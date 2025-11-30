@@ -3,8 +3,11 @@
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #include "autogen/environment.h"
+
+#include "luminismcore.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +15,19 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
+    LuminismCore core = LuminismCore();
+
+    TagSet *ts = new TagSet("People", "Susan");
+
+    QList<TagSet*> tsl = QList<TagSet*>();
+
+    tsl.append(ts);
+
+    core.tfc->addFile("myfile.jpg", tsl);
+
+    engine.rootContext()->setContextProperty("core", &core);
+
     const QUrl url(mainQmlFile);
     QObject::connect(
                 &engine, &QQmlApplicationEngine::objectCreated, &app,

@@ -17,12 +17,36 @@ set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
 )
 
 find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Widgets Qml Quick QuickTimeline ShaderTools)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 qt_standard_project_setup()
 
 
-qt_add_executable(${CMAKE_PROJECT_NAME})
+qt_add_executable(${CMAKE_PROJECT_NAME}
+    App/taggedfilecollection.h App/taggedfilecollection.cpp
+    App/tag.h App/tag.cpp
+    App/tagfamily.h App/tagfamily.cpp
+    App/taggedfile.h App/taggedfile.cpp
+    App/luminismcore.h App/luminismcore.cpp
+    App/tagset.h App/tagset.cpp)
 qt_add_resources(${CMAKE_PROJECT_NAME} "configuration"
-    PREFIX "/"
+
+target_link_libraries(LuminismApp PRIVATE Qt6::Core)
+
+target_link_libraries(LuminismApp PRIVATE Qt6::Core)
+
+target_link_libraries(LuminismApp PRIVATE Qt6::Core)
+
+target_link_libraries(LuminismApp PRIVATE Qt6::Core)
+
+target_link_libraries(LuminismApp PRIVATE Qt6::Core)
+
+target_link_libraries(LuminismApp PRIVATE Qt6::Core)
+PREFIX "/"
     FILES
         qtquickcontrols2.conf)
 
