@@ -1,48 +1,66 @@
 #include "taggedfilecollection.h"
 #include <QDebug>
 
-TaggedFileCollection::TaggedFileCollection(QObject *parent)
-    : QObject{parent}
-{
-    tag_family_collection_ = new QList<TagFamily>;
-    tag_collection_ = new QList<Tag>;
-    tagged_file_collection_ = new QList<TaggedFile>;
-
+TaggedFileCollection::TaggedFileCollection(){
+    tag_family_collection_ = new QList<TagFamily*>();
+    tag_collection_ = new QList<Tag*>();
+    tagged_file_collection_ = new QList<TaggedFile*>();
 }
 
-void TaggedFileCollection::addFile(QString f, QList<TagSet*> tags){
-    // Add to to the Tagged Object collection and propagate its tags and tag families
-    addTagFamilies(tags);
+void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
+    // Add to to the Tagged Object collection and collect links to its tags and tag families
 
-    // TODO: Make a new TaggedObject with the tags linked
-
-
-    // Then add it
-    //tagged_file_collection_.append(f);
-}
-
-void TaggedFileCollection::addTagFamilies(QList<TagSet*> tags){
-    // For each item in the tag set add the family, if it doesn't already exist
+    // For each item in the tag set add the family, if it doesn't already exist,
     // and add the tag including a link to the family, if the tag doesn't already exist
 
-    for(const TagSet *value : tags) {
+    QList<Tag*>* newOrExistingTags = new QList<Tag*>();
 
-        QString current_family = value->tagFamilyName;
-        QString current_tag = value->tagName;
+    for(const TagSet value : tags) {
 
-        qDebug() << current_family;
-        qDebug() << current_tag;
+        TagFamily *current_family = nullptr;
 
-        //if( ! tag_family_collection_->contains(current_family) ){
-        //    tag_family_collection_->append(current_family);
-        //}
-        //
-        //int index = tag_family_collection_->indexOf(current_family);
-        //TagFamily tf = tag_family_collection_[index];
+        for(TagFamily *fam : *tag_family_collection_) {
+            if (fam->tagFamilyName == value.tagFamilyName){
+                // Found a match, use it
+                current_family = fam;
+            }
+        }
 
-        //if( ! tag_collection_->contains(value.tagName)){
-        //    Tag t = new Tag(tf, value.tagName);
-        //    tag_collection_->append(t);
-        //}
+        if( ! current_family ){
+            current_family = new TagFamily(value.tagFamilyName);
+            tag_family_collection_->append(current_family);
+        }
+
+        Tag *current_tag = nullptr;
+
+        for(Tag *tag : *tag_collection_){
+            if (tag->tagFamily->tagFamilyName == value.tagFamilyName && tag->tagName == value.tagName){
+                current_tag = tag;
+            }
+        }
+
+        if( ! current_tag ){
+            current_tag = new Tag(current_family, value.tagName);
+            tag_collection_->append(current_tag);
+        }
+
+        qDebug() << current_tag->tagFamily->tagFamilyName;
+        qDebug() << current_tag->tagName;
+
+        newOrExistingTags->append(current_tag);
+
+    }
+
+    // Then add it
+    TaggedFile *tf = new TaggedFile(fp, fn, newOrExistingTags);
+    tagged_file_collection_->append(tf);
+}
+
+void TaggedFileCollection::renameFamily(QString oldName, QString newName){
+    for(TagFamily *fam : *tag_family_collection_) {
+        if (fam->tagFamilyName == oldName){
+            fam->tagFamilyName = newName;
+        }
     }
 }
+

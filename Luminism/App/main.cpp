@@ -18,13 +18,16 @@ int main(int argc, char *argv[])
 
     LuminismCore core = LuminismCore();
 
-    TagSet *ts = new TagSet("People", "Susan");
+    QList<TagSet> tsl = QList<TagSet>();
 
-    QList<TagSet*> tsl = QList<TagSet*>();
-
+    TagSet ts = TagSet("People", "Susan");
     tsl.append(ts);
 
-    core.tfc->addFile("myfile.jpg", tsl);
+    TagSet ts2 = TagSet("People", "Bill");
+    tsl.append(ts2);
+
+    core.tfc->addFile("/home/foo/bar/", "myfile.jpg", tsl);
+    //core.tfc->renameFamily("People","Persons");
 
     engine.rootContext()->setContextProperty("core", &core);
 

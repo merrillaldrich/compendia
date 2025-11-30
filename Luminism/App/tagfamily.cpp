@@ -1,10 +1,17 @@
 #include "tagfamily.h"
 
-TagFamily::TagFamily(QObject *parent)
-    : QObject{parent}
-{
+TagFamily::TagFamily(){
     tagFamilyName = "";
 }
-TagFamily::TagFamily(QString tf, QObject *parent){
+
+TagFamily::TagFamily(QString tf){
     tagFamilyName = tf;
 }
+
+//bool TagFamily::operator==(const TagFamily other) const noexcept {
+//    return tagFamilyName == other.tagFamilyName;
+//}
+//
+//bool TagFamily::operator==(const QString other) const noexcept {
+//    return tagFamilyName == other;
+//}

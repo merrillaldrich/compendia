@@ -1,20 +1,19 @@
 #ifndef TAG_H
 #define TAG_H
 
-#include <QObject>
 #include "tagfamily.h"
 
-class Tag : public QObject
+class Tag
 {
-    Q_OBJECT
+
 public:
     QString tagName;
     TagFamily* tagFamily;
 
-    explicit Tag(QObject *parent = nullptr);
-    Tag(TagFamily *tf, QString t, QObject *parent = nullptr);
+    Tag(TagFamily* tf, QString t);
 
-signals:
+//    bool operator==(const Tag *other) const noexcept;
+
 };
 
 #endif // TAG_H

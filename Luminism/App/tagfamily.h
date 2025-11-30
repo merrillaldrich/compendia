@@ -1,17 +1,20 @@
 #ifndef TAGFAMILY_H
 #define TAGFAMILY_H
 
-#include <QObject>
+#include <QString>
 
-class TagFamily : public QObject
+class TagFamily
 {
-    Q_OBJECT
+
 public:
     QString tagFamilyName = "";
-    explicit TagFamily(QObject *parent = nullptr);
-    TagFamily(QString tf, QObject *parent = nullptr);
 
-signals:
+    TagFamily();
+    TagFamily(QString tf);
+
+//    bool operator==(const TagFamily other) const noexcept;
+//    bool operator==(const QString other) const noexcept;
+
 };
 
 #endif // TAGFAMILY_H

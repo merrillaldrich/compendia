@@ -1,22 +1,19 @@
 #ifndef TAGGEDFILE_H
 #define TAGGEDFILE_H
 
-#include <QObject>
+#include <QList>
 #include "tag.h"
 
-class TaggedFile : public QObject
+class TaggedFile
 {
-    Q_OBJECT
 
 public:
     QString filePath;
     QString fileName;
-    QList<Tag> tagList;
+    QList<Tag*>* tagList;
 
-    explicit TaggedFile(QObject *parent = nullptr);
-    TaggedFile(QString fp, QString fn, QList<Tag> tl);
+    TaggedFile(QString fp, QString fn, QList<Tag *> *tl);
 
-signals:
 };
 
 #endif // TAGGEDFILE_H

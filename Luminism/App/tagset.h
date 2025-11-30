@@ -1,7 +1,7 @@
 #ifndef TAGSET_H
 #define TAGSET_H
 
-#include <QObject>
+#include <QString>
 
 class TagSet
 {
