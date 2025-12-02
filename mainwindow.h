@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "luminismcore.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,7 +20,10 @@ public:
 
 private slots:
 
+    void on_actionOpen_Folder_triggered();
+
 private:
     Ui::MainWindow *ui;
+    LuminismCore *core;
 };
 #endif // MAINWINDOW_H
