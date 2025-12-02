@@ -1,0 +1,5 @@
+<RCC>
+   <qresource prefix="/">
+       <file>SampleFiles/Hilde at the Dragon.jpg</file>
+   </qresource>
+</RCC>

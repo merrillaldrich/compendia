@@ -6,25 +6,92 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1200</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>-1</y>
+      <width>1201</width>
+      <height>761</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QSplitter" name="splitter_4">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <widget class="QSplitter" name="splitter_3">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(96, 174, 233)</string>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <widget class="QWidget" name="widget" native="true"/>
+        <widget class="QWidget" name="widget_2" native="true"/>
+        <widget class="QWidget" name="widget_3" native="true"/>
+       </widget>
+       <widget class="QSplitter" name="splitter_2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <widget class="QWidget" name="widget_4" native="true"/>
+        <widget class="QWidget" name="widget_5" native="true"/>
+        <widget class="QWidget" name="widget_6" native="true"/>
+       </widget>
+       <widget class="QSplitter" name="splitter">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <widget class="QWidget" name="widget_7" native="true"/>
+        <widget class="QWidget" name="widget_8" native="true"/>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1200</width>
      <height>17</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 117, 183);
+border-bottom: 1px solid #DDD; /* width, style, color */</string>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen_Folder"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 120, 186);
+border-top: 1px solid #DDD; /* width, style, color */</string>
+   </property>
+  </widget>
+  <action name="actionOpen_Folder">
+   <property name="text">
+    <string>Open Folder...</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
