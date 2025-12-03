@@ -32,6 +32,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
 void MainWindow::on_actionOpen_Folder_triggered()
 {
    QString folder = QFileDialog::getExistingDirectory(this, "Open Folder", "C:/Users/merri/Pictures");
@@ -44,7 +45,6 @@ void MainWindow::on_actionOpen_Folder_triggered()
 }
 
 void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
-    qDebug() << "Selection Changed";
 
     QList<QModelIndex> sel = selected.indexes();
 
@@ -68,11 +68,41 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
     QGraphicsPixmapItem *item = scene->addPixmap(pixmap);
     item->setTransformationMode(Qt::SmoothTransformation); // Better scaling
 
-    // Create a view, set the scene
+    // Get the ui graphics view, set the scene
     QGraphicsView* view = ui->previewGraphicsView;
     view->setScene(scene);
+    view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
     view->setRenderHint(QPainter::Antialiasing);
     view->setRenderHint(QPainter::SmoothPixmapTransform);
     view->setDragMode(QGraphicsView::ScrollHandDrag); // Optional: drag to move
     view->show();
 }
+
+void MainWindow::freshenPreview(){
+    QGraphicsView* view = ui->previewGraphicsView;
+    if (view->scene() != nullptr){
+        view->fitInView(view->scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
+    }
+
+}
+
+void MainWindow::on_previewSplitter_splitterMoved(int pos, int index)
+{
+    freshenPreview();
+}
+
+
+void MainWindow::on_windowBodySplitter_splitterMoved(int pos, int index)
+{
+    freshenPreview();
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event) {
+
+    // Be careful not to do anything before the window actually contains a view and image
+    freshenPreview();
+
+    // Always call base class implementation
+    QMainWindow::resizeEvent(event);
+}
+

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QItemSelection>
+#include <QResizeEvent>
+#include <QGraphicsView>
 #include "luminismcore.h"
 
 QT_BEGIN_NAMESPACE
@@ -15,19 +17,28 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+private:
+    Ui::MainWindow *ui;
+    LuminismCore *core;
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void freshenPreview();
 
 private slots:
 
     void on_actionOpen_Folder_triggered();
     void onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
-private:
-    Ui::MainWindow *ui;
-    LuminismCore *core;
+    void on_previewSplitter_splitterMoved(int pos, int index);
 
+    void on_windowBodySplitter_splitterMoved(int pos, int index);
+
+protected:
+    // Override resizeEvent to handle window resizing
+    void resizeEvent(QResizeEvent *event) override;
 
 };
 #endif // MAINWINDOW_H
