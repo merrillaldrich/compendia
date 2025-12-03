@@ -11,9 +11,10 @@ class LuminismCore : public QObject
     Q_OBJECT
 private:
     QString root_directory_;
-    TaggedFileCollection *tfc = new TaggedFileCollection();
 
 public:
+    TaggedFileCollection *tfc = new TaggedFileCollection();
+
     explicit LuminismCore(QObject *parent = nullptr);
 
     void setRootDirectory(QString path);

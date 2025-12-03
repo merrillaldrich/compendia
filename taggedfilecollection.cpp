@@ -2,16 +2,20 @@
 #include <QDebug>
 
 TaggedFileCollection::TaggedFileCollection(){
-    tag_family_collection_ = new QList<TagFamily*>();
-    tag_collection_ = new QList<Tag*>();
+    tag_families_ = new QList<TagFamily*>();
+    tags_ = new QList<Tag*>();
 
     //tagged_file_collection_ = new QList<TaggedFile*>();
-    tagged_file_collection_ = new QStandardItemModel();
+    tagged_files_ = new QStandardItemModel();
+}
+
+QStandardItemModel* TaggedFileCollection::getItemModel(){
+    return tagged_files_;
 }
 
 bool TaggedFileCollection::containsFiles(){
     //return ( tagged_file_collection_->count() > 0 );
-    return ( tagged_file_collection_->rowCount() > 0 );
+    return ( tagged_files_->rowCount() > 0 );
 }
 
 void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
@@ -26,7 +30,7 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
 
         TagFamily *current_family = nullptr;
 
-        for(TagFamily *fam : *tag_family_collection_) {
+        for(TagFamily *fam : *tag_families_) {
             if (fam->tagFamilyName == value.tagFamilyName){
                 // Found a match, use it
                 current_family = fam;
@@ -35,12 +39,12 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
 
         if( ! current_family ){
             current_family = new TagFamily(value.tagFamilyName);
-            tag_family_collection_->append(current_family);
+            tag_families_->append(current_family);
         }
 
         Tag *current_tag = nullptr;
 
-        for(Tag *tag : *tag_collection_){
+        for(Tag *tag : *tags_){
             if (tag->tagFamily->tagFamilyName == value.tagFamilyName && tag->tagName == value.tagName){
                 current_tag = tag;
             }
@@ -48,7 +52,7 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
 
         if( ! current_tag ){
             current_tag = new Tag(current_family, value.tagName);
-            tag_collection_->append(current_tag);
+            tags_->append(current_tag);
         }
 
         qDebug() << current_tag->tagFamily->tagFamilyName;
@@ -60,10 +64,16 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
 
     // Then add it
     TaggedFile *tf = new TaggedFile(fp, fn, newOrExistingTags);
-    //tagged_file_collection_->append(tf);
-    QStandardItem *i = new QStandardItem();
+    // Standard items have just an icon and text
+
+    // Make an icon
+    QPixmap p = QPixmap(fp + "/" + fn);
+    QPixmap squarePixmap = makeSquareIcon(p, 100);
+
+    QStandardItem *i = new QStandardItem(QIcon(squarePixmap), tf->fileName);
+    // In order to store the custom object box it as a variant and store in item.setdata()
     i->setData(QVariant::fromValue(tf));
-    tagged_file_collection_->appendRow(i);
+    tagged_files_->appendRow(i);
 \
     // Debugging adding and retrieving variants
 
@@ -77,10 +87,30 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
 }
 
 void TaggedFileCollection::renameFamily(QString oldName, QString newName){
-    for(TagFamily *fam : *tag_family_collection_) {
+    for(TagFamily *fam : *tag_families_) {
         if (fam->tagFamilyName == oldName){
             fam->tagFamilyName = newName;
         }
     }
 }
+
+QPixmap TaggedFileCollection::makeSquareIcon(const QPixmap &source, int size)
+{
+    // Scale the image to fit within a square, keeping aspect ratio
+    QPixmap scaled = source.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    // Create a transparent square pixmap
+    QPixmap square(size, size);
+    square.fill(Qt::transparent);
+
+    // Center the scaled image in the square
+    QPainter painter(&square);
+    int x = (size - scaled.width()) / 2;
+    int y = (size - scaled.height()) / 2;
+    painter.drawPixmap(x, y, scaled);
+    painter.end();
+
+    return square;
+}
+
 

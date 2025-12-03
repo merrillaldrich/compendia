@@ -28,4 +28,5 @@ void LuminismCore::loadRootDirectory(){
 
         tfc->addFile(fileInfo.absolutePath(), fileInfo.fileName(), tags);
     }
+
 }

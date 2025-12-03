@@ -2,6 +2,7 @@
 #define TAGGEDFILECOLLECTION_H
 
 #include <QStandardItemModel>
+#include <QPainter>
 #include "tagfamily.h"
 #include "tag.h"
 #include "taggedfile.h"
@@ -11,11 +12,13 @@ class TaggedFileCollection
 {
 
 private:
-    QList<TagFamily*> *tag_family_collection_;
-    QList<Tag*> *tag_collection_;
+    QList<TagFamily*> *tag_families_;
+    QList<Tag*> *tags_;
 
-    //QList<TaggedFile*> *tagged_file_collection_;
-    QStandardItemModel *tagged_file_collection_;
+    //QList<TaggedFile*> *tagged_files_;
+    QStandardItemModel *tagged_files_;
+
+    QPixmap makeSquareIcon(const QPixmap &source, int size);
 
 public:
     explicit TaggedFileCollection();
@@ -25,6 +28,8 @@ public:
     void addFile(QString fp, QString fn, QList<TagSet> tags);
 
     void renameFamily(QString oldName, QString newName);
+
+    QStandardItemModel* getItemModel();
 
 };
 
