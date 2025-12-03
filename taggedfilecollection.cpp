@@ -4,7 +4,14 @@
 TaggedFileCollection::TaggedFileCollection(){
     tag_family_collection_ = new QList<TagFamily*>();
     tag_collection_ = new QList<Tag*>();
-    tagged_file_collection_ = new QList<TaggedFile*>();
+
+    //tagged_file_collection_ = new QList<TaggedFile*>();
+    tagged_file_collection_ = new QStandardItemModel();
+}
+
+bool TaggedFileCollection::containsFiles(){
+    //return ( tagged_file_collection_->count() > 0 );
+    return ( tagged_file_collection_->rowCount() > 0 );
 }
 
 void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
@@ -53,7 +60,20 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
 
     // Then add it
     TaggedFile *tf = new TaggedFile(fp, fn, newOrExistingTags);
-    tagged_file_collection_->append(tf);
+    //tagged_file_collection_->append(tf);
+    QStandardItem *i = new QStandardItem();
+    i->setData(QVariant::fromValue(tf));
+    tagged_file_collection_->appendRow(i);
+\
+    // Debugging adding and retrieving variants
+
+    //qDebug() << tagged_file_collection_->rowCount();
+
+    //QStandardItem* item = tagged_file_collection_->item(tagged_file_collection_->rowCount()-1);
+    //QVariant var = item->data();
+    //TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+
+    //qDebug() << itemAsTaggedFile->fileName;
 }
 
 void TaggedFileCollection::renameFamily(QString oldName, QString newName){

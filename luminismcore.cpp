@@ -12,6 +12,12 @@ void LuminismCore::setRootDirectory(QString path){
 }
 
 void LuminismCore::loadRootDirectory(){
+
+    // Pointing to a new folder means we have to clear any data already loaded:
+    if ( tfc->containsFiles() ){
+        tfc = new TaggedFileCollection();
+    }
+
     QDirIterator it(root_directory_, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
     while (it.hasNext()) {
         QFile f(it.next());
