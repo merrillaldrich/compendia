@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "luminismcore.h"
+#include "tagwidget.h"
 #include <QFileDialog>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 
 #include <QDebug>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,6 +27,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->fileListSplitter->setSizes(sizes);
     sizes = {800,200};
     ui->previewSplitter->setSizes(sizes);
+
+    Tag* t = new Tag(new TagFamily(),"Foo");
+    TagWidget* tw = new TagWidget(t, ui->navTagLibraryContainer);
+    tw->resize(110,30);
+    tw->show();
 }
 
 MainWindow::~MainWindow()
