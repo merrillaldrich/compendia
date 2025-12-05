@@ -56,7 +56,7 @@
           </property>
          </widget>
          <widget class="QWidget" name="navFilterContainer" native="true"/>
-         <widget class="QWidget" name="navTagLibraryContainer" native="true"/>
+         <widget class="QWidget" name="navLibraryContainer" native="true"/>
         </widget>
         <widget class="QSplitter" name="fileListSplitter">
          <property name="orientation">

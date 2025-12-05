@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include <QPainter>
+#include <QDrag>
+#include <QMouseEvent>
+#include <QMimeData>
+#include <QApplication>
 #include "tag.h"
 
 class TagWidget : public QWidget
@@ -19,6 +23,11 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dragMoveEvent(QDragMoveEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 
 signals:
 };

@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "luminismcore.h"
 #include "tagwidget.h"
+#include "flowlayout.h"
 #include <QFileDialog>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
@@ -17,6 +18,28 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
+    //QHBoxLayout* navTagLibraryLayout = new QHBoxLayout(ui->navLibraryContainer);
+
+    Tag* t = new Tag(new TagFamily(),"Foo");
+    TagWidget* tw = new TagWidget(t);
+    navTagLibraryLayout->addWidget(tw);
+
+    t = new Tag(new TagFamily(),"Foo");
+    tw = new TagWidget(t);
+    navTagLibraryLayout->addWidget(tw);
+
+    t = new Tag(new TagFamily(),"Foo");
+    tw = new TagWidget(t);
+    navTagLibraryLayout->addWidget(tw);
+
+    t = new Tag(new TagFamily(),"Foo");
+    tw = new TagWidget(t);
+    navTagLibraryLayout->addWidget(tw);
+
+    ui->navLibraryContainer->setLayout(navTagLibraryLayout);
+
+    // Default pane sizes
     resize(1400, 900);
 
     QList<int> sizes = {350,650,400} ;
@@ -28,10 +51,10 @@ MainWindow::MainWindow(QWidget *parent)
     sizes = {800,200};
     ui->previewSplitter->setSizes(sizes);
 
-    Tag* t = new Tag(new TagFamily(),"Foo");
-    TagWidget* tw = new TagWidget(t, ui->navTagLibraryContainer);
-    tw->resize(110,30);
-    tw->show();
+    // Drag and drop setup
+    ui->navFilterContainer->setAcceptDrops(true);
+    ui->fileListTagAssignmentContainer->setAcceptDrops(true);
+
 }
 
 MainWindow::~MainWindow()
