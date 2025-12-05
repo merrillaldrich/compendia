@@ -107,7 +107,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="fileListTagAssignmentContainer" native="true"/>
+         <widget class="TagAssignmentContainer" name="fileListTagAssignmentContainer" native="true"/>
         </widget>
         <widget class="QSplitter" name="previewSplitter">
          <property name="orientation">
@@ -176,6 +176,14 @@ border-top: 1px solid #DDD; /* width, style, color */</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TagAssignmentContainer</class>
+   <extends>QWidget</extends>
+   <header>tagassignmentcontainer.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

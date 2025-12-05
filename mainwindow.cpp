@@ -18,8 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    // Set up the tag library area
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
-    //QHBoxLayout* navTagLibraryLayout = new QHBoxLayout(ui->navLibraryContainer);
 
     Tag* t = new Tag(new TagFamily(),"Foo");
     TagWidget* tw = new TagWidget(t);
@@ -38,6 +38,20 @@ MainWindow::MainWindow(QWidget *parent)
     navTagLibraryLayout->addWidget(tw);
 
     ui->navLibraryContainer->setLayout(navTagLibraryLayout);
+
+    // Set up the tag assignment area
+
+    FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
+
+    t = new Tag(new TagFamily(),"Bar");
+    tw = new TagWidget(t);
+    fileListTagAssignmentLayout->addWidget(tw);
+
+    t = new Tag(new TagFamily(),"Baz");
+    tw = new TagWidget(t);
+    fileListTagAssignmentLayout->addWidget(tw);
+
+    ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
 
     // Default pane sizes
     resize(1400, 900);
