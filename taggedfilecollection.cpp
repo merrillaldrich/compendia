@@ -18,6 +18,32 @@ bool TaggedFileCollection::containsFiles(){
     return ( tagged_files_->rowCount() > 0 );
 }
 
+Tag* TaggedFileCollection::getTag(QString tagFamily, QString tag){
+    Tag* matchingTag;
+    for( int i = 0; i < tags_->count(); ++i ){
+        Tag* t = tags_->at(i);
+        if ( t->tagName == tag && t->tagFamily->tagFamilyName == tagFamily){
+            matchingTag = t;
+            break;
+        }
+    }
+    return matchingTag;
+}
+
+void TaggedFileCollection::applyTag(Tag* t){
+    for( int i = 0; i < tagged_files_->rowCount(); ++i ){
+        QStandardItem* item = tagged_files_->item(i);
+        QVariant var = item->data();
+        TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+        itemAsTaggedFile->tagList->append(t);
+    }
+}
+void TaggedFileCollection::addLibraryTag(Tag* t){
+    // TODO: make sure these are unique
+    tag_families_->append(t->tagFamily);
+    tags_->append(t);
+}
+
 void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
     // Add to to the Tagged Object collection and collect links to its tags and tag families
 

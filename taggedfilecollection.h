@@ -25,7 +25,13 @@ public:
 
     bool containsFiles();
 
+    Tag* getTag(QString tagFamily, QString tag);
+
     void addFile(QString fp, QString fn, QList<TagSet> tags);
+
+    void applyTag(Tag* droppedTag);
+
+    void addLibraryTag(Tag* t);
 
     void renameFamily(QString oldName, QString newName);
 

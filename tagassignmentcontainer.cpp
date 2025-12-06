@@ -6,7 +6,7 @@ TagAssignmentContainer::TagAssignmentContainer(QWidget *parent)
 
 void TagAssignmentContainer::dragEnterEvent(QDragEnterEvent *event)
 {
-    qDebug() << "Drag enter event!";
+    //qDebug() << "Drag enter event!";
 
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         if (event->source() == this) {
@@ -38,28 +38,32 @@ void TagAssignmentContainer::dragMoveEvent(QDragMoveEvent *event)
 
 void TagAssignmentContainer::dropEvent(QDropEvent *event)
 {
-    qDebug() << "Drop event!";
+    //qDebug() << "Drop event!";
 
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
 
-        qDebug() << "Drop!";
+        //qDebug() << "Drop!";
 
         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
 
+        QString tagFamilyName;
         QString tagName;
         QPoint offset;
-        dataStream >> tagName >> offset;
 
-        //QLabel *newIcon = new QLabel(this);
-        //newIcon->setPixmap(pixmap);
-        //newIcon->move(event->position().toPoint() - offset);
-        //newIcon->show();
-        //newIcon->setAttribute(Qt::WA_DeleteOnClose);
+        dataStream >> tagFamilyName >> tagName >> offset;
 
-        TagWidget* droppedTagWidget = new TagWidget(new Tag(new TagFamily(""),tagName),this);
+        // Locate the dropped tag in the tag library
+        MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
+
+        Tag* t = mainWin->core->getTag(tagFamilyName, tagName);
+
+        TagWidget* droppedTagWidget = new TagWidget(t,this);
         this->layout()->addWidget(droppedTagWidget);
         droppedTagWidget->show();
+
+        // Apply the dropped tag to all visible files
+        mainWin->core->applyTag(t);
 
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);

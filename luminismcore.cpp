@@ -15,6 +15,7 @@ void LuminismCore::loadRootDirectory(){
 
     // Pointing to a new folder means we have to clear any data already loaded:
     if ( tfc->containsFiles() ){
+        delete tfc;
         tfc = new TaggedFileCollection();
     }
 
@@ -28,5 +29,35 @@ void LuminismCore::loadRootDirectory(){
 
         tfc->addFile(fileInfo.absolutePath(), fileInfo.fileName(), tags);
     }
+}
 
+void LuminismCore::writeFileMetadata(){
+
+    QStandardItemModel* model = tfc->getItemModel();
+
+    for (int row = 0; row < model->rowCount(); ++row) {
+        QVariant fi = model->item(row)->data();
+        TaggedFile* itemAsTaggedFile = fi.value<TaggedFile*>();
+
+        qDebug() << itemAsTaggedFile->fileName;
+
+        QList<Tag*>* tagList = itemAsTaggedFile->tagList;
+
+        for ( int i = 0; i < tagList->count(); ++i){
+            Tag* t = tagList->at(i);
+            qDebug() << t->tagFamily->tagFamilyName << t->tagName;
+        }
+    }
+}
+
+Tag* LuminismCore::getTag(QString tagFamily, QString tag){
+    return tfc->getTag(tagFamily, tag);
+}
+
+void LuminismCore::addLibraryTag(Tag* t){
+    tfc->addLibraryTag(t);
+}
+
+void LuminismCore::applyTag(Tag* droppedTag){
+    tfc->applyTag(droppedTag);
 }

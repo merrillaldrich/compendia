@@ -25,15 +25,20 @@ MainWindow::MainWindow(QWidget *parent)
     // Set up the tag library area
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
 
-    Tag* t = new Tag(new TagFamily(),"Foo");
+    // Sample tags
+    Tag* t = new Tag(new TagFamily("Default"),"Foo");
+    core->addLibraryTag(t);
+
     TagWidget* tw = new TagWidget(t);
     navTagLibraryLayout->addWidget(tw);
 
-    t = new Tag(new TagFamily(),"Bar");
+    t = new Tag(new TagFamily("Default"),"Bar");
+    core->addLibraryTag(t);
     tw = new TagWidget(t);
     navTagLibraryLayout->addWidget(tw);
 
-    t = new Tag(new TagFamily(),"Baz");
+    t = new Tag(new TagFamily("Default"),"Baz");
+    core->addLibraryTag(t);
     tw = new TagWidget(t);
     navTagLibraryLayout->addWidget(tw);
 
@@ -43,13 +48,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
 
-    t = new Tag(new TagFamily(),"Grok");
-    tw = new TagWidget(t);
-    fileListTagAssignmentLayout->addWidget(tw);
+    //t = new Tag(new TagFamily("Default"),"Grok");
+    //tw = new TagWidget(t);
+    //fileListTagAssignmentLayout->addWidget(tw);
 
-    t = new Tag(new TagFamily(),"Zing");
-    tw = new TagWidget(t);
-    fileListTagAssignmentLayout->addWidget(tw);
+    //t = new Tag(new TagFamily("Default"),"Zing");
+    //tw = new TagWidget(t);
+    //fileListTagAssignmentLayout->addWidget(tw);
 
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
 
@@ -154,14 +159,12 @@ void MainWindow::freshenPreview(){
     if (view->scene() != nullptr){
         view->fitInView(view->scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
     }
-
 }
 
 void MainWindow::on_previewSplitter_splitterMoved(int pos, int index)
 {
     freshenPreview();
 }
-
 
 void MainWindow::on_windowBodySplitter_splitterMoved(int pos, int index)
 {
@@ -177,7 +180,8 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
 }
 
-
-
-
+void MainWindow::on_saveButton_clicked()
+{
+    core->writeFileMetadata();
+}
 

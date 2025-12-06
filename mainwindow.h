@@ -19,11 +19,12 @@ class MainWindow : public QMainWindow
 
 private:
     Ui::MainWindow *ui;
-    LuminismCore *core;
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    LuminismCore *core;
 
     void freshenPreview();
 
@@ -39,6 +40,8 @@ private slots:
     void on_mediaFolderBrowseButton_clicked();
 
     void on_mediaFolderLineEdit_returnPressed();
+
+    void on_saveButton_clicked();
 
 protected:
     // Override resizeEvent to handle window resizing

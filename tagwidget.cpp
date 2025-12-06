@@ -39,6 +39,7 @@ void TagWidget::mousePressEvent(QMouseEvent *event)
     TagWidget* draggedTag = this;
     Tag* t = draggedTag->tag_;
     QString tagName = t->tagName;
+    QString tagFamilyName = t->tagFamily->tagFamilyName;
 
     //qDebug() << draggedTag->tag_->tagName;
 
@@ -47,7 +48,7 @@ void TagWidget::mousePressEvent(QMouseEvent *event)
 
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-    dataStream << tagName << QPoint(event->position().toPoint() - draggedTag->pos());
+    dataStream << tagFamilyName << tagName << QPoint(event->position().toPoint() - draggedTag->pos());
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData("application/x-dnditemdata", itemData);

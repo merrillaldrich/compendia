@@ -19,6 +19,11 @@ public:
 
     void setRootDirectory(QString path);
     void loadRootDirectory();
+    void writeFileMetadata();
+
+    Tag* getTag(QString tagFamily, QString tag);
+    void addLibraryTag(Tag* t);
+    void applyTag(Tag* droppedTag);
 
 public slots:
 

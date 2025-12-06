@@ -7,6 +7,7 @@
 #include <QMimeData>
 #include <QLayout>
 #include "tagwidget.h"
+#include "mainwindow.h"
 
 class TagAssignmentContainer : public QWidget
 {
