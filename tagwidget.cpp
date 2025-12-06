@@ -36,7 +36,9 @@ void TagWidget::mousePressEvent(QMouseEvent *event)
 {
     //qDebug() << "Drag started!";
 
-    TagWidget *draggedTag = this;
+    TagWidget* draggedTag = this;
+    Tag* t = draggedTag->tag_;
+    QString tagName = t->tagName;
 
     //qDebug() << draggedTag->tag_->tagName;
 
@@ -45,17 +47,18 @@ void TagWidget::mousePressEvent(QMouseEvent *event)
 
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-    dataStream << QPoint(event->position().toPoint() - draggedTag->pos());
+    dataStream << tagName << QPoint(event->position().toPoint() - draggedTag->pos());
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData("application/x-dnditemdata", itemData);
 
+    // Bundle the image and mime data into a QDrag object
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimeData);
     drag->setPixmap(dragimage);
     drag->setHotSpot(event->position().toPoint());
     drag->exec();
-    // Do this only if you want to actually move the object on drop. Note this seems to be f'd with by layouts
+    // Do this only if you want to actually move the object on drop. Note this seems to be f'd with by layouts:
     //draggedTag->move(event->position().toPoint() - drag->hotSpot());
 
 }

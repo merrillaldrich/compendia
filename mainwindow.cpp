@@ -18,6 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    // Default Root Folder
+    QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
+    le->setText("C:/Users/merri/OneDrive/Pictures/");
+
     // Set up the tag library area
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
 
@@ -25,15 +29,11 @@ MainWindow::MainWindow(QWidget *parent)
     TagWidget* tw = new TagWidget(t);
     navTagLibraryLayout->addWidget(tw);
 
-    t = new Tag(new TagFamily(),"Foo");
+    t = new Tag(new TagFamily(),"Bar");
     tw = new TagWidget(t);
     navTagLibraryLayout->addWidget(tw);
 
-    t = new Tag(new TagFamily(),"Foo");
-    tw = new TagWidget(t);
-    navTagLibraryLayout->addWidget(tw);
-
-    t = new Tag(new TagFamily(),"Foo");
+    t = new Tag(new TagFamily(),"Baz");
     tw = new TagWidget(t);
     navTagLibraryLayout->addWidget(tw);
 
@@ -43,11 +43,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
 
-    t = new Tag(new TagFamily(),"Bar");
+    t = new Tag(new TagFamily(),"Grok");
     tw = new TagWidget(t);
     fileListTagAssignmentLayout->addWidget(tw);
 
-    t = new Tag(new TagFamily(),"Baz");
+    t = new Tag(new TagFamily(),"Zing");
     tw = new TagWidget(t);
     fileListTagAssignmentLayout->addWidget(tw);
 
@@ -74,18 +74,45 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete core;
 }
 
 
 void MainWindow::on_actionOpen_Folder_triggered()
 {
-   QString folder = QFileDialog::getExistingDirectory(this, "Open Folder", "C:/Users/merri/Pictures");
-   core->setRootDirectory(folder);
+    setRootFolder();
+}
 
-   QListView* lv = ui->fileListView;
-   lv->setModel(core->tfc->getItemModel());
-   connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
-   lv->show();
+void MainWindow::on_mediaFolderBrowseButton_clicked()
+{
+    setRootFolder();
+}
+
+void MainWindow::on_mediaFolderLineEdit_returnPressed()
+{
+    QObject *obj = sender();
+    QLineEdit *le = qobject_cast<QLineEdit*>(obj);
+    core->setRootDirectory(le->text());
+    le->clearFocus();
+
+    QListView* lv = ui->fileListView;
+    lv->setModel(core->tfc->getItemModel());
+    connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
+    lv->show();
+}
+
+void MainWindow::setRootFolder(){
+    QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
+
+    QString folder = QFileDialog::getExistingDirectory(this, "Open Folder", le->text());
+    core->setRootDirectory(folder);
+
+    le->setText(folder);
+
+    QListView* lv = ui->fileListView;
+    lv->setModel(core->tfc->getItemModel());
+    connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
+    lv->show();
 }
 
 void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
@@ -149,4 +176,8 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     // Always call base class implementation
     QMainWindow::resizeEvent(event);
 }
+
+
+
+
 

@@ -5,6 +5,8 @@
 #include <QDrag>
 #include <QDragEnterEvent>
 #include <QMimeData>
+#include <QLayout>
+#include "tagwidget.h"
 
 class TagAssignmentContainer : public QWidget
 {

@@ -62,7 +62,37 @@
          <property name="orientation">
           <enum>Qt::Orientation::Vertical</enum>
          </property>
-         <widget class="QWidget" name="fileListFiltersContainer" native="true"/>
+         <widget class="QWidget" name="fileListFiltersContainer" native="true">
+          <widget class="QWidget" name="">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>531</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="mediaFolderLabel">
+              <property name="text">
+               <string>Media Folder</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="mediaFolderLineEdit"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="mediaFolderBrowseButton">
+              <property name="text">
+               <string>Browse...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
          <widget class="QWidget" name="verticalLayoutWidget">
           <layout class="QVBoxLayout" name="fileListContainer">
            <property name="spacing">

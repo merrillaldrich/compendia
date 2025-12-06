@@ -41,20 +41,25 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
     qDebug() << "Drop event!";
 
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
+
+        qDebug() << "Drop!";
+
         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
 
-        QPixmap pixmap;
+        QString tagName;
         QPoint offset;
-        dataStream >> pixmap >> offset;
-
-        qDebug() << "Drop!";
+        dataStream >> tagName >> offset;
 
         //QLabel *newIcon = new QLabel(this);
         //newIcon->setPixmap(pixmap);
         //newIcon->move(event->position().toPoint() - offset);
         //newIcon->show();
         //newIcon->setAttribute(Qt::WA_DeleteOnClose);
+
+        TagWidget* droppedTagWidget = new TagWidget(new Tag(new TagFamily(""),tagName),this);
+        this->layout()->addWidget(droppedTagWidget);
+        droppedTagWidget->show();
 
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);

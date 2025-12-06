@@ -17,4 +17,10 @@ public:
 
 };
 
+QDataStream &operator<<(QDataStream &out, const TagFamily &t);
+
+// Overload operator>> for reading from QDataStream for drag and drop
+QDataStream &operator>>(QDataStream &in, TagFamily &t);
+
+
 #endif // TAGFAMILY_H

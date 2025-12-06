@@ -36,9 +36,13 @@ private slots:
 
     void on_windowBodySplitter_splitterMoved(int pos, int index);
 
+    void on_mediaFolderBrowseButton_clicked();
+
+    void on_mediaFolderLineEdit_returnPressed();
+
 protected:
     // Override resizeEvent to handle window resizing
     void resizeEvent(QResizeEvent *event) override;
-
+    void setRootFolder();
 };
 #endif // MAINWINDOW_H
