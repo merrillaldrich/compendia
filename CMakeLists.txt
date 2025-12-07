@@ -36,6 +36,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         flowlayout.h flowlayout.cpp
         tagassignmentcontainer.h tagassignmentcontainer.cpp
         tagfamilywidget.h tagfamilywidget.cpp
+        taggablelistview.h taggablelistview.cpp
     )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})

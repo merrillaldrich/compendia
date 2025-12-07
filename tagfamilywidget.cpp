@@ -38,9 +38,9 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
     path.moveTo(radius, 2);
     path.lineTo(width()/3, 2);
     path.lineTo(width()/3, 24);
-    path.lineTo(2,24);
-    path.lineTo(2,radius);
-    path.arcTo(2,2, radius*2, radius*2, 180, -90);
+    path.lineTo(2, 24);
+    path.lineTo(2, radius);
+    path.arcTo(2, 2, radius*2, radius*2, 180, -90);
     path.closeSubpath();
 
     painter.drawPath(path);
