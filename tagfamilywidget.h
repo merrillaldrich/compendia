@@ -2,6 +2,9 @@
 #define TAGFAMILYWIDGET_H
 
 #include <QWidget>
+#include <QPainter>
+#include <QPainterPath>
+#include "flowlayout.h"
 #include "tagfamily.h"
 
 class TagFamilyWidget : public QWidget
@@ -15,6 +18,7 @@ public:
 
     TagFamilyWidget(TagFamily *tagFamily, QWidget *parent);
 
+    void paintEvent(QPaintEvent *event);
 signals:
 };
 

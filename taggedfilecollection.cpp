@@ -19,7 +19,7 @@ bool TaggedFileCollection::containsFiles(){
 }
 
 Tag* TaggedFileCollection::getTag(QString tagFamily, QString tag){
-    Tag* matchingTag;
+    Tag* matchingTag = nullptr;
     for( int i = 0; i < tags_->count(); ++i ){
         Tag* t = tags_->at(i);
         if ( t->tagName == tag && t->tagFamily->tagFamilyName == tagFamily){
@@ -39,38 +39,39 @@ void TaggedFileCollection::applyTag(Tag* t){
     }
 }
 Tag* TaggedFileCollection::addLibraryTag(QString tagFamilyName, QString tagName){
-    // TODO: make sure these are unique
-    TagFamily* tf = addLibraryFamily(tagFamilyName);
-    Tag* match = new Tag;
+
+    TagFamily* tf = addLibraryTagFamily(tagFamilyName);
+    Tag* matchingTag = nullptr;
     Tag* t;
     for(int i = 0; i < tags_->count(); ++i){
         t = tags_->at(i);
         if(t->tagName == tagName && t->tagFamily == tf){
-            match = t;
+            matchingTag = t;
             break;
         }
     }
-    if(&match == nullptr){
-        match = new Tag(tf, tagName);
-        tags_->append(match);
+    if(matchingTag == nullptr){
+        matchingTag = new Tag(tf, tagName);
+        tags_->append(matchingTag);
     }
-    return match;
+    return matchingTag;
 }
-TagFamily* TaggedFileCollection::addLibraryFamily(QString tagFamilyName){
-    // TODO: make sure these are unique
-    TagFamily* match;
-    TagFamily* fam;
+TagFamily* TaggedFileCollection::addLibraryTagFamily(QString tagFamilyName){
+
+    TagFamily* matchingFam = nullptr;
+    TagFamily* fam = nullptr;
     for(int i = 0; i < tag_families_->count(); ++i){
+        fam = tag_families_->at(i);
         if(fam->tagFamilyName == tagFamilyName){
-            match = fam;
+            matchingFam = fam;
             break;
         }
     }
-    if(match == nullptr){
-        match = new TagFamily;
-        tag_families_->append(match);
+    if(matchingFam == nullptr){
+        matchingFam = new TagFamily(tagFamilyName);
+        tag_families_->append(matchingFam);
     }
-    return match;
+    return matchingFam;
 }
 
 void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){

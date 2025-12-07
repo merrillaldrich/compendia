@@ -1,6 +1,9 @@
 #ifndef FLOWLAYOUT_H
 #define FLOWLAYOUT_H
 
+#include <QLayout>
+#include <QStyle>
+
 class FlowLayout : public QLayout
 {
 public:

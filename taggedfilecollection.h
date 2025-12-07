@@ -32,7 +32,7 @@ public:
     void applyTag(Tag* droppedTag);
 
     Tag* addLibraryTag(QString tagFamilyName, QString tagName);
-    TagFamily* addLibraryFamily(QString tagFamilyName);
+    TagFamily* addLibraryTagFamily(QString tagFamilyName);
 
     void renameFamily(QString oldName, QString newName);
 

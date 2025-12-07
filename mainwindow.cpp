@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "luminismcore.h"
 #include "tagwidget.h"
+#include "tagfamilywidget.h"
 #include "flowlayout.h"
 #include <QFileDialog>
 #include <QGraphicsView>
@@ -25,20 +26,27 @@ MainWindow::MainWindow(QWidget *parent)
     // Set up the tag library area
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
 
-    // Sample tags
-    //Tag* t = new Tag(new TagFamily("Default"),"Foo");
-    Tag* t = core->addLibraryTag("Default","Foo");
+    // Sample Families and tags
 
+    TagFamily* f = core->addLibraryTagFamily("People");
+    TagFamilyWidget* tfw = new TagFamilyWidget(f, this);
+    navTagLibraryLayout->addWidget(tfw);
+
+    Tag* t = core->addLibraryTag("People","Foo");
     TagWidget* tw = new TagWidget(t);
-    navTagLibraryLayout->addWidget(tw);
+    tfw->layout()->addWidget(tw);
 
-    t = core->addLibraryTag("Default","Bar");
+    t = core->addLibraryTag("People","Bar");
     tw = new TagWidget(t);
-    navTagLibraryLayout->addWidget(tw);
+    tfw->layout()->addWidget(tw);
 
-    t = core->addLibraryTag("Default","Baz");
+    f = core->addLibraryTagFamily("Places");
+    tfw = new TagFamilyWidget(f, this);
+    navTagLibraryLayout->addWidget(tfw);
+
+    t = core->addLibraryTag("Places","Baz");
     tw = new TagWidget(t);
-    navTagLibraryLayout->addWidget(tw);
+    tfw->layout()->addWidget(tw);
 
     ui->navLibraryContainer->setLayout(navTagLibraryLayout);
 
@@ -116,6 +124,8 @@ void MainWindow::setRootFolder(){
     lv->setModel(core->getItemModel());
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
+
+    clearPreview();
 }
 
 void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
@@ -156,6 +166,13 @@ void MainWindow::freshenPreview(){
     QGraphicsView* view = ui->previewGraphicsView;
     if (view->scene() != nullptr){
         view->fitInView(view->scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
+    }
+}
+
+void MainWindow::clearPreview(){
+    QGraphicsView* view = ui->previewGraphicsView;
+    if (view->scene() != nullptr){
+        view->scene()->clear();
     }
 }
 

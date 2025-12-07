@@ -47,5 +47,6 @@ protected:
     // Override resizeEvent to handle window resizing
     void resizeEvent(QResizeEvent *event) override;
     void setRootFolder();
+    void clearPreview();
 };
 #endif // MAINWINDOW_H
