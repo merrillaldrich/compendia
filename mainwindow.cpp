@@ -26,19 +26,17 @@ MainWindow::MainWindow(QWidget *parent)
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
 
     // Sample tags
-    Tag* t = new Tag(new TagFamily("Default"),"Foo");
-    core->addLibraryTag(t);
+    //Tag* t = new Tag(new TagFamily("Default"),"Foo");
+    Tag* t = core->addLibraryTag("Default","Foo");
 
     TagWidget* tw = new TagWidget(t);
     navTagLibraryLayout->addWidget(tw);
 
-    t = new Tag(new TagFamily("Default"),"Bar");
-    core->addLibraryTag(t);
+    t = core->addLibraryTag("Default","Bar");
     tw = new TagWidget(t);
     navTagLibraryLayout->addWidget(tw);
 
-    t = new Tag(new TagFamily("Default"),"Baz");
-    core->addLibraryTag(t);
+    t = core->addLibraryTag("Default","Baz");
     tw = new TagWidget(t);
     navTagLibraryLayout->addWidget(tw);
 
@@ -101,7 +99,7 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
     le->clearFocus();
 
     QListView* lv = ui->fileListView;
-    lv->setModel(core->tfc->getItemModel());
+    lv->setModel(core->getItemModel());
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
 }
@@ -115,7 +113,7 @@ void MainWindow::setRootFolder(){
     le->setText(folder);
 
     QListView* lv = ui->fileListView;
-    lv->setModel(core->tfc->getItemModel());
+    lv->setModel(core->getItemModel());
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
 }
@@ -127,7 +125,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
     int firstInd = sel.first().row();
 
     // Get the absolute path to the selected file
-    QVariant selectedImage = core->tfc->getItemModel()->item(firstInd)->data();
+    QVariant selectedImage = core->getItemModel()->item(firstInd)->data();
     TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
 
     // Create a scene

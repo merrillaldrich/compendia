@@ -54,10 +54,14 @@ Tag* LuminismCore::getTag(QString tagFamily, QString tag){
     return tfc->getTag(tagFamily, tag);
 }
 
-void LuminismCore::addLibraryTag(Tag* t){
-    tfc->addLibraryTag(t);
+Tag* LuminismCore::addLibraryTag(QString tagFamily, QString tag){
+    return tfc->addLibraryTag(tagFamily, tag);
 }
 
 void LuminismCore::applyTag(Tag* droppedTag){
     tfc->applyTag(droppedTag);
+}
+
+QStandardItemModel* LuminismCore::getItemModel(){
+    return tfc->getItemModel();
 }

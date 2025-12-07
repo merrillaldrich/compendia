@@ -38,10 +38,39 @@ void TaggedFileCollection::applyTag(Tag* t){
         itemAsTaggedFile->tagList->append(t);
     }
 }
-void TaggedFileCollection::addLibraryTag(Tag* t){
+Tag* TaggedFileCollection::addLibraryTag(QString tagFamilyName, QString tagName){
     // TODO: make sure these are unique
-    tag_families_->append(t->tagFamily);
-    tags_->append(t);
+    TagFamily* tf = addLibraryFamily(tagFamilyName);
+    Tag* match = new Tag;
+    Tag* t;
+    for(int i = 0; i < tags_->count(); ++i){
+        t = tags_->at(i);
+        if(t->tagName == tagName && t->tagFamily == tf){
+            match = t;
+            break;
+        }
+    }
+    if(&match == nullptr){
+        match = new Tag(tf, tagName);
+        tags_->append(match);
+    }
+    return match;
+}
+TagFamily* TaggedFileCollection::addLibraryFamily(QString tagFamilyName){
+    // TODO: make sure these are unique
+    TagFamily* match;
+    TagFamily* fam;
+    for(int i = 0; i < tag_families_->count(); ++i){
+        if(fam->tagFamilyName == tagFamilyName){
+            match = fam;
+            break;
+        }
+    }
+    if(match == nullptr){
+        match = new TagFamily;
+        tag_families_->append(match);
+    }
+    return match;
 }
 
 void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
