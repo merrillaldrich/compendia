@@ -2,7 +2,10 @@
 #define TAGGEDFILE_H
 
 #include <QList>
+#include <QString>
 #include <QMetaType>
+#include <QJsonArray>
+#include <QJsonObject>
 #include "tag.h"
 
 class TaggedFile {
@@ -15,6 +18,8 @@ public:
     TaggedFile();
 
     TaggedFile(QString fp, QString fn, QList<Tag *> *tl);
+
+    QString TaggedFileJSON();
 
 };
 

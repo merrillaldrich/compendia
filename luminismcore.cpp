@@ -45,8 +45,10 @@ void LuminismCore::writeFileMetadata(){
 
         for ( int i = 0; i < tagList->count(); ++i){
             Tag* t = tagList->at(i);
-            qDebug() << t->tagFamily->tagFamilyName << t->tagName;
+            qDebug() << t->tagFamily->tagFamilyName << t->tagName;            
         }
+
+        qDebug() << itemAsTaggedFile->TaggedFileJSON();
     }
 }
 
