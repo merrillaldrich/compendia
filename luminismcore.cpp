@@ -39,16 +39,25 @@ void LuminismCore::writeFileMetadata(){
         QVariant fi = model->item(row)->data();
         TaggedFile* itemAsTaggedFile = fi.value<TaggedFile*>();
 
-        qDebug() << itemAsTaggedFile->fileName;
+        QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
+        QFileInfo fileInfo(origFile);
+        QString metaFilePath = itemAsTaggedFile->filePath + "/" +fileInfo.baseName() + ".json";
 
-        QList<Tag*>* tagList = itemAsTaggedFile->tagList;
 
-        for ( int i = 0; i < tagList->count(); ++i){
-            Tag* t = tagList->at(i);
-            qDebug() << t->tagFamily->tagFamilyName << t->tagName;            
+        qDebug() << "Write to " << metaFilePath;
+        qDebug() << itemAsTaggedFile->TaggedFileJSON();
+
+        QFile metaFile(metaFilePath);
+
+        if (!metaFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qDebug() << "Could not open file for writing:" << metaFile.errorString();
+            //qCritical() << "Could not open file for writing:" << metaFile.errorString();
+            //return 1;
         }
 
-        qDebug() << itemAsTaggedFile->TaggedFileJSON();
+        QTextStream out(&metaFile);
+        out << itemAsTaggedFile->TaggedFileJSON();
+        metaFile.close();
     }
 }
 
