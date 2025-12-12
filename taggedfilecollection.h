@@ -26,7 +26,10 @@ public:
     bool containsFiles();
 
     Tag* getTag(QString tagFamily, QString tag);
+    QList<TagSet> parseTagJson(QJsonObject tagsJson);
 
+    void addFile(QString fp, QString fn);
+    void addFile(QString fp, QString fn, QJsonObject tagsJson);
     void addFile(QString fp, QString fn, QList<TagSet> tags);
 
     void applyTag(Tag* droppedTag);

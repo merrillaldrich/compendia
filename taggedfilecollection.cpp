@@ -74,6 +74,25 @@ TagFamily* TaggedFileCollection::addLibraryTagFamily(QString tagFamilyName){
     return matchingFam;
 }
 
+QList<TagSet> TaggedFileCollection::parseTagJson(QJsonObject tagsJson){
+    QList<TagSet> tagSets;
+
+    for (auto it = tagsJson.begin(); it != tagsJson.end(); ++it) {
+        qDebug() << "Key:" << it.key() << "Value:" << it.value();
+    }
+
+    return tagSets;
+}
+
+void TaggedFileCollection::addFile(QString fp, QString fn){
+
+}
+
+void TaggedFileCollection::addFile(QString fp, QString fn, QJsonObject tagsJson){
+    QList<TagSet> tagSets = parseTagJson(tagsJson);
+    addFile(fp,fn,tagSets);
+}
+
 void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
     // Add to to the Tagged Object collection and collect links to its tags and tag families
 

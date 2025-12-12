@@ -19,15 +19,37 @@ void LuminismCore::loadRootDirectory(){
         tfc = new TaggedFileCollection();
     }
 
-    QDirIterator it(root_directory_, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    // QDirIterator it(root_directory_, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    QDirIterator it(root_directory_, QStringList() << "*.jpg", QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
     while (it.hasNext()) {
         QFile f(it.next());
         QFileInfo fileInfo(f.fileName());
 
-        // Dummy empty tag sets
-        QList<TagSet> tags = QList<TagSet>();
+        // Check to see if there's a sidecar file next to each image file
+        QString metaFileName = fileInfo.baseName() + ".json";
+        QFileInfo metaFileInfo(fileInfo.absolutePath() + "/" + metaFileName);
 
-        tfc->addFile(fileInfo.absolutePath(), fileInfo.fileName(), tags);
+        if(metaFileInfo.exists() && metaFileInfo.isFile()){
+            // If so then add the file using the tags in that sidecar file
+            QString val;
+
+            QFile metaFile;
+            metaFile.setFileName(fileInfo.absolutePath() + "/" + metaFileName);
+            metaFile.open(QIODevice::ReadOnly | QIODevice::Text);
+            val = metaFile.readAll();
+            metaFile.close();
+
+            qDebug() << val;
+            QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
+            QJsonObject tagsJson = d.object();
+
+            tfc->addFile(fileInfo.absolutePath(), fileInfo.fileName(), tagsJson);
+
+        } else {
+            // Otherwise just add the file with no tags
+            tfc->addFile(fileInfo.absolutePath(), fileInfo.fileName());
+        }
+
     }
 }
 
