@@ -86,10 +86,10 @@ QList<TagSet> TaggedFileCollection::parseTagJson(QJsonObject tagsJson){
     QList<TagSet> tagSets;
 
     for (auto it = tagsJson.begin(); it != tagsJson.end(); ++it) {
-        qDebug() << "Key:" << it.key() << "Value:" << it.value();
+        //qDebug() << "Key:" << it.key() << "Value:" << it.value();
         QJsonArray array = it.value().toArray();
         for (const QJsonValue &value : array){
-            qDebug() << "Tag:" << value.toString();
+            //qDebug() << "Tag:" << value.toString();
             tagSets.append(TagSet(it.key(),value.toString()));
         }
     }
@@ -145,8 +145,8 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
             tags_->append(current_tag);
         }
 
-        qDebug() << current_tag->tagFamily->tagFamilyName;
-        qDebug() << current_tag->tagName;
+        //qDebug() << current_tag->tagFamily->tagFamilyName;
+        //qDebug() << current_tag->tagName;
 
         newOrExistingTags->append(current_tag);
 

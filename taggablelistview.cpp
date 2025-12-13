@@ -14,8 +14,8 @@ void TaggableListView::dropEvent(QDropEvent *event) {
     QModelIndex index = indexAt(event->position().toPoint());
 
     if (index.isValid()) {
-        qDebug() << "Dropped on row:" << index.row()
-        << "data:" << index.data().toString();
+        //qDebug() << "Dropped on row:" << index.row()
+        //<< "data:" << index.data().toString();
 
         // Assign the dropped tag to the item
 
@@ -41,7 +41,7 @@ void TaggableListView::dropEvent(QDropEvent *event) {
         mainWin->core->applyTag(itemAsTaggedFile, ts);
 
     } else {
-        qDebug() << "Dropped on empty area";
+        //qDebug() << "Dropped on empty area";
     }
 
     // Call base implementation for other QListView actions that
@@ -50,7 +50,7 @@ void TaggableListView::dropEvent(QDropEvent *event) {
 }
 
 void TaggableListView::dragEnterEvent(QDragEnterEvent *event) {
-    qDebug() << "Drag Enter!";
+    //qDebug() << "Drag Enter!";
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);

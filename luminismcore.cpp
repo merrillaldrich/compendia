@@ -65,8 +65,8 @@ void LuminismCore::writeFileMetadata(){
         QString metaFilePath = itemAsTaggedFile->filePath + "/" +fileInfo.baseName() + ".json";
 
 
-        qDebug() << "Write to " << metaFilePath;
-        qDebug() << itemAsTaggedFile->TaggedFileJSON();
+        //qDebug() << "Write to " << metaFilePath;
+        //qDebug() << itemAsTaggedFile->TaggedFileJSON();
 
         QFile metaFile(metaFilePath);
 
