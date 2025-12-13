@@ -4,6 +4,9 @@
 #include <QListView>
 #include <QDropEvent>
 #include <QMimeData>
+#include "mainwindow.h"
+#include "taggedfile.h"
+#include "tagset.h"
 
 class TaggableListView : public QListView
 {

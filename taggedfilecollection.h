@@ -33,6 +33,7 @@ public:
     void addFile(QString fp, QString fn, QList<TagSet> tags);
 
     void applyTag(Tag* droppedTag);
+    void applyTag(TaggedFile* f, TagSet t);
 
     Tag* addLibraryTag(QString tagFamilyName, QString tagName);
     TagFamily* addLibraryTagFamily(QString tagFamilyName);

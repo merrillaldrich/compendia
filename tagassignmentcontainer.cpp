@@ -44,6 +44,7 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
 
         //qDebug() << "Drop!";
 
+        // Convert the dropped data
         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
 

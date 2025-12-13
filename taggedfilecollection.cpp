@@ -38,6 +38,13 @@ void TaggedFileCollection::applyTag(Tag* t){
         itemAsTaggedFile->tagList->append(t);
     }
 }
+
+void TaggedFileCollection::applyTag(TaggedFile* f, TagSet t){
+    // TODO: deal with uniqueness of tags
+    Tag* tag = getTag(t.tagFamilyName, t.tagName);
+    f->tagList->append(tag);
+}
+
 Tag* TaggedFileCollection::addLibraryTag(QString tagFamilyName, QString tagName){
 
     TagFamily* tf = addLibraryTagFamily(tagFamilyName);
@@ -79,12 +86,19 @@ QList<TagSet> TaggedFileCollection::parseTagJson(QJsonObject tagsJson){
 
     for (auto it = tagsJson.begin(); it != tagsJson.end(); ++it) {
         qDebug() << "Key:" << it.key() << "Value:" << it.value();
+        QJsonArray array = it.value().toArray();
+        for (const QJsonValue &value : array){
+            qDebug() << "Tag:" << value.toString();
+            tagSets.append(TagSet(it.key(),value.toString()));
+        }
     }
 
     return tagSets;
 }
 
 void TaggedFileCollection::addFile(QString fp, QString fn){
+    QList<TagSet> tagSets;
+    addFile(fp,fn,tagSets);
 
 }
 

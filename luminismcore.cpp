@@ -19,7 +19,6 @@ void LuminismCore::loadRootDirectory(){
         tfc = new TaggedFileCollection();
     }
 
-    // QDirIterator it(root_directory_, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
     QDirIterator it(root_directory_, QStringList() << "*.jpg", QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
     while (it.hasNext()) {
         QFile f(it.next());
@@ -39,7 +38,6 @@ void LuminismCore::loadRootDirectory(){
             val = metaFile.readAll();
             metaFile.close();
 
-            qDebug() << val;
             QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
             QJsonObject tagsJson = d.object();
 
@@ -97,6 +95,10 @@ TagFamily* LuminismCore::addLibraryTagFamily(QString tagFamily){
 
 void LuminismCore::applyTag(Tag* droppedTag){
     tfc->applyTag(droppedTag);
+}
+
+void LuminismCore::applyTag(TaggedFile* file, TagSet tagSet){
+    tfc->applyTag(file, tagSet);
 }
 
 QStandardItemModel* LuminismCore::getItemModel(){
