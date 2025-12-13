@@ -11,7 +11,7 @@ class TagFamilyWidget : public QWidget
 {
     Q_OBJECT
 private:
-    TagFamily* tag_family_ = new TagFamily("");
+    TagFamily* tag_family_;
 
 public:
     explicit TagFamilyWidget(QWidget *parent = nullptr);

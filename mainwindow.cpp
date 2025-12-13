@@ -28,39 +28,31 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Sample Families and tags
 
-    TagFamily* f = core->addLibraryTagFamily("People");
-    TagFamilyWidget* tfw = new TagFamilyWidget(f, this);
-    navTagLibraryLayout->addWidget(tfw);
+    //TagFamily* f = core->addLibraryTagFamily("People");
+    //TagFamilyWidget* tfw = new TagFamilyWidget(f, this);
+    //navTagLibraryLayout->addWidget(tfw);
 
-    Tag* t = core->addLibraryTag("People","Foo");
-    TagWidget* tw = new TagWidget(t);
-    tfw->layout()->addWidget(tw);
+    //Tag* t = core->addLibraryTag("People","Foo");
+    //TagWidget* tw = new TagWidget(t);
+    //tfw->layout()->addWidget(tw);
 
-    t = core->addLibraryTag("People","Bar");
-    tw = new TagWidget(t);
-    tfw->layout()->addWidget(tw);
+    //t = core->addLibraryTag("People","Bar");
+    //tw = new TagWidget(t);
+    //tfw->layout()->addWidget(tw);
 
-    f = core->addLibraryTagFamily("Places");
-    tfw = new TagFamilyWidget(f, this);
-    navTagLibraryLayout->addWidget(tfw);
+    //f = core->addLibraryTagFamily("Places");
+    //tfw = new TagFamilyWidget(f, this);
+    //navTagLibraryLayout->addWidget(tfw);
 
-    t = core->addLibraryTag("Places","Baz");
-    tw = new TagWidget(t);
-    tfw->layout()->addWidget(tw);
+    //t = core->addLibraryTag("Places","Baz");
+    //tw = new TagWidget(t);
+    //tfw->layout()->addWidget(tw);
 
     ui->navLibraryContainer->setLayout(navTagLibraryLayout);
 
     // Set up the tag assignment area
 
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
-
-    //t = new Tag(new TagFamily("Default"),"Grok");
-    //tw = new TagWidget(t);
-    //fileListTagAssignmentLayout->addWidget(tw);
-
-    //t = new Tag(new TagFamily("Default"),"Zing");
-    //tw = new TagWidget(t);
-    //fileListTagAssignmentLayout->addWidget(tw);
 
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
 

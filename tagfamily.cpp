@@ -1,10 +1,11 @@
 #include "tagfamily.h"
 
-TagFamily::TagFamily(){
+TagFamily::TagFamily(QObject *parent)
+    : QObject{parent}{
     tagFamilyName = "";
 }
 
-TagFamily::TagFamily(QString tf){
+TagFamily::TagFamily(QString tf, QObject *parent = nullptr){
     tagFamilyName = tf;
 }
 

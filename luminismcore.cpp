@@ -3,8 +3,9 @@
 #include <QDebug>
 
 LuminismCore::LuminismCore(QObject *parent)
-    : QObject{parent}
-{}
+    : QObject{parent}{
+    tfc = new TaggedFileCollection(this);
+}
 
 void LuminismCore::setRootDirectory(QString path){
     root_directory_ = path;
@@ -16,7 +17,7 @@ void LuminismCore::loadRootDirectory(){
     // Pointing to a new folder means we have to clear any data already loaded:
     if ( tfc->containsFiles() ){
         delete tfc;
-        tfc = new TaggedFileCollection();
+        tfc = new TaggedFileCollection(this);
     }
 
     QDirIterator it(root_directory_, QStringList() << "*.jpg", QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);

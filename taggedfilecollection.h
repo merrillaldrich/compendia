@@ -1,6 +1,7 @@
 #ifndef TAGGEDFILECOLLECTION_H
 #define TAGGEDFILECOLLECTION_H
 
+#include <QObject>
 #include <QStandardItemModel>
 #include <QPainter>
 #include "tagfamily.h"
@@ -8,8 +9,9 @@
 #include "taggedfile.h"
 #include "tagset.h"
 
-class TaggedFileCollection
+class TaggedFileCollection : public QObject
 {
+    Q_OBJECT
 
 private:
     QList<TagFamily*> *tag_families_;
@@ -21,7 +23,7 @@ private:
     QPixmap makeSquareIcon(const QPixmap &source, int size);
 
 public:
-    explicit TaggedFileCollection();
+    explicit TaggedFileCollection(QObject *parent = nullptr);
 
     bool containsFiles();
 

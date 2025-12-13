@@ -1,18 +1,21 @@
 #ifndef TAG_H
 #define TAG_H
 
+#include <QObject>
 #include <QDataStream>
 #include "tagfamily.h"
 
-class Tag
+class Tag : public QObject
 {
+    Q_OBJECT
 
 public:
+    explicit Tag(QObject *parent = nullptr);
+
     QString tagName;
     TagFamily* tagFamily;
 
-    Tag();
-    Tag(TagFamily* tf, QString t);
+    Tag(TagFamily* tf, QString t, QObject *parent = nullptr);
 
 };
 

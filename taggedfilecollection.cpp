@@ -1,7 +1,8 @@
 #include "taggedfilecollection.h"
 #include <QDebug>
 
-TaggedFileCollection::TaggedFileCollection(){
+TaggedFileCollection::TaggedFileCollection(QObject *parent)
+    : QObject{parent}{
     tag_families_ = new QList<TagFamily*>();
     tags_ = new QList<Tag*>();
 
@@ -58,7 +59,7 @@ Tag* TaggedFileCollection::addLibraryTag(QString tagFamilyName, QString tagName)
         }
     }
     if(matchingTag == nullptr){
-        matchingTag = new Tag(tf, tagName);
+        matchingTag = new Tag(tf, tagName, this);
         tags_->append(matchingTag);
     }
     return matchingTag;
@@ -75,7 +76,7 @@ TagFamily* TaggedFileCollection::addLibraryTagFamily(QString tagFamilyName){
         }
     }
     if(matchingFam == nullptr){
-        matchingFam = new TagFamily(tagFamilyName);
+        matchingFam = new TagFamily(tagFamilyName, this);
         tag_families_->append(matchingFam);
     }
     return matchingFam;
@@ -127,7 +128,7 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
         }
 
         if( ! current_family ){
-            current_family = new TagFamily(value.tagFamilyName);
+            current_family = new TagFamily(value.tagFamilyName, this);
             tag_families_->append(current_family);
         }
 
@@ -140,7 +141,7 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
         }
 
         if( ! current_tag ){
-            current_tag = new Tag(current_family, value.tagName);
+            current_tag = new Tag(current_family, value.tagName, this);
             tags_->append(current_tag);
         }
 

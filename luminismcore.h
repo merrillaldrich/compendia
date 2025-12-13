@@ -11,8 +11,9 @@ class LuminismCore : public QObject
 {
     Q_OBJECT
 private:
+
     QString root_directory_;
-    TaggedFileCollection *tfc = new TaggedFileCollection();
+    TaggedFileCollection *tfc;
 
 public:
 

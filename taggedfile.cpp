@@ -1,10 +1,12 @@
 #include "taggedfile.h"
 
-TaggedFile::TaggedFile(){
+TaggedFile::TaggedFile(QObject *parent)
+    : QObject{parent}{
 
 }
 
-TaggedFile::TaggedFile(QString fp, QString fn, QList<Tag*>* tl){
+TaggedFile::TaggedFile(QString fp, QString fn, QList<Tag*>* tl, QObject *parent)
+    : QObject{parent}{
     filePath = fp;
     fileName = fn;
     tagList = tl;
