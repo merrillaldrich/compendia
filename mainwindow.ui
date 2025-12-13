@@ -42,7 +42,8 @@
         </property>
         <widget class="QSplitter" name="navSplitter">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(96, 174, 233)</string>
+          <string notr="true">QWidget#navSplitter { background-color: rgb(96, 174, 233) }
+</string>
          </property>
          <property name="orientation">
           <enum>Qt::Orientation::Vertical</enum>

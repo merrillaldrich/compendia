@@ -14,6 +14,28 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     FlowLayout* fl = new FlowLayout(this);
     fl->setContentsMargins(4, 24, 4, 4); //left, top, right, bottom
     this->setLayout(fl);
+
+    line_edit_ = new QLineEdit(this);
+    line_edit_->move(12, 0);
+    line_edit_->hide();
+
+    label_ = new ClickableLabel(this);
+    label_->move(18, 0);
+    label_->show();
+
+    connect(line_edit_, &QLineEdit::returnPressed, this, &TagFamilyWidget::onReturnPressed);
+    connect(label_, &ClickableLabel::clicked, this, &TagFamilyWidget::onLabelClicked);
+}
+
+void TagFamilyWidget::onReturnPressed(){
+    qDebug() << line_edit_->text();
+    endEdit();
+}
+
+void TagFamilyWidget::onLabelClicked(QMouseEvent *event){
+    qDebug() << "Label clicked!";
+    startEdit();
+    event->accept();
 }
 
 void TagFamilyWidget::paintEvent(QPaintEvent *event) {
@@ -22,31 +44,39 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
 
     QPen p = QPen(QColor("orange")); //QBrush(QColor("black")), 2);
     painter.setPen(p);
-
-    //QBrush b = QBrush(QColor("orange"));
-    //painter.setPen(p);
-    //painter.setBrush(b);
-
-    painter.drawRoundedRect(QRect(2, 2, 300, 52), 12, 12);
+    painter.drawRoundedRect(QRect(2, 4, 300, 52), 12, 12);
 
     QPainterPath path;
     int radius = 12;
 
-    painter.setBrush(QColor("orange")); // light blue
+    painter.setBrush(QColor("orange"));
     painter.setPen(Qt::NoPen);
 
-    path.moveTo(radius, 2);
-    path.lineTo(width()/3, 2);
-    path.lineTo(width()/3, 24);
-    path.lineTo(2, 24);
+    path.moveTo(radius, 4);
+    path.lineTo(width()/3, 4);
+    path.lineTo(width()/3, 26);
+    path.lineTo(2, 26);
     path.lineTo(2, radius);
-    path.arcTo(2, 2, radius*2, radius*2, 180, -90);
+    path.arcTo(2, 4, radius*2, radius*2, 180, -90);
     path.closeSubpath();
 
     painter.drawPath(path);
+}
 
-    p = QPen(QBrush(QColor("black")), 2);
-    painter.setPen(p);
-    painter.setFont(QFont("Segoe", 10));
-    painter.drawText(QRect(22,6,100,20), Qt::AlignLeft, tag_family_->tagFamilyName);
+void TagFamilyWidget::startEdit(){
+    qDebug() << "Enter edit mode";
+    edit_status_ = "Edit";
+    label_->hide();
+    line_edit_->show();
+    line_edit_->setFocus();
+}
+
+void TagFamilyWidget::endEdit(){
+    qDebug() << "Leave edit mode";
+    edit_status_ = "Read";
+    tag_family_->tagFamilyName = line_edit_->text();
+    line_edit_->clearFocus();
+    line_edit_->hide();
+    label_->setText(tag_family_->tagFamilyName);
+    label_->show();
 }

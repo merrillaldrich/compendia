@@ -40,6 +40,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         tagfamilywidget.h tagfamilywidget.cpp
         taggablelistview.h taggablelistview.cpp
         navlibrarycontainer.h navlibrarycontainer.cpp
+        clickablelabel.h clickablelabel.cpp
 
     )
 

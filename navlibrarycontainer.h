@@ -5,7 +5,7 @@
 #include <QLayout>
 #include "tag.h"
 #include "tagfamily.h"
-#include "tagwidget.h"
+#include "tagfamilywidget.h"
 
 class NavLibraryContainer : public QWidget
 {
@@ -14,7 +14,7 @@ public:
     explicit NavLibraryContainer(QWidget *parent = nullptr);
 
 protected:
-    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 signals:
 };
