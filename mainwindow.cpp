@@ -56,6 +56,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
 
+    // Set up the preview area
+
+    QGraphicsScene* scene = new QGraphicsScene();
+    ui->previewGraphicsView->setScene(scene);
+
     // Default pane sizes
     resize(1400, 900);
 
@@ -130,27 +135,26 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
     QVariant selectedImage = core->getItemModel()->item(firstInd)->data();
     TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
 
-    // Create a scene
-    QGraphicsScene* scene = new QGraphicsScene();
+    // Get the previewer scene
+    QGraphicsView* view = ui->previewGraphicsView;
+    QGraphicsScene* scene = view->scene();
 
     // Load the image
-    QPixmap pixmap(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName); // Use resource or absolute path
-    //if (pixmap.isNull()) {
+    QPixmap pixmap(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
     //    QMessageBox::critical(nullptr, "Error", "Failed to load image.");
     //    return -1;
     //}
 
-    // Add the image to the scene
+    // Replace the image in the scene
+    scene->clear();
     QGraphicsPixmapItem *item = scene->addPixmap(pixmap);
-    item->setTransformationMode(Qt::SmoothTransformation); // Better scaling
+    item->setTransformationMode(Qt::SmoothTransformation);
 
-    // Get the ui graphics view, set the scene
-    QGraphicsView* view = ui->previewGraphicsView;
-    view->setScene(scene);
+    // Fix up zoom and such
     view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
     view->setRenderHint(QPainter::Antialiasing);
     view->setRenderHint(QPainter::SmoothPixmapTransform);
-    view->setDragMode(QGraphicsView::ScrollHandDrag); // Optional: drag to move
+    view->setDragMode(QGraphicsView::ScrollHandDrag);
     view->show();
 }
 
