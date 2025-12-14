@@ -2,12 +2,15 @@
 #define TAGWIDGET_H
 
 #include <QWidget>
+#include <QLineEdit>
 #include <QPainter>
 #include <QDrag>
 #include <QMouseEvent>
 #include <QMimeData>
 #include <QApplication>
 #include "tag.h"
+#include "clickablelabel.h"
+
 
 class TagWidget : public QWidget
 {
@@ -15,18 +18,31 @@ class TagWidget : public QWidget
 
 private:
     Tag* tag_ = new Tag(new TagFamily(),"");
+    QString edit_status_ = "Read";
+    QLineEdit* line_edit_;
+    ClickableLabel* label_;
 
 public:
     explicit TagWidget(QWidget *parent = nullptr);
 
-    TagWidget(Tag *tag, QWidget *parent = nullptr);
+    TagWidget(Tag *tag, QWidget *parent);
+
+    void startEdit();
+    void endEdit();
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
 
+    void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
 
+
+private slots:
+
+    void onReturnPressed();
+    void onLabelClicked(QMouseEvent *event);
+
 signals:
+
 };
 
 #endif // TAGWIDGET_H

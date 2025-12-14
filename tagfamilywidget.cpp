@@ -8,11 +8,11 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     : QWidget{parent}
 {
     tag_family_ = tagFamily;
-    setMinimumSize(304,56);
+    setMinimumSize(304,64);
     setAttribute(Qt::WA_TranslucentBackground);
 
     FlowLayout* fl = new FlowLayout(this);
-    fl->setContentsMargins(4, 24, 4, 4); //left, top, right, bottom
+    fl->setContentsMargins(4, 28, 4, 4); //left, top, right, bottom
     this->setLayout(fl);
 
     line_edit_ = new QLineEdit(this);
@@ -27,13 +27,22 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     connect(label_, &ClickableLabel::clicked, this, &TagFamilyWidget::onLabelClicked);
 }
 
+void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
+
+    Tag* t = new Tag(tag_family_, "", this);
+    TagWidget* tw = new TagWidget(t, this);
+    this->layout()->addWidget(tw);
+    tw->startEdit();
+    event->accept();
+
+    //QWidget::mouseReleaseEvent(event); // Do not call parent b/c we handled the event fully
+}
+
 void TagFamilyWidget::onReturnPressed(){
-    qDebug() << line_edit_->text();
     endEdit();
 }
 
 void TagFamilyWidget::onLabelClicked(QMouseEvent *event){
-    qDebug() << "Label clicked!";
     startEdit();
     event->accept();
 }
@@ -64,7 +73,7 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
 }
 
 void TagFamilyWidget::startEdit(){
-    qDebug() << "Enter edit mode";
+    qDebug() << "Enter family edit mode";
     edit_status_ = "Edit";
     label_->hide();
     line_edit_->show();
@@ -72,7 +81,7 @@ void TagFamilyWidget::startEdit(){
 }
 
 void TagFamilyWidget::endEdit(){
-    qDebug() << "Leave edit mode";
+    qDebug() << "Leave family edit mode";
     edit_status_ = "Read";
     tag_family_->tagFamilyName = line_edit_->text();
     line_edit_->clearFocus();

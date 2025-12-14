@@ -10,7 +10,29 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     tag_ = tag;
     setMinimumSize(104,25);
     setAttribute(Qt::WA_TranslucentBackground);
-    //setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    line_edit_ = new QLineEdit(this);
+    line_edit_->move(12, 2);
+    line_edit_->hide();
+
+    label_ = new ClickableLabel(this);
+    label_->move(18, 4);
+    label_->show();
+
+    connect(line_edit_, &QLineEdit::returnPressed, this, &TagWidget::onReturnPressed);
+    connect(label_, &ClickableLabel::clicked, this, &TagWidget::onLabelClicked);
+
+}
+
+void TagWidget::onReturnPressed(){
+    qDebug() << line_edit_->text();
+    endEdit();
+}
+
+void TagWidget::onLabelClicked(QMouseEvent *event){
+    qDebug() << "Label clicked!";
+    startEdit();
+    event->accept();
 }
 
 void TagWidget::paintEvent(QPaintEvent *event) {
@@ -25,11 +47,24 @@ void TagWidget::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     painter.drawRoundedRect(QRect(2, 2, 100, 24), 12, 12);
+}
 
-    p = QPen(QBrush(QColor("black")), 2);
-    painter.setPen(p);
-    painter.setFont(QFont("Segoe", 10));
-    painter.drawText(QRect(22,6,100,20), Qt::AlignLeft, tag_->tagName);
+void TagWidget::startEdit(){
+    qDebug() << "Enter tag edit mode";
+    edit_status_ = "Edit";
+    label_->hide();
+    line_edit_->show();
+    line_edit_->setFocus();
+}
+
+void TagWidget::endEdit(){
+    qDebug() << "Leave tag edit mode";
+    edit_status_ = "Read";
+    tag_->tagName = line_edit_->text();
+    line_edit_->clearFocus();
+    line_edit_->hide();
+    label_->setText(tag_->tagName);
+    label_->show();
 }
 
 void TagWidget::mousePressEvent(QMouseEvent *event)

@@ -8,6 +8,7 @@
 #include <QMouseEvent>
 #include "flowlayout.h"
 #include "tagfamily.h"
+#include "tagwidget.h"
 #include "clickablelabel.h"
 
 class TagFamilyWidget : public QWidget
@@ -19,6 +20,9 @@ private:
     QString edit_status_ = "Read";
     QLineEdit* line_edit_;
     ClickableLabel* label_;
+
+protected:
+    void mouseReleaseEvent(QMouseEvent *event);
 
 public:
     explicit TagFamilyWidget(QWidget *parent = nullptr);
@@ -35,6 +39,7 @@ private slots:
     void onLabelClicked(QMouseEvent *event);
 
 signals:
+
 };
 
 #endif // TAGFAMILYWIDGET_H
