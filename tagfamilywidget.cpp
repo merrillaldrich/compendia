@@ -17,10 +17,12 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
 
     line_edit_ = new QLineEdit(this);
     line_edit_->move(12, 0);
+    line_edit_->setFixedHeight(line_edit_->height());
     line_edit_->hide();
 
     label_ = new ClickableLabel(this);
     label_->move(18, 0);
+    label_->setFixedHeight(label_->height());
     label_->show();
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagFamilyWidget::onReturnPressed);
@@ -53,20 +55,29 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
 
     QPen p = QPen(QColor("orange")); //QBrush(QColor("black")), 2);
     painter.setPen(p);
-    painter.drawRoundedRect(QRect(2, 4, 300, 52), 12, 12);
+
+    int inset = 2;
+    int leftX = inset;
+    int topY = inset;
+    int rightX = width() - (inset * 2);
+    int bottomY = height() - (inset * 2);
+    int cornerRadius = 12;
+    int labelAreaHeight = 26;
+    int labelAreaWidth = leftX + cornerRadius + label_->width() + 24;
+
+    painter.drawRoundedRect(QRect(leftX, topY, rightX, bottomY), cornerRadius, cornerRadius);
 
     QPainterPath path;
-    int radius = 12;
 
     painter.setBrush(QColor("orange"));
     painter.setPen(Qt::NoPen);
 
-    path.moveTo(radius, 4);
-    path.lineTo(width()/3, 4);
-    path.lineTo(width()/3, 26);
-    path.lineTo(2, 26);
-    path.lineTo(2, radius);
-    path.arcTo(2, 4, radius*2, radius*2, 180, -90);
+    path.moveTo(cornerRadius, topY);
+    path.lineTo(labelAreaWidth, topY);
+    path.lineTo(labelAreaWidth, labelAreaHeight);
+    path.lineTo(leftX, labelAreaHeight);
+    path.lineTo(leftX, cornerRadius);
+    path.arcTo(leftX, topY, cornerRadius*2, cornerRadius*2, 180, -90);
     path.closeSubpath();
 
     painter.drawPath(path);
@@ -87,5 +98,7 @@ void TagFamilyWidget::endEdit(){
     line_edit_->clearFocus();
     line_edit_->hide();
     label_->setText(tag_family_->tagFamilyName);
+    label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
+    update(0, 0, width(), 26); // Paint a band across the widget for the case where the label became shorter after edit
     label_->show();
 }
