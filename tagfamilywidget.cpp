@@ -115,3 +115,7 @@ void TagFamilyWidget::endEdit(){
     update(0, 0, width(), 26); // Paint a band across the widget for the case where the label became shorter after edit
     label_->show();
 }
+
+TagFamily* TagFamilyWidget::getTagFamily(){
+    return tag_family_;
+}

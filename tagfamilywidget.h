@@ -21,12 +21,12 @@ private:
     QLineEdit* line_edit_;
     ClickableLabel* label_;
     bool in_library_ = false;
+    TagFamily* tag_family_;
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event);
 
 public:
-    TagFamily* tag_family_;
 
     explicit TagFamilyWidget(QWidget *parent = nullptr);
 
@@ -36,6 +36,7 @@ public:
 
     void startEdit();
     void endEdit();
+    TagFamily* getTagFamily();
 
 private slots:
     void onReturnPressed();

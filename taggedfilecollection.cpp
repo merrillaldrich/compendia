@@ -23,16 +23,28 @@ QList<Tag*>* TaggedFileCollection::getLibraryTags(){
     return tags_;
 }
 
-Tag* TaggedFileCollection::getTag(QString tagFamily, QString tag){
+Tag* TaggedFileCollection::getTag(QString tagFamilyName, QString tagName){
     Tag* matchingTag = nullptr;
     for( int i = 0; i < tags_->count(); ++i ){
         Tag* t = tags_->at(i);
-        if ( t->tagName == tag && t->tagFamily->tagFamilyName == tagFamily){
+        if ( t->tagName == tagName && t->tagFamily->tagFamilyName == tagFamilyName){
             matchingTag = t;
             break;
         }
     }
     return matchingTag;
+}
+
+TagFamily* TaggedFileCollection::getTagFamily(QString tagFamilyName){
+    TagFamily* matchingTagFamily = nullptr;
+    for( int i = 0; i < tag_families_->count(); ++i ){
+        TagFamily* tf = tag_families_->at(i);
+        if ( tf->tagFamilyName == tagFamilyName){
+            matchingTagFamily = tf;
+            break;
+        }
+    }
+    return matchingTagFamily;
 }
 
 void TaggedFileCollection::applyTag(Tag* t){

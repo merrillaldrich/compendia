@@ -101,7 +101,6 @@ void MainWindow::setRootFolder(){
 
 void MainWindow::refreshNavTagLibrary(){
 
-
     // Loop over all the tags in the library
     QList<Tag*>* libTags = core->getLibraryTags();
     for (int ti=0; ti < libTags->count(); ++ti){
@@ -115,15 +114,19 @@ void MainWindow::refreshNavTagLibrary(){
         // If there are no tag family widgets or there's no tagfamilywidget for the current tag's family, add a new tagfamilywidget
         QList<TagFamilyWidget*> existingTFWidgets = ui->navLibraryContainer->findChildren<TagFamilyWidget*>();
 
-        for (TagFamilyWidget* tfw : existingTFWidgets){
-            if (tfw->tag_family_ == currentTagFamily) {
+        //for(TagFamilyWidget* tfw : existingTFWidgets){
+        for(int tfwi = 0; tfwi < existingTFWidgets.count(); ++tfwi){
+            TagFamilyWidget* existingTFWidget = existingTFWidgets.at(tfwi);
+
+            if (existingTFWidget->getTagFamily() == currentTagFamily) {
                 // Tag family widget exists, use it
-                w = tfw;
+                w = existingTFWidget;
             }
         }
 
         if (w==nullptr){
-            w = new TagFamilyWidget(currentTagFamily, this);
+            TagFamily* tf = core->getTagFamily(currentTag->tagFamily->tagFamilyName);
+            w = new TagFamilyWidget(tf, ui->navLibraryContainer);
             ui->navLibraryContainer->layout()->addWidget(w);
             w->show();
         }
@@ -131,10 +134,11 @@ void MainWindow::refreshNavTagLibrary(){
         // If there are no tag widgets, or there's no tagwidget for the current tag in the current family widget, add a new tagwidget
         QList<TagWidget*> existingTWidgets = w->findChildren<TagWidget*>();
 
-        for (TagWidget* tw : existingTWidgets){
-            if(tw->tag_ == currentTag){
+        for(int twi = 0; twi < existingTWidgets.count(); ++twi){
+            TagWidget* existingTWidget = existingTWidgets.at(twi);
+            if(existingTWidget->getTag() == currentTag){
                 // Tag widget exists, use it
-                t = tw;
+                t = existingTWidget;
             }
         }
 

@@ -18,7 +18,7 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     label_ = new ClickableLabel(this);
     label_->move(18, 0);
     label_->setFixedHeight(label_->height());
-    label_->setText(tag_->tagName);
+    label_->setText(tag->tagName);
     label_->show();
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagWidget::onReturnPressed);
@@ -125,5 +125,9 @@ void TagWidget::mouseMoveEvent(QMouseEvent *event){
 
     // Do this only if you want to actually move the object on drop. Note this seems to be f'd with by layouts:
     //draggedTag->move(event->position().toPoint() - drag->hotSpot());
+}
+
+Tag* TagWidget::getTag(){
+    return tag_;
 }
 

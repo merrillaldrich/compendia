@@ -23,9 +23,9 @@ private:
     ClickableLabel* label_;
     QPoint drag_start_position_;
     bool in_library_ = false;
+    Tag* tag_;
 
 public:
-    Tag* tag_ = new Tag(new TagFamily(),"");
 
     explicit TagWidget(QWidget *parent = nullptr);
 
@@ -33,6 +33,7 @@ public:
 
     void startEdit();
     void endEdit();
+    Tag* getTag();
 
 protected:
 

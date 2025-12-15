@@ -28,7 +28,9 @@ public:
     bool containsFiles();
 
     QList<Tag*>* getLibraryTags();
-    Tag* getTag(QString tagFamily, QString tag);
+    Tag* getTag(QString tagFamilyName, QString tagName);
+    TagFamily* getTagFamily(QString tagFamilyName);
+
     QList<TagSet> parseTagJson(QJsonObject tagsJson);
 
     void addFile(QString fp, QString fn);
