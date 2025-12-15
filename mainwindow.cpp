@@ -101,30 +101,47 @@ void MainWindow::setRootFolder(){
 
 void MainWindow::refreshNavTagLibrary(){
 
-    TagFamilyWidget* w = nullptr;
 
     // Loop over all the tags in the library
     QList<Tag*>* libTags = core->getLibraryTags();
-    for(int ti=0; ti < libTags->count(); ++ti){
+    for (int ti=0; ti < libTags->count(); ++ti){
 
-        // If there are no tag families or there's no tagfamilywidget for the current tag's family, add a tag family widget
+        TagFamilyWidget* w = nullptr;
+        TagWidget* t = nullptr;
+
         Tag* currentTag = libTags->at(ti);
-
         TagFamily* currentTagFamily = currentTag->tagFamily;
 
-        QList<TagFamilyWidget*> existingWidgets = ui->navLibraryContainer->findChildren<TagFamilyWidget*>();
+        // If there are no tag family widgets or there's no tagfamilywidget for the current tag's family, add a new tagfamilywidget
+        QList<TagFamilyWidget*> existingTFWidgets = ui->navLibraryContainer->findChildren<TagFamilyWidget*>();
 
-        for (TagFamilyWidget* tfw : existingWidgets){
+        for (TagFamilyWidget* tfw : existingTFWidgets){
             if (tfw->tag_family_ == currentTagFamily) {
                 // Tag family widget exists, use it
                 w = tfw;
             }
         }
 
-        if(w==nullptr){
+        if (w==nullptr){
             w = new TagFamilyWidget(currentTagFamily, this);
             ui->navLibraryContainer->layout()->addWidget(w);
             w->show();
+        }
+
+        // If there are no tag widgets, or there's no tagwidget for the current tag in the current family widget, add a new tagwidget
+        QList<TagWidget*> existingTWidgets = w->findChildren<TagWidget*>();
+
+        for (TagWidget* tw : existingTWidgets){
+            if(tw->tag_ == currentTag){
+                // Tag widget exists, use it
+                t = tw;
+            }
+        }
+
+        if (t==nullptr){
+            t = new TagWidget(currentTag, w);
+            w->layout()->addWidget(t);
+            t->show();
         }
     }
 }

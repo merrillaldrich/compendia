@@ -18,7 +18,6 @@ class TagWidget : public QWidget
     Q_OBJECT
 
 private:
-    Tag* tag_ = new Tag(new TagFamily(),"");
     QString edit_status_ = "Read";
     QLineEdit* line_edit_;
     ClickableLabel* label_;
@@ -26,6 +25,8 @@ private:
     bool in_library_ = false;
 
 public:
+    Tag* tag_ = new Tag(new TagFamily(),"");
+
     explicit TagWidget(QWidget *parent = nullptr);
 
     TagWidget(Tag *tag, QWidget *parent);

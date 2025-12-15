@@ -7,15 +7,18 @@ TagWidget::TagWidget(QWidget *parent)
 TagWidget::TagWidget(Tag *tag, QWidget *parent)
     : QWidget{parent}{
     tag_ = tag;
-    setMinimumSize(104,25);
+    setMinimumSize(104,28);
     setAttribute(Qt::WA_TranslucentBackground);
 
     line_edit_ = new QLineEdit(this);
-    line_edit_->move(12, 2);
+    line_edit_->move(12, 0);
+    line_edit_->setFixedHeight(line_edit_->height());
     line_edit_->hide();
 
     label_ = new ClickableLabel(this);
-    label_->move(18, 4);
+    label_->move(18, 0);
+    label_->setFixedHeight(label_->height());
+    label_->setText(tag_->tagName);
     label_->show();
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagWidget::onReturnPressed);
@@ -43,13 +46,14 @@ void TagWidget::paintEvent(QPaintEvent *event) {
     painter.setBrush(b);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.drawRoundedRect(QRect(2, 2, 100, 24), 12, 12);
+    painter.drawRoundedRect(QRect(2, 4, 100, 24), 12, 12);
 }
 
 void TagWidget::startEdit(){
     qDebug() << "Enter tag edit mode";
     edit_status_ = "Edit";
     label_->hide();
+    line_edit_->setText(tag_->tagName);
     line_edit_->show();
     line_edit_->setFocus();
 }
