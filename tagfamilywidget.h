@@ -17,7 +17,6 @@ class TagFamilyWidget : public QWidget
     Q_OBJECT
 
 private:
-    TagFamily* tag_family_;
     QString edit_status_ = "Read";
     QLineEdit* line_edit_;
     ClickableLabel* label_;
@@ -27,6 +26,8 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
 
 public:
+    TagFamily* tag_family_;
+
     explicit TagFamilyWidget(QWidget *parent = nullptr);
 
     TagFamilyWidget(TagFamily *tagFamily, QWidget *parent);

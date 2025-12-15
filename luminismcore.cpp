@@ -48,7 +48,6 @@ void LuminismCore::loadRootDirectory(){
             // Otherwise just add the file with no tags
             tfc->addFile(fileInfo.absolutePath(), fileInfo.fileName());
         }
-
     }
 }
 
@@ -80,6 +79,10 @@ void LuminismCore::writeFileMetadata(){
         out << itemAsTaggedFile->TaggedFileJSON();
         metaFile.close();
     }
+}
+
+QList<Tag*>* LuminismCore::getLibraryTags(){
+    return tfc->getLibraryTags();
 }
 
 Tag* LuminismCore::getTag(QString tagFamily, QString tag){

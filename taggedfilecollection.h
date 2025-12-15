@@ -27,6 +27,7 @@ public:
 
     bool containsFiles();
 
+    QList<Tag*>* getLibraryTags();
     Tag* getTag(QString tagFamily, QString tag);
     QList<TagSet> parseTagJson(QJsonObject tagsJson);
 

@@ -24,6 +24,7 @@ public:
 
     void writeFileMetadata();
 
+    QList<Tag*>* getLibraryTags();
     Tag* getTag(QString tagFamily, QString tag);
     Tag* addLibraryTag(QString tagFamily, QString tagName);
     void addLibraryTag(Tag* tag);

@@ -95,8 +95,38 @@ void MainWindow::setRootFolder(){
     lv->setModel(core->getItemModel());
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
-
+    refreshNavTagLibrary();
     clearPreview();
+}
+
+void MainWindow::refreshNavTagLibrary(){
+
+    TagFamilyWidget* w = nullptr;
+
+    // Loop over all the tags in the library
+    QList<Tag*>* libTags = core->getLibraryTags();
+    for(int ti=0; ti < libTags->count(); ++ti){
+
+        // If there are no tag families or there's no tagfamilywidget for the current tag's family, add a tag family widget
+        Tag* currentTag = libTags->at(ti);
+
+        TagFamily* currentTagFamily = currentTag->tagFamily;
+
+        QList<TagFamilyWidget*> existingWidgets = ui->navLibraryContainer->findChildren<TagFamilyWidget*>();
+
+        for (TagFamilyWidget* tfw : existingWidgets){
+            if (tfw->tag_family_ == currentTagFamily) {
+                // Tag family widget exists, use it
+                w = tfw;
+            }
+        }
+
+        if(w==nullptr){
+            w = new TagFamilyWidget(currentTagFamily, this);
+            ui->navLibraryContainer->layout()->addWidget(w);
+            w->show();
+        }
+    }
 }
 
 void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {

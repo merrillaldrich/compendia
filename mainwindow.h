@@ -48,5 +48,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void setRootFolder();
     void clearPreview();
+    void refreshNavTagLibrary();
 };
+
 #endif // MAINWINDOW_H

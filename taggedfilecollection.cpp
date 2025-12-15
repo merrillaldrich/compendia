@@ -19,6 +19,10 @@ bool TaggedFileCollection::containsFiles(){
     return ( tagged_files_->rowCount() > 0 );
 }
 
+QList<Tag*>* TaggedFileCollection::getLibraryTags(){
+    return tags_;
+}
+
 Tag* TaggedFileCollection::getTag(QString tagFamily, QString tag){
     Tag* matchingTag = nullptr;
     for( int i = 0; i < tags_->count(); ++i ){

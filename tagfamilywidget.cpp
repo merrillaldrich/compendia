@@ -23,6 +23,7 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     label_ = new ClickableLabel(this);
     label_->move(18, 0);
     label_->setFixedHeight(label_->height());
+    label_->setText(tag_family_->tagFamilyName);
     label_->show();
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagFamilyWidget::onReturnPressed);
@@ -87,6 +88,7 @@ void TagFamilyWidget::startEdit(){
     qDebug() << "Enter family edit mode";
     edit_status_ = "Edit";
     label_->hide();
+    line_edit_->setText(tag_family_->tagFamilyName);
     line_edit_->show();
     line_edit_->setFocus();
 }
