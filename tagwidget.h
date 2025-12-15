@@ -22,6 +22,7 @@ private:
     QString edit_status_ = "Read";
     QLineEdit* line_edit_;
     ClickableLabel* label_;
+    QPoint drag_start_position_;
     bool in_library_ = false;
 
 public:
@@ -36,6 +37,7 @@ protected:
 
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 private slots:
 

@@ -75,10 +75,25 @@ void TagWidget::endEdit(){
     label_->show();
 }
 
-void TagWidget::mousePressEvent(QMouseEvent *event)
-{
-    // TODO - this is blocking editing the tag; need to change to some other method of detecting a drag
-    qDebug() << "Drag started!";
+void TagWidget::mousePressEvent(QMouseEvent *event){
+
+    // To determine if this should be a drag operation or just a click, record the location of the mouse when left button pressed
+    // then use the value in MouseMoveEvent() to check the distance the mouse was moved
+
+    if (event->button() == Qt::LeftButton){
+        drag_start_position_ = event->pos();
+    }
+
+}
+
+void TagWidget::mouseMoveEvent(QMouseEvent *event){
+
+    // Start a drag, but only if the mouse was moved with the left button pressed
+
+    if (!(event->buttons() & Qt::LeftButton))
+        return;
+    if ((event->pos() - drag_start_position_).manhattanLength() < QApplication::startDragDistance())
+        return;
 
     TagWidget* draggedTag = this;
     Tag* t = draggedTag->tag_;
@@ -103,9 +118,8 @@ void TagWidget::mousePressEvent(QMouseEvent *event)
     drag->setPixmap(dragimage);
     drag->setHotSpot(event->position().toPoint());
     drag->exec();
+
     // Do this only if you want to actually move the object on drop. Note this seems to be f'd with by layouts:
     //draggedTag->move(event->position().toPoint() - drag->hotSpot());
-
 }
-
 
