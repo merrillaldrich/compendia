@@ -10,6 +10,7 @@
 #include <QApplication>
 #include "tag.h"
 #include "clickablelabel.h"
+#include "mainwindow.h"
 
 
 class TagWidget : public QWidget
@@ -21,6 +22,7 @@ private:
     QString edit_status_ = "Read";
     QLineEdit* line_edit_;
     ClickableLabel* label_;
+    bool in_library_ = false;
 
 public:
     explicit TagWidget(QWidget *parent = nullptr);
@@ -34,7 +36,6 @@ protected:
 
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
-
 
 private slots:
 

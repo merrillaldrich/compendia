@@ -64,6 +64,12 @@ Tag* TaggedFileCollection::addLibraryTag(QString tagFamilyName, QString tagName)
     }
     return matchingTag;
 }
+
+void TaggedFileCollection::addLibraryTag(Tag* tag){
+    tags_->append(tag);
+}
+
+
 TagFamily* TaggedFileCollection::addLibraryTagFamily(QString tagFamilyName){
 
     TagFamily* matchingFam = nullptr;
@@ -80,6 +86,12 @@ TagFamily* TaggedFileCollection::addLibraryTagFamily(QString tagFamilyName){
         tag_families_->append(matchingFam);
     }
     return matchingFam;
+}
+
+void TaggedFileCollection::addLibraryTagFamily(TagFamily* tagFamily){
+    if(! tag_families_->contains(tagFamily)){
+        tag_families_->append(tagFamily);
+    }
 }
 
 QList<TagSet> TaggedFileCollection::parseTagJson(QJsonObject tagsJson){

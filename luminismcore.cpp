@@ -90,8 +90,16 @@ Tag* LuminismCore::addLibraryTag(QString tagFamily, QString tag){
     return tfc->addLibraryTag(tagFamily, tag);
 }
 
+void LuminismCore::addLibraryTag(Tag* tag){
+    tfc->addLibraryTag(tag);
+}
+
 TagFamily* LuminismCore::addLibraryTagFamily(QString tagFamily){
     return tfc->addLibraryTagFamily(tagFamily);
+}
+
+void LuminismCore::addLibraryTagFamily(TagFamily* tagFamily){
+    tfc->addLibraryTagFamily(tagFamily);
 }
 
 void LuminismCore::applyTag(Tag* droppedTag){

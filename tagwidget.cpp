@@ -5,8 +5,7 @@ TagWidget::TagWidget(QWidget *parent)
 {}
 
 TagWidget::TagWidget(Tag *tag, QWidget *parent)
-    : QWidget{parent}
-{
+    : QWidget{parent}{
     tag_ = tag;
     setMinimumSize(104,25);
     setAttribute(Qt::WA_TranslucentBackground);
@@ -21,16 +20,14 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagWidget::onReturnPressed);
     connect(label_, &ClickableLabel::clicked, this, &TagWidget::onLabelClicked);
-
 }
 
 void TagWidget::onReturnPressed(){
-    qDebug() << line_edit_->text();
     endEdit();
 }
 
 void TagWidget::onLabelClicked(QMouseEvent *event){
-    qDebug() << "Label clicked!";
+    qDebug() << "Tag label clicked";
     startEdit();
     event->accept();
 }
@@ -61,6 +58,17 @@ void TagWidget::endEdit(){
     qDebug() << "Leave tag edit mode";
     edit_status_ = "Read";
     tag_->tagName = line_edit_->text();
+
+    // If this tag isn't represented in the library then add it.
+    // Should happen once on creation; After that edits already apply
+    // in the library because this is holding a pointer
+
+    if(! in_library_) {
+        MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
+        mainWin->core->addLibraryTag(tag_);
+        in_library_ = true;
+    }
+
     line_edit_->clearFocus();
     line_edit_->hide();
     label_->setText(tag_->tagName);
@@ -69,7 +77,8 @@ void TagWidget::endEdit(){
 
 void TagWidget::mousePressEvent(QMouseEvent *event)
 {
-    //qDebug() << "Drag started!";
+    // TODO - this is blocking editing the tag; need to change to some other method of detecting a drag
+    qDebug() << "Drag started!";
 
     TagWidget* draggedTag = this;
     Tag* t = draggedTag->tag_;

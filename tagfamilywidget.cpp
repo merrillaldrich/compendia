@@ -95,6 +95,17 @@ void TagFamilyWidget::endEdit(){
     qDebug() << "Leave family edit mode";
     edit_status_ = "Read";
     tag_family_->tagFamilyName = line_edit_->text();
+
+    // If this tagfamily isn't represented in the library then add it.
+    // Should happen once on creation; After that edits already apply
+    // in the library because this is holding a pointer
+
+    if(! in_library_) {
+        MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
+        mainWin->core->addLibraryTagFamily(tag_family_);
+        in_library_ = true;
+    }
+
     line_edit_->clearFocus();
     line_edit_->hide();
     label_->setText(tag_family_->tagFamilyName);

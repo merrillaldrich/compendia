@@ -26,7 +26,9 @@ public:
 
     Tag* getTag(QString tagFamily, QString tag);
     Tag* addLibraryTag(QString tagFamily, QString tagName);
+    void addLibraryTag(Tag* tag);
     TagFamily* addLibraryTagFamily(QString tagFamilyName);
+    void addLibraryTagFamily(TagFamily* tagFamily);
     void applyTag(Tag* tag);
     void applyTag(TaggedFile* file, TagSet tagSet);
 

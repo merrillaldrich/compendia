@@ -82,14 +82,21 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="mediaFolderLineEdit"/>
+             <widget class="QLineEdit" name="mediaFolderLineEdit">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="mediaFolderBrowseButton">
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>20</height>
+                <height>30</height>
                </size>
               </property>
               <property name="baseSize">
@@ -111,13 +118,13 @@
              <x>10</x>
              <y>60</y>
              <width>80</width>
-             <height>20</height>
+             <height>30</height>
             </rect>
            </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>20</height>
+             <height>30</height>
             </size>
            </property>
            <property name="baseSize">

@@ -38,7 +38,9 @@ public:
     void applyTag(TaggedFile* f, TagSet t);
 
     Tag* addLibraryTag(QString tagFamilyName, QString tagName);
+    void addLibraryTag(Tag* tag);
     TagFamily* addLibraryTagFamily(QString tagFamilyName);
+    void addLibraryTagFamily(TagFamily* tagFamily);
 
     void renameFamily(QString oldName, QString newName);
 

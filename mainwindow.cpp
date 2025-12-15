@@ -25,39 +25,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set up the tag library area
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
-
-    // Sample Families and tags
-
-    //TagFamily* f = core->addLibraryTagFamily("People");
-    //TagFamilyWidget* tfw = new TagFamilyWidget(f, this);
-    //navTagLibraryLayout->addWidget(tfw);
-
-    //Tag* t = core->addLibraryTag("People","Foo");
-    //TagWidget* tw = new TagWidget(t);
-    //tfw->layout()->addWidget(tw);
-
-    //t = core->addLibraryTag("People","Bar");
-    //tw = new TagWidget(t);
-    //tfw->layout()->addWidget(tw);
-
-    //f = core->addLibraryTagFamily("Places");
-    //tfw = new TagFamilyWidget(f, this);
-    //navTagLibraryLayout->addWidget(tfw);
-
-    //t = core->addLibraryTag("Places","Baz");
-    //tw = new TagWidget(t);
-    //tfw->layout()->addWidget(tw);
-
     ui->navLibraryContainer->setLayout(navTagLibraryLayout);
 
     // Set up the tag assignment area
-
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
-
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
 
     // Set up the preview area
-
     QGraphicsScene* scene = new QGraphicsScene();
     ui->previewGraphicsView->setScene(scene);
 
