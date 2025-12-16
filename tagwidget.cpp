@@ -11,20 +11,32 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     // Connect this widget to its tag's name changed event
     connect(tag_, &Tag::nameChanged, this, &onTagNameChanged);
 
-    setMinimumSize(104,28);
+    // Must set a default size here even though the width will be adjusted for the text content later
+    setMinimumSize(132, 28);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    line_edit_ = new QLineEdit(this);
+    line_edit_ = new VariableWidthLineEdit(this);
     line_edit_->move(12, 0);
     line_edit_->setFixedHeight(line_edit_->height());
     line_edit_->hide();
+
+    // Connect this widget to the line edit, to keep this wide enough
+    // on screen for longer values to be entered
+    connect(line_edit_, &QLineEdit::textEdited, this, &onTextEdited);
 
     label_ = new ClickableLabel(this);
     label_->move(18, 0);
     label_->setFixedHeight(label_->height());
     label_->setText(tag->getName());
     label_->adjustSize();
-    setMinimumWidth(label_->width() + 32);
+
+    if(label_->width() < 100){
+        setMinimumWidth(150);
+    }
+    else{
+        setMinimumWidth(label_->width() + 32);
+    }
+
     label_->show();
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagWidget::onReturnPressed);
@@ -39,6 +51,15 @@ void TagWidget::onLabelClicked(QMouseEvent *event){
     qDebug() << "Tag label clicked";
     startEdit();
     event->accept();
+}
+
+void TagWidget::onTextEdited(){
+    if(line_edit_->width() < 50){
+        setMinimumWidth(100);
+    }
+    else{
+        setMinimumWidth(line_edit_->width() + 32);
+    }
 }
 
 void TagWidget::paintEvent(QPaintEvent *event) {

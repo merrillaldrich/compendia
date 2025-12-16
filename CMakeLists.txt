@@ -41,6 +41,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         taggablelistview.h taggablelistview.cpp
         navlibrarycontainer.h navlibrarycontainer.cpp
         clickablelabel.h clickablelabel.cpp
+        variablewidthlineedit.h variablewidthlineedit.cpp
 
     )
 

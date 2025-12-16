@@ -10,6 +10,7 @@
 #include "tagfamily.h"
 #include "tagwidget.h"
 #include "clickablelabel.h"
+#include "variablewidthlineedit.h"
 #include "mainwindow.h"
 
 class TagFamilyWidget : public QWidget
@@ -18,7 +19,7 @@ class TagFamilyWidget : public QWidget
 
 private:
     QString edit_status_ = "Read";
-    QLineEdit* line_edit_;
+    VariableWidthLineEdit* line_edit_;
     ClickableLabel* label_;
     bool in_library_ = false;
     TagFamily* tag_family_;

@@ -10,6 +10,7 @@
 #include <QApplication>
 #include "tag.h"
 #include "clickablelabel.h"
+#include "variablewidthlineedit.h"
 #include "mainwindow.h"
 
 
@@ -19,7 +20,7 @@ class TagWidget : public QWidget
 
 private:
     QString edit_status_ = "Read";
-    QLineEdit* line_edit_;
+    VariableWidthLineEdit* line_edit_;
     ClickableLabel* label_;
     QPoint drag_start_position_;
     bool in_library_ = false;
@@ -43,6 +44,7 @@ private slots:
     void onReturnPressed();
     void onLabelClicked(QMouseEvent *event);
     void onTagNameChanged();
+    void onTextEdited();
 
 signals:
 

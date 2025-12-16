@@ -19,7 +19,7 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     fl->setContentsMargins(4, 28, 4, 4); //left, top, right, bottom
     this->setLayout(fl);
 
-    line_edit_ = new QLineEdit(this);
+    line_edit_ = new VariableWidthLineEdit(this);
     line_edit_->move(12, 0);
     line_edit_->setFixedHeight(line_edit_->height());
     line_edit_->hide();
