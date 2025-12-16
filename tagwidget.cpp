@@ -23,6 +23,8 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     label_->move(18, 0);
     label_->setFixedHeight(label_->height());
     label_->setText(tag->getName());
+    label_->adjustSize();
+    setMinimumWidth(label_->width() + 32);
     label_->show();
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagWidget::onReturnPressed);
@@ -50,7 +52,14 @@ void TagWidget::paintEvent(QPaintEvent *event) {
     painter.setBrush(b);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.drawRoundedRect(QRect(2, 4, 100, 24), 12, 12);
+    int inset = 2;
+    int leftX = inset;
+    int topY = inset;
+    int rightX = width() - (inset * 2);
+    int bottomY = height() - (inset * 2);
+    int cornerRadius = 12;
+
+    painter.drawRoundedRect(QRect(leftX, topY, rightX, bottomY), cornerRadius, cornerRadius);
 }
 
 void TagWidget::startEdit(){
@@ -133,6 +142,8 @@ void TagWidget::mouseMoveEvent(QMouseEvent *event){
 
 void TagWidget::onTagNameChanged(){
     label_->setText(tag_->getName());
+    label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
+    setMinimumWidth(label_->width() + 32);
 }
 
 Tag* TagWidget::getTag(){
