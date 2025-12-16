@@ -8,6 +8,10 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     : QWidget{parent}
 {
     tag_family_ = tagFamily;
+
+    // Connect this widget to its tag family's name changed event
+    connect(tag_family_, &TagFamily::nameChanged, this, &onTagFamilyNameChanged);
+
     setMinimumSize(304,64);
     setAttribute(Qt::WA_TranslucentBackground);
 
@@ -110,10 +114,13 @@ void TagFamilyWidget::endEdit(){
 
     line_edit_->clearFocus();
     line_edit_->hide();
+    label_->show();
+}
+
+void TagFamilyWidget::onTagFamilyNameChanged(){
     label_->setText(tag_family_->getName());
     label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
     update(0, 0, width(), 26); // Paint a band across the widget for the case where the label became shorter after edit
-    label_->show();
 }
 
 TagFamily* TagFamilyWidget::getTagFamily(){

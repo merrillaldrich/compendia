@@ -26,7 +26,6 @@ private:
     Tag* tag_;
 
 public:
-
     explicit TagWidget(QWidget *parent = nullptr);
 
     TagWidget(Tag *tag, QWidget *parent);
@@ -36,15 +35,14 @@ public:
     Tag* getTag();
 
 protected:
-
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private slots:
-
     void onReturnPressed();
     void onLabelClicked(QMouseEvent *event);
+    void onTagNameChanged();
 
 signals:
 

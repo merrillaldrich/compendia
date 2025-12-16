@@ -27,7 +27,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
 
 public:
-
     explicit TagFamilyWidget(QWidget *parent = nullptr);
 
     TagFamilyWidget(TagFamily *tagFamily, QWidget *parent);
@@ -41,6 +40,7 @@ public:
 private slots:
     void onReturnPressed();
     void onLabelClicked(QMouseEvent *event);
+    void onTagFamilyNameChanged();
 
 signals:
 

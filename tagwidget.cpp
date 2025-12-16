@@ -7,6 +7,10 @@ TagWidget::TagWidget(QWidget *parent)
 TagWidget::TagWidget(Tag *tag, QWidget *parent)
     : QWidget{parent}{
     tag_ = tag;
+
+    // Connect this widget to its tag's name changed event
+    connect(tag_, &Tag::nameChanged, this, &onTagNameChanged);
+
     setMinimumSize(104,28);
     setAttribute(Qt::WA_TranslucentBackground);
 
@@ -125,6 +129,10 @@ void TagWidget::mouseMoveEvent(QMouseEvent *event){
 
     // Do this only if you want to actually move the object on drop. Note this seems to be f'd with by layouts:
     //draggedTag->move(event->position().toPoint() - drag->hotSpot());
+}
+
+void TagWidget::onTagNameChanged(){
+    label_->setText(tag_->getName());
 }
 
 Tag* TagWidget::getTag(){
