@@ -28,6 +28,8 @@ public:
     bool containsFiles();
 
     QList<Tag*>* getLibraryTags();
+    QList<Tag*>* getAssignedTags();
+
     Tag* getTag(QString tagFamilyName, QString tagName);
     TagFamily* getTagFamily(QString tagFamilyName);
 

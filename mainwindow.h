@@ -49,6 +49,7 @@ protected:
     void setRootFolder();
     void clearPreview();
     void refreshNavTagLibrary();
+    void refreshTagAssignmentArea();
 };
 
 #endif // MAINWINDOW_H

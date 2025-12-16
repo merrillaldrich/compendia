@@ -85,6 +85,10 @@ QList<Tag*>* LuminismCore::getLibraryTags(){
     return tfc->getLibraryTags();
 }
 
+QList<Tag*>* LuminismCore::getAssignedTags(){
+    return tfc->getAssignedTags();
+}
+
 Tag* LuminismCore::getTag(QString tagFamilyName, QString tagName){
     return tfc->getTag(tagFamilyName, tagName);
 }

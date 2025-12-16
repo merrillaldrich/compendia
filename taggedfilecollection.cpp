@@ -23,6 +23,25 @@ QList<Tag*>* TaggedFileCollection::getLibraryTags(){
     return tags_;
 }
 
+QList<Tag*>* TaggedFileCollection::getAssignedTags(){
+    // Loop over files and make a distinct list of all tags that
+    // are assigned to a file
+    QList<Tag*>* distinctTags = new QList<Tag*>();
+
+    for (int i = 0; i < tagged_files_->rowCount(); ++i){
+        QStandardItem* item = tagged_files_->item(i);
+        QVariant var = item->data();
+        TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+        for (int j = 0; j < itemAsTaggedFile->tagList->count(); ++j){
+            Tag* t = itemAsTaggedFile->tagList->at(j);
+            if(!distinctTags->contains(t)){
+                distinctTags->append(t);
+            }
+        }
+    }
+    return distinctTags;
+}
+
 Tag* TaggedFileCollection::getTag(QString tagFamilyName, QString tagName){
     Tag* matchingTag = nullptr;
     for( int i = 0; i < tags_->count(); ++i ){

@@ -59,6 +59,8 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
 
         Tag* t = mainWin->core->getTag(tagFamilyName, tagName);
 
+        // TODO: Identify an existing TagFamilyWidget or make a new TagFamilyWidget if it's missing
+
         TagWidget* droppedTagWidget = new TagWidget(t,this);
         this->layout()->addWidget(droppedTagWidget);
         droppedTagWidget->show();
@@ -72,6 +74,7 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
         } else {
             event->acceptProposedAction();
         }
+
     } else {
         event->ignore();
     }
