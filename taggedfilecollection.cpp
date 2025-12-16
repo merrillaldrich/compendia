@@ -46,7 +46,7 @@ Tag* TaggedFileCollection::getTag(QString tagFamilyName, QString tagName){
     Tag* matchingTag = nullptr;
     for( int i = 0; i < tags_->count(); ++i ){
         Tag* t = tags_->at(i);
-        if ( t->tagName == tagName && t->tagFamily->tagFamilyName == tagFamilyName){
+        if ( t->getName() == tagName && t->tagFamily->getName() == tagFamilyName){
             matchingTag = t;
             break;
         }
@@ -58,7 +58,7 @@ TagFamily* TaggedFileCollection::getTagFamily(QString tagFamilyName){
     TagFamily* matchingTagFamily = nullptr;
     for( int i = 0; i < tag_families_->count(); ++i ){
         TagFamily* tf = tag_families_->at(i);
-        if ( tf->tagFamilyName == tagFamilyName){
+        if ( tf->getName() == tagFamilyName){
             matchingTagFamily = tf;
             break;
         }
@@ -88,7 +88,7 @@ Tag* TaggedFileCollection::addLibraryTag(QString tagFamilyName, QString tagName)
     Tag* t;
     for(int i = 0; i < tags_->count(); ++i){
         t = tags_->at(i);
-        if(t->tagName == tagName && t->tagFamily == tf){
+        if(t->getName() == tagName && t->tagFamily == tf){
             matchingTag = t;
             break;
         }
@@ -111,7 +111,7 @@ TagFamily* TaggedFileCollection::addLibraryTagFamily(QString tagFamilyName){
     TagFamily* fam = nullptr;
     for(int i = 0; i < tag_families_->count(); ++i){
         fam = tag_families_->at(i);
-        if(fam->tagFamilyName == tagFamilyName){
+        if(fam->getName() == tagFamilyName){
             matchingFam = fam;
             break;
         }
@@ -168,7 +168,7 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
         TagFamily *current_family = nullptr;
 
         for(TagFamily *fam : *tag_families_) {
-            if (fam->tagFamilyName == value.tagFamilyName){
+            if (fam->getName() == value.tagFamilyName){
                 // Found a match, use it
                 current_family = fam;
             }
@@ -182,7 +182,7 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
         Tag *current_tag = nullptr;
 
         for(Tag *tag : *tags_){
-            if (tag->tagFamily->tagFamilyName == value.tagFamilyName && tag->tagName == value.tagName){
+            if (tag->tagFamily->getName() == value.tagFamilyName && tag->getName() == value.tagName){
                 current_tag = tag;
             }
         }
@@ -225,8 +225,8 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
 
 void TaggedFileCollection::renameFamily(QString oldName, QString newName){
     for(TagFamily *fam : *tag_families_) {
-        if (fam->tagFamilyName == oldName){
-            fam->tagFamilyName = newName;
+        if (fam->getName() == oldName){
+            fam->setName(newName);
         }
     }
 }

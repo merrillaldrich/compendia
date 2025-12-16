@@ -128,7 +128,7 @@ void MainWindow::refreshNavTagLibrary(){
         }
 
         if (w==nullptr){
-            TagFamily* tf = core->getTagFamily(currentTag->tagFamily->tagFamilyName);
+            TagFamily* tf = core->getTagFamily(currentTag->tagFamily->getName());
             w = new TagFamilyWidget(tf, ui->navLibraryContainer);
             ui->navLibraryContainer->layout()->addWidget(w);
             w->show();
@@ -184,7 +184,7 @@ void MainWindow::refreshTagAssignmentArea(){
         }
 
         if (w==nullptr){
-            TagFamily* tf = core->getTagFamily(currentTag->tagFamily->tagFamilyName);
+            TagFamily* tf = core->getTagFamily(currentTag->tagFamily->getName());
             w = new TagFamilyWidget(tf, ui->fileListTagAssignmentContainer);
             ui->fileListTagAssignmentContainer->layout()->addWidget(w);
             w->show();

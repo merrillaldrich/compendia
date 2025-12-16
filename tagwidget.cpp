@@ -18,7 +18,7 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     label_ = new ClickableLabel(this);
     label_->move(18, 0);
     label_->setFixedHeight(label_->height());
-    label_->setText(tag->tagName);
+    label_->setText(tag->getName());
     label_->show();
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagWidget::onReturnPressed);
@@ -53,7 +53,7 @@ void TagWidget::startEdit(){
     qDebug() << "Enter tag edit mode";
     edit_status_ = "Edit";
     label_->hide();
-    line_edit_->setText(tag_->tagName);
+    line_edit_->setText(tag_->getName());
     line_edit_->show();
     line_edit_->setFocus();
 }
@@ -61,7 +61,7 @@ void TagWidget::startEdit(){
 void TagWidget::endEdit(){
     qDebug() << "Leave tag edit mode";
     edit_status_ = "Read";
-    tag_->tagName = line_edit_->text();
+    tag_->setName(line_edit_->text());
 
     // If this tag isn't represented in the library then add it.
     // Should happen once on creation; After that edits already apply
@@ -75,7 +75,7 @@ void TagWidget::endEdit(){
 
     line_edit_->clearFocus();
     line_edit_->hide();
-    label_->setText(tag_->tagName);
+    label_->setText(tag_->getName());
     label_->show();
 }
 
@@ -101,8 +101,8 @@ void TagWidget::mouseMoveEvent(QMouseEvent *event){
 
     TagWidget* draggedTag = this;
     Tag* t = draggedTag->tag_;
-    QString tagName = t->tagName;
-    QString tagFamilyName = t->tagFamily->tagFamilyName;
+    QString tagName = t->getName();
+    QString tagFamilyName = t->tagFamily->getName();
 
     //qDebug() << draggedTag->tag_->tagName;
 

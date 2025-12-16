@@ -9,13 +9,21 @@ class Tag : public QObject
 {
     Q_OBJECT
 
+private:
+    QString tag_name_;
+
 public:
     explicit Tag(QObject *parent = nullptr);
 
-    QString tagName;
     TagFamily* tagFamily;
 
     Tag(TagFamily* tf, QString t, QObject *parent = nullptr);
+
+    void setName(QString tagName);
+    QString getName() const;
+
+signals:
+    void nameChanged();
 
 };
 

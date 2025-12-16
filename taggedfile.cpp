@@ -22,12 +22,12 @@ QString TaggedFile::TaggedFileJSON(){
 
     for(int i = 0; i < tagList->count(); ++i){
         t = tagList->at(i);
-        fn = t->tagFamily->tagFamilyName;
+        fn = t->tagFamily->getName();
         if(!families.contains(fn)) {
             families.insert(fn, QJsonArray());
         }
         QJsonArray tags = families[fn].toArray();
-        tags.append(t->tagName);
+        tags.append(t->getName());
         families[fn]=tags;
     }
     QJsonDocument doc(families);

@@ -23,7 +23,7 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     label_ = new ClickableLabel(this);
     label_->move(18, 0);
     label_->setFixedHeight(label_->height());
-    label_->setText(tag_family_->tagFamilyName);
+    label_->setText(tag_family_->getName());
     label_->show();
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagFamilyWidget::onReturnPressed);
@@ -88,7 +88,7 @@ void TagFamilyWidget::startEdit(){
     qDebug() << "Enter family edit mode";
     edit_status_ = "Edit";
     label_->hide();
-    line_edit_->setText(tag_family_->tagFamilyName);
+    line_edit_->setText(tag_family_->getName());
     line_edit_->show();
     line_edit_->setFocus();
 }
@@ -96,7 +96,7 @@ void TagFamilyWidget::startEdit(){
 void TagFamilyWidget::endEdit(){
     qDebug() << "Leave family edit mode";
     edit_status_ = "Read";
-    tag_family_->tagFamilyName = line_edit_->text();
+    tag_family_->setName(line_edit_->text());
 
     // If this tagfamily isn't represented in the library then add it.
     // Should happen once on creation; After that edits already apply
@@ -110,7 +110,7 @@ void TagFamilyWidget::endEdit(){
 
     line_edit_->clearFocus();
     line_edit_->hide();
-    label_->setText(tag_family_->tagFamilyName);
+    label_->setText(tag_family_->getName());
     label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
     update(0, 0, width(), 26); // Paint a band across the widget for the case where the label became shorter after edit
     label_->show();

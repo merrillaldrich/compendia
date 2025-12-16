@@ -8,11 +8,19 @@ class TagFamily : public QObject
 {
     Q_OBJECT
 
-public:
-    QString tagFamilyName = "";
+private:
+    QString tag_family_name_;
 
+public:
     explicit TagFamily(QObject *parent = nullptr);
+
     TagFamily(QString tf, QObject *parent);
+
+    void setName(QString tagFamilyName);
+    QString getName() const;
+
+signals:
+    void nameChanged();
 
 };
 
