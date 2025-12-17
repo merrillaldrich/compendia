@@ -58,12 +58,46 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
         MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
 
         Tag* t = mainWin->core->getTag(tagFamilyName, tagName);
+        TagFamily* f = t->tagFamily;
 
-        // TODO: Identify an existing TagFamilyWidget or make a new TagFamilyWidget if it's missing
+        // Identify an existing TagFamilyWidget or make a new TagFamilyWidget if it's missing
 
-        TagWidget* droppedTagWidget = new TagWidget(t,this);
-        this->layout()->addWidget(droppedTagWidget);
-        droppedTagWidget->show();
+        TagWidget* tw = nullptr;
+        TagFamilyWidget* tfw = nullptr;
+
+        QList<TagFamilyWidget*> existingTFWidgets = findChildren<TagFamilyWidget*>();
+
+        for(int tfwi = 0; tfwi < existingTFWidgets.count(); ++tfwi){
+            TagFamilyWidget* existingTFWidget = existingTFWidgets.at(tfwi);
+
+            if (existingTFWidget->getTagFamily() == f) {
+                // Tag family widget exists, use it
+                tfw = existingTFWidget;
+            }
+        }
+
+        if (tfw==nullptr){
+            tfw = new TagFamilyWidget(f, this);
+            layout()->addWidget(tfw);
+            tfw->show();
+        }
+
+        // If there are no tag widgets, or there's no tagwidget for the current tag in the current family widget, add a new tagwidget
+        QList<TagWidget*> existingTWidgets = tfw->findChildren<TagWidget*>();
+
+        for(int twi = 0; twi < existingTWidgets.count(); ++twi){
+            TagWidget* existingTWidget = existingTWidgets.at(twi);
+            if(existingTWidget->getTag() == t){
+                // Tag widget exists, use it
+                tw = existingTWidget;
+            }
+        }
+
+        if (tw==nullptr){
+            tw = new TagWidget(t, tfw);
+            tfw->layout()->addWidget(tw);
+            tw->show();
+        }
 
         // Apply the dropped tag to all visible files
         mainWin->core->applyTag(t);
@@ -79,3 +113,6 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
         event->ignore();
     }
 }
+
+
+
