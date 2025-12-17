@@ -28,12 +28,11 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     label_->move(18, 0);
     label_->setFixedHeight(label_->height());
     label_->setText(tag->getName());
-    label_->adjustSize();
 
-    if(label_->width() < 100){
-        setMinimumWidth(150);
-    }
-    else{
+    // Set the width of this widget to a custom size based on the name, but only if the tag name
+    // has a value. Otherwise we need the default width so it doesn't collapse
+    if(label_->text().length() > 0){
+        label_->adjustSize();
         setMinimumWidth(label_->width() + 32);
     }
 

@@ -28,6 +28,15 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     label_->move(18, 0);
     label_->setFixedHeight(label_->height());
     label_->setText(tag_family_->getName());
+
+    // Set the width of this widget's label to a custom size based on the family name, but only
+    // if the family name has a value. Otherwise we need the default width so it doesn't collapse.
+
+    if(label_->text().length() > 0){
+        label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
+        update(0, 0, width(), 26); // Paint a band across the widget for the case where the label became shorter after edit
+    }
+
     label_->show();
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagFamilyWidget::onReturnPressed);
