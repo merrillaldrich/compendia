@@ -7,11 +7,17 @@ TaggedFileCollection::TaggedFileCollection(QObject *parent)
     tags_ = new QList<Tag*>();
 
     //tagged_file_collection_ = new QList<TaggedFile*>();
-    tagged_files_ = new QStandardItemModel();
+    tagged_files_ = new QStandardItemModel(this);
+    tagged_files_proxy_ = new FilterProxyModel(this);
+    tagged_files_proxy_->setSourceModel(tagged_files_);
 }
 
 QStandardItemModel* TaggedFileCollection::getItemModel(){
     return tagged_files_;
+}
+
+FilterProxyModel* TaggedFileCollection::getItemModelProxy(){
+    return tagged_files_proxy_;
 }
 
 bool TaggedFileCollection::containsFiles(){
@@ -250,4 +256,7 @@ QPixmap TaggedFileCollection::makeSquareIcon(const QPixmap &source, int size)
     return square;
 }
 
+void TaggedFileCollection::setFileNameFilter(QString filterText){
+    tagged_files_proxy_->setNameFilter(filterText);
+}
 

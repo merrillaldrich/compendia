@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->windowBodySplitter->setSizes(sizes);
     sizes = {100,500,300};
     ui->navSplitter->setSizes(sizes);
-    sizes = {200,800,200};
+    sizes = {700,300};
     ui->fileListSplitter->setSizes(sizes);
     sizes = {800,200};
     ui->previewSplitter->setSizes(sizes);
@@ -78,7 +78,7 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
     le->clearFocus();
 
     QListView* lv = ui->fileListView;
-    lv->setModel(core->getItemModel());
+    lv->setModel(core->getItemModelProxy());
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
 }
@@ -92,7 +92,7 @@ void MainWindow::setRootFolder(){
     le->setText(folder);
 
     QListView* lv = ui->fileListView;
-    lv->setModel(core->getItemModel());
+    lv->setModel(core->getItemModelProxy());
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
     refreshNavTagLibrary();
@@ -278,5 +278,11 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 void MainWindow::on_saveButton_clicked()
 {
     core->writeFileMetadata();
+}
+
+
+void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
+{
+    core->setFileNameFilter(ui->fileNameFilterLineEdit->text());
 }
 

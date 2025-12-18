@@ -8,6 +8,7 @@
 #include "tag.h"
 #include "taggedfile.h"
 #include "tagset.h"
+#include "filterproxymodel.h"
 
 class TaggedFileCollection : public QObject
 {
@@ -19,6 +20,7 @@ private:
 
     //QList<TaggedFile*> *tagged_files_;
     QStandardItemModel *tagged_files_;
+    FilterProxyModel *tagged_files_proxy_;
 
     QPixmap makeSquareIcon(const QPixmap &source, int size);
 
@@ -50,6 +52,9 @@ public:
     void renameFamily(QString oldName, QString newName);
 
     QStandardItemModel* getItemModel();
+    FilterProxyModel* getItemModelProxy();
+
+    void setFileNameFilter(QString filterText);
 
 };
 

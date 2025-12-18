@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QStandardItemModel>
 #include "taggedfilecollection.h"
+#include "filterproxymodel.h"
 
 class LuminismCore : public QObject
 {
@@ -35,8 +36,10 @@ public:
     void applyTag(Tag* tag);
     void applyTag(TaggedFile* file, TagSet tagSet);
 
-    QStandardItemModel* getItemModel();
+    void setFileNameFilter(QString filterText);
 
+    QStandardItemModel* getItemModel();
+    FilterProxyModel* getItemModelProxy();
 
 public slots:
 

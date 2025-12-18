@@ -124,3 +124,11 @@ void LuminismCore::applyTag(TaggedFile* file, TagSet tagSet){
 QStandardItemModel* LuminismCore::getItemModel(){
     return tfc->getItemModel();
 }
+
+FilterProxyModel* LuminismCore::getItemModelProxy(){
+    return tfc->getItemModelProxy();
+}
+
+void LuminismCore::setFileNameFilter(QString filterText){
+    tfc->setFileNameFilter(filterText);
+}

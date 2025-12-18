@@ -42,6 +42,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         navlibrarycontainer.h navlibrarycontainer.cpp
         clickablelabel.h clickablelabel.cpp
         variablewidthlineedit.h variablewidthlineedit.cpp
+        filterproxymodel.h filterproxymodel.cpp
 
     )
 

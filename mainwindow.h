@@ -43,6 +43,8 @@ private slots:
 
     void on_saveButton_clicked();
 
+    void on_fileNameFilterLineEdit_textChanged(const QString &arg1);
+
 protected:
     // Override resizeEvent to handle window resizing
     void resizeEvent(QResizeEvent *event) override;
