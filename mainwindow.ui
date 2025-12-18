@@ -14,10 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="spacing">
-     <number>0</number>
-    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -31,193 +28,223 @@
      <number>0</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="windowBodyLayout">
-      <property name="spacing">
-       <number>0</number>
+     <widget class="QSplitter" name="windowBodySplitter">
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
-      <item>
-       <widget class="QSplitter" name="windowBodySplitter">
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
-        </property>
-        <widget class="QSplitter" name="navSplitter">
-         <property name="styleSheet">
-          <string notr="true">QWidget#navSplitter { background-color: rgb(96, 174, 233) }
+      <widget class="QSplitter" name="navSplitter">
+       <property name="styleSheet">
+        <string notr="true">QWidget#navSplitter { background-color: rgb(96, 174, 233) }
 </string>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
-         <widget class="QWidget" name="navTopContainer" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
-         <widget class="QWidget" name="navFilterContainer" native="true"/>
-         <widget class="NavLibraryContainer" name="navLibraryContainer" native="true"/>
-        </widget>
-        <widget class="QSplitter" name="fileListSplitter">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+       <widget class="QWidget" name="navFilterContainer" native="true"/>
+       <widget class="QWidget" name="navTopContainer" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="NavLibraryContainer" name="navLibraryContainer" native="true"/>
+      </widget>
+      <widget class="QWidget" name="fileFilterArea" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
          <widget class="QWidget" name="fileListFiltersContainer" native="true">
-          <widget class="QWidget" name="layoutWidget">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>10</y>
-             <width>531</width>
-             <height>52</height>
-            </rect>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QHBoxLayout" name="mediaFolderLayout">
+             <item>
+              <widget class="QLabel" name="mediaFolderLabel">
+               <property name="text">
+                <string>Media Folder</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="mediaFolderLineEdit">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="mediaFolderBrowseButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="baseSize">
+                <size>
+                 <width>0</width>
+                 <height>100</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Browse...</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="saveButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="baseSize">
+                <size>
+                 <width>0</width>
+                 <height>100</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Save</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="filterCriteriaLayout">
+             <property name="spacing">
+              <number>4</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Name Matches</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Creation Date</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDateEdit" name="dateEdit">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSplitter" name="fileListSplitter">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <widget class="QWidget" name="verticalLayoutWidget">
+           <layout class="QVBoxLayout" name="fileListContainer">
+            <property name="spacing">
+             <number>5</number>
+            </property>
+            <property name="leftMargin">
+             <number>5</number>
+            </property>
+            <property name="topMargin">
+             <number>5</number>
+            </property>
+            <property name="rightMargin">
+             <number>5</number>
+            </property>
+            <property name="bottomMargin">
+             <number>5</number>
+            </property>
             <item>
-             <widget class="QLabel" name="mediaFolderLabel">
-              <property name="text">
-               <string>Media Folder</string>
+             <widget class="TaggableListView" name="fileListView">
+              <property name="acceptDrops">
+               <bool>true</bool>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="mediaFolderLineEdit">
-              <property name="minimumSize">
+              <property name="iconSize">
                <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="mediaFolderBrowseButton">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
+                <width>100</width>
                 <height>100</height>
                </size>
               </property>
-              <property name="text">
-               <string>Browse...</string>
+              <property name="resizeMode">
+               <enum>QListView::ResizeMode::Adjust</enum>
+              </property>
+              <property name="spacing">
+               <number>5</number>
+              </property>
+              <property name="gridSize">
+               <size>
+                <width>120</width>
+                <height>120</height>
+               </size>
+              </property>
+              <property name="viewMode">
+               <enum>QListView::ViewMode::IconMode</enum>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
-          <widget class="QPushButton" name="saveButton">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>60</y>
-             <width>80</width>
-             <height>30</height>
-            </rect>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="baseSize">
-            <size>
-             <width>0</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Save</string>
-           </property>
-          </widget>
+          <widget class="TagAssignmentContainer" name="fileListTagAssignmentContainer" native="true"/>
          </widget>
-         <widget class="QWidget" name="verticalLayoutWidget">
-          <layout class="QVBoxLayout" name="fileListContainer">
-           <property name="spacing">
-            <number>5</number>
-           </property>
-           <property name="leftMargin">
-            <number>5</number>
-           </property>
-           <property name="topMargin">
-            <number>5</number>
-           </property>
-           <property name="rightMargin">
-            <number>5</number>
-           </property>
-           <property name="bottomMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <widget class="TaggableListView" name="fileListView">
-             <property name="acceptDrops">
-              <bool>true</bool>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>100</width>
-               <height>100</height>
-              </size>
-             </property>
-             <property name="resizeMode">
-              <enum>QListView::ResizeMode::Adjust</enum>
-             </property>
-             <property name="spacing">
-              <number>5</number>
-             </property>
-             <property name="gridSize">
-              <size>
-               <width>120</width>
-               <height>120</height>
-              </size>
-             </property>
-             <property name="viewMode">
-              <enum>QListView::ViewMode::IconMode</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="TagAssignmentContainer" name="fileListTagAssignmentContainer" native="true"/>
-        </widget>
-        <widget class="QSplitter" name="previewSplitter">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QSplitter" name="previewSplitter">
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+       <widget class="QWidget" name="horizontalLayoutWidget_2">
+        <layout class="QHBoxLayout" name="previewContainer">
+         <property name="spacing">
+          <number>5</number>
          </property>
-         <widget class="QWidget" name="horizontalLayoutWidget_2">
-          <layout class="QHBoxLayout" name="previewContainer">
-           <property name="spacing">
-            <number>5</number>
-           </property>
-           <property name="leftMargin">
-            <number>5</number>
-           </property>
-           <property name="topMargin">
-            <number>5</number>
-           </property>
-           <property name="rightMargin">
-            <number>5</number>
-           </property>
-           <property name="bottomMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <widget class="QGraphicsView" name="previewGraphicsView"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="previewWidget" native="true"/>
-        </widget>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QGraphicsView" name="previewGraphicsView"/>
+         </item>
+        </layout>
        </widget>
-      </item>
-     </layout>
+       <widget class="QWidget" name="previewWidget" native="true"/>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -239,8 +266,21 @@ border-bottom: 1px solid #DDD; /* width, style, color */</string>
      <string>File</string>
     </property>
     <addaction name="actionOpen_Folder"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave_All"/>
+    <addaction name="actionSave_Visible"/>
+   </widget>
+   <widget class="QMenu" name="menuFilter">
+    <property name="title">
+     <string>Filter</string>
+    </property>
+    <addaction name="actionFile_Name"/>
+    <addaction name="actionFile_Path"/>
+    <addaction name="actionCreation_Date"/>
+    <addaction name="actionModification_Date"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuFilter"/>
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="styleSheet">
@@ -251,6 +291,36 @@ border-top: 1px solid #DDD; /* width, style, color */</string>
   <action name="actionOpen_Folder">
    <property name="text">
     <string>Open Folder...</string>
+   </property>
+  </action>
+  <action name="actionSave_All">
+   <property name="text">
+    <string>Save All</string>
+   </property>
+  </action>
+  <action name="actionSave_Visible">
+   <property name="text">
+    <string>Save Visible</string>
+   </property>
+  </action>
+  <action name="actionFile_Name">
+   <property name="text">
+    <string>File Name</string>
+   </property>
+  </action>
+  <action name="actionFile_Path">
+   <property name="text">
+    <string>File Path</string>
+   </property>
+  </action>
+  <action name="actionCreation_Date">
+   <property name="text">
+    <string>Creation Date</string>
+   </property>
+  </action>
+  <action name="actionModification_Date">
+   <property name="text">
+    <string>Modification Date</string>
    </property>
   </action>
  </widget>
