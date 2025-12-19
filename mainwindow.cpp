@@ -163,6 +163,16 @@ void MainWindow::refreshTagAssignmentArea(){
 
     QList<Tag*>* assignedTags = core->getAssignedTags_FilteredFiles();
 
+    // Remove existing tag assignment widgets
+    QLayout* l = ui->fileListTagAssignmentContainer->layout();
+    QLayoutItem* item;
+    while ((item = l->takeAt(0)) != nullptr) {
+        if (QWidget *widget = item->widget()) {
+            widget->setParent(nullptr); // Detach from parent
+            widget->deleteLater();      // Schedule deletion
+        }
+    }
+
     for (int ti=0; ti < assignedTags->count(); ++ti){
 
         TagFamilyWidget* w = nullptr;
