@@ -198,11 +198,7 @@ void TaggedFileCollection::addFile(QFileInfo fileInfo, QList<TagSet> tags){
             tags_->append(current_tag);
         }
 
-        //qDebug() << current_tag->tagFamily->tagFamilyName;
-        //qDebug() << current_tag->tagName;
-
         newOrExistingTags->append(current_tag);
-
     }
 
     // Then add it
@@ -217,16 +213,6 @@ void TaggedFileCollection::addFile(QFileInfo fileInfo, QList<TagSet> tags){
     // In order to store the custom object box it as a variant and store in item.setdata()
     i->setData(QVariant::fromValue(tf));
     tagged_files_->appendRow(i);
-\
-    // Debugging adding and retrieving variants
-
-    //qDebug() << tagged_file_collection_->rowCount();
-
-    //QStandardItem* item = tagged_file_collection_->item(tagged_file_collection_->rowCount()-1);
-    //QVariant var = item->data();
-    //TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-
-    //qDebug() << itemAsTaggedFile->fileName;
 }
 
 void TaggedFileCollection::renameFamily(QString oldName, QString newName){

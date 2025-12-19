@@ -87,11 +87,12 @@ void MainWindow::setRootFolder(){
     QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
 
     QString folder = QFileDialog::getExistingDirectory(this, "Open Folder", le->text());
+    QListView* lv = ui->fileListView;
+    lv->setModel(nullptr);
+
     core->setRootDirectory(folder);
 
     le->setText(folder);
-
-    QListView* lv = ui->fileListView;
     lv->setModel(core->getItemModelProxy());
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
@@ -211,35 +212,42 @@ void MainWindow::refreshTagAssignmentArea(){
 
 void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
 
-    QList<QModelIndex> sel = selected.indexes();
-
-    int firstInd = sel.first().row();
-
-    // Get the absolute path to the selected file
-    QVariant selectedImage = core->getItemModel()->item(firstInd)->data();
-    TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
-
     // Get the previewer scene
     QGraphicsView* view = ui->previewGraphicsView;
     QGraphicsScene* scene = view->scene();
 
-    // Load the image
-    QPixmap pixmap(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
-    //    QMessageBox::critical(nullptr, "Error", "Failed to load image.");
-    //    return -1;
-    //}
+    if( selected.isEmpty()){
+        scene->clear();
+    }
+    else {
+        QModelIndex proxyIndex = selected.indexes().first();
 
-    // Replace the image in the scene
-    scene->clear();
-    QGraphicsPixmapItem *item = scene->addPixmap(pixmap);
-    item->setTransformationMode(Qt::SmoothTransformation);
+        // Map proxy index used by the view to source index in the model
+        QModelIndex sourceIndex = core->getItemModelProxy()->mapToSource(proxyIndex);
 
-    // Fix up zoom and such
-    view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
-    view->setRenderHint(QPainter::Antialiasing);
-    view->setRenderHint(QPainter::SmoothPixmapTransform);
-    view->setDragMode(QGraphicsView::ScrollHandDrag);
-    view->show();
+        // Get the absolute path to the selected file
+        QVariant selectedImage = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
+        TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
+
+
+        // Load the image
+        QPixmap pixmap(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
+        //    QMessageBox::critical(nullptr, "Error", "Failed to load image.");
+        //    return -1;
+        //}
+
+        // Replace the image in the scene
+        scene->clear();
+        QGraphicsPixmapItem *item = scene->addPixmap(pixmap);
+        item->setTransformationMode(Qt::SmoothTransformation);
+
+        // Fix up zoom and such
+        view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
+        view->setRenderHint(QPainter::Antialiasing);
+        view->setRenderHint(QPainter::SmoothPixmapTransform);
+        view->setDragMode(QGraphicsView::ScrollHandDrag);
+        view->show();
+    }
 }
 
 void MainWindow::freshenPreview(){
@@ -284,5 +292,8 @@ void MainWindow::on_saveButton_clicked()
 void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
 {
     core->setFileNameFilter(ui->fileNameFilterLineEdit->text());
+    if (ui->fileListView->selectionModel()) {
+        ui->fileListView->selectionModel()->clearSelection();
+    }
 }
 
