@@ -150,18 +150,18 @@ QList<TagSet> TaggedFileCollection::parseTagJson(QJsonObject tagsJson){
     return tagSets;
 }
 
-void TaggedFileCollection::addFile(QString fp, QString fn){
+void TaggedFileCollection::addFile(QFileInfo fileInfo){
     QList<TagSet> tagSets;
-    addFile(fp,fn,tagSets);
+    addFile(fileInfo, tagSets);
 
 }
 
-void TaggedFileCollection::addFile(QString fp, QString fn, QJsonObject tagsJson){
+void TaggedFileCollection::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
     QList<TagSet> tagSets = parseTagJson(tagsJson);
-    addFile(fp,fn,tagSets);
+    addFile(fileInfo, tagSets);
 }
 
-void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
+void TaggedFileCollection::addFile(QFileInfo fileInfo, QList<TagSet> tags){
     // Add to to the Tagged Object collection and collect links to its tags and tag families
 
     // For each item in the tag set add the family, if it doesn't already exist,
@@ -206,11 +206,11 @@ void TaggedFileCollection::addFile(QString fp, QString fn, QList<TagSet> tags){
     }
 
     // Then add it
-    TaggedFile *tf = new TaggedFile(fp, fn, newOrExistingTags);
+    TaggedFile *tf = new TaggedFile(fileInfo, newOrExistingTags);
     // Standard items have just an icon and text
 
     // Make an icon
-    QPixmap p = QPixmap(fp + "/" + fn);
+    QPixmap p = QPixmap(tf->filePath + "/" + tf->fileName);
     QPixmap squarePixmap = makeSquareIcon(p, 100);
 
     QStandardItem *i = new QStandardItem(QIcon(squarePixmap), tf->fileName);

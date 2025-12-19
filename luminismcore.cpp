@@ -42,11 +42,11 @@ void LuminismCore::loadRootDirectory(){
             QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
             QJsonObject tagsJson = d.object();
 
-            tfc->addFile(fileInfo.absolutePath(), fileInfo.fileName(), tagsJson);
+            tfc->addFile(fileInfo, tagsJson);
 
         } else {
             // Otherwise just add the file with no tags
-            tfc->addFile(fileInfo.absolutePath(), fileInfo.fileName());
+            tfc->addFile(fileInfo);
         }
     }
 }

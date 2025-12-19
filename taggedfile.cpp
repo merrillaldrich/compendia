@@ -5,10 +5,14 @@ TaggedFile::TaggedFile(QObject *parent)
 
 }
 
-TaggedFile::TaggedFile(QString fp, QString fn, QList<Tag*>* tl, QObject *parent)
+TaggedFile::TaggedFile(QFileInfo fileInfo,
+                       QList<Tag*>* tl,
+                       QObject *parent)
     : QObject{parent}{
-    filePath = fp;
-    fileName = fn;
+    this->filePath = fileInfo.absolutePath();
+    this->fileName = fileInfo.fileName();
+    this->fileCreationDateTime = fileInfo.birthTime();
+    this->fileModificationDateTime = fileInfo.lastModified();
     tagList = tl;
 }
 

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QStandardItemModel>
 #include <QPainter>
+#include <QFileInfo>
 #include "tagfamily.h"
 #include "tag.h"
 #include "taggedfile.h"
@@ -37,9 +38,9 @@ public:
 
     QList<TagSet> parseTagJson(QJsonObject tagsJson);
 
-    void addFile(QString fp, QString fn);
-    void addFile(QString fp, QString fn, QJsonObject tagsJson);
-    void addFile(QString fp, QString fn, QList<TagSet> tags);
+    void addFile(QFileInfo fileInfo);
+    void addFile(QFileInfo fileInfo, QJsonObject tagsJson);
+    void addFile(QFileInfo fileInfo, QList<TagSet> tags);
 
     void applyTag(Tag* droppedTag);
     void applyTag(TaggedFile* f, TagSet t);

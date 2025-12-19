@@ -7,6 +7,7 @@
 #include <QMetaType>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QFileInfo>
 #include "tag.h"
 
 class TaggedFile : public QObject {
@@ -16,11 +17,14 @@ class TaggedFile : public QObject {
 public:
     QString filePath = "";
     QString fileName = "";
+    QDateTime fileCreationDateTime;
+    QDateTime fileModificationDateTime;
+
     QList<Tag*>* tagList = new QList<Tag*>;
 
     TaggedFile(QObject *parent = nullptr);
 
-    TaggedFile(QString fp, QString fn, QList<Tag *> *tl, QObject *parent = nullptr);
+    TaggedFile(QFileInfo fileInfo, QList<Tag *> *tl, QObject *parent = nullptr);
 
     QString TaggedFileJSON();
 
