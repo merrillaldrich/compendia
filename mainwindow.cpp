@@ -161,7 +161,7 @@ void MainWindow::refreshTagAssignmentArea(){
 
     // Loop over all the tags assigned to files
 
-    QList<Tag*>* assignedTags = core->getAssignedTags();
+    QList<Tag*>* assignedTags = core->getAssignedTags_FilteredFiles();
 
     for (int ti=0; ti < assignedTags->count(); ++ti){
 
@@ -295,5 +295,6 @@ void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
     if (ui->fileListView->selectionModel()) {
         ui->fileListView->selectionModel()->clearSelection();
     }
+    refreshTagAssignmentArea();
 }
 

@@ -32,6 +32,7 @@ public:
 
     QList<Tag*>* getLibraryTags();
     QList<Tag*>* getAssignedTags();
+    QList<Tag*>* getAssignedTags_FilteredFiles();
 
     Tag* getTag(QString tagFamilyName, QString tagName);
     TagFamily* getTagFamily(QString tagFamilyName);

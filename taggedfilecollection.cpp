@@ -48,6 +48,31 @@ QList<Tag*>* TaggedFileCollection::getAssignedTags(){
     return distinctTags;
 }
 
+QList<Tag*>* TaggedFileCollection::getAssignedTags_FilteredFiles(){
+    // Loop over files and make a distinct list of all tags that
+    // are assigned to a file
+    QList<Tag*>* distinctTags = new QList<Tag*>();
+
+    for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i){
+
+        QModelIndex proxyIndex = tagged_files_proxy_->index(i, 0);
+
+        // Map proxy index used by the view to source index in the model
+        QModelIndex sourceIndex = getItemModelProxy()->mapToSource(proxyIndex);
+
+        QVariant var = sourceIndex.data(Qt::UserRole + 1);
+        TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+
+        for (int j = 0; j < itemAsTaggedFile->tagList->count(); ++j){
+            Tag* t = itemAsTaggedFile->tagList->at(j);
+            if(!distinctTags->contains(t)){
+                distinctTags->append(t);
+            }
+        }
+    }
+    return distinctTags;
+}
+
 Tag* TaggedFileCollection::getTag(QString tagFamilyName, QString tagName){
     Tag* matchingTag = nullptr;
     for( int i = 0; i < tags_->count(); ++i ){
