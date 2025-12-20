@@ -22,6 +22,8 @@ public:
     void setName(QString tagName);
     QString getName() const;
 
+    bool operator==(const Tag& other) const;
+
 signals:
     void nameChanged();
 

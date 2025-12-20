@@ -23,6 +23,10 @@ QString Tag::getName() const {
     return tag_name_;
 }
 
+bool Tag::operator==(const Tag& other) const {
+    return ( tag_name_ == other.getName() && tagFamily->getName() == other.tagFamily->getName() );
+}
+
 // Overloaded operator<< for writing to QDataStream for drag and drop
 QDataStream &operator<<(QDataStream &out, const Tag &t) {
     QString name = t.getName();

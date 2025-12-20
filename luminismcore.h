@@ -36,6 +36,7 @@ public:
     void addLibraryTagFamily(TagFamily* tagFamily);
     void applyTag(Tag* tag);
     void applyTag(TaggedFile* file, TagSet tagSet);
+    void unApplyTag(TaggedFile* file, Tag* tag);
 
     void setFileNameFilter(QString filterText);
 

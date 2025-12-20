@@ -97,12 +97,12 @@ TagFamily* TaggedFileCollection::getTagFamily(QString tagFamilyName){
     return matchingTagFamily;
 }
 
-void TaggedFileCollection::applyTag(Tag* t){
+void TaggedFileCollection::applyTag(Tag* tag){
     for( int i = 0; i < tagged_files_->rowCount(); ++i ){
         QStandardItem* item = tagged_files_->item(i);
         QVariant var = item->data();
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-        itemAsTaggedFile->tagList->append(t);
+        itemAsTaggedFile->tagList->append(tag);
     }
 }
 
@@ -110,6 +110,17 @@ void TaggedFileCollection::applyTag(TaggedFile* f, TagSet t){
     // TODO: deal with uniqueness of tags
     Tag* tag = getTag(t.tagFamilyName, t.tagName);
     f->tagList->append(tag);
+}
+
+void TaggedFileCollection::unApplyTag(TaggedFile* file, Tag* tag){
+    // Locate the file and remove the indicated tag from it
+    for( int i = 0; i < tagged_files_->rowCount(); ++i ){
+        QStandardItem* item = tagged_files_->item(i);
+        QVariant var = item->data();
+        TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+        if(itemAsTaggedFile == file)
+            itemAsTaggedFile->tagList->removeOne(tag);
+    }
 }
 
 Tag* TaggedFileCollection::addLibraryTag(QString tagFamilyName, QString tagName){

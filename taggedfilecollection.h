@@ -43,8 +43,9 @@ public:
     void addFile(QFileInfo fileInfo, QJsonObject tagsJson);
     void addFile(QFileInfo fileInfo, QList<TagSet> tags);
 
-    void applyTag(Tag* droppedTag);
+    void applyTag(Tag* tag);
     void applyTag(TaggedFile* f, TagSet t);
+    void unApplyTag(TaggedFile* file, Tag* tag);
 
     Tag* addLibraryTag(QString tagFamilyName, QString tagName);
     void addLibraryTag(Tag* tag);

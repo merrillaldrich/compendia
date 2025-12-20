@@ -25,7 +25,7 @@ void TagWidgetCloseButton::paintEvent(QPaintEvent *event){
 
     QPainterPath path;
 
-    QPen xPen(QColor("#666666"));
+    QPen xPen(QColor("#888888"));
     xPen.setWidth(2);
     painter.setPen(xPen);
 
