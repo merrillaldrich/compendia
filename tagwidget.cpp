@@ -15,8 +15,11 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     setMinimumSize(132, 28);
     setAttribute(Qt::WA_TranslucentBackground);
 
+    TagWidgetCloseButton* closeButton = new TagWidgetCloseButton("", this);
+    closeButton->setMinimumSize(20,20);
+
     line_edit_ = new VariableWidthLineEdit(this);
-    line_edit_->move(12, 0);
+    line_edit_->move(20, 0);
     line_edit_->setFixedHeight(line_edit_->height());
     line_edit_->hide();
 
@@ -25,7 +28,7 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     connect(line_edit_, &QLineEdit::textEdited, this, &onTextEdited);
 
     label_ = new ClickableLabel(this);
-    label_->move(18, 0);
+    label_->move(26, 0);
     label_->setFixedHeight(label_->height());
     label_->setText(tag->getName());
 
@@ -33,7 +36,7 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     // has a value. Otherwise we need the default width so it doesn't collapse
     if(label_->text().length() > 0){
         label_->adjustSize();
-        setMinimumWidth(label_->width() + 32);
+        setMinimumWidth(label_->width() + 36);
     }
 
     label_->show();
@@ -57,7 +60,7 @@ void TagWidget::onTextEdited(){
         setMinimumWidth(100);
     }
     else{
-        setMinimumWidth(line_edit_->width() + 32);
+        setMinimumWidth(line_edit_->width() + 42);
     }
 }
 
@@ -163,7 +166,7 @@ void TagWidget::mouseMoveEvent(QMouseEvent *event){
 void TagWidget::onTagNameChanged(){
     label_->setText(tag_->getName());
     label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
-    setMinimumWidth(label_->width() + 32);
+    setMinimumWidth(label_->width() + 42);
 }
 
 Tag* TagWidget::getTag(){

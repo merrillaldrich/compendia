@@ -11,6 +11,7 @@
 #include "tag.h"
 #include "clickablelabel.h"
 #include "variablewidthlineedit.h"
+#include "tagwidgetclosebutton.h"
 #include "mainwindow.h"
 
 

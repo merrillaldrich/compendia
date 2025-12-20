@@ -43,6 +43,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         clickablelabel.h clickablelabel.cpp
         variablewidthlineedit.h variablewidthlineedit.cpp
         filterproxymodel.h filterproxymodel.cpp
+        tagwidgetclosebutton.h tagwidgetclosebutton.cpp
 
     )
 
