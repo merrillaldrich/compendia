@@ -114,5 +114,8 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
     }
 }
 
+void TagAssignmentContainer::unApplyTag(TaggedFile* file, Tag* tag){
+    qDebug() << "Not implemented: tagAssignmentContainer.unApplyTag";
+}
 
 

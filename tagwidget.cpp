@@ -17,6 +17,7 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     TagWidgetCloseButton* closeButton = new TagWidgetCloseButton("", this);
     closeButton->setMinimumSize(20,20);
+    connect(closeButton, &TagWidgetCloseButton::clicked, this, &onCloseButtonClicked);
 
     line_edit_ = new VariableWidthLineEdit(this);
     line_edit_->move(20, 0);
@@ -62,6 +63,10 @@ void TagWidget::onTextEdited(){
     else{
         setMinimumWidth(line_edit_->width() + 42);
     }
+}
+
+void TagWidget::onCloseButtonClicked(){
+    qDebug() << "Tag close button clicked";
 }
 
 void TagWidget::paintEvent(QPaintEvent *event) {

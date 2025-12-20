@@ -46,6 +46,7 @@ private slots:
     void onLabelClicked(QMouseEvent *event);
     void onTagNameChanged();
     void onTextEdited();
+    void onCloseButtonClicked();
 
 signals:
 

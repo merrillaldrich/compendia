@@ -20,6 +20,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+    void unApplyTag(TaggedFile* file, Tag* tag);
 
 signals:
 };
