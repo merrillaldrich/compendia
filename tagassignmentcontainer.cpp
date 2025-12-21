@@ -61,7 +61,7 @@ void TagAssignmentContainer::refresh(QSet<Tag*>* tags){
 
         if (t==nullptr){
             t = new TagWidget(currentTag, w);
-            connect(t, &TagWidget::deleteRequested, this, &onTagDeleteRequested);
+            connect(t, &TagWidget::deleteRequested, this, &TagAssignmentContainer::onTagDeleteRequested);
             w->layout()->addWidget(t);
             t->show();
         }

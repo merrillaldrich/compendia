@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Set up the tag assignment area
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
-    connect(ui->fileListTagAssignmentContainer, &TagAssignmentContainer::tagDeleteRequested, this, &on_tagUnassign_Requested);
+    connect(ui->fileListTagAssignmentContainer, &TagAssignmentContainer::tagDeleteRequested, this, &MainWindow::on_tagUnassign_Requested);
 
     // Set up the preview area
     QGraphicsScene* scene = new QGraphicsScene();
