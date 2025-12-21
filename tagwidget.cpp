@@ -9,7 +9,7 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     tag_ = tag;
 
     // Connect this widget to its tag's name changed event
-    connect(tag_, &Tag::nameChanged, this, &onTagNameChanged);
+    connect(tag_, &Tag::nameChanged, this, &TagWidget::onTagNameChanged);
 
     // Must set a default size here even though the width will be adjusted for the text content later
     setMinimumSize(132, 28);
@@ -17,7 +17,7 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     TagWidgetCloseButton* closeButton = new TagWidgetCloseButton("", this);
     closeButton->setMinimumSize(20,20);
-    connect(closeButton, &TagWidgetCloseButton::clicked, this, &onCloseButtonClicked);
+    connect(closeButton, &TagWidgetCloseButton::clicked, this, &TagWidget::onCloseButtonClicked);
 
     line_edit_ = new VariableWidthLineEdit(this);
     line_edit_->move(20, 0);
@@ -26,7 +26,7 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     // Connect this widget to the line edit, to keep this wide enough
     // on screen for longer values to be entered
-    connect(line_edit_, &QLineEdit::textEdited, this, &onTextEdited);
+    connect(line_edit_, &QLineEdit::textEdited, this, &TagWidget::onTextEdited);
 
     label_ = new ClickableLabel(this);
     label_->move(26, 0);

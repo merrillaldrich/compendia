@@ -10,7 +10,7 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     tag_family_ = tagFamily;
 
     // Connect this widget to its tag family's name changed event
-    connect(tag_family_, &TagFamily::nameChanged, this, &onTagFamilyNameChanged);
+    connect(tag_family_, &TagFamily::nameChanged, this, &TagFamilyWidget::onTagFamilyNameChanged);
 
     setMinimumSize(304,64);
     setAttribute(Qt::WA_TranslucentBackground);
