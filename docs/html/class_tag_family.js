@@ -1,0 +1,8 @@
+var class_tag_family =
+[
+    [ "TagFamily", "class_tag_family.html#a88c3c36aeb7f46ae7b6ad984ccc6fcc7", null ],
+    [ "TagFamily", "class_tag_family.html#ad984137ef12707072c2048bd926636b2", null ],
+    [ "getName", "class_tag_family.html#a9d344211abfce9b2852e454d98507949", null ],
+    [ "nameChanged", "class_tag_family.html#a722daa0913c95fd78e08a8cd9040860e", null ],
+    [ "setName", "class_tag_family.html#a8cb81c8dd65532fcf6552960fd515608", null ]
+];

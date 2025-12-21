@@ -1,0 +1,37 @@
+<map id="luminismcore.h" name="luminismcore.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="111,5,220,32"/>
+<area shape="rect" id="Node000002" href="$luminismcore_8cpp.html" title=" " alt="" coords="5,80,129,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,44,86,81,82,78,138,39"/>
+<area shape="rect" id="Node000003" href="$mainwindow_8cpp.html" title=" " alt="" coords="158,304,275,331"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="173,46,217,304,212,304,168,49"/>
+<area shape="rect" id="Node000004" href="$mainwindow_8h.html" title=" " alt="" coords="358,80,461,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="222,34,369,78,365,81,223,39"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="341,107,297,126,275,140,257,156,235,193,223,235,219,274,218,305,213,302,213,274,218,234,230,191,253,153,272,135,295,121,345,104"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html" title=" " alt="" coords="267,155,342,181"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="377,117,324,156,321,152,381,114"/>
+<area shape="rect" id="Node000006" href="$tagassignmentcontainer_8h.html" title=" " alt="" coords="626,304,796,331"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="476,92,533,96,595,106,660,124,720,152,752,173,775,196,783,209,786,224,786,240,780,257,760,285,734,306,732,301,756,282,775,255,780,239,781,224,778,211,771,199,748,177,718,157,658,129,594,111,532,101,478,97"/>
+<area shape="rect" id="Node000008" href="$tagfamilywidget_8h.html" title=" " alt="" coords="429,229,553,256"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="436,115,468,153,484,193,492,230,487,228,479,195,463,156,435,120"/>
+<area shape="rect" id="Node000012" href="$taggablelistview_8h.html" title=" " alt="" coords="582,155,706,181"/>
+<area shape="poly" id="edge14_Node000004_Node000012" title=" " alt="" coords="465,109,606,153,601,155,465,114"/>
+<area shape="rect" id="Node000014" href="$tagwidget_8h.html" title=" " alt="" coords="366,155,454,181"/>
+<area shape="poly" id="edge16_Node000004_Node000014" title=" " alt="" coords="411,120,412,155,407,153,408,125"/>
+<area shape="rect" id="Node000007" href="$tagassignmentcontainer_8cpp.html" title=" " alt="" coords="619,379,803,405"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="713,345,713,380,709,377,709,348"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="426,261,265,306,264,301,431,259"/>
+<area shape="poly" id="edge12_Node000008_Node000006" title=" " alt="" coords="544,259,675,303,670,304,543,264"/>
+<area shape="rect" id="Node000009" href="$navlibrarycontainer_8h.html" title=" " alt="" coords="299,304,440,331"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="459,263,392,306,390,301,454,265"/>
+<area shape="rect" id="Node000011" href="$tagfamilywidget_8cpp.html" title=" " alt="" coords="465,304,602,331"/>
+<area shape="poly" id="edge13_Node000008_Node000011" title=" " alt="" coords="507,267,529,305,524,303,505,272"/>
+<area shape="rect" id="Node000010" href="$navlibrarycontainer_8cpp.html" title=" " alt="" coords="292,379,447,405"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="372,345,372,380,368,377,368,348"/>
+<area shape="rect" id="Node000013" href="$taggablelistview_8cpp.html" title=" " alt="" coords="627,229,766,256"/>
+<area shape="poly" id="edge15_Node000012_Node000013" title=" " alt="" coords="663,192,690,230,685,228,661,197"/>
+<area shape="poly" id="edge17_Node000014_Node000003" title=" " alt="" coords="404,194,391,228,369,258,348,274,324,288,276,306,274,301,322,283,345,270,365,254,386,226,400,198"/>
+<area shape="poly" id="edge18_Node000014_Node000006" title=" " alt="" coords="462,184,565,227,637,266,695,304,689,303,634,271,563,232,461,190"/>
+<area shape="poly" id="edge19_Node000014_Node000008" title=" " alt="" coords="436,189,480,229,474,229,434,194"/>
+<area shape="rect" id="Node000015" href="$tagwidget_8cpp.html" title=" " alt="" coords="253,229,356,256"/>
+<area shape="poly" id="edge20_Node000014_Node000015" title=" " alt="" coords="381,189,324,231,321,226,377,192"/>
+</map>

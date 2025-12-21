@@ -1,0 +1,9 @@
+<map id="tagwidgetclosebutton.h" name="tagwidgetclosebutton.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="87,5,242,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,105,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,32,88,74,85,69,143,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="128,80,200,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="166,31,167,66,162,63,163,34"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="224,80,323,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="184,30,245,71,240,72,183,35"/>
+</map>

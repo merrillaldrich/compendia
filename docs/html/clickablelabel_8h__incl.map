@@ -1,0 +1,9 @@
+<map id="clickablelabel.h" name="clickablelabel.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="73,5,184,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,68,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,32,66,73,62,68,110,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="92,80,165,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="130,31,131,65,126,63,127,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="189,80,228,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="143,30,186,70,181,70,141,35"/>
+</map>

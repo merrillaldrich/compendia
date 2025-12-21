@@ -20,6 +20,10 @@ void TagAssignmentContainer::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 
+/*!
+ * \brief TagAssignmentContainer::dragMoveEvent
+ * \param event
+ */
 void TagAssignmentContainer::dragMoveEvent(QDragMoveEvent *event)
 {
     //qDebug() << "Drag move event!";
