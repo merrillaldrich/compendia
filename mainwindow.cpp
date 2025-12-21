@@ -105,119 +105,19 @@ void MainWindow::refreshNavTagLibrary(){
 
     // Update the display of the tag library to show all the tag families and tags
 
-    // Loop over all the tags in the library
     QList<Tag*>* libTags = core->getLibraryTags();
-    for (int ti=0; ti < libTags->count(); ++ti){
-
-        TagFamilyWidget* w = nullptr;
-        TagWidget* t = nullptr;
-
-        Tag* currentTag = libTags->at(ti);
-        TagFamily* currentTagFamily = currentTag->tagFamily;
-
-        // If there are no tag family widgets or there's no tagfamilywidget for the current tag's family, add a new tagfamilywidget
-        QList<TagFamilyWidget*> existingTFWidgets = ui->navLibraryContainer->findChildren<TagFamilyWidget*>();
-
-        //for(TagFamilyWidget* tfw : existingTFWidgets){
-        for(int tfwi = 0; tfwi < existingTFWidgets.count(); ++tfwi){
-            TagFamilyWidget* existingTFWidget = existingTFWidgets.at(tfwi);
-
-            if (existingTFWidget->getTagFamily() == currentTagFamily) {
-                // Tag family widget exists, use it
-                w = existingTFWidget;
-            }
-        }
-
-        if (w==nullptr){
-            TagFamily* tf = core->getTagFamily(currentTag->tagFamily->getName());
-            w = new TagFamilyWidget(tf, ui->navLibraryContainer);
-            ui->navLibraryContainer->layout()->addWidget(w);
-            w->show();
-        }
-
-        // If there are no tag widgets, or there's no tagwidget for the current tag in the current family widget, add a new tagwidget
-        QList<TagWidget*> existingTWidgets = w->findChildren<TagWidget*>();
-
-        for(int twi = 0; twi < existingTWidgets.count(); ++twi){
-            TagWidget* existingTWidget = existingTWidgets.at(twi);
-            if(existingTWidget->getTag() == currentTag){
-                // Tag widget exists, use it
-                t = existingTWidget;
-            }
-        }
-
-        if (t==nullptr){
-            t = new TagWidget(currentTag, w);
-            w->layout()->addWidget(t);
-            t->show();
-        }
-    }
+    ui->navLibraryContainer->refresh(libTags);
 }
+
 
 void MainWindow::refreshTagAssignmentArea(){
 
     // Update the display of the tag assignment area to show all the tag families and tags that are
     // associated to files in the file list
 
-    // Loop over all the tags assigned to files
-
     QList<Tag*>* assignedTags = core->getAssignedTags_FilteredFiles();
+    ui->fileListTagAssignmentContainer->refresh(assignedTags);
 
-    // Remove existing tag assignment widgets
-    QLayout* l = ui->fileListTagAssignmentContainer->layout();
-    QLayoutItem* item;
-    while ((item = l->takeAt(0)) != nullptr) {
-        if (QWidget *widget = item->widget()) {
-            widget->setParent(nullptr); // Detach from parent
-            widget->deleteLater();      // Schedule deletion
-        }
-    }
-
-    for (int ti=0; ti < assignedTags->count(); ++ti){
-
-        TagFamilyWidget* w = nullptr;
-        TagWidget* t = nullptr;
-
-        Tag* currentTag = assignedTags->at(ti);
-        TagFamily* currentTagFamily = currentTag->tagFamily;
-
-        // If there are no tag family widgets or there's no tagfamilywidget for the current tag's family, add a new tagfamilywidget
-        QList<TagFamilyWidget*> existingTFWidgets = ui->fileListTagAssignmentContainer->findChildren<TagFamilyWidget*>();
-
-        //for(TagFamilyWidget* tfw : existingTFWidgets){
-        for(int tfwi = 0; tfwi < existingTFWidgets.count(); ++tfwi){
-            TagFamilyWidget* existingTFWidget = existingTFWidgets.at(tfwi);
-
-            if (existingTFWidget->getTagFamily() == currentTagFamily) {
-                // Tag family widget exists, use it
-                w = existingTFWidget;
-            }
-        }
-
-        if (w==nullptr){
-            TagFamily* tf = core->getTagFamily(currentTag->tagFamily->getName());
-            w = new TagFamilyWidget(tf, ui->fileListTagAssignmentContainer);
-            ui->fileListTagAssignmentContainer->layout()->addWidget(w);
-            w->show();
-        }
-
-        // If there are no tag widgets, or there's no tagwidget for the current tag in the current family widget, add a new tagwidget
-        QList<TagWidget*> existingTWidgets = w->findChildren<TagWidget*>();
-
-        for(int twi = 0; twi < existingTWidgets.count(); ++twi){
-            TagWidget* existingTWidget = existingTWidgets.at(twi);
-            if(existingTWidget->getTag() == currentTag){
-                // Tag widget exists, use it
-                t = existingTWidget;
-            }
-        }
-
-        if (t==nullptr){
-            t = new TagWidget(currentTag, w);
-            w->layout()->addWidget(t);
-            t->show();
-        }
-    }
 }
 
 void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {

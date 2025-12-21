@@ -1,0 +1,7 @@
+<map id="TagFamilyWidget::TagFamilyWidget" name="TagFamilyWidget::TagFamilyWidget">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,23,196,65"/>
+<area shape="rect" id="Node000002" href="$class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e" title=" " alt="" coords="253,5,408,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,31,240,28,235,29,197,36"/>
+<area shape="rect" id="Node000003" href="$class_tag_family.html#a722daa0913c95fd78e08a8cd9040860e" title=" " alt="" coords="244,56,417,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,52,231,58,226,58,196,57"/>
+</map>

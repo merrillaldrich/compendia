@@ -1,0 +1,9 @@
+<map id="TagFamily::nameChanged" name="TagFamily::nameChanged">
+<area shape="rect" id="Node000001" title=" " alt="" coords="376,35,549,61"/>
+<area shape="rect" id="Node000002" href="$class_tag_family.html#a8cb81c8dd65532fcf6552960fd515608" title=" " alt="" coords="162,5,304,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="358,35,305,30,305,25,363,35"/>
+<area shape="rect" id="Node000004" href="$class_tag_family_widget.html#aafc6de5e5fbc7740ad587c6f4199af44" title=" " alt="" coords="138,56,328,99"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="363,61,329,68,328,63,358,61"/>
+<area shape="rect" id="Node000003" href="$tagfamily_8cpp.html#afdfd98b759c396c438841712c3eb57a5" title=" " alt="" coords="5,5,90,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="144,20,90,21,89,16,149,17"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="TagAssignmentContainer::dropEvent" name="TagAssignmentContainer::dropEvent">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,73,173,116"/>
+<area shape="rect" id="Node000002" href="$class_luminism_core.html#a9fe93be3e6f05b1d8901f307f09a0880" title=" " alt="" coords="242,5,408,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,70,220,41,249,35,244,38,221,47,143,75"/>
+<area shape="rect" id="Node000003" href="$class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title=" " alt="" coords="249,56,401,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="173,83,236,78,231,80,174,88"/>
+<area shape="rect" id="Node000004" href="$class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title=" " alt="" coords="260,107,390,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="173,101,247,111,242,112,173,106"/>
+<area shape="rect" id="Node000005" href="$class_tag_family_widget.html#a3a79a93c476ad39e34381641bb97a187" title=" " alt="" coords="221,157,429,184"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="142,114,221,143,249,153,244,153,220,148,141,119"/>
+</map>

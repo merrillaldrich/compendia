@@ -12,7 +12,7 @@ class NavLibraryContainer : public QWidget
     Q_OBJECT
 public:
     explicit NavLibraryContainer(QWidget *parent = nullptr);
-
+    void refresh(QList<Tag*>* tags);
 protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 

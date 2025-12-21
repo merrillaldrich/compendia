@@ -1,0 +1,21 @@
+<map id="Tag::getName" name="Tag::getName">
+<area shape="rect" id="Node000001" title=" " alt="" coords="514,189,617,216"/>
+<area shape="rect" id="Node000002" href="$class_tagged_file_collection.html#adcb7c9ac635de9df3b7068025a49367d" title=" " alt="" coords="297,5,439,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="549,175,516,119,492,88,464,62,440,48,440,42,468,58,496,85,521,116,555,176"/>
+<area shape="rect" id="Node000003" href="$class_tagged_file_collection.html#a3f8358b95712d17c0e5716bec1037f86" title=" " alt="" coords="297,72,439,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="536,179,504,154,465,129,440,117,440,112,467,124,507,150,542,179"/>
+<area shape="rect" id="Node000005" href="$class_tag_widget.html#af7a7bc637053188b7106dba0e533f20e" title=" " alt="" coords="270,139,466,165"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="496,186,423,169,423,163,502,185"/>
+<area shape="rect" id="Node000006" href="$tag_8cpp.html#a53842d615ae3cb82bfa54db2f4268a0b" title=" " alt="" coords="326,189,410,216"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="496,203,411,205,410,200,501,202"/>
+<area shape="rect" id="Node000007" href="$class_tag.html#ac573654c99464b6f22d53af4cd12be8c" title=" " alt="" coords="311,240,424,267"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="496,220,423,242,422,237,502,219"/>
+<area shape="rect" id="Node000008" href="$class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title=" " alt="" coords="272,291,464,317"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="542,226,507,256,467,281,437,293,436,288,465,276,504,252,537,228"/>
+<area shape="rect" id="Node000010" href="$class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title=" " alt="" coords="291,341,444,368"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="553,228,519,283,495,309,467,332,444,343,443,338,465,327,491,305,514,279,548,231"/>
+<area shape="rect" id="Node000004" href="$class_tagged_file_collection.html#ae0cbbcbe0e5d9837f435ce7d732af93e" title=" " alt="" coords="42,72,185,115"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="279,95,186,96,184,91,283,92"/>
+<area shape="rect" id="Node000009" href="$class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title=" " alt="" coords="5,291,222,317"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="254,304,222,307,222,301,259,304"/>
+</map>

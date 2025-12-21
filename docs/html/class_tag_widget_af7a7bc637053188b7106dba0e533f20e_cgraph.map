@@ -1,0 +1,9 @@
+<map id="TagWidget::mouseMoveEvent" name="TagWidget::mouseMoveEvent">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,202,83"/>
+<area shape="rect" id="Node000002" href="$class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title=" " alt="" coords="275,5,378,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,53,262,33,257,35,166,58"/>
+<area shape="rect" id="Node000003" href="$class_tag_family.html#a9d344211abfce9b2852e454d98507949" title=" " alt="" coords="255,56,398,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="202,67,242,69,237,70,202,72"/>
+<area shape="rect" id="Node000004" href="$class_tag_widget.html#a50de81724fb26ba24274b5fac5279867" title=" " alt="" coords="250,107,403,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="166,81,252,102,247,103,165,86"/>
+</map>

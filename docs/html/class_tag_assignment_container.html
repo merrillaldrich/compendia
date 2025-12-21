@@ -118,14 +118,15 @@ Collaboration diagram for TagAssignmentContainer:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a50559469a54b9da5d0889cf184d3d830" id="r_a50559469a54b9da5d0889cf184d3d830"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a50559469a54b9da5d0889cf184d3d830">TagAssignmentContainer</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memitem:ac99326694ed23e9c768b6999980c8a45" id="r_ac99326694ed23e9c768b6999980c8a45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac99326694ed23e9c768b6999980c8a45">refresh</a> (QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *tags)</td></tr>
+<tr class="memdesc:ac99326694ed23e9c768b6999980c8a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust the UI to display only the tags assigned to the files in the filtered list of files.  <br /></td></tr>
+<tr class="memitem:a8cb54550e378f6c34f29c89b31431c07" id="r_a8cb54550e378f6c34f29c89b31431c07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8cb54550e378f6c34f29c89b31431c07">unApplyTag</a> (<a class="el" href="class_tagged_file.html">TaggedFile</a> *file, <a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aa38bdffa0d58b7a983def087fe0ddd43" id="r_aa38bdffa0d58b7a983def087fe0ddd43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa38bdffa0d58b7a983def087fe0ddd43">dragEnterEvent</a> (QDragEnterEvent *event) override</td></tr>
 <tr class="memitem:a0109e800c07b54b925e3c81891216496" id="r_a0109e800c07b54b925e3c81891216496"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0109e800c07b54b925e3c81891216496">dragMoveEvent</a> (QDragMoveEvent *event) override</td></tr>
-<tr class="memdesc:a0109e800c07b54b925e3c81891216496"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="#a0109e800c07b54b925e3c81891216496" title="TagAssignmentContainer::dragMoveEvent.">TagAssignmentContainer::dragMoveEvent</a>.  <br /></td></tr>
 <tr class="memitem:acc294e5cea082d4375b9be7876b828de" id="r_acc294e5cea082d4375b9be7876b828de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc294e5cea082d4375b9be7876b828de">dropEvent</a> (QDropEvent *event) override</td></tr>
-<tr class="memitem:a8cb54550e378f6c34f29c89b31431c07" id="r_a8cb54550e378f6c34f29c89b31431c07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8cb54550e378f6c34f29c89b31431c07">unApplyTag</a> (<a class="el" href="class_tagged_file.html">TaggedFile</a> *file, <a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a50559469a54b9da5d0889cf184d3d830" name="a50559469a54b9da5d0889cf184d3d830"></a>
@@ -202,14 +203,6 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="#a0109e800c07b54b925e3c81891216496" title="TagAssignmentContainer::dragMoveEvent.">TagAssignmentContainer::dragMoveEvent</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">event</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
 </div>
 </div>
 <a id="acc294e5cea082d4375b9be7876b828de" name="acc294e5cea082d4375b9be7876b828de"></a>
@@ -234,6 +227,60 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph.png" border="0" usemap="#aclass_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph" id="aclass_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph">
+<area shape="rect" title=" " alt="" coords="5,73,173,116"/>
+<area shape="rect" href="class_luminism_core.html#a9fe93be3e6f05b1d8901f307f09a0880" title=" " alt="" coords="242,5,408,32"/>
+<area shape="poly" title=" " alt="" coords="141,70,220,41,249,35,244,38,221,47,143,75"/>
+<area shape="rect" href="class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title=" " alt="" coords="249,56,401,83"/>
+<area shape="poly" title=" " alt="" coords="173,83,236,78,231,80,174,88"/>
+<area shape="rect" href="class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title=" " alt="" coords="260,107,390,133"/>
+<area shape="poly" title=" " alt="" coords="173,101,247,111,242,112,173,106"/>
+<area shape="rect" href="class_tag_family_widget.html#a3a79a93c476ad39e34381641bb97a187" title=" " alt="" coords="221,157,429,184"/>
+<area shape="poly" title=" " alt="" coords="142,114,221,143,249,153,244,153,220,148,141,119"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac99326694ed23e9c768b6999980c8a45" name="ac99326694ed23e9c768b6999980c8a45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac99326694ed23e9c768b6999980c8a45">&#9670;&#160;</a></span>refresh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagAssignmentContainer::refresh </td>
+          <td>(</td>
+          <td class="paramtype">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *</td>          <td class="paramname"><span class="paramname"><em>tags</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adjust the UI to display only the tags assigned to the files in the filtered list of files. </p>
+<p>Update the tag assignment area to show only the tags in the passed list.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tags</td><td>Set of tags to include in the assignment area </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_assignment_container_ac99326694ed23e9c768b6999980c8a45_cgraph.png" border="0" usemap="#aclass_tag_assignment_container_ac99326694ed23e9c768b6999980c8a45_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_assignment_container_ac99326694ed23e9c768b6999980c8a45_cgraph" id="aclass_tag_assignment_container_ac99326694ed23e9c768b6999980c8a45_cgraph">
+<area shape="rect" title="Adjust the UI to display only the tags assigned to the files in the filtered list of files." alt="" coords="5,23,173,65"/>
+<area shape="rect" href="class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title=" " alt="" coords="260,5,390,32"/>
+<area shape="poly" title=" " alt="" coords="173,32,247,27,242,28,174,38"/>
+<area shape="rect" href="class_tag_family_widget.html#a3a79a93c476ad39e34381641bb97a187" title=" " alt="" coords="221,56,429,83"/>
+<area shape="poly" title=" " alt="" coords="173,50,208,56,202,57,173,56"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -242,9 +289,6 @@ Protected Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void TagAssignmentContainer::unApplyTag </td>
@@ -257,11 +301,6 @@ Protected Member Functions</h2></td></tr>
           <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>

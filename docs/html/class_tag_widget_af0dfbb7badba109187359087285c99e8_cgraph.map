@@ -1,0 +1,9 @@
+<map id="TagWidget::TagWidget" name="TagWidget::TagWidget">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,159,83"/>
+<area shape="rect" id="Node000002" href="$class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e" title=" " alt="" coords="207,5,362,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,53,216,35,211,38,139,58"/>
+<area shape="rect" id="Node000003" href="$class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title=" " alt="" coords="233,56,336,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,67,220,69,214,70,159,72"/>
+<area shape="rect" id="Node000004" href="$class_tag.html#a1529679fece67dd8a8cd704aeb703e4d" title=" " alt="" coords="217,107,352,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="139,81,216,101,211,103,138,86"/>
+</map>
