@@ -39,6 +39,7 @@ void TaggableListView::dropEvent(QDropEvent *event) {
         // Apply the tagset to the item
         MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
         mainWin->core->applyTag(itemAsTaggedFile, ts);
+        mainWin->refreshTagAssignmentArea();
 
     } else {
         //qDebug() << "Dropped on empty area";

@@ -61,6 +61,7 @@ void TagAssignmentContainer::refresh(QSet<Tag*>* tags){
 
         if (t==nullptr){
             t = new TagWidget(currentTag, w);
+            connect(t, &TagWidget::deleteRequested, this, &onTagDeleteRequested);
             w->layout()->addWidget(t);
             t->show();
         }
@@ -177,8 +178,11 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
     }
 }
 
-void TagAssignmentContainer::unApplyTag(TaggedFile* file, Tag* tag){
-    qDebug() << "Not implemented: tagAssignmentContainer.unApplyTag";
+void TagAssignmentContainer::onTagDeleteRequested(Tag* tag){
+    // Tell core to remove this tag from all the files in the filtered file list
+
+    emit tagDeleteRequested(tag);
 }
+
 
 

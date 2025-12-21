@@ -26,7 +26,11 @@ public:
 
     LuminismCore *core;
 
+    void setRootFolder();
     void freshenPreview();
+    void clearPreview();
+    void refreshNavTagLibrary();
+    void refreshTagAssignmentArea();
 
 private slots:
 
@@ -45,13 +49,11 @@ private slots:
 
     void on_fileNameFilterLineEdit_textChanged(const QString &arg1);
 
+    void on_tagUnassign_Requested(Tag* tag);
+
 protected:
     // Override resizeEvent to handle window resizing
     void resizeEvent(QResizeEvent *event) override;
-    void setRootFolder();
-    void clearPreview();
-    void refreshNavTagLibrary();
-    void refreshTagAssignmentArea();
 };
 
 #endif // MAINWINDOW_H

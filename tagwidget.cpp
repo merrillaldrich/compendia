@@ -67,6 +67,9 @@ void TagWidget::onTextEdited(){
 
 void TagWidget::onCloseButtonClicked(){
     qDebug() << "Tag close button clicked";
+    qDebug() << "Request deletion of tag" << this->tag_->getName();
+
+    emit(deleteRequested(this->tag_));
 }
 
 void TagWidget::paintEvent(QPaintEvent *event) {

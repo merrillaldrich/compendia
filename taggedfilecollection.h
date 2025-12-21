@@ -45,7 +45,8 @@ public:
 
     void applyTag(Tag* tag);
     void applyTag(TaggedFile* f, TagSet t);
-    void unApplyTag(TaggedFile* file, Tag* tag);
+    void unapplyTag(TaggedFile* file, Tag* tag);
+    void unapplyTag(Tag* tag);
 
     Tag* addLibraryTag(QString tagFamilyName, QString tagName);
     void addLibraryTag(Tag* tag);

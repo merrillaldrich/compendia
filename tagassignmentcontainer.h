@@ -16,14 +16,15 @@ class TagAssignmentContainer : public QWidget
 public:
     explicit TagAssignmentContainer(QWidget *parent = nullptr);
     void refresh(QSet<Tag *> *tags);
-    void unApplyTag(TaggedFile* file, Tag* tag);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+    void onTagDeleteRequested(Tag* tag);
 
 signals:
+    void tagDeleteRequested(Tag* tag);
 };
 
 #endif // TAGASSIGNMENTCONTAINER_H

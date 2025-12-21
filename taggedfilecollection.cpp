@@ -21,7 +21,6 @@ FilterProxyModel* TaggedFileCollection::getItemModelProxy(){
 }
 
 bool TaggedFileCollection::containsFiles(){
-    //return ( tagged_file_collection_->count() > 0 );
     return ( tagged_files_->rowCount() > 0 );
 }
 
@@ -105,9 +104,13 @@ TagFamily* TaggedFileCollection::getTagFamily(QString tagFamilyName){
 }
 
 void TaggedFileCollection::applyTag(Tag* tag){
-    for( int i = 0; i < tagged_files_->rowCount(); ++i ){
-        QStandardItem* item = tagged_files_->item(i);
-        QVariant var = item->data();
+    // Apply tag to all the files in the filtered file list
+    for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i){
+        QModelIndex proxyIndex = tagged_files_proxy_->index(i, 0);
+
+        // Map proxy index used by the view to source index in the model
+        QModelIndex sourceIndex = getItemModelProxy()->mapToSource(proxyIndex);
+        QVariant var = sourceIndex.data(Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
         itemAsTaggedFile->tags->insert(tag);
     }
@@ -118,7 +121,20 @@ void TaggedFileCollection::applyTag(TaggedFile* f, TagSet t){
     f->tags->insert(tag);
 }
 
-void TaggedFileCollection::unApplyTag(TaggedFile* file, Tag* tag){
+void TaggedFileCollection::unapplyTag(Tag* tag){
+    // Remove tag from all the files in the filtered file list
+    for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i){
+        QModelIndex proxyIndex = tagged_files_proxy_->index(i, 0);
+
+        // Map proxy index used by the view to source index in the model
+        QModelIndex sourceIndex = getItemModelProxy()->mapToSource(proxyIndex);
+        QVariant var = sourceIndex.data(Qt::UserRole + 1);
+        TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+        itemAsTaggedFile->tags->remove(tag);
+    }
+}
+
+void TaggedFileCollection::unapplyTag(TaggedFile* file, Tag* tag){
     // Locate the file and remove the indicated tag from it
     for( int i = 0; i < tagged_files_->rowCount(); ++i ){
         QStandardItem* item = tagged_files_->item(i);

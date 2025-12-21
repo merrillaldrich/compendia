@@ -49,7 +49,7 @@ private slots:
     void onCloseButtonClicked();
 
 signals:
-
+    void deleteRequested(Tag *t);
 };
 
 #endif // TAGWIDGET_H

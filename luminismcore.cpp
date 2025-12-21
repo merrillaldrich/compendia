@@ -125,9 +125,15 @@ void LuminismCore::applyTag(TaggedFile* file, TagSet tagSet){
     tfc->applyTag(file, tagSet);
 }
 
-void LuminismCore::unApplyTag(TaggedFile* file, Tag* tag){
-    tfc->unApplyTag(file, tag);
+void LuminismCore::unapplyTag(TaggedFile* file, Tag* tag){
+    tfc->unapplyTag(file, tag);
 }
+
+void LuminismCore::unapplyTag(Tag* tag){
+    // Remove tag from all files in the filtered list
+    tfc->unapplyTag(tag);
+}
+
 
 QStandardItemModel* LuminismCore::getItemModel(){
     return tfc->getItemModel();

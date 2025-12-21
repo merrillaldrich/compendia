@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Set up the tag assignment area
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
+    connect(ui->fileListTagAssignmentContainer, &TagAssignmentContainer::tagDeleteRequested, this, &on_tagUnassign_Requested);
 
     // Set up the preview area
     QGraphicsScene* scene = new QGraphicsScene();
@@ -204,3 +205,7 @@ void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
     refreshTagAssignmentArea();
 }
 
+void MainWindow::on_tagUnassign_Requested(Tag* tag){
+    core->unapplyTag(tag);
+    refreshTagAssignmentArea();
+}
