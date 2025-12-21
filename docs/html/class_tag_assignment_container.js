@@ -4,6 +4,6 @@ var class_tag_assignment_container =
     [ "dragEnterEvent", "class_tag_assignment_container.html#aa38bdffa0d58b7a983def087fe0ddd43", null ],
     [ "dragMoveEvent", "class_tag_assignment_container.html#a0109e800c07b54b925e3c81891216496", null ],
     [ "dropEvent", "class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de", null ],
-    [ "refresh", "class_tag_assignment_container.html#ac99326694ed23e9c768b6999980c8a45", null ],
+    [ "refresh", "class_tag_assignment_container.html#a1b270469b801c5c32dc124ad82bffba1", null ],
     [ "unApplyTag", "class_tag_assignment_container.html#a8cb54550e378f6c34f29c89b31431c07", null ]
 ];

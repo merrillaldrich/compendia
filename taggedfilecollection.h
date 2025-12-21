@@ -30,9 +30,9 @@ public:
 
     bool containsFiles();
 
-    QSet<Tag *> *getLibraryTags();
-    QList<Tag*>* getAssignedTags();
-    QList<Tag*>* getAssignedTags_FilteredFiles();
+    QSet<Tag*>* getLibraryTags();
+    QSet<Tag*>* getAssignedTags();
+    QSet<Tag*>* getAssignedTags_FilteredFiles();
 
     Tag* getTag(QString tagFamilyName, QString tagName);
     TagFamily* getTagFamily(QString tagFamilyName);

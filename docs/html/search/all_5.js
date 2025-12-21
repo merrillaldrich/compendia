@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['getassignedtags_0',['getAssignedTags',['../class_luminism_core.html#a176e8bf777d9702d39f8313fedf7bbff',1,'LuminismCore::getAssignedTags()'],['../class_tagged_file_collection.html#ad334848604bd80350e1b1a9e81396f53',1,'TaggedFileCollection::getAssignedTags()']]],
-  ['getassignedtags_5ffilteredfiles_1',['getAssignedTags_FilteredFiles',['../class_luminism_core.html#a758fd15ec5a5a3a9e17290ba11855052',1,'LuminismCore::getAssignedTags_FilteredFiles()'],['../class_tagged_file_collection.html#a647b344465c845ed04c5754cf1240f9f',1,'TaggedFileCollection::getAssignedTags_FilteredFiles()']]],
+  ['getassignedtags_0',['getAssignedTags',['../class_luminism_core.html#a0ce8ff76fc0457058162381e4bf4331f',1,'LuminismCore::getAssignedTags()'],['../class_tagged_file_collection.html#a45a6855e893c93182be6d417b45984e5',1,'TaggedFileCollection::getAssignedTags()']]],
+  ['getassignedtags_5ffilteredfiles_1',['getAssignedTags_FilteredFiles',['../class_luminism_core.html#ab94d6cae69aa49c88e5c0df6d06d01ba',1,'LuminismCore::getAssignedTags_FilteredFiles()'],['../class_tagged_file_collection.html#a48f02fcecff6e80c342fc08bd40d185e',1,'TaggedFileCollection::getAssignedTags_FilteredFiles()']]],
   ['getfiltercreationdate_2',['getFilterCreationDate',['../class_filter_proxy_model.html#a938e8b371f366de31c071e03e1c904ce',1,'FilterProxyModel']]],
   ['getitemmodel_3',['getItemModel',['../class_luminism_core.html#abde1217c9f067c103db0d1f903880a9c',1,'LuminismCore::getItemModel()'],['../class_tagged_file_collection.html#afe5b1a73f7892294bfef0716d7b514bc',1,'TaggedFileCollection::getItemModel()']]],
   ['getitemmodelproxy_4',['getItemModelProxy',['../class_luminism_core.html#affb257e3d695377774c5fbb6531cbc32',1,'LuminismCore::getItemModelProxy()'],['../class_tagged_file_collection.html#a05c1524a43ae0dbbe44627110baa8f9d',1,'TaggedFileCollection::getItemModelProxy()']]],

@@ -5,7 +5,7 @@ var searchData=
   ['tagfamily_2',['TagFamily',['../class_tag_family.html#a88c3c36aeb7f46ae7b6ad984ccc6fcc7',1,'TagFamily::TagFamily(QObject *parent=nullptr)'],['../class_tag_family.html#ad984137ef12707072c2048bd926636b2',1,'TagFamily::TagFamily(QString tf, QObject *parent)']]],
   ['tagfamilywidget_3',['TagFamilyWidget',['../class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158',1,'TagFamilyWidget::TagFamilyWidget(QWidget *parent=nullptr)'],['../class_tag_family_widget.html#aafc6de5e5fbc7740ad587c6f4199af44',1,'TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)']]],
   ['taggablelistview_4',['TaggableListView',['../class_taggable_list_view.html#adbbd197786c726596616f6b23b5bc764',1,'TaggableListView']]],
-  ['taggedfile_5',['TaggedFile',['../class_tagged_file.html#a43c3f4264871eb417ea34e0cfbdf354f',1,'TaggedFile::TaggedFile(QObject *parent=nullptr)'],['../class_tagged_file.html#a9771ef02c42da144a0e924fca40c1bbe',1,'TaggedFile::TaggedFile(QFileInfo fileInfo, QList&lt; Tag * &gt; *tl, QObject *parent=nullptr)']]],
+  ['taggedfile_5',['TaggedFile',['../class_tagged_file.html#a43c3f4264871eb417ea34e0cfbdf354f',1,'TaggedFile::TaggedFile(QObject *parent=nullptr)'],['../class_tagged_file.html#a7c036453d9bdf5b954de39921721dafd',1,'TaggedFile::TaggedFile(QFileInfo fileInfo, QSet&lt; Tag * &gt; *tags, QObject *parent=nullptr)']]],
   ['taggedfilecollection_6',['TaggedFileCollection',['../class_tagged_file_collection.html#a1f1fd591180aee48780558bc8f424710',1,'TaggedFileCollection']]],
   ['taggedfilejson_7',['TaggedFileJSON',['../class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688',1,'TaggedFile']]],
   ['tagset_8',['TagSet',['../class_tag_set.html#a2f80becb68dc589245d1035cbcdd5f2c',1,'TagSet']]],

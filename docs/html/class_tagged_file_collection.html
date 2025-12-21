@@ -120,8 +120,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f1fd591180aee48780558bc8f424710" id="r_a1f1fd591180aee48780558bc8f424710"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f1fd591180aee48780558bc8f424710">TaggedFileCollection</a> (QObject *parent=nullptr)</td></tr>
 <tr class="memitem:a0b2eadb1eb4178a4a95e1a92e7b0c1d7" id="r_a0b2eadb1eb4178a4a95e1a92e7b0c1d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b2eadb1eb4178a4a95e1a92e7b0c1d7">containsFiles</a> ()</td></tr>
 <tr class="memitem:af0685a06f744c8604a61c15bd2abd8ff" id="r_af0685a06f744c8604a61c15bd2abd8ff"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0685a06f744c8604a61c15bd2abd8ff">getLibraryTags</a> ()</td></tr>
-<tr class="memitem:ad334848604bd80350e1b1a9e81396f53" id="r_ad334848604bd80350e1b1a9e81396f53"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad334848604bd80350e1b1a9e81396f53">getAssignedTags</a> ()</td></tr>
-<tr class="memitem:a647b344465c845ed04c5754cf1240f9f" id="r_a647b344465c845ed04c5754cf1240f9f"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a647b344465c845ed04c5754cf1240f9f">getAssignedTags_FilteredFiles</a> ()</td></tr>
+<tr class="memitem:a45a6855e893c93182be6d417b45984e5" id="r_a45a6855e893c93182be6d417b45984e5"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45a6855e893c93182be6d417b45984e5">getAssignedTags</a> ()</td></tr>
+<tr class="memitem:a48f02fcecff6e80c342fc08bd40d185e" id="r_a48f02fcecff6e80c342fc08bd40d185e"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48f02fcecff6e80c342fc08bd40d185e">getAssignedTags_FilteredFiles</a> ()</td></tr>
 <tr class="memitem:a3f8358b95712d17c0e5716bec1037f86" id="r_a3f8358b95712d17c0e5716bec1037f86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tag.html">Tag</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f8358b95712d17c0e5716bec1037f86">getTag</a> (QString tagFamilyName, QString tagName)</td></tr>
 <tr class="memitem:a972da14a9161a300f6296421a18d0cdf" id="r_a972da14a9161a300f6296421a18d0cdf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tag_family.html">TagFamily</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a972da14a9161a300f6296421a18d0cdf">getTagFamily</a> (QString tagFamilyName)</td></tr>
 <tr class="memitem:a011f61a99f743fa70b5e1086f202ba12" id="r_a011f61a99f743fa70b5e1086f202ba12"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="class_tag_set.html">TagSet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a011f61a99f743fa70b5e1086f202ba12">parseTagJson</a> (QJsonObject tagsJson)</td></tr>
@@ -449,14 +449,14 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="ad334848604bd80350e1b1a9e81396f53" name="ad334848604bd80350e1b1a9e81396f53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad334848604bd80350e1b1a9e81396f53">&#9670;&#160;</a></span>getAssignedTags()</h2>
+<a id="a45a6855e893c93182be6d417b45984e5" name="a45a6855e893c93182be6d417b45984e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45a6855e893c93182be6d417b45984e5">&#9670;&#160;</a></span>getAssignedTags()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; * TaggedFileCollection::getAssignedTags </td>
+          <td class="memname">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; * TaggedFileCollection::getAssignedTags </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -466,14 +466,14 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a647b344465c845ed04c5754cf1240f9f" name="a647b344465c845ed04c5754cf1240f9f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a647b344465c845ed04c5754cf1240f9f">&#9670;&#160;</a></span>getAssignedTags_FilteredFiles()</h2>
+<a id="a48f02fcecff6e80c342fc08bd40d185e" name="a48f02fcecff6e80c342fc08bd40d185e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48f02fcecff6e80c342fc08bd40d185e">&#9670;&#160;</a></span>getAssignedTags_FilteredFiles()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; * TaggedFileCollection::getAssignedTags_FilteredFiles </td>
+          <td class="memname">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; * TaggedFileCollection::getAssignedTags_FilteredFiles </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -483,8 +483,8 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_tagged_file_collection_a647b344465c845ed04c5754cf1240f9f_cgraph.png" border="0" usemap="#aclass_tagged_file_collection_a647b344465c845ed04c5754cf1240f9f_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_collection_a647b344465c845ed04c5754cf1240f9f_cgraph" id="aclass_tagged_file_collection_a647b344465c845ed04c5754cf1240f9f_cgraph">
+<div class="center"><img src="class_tagged_file_collection_a48f02fcecff6e80c342fc08bd40d185e_cgraph.png" border="0" usemap="#aclass_tagged_file_collection_a48f02fcecff6e80c342fc08bd40d185e_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tagged_file_collection_a48f02fcecff6e80c342fc08bd40d185e_cgraph" id="aclass_tagged_file_collection_a48f02fcecff6e80c342fc08bd40d185e_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,213,48"/>
 <area shape="rect" href="class_tagged_file_collection.html#a05c1524a43ae0dbbe44627110baa8f9d" title=" " alt="" coords="261,5,403,48"/>
 <area shape="poly" title=" " alt="" coords="213,24,248,27,243,27,213,29"/>
@@ -530,7 +530,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="class_tagged_file_collection_a05c1524a43ae0dbbe44627110baa8f9d_icgraph.png" border="0" usemap="#aclass_tagged_file_collection_a05c1524a43ae0dbbe44627110baa8f9d_icgraph" loading="lazy" alt=""/></div>
 <map name="aclass_tagged_file_collection_a05c1524a43ae0dbbe44627110baa8f9d_icgraph" id="aclass_tagged_file_collection_a05c1524a43ae0dbbe44627110baa8f9d_icgraph">
 <area shape="rect" title=" " alt="" coords="261,5,403,48"/>
-<area shape="rect" href="class_tagged_file_collection.html#a647b344465c845ed04c5754cf1240f9f" title=" " alt="" coords="5,5,213,48"/>
+<area shape="rect" href="class_tagged_file_collection.html#a48f02fcecff6e80c342fc08bd40d185e" title=" " alt="" coords="5,5,213,48"/>
 <area shape="poly" title=" " alt="" coords="243,27,213,29,213,24,248,27"/>
 </map>
 </div>

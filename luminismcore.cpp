@@ -85,11 +85,11 @@ QSet<Tag*>* LuminismCore::getLibraryTags(){
     return tfc->getLibraryTags();
 }
 
-QList<Tag*>* LuminismCore::getAssignedTags(){
+QSet<Tag*>* LuminismCore::getAssignedTags(){
     return tfc->getAssignedTags();
 }
 
-QList<Tag*>* LuminismCore::getAssignedTags_FilteredFiles(){
+QSet<Tag*>* LuminismCore::getAssignedTags_FilteredFiles(){
     return tfc->getAssignedTags_FilteredFiles();
 }
 

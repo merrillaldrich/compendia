@@ -15,7 +15,7 @@ class TagAssignmentContainer : public QWidget
     Q_OBJECT
 public:
     explicit TagAssignmentContainer(QWidget *parent = nullptr);
-    void refresh(QList<Tag*>* tags);
+    void refresh(QSet<Tag *> *tags);
     void unApplyTag(TaggedFile* file, Tag* tag);
 
 protected:

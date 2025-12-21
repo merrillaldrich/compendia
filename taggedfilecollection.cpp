@@ -29,29 +29,25 @@ QSet<Tag*>* TaggedFileCollection::getLibraryTags(){
     return tags_;
 }
 
-QList<Tag*>* TaggedFileCollection::getAssignedTags(){
+QSet<Tag*>* TaggedFileCollection::getAssignedTags(){
     // Loop over files and make a distinct list of all tags that
     // are assigned to a file
-    QList<Tag*>* distinctTags = new QList<Tag*>();
+    QSet<Tag*>* distinctTags = new QSet<Tag*>();
 
     for (int i = 0; i < tagged_files_->rowCount(); ++i){
         QStandardItem* item = tagged_files_->item(i);
         QVariant var = item->data();
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-        for (int j = 0; j < itemAsTaggedFile->tagList->count(); ++j){
-            Tag* t = itemAsTaggedFile->tagList->at(j);
-            if(!distinctTags->contains(t)){
-                distinctTags->append(t);
-            }
-        }
+        QSet<Tag*> &tgs = *itemAsTaggedFile->tags;
+        distinctTags->unite(tgs);
     }
     return distinctTags;
 }
 
-QList<Tag*>* TaggedFileCollection::getAssignedTags_FilteredFiles(){
+QSet<Tag*>* TaggedFileCollection::getAssignedTags_FilteredFiles(){
     // Loop over files and make a distinct list of all tags that
     // are assigned to a file
-    QList<Tag*>* distinctTags = new QList<Tag*>();
+    QSet<Tag*>* distinctTags = new QSet<Tag*>();
 
     for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i){
 
@@ -63,12 +59,8 @@ QList<Tag*>* TaggedFileCollection::getAssignedTags_FilteredFiles(){
         QVariant var = sourceIndex.data(Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
 
-        for (int j = 0; j < itemAsTaggedFile->tagList->count(); ++j){
-            Tag* t = itemAsTaggedFile->tagList->at(j);
-            if(!distinctTags->contains(t)){
-                distinctTags->append(t);
-            }
-        }
+        QSet<Tag*> &tgs = *itemAsTaggedFile->tags;
+        distinctTags->unite(tgs);
     }
     return distinctTags;
 }
@@ -117,14 +109,13 @@ void TaggedFileCollection::applyTag(Tag* tag){
         QStandardItem* item = tagged_files_->item(i);
         QVariant var = item->data();
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-        itemAsTaggedFile->tagList->append(tag);
+        itemAsTaggedFile->tags->insert(tag);
     }
 }
 
 void TaggedFileCollection::applyTag(TaggedFile* f, TagSet t){
-    // TODO: deal with uniqueness of tags
     Tag* tag = getTag(t.tagFamilyName, t.tagName);
-    f->tagList->append(tag);
+    f->tags->insert(tag);
 }
 
 void TaggedFileCollection::unApplyTag(TaggedFile* file, Tag* tag){
@@ -134,7 +125,7 @@ void TaggedFileCollection::unApplyTag(TaggedFile* file, Tag* tag){
         QVariant var = item->data();
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
         if(itemAsTaggedFile == file)
-            itemAsTaggedFile->tagList->removeOne(tag);
+            itemAsTaggedFile->tags->remove(tag);
     }
 }
 
@@ -231,7 +222,7 @@ void TaggedFileCollection::addFile(QFileInfo fileInfo, QList<TagSet> tags){
     // For each item in the tag set add the family, if it doesn't already exist,
     // and add the tag including a link to the family, if the tag doesn't already exist
 
-    QList<Tag*>* newOrExistingTags = new QList<Tag*>();
+    QSet<Tag*>* newOrExistingTags = new QSet<Tag*>();
 
     for(const TagSet value : tags) {
 
@@ -262,7 +253,7 @@ void TaggedFileCollection::addFile(QFileInfo fileInfo, QList<TagSet> tags){
             tags_->insert(current_tag);
         }
 
-        newOrExistingTags->append(current_tag);
+        newOrExistingTags->insert(current_tag);
     }
 
     // Then add it

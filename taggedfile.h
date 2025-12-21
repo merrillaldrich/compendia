@@ -20,11 +20,10 @@ public:
     QDateTime fileCreationDateTime;
     QDateTime fileModificationDateTime;
 
-    QList<Tag*>* tagList = new QList<Tag*>;
+    QSet<Tag*>* tags = new QSet<Tag*>;
 
     TaggedFile(QObject *parent = nullptr);
-
-    TaggedFile(QFileInfo fileInfo, QList<Tag *> *tl, QObject *parent = nullptr);
+    TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QObject *parent = nullptr);
 
     QString TaggedFileJSON();
 

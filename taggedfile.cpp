@@ -5,15 +5,13 @@ TaggedFile::TaggedFile(QObject *parent)
 
 }
 
-TaggedFile::TaggedFile(QFileInfo fileInfo,
-                       QList<Tag*>* tl,
-                       QObject *parent)
+TaggedFile::TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QObject *parent)
     : QObject{parent}{
     this->filePath = fileInfo.absolutePath();
     this->fileName = fileInfo.fileName();
     this->fileCreationDateTime = fileInfo.birthTime();
     this->fileModificationDateTime = fileInfo.lastModified();
-    tagList = tl;
+    this->tags = tags;
 }
 
 QString TaggedFile::TaggedFileJSON(){
@@ -24,8 +22,9 @@ QString TaggedFile::TaggedFileJSON(){
     Tag* t;
     QString fn;
 
-    for(int i = 0; i < tagList->count(); ++i){
-        t = tagList->at(i);
+    QSetIterator<Tag *> i(*tags);
+    while (i.hasNext()) {
+        Tag* t = i.next();
         fn = t->tagFamily->getName();
         if(!families.contains(fn)) {
             families.insert(fn, QJsonArray());

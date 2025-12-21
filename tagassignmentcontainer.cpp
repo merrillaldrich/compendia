@@ -11,7 +11,7 @@ TagAssignmentContainer::TagAssignmentContainer(QWidget *parent)
  *
  *  @param tags Set of tags to include in the assignment area
  */
-void TagAssignmentContainer::refresh(QList<Tag*>* tags){
+void TagAssignmentContainer::refresh(QSet<Tag*>* tags){
 
     // Remove existing tag assignment widgets
     QLayoutItem* item;
@@ -22,18 +22,17 @@ void TagAssignmentContainer::refresh(QList<Tag*>* tags){
         }
     }
 
-    for (int ti = 0; ti < tags->count(); ++ti){
+    QSetIterator<Tag *> i(*tags);
+    while (i.hasNext()) {
+        Tag* currentTag = i.next();
+        TagFamily* currentTagFamily = currentTag->tagFamily;
 
         TagFamilyWidget* w = nullptr;
         TagWidget* t = nullptr;
 
-        Tag* currentTag = tags->at(ti);
-        TagFamily* currentTagFamily = currentTag->tagFamily;
-
         // If there are no tag family widgets or there's no tagfamilywidget for the current tag's family, add a new tagfamilywidget
         QList<TagFamilyWidget*> existingTFWidgets = findChildren<TagFamilyWidget*>();
 
-        //for(TagFamilyWidget* tfw : existingTFWidgets){
         for(int tfwi = 0; tfwi < existingTFWidgets.count(); ++tfwi){
             TagFamilyWidget* existingTFWidget = existingTFWidgets.at(tfwi);
 

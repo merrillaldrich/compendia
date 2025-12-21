@@ -115,7 +115,7 @@ void MainWindow::refreshTagAssignmentArea(){
     // Update the display of the tag assignment area to show all the tag families and tags that are
     // associated to files in the file list
 
-    QList<Tag*>* assignedTags = core->getAssignedTags_FilteredFiles();
+    QSet<Tag*>* assignedTags = core->getAssignedTags_FilteredFiles();
     ui->fileListTagAssignmentContainer->refresh(assignedTags);
 
 }
