@@ -11,7 +11,7 @@ var class_luminism_core =
     [ "getAssignedTags_FilteredFiles", "class_luminism_core.html#a758fd15ec5a5a3a9e17290ba11855052", null ],
     [ "getItemModel", "class_luminism_core.html#abde1217c9f067c103db0d1f903880a9c", null ],
     [ "getItemModelProxy", "class_luminism_core.html#affb257e3d695377774c5fbb6531cbc32", null ],
-    [ "getLibraryTags", "class_luminism_core.html#a2f2a5282076ee58399ec63bd8f5613d8", null ],
+    [ "getLibraryTags", "class_luminism_core.html#a92ca175522004a3fa53f458f773fb97c", null ],
     [ "getTag", "class_luminism_core.html#ab3abeb957ed6015b509e1022568377de", null ],
     [ "getTagFamily", "class_luminism_core.html#ab1bfb52f20623c4aaca07a3ddda3a513", null ],
     [ "loadRootDirectory", "class_luminism_core.html#a797e7ab9f7b0c18348eb182c08abb980", null ],

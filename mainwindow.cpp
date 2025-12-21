@@ -105,7 +105,7 @@ void MainWindow::refreshNavTagLibrary(){
 
     // Update the display of the tag library to show all the tag families and tags
 
-    QList<Tag*>* libTags = core->getLibraryTags();
+    QSet<Tag*>* libTags = core->getLibraryTags();
     ui->navLibraryContainer->refresh(libTags);
 }
 
@@ -138,7 +138,6 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         // Get the absolute path to the selected file
         QVariant selectedImage = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
-
 
         // Load the image
         QPixmap pixmap(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
@@ -188,13 +187,10 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 
     // Be careful not to do anything before the window actually contains a view and image
     freshenPreview();
-
-    // Always call base class implementation
     QMainWindow::resizeEvent(event);
 }
 
-void MainWindow::on_saveButton_clicked()
-{
+void MainWindow::on_saveButton_clicked(){
     core->writeFileMetadata();
 }
 

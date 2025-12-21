@@ -81,7 +81,7 @@ void LuminismCore::writeFileMetadata(){
     }
 }
 
-QList<Tag*>* LuminismCore::getLibraryTags(){
+QSet<Tag*>* LuminismCore::getLibraryTags(){
     return tfc->getLibraryTags();
 }
 

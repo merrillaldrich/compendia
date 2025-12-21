@@ -16,8 +16,8 @@ class TaggedFileCollection : public QObject
     Q_OBJECT
 
 private:
-    QList<TagFamily*> *tag_families_;
-    QList<Tag*> *tags_;
+    QSet<TagFamily*>* tag_families_;
+    QSet<Tag*>* tags_;
 
     //QList<TaggedFile*> *tagged_files_;
     QStandardItemModel *tagged_files_;
@@ -30,7 +30,7 @@ public:
 
     bool containsFiles();
 
-    QList<Tag*>* getLibraryTags();
+    QSet<Tag *> *getLibraryTags();
     QList<Tag*>* getAssignedTags();
     QList<Tag*>* getAssignedTags_FilteredFiles();
 

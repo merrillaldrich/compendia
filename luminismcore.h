@@ -25,7 +25,7 @@ public:
 
     void writeFileMetadata();
 
-    QList<Tag*>* getLibraryTags();
+    QSet<Tag *> *getLibraryTags();
     QList<Tag*>* getAssignedTags();
     QList<Tag*>* getAssignedTags_FilteredFiles();
     Tag* getTag(QString tagFamilyName, QString tagName);

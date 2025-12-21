@@ -15,7 +15,7 @@ var class_tagged_file_collection =
     [ "getAssignedTags_FilteredFiles", "class_tagged_file_collection.html#a647b344465c845ed04c5754cf1240f9f", null ],
     [ "getItemModel", "class_tagged_file_collection.html#afe5b1a73f7892294bfef0716d7b514bc", null ],
     [ "getItemModelProxy", "class_tagged_file_collection.html#a05c1524a43ae0dbbe44627110baa8f9d", null ],
-    [ "getLibraryTags", "class_tagged_file_collection.html#a0252c0512a0da979c5cab87621653575", null ],
+    [ "getLibraryTags", "class_tagged_file_collection.html#af0685a06f744c8604a61c15bd2abd8ff", null ],
     [ "getTag", "class_tagged_file_collection.html#a3f8358b95712d17c0e5716bec1037f86", null ],
     [ "getTagFamily", "class_tagged_file_collection.html#a972da14a9161a300f6296421a18d0cdf", null ],
     [ "parseTagJson", "class_tagged_file_collection.html#a011f61a99f743fa70b5e1086f202ba12", null ],

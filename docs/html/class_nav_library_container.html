@@ -118,7 +118,7 @@ Collaboration diagram for NavLibraryContainer:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f20c6dbe3c1f30c792035676fb205d6" id="r_a1f20c6dbe3c1f30c792035676fb205d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f20c6dbe3c1f30c792035676fb205d6">NavLibraryContainer</a> (QWidget *parent=nullptr)</td></tr>
-<tr class="memitem:a13e132b93bd0e6e3916ae56dbaafe136" id="r_a13e132b93bd0e6e3916ae56dbaafe136"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13e132b93bd0e6e3916ae56dbaafe136">refresh</a> (QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *tags)</td></tr>
+<tr class="memitem:ae07805f6e7153c74be9d9c14ea2ae3a9" id="r_ae07805f6e7153c74be9d9c14ea2ae3a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae07805f6e7153c74be9d9c14ea2ae3a9">refresh</a> (QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *tags)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -186,8 +186,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a13e132b93bd0e6e3916ae56dbaafe136" name="a13e132b93bd0e6e3916ae56dbaafe136"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13e132b93bd0e6e3916ae56dbaafe136">&#9670;&#160;</a></span>refresh()</h2>
+<a id="ae07805f6e7153c74be9d9c14ea2ae3a9" name="ae07805f6e7153c74be9d9c14ea2ae3a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae07805f6e7153c74be9d9c14ea2ae3a9">&#9670;&#160;</a></span>refresh()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,16 +195,24 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">void NavLibraryContainer::refresh </td>
           <td>(</td>
-          <td class="paramtype">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *</td>          <td class="paramname"><span class="paramname"><em>tags</em></span></td><td>)</td>
+          <td class="paramtype">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *</td>          <td class="paramname"><span class="paramname"><em>tags</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Refresh the navigation area's library panel in the UI.</p>
+<p>This is generally used to update the UI to reflect the tags in the library</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tags</td><td>The set of tags that should be shown </td></tr>
+  </table>
+  </dd>
+</dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_nav_library_container_a13e132b93bd0e6e3916ae56dbaafe136_cgraph.png" border="0" usemap="#aclass_nav_library_container_a13e132b93bd0e6e3916ae56dbaafe136_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_nav_library_container_a13e132b93bd0e6e3916ae56dbaafe136_cgraph" id="aclass_nav_library_container_a13e132b93bd0e6e3916ae56dbaafe136_cgraph">
+<div class="center"><img src="class_nav_library_container_ae07805f6e7153c74be9d9c14ea2ae3a9_cgraph.png" border="0" usemap="#aclass_nav_library_container_ae07805f6e7153c74be9d9c14ea2ae3a9_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_nav_library_container_ae07805f6e7153c74be9d9c14ea2ae3a9_cgraph" id="aclass_nav_library_container_ae07805f6e7153c74be9d9c14ea2ae3a9_cgraph">
 <area shape="rect" title=" " alt="" coords="5,23,146,65"/>
 <area shape="rect" href="class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title=" " alt="" coords="233,5,363,32"/>
 <area shape="poly" title=" " alt="" coords="145,33,220,27,215,29,146,39"/>

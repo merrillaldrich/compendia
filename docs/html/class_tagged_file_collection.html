@@ -119,7 +119,7 @@ Collaboration diagram for TaggedFileCollection:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f1fd591180aee48780558bc8f424710" id="r_a1f1fd591180aee48780558bc8f424710"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f1fd591180aee48780558bc8f424710">TaggedFileCollection</a> (QObject *parent=nullptr)</td></tr>
 <tr class="memitem:a0b2eadb1eb4178a4a95e1a92e7b0c1d7" id="r_a0b2eadb1eb4178a4a95e1a92e7b0c1d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b2eadb1eb4178a4a95e1a92e7b0c1d7">containsFiles</a> ()</td></tr>
-<tr class="memitem:a0252c0512a0da979c5cab87621653575" id="r_a0252c0512a0da979c5cab87621653575"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0252c0512a0da979c5cab87621653575">getLibraryTags</a> ()</td></tr>
+<tr class="memitem:af0685a06f744c8604a61c15bd2abd8ff" id="r_af0685a06f744c8604a61c15bd2abd8ff"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0685a06f744c8604a61c15bd2abd8ff">getLibraryTags</a> ()</td></tr>
 <tr class="memitem:ad334848604bd80350e1b1a9e81396f53" id="r_ad334848604bd80350e1b1a9e81396f53"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad334848604bd80350e1b1a9e81396f53">getAssignedTags</a> ()</td></tr>
 <tr class="memitem:a647b344465c845ed04c5754cf1240f9f" id="r_a647b344465c845ed04c5754cf1240f9f"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a647b344465c845ed04c5754cf1240f9f">getAssignedTags_FilteredFiles</a> ()</td></tr>
 <tr class="memitem:a3f8358b95712d17c0e5716bec1037f86" id="r_a3f8358b95712d17c0e5716bec1037f86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tag.html">Tag</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f8358b95712d17c0e5716bec1037f86">getTag</a> (QString tagFamilyName, QString tagName)</td></tr>
@@ -277,6 +277,14 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Create a tag in the library using just its family name and tag name as strings</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagFamilyName</td><td></td></tr>
+    <tr><td class="paramname">tagName</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -308,6 +316,13 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Add a tag to the library if it doesn't exist</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -522,14 +537,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a0252c0512a0da979c5cab87621653575" name="a0252c0512a0da979c5cab87621653575"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0252c0512a0da979c5cab87621653575">&#9670;&#160;</a></span>getLibraryTags()</h2>
+<a id="af0685a06f744c8604a61c15bd2abd8ff" name="af0685a06f744c8604a61c15bd2abd8ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0685a06f744c8604a61c15bd2abd8ff">&#9670;&#160;</a></span>getLibraryTags()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QList&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; * TaggedFileCollection::getLibraryTags </td>
+          <td class="memname">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; * TaggedFileCollection::getLibraryTags </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -557,6 +572,14 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Retrieve a tag from the library by name.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagFamilyName</td><td></td></tr>
+    <tr><td class="paramname">tagName</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -596,6 +619,13 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Retrieve a tag family from the library by name.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagFamilyName</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
