@@ -47,7 +47,11 @@ void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
 
     Tag* t = new Tag(tag_family_, "", this);
     TagWidget* tw = new TagWidget(t, this);
-    this->layout()->addWidget(tw);
+    layout()->addWidget(tw);
+
+    qDebug() << "ChildrenRect" << childrenRect();
+    updateGeometry();
+
     tw->startEdit();
     event->accept();
 
@@ -95,6 +99,8 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
     path.closeSubpath();
 
     painter.drawPath(path);
+
+    qDebug() << "Tag fam dims " << this->size();
 }
 
 void TagFamilyWidget::startEdit(){

@@ -2,14 +2,17 @@
 
 VariableWidthLineEdit::VariableWidthLineEdit(QWidget* parent)
     : QLineEdit(parent) {
-    setMinimumWidth(50);
-    //setMaximumWidth(1000);
+    QFontMetrics fm = QFontMetrics(font());
+    setFixedWidth(fm.horizontalAdvance("WWW") + 14);
 }
 
 void VariableWidthLineEdit::keyPressEvent(QKeyEvent *e) {
-    if(text().length()>10) {
-        QFontMetrics fm = QFontMetrics(font());
-        setMinimumWidth(fm.horizontalAdvance(text()) + 24);
-    }
+    // Set the width of the text edit to fit at least 3 W characters, or the physical length of the
+    // value, plus the room for padding/decoration of the box itself
     QLineEdit::keyPressEvent(e);
+
+    QFontMetrics fm = QFontMetrics(font());
+    setFixedWidth(std::max(fm.horizontalAdvance("WWW"),fm.horizontalAdvance(text())) + 14);
 }
+
+

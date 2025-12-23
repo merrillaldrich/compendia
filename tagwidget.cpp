@@ -12,7 +12,9 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     connect(tag_, &Tag::nameChanged, this, &TagWidget::onTagNameChanged);
 
     // Must set a default size here even though the width will be adjusted for the text content later
-    setMinimumSize(132, 28);
+    setFixedWidth(56);
+    setFixedHeight(28);
+
     setAttribute(Qt::WA_TranslucentBackground);
 
     TagWidgetCloseButton* closeButton = new TagWidgetCloseButton("", this);
@@ -21,7 +23,10 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     line_edit_ = new VariableWidthLineEdit(this);
     line_edit_->move(20, 0);
+
+    //line_edit_->setFixedWidth(36);
     line_edit_->setFixedHeight(line_edit_->height());
+
     line_edit_->hide();
 
     // Connect this widget to the line edit, to keep this wide enough
@@ -30,15 +35,11 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     label_ = new ClickableLabel(this);
     label_->move(26, 0);
+    //label_->setFixedWidth(32);
     label_->setFixedHeight(label_->height());
     label_->setText(tag->getName());
 
-    // Set the width of this widget to a custom size based on the name, but only if the tag name
-    // has a value. Otherwise we need the default width so it doesn't collapse
-    if(label_->text().length() > 0){
-        label_->adjustSize();
-        setMinimumWidth(label_->width() + 36);
-    }
+    adjustSize();
 
     label_->show();
 
@@ -57,12 +58,7 @@ void TagWidget::onLabelClicked(QMouseEvent *event){
 }
 
 void TagWidget::onTextEdited(){
-    if(line_edit_->width() < 50){
-        setMinimumWidth(100);
-    }
-    else{
-        setMinimumWidth(line_edit_->width() + 42);
-    }
+    adjustSize();
 }
 
 void TagWidget::onCloseButtonClicked(){
@@ -98,6 +94,7 @@ void TagWidget::startEdit(){
     edit_status_ = "Edit";
     label_->hide();
     line_edit_->setText(tag_->getName());
+    adjustSize();
     line_edit_->show();
     line_edit_->setFocus();
 }
@@ -120,6 +117,7 @@ void TagWidget::endEdit(){
     line_edit_->clearFocus();
     line_edit_->hide();
     label_->setText(tag_->getName());
+    adjustSize();
     label_->show();
 }
 
@@ -174,10 +172,36 @@ void TagWidget::mouseMoveEvent(QMouseEvent *event){
 void TagWidget::onTagNameChanged(){
     label_->setText(tag_->getName());
     label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
-    setMinimumWidth(label_->width() + 42);
+    adjustSize();
 }
 
 Tag* TagWidget::getTag(){
     return tag_;
 }
 
+void TagWidget::adjustSize(){
+    // Set the width of this widget to a custom size based on the tag name, but only if the tag name
+    // has a value. Otherwise we need the default width so it doesn't collapse
+    // Use the label width when not editing the value, but the line edit widget width in edit mode
+
+    // This should theoretically be more reliable than label_.adjustSize()
+    QFontMetrics fm = QFontMetrics(font());
+    if(label_->text().length() < 4){
+        label_->setFixedWidth(fm.horizontalAdvance("WWW") + 4);
+    } else {
+        label_->setFixedWidth(fm.horizontalAdvance(label_->text()) + 4);
+    }
+
+    if(edit_status_ == "Edit"){
+        setFixedWidth(line_edit_->width() + 36);
+    } else {
+        if(label_->text().length() > 0) {
+            setFixedWidth(label_->width() + 36);
+        } else {
+            label_->setFixedWidth(24);
+            setFixedWidth(36);
+        }
+    }
+    updateGeometry();
+    update();
+}
