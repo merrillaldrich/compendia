@@ -2,7 +2,6 @@
 #define VARIABLEWIDTHLINEEDIT_H
 
 #include <QLineEdit>
-#include <QEvent>
 
 class VariableWidthLineEdit : public QLineEdit{
     Q_OBJECT

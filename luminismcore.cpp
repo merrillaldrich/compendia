@@ -49,6 +49,7 @@ void LuminismCore::loadRootDirectory(){
             tfc->addFile(fileInfo);
         }
     }
+    tfc->populateIcons();
 }
 
 void LuminismCore::writeFileMetadata(){

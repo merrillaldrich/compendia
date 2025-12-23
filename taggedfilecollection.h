@@ -5,11 +5,13 @@
 #include <QStandardItemModel>
 #include <QPainter>
 #include <QFileInfo>
+#include <QtConcurrent/QtConcurrentRun>
 #include "tagfamily.h"
 #include "tag.h"
 #include "taggedfile.h"
 #include "tagset.h"
 #include "filterproxymodel.h"
+#include "icongenerator.h"
 
 class TaggedFileCollection : public QObject
 {
@@ -23,7 +25,8 @@ private:
     QStandardItemModel *tagged_files_;
     FilterProxyModel *tagged_files_proxy_;
 
-    QPixmap makeSquareIcon(const QPixmap &source, int size);
+    void iconsFromFiles();
+    QFuture<void> icons_future_;
 
 public:
     explicit TaggedFileCollection(QObject *parent = nullptr);
@@ -42,6 +45,7 @@ public:
     void addFile(QFileInfo fileInfo);
     void addFile(QFileInfo fileInfo, QJsonObject tagsJson);
     void addFile(QFileInfo fileInfo, QList<TagSet> tags);
+    void populateIcons();
 
     void applyTag(Tag* tag);
     void applyTag(TaggedFile* f, TagSet t);

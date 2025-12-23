@@ -224,7 +224,6 @@ QList<TagSet> TaggedFileCollection::parseTagJson(QJsonObject tagsJson){
 void TaggedFileCollection::addFile(QFileInfo fileInfo){
     QList<TagSet> tagSets;
     addFile(fileInfo, tagSets);
-
 }
 
 void TaggedFileCollection::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
@@ -276,14 +275,33 @@ void TaggedFileCollection::addFile(QFileInfo fileInfo, QList<TagSet> tags){
     TaggedFile *tf = new TaggedFile(fileInfo, newOrExistingTags);
     // Standard items have just an icon and text
 
-    // Make an icon
-    QPixmap p = QPixmap(tf->filePath + "/" + tf->fileName);
-    QPixmap squarePixmap = makeSquareIcon(p, 100);
-
+    // Make an icon moved to run async
+    QPixmap squarePixmap = QPixmap(":/resources/NoImagePreviewIcon.png");
     QStandardItem *i = new QStandardItem(QIcon(squarePixmap), tf->fileName);
     // In order to store the custom object box it as a variant and store in item.setdata()
     i->setData(QVariant::fromValue(tf));
     tagged_files_->appendRow(i);
+}
+
+void TaggedFileCollection::populateIcons(){
+    qDebug() << "Populate icons called";
+
+    auto task = [this]() { this->iconsFromFiles(); };
+    QFuture<void> future = QtConcurrent::run(task);
+    icons_future_ = future;
+}
+
+void TaggedFileCollection::iconsFromFiles(){
+    for (int i=0; tagged_files_->rowCount(); ++i){
+        QStandardItem* item = tagged_files_->item(i);
+        if(item){
+            QVariant var = item->data();
+            TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+            QString fullFilePath = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
+            QPixmap p = IconGenerator::generateIcon(fullFilePath);
+            item->setIcon(p);
+        }
+    }
 }
 
 void TaggedFileCollection::renameFamily(QString oldName, QString newName){
@@ -292,25 +310,6 @@ void TaggedFileCollection::renameFamily(QString oldName, QString newName){
             fam->setName(newName);
         }
     }
-}
-
-QPixmap TaggedFileCollection::makeSquareIcon(const QPixmap &source, int size)
-{
-    // Scale the image to fit within a square, keeping aspect ratio
-    QPixmap scaled = source.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    // Create a transparent square pixmap
-    QPixmap square(size, size);
-    square.fill(Qt::transparent);
-
-    // Center the scaled image in the square
-    QPainter painter(&square);
-    int x = (size - scaled.width()) / 2;
-    int y = (size - scaled.height()) / 2;
-    painter.drawPixmap(x, y, scaled);
-    painter.end();
-
-    return square;
 }
 
 void TaggedFileCollection::setFileNameFilter(QString filterText){
