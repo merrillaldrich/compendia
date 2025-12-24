@@ -278,7 +278,7 @@ void TaggedFileCollection::addFile(QFileInfo fileInfo, QList<TagSet> tags){
     // Standard items have just an icon and text
 
     // Make an icon moved to run async
-    QPixmap squarePixmap = QPixmap(":/resources/NoImagePreviewIcon.png");
+    QPixmap squarePixmap = default_icon_;
     QStandardItem *i = new QStandardItem(QIcon(squarePixmap), tf->fileName);
     // In order to store the custom object box it as a variant and store in item.setdata()
     i->setData(QVariant::fromValue(tf));
