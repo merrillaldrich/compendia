@@ -4,8 +4,10 @@
 #include <QObject>
 #include <QStandardItemModel>
 #include <QPainter>
+#include <QImage>
 #include <QFileInfo>
 #include <QtConcurrentRun>
+#include <QTimer>
 #include "tagfamily.h"
 #include "tag.h"
 #include "taggedfile.h"
@@ -25,9 +27,14 @@ private:
     QStandardItemModel *tagged_files_;
     FilterProxyModel *tagged_files_proxy_;
 
+    QMutex resultsMutex_;
+    QVector<std::tuple<QString, QString, QImage>> results_; // fileName, path, image
+    QTimer uiFlushTimer_;
+
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
 
-    void on_IconReady(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap);
+    void flushIconGeneratorQueue();
+    void applyIconToModel(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap);
 
 public:
     explicit TaggedFileCollection(QObject *parent = nullptr);
@@ -65,8 +72,9 @@ public:
 
     void setFileNameFilter(QString filterText);
 
-signals:
-    void iconReady(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap);
+public slots:
+
+    void ensureUiFlushTimerRunning();
 
 };
 

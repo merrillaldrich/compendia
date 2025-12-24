@@ -16,12 +16,12 @@ class IconGenerator : public QObject
 
 public:
     IconGenerator(QObject *parent);
-    static QPixmap generateIcon(const QString absoluteFileName);
+    static QImage generateIcon(const QString absoluteFileName);
 
 private:
-    static QPixmap makeSquareIcon(const QPixmap &source, int size);
-    static bool saveIconToCache(const QString &absoluteFileName, const QPixmap &pict);
-    static QPixmap loadIconFromCache(const QString &absoluteFileName);
+    static QImage makeSquareIcon(const QImage &source, int size);
+    static bool saveIconToCache(const QString &absoluteFileName, const QImage &pict);
+    static QImage loadIconFromCache(const QString &absoluteFileName);
 
 };
 

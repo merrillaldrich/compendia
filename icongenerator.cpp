@@ -5,16 +5,16 @@ IconGenerator::IconGenerator(QObject *parent)
 
 }
 
-QPixmap IconGenerator::generateIcon(const QString absoluteFileName)
+QImage IconGenerator::generateIcon(const QString absoluteFileName)
 {
-    QPixmap iconPic;
+    QImage iconPic;
 
     iconPic = loadIconFromCache(absoluteFileName);
 
     // For cache miss, process the original image, save the result to cache, and also return it
     if (iconPic.isNull()) {
         qDebug() << "Icon cache miss";
-        QPixmap p = QPixmap(absoluteFileName);
+        QImage p = QImage(absoluteFileName);
         iconPic = makeSquareIcon(p, 100);
 
         bool cached = saveIconToCache(absoluteFileName, iconPic);
@@ -25,7 +25,7 @@ QPixmap IconGenerator::generateIcon(const QString absoluteFileName)
     return iconPic;
 }
 
-bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QPixmap &pict) {
+bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImage &pict) {
 
     QFileInfo fi(absoluteFileName);
     QString cachePath = fi.absolutePath() + "/" + ".luminism_cache";
@@ -39,7 +39,7 @@ bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QPixm
         }
     }
 
-    QString filePath = cachePath + "/" + fi.baseName() + "_100" + ".pixmap";
+    QString filePath = cachePath + "/" + fi.baseName() + "_100" + ".qimg";
 
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -54,7 +54,7 @@ bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QPixm
     return true;
 }
 
-QPixmap IconGenerator::loadIconFromCache(const QString &absoluteFileName){
+QImage IconGenerator::loadIconFromCache(const QString &absoluteFileName){
 
     QFileInfo fi(absoluteFileName);
     QString cachePath = fi.absolutePath() + "/" + ".luminism_cache";
@@ -62,41 +62,47 @@ QPixmap IconGenerator::loadIconFromCache(const QString &absoluteFileName){
 
     if (!dir.exists()) {
         qWarning() << "There is no cache folder for absoluteFileName";
-        return QPixmap();
+        return QImage();
     }
 
-    QString filePath = cachePath + "/" + fi.baseName() + "_100" + ".pixmap";
+    QString filePath = cachePath + "/" + fi.baseName() + "_100" + ".qimg";
 
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
         qWarning() << "Cannot open cache file for reading:" << file.errorString();
-        return QPixmap();
+        return QImage();
     }
 
     QDataStream in(&file);
     in.setVersion(QDataStream::Qt_6_0);
 
-    QPixmap iconPic;
+    QImage iconPic;
     in >> iconPic;
 
     return iconPic;
 }
 
-QPixmap IconGenerator::makeSquareIcon(const QPixmap &source, int size)
+QImage IconGenerator::makeSquareIcon(const QImage &source, int size)
 {
     // Scale the image to fit within a square, keeping aspect ratio
-    QPixmap scaled = source.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QImage scaled = source.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-    // Create a transparent square pixmap
-    QPixmap square(size, size);
-    square.fill(Qt::transparent);
+    //// Create a transparent square pixmap
+    //QImage square(size, size);
+    //square.fill(Qt::transparent);
 
-    // Center the scaled image in the square
-    QPainter painter(&square);
-    int x = (size - scaled.width()) / 2;
-    int y = (size - scaled.height()) / 2;
-    painter.drawPixmap(x, y, scaled);
-    painter.end();
+    //// Center the scaled image in the square
+    //QPainter painter(&square);
+    //int x = (size - scaled.width()) / 2;
+    //int y = (size - scaled.height()) / 2;
+    //painter.drawPixmap(x, y, scaled);
+    //painter.end();
 
-    return square;
+    QImage scaledImage = source.scaled(
+        size, size,
+        Qt::KeepAspectRatio,
+        Qt::SmoothTransformation
+        );
+
+    return scaledImage;
 }

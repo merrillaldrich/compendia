@@ -11,7 +11,7 @@ TaggedFileCollection::TaggedFileCollection(QObject *parent)
     tagged_files_proxy_ = new FilterProxyModel(this);
     tagged_files_proxy_->setSourceModel(tagged_files_);
 
-    connect(this, &TaggedFileCollection::iconReady, this, &TaggedFileCollection::on_IconReady);
+    //connect(this, &TaggedFileCollection::iconReady, this, &TaggedFileCollection::on_IconReady);
 }
 
 QStandardItemModel* TaggedFileCollection::getItemModel(){
@@ -297,20 +297,57 @@ void TaggedFileCollection::populateIcons(){
 
     // run one async task per file explicitly, to avoid map overload ambiguity
     for (const QString &path : files) {
+        // queue icon generation to thread pool
+        // but place the results in a threadsafe vector instead of trying
+        // to apply directly, so we can throttle this appropriately
         QtConcurrent::run([this, path]() {
             qDebug() << "Get or generate icon for" << path;
-            QPixmap pix = IconGenerator::generateIcon(path);
+            QImage img = IconGenerator::generateIcon(path);
             QString fileName = QFileInfo(path).fileName();
-            QMetaObject::invokeMethod(this, "iconReady",
-                                      Qt::QueuedConnection,
-                                      Q_ARG(QString, fileName),
-                                      Q_ARG(QString, path),
-                                      Q_ARG(QPixmap, pix));
+
+            // store result (thread-safe)
+            {
+                QMutexLocker lock(&resultsMutex_);
+                results_.emplace_back(fileName, path, std::move(img));
+            }
+            // ensure timer is running on GUI thread to flush results
+            QMetaObject::invokeMethod(this, "ensureUiFlushTimerRunning", Qt::QueuedConnection);
         });
+    }
+
+    // start a timer that will apply a few icons per tick
+    connect(&uiFlushTimer_, &QTimer::timeout, this, &TaggedFileCollection::flushIconGeneratorQueue);
+    uiFlushTimer_.setInterval(50);
+}
+
+void TaggedFileCollection::ensureUiFlushTimerRunning(){
+    if (!uiFlushTimer_.isActive()) uiFlushTimer_.start();
+}
+
+void TaggedFileCollection::flushIconGeneratorQueue(){
+    const int maxPerTick = 8;
+    QVector<std::tuple<QString, QString, QImage>> batch;
+    {
+        QMutexLocker lock(&resultsMutex_);
+        int take = qMin(maxPerTick, results_.size());
+        for (int i = 0; i < take; ++i) batch.append(std::move(results_.takeFirst()));
+        if (results_.isEmpty()) uiFlushTimer_.stop();
+    }
+
+    for (auto &t : batch) {
+        const QString &fileName = std::get<0>(t);
+        const QString &path = std::get<1>(t);
+        QImage img = std::get<2>(t);
+
+        // Change QImage to QPixmap while preserving aspect ratio
+        QPixmap pix = QPixmap::fromImage(img).scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        // update your model/view safely (small number per tick keeps UI responsive)
+        applyIconToModel(fileName, path, pix);
     }
 }
 
-void TaggedFileCollection::on_IconReady(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap)
+void TaggedFileCollection::applyIconToModel(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap)
 {
     // There could be files in different folders having the same name, but to make things quick
     // we find all files with a matching name in the model, and then zero in on the specific one
