@@ -52,6 +52,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->navFilterContainer->setAcceptDrops(true);
     ui->fileListTagAssignmentContainer->setAcceptDrops(true);
 
+    // Settings so multithreading does not take over all cores
+    int idealThreads = QThread::idealThreadCount();
+    if (idealThreads <= 4){
+        QThreadPool::globalInstance()->setMaxThreadCount(idealThreads);
+    } else {
+        QThreadPool::globalInstance()->setMaxThreadCount(idealThreads - 2);
+    }
 }
 
 MainWindow::~MainWindow()

@@ -11,7 +11,7 @@ TaggedFileCollection::TaggedFileCollection(QObject *parent)
     tagged_files_proxy_ = new FilterProxyModel(this);
     tagged_files_proxy_->setSourceModel(tagged_files_);
 
-    connect(this, &TaggedFileCollection::iconReady, this, &TaggedFileCollection::onIconReady);
+    connect(this, &TaggedFileCollection::iconReady, this, &TaggedFileCollection::on_IconReady);
 }
 
 QStandardItemModel* TaggedFileCollection::getItemModel(){
@@ -309,7 +309,7 @@ void TaggedFileCollection::populateIcons(){
     }
 }
 
-void TaggedFileCollection::onIconReady(const QString &absoluteFilePathName, const QPixmap &pixmap)
+void TaggedFileCollection::on_IconReady(const QString &absoluteFilePathName, const QPixmap &pixmap)
 {
     // There could be files in different folders having the same name, but to make things quick
     // we find all files with a matching name in the model, and then zero in on the specific one

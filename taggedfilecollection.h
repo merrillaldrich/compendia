@@ -25,7 +25,7 @@ private:
     QStandardItemModel *tagged_files_;
     FilterProxyModel *tagged_files_proxy_;
 
-    void onIconReady(const QString &absoluteFilePathName, const QPixmap &pixmap);
+    void on_IconReady(const QString &absoluteFilePathName, const QPixmap &pixmap);
 
 public:
     explicit TaggedFileCollection(QObject *parent = nullptr);
