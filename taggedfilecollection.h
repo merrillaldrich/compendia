@@ -25,7 +25,7 @@ private:
     QStandardItemModel *tagged_files_;
     FilterProxyModel *tagged_files_proxy_;
 
-    void onIconReady(const QString &fileName, const QPixmap &pixmap);
+    void onIconReady(const QString &absoluteFilePathName, const QPixmap &pixmap);
 
 public:
     explicit TaggedFileCollection(QObject *parent = nullptr);
@@ -64,7 +64,7 @@ public:
     void setFileNameFilter(QString filterText);
 
 signals:
-    void iconReady(const QString &fileName, const QPixmap &pixmap);
+    void iconReady(const QString &absoluteFilePathName, const QPixmap &pixmap);
 
 };
 
