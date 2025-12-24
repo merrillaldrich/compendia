@@ -3,10 +3,12 @@
 
 #include <QObject>
 #include <QPixmap>
-#include <QFuture>
-#include <QFutureWatcher>
-#include <QtConcurrentRun>
 #include <QPainter>
+#include <QFileInfo>
+#include <QFile>
+#include <QDir>
+#include <QDataStream>
+#include <QDebug>
 
 class IconGenerator : public QObject
 {
@@ -18,6 +20,8 @@ public:
 
 private:
     static QPixmap makeSquareIcon(const QPixmap &source, int size);
+    static bool saveIconToCache(const QString &absoluteFileName, const QPixmap &pict);
+    static QPixmap loadIconFromCache(const QString &absoluteFileName);
 
 };
 

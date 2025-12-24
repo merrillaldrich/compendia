@@ -7,9 +7,79 @@ IconGenerator::IconGenerator(QObject *parent)
 
 QPixmap IconGenerator::generateIcon(const QString absoluteFileName)
 {
-    QPixmap p = QPixmap(absoluteFileName);
-    QPixmap squarePixmap = makeSquareIcon(p, 100);
-    return squarePixmap;
+    QPixmap iconPic;
+
+    iconPic = loadIconFromCache(absoluteFileName);
+
+    // For cache miss, process the original image, save the result to cache, and also return it
+    if (iconPic.isNull()) {
+        qDebug() << "Icon cache miss";
+        QPixmap p = QPixmap(absoluteFileName);
+        iconPic = makeSquareIcon(p, 100);
+
+        bool cached = saveIconToCache(absoluteFileName, iconPic);
+
+        if(cached)
+            qDebug() << "Cached icon image";
+    }
+    return iconPic;
+}
+
+bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QPixmap &pict) {
+
+    QFileInfo fi(absoluteFileName);
+    QString cachePath = fi.absolutePath() + "/" + ".luminism_cache";
+    QDir dir(cachePath);
+
+    if (!dir.exists()) {
+        if (dir.mkpath(".")) {
+        } else {
+            qWarning() << "Failed to create directory:" << cachePath;
+            return false;
+        }
+    }
+
+    QString filePath = cachePath + "/" + fi.baseName() + "_100" + ".pixmap";
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly)) {
+        qWarning() << "Cannot open file for writing:" << file.errorString();
+        return false;
+    }
+
+    QDataStream out(&file);
+    out.setVersion(QDataStream::Qt_6_0); // Ensure compatibility
+    out << pict;
+
+    return true;
+}
+
+QPixmap IconGenerator::loadIconFromCache(const QString &absoluteFileName){
+
+    QFileInfo fi(absoluteFileName);
+    QString cachePath = fi.absolutePath() + "/" + ".luminism_cache";
+    QDir dir(cachePath);
+
+    if (!dir.exists()) {
+        qWarning() << "There is no cache folder for absoluteFileName";
+        return QPixmap();
+    }
+
+    QString filePath = cachePath + "/" + fi.baseName() + "_100" + ".pixmap";
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Cannot open cache file for reading:" << file.errorString();
+        return QPixmap();
+    }
+
+    QDataStream in(&file);
+    in.setVersion(QDataStream::Qt_6_0);
+
+    QPixmap iconPic;
+    in >> iconPic;
+
+    return iconPic;
 }
 
 QPixmap IconGenerator::makeSquareIcon(const QPixmap &source, int size)
