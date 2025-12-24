@@ -303,20 +303,19 @@ void TaggedFileCollection::populateIcons(){
             QString fileName = QFileInfo(path).fileName();
             QMetaObject::invokeMethod(this, "iconReady",
                                       Qt::QueuedConnection,
+                                      Q_ARG(QString, fileName),
                                       Q_ARG(QString, path),
                                       Q_ARG(QPixmap, pix));
         });
     }
 }
 
-void TaggedFileCollection::on_IconReady(const QString &absoluteFilePathName, const QPixmap &pixmap)
+void TaggedFileCollection::on_IconReady(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap)
 {
     // There could be files in different folders having the same name, but to make things quick
     // we find all files with a matching name in the model, and then zero in on the specific one
     // using the full path and name. Generally expect the names will be unique most of the time.
 
-    QFileInfo fi(absoluteFilePathName);
-    QString fileName = fi.fileName();
     auto matches = tagged_files_->findItems(fileName);
     if (matches.isEmpty()) {
         qDebug() << "Could not locate " + absoluteFilePathName + " to set icon";

@@ -27,9 +27,7 @@ private:
 
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
 
-    void on_IconReady(const QString &absoluteFilePathName, const QPixmap &pixmap);
-
-
+    void on_IconReady(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap);
 
 public:
     explicit TaggedFileCollection(QObject *parent = nullptr);
@@ -68,7 +66,7 @@ public:
     void setFileNameFilter(QString filterText);
 
 signals:
-    void iconReady(const QString &absoluteFilePathName, const QPixmap &pixmap);
+    void iconReady(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap);
 
 };
 
