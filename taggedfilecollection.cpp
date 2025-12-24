@@ -298,7 +298,7 @@ void TaggedFileCollection::populateIcons(){
     // run one async task per file explicitly, to avoid map overload ambiguity
     for (const QString &path : files) {
         QtConcurrent::run([this, path]() {
-            qDebug() << "Generate icon for" << path;
+            qDebug() << "Get or generate icon for" << path;
             QPixmap pix = IconGenerator::generateIcon(path);
             QString fileName = QFileInfo(path).fileName();
             QMetaObject::invokeMethod(this, "iconReady",

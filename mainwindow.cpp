@@ -136,6 +136,11 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
 
     if( selected.isEmpty()){
         scene->clear();
+        ui->previewFileNameValue->setText("-");
+        ui->previewFileLocationValue->setText("-");
+        ui->previewFileCreatedValue->setText("-");
+        ui->previewFileModifiedValue->setText("-");
+        ui->previewFileTagsValue->setText("-");
     }
     else {
         QModelIndex proxyIndex = selected.indexes().first();
@@ -164,6 +169,37 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         view->setRenderHint(QPainter::SmoothPixmapTransform);
         view->setDragMode(QGraphicsView::ScrollHandDrag);
         view->show();
+
+        QLocale locale = QLocale::system();
+
+        ui->previewFileNameValue->setText(itemAsTaggedFile->fileName);
+        ui->previewFileLocationValue->setText(itemAsTaggedFile->filePath);
+        ui->previewFileCreatedValue->setText(locale.toString(itemAsTaggedFile->fileCreationDateTime, QLocale::ShortFormat));
+        ui->previewFileModifiedValue->setText(locale.toString(itemAsTaggedFile->fileModificationDateTime, QLocale::ShortFormat));
+
+        QString tagText("");
+        QMap<QString, QList<QString>> dict;
+
+        QSetIterator<Tag*> it(*itemAsTaggedFile->tags);
+        while (it.hasNext()) {
+            Tag* t = it.next(); // Advances iterator and returns the element
+            QString famName = t->tagFamily->getName();
+            if (!dict.contains(famName)){
+                dict.insert(famName,QList<QString>(t->getName()));
+            } else {
+                dict[famName].append(t->getName());
+            }
+        }
+
+        for (auto [key, value] : dict.asKeyValueRange()) {
+            tagText += key;
+            tagText += ": ";
+            tagText += value.join(", ");
+            tagText += " ";
+        }
+
+        ui->previewFileTagsValue->setText(tagText);
+
     }
 }
 
