@@ -10,6 +10,8 @@ TaggedFileCollection::TaggedFileCollection(QObject *parent)
     tagged_files_ = new QStandardItemModel(this);
     tagged_files_proxy_ = new FilterProxyModel(this);
     tagged_files_proxy_->setSourceModel(tagged_files_);
+
+    connect(this, &TaggedFileCollection::iconReady, this, &TaggedFileCollection::onIconReady);
 }
 
 QStandardItemModel* TaggedFileCollection::getItemModel(){
@@ -284,24 +286,35 @@ void TaggedFileCollection::addFile(QFileInfo fileInfo, QList<TagSet> tags){
 }
 
 void TaggedFileCollection::populateIcons(){
-    qDebug() << "Populate icons called";
 
-    auto task = [this]() { this->iconsFromFiles(); };
-    QFuture<void> future = QtConcurrent::run(task);
-    icons_future_ = future;
+    QStringList files;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        QStandardItem *item = tagged_files_->item(i);
+        if (!item) continue;
+        auto tf = item->data().value<TaggedFile*>();
+        files << (tf->filePath + "/" + tf->fileName);
+    }
+
+    // run one task per file to avoid map overload ambiguity
+    for (const QString &path : files) {
+        QtConcurrent::run([this, path]() { // capture path by value
+            qDebug() << "Generate icon for" << path;
+            QPixmap pix = IconGenerator::generateIcon(path); // must be thread-safe (no GUI)
+            QString fileName = QFileInfo(path).fileName();
+            QMetaObject::invokeMethod(this, "iconReady",
+                                      Qt::QueuedConnection,
+                                      Q_ARG(QString, fileName),
+                                      Q_ARG(QPixmap, pix));
+        });
+    }
 }
 
-void TaggedFileCollection::iconsFromFiles(){
-    for (int i=0; tagged_files_->rowCount(); ++i){
-        QStandardItem* item = tagged_files_->item(i);
-        if(item){
-            QVariant var = item->data();
-            TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-            QString fullFilePath = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
-            QPixmap p = IconGenerator::generateIcon(fullFilePath);
-            item->setIcon(p);
-        }
-    }
+void TaggedFileCollection::onIconReady(const QString &fileName, const QPixmap &pixmap)
+{
+    auto matches = tagged_files_->findItems(fileName);
+    if (matches.isEmpty()) return;
+    QStandardItem *item = matches.first();
+    item->setIcon(pixmap);
 }
 
 void TaggedFileCollection::renameFamily(QString oldName, QString newName){

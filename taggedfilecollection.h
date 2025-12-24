@@ -5,7 +5,7 @@
 #include <QStandardItemModel>
 #include <QPainter>
 #include <QFileInfo>
-#include <QtConcurrent/QtConcurrentRun>
+#include <QtConcurrentRun>
 #include "tagfamily.h"
 #include "tag.h"
 #include "taggedfile.h"
@@ -25,8 +25,7 @@ private:
     QStandardItemModel *tagged_files_;
     FilterProxyModel *tagged_files_proxy_;
 
-    void iconsFromFiles();
-    QFuture<void> icons_future_;
+    void onIconReady(const QString &fileName, const QPixmap &pixmap);
 
 public:
     explicit TaggedFileCollection(QObject *parent = nullptr);
@@ -63,6 +62,9 @@ public:
     FilterProxyModel* getItemModelProxy();
 
     void setFileNameFilter(QString filterText);
+
+signals:
+    void iconReady(const QString &fileName, const QPixmap &pixmap);
 
 };
 
