@@ -71,6 +71,8 @@ public:
     FilterProxyModel* getItemModelProxy();
 
     void setFileNameFilter(QString filterText);
+    void addTagFilter(Tag *tag);
+    void removeTagFilter(Tag *tag);
 
 public slots:
 

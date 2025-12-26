@@ -101,8 +101,8 @@ void NavFilterContainer::dropEvent(QDropEvent *event)
             tw->show();
         }
 
-        //TODO: Apply the dropped tag to the filter
-        //mainWin->core->applyTag(t);
+        // Apply the dropped tag to the filter
+        mainWin->core->addTagFilter(t);
 
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);

@@ -17,11 +17,35 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
     TaggedFile* itemAsTaggedFile = val.value<TaggedFile*>();
     QString fileName = itemAsTaggedFile->fileName;
 
-if(name_filter_ == ""){
-        return true;
+    bool nameResult = false;
+
+    if (name_filter_ == ""){
+        nameResult = true;
     }
     else {
-        bool result = fileName.contains(name_filter_, Qt::CaseInsensitive);
-        return result;
+        nameResult = fileName.contains(name_filter_, Qt::CaseInsensitive);
     }
+
+    bool tagResult = false;
+
+    if (tags_.isEmpty()){
+        tagResult = true;
+    } else {
+        const QSet<Tag*> tagsconst = *itemAsTaggedFile->tags;
+        tagResult = tags_.intersects(tagsconst);
+    }
+
+    return nameResult && tagResult;
+}
+
+void FilterProxyModel::addTagFilter(Tag* tag){
+    beginFilterChange();
+    tags_.insert(tag);
+    endFilterChange(QSortFilterProxyModel::Direction::Rows);
+}
+
+void FilterProxyModel::removeTagFilter(Tag* tag){
+    beginFilterChange();
+    tags_.remove(tag);
+    endFilterChange(QSortFilterProxyModel::Direction::Rows);
 }

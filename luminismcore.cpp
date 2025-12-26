@@ -147,3 +147,10 @@ FilterProxyModel* LuminismCore::getItemModelProxy(){
 void LuminismCore::setFileNameFilter(QString filterText){
     tfc->setFileNameFilter(filterText);
 }
+
+void LuminismCore::addTagFilter(Tag* tag){
+    tfc->addTagFilter(tag);
+}
+void LuminismCore::removeTagFilter(Tag* tag){
+    tfc->removeTagFilter(tag);
+}
