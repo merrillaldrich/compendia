@@ -112,12 +112,9 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
     path.closeSubpath();
 
     painter.drawPath(path);
-
-    qDebug() << "Tag fam dims " << this->size();
 }
 
 void TagFamilyWidget::startEdit(){
-    qDebug() << "Enter family edit mode";
     edit_status_ = "Edit";
     label_->hide();
     line_edit_->setText(tag_family_->getName());
@@ -126,7 +123,6 @@ void TagFamilyWidget::startEdit(){
 }
 
 void TagFamilyWidget::endEdit(){
-    qDebug() << "Leave family edit mode";
     edit_status_ = "Read";
     tag_family_->setName(line_edit_->text());
 

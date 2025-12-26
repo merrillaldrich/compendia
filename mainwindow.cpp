@@ -27,6 +27,10 @@ MainWindow::MainWindow(QWidget *parent)
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
     ui->navLibraryContainer->setLayout(navTagLibraryLayout);
 
+    // Set up the tag filter area
+    FlowLayout* navFilterLayout = new FlowLayout(ui->navFilterContainer);
+    ui->navFilterContainer->setLayout(navFilterLayout);
+
     // Set up the tag assignment area
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);

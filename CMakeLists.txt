@@ -42,6 +42,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         filterproxymodel.h filterproxymodel.cpp
         tagwidgetclosebutton.h tagwidgetclosebutton.cpp
         icongenerator.h icongenerator.cpp
+        navfiltercontainer.h navfiltercontainer.cpp
 
     )
 

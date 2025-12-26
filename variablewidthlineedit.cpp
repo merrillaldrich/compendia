@@ -8,7 +8,6 @@ VariableWidthLineEdit::VariableWidthLineEdit(QWidget* parent)
     policy.setVerticalPolicy(QSizePolicy::Minimum);
     setFixedWidth(fm.horizontalAdvance("WWW") + 14);
 
-    qDebug() << "Lineedit width at end of constructor " << this->sizeHint().width();
 }
 
 void VariableWidthLineEdit::keyPressEvent(QKeyEvent *e) {

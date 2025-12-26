@@ -40,8 +40,8 @@
        <property name="orientation">
         <enum>Qt::Orientation::Vertical</enum>
        </property>
-       <widget class="QWidget" name="navFilterContainer" native="true"/>
-       <widget class="QWidget" name="navTopContainer" native="true">
+       <widget class="QWidget" name="navTopContainer" native="true"/>
+       <widget class="NavFilterContainer" name="navFilterContainer" native="true">
         <property name="minimumSize">
          <size>
           <width>100</width>
@@ -477,6 +477,12 @@ border-top: 1px solid #DDD; /* width, style, color */</string>
    <class>NavLibraryContainer</class>
    <extends>QWidget</extends>
    <header>navlibrarycontainer.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NavFilterContainer</class>
+   <extends>QWidget</extends>
+   <header>navfiltercontainer.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
