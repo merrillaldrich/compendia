@@ -41,6 +41,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void adjustSize();
+    QSize sizeHint() const override;
 
 private slots:
     void onReturnPressed();

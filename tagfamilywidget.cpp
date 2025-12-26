@@ -17,6 +17,7 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
 
     FlowLayout* fl = new FlowLayout(this);
     fl->setContentsMargins(4, 28, 4, 4); //left, top, right, bottom
+    fl->setSpacing(2);
     this->setLayout(fl);
 
     line_edit_ = new VariableWidthLineEdit(this);
@@ -48,10 +49,22 @@ void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
     Tag* t = new Tag(tag_family_, "", this);
     TagWidget* tw = new TagWidget(t, this);
     layout()->addWidget(tw);
+    tw->show();
 
-    qDebug() << "ChildrenRect" << childrenRect();
+    // Here we need to force one extra layout computation to get this widget
+    // to resized to accomodate the new child widget. Without this
+    // the vertical expansion of this tagfamilywidget lags one tag
+    // behind:
+    layout()->invalidate();
+    layout()->activate();
     updateGeometry();
 
+    // Explicitly set the height of this widget to fit all the current
+    // children
+    this->setMinimumHeight(childrenRect().height() + 4);
+
+    // Put the new tag in edit mode immediately so the user doesn't have to
+    // click on it to enter the name
     tw->startEdit();
     event->accept();
 
@@ -140,4 +153,8 @@ void TagFamilyWidget::onTagFamilyNameChanged(){
 
 TagFamily* TagFamilyWidget::getTagFamily(){
     return tag_family_;
+}
+
+QSize TagFamilyWidget::sizeHint() const {
+    return minimumSize();
 }

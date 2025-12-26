@@ -12,6 +12,9 @@ private:
 public:
     explicit VariableWidthLineEdit(QWidget* parent = nullptr);
 
+protected:
+    QSize sizeHint() const;
+
 };
 
 #endif // VARIABLEWIDTHLINEEDIT_H

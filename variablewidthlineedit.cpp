@@ -3,7 +3,12 @@
 VariableWidthLineEdit::VariableWidthLineEdit(QWidget* parent)
     : QLineEdit(parent) {
     QFontMetrics fm = QFontMetrics(font());
+
+    QSizePolicy policy = this->sizePolicy();
+    policy.setVerticalPolicy(QSizePolicy::Minimum);
     setFixedWidth(fm.horizontalAdvance("WWW") + 14);
+
+    qDebug() << "Lineedit width at end of constructor " << this->sizeHint().width();
 }
 
 void VariableWidthLineEdit::keyPressEvent(QKeyEvent *e) {
@@ -13,6 +18,11 @@ void VariableWidthLineEdit::keyPressEvent(QKeyEvent *e) {
 
     QFontMetrics fm = QFontMetrics(font());
     setFixedWidth(std::max(fm.horizontalAdvance("WWW"),fm.horizontalAdvance(text())) + 14);
+
+}
+
+QSize VariableWidthLineEdit::sizeHint() const {
+    return minimumSize();
 }
 
 

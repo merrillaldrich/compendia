@@ -26,6 +26,7 @@ private:
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event);
+    QSize sizeHint() const ;
 
 public:
     explicit TagFamilyWidget(QWidget *parent = nullptr);

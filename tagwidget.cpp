@@ -12,8 +12,11 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     connect(tag_, &Tag::nameChanged, this, &TagWidget::onTagNameChanged);
 
     // Must set a default size here even though the width will be adjusted for the text content later
-    setFixedWidth(56);
+    setFixedWidth(36);
     setFixedHeight(28);
+
+    QSizePolicy policy = this->sizePolicy();
+    policy.setVerticalPolicy(QSizePolicy::Minimum);
 
     setAttribute(Qt::WA_TranslucentBackground);
 
@@ -45,6 +48,9 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     connect(line_edit_, &QLineEdit::returnPressed, this, &TagWidget::onReturnPressed);
     connect(label_, &ClickableLabel::clicked, this, &TagWidget::onLabelClicked);
+
+    //qDebug() << "Size at end of constructor " << this->sizeHint().width();
+
 }
 
 void TagWidget::onReturnPressed(){
@@ -177,6 +183,10 @@ void TagWidget::onTagNameChanged(){
 
 Tag* TagWidget::getTag(){
     return tag_;
+}
+
+QSize TagWidget::sizeHint() const {
+    return minimumSize();
 }
 
 void TagWidget::adjustSize(){
