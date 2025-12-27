@@ -54,6 +54,8 @@ private slots:
 
     void on_tagFilterRemove_Requested(Tag* tag);
 
+    void on_folderFilterLineEdit_editingFinished();
+
 protected:
     // Override resizeEvent to handle window resizing
     void resizeEvent(QResizeEvent *event) override;

@@ -151,6 +151,9 @@ FilterProxyModel* LuminismCore::getItemModelProxy(){
 void LuminismCore::setFileNameFilter(QString filterText){
     tfc->setFileNameFilter(filterText);
 }
+void LuminismCore::setFolderFilter(QString filterText){
+    tfc->setFolderFilter(filterText);
+}
 
 void LuminismCore::addTagFilter(Tag* tag){
     tfc->addTagFilter(tag);

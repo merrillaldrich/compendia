@@ -393,6 +393,10 @@ void TaggedFileCollection::setFileNameFilter(QString filterText){
     tagged_files_proxy_->setNameFilter(filterText);
 }
 
+void TaggedFileCollection::setFolderFilter(QString filterText){
+    tagged_files_proxy_->setFolderFilter(filterText);
+}
+
 void TaggedFileCollection::addTagFilter(Tag* tag){
     tagged_files_proxy_->addTagFilter(tag);
 }

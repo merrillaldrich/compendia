@@ -279,3 +279,13 @@ void MainWindow::on_tagFilterRemove_Requested(Tag* tag){
     core->removeTagFilter(tag);
     refreshTagFilterArea();
 }
+
+void MainWindow::on_folderFilterLineEdit_editingFinished()
+{
+    core->setFolderFilter(ui->folderFilterLineEdit->text());
+    if (ui->fileListView->selectionModel()) {
+        ui->fileListView->selectionModel()->clearSelection();
+    }
+    refreshTagAssignmentArea();
+}
+

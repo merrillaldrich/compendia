@@ -4,19 +4,14 @@ FilterProxyModel::FilterProxyModel(QObject *parent)
     : QSortFilterProxyModel{parent}
 {}
 
-void FilterProxyModel::setNameFilter(QString filterText){
-    beginFilterChange();
-    name_filter_ = filterText;
-    endFilterChange(QSortFilterProxyModel::Direction::Rows);
-}
 
 bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex i = sourceModel()->index(sourceRow, 0, sourceParent);
     QVariant val = i.data(Qt::UserRole + 1);
     TaggedFile* itemAsTaggedFile = val.value<TaggedFile*>();
-    QString fileName = itemAsTaggedFile->fileName;
 
+    QString fileName = itemAsTaggedFile->fileName;
     bool nameResult = false;
 
     if (name_filter_ == ""){
@@ -24,6 +19,16 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
     }
     else {
         nameResult = fileName.contains(name_filter_, Qt::CaseInsensitive);
+    }
+
+    QString folderName = itemAsTaggedFile->filePath;
+    bool folderResult = false;
+
+    if (folder_filter_ == ""){
+        folderResult = true;
+    }
+    else {
+        folderResult = folderName.contains(folder_filter_, Qt::CaseInsensitive);
     }
 
     bool tagResult = false;
@@ -35,7 +40,19 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
         tagResult = tags_.intersects(tagsconst);
     }
 
-    return nameResult && tagResult;
+    return nameResult && folderResult && tagResult;
+}
+
+void FilterProxyModel::setNameFilter(QString filterText){
+    beginFilterChange();
+    name_filter_ = filterText;
+    endFilterChange(QSortFilterProxyModel::Direction::Rows);
+}
+
+void FilterProxyModel::setFolderFilter(QString filterText){
+    beginFilterChange();
+    folder_filter_ = filterText;
+    endFilterChange(QSortFilterProxyModel::Direction::Rows);
 }
 
 void FilterProxyModel::addTagFilter(Tag* tag){

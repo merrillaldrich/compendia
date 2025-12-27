@@ -42,6 +42,8 @@ public:
     void unapplyTag(Tag* tag);
 
     void setFileNameFilter(QString filterText);
+    void setFolderFilter(QString filterText);
+
     void addTagFilter(Tag* tag);
     void removeTagFilter(Tag* tag);
 
