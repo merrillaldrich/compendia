@@ -90,6 +90,10 @@ QSet<Tag*>* LuminismCore::getAssignedTags(){
     return tfc->getAssignedTags();
 }
 
+QSet<Tag*>* LuminismCore::getFilterTags(){
+    return tfc->getFilterTags();
+}
+
 QSet<Tag*>* LuminismCore::getAssignedTags_FilteredFiles(){
     return tfc->getAssignedTags_FilteredFiles();
 }

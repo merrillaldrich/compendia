@@ -28,7 +28,7 @@ void TagAssignmentContainer::refresh(QSet<Tag*>* tags){
         TagFamily* currentTagFamily = currentTag->tagFamily;
 
         TagFamilyWidget* w = nullptr;
-        TagWidget* t = nullptr;
+        TagWidget* tw = nullptr;
 
         // If there are no tag family widgets or there's no tagfamilywidget for the current tag's family, add a new tagfamilywidget
         QList<TagFamilyWidget*> existingTFWidgets = findChildren<TagFamilyWidget*>();
@@ -55,15 +55,21 @@ void TagAssignmentContainer::refresh(QSet<Tag*>* tags){
             TagWidget* existingTWidget = existingTWidgets.at(twi);
             if(existingTWidget->getTag() == currentTag){
                 // Tag widget exists, use it
-                t = existingTWidget;
+                tw = existingTWidget;
             }
         }
 
-        if (t==nullptr){
-            t = new TagWidget(currentTag, w);
-            connect(t, &TagWidget::deleteRequested, this, &TagAssignmentContainer::onTagDeleteRequested);
-            w->layout()->addWidget(t);
-            t->show();
+        if (tw==nullptr){
+            tw = new TagWidget(currentTag, w);
+
+            if (connect(tw, &TagWidget::deleteRequested, this, &TagAssignmentContainer::onTagDeleteRequested)){
+
+            } else {
+                qWarning() << "Failed to connect tag widget delete to assignment container delete";
+            }
+
+            w->layout()->addWidget(tw);
+            tw->show();
         }
     }
 }
@@ -159,6 +165,10 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
 
         if (tw==nullptr){
             tw = new TagWidget(t, tfw);
+
+            if (! connect(tw, &TagWidget::deleteRequested, this, &TagAssignmentContainer::onTagDeleteRequested))
+                qWarning() << "Failed to connect tag widget delete to assignment container delete";
+
             tfw->layout()->addWidget(tw);
             tw->show();
         }

@@ -30,11 +30,20 @@ MainWindow::MainWindow(QWidget *parent)
     // Set up the tag filter area
     FlowLayout* navFilterLayout = new FlowLayout(ui->navFilterContainer);
     ui->navFilterContainer->setLayout(navFilterLayout);
+    if (connect(ui->navFilterContainer, &NavFilterContainer::tagDeleteRequested, this, &MainWindow::on_tagFilterRemove_Requested)){
+
+    } else {
+        qWarning() << "Connecting nav filter delete function didn't work";
+    }
 
     // Set up the tag assignment area
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
-    connect(ui->fileListTagAssignmentContainer, &TagAssignmentContainer::tagDeleteRequested, this, &MainWindow::on_tagUnassign_Requested);
+    if (connect(ui->fileListTagAssignmentContainer, &TagAssignmentContainer::tagDeleteRequested, this, &MainWindow::on_tagUnassign_Requested)){
+
+    } else {
+        qWarning() << "Connecting assignment delete function didn't work";
+    }
 
     // Set up the preview area
     QGraphicsScene* scene = new QGraphicsScene();
@@ -121,7 +130,6 @@ void MainWindow::refreshNavTagLibrary(){
     ui->navLibraryContainer->refresh(libTags);
 }
 
-
 void MainWindow::refreshTagAssignmentArea(){
 
     // Update the display of the tag assignment area to show all the tag families and tags that are
@@ -129,6 +137,16 @@ void MainWindow::refreshTagAssignmentArea(){
 
     QSet<Tag*>* assignedTags = core->getAssignedTags_FilteredFiles();
     ui->fileListTagAssignmentContainer->refresh(assignedTags);
+
+}
+
+void MainWindow::refreshTagFilterArea(){
+
+    // Update the display of the tag filter area to show all the tag families and tags that are
+    // currently set as filters
+
+    QSet<Tag*>* filterTags = core->getFilterTags();
+    ui->navFilterContainer->refresh(filterTags);
 
 }
 
@@ -255,4 +273,9 @@ void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
 void MainWindow::on_tagUnassign_Requested(Tag* tag){
     core->unapplyTag(tag);
     refreshTagAssignmentArea();
+}
+
+void MainWindow::on_tagFilterRemove_Requested(Tag* tag){
+    core->removeTagFilter(tag);
+    refreshTagFilterArea();
 }

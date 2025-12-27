@@ -47,7 +47,7 @@ QSet<Tag*>* TaggedFileCollection::getAssignedTags(){
 
 QSet<Tag*>* TaggedFileCollection::getAssignedTags_FilteredFiles(){
     // Loop over files and make a distinct list of all tags that
-    // are assigned to a file
+    // are assigned to a visible file
     QSet<Tag*>* distinctTags = new QSet<Tag*>();
 
     for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i){
@@ -64,6 +64,12 @@ QSet<Tag*>* TaggedFileCollection::getAssignedTags_FilteredFiles(){
         distinctTags->unite(tgs);
     }
     return distinctTags;
+}
+
+QSet<Tag*>* TaggedFileCollection::getFilterTags(){
+    // Loop over files and make a distinct list of all tags that
+    // are assigned to a file
+    return tagged_files_proxy_->getFilterTags();
 }
 
 /*! Retrieve a tag from the library by name.
@@ -301,7 +307,6 @@ void TaggedFileCollection::populateIcons(){
         // but place the results in a threadsafe vector instead of trying
         // to apply directly, so we can throttle this appropriately
         QtConcurrent::run([this, path]() {
-            qDebug() << "Get or generate icon for" << path;
             QImage img = IconGenerator::generateIcon(path);
             QString fileName = QFileInfo(path).fileName();
 

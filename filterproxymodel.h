@@ -19,6 +19,8 @@ public:
     QString name_filter_;
     explicit FilterProxyModel(QObject *parent = nullptr);
 
+    QSet<Tag*>* getFilterTags();
+
     void setNameFilter(QString filterText);
     void addTagFilter(Tag* tag);
     void removeTagFilter(Tag* tag);

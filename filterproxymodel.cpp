@@ -49,3 +49,7 @@ void FilterProxyModel::removeTagFilter(Tag* tag){
     tags_.remove(tag);
     endFilterChange(QSortFilterProxyModel::Direction::Rows);
 }
+
+QSet<Tag*>* FilterProxyModel::getFilterTags(){
+    return &tags_;
+}

@@ -28,6 +28,8 @@ public:
     QSet<Tag*>* getLibraryTags();
     QSet<Tag*>* getAssignedTags();
     QSet<Tag*>* getAssignedTags_FilteredFiles();
+    QSet<Tag*>* getFilterTags();
+
     Tag* getTag(QString tagFamilyName, QString tagName);
     TagFamily* getTagFamily(QString tagFamilyName);
     Tag* addLibraryTag(QString tagFamily, QString tagName);

@@ -31,6 +31,7 @@ public:
     void clearPreview();
     void refreshNavTagLibrary();
     void refreshTagAssignmentArea();
+    void refreshTagFilterArea();
 
 private slots:
 
@@ -50,6 +51,8 @@ private slots:
     void on_fileNameFilterLineEdit_textChanged(const QString &arg1);
 
     void on_tagUnassign_Requested(Tag* tag);
+
+    void on_tagFilterRemove_Requested(Tag* tag);
 
 protected:
     // Override resizeEvent to handle window resizing
