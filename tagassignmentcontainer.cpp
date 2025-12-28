@@ -126,11 +126,6 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
     }
 }
 
-void TagAssignmentContainer::onTagDeleteRequested(Tag* tag){
-    // Tell core to remove this tag from all the files in the filtered file list
-
-    emit tagDeleteRequested(tag);
-}
 
 
 

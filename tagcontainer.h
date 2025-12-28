@@ -16,9 +16,9 @@ public:
     explicit TagContainer(QWidget *parent = nullptr);
 
     void refresh(QSet<Tag*>* tags);
+    void onTagDeleteRequested(Tag* tag);
 
 protected:
-    void onTagDeleteRequested(Tag* tag);
 
 signals:
     void tagDeleteRequested(Tag* tag);

@@ -99,7 +99,7 @@ void NavFilterContainer::dropEvent(QDropEvent *event)
         if (tw==nullptr){
             tw = new TagWidget(t, tfw);
 
-            if (connect(tw, &TagWidget::deleteRequested, this, &NavFilterContainer::onTagDeleteRequested)){
+            if (connect(tw, &TagWidget::deleteRequested, this, &TagContainer::onTagDeleteRequested)){
 
             } else {
                 qWarning() << "Failed to connect tag widget delete to filter container delete";

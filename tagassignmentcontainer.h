@@ -21,10 +21,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
-    void onTagDeleteRequested(Tag* tag);
 
-signals:
-    void tagDeleteRequested(Tag* tag);
 };
 
 #endif // TAGASSIGNMENTCONTAINER_H

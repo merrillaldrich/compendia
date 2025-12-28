@@ -280,7 +280,6 @@ void MainWindow::on_tagFilterRemove_Requested(Tag* tag){
     refreshTagFilterArea();
 }
 
-
 void MainWindow::on_folderFilterLineEdit_textChanged(const QString &arg1)
 {
     core->setFolderFilter(ui->folderFilterLineEdit->text());
