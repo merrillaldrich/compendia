@@ -61,9 +61,10 @@ void TagContainer::refresh(QSet<Tag*>* tags){
             tw->show();
 
             // Cause the family to grow if there are more tags than space in the family widget
-            layout()->invalidate();
-            layout()->activate();
-            updateGeometry();
+            w->layout()->invalidate();
+            w->layout()->activate();
+            w->setMinimumHeight(w->childrenRect().height() + 4);
+            w->updateGeometry();
         }
     }
 }
