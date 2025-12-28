@@ -10,6 +10,7 @@ TaggedFileCollection::TaggedFileCollection(QObject *parent)
     tagged_files_ = new QStandardItemModel(this);
     tagged_files_proxy_ = new FilterProxyModel(this);
     tagged_files_proxy_->setSourceModel(tagged_files_);
+    tagged_files_proxy_->sort(0);
 
     //connect(this, &TaggedFileCollection::iconReady, this, &TaggedFileCollection::on_IconReady);
 }
