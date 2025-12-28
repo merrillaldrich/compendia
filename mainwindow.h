@@ -48,13 +48,13 @@ private slots:
 
     void on_saveButton_clicked();
 
-    void on_fileNameFilterLineEdit_textChanged(const QString &arg1);
-
     void on_tagUnassign_Requested(Tag* tag);
 
     void on_tagFilterRemove_Requested(Tag* tag);
 
-    void on_folderFilterLineEdit_editingFinished();
+    void on_fileNameFilterLineEdit_textChanged(const QString &arg1);
+
+    void on_folderFilterLineEdit_textChanged(const QString &arg1);
 
 protected:
     // Override resizeEvent to handle window resizing

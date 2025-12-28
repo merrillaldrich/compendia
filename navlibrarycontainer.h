@@ -6,13 +6,14 @@
 #include "tag.h"
 #include "tagfamily.h"
 #include "tagfamilywidget.h"
+#include "tagcontainer.h"
 
-class NavLibraryContainer : public QWidget
+class NavLibraryContainer : public TagContainer
 {
     Q_OBJECT
 public:
     explicit NavLibraryContainer(QWidget *parent = nullptr);
-    void refresh(QSet<Tag*>* tags);
+
 protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 

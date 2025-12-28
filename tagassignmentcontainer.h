@@ -9,13 +9,13 @@
 #include "tagwidget.h"
 #include "tagfamilywidget.h"
 #include "mainwindow.h"
+#include "tagcontainer.h"
 
-class TagAssignmentContainer : public QWidget
+class TagAssignmentContainer : public TagContainer
 {
     Q_OBJECT
 public:
     explicit TagAssignmentContainer(QWidget *parent = nullptr);
-    void refresh(QSet<Tag *> *tags);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;

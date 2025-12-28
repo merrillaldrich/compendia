@@ -1,68 +1,11 @@
 #include "navfiltercontainer.h"
 
 NavFilterContainer::NavFilterContainer(QWidget *parent)
-    : QWidget{parent}
+    : TagContainer{parent}
 {
 
 }
 
-void NavFilterContainer::refresh(QSet<Tag*>* tags){
-
-    // Remove existing tag filter widgets
-    QLayoutItem* item;
-    while ((item = layout()->takeAt(0)) != nullptr) {
-        if (QWidget *widget = item->widget()) {
-            widget->setParent(nullptr); // Detach from parent
-            widget->deleteLater();      // Schedule deletion
-        }
-    }
-
-    QSetIterator<Tag *> i(*tags);
-    while (i.hasNext()) {
-        Tag* currentTag = i.next();
-        TagFamily* currentTagFamily = currentTag->tagFamily;
-
-        TagFamilyWidget* w = nullptr;
-        TagWidget* tw = nullptr;
-
-        // If there are no tag family widgets or there's no tagfamilywidget for the current tag's family, add a new tagfamilywidget
-        QList<TagFamilyWidget*> existingTFWidgets = findChildren<TagFamilyWidget*>();
-
-        for(int tfwi = 0; tfwi < existingTFWidgets.count(); ++tfwi){
-            TagFamilyWidget* existingTFWidget = existingTFWidgets.at(tfwi);
-
-            if (existingTFWidget->getTagFamily() == currentTagFamily) {
-                // Tag family widget exists, use it
-                w = existingTFWidget;
-            }
-        }
-
-        if (w==nullptr){
-            w = new TagFamilyWidget(currentTag->tagFamily, this);
-            layout()->addWidget(w);
-            w->show();
-        }
-
-        // If there are no tag widgets, or there's no tagwidget for the current tag in the current family widget, add a new tagwidget
-        QList<TagWidget*> existingTWidgets = w->findChildren<TagWidget*>();
-
-        for(int twi = 0; twi < existingTWidgets.count(); ++twi){
-            TagWidget* existingTWidget = existingTWidgets.at(twi);
-            if(existingTWidget->getTag() == currentTag){
-                // Tag widget exists, use it
-                tw = existingTWidget;
-            }
-        }
-
-        if (tw==nullptr){
-            tw = new TagWidget(currentTag, w);
-            if (! connect(tw, &TagWidget::deleteRequested, this, &NavFilterContainer::onTagDeleteRequested))
-                qWarning() << "Failed to connect tag widget delete to filter container delete";
-            w->layout()->addWidget(tw);
-            tw->show();
-        }
-    }
-}
 
 void NavFilterContainer::dragEnterEvent(QDragEnterEvent *event)
 {
@@ -181,9 +124,4 @@ void NavFilterContainer::dropEvent(QDropEvent *event)
     }
 }
 
-void NavFilterContainer::onTagDeleteRequested(Tag* tag){
-    // Tell core to remove this tag from all the files in the filtered file list
-
-    emit tagDeleteRequested(tag);
-}
 
