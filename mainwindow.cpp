@@ -25,11 +25,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set up the tag library area
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
+    ui->navLibraryScrollArea->setStyleSheet("background-color: rgb(96, 174, 233)");
+    ui->navLibraryScrollArea->viewport()->setStyleSheet("background-color: rgb(96, 174, 233)");
     ui->navLibraryContainer->setLayout(navTagLibraryLayout);
 
     // Set up the tag filter area
     FlowLayout* navFilterLayout = new FlowLayout(ui->navFilterContainer);
     ui->navFilterContainer->setLayout(navFilterLayout);
+    ui->navFilterScrollArea->setStyleSheet("background-color: rgb(96, 174, 233)");
+    ui->navFilterScrollArea->viewport()->setStyleSheet("background-color: rgb(96, 174, 233)");
+
     if (connect(ui->navFilterContainer, &NavFilterContainer::tagDeleteRequested, this, &MainWindow::on_tagFilterRemove_Requested)){
 
     } else {
