@@ -26,8 +26,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         tagset.cpp
-        tag.cpp tagfamily.cpp taggedfile.cpp taggedfilecollection.cpp
-        luminismcore.h tagfamily.h taggedfile.h taggedfilecollection.h tagset.h
+        tag.cpp tagfamily.cpp taggedfile.cpp
+        luminismcore.h tagfamily.h taggedfile.h  tagset.h
         luminismcore.cpp
         tag.h
         resources.qrc

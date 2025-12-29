@@ -5,8 +5,12 @@
 #include <QDir>
 #include <QDebug>
 #include <QStandardItemModel>
-#include "taggedfilecollection.h"
+#include <QMutex>
+#include <QTimer>
+#include <QtConcurrent>
+#include "tagset.h"
 #include "filterproxymodel.h"
+#include "icongenerator.h"
 
 class LuminismCore : public QObject
 {
@@ -14,7 +18,20 @@ class LuminismCore : public QObject
 private:
 
     QString root_directory_;
-    TaggedFileCollection *tfc;
+
+    QSet<TagFamily*>* tag_families_;
+    QSet<Tag*>* tags_;
+    QStandardItemModel *tagged_files_;
+    FilterProxyModel *tagged_files_proxy_;
+
+    QMutex resultsMutex_;
+    QVector<std::tuple<QString, QString, QImage>> results_; // fileName, path, image
+    QTimer uiFlushTimer_;
+
+    QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
+
+    void flushIconGeneratorQueue();
+    void applyIconToModel(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap);
 
 public:
 
@@ -22,6 +39,14 @@ public:
 
     void setRootDirectory(QString path);
     void loadRootDirectory();
+
+    bool containsFiles();
+
+    void addFile(QFileInfo fileInfo);
+    void addFile(QFileInfo fileInfo, QJsonObject tagsJson);
+    void addFile(QFileInfo fileInfo, QList<TagSet> tags);
+    void populateIcons();
+
 
     void writeFileMetadata();
 
@@ -50,7 +75,11 @@ public:
     QStandardItemModel* getItemModel();
     FilterProxyModel* getItemModelProxy();
 
+    QList<TagSet> parseTagJson(QJsonObject tagsJson);
+
 public slots:
+
+    void ensureUiFlushTimerRunning();
 
 signals:
 };
