@@ -52,6 +52,7 @@ private slots:
 
 signals:
     void deleteRequested(Tag *t);
+    void tagNameChanged(Tag *t);
 };
 
 #endif // TAGWIDGET_H

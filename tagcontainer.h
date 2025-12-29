@@ -12,11 +12,16 @@
 class TagContainer : public QWidget
 {
     Q_OBJECT
+
+private:
+    bool const famNameLessThan(const TagFamilyWidget &a, const TagFamilyWidget &b) ;
+
 public:
     explicit TagContainer(QWidget *parent = nullptr);
 
     void refresh(QSet<Tag*>* tags);
     void onTagDeleteRequested(Tag* tag);
+    void sort();
 
 protected:
 

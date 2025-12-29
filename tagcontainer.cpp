@@ -67,8 +67,38 @@ void TagContainer::refresh(QSet<Tag*>* tags){
             w->updateGeometry();
         }
     }
+    this->sort();
 }
-void TagContainer::onTagDeleteRequested(Tag* tag){
 
+void TagContainer::onTagDeleteRequested(Tag* tag){
     emit tagDeleteRequested(tag);
+}
+
+void TagContainer::sort() {
+    QList<TagFamilyWidget*> fwlist;
+    QLayoutItem* item = nullptr;
+
+    // Temporarily move child widgets to a list
+    while ((item = layout()->takeAt(0)) != nullptr) {
+        if (QWidget *widget = item->widget()) {
+            if (auto *tfw = qobject_cast<TagFamilyWidget*>(widget)) {
+                fwlist.append(tfw);
+            }
+        }
+        delete item; // is this needed to avoid QLayoutItem leak?
+    }
+
+    // Sort the list (compare pointers)
+    std::sort(fwlist.begin(), fwlist.end(),
+              [](TagFamilyWidget* a, TagFamilyWidget* b) {
+                  return a->getTagFamily()->getName() < b->getTagFamily()->getName();
+              });
+
+    // Put the widgets back in the layout, in order
+    for (TagFamilyWidget* w : fwlist) {
+        w->sort();
+        w->layout()->invalidate();
+        w->layout()->activate();
+        layout()->addWidget(w);
+    }
 }

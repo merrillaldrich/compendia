@@ -37,12 +37,14 @@ public:
 
     void startEdit();
     void endEdit();
-    TagFamily* getTagFamily();
+    TagFamily* getTagFamily() const;
+    void sort();
 
 private slots:
     void onReturnPressed();
     void onLabelClicked(QMouseEvent *event);
     void onTagFamilyNameChanged();
+    void onTagNameChanged();
 
 signals:
 

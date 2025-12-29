@@ -147,10 +147,41 @@ void TagFamilyWidget::onTagFamilyNameChanged(){
     update(0, 0, width(), 26); // Paint a band across the widget for the case where the label became shorter after edit
 }
 
-TagFamily* TagFamilyWidget::getTagFamily(){
+void TagFamilyWidget::onTagNameChanged(){
+    sort();
+}
+
+TagFamily *TagFamilyWidget::getTagFamily() const{
     return tag_family_;
 }
 
 QSize TagFamilyWidget::sizeHint() const {
     return minimumSize();
+}
+
+void TagFamilyWidget::sort() {
+    QList<TagWidget*> twlist;
+    QLayoutItem* item = nullptr;
+
+    // Temporarily move child widgets to a list
+    while ((item = layout()->takeAt(0)) != nullptr) {
+        if (QWidget *widget = item->widget()) {
+            if (auto *tfw = qobject_cast<TagWidget*>(widget)) {
+                twlist.append(tfw);
+            }
+        }
+        delete item; // is this needed to avoid QLayoutItem leak?
+    }
+
+    // Sort the list (compare pointers)
+    std::sort(twlist.begin(), twlist.end(),
+              [](TagWidget* a, TagWidget* b) {
+                  return a->getTag()->getName() < b->getTag()->getName();
+              });
+
+    // Put the widgets back in the layout, in order
+    // and sort the tags inside each one
+    for (TagWidget* w : twlist) {
+        layout()->addWidget(w);
+    }
 }

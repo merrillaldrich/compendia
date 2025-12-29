@@ -179,6 +179,7 @@ void TagWidget::onTagNameChanged(){
     label_->setText(tag_->getName());
     label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
     adjustSize();
+    emit tagNameChanged(tag_);
 }
 
 Tag* TagWidget::getTag(){
