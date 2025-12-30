@@ -179,15 +179,33 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         QVariant selectedImage = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
 
+        QImageReader ir( itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName );
+
+        QString format = ir.format().toLower();
+        QString subType = ir.subType().toLower();
+
+        qDebug() << "Preview image";
+        qDebug() << format;
+        qDebug() << subType;
+
         // Load the image
-        QPixmap pixmap(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
+        QImage image = ir.read();
+        if (image.isNull()) {
+            QMessageBox::critical(nullptr, "Error", "Failed to load image: " + ir.errorString());
+            //return -1;
+        }
+
+        //QPixmap pixmap(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
         //    QMessageBox::critical(nullptr, "Error", "Failed to load image.");
         //    return -1;
         //}
 
         // Replace the image in the scene
         scene->clear();
-        QGraphicsPixmapItem *item = scene->addPixmap(pixmap);
+
+        QGraphicsPixmapItem *item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        scene->addItem(item);
+
         item->setTransformationMode(Qt::SmoothTransformation);
 
         // Fix up zoom and such

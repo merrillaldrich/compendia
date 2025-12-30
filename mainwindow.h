@@ -5,6 +5,8 @@
 #include <QItemSelection>
 #include <QResizeEvent>
 #include <QGraphicsView>
+#include <QImageReader>
+#include <QMessageBox>
 #include "luminismcore.h"
 
 QT_BEGIN_NAMESPACE
