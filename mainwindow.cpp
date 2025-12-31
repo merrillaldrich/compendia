@@ -180,6 +180,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
 
         QImageReader ir( itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName );
+        ir.setAutoTransform(true);
 
         QString format = ir.format().toLower();
         QString subType = ir.subType().toLower();

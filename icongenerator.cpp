@@ -1,4 +1,5 @@
 #include "icongenerator.h"
+#include <qimagereader.h>
 
 IconGenerator::IconGenerator(QObject *parent)
     : QObject(parent){
@@ -14,7 +15,10 @@ QImage IconGenerator::generateIcon(const QString absoluteFileName)
     // For cache miss, process the original image, save the result to cache, and also return it
     if (iconPic.isNull()) {
         qDebug() << "Icon cache miss";
-        QImage p = QImage(absoluteFileName);
+
+        QImageReader ir(absoluteFileName);
+        ir.setAutoTransform(true);
+        QImage p = ir.read();
         iconPic = makeSquareIcon(p, 100);
 
         bool cached = saveIconToCache(absoluteFileName, iconPic);
