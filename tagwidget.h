@@ -44,7 +44,7 @@ protected:
     QSize sizeHint() const override;
 
 private slots:
-    void onReturnPressed();
+    void onLineEditEditingFinished();
     void onLabelClicked(QMouseEvent *event);
     void onTagNameChanged();
     void onTextEdited();

@@ -46,14 +46,15 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     label_->show();
 
-    connect(line_edit_, &QLineEdit::returnPressed, this, &TagWidget::onReturnPressed);
+    connect(line_edit_, &QLineEdit::editingFinished, this, &TagWidget::onLineEditEditingFinished);
     connect(label_, &ClickableLabel::clicked, this, &TagWidget::onLabelClicked);
+
 
     //qDebug() << "Size at end of constructor " << this->sizeHint().width();
 
 }
 
-void TagWidget::onReturnPressed(){
+void TagWidget::onLineEditEditingFinished(){
     endEdit();
 }
 
@@ -96,7 +97,9 @@ void TagWidget::paintEvent(QPaintEvent *event) {
 }
 
 void TagWidget::startEdit(){
-    qDebug() << "Enter tag edit mode";
+
+    //qDebug() << "Enter tag edit mode";
+
     edit_status_ = "Edit";
     label_->hide();
     line_edit_->setText(tag_->getName());
@@ -106,7 +109,9 @@ void TagWidget::startEdit(){
 }
 
 void TagWidget::endEdit(){
-    qDebug() << "Leave tag edit mode";
+
+    //qDebug() << "Leave tag edit mode";
+
     edit_status_ = "Read";
     tag_->setName(line_edit_->text());
 

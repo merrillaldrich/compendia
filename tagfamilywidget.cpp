@@ -40,7 +40,7 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
 
     label_->show();
 
-    connect(line_edit_, &QLineEdit::returnPressed, this, &TagFamilyWidget::onReturnPressed);
+    connect(line_edit_, &QLineEdit::editingFinished, this, &TagFamilyWidget::onLineEditEditingFinished);
     connect(label_, &ClickableLabel::clicked, this, &TagFamilyWidget::onLabelClicked);
 }
 
@@ -71,7 +71,7 @@ void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
     //QWidget::mouseReleaseEvent(event); // Do not call parent b/c we handled the event fully
 }
 
-void TagFamilyWidget::onReturnPressed(){
+void TagFamilyWidget::onLineEditEditingFinished(){
     endEdit();
 }
 

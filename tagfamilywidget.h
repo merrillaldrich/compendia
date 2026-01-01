@@ -41,7 +41,7 @@ public:
     void sort();
 
 private slots:
-    void onReturnPressed();
+    void onLineEditEditingFinished();
     void onLabelClicked(QMouseEvent *event);
     void onTagFamilyNameChanged();
     void onTagNameChanged();
