@@ -4,14 +4,6 @@ TagAssignmentContainer::TagAssignmentContainer(QWidget *parent)
     : TagContainer{parent}
 {}
 
-/*! Update the tag assignment area to show only the tags in the passed list.
- *
- *  @brief Adjust the UI to display only the tags assigned to the files in the
- *  filtered list of files
- *
- *  @param tags Set of tags to include in the assignment area
- */
-
 void TagAssignmentContainer::dragEnterEvent(QDragEnterEvent *event)
 {
     //qDebug() << "Drag enter event!";

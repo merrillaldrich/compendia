@@ -180,7 +180,6 @@ void TagFamilyWidget::sort() {
               });
 
     // Put the widgets back in the layout, in order
-    // and sort the tags inside each one
     for (TagWidget* w : twlist) {
         layout()->addWidget(w);
     }
