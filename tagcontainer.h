@@ -20,6 +20,7 @@ public:
     explicit TagContainer(QWidget *parent = nullptr);
 
     void refresh(QSet<Tag*>* tags);
+    void clear();
     void onTagDeleteRequested(Tag* tag);
     void sort();
 

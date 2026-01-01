@@ -116,6 +116,9 @@ void MainWindow::setRootFolder(){
     QListView* lv = ui->fileListView;
     lv->setModel(nullptr);
 
+    ui->navFilterContainer->clear();
+    ui->fileListTagAssignmentContainer->clear();
+
     core->setRootDirectory(folder);
 
     le->setText(folder);

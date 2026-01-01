@@ -6,14 +6,7 @@ TagContainer::TagContainer(QWidget *parent)
 
 void TagContainer::refresh(QSet<Tag*>* tags){
 
-    // Remove existing tag filter widgets
-    QLayoutItem* item;
-    while ((item = layout()->takeAt(0)) != nullptr) {
-        if (QWidget *widget = item->widget()) {
-            widget->setParent(nullptr); // Detach from parent
-            widget->deleteLater();      // Schedule deletion
-        }
-    }
+    clear();
 
     // Insert all tags in the incoming set, resolving into families
     QSetIterator<Tag *> i(*tags);
@@ -70,6 +63,17 @@ void TagContainer::refresh(QSet<Tag*>* tags){
     this->sort();
 }
 
+void TagContainer::clear(){
+    // Remove existing tag filter widgets
+    QLayoutItem* item;
+    while ((item = layout()->takeAt(0)) != nullptr) {
+        if (QWidget *widget = item->widget()) {
+            widget->setParent(nullptr); // Detach from parent
+            widget->deleteLater();      // Schedule deletion
+        }
+    }
+
+}
 void TagContainer::onTagDeleteRequested(Tag* tag){
     emit tagDeleteRequested(tag);
 }
