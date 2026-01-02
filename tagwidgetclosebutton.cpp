@@ -10,11 +10,16 @@ TagWidgetCloseButton::TagWidgetCloseButton(QWidget *parent)
         background_color_ = QColor::fromHsv(0,200,200); // Default color if this item has an incorrect parent
     }
 
-    int bright_value = background_color_.value() + 15;
-    brighter_edge_color_ = QColor::fromHsv(background_color_.hue(), background_color_.saturation(), bright_value);
+    effective_color_ = background_color_;
 
-    int dark_value = background_color_.value() - 25;
-    darker_edge_color_ = QColor::fromHsv(background_color_.hue(), background_color_.saturation(), dark_value);
+    int mouse_over_value_ = background_color_.value() + 12;
+    mouse_over_color_ = QColor::fromHsv(background_color_.hue(), background_color_.saturation(), mouse_over_value_);
+
+    int highlight_value = background_color_.value() + 15;
+    highlight_edge_color_ = QColor::fromHsv(background_color_.hue(), background_color_.saturation(), highlight_value);
+
+    int shadow_value = background_color_.value() - 25;
+    shadow_edge_color_ = QColor::fromHsv(background_color_.hue(), background_color_.saturation(), shadow_value);
 }
 
 void TagWidgetCloseButton::paintEvent(QPaintEvent *event){
@@ -30,12 +35,12 @@ void TagWidgetCloseButton::paintEvent(QPaintEvent *event){
     double xRightBottom = xInset + 5;
 
     // Paint circular button
-    painter.setBrush(background_color_);
+    painter.setBrush(effective_color_);
     painter.setPen(Qt::NoPen);
     QRect circleBounds = QRect(circleInset, circleInset, circleRightBottom, circleRightBottom);
     painter.drawRoundedRect(circleBounds, circleRadius, circleRadius);
 
-    QPen circlePen(darker_edge_color_);
+    QPen circlePen(shadow_edge_color_);
     circlePen.setWidth(2);
     circlePen.setCapStyle(Qt::FlatCap);
 
@@ -43,7 +48,7 @@ void TagWidgetCloseButton::paintEvent(QPaintEvent *event){
     painter.setPen(circlePen);
     painter.drawArc(circleBounds, 45 * 16, 180 * 16);
 
-    circlePen.setColor(brighter_edge_color_);
+    circlePen.setColor(highlight_edge_color_);
     painter.setPen(circlePen);
     painter.drawArc(circleBounds, 225 * 16, 180 * 16);
 
@@ -59,4 +64,14 @@ void TagWidgetCloseButton::paintEvent(QPaintEvent *event){
     path.moveTo(xInset, xRightBottom);
     path.lineTo(xRightBottom, xInset);
     painter.drawPath(path);
+}
+
+void TagWidgetCloseButton::enterEvent(QEnterEvent *event) {
+    effective_color_ = mouse_over_color_;
+    QPushButton::enterEvent(event);
+}
+
+void TagWidgetCloseButton::leaveEvent(QEvent *event) {
+    effective_color_ = background_color_;
+    QPushButton::leaveEvent(event);
 }
