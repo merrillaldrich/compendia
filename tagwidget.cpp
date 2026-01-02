@@ -1,12 +1,13 @@
 #include "tagwidget.h"
 
 TagWidget::TagWidget(QWidget *parent)
-    : QWidget{parent}
+    : TaggingWidget{parent}
 {}
 
 TagWidget::TagWidget(Tag *tag, QWidget *parent)
-    : QWidget{parent}{
+    : TaggingWidget{parent}{
     tag_ = tag;
+    base_color_ = tag->tagFamily->getColor();
 
     // Connect this widget to its tag's name changed event
     connect(tag_, &Tag::nameChanged, this, &TagWidget::onTagNameChanged);
@@ -81,7 +82,7 @@ void TagWidget::paintEvent(QPaintEvent *event) {
     QPen p = QPen(Qt::NoPen); //QBrush(QColor("black")), 2);
     //painter.setPen(p);
 
-    QBrush b = QBrush(QColor("orange"));
+    QBrush b = QBrush(base_color_);
     painter.setPen(p);
     painter.setBrush(b);
     painter.setRenderHint(QPainter::Antialiasing);

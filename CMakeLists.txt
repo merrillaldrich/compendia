@@ -44,6 +44,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         icongenerator.h icongenerator.cpp
         navfiltercontainer.h navfiltercontainer.cpp
         tagcontainer.h tagcontainer.cpp
+        taggingwidget.h taggingwidget.cpp
 
     )
 

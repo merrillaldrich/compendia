@@ -57,14 +57,10 @@ MainWindow::MainWindow(QWidget *parent)
     // Default pane sizes
     resize(1400, 900);
 
-    QList<int> sizes = {350,650,400} ;
-    ui->windowBodySplitter->setSizes(sizes);
-    sizes = {100,500,300};
-    ui->navSplitter->setSizes(sizes);
-    sizes = {700,300};
-    ui->fileListSplitter->setSizes(sizes);
-    sizes = {800,200};
-    ui->previewSplitter->setSizes(sizes);
+    ui->windowBodySplitter->setSizes({350,650,400});
+    ui->navSplitter->setSizes({100,200,600});
+    ui->fileListSplitter->setSizes({700,300});
+    ui->previewSplitter->setSizes({800,200});
 
     // Drag and drop setup
     ui->navFilterContainer->setAcceptDrops(true);

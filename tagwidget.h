@@ -13,9 +13,10 @@
 #include "variablewidthlineedit.h"
 #include "tagwidgetclosebutton.h"
 #include "mainwindow.h"
+#include "taggingwidget.h"
 
 
-class TagWidget : public QWidget
+class TagWidget : public TaggingWidget
 {
     Q_OBJECT
 

@@ -1,13 +1,14 @@
 #include "tagfamilywidget.h"
 
 TagFamilyWidget::TagFamilyWidget(QWidget *parent)
-    : QWidget{parent}
+    : TaggingWidget{parent}
 {}
 
 TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
-    : QWidget{parent}
+    : TaggingWidget{parent}
 {
     tag_family_ = tagFamily;
+    base_color_ = tagFamily->getColor();
 
     // Connect this widget to its tag family's name changed event
     connect(tag_family_, &TagFamily::nameChanged, this, &TagFamilyWidget::onTagFamilyNameChanged);
@@ -84,7 +85,7 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QPen p = QPen(QColor("orange")); //QBrush(QColor("black")), 2);
+    QPen p = QPen(base_color_); //QBrush(QColor("black")), 2);
     painter.setPen(p);
 
     int inset = 2;
@@ -100,7 +101,7 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
 
     QPainterPath path;
 
-    painter.setBrush(QColor("orange"));
+    painter.setBrush(QColor(base_color_));
     painter.setPen(Qt::NoPen);
 
     path.moveTo(cornerRadius, topY);

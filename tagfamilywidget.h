@@ -12,8 +12,9 @@
 #include "clickablelabel.h"
 #include "variablewidthlineedit.h"
 #include "mainwindow.h"
+#include "taggingwidget.h"
 
-class TagFamilyWidget : public QWidget
+class TagFamilyWidget : public TaggingWidget
 {
     Q_OBJECT
 
