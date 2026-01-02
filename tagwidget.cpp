@@ -21,7 +21,7 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     setAttribute(Qt::WA_TranslucentBackground);
 
-    TagWidgetCloseButton* closeButton = new TagWidgetCloseButton("", this);
+    TagWidgetCloseButton* closeButton = new TagWidgetCloseButton(this);
     closeButton->setMinimumSize(20,20);
     connect(closeButton, &TagWidgetCloseButton::clicked, this, &TagWidget::onCloseButtonClicked);
 
