@@ -30,15 +30,12 @@ void LuminismCore::flushIconGeneratorQueue(){
         const QString &path = std::get<1>(t);
         QImage img = std::get<2>(t);
 
-        // Change QImage to QPixmap while preserving aspect ratio
-        QPixmap pix = QPixmap::fromImage(img).scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-        // update your model/view safely (small number per tick keeps UI responsive)
-        applyIconToModel(fileName, path, pix);
+        // Update the model using an icon based on the image
+        applyIconToModel(fileName, path, img);
     }
 }
 
-void LuminismCore::applyIconToModel(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap)
+void LuminismCore::applyIconToModel(const QString &fileName, const QString &absoluteFilePathName, const QImage &image)
 {
     // There could be files in different folders having the same name, but to make things quick
     // we find all files with a matching name in the model, and then zero in on the specific one
@@ -50,6 +47,7 @@ void LuminismCore::applyIconToModel(const QString &fileName, const QString &abso
         return;
     }
 
+    // Handle duplicate file names by comparing on the full path
     QStandardItem* item = nullptr;
     for (int i = 0; i < matches.count(); ++i){
         QStandardItem* currentItem = matches[i];
@@ -61,7 +59,20 @@ void LuminismCore::applyIconToModel(const QString &fileName, const QString &abso
     }
 
     if( item != nullptr){
-        item->setIcon(pixmap);
+
+        int size = 100;
+        // Create a transparent square pixmap
+        QPixmap square(size, size);
+        square.fill(Qt::transparent);
+
+        // Center the scaled image in the square
+        QPainter painter(&square);
+        int x = (size - image.width()) / 2;
+        int y = (size - image.height()) / 2;
+        painter.drawImage(x, y, image);
+        painter.end();
+
+        item->setIcon(square);
     } else {
         qDebug() << "Could not locate " + absoluteFilePathName + " to set icon";
     }

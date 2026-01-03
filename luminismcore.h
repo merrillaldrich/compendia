@@ -31,7 +31,7 @@ private:
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
 
     void flushIconGeneratorQueue();
-    void applyIconToModel(const QString &fileName, const QString &absoluteFilePathName, const QPixmap &pixmap);
+    void applyIconToModel(const QString &fileName, const QString &absoluteFilePathName, const QImage &image);
 
 public:
 

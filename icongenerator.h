@@ -19,7 +19,6 @@ public:
     static QImage generateIcon(const QString absoluteFileName);
 
 private:
-    static QImage makeSquareIcon(const QImage &source, int size);
     static bool saveIconToCache(const QString &absoluteFileName, const QImage &pict);
     static QImage loadIconFromCache(const QString &absoluteFileName);
 

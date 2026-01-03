@@ -16,10 +16,11 @@ QImage IconGenerator::generateIcon(const QString absoluteFileName)
     if (iconPic.isNull()) {
         qDebug() << "Icon cache miss";
 
+        int size = 100;
         QImageReader ir(absoluteFileName);
         ir.setAutoTransform(true);
-        QImage p = ir.read();
-        iconPic = makeSquareIcon(p, 100);
+        QImage iconPic = ir.read();
+        iconPic = iconPic.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
         bool cached = saveIconToCache(absoluteFileName, iconPic);
 
@@ -84,29 +85,4 @@ QImage IconGenerator::loadIconFromCache(const QString &absoluteFileName){
     in >> iconPic;
 
     return iconPic;
-}
-
-QImage IconGenerator::makeSquareIcon(const QImage &source, int size)
-{
-    // Scale the image to fit within a square, keeping aspect ratio
-    QImage scaled = source.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    //// Create a transparent square pixmap
-    //QImage square(size, size);
-    //square.fill(Qt::transparent);
-
-    //// Center the scaled image in the square
-    //QPainter painter(&square);
-    //int x = (size - scaled.width()) / 2;
-    //int y = (size - scaled.height()) / 2;
-    //painter.drawPixmap(x, y, scaled);
-    //painter.end();
-
-    QImage scaledImage = source.scaled(
-        size, size,
-        Qt::KeepAspectRatio,
-        Qt::SmoothTransformation
-        );
-
-    return scaledImage;
 }
