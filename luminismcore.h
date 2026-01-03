@@ -82,6 +82,8 @@ public slots:
     void ensureUiFlushTimerRunning();
 
 signals:
+    void iconUpdated();
+    void metadataSaved();
 };
 
 #endif // LUMINISMCORE_H

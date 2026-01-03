@@ -32,6 +32,7 @@ void LuminismCore::flushIconGeneratorQueue(){
 
         // Update the model using an icon based on the image
         applyIconToModel(fileName, path, img);
+        emit iconUpdated();
     }
 }
 
@@ -262,6 +263,7 @@ void LuminismCore::writeFileMetadata(){
         QTextStream out(&metaFile);
         out << itemAsTaggedFile->TaggedFileJSON();
         metaFile.close();
+        emit metadataSaved();
     }
 }
 

@@ -54,6 +54,36 @@ MainWindow::MainWindow(QWidget *parent)
     QGraphicsScene* scene = new QGraphicsScene();
     ui->previewGraphicsView->setScene(scene);
 
+    // Set up the status bar
+    progress_label_ = new QLabel("Progress:", this);
+    ui->statusBar->addPermanentWidget(progress_label_);
+
+    progress_bar_ = new QProgressBar(this);
+    progress_bar_->setTextVisible(false);
+    progress_bar_->setMinimum(0);
+    progress_bar_->setMaximum(1000);
+    progress_bar_->setFixedSize(300, 12);
+    progress_bar_->setValue(0);
+
+    progress_bar_->setStyleSheet(R"(
+        QProgressBar {
+        border: 1px solid #AAAAAA;
+        border-radius: 1px;
+        text-align: center;
+        background-color: #E0E0E0;
+        color: grey;
+        }
+        QProgressBar::chunk {
+        background-color: #4CAF50;
+        width: 12px;
+        }
+        )"
+    );
+
+    ui->statusBar->addPermanentWidget(progress_bar_);
+    connect(core, &LuminismCore::iconUpdated, this, &MainWindow::on_icon_updated);
+    connect(core, &LuminismCore::metadataSaved, this, &MainWindow::on_metadata_saved);
+
     // Default pane sizes
     resize(1400, 900);
 
@@ -126,6 +156,7 @@ void MainWindow::setRootFolder(){
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
     clearPreview();
+    progress_bar_->setMaximum(core->getItemModel()->rowCount());
 }
 
 void MainWindow::refreshNavTagLibrary(){
@@ -314,3 +345,21 @@ void MainWindow::on_folderFilterLineEdit_textChanged(const QString &arg1)
     refreshTagAssignmentArea();
 }
 
+void MainWindow::on_icon_updated(){
+    if(progress_label_->text() != "Generating Icons")
+        progress_label_->setText("Generating Icons");
+    progress_bar_->setValue(progress_bar_->value() + 1);
+    if(progress_bar_->value() >= progress_bar_->maximum()){
+        progress_label_->setText("Icons Complete");
+        progress_bar_->setValue(0);
+    }
+}
+void MainWindow::on_metadata_saved(){
+    if(progress_label_->text() != "Saving")
+        progress_label_->setText("Saving");
+    progress_bar_->setValue(progress_bar_->value() + 1);
+    if(progress_bar_->value() >= progress_bar_->maximum()){
+        progress_label_->setText("Save Complete");
+        progress_bar_->setValue(0);
+    }
+}

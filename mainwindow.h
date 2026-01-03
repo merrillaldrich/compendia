@@ -7,6 +7,7 @@
 #include <QGraphicsView>
 #include <QImageReader>
 #include <QMessageBox>
+#include <QProgressBar>
 #include "luminismcore.h"
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +22,8 @@ class MainWindow : public QMainWindow
 
 private:
     Ui::MainWindow *ui;
+    QProgressBar* progress_bar_;
+    QLabel* progress_label_;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -57,6 +60,9 @@ private slots:
     void on_fileNameFilterLineEdit_textChanged(const QString &arg1);
 
     void on_folderFilterLineEdit_textChanged(const QString &arg1);
+
+    void on_icon_updated();
+    void on_metadata_saved();
 
 protected:
     // Override resizeEvent to handle window resizing

@@ -53,8 +53,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>49</width>
-           <height>49</height>
+           <width>64</width>
+           <height>64</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -74,8 +74,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>49</width>
-           <height>49</height>
+           <width>64</width>
+           <height>64</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -274,8 +274,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>615</width>
-              <height>49</height>
+              <width>598</width>
+              <height>64</height>
              </rect>
             </property>
            </widget>
@@ -459,7 +459,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>17</height>
+     <height>18</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -487,10 +487,12 @@ border-bottom: 1px solid #DDD; /* width, style, color */</string>
    <addaction name="menuFile"/>
    <addaction name="menuFilter"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar">
+  <widget class="QStatusBar" name="statusBar">
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 120, 186);
-border-top: 1px solid #DDD; /* width, style, color */</string>
+    <string notr="true">#statusBar {
+background-color: rgb(0, 120, 186);
+border-top: 1px solid #DDD; /* width, style, color */
+}</string>
    </property>
   </widget>
   <action name="actionOpen_Folder">
