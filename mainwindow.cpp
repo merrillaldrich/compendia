@@ -114,6 +114,7 @@ void MainWindow::setRootFolder(){
 
     ui->navFilterContainer->clear();
     ui->fileListTagAssignmentContainer->clear();
+    ui->navLibraryContainer->clear();
 
     core->setRootDirectory(folder);
 

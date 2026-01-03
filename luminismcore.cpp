@@ -86,20 +86,19 @@ void LuminismCore::setRootDirectory(QString path){
 void LuminismCore::loadRootDirectory(){
 
     // Pointing to a new folder means we have to clear any data already loaded:
-    if ( containsFiles() ){
-        delete tagged_files_proxy_;
-        delete tagged_files_;
-        delete tags_;
-        delete tag_families_;
+    delete tagged_files_proxy_;
+    delete tagged_files_;
+    delete tags_;
+    delete tag_families_;
 
-        tag_families_ = new QSet<TagFamily*>();
-        tags_ = new QSet<Tag*>();
-        tagged_files_ = new QStandardItemModel(this);
-        tagged_files_proxy_ = new FilterProxyModel(this);
+    tag_families_ = new QSet<TagFamily*>();
+    tags_ = new QSet<Tag*>();
+    tagged_files_ = new QStandardItemModel(this);
+    tagged_files_proxy_ = new FilterProxyModel(this);
 
-        tagged_files_proxy_->setSourceModel(tagged_files_);
-        tagged_files_proxy_->sort(0);
-    }
+    tagged_files_proxy_->setSourceModel(tagged_files_);
+    tagged_files_proxy_->sort(0);
+
 
     // Iterate over the entire root directory recursively and populate the model
     QDirIterator it(root_directory_, QStringList() << "*.jpg" << "*.JPG" << "*.heic" << "*.HEIC" << "*.png" << "*.PNG", QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
