@@ -196,6 +196,10 @@ QSize TagWidget::sizeHint() const {
     return minimumSize();
 }
 
+QSize TagWidget::minimumSizeHint() const {
+    return minimumSize();
+}
+
 void TagWidget::adjustCustomWidth(){
     // Set the width of this widget to a custom size based on the tag name, but only if the tag name
     // has a value. Otherwise we need the default width so it doesn't collapse
