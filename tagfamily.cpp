@@ -51,9 +51,11 @@ QColor TagFamily::generateNextColor(){
 
     int current_hue = next_hue_ % 360;
     double times_around_the_wheel = next_hue_ / 360;
+    int default_saturation = 190;
+    int default_value = 220;
 
-    int current_saturation = 230 - (230 * times_around_the_wheel * 0.2);
-    int current_value = 240 - (240 * times_around_the_wheel * 0.07);
+    int current_saturation = default_saturation - (default_saturation * times_around_the_wheel * 0.2);
+    int current_value = default_value - (default_value * times_around_the_wheel * 0.07);
 
     next_hue_ += 32;
 
