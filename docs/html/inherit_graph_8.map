@@ -1,11 +1,17 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,81,78,108"/>
-<area shape="rect" id="Node000001" href="$class_nav_library_container.html" title=" " alt="" coords="139,5,280,32"/>
-<area shape="poly" id="edge13_Node000000_Node000001" title=" " alt="" coords="74,70,125,42,158,31,154,34,127,46,77,74"/>
-<area shape="rect" id="Node000002" href="$class_tag_assignment_container.html" title=" " alt="" coords="126,56,293,83"/>
-<area shape="poly" id="edge14_Node000000_Node000002" title=" " alt="" coords="92,84,127,81,123,84,94,89"/>
-<area shape="rect" id="Node000003" href="$class_tag_family_widget.html" title=" " alt="" coords="148,107,270,133"/>
-<area shape="poly" id="edge15_Node000000_Node000003" title=" " alt="" coords="93,100,150,109,146,112,94,105"/>
-<area shape="rect" id="Node000004" href="$class_tag_widget.html" title=" " alt="" coords="168,157,251,184"/>
-<area shape="poly" id="edge16_Node000000_Node000004" title=" " alt="" coords="76,114,127,143,170,160,164,161,125,148,75,120"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,132,78,159"/>
+<area shape="rect" id="Node000001" href="$class_tag_container.html" title=" " alt="" coords="130,81,228,108"/>
+<area shape="poly" id="edge13_Node000000_Node000001" title=" " alt="" coords="91,124,143,107,139,110,94,129"/>
+<area shape="rect" id="Node000005" href="$class_tagging_widget.html" title=" " alt="" coords="126,157,233,184"/>
+<area shape="poly" id="edge17_Node000000_Node000005" title=" " alt="" coords="93,152,128,160,123,162,93,157"/>
+<area shape="rect" id="Node000002" href="$class_nav_filter_container.html" title=" " alt="" coords="300,5,430,32"/>
+<area shape="poly" id="edge14_Node000001_Node000002" title=" " alt="" coords="217,71,280,42,316,31,311,34,282,46,220,76"/>
+<area shape="rect" id="Node000003" href="$class_nav_library_container.html" title=" " alt="" coords="294,56,435,83"/>
+<area shape="poly" id="edge15_Node000001_Node000003" title=" " alt="" coords="243,83,296,78,292,80,245,88"/>
+<area shape="rect" id="Node000004" href="$class_tag_assignment_container.html" title=" " alt="" coords="281,107,448,133"/>
+<area shape="poly" id="edge16_Node000001_Node000004" title=" " alt="" coords="244,101,283,108,278,109,244,106"/>
+<area shape="rect" id="Node000006" href="$class_tag_family_widget.html" title=" " alt="" coords="304,157,426,184"/>
+<area shape="poly" id="edge18_Node000005_Node000006" title=" " alt="" coords="248,168,306,170,300,171,249,173"/>
+<area shape="rect" id="Node000007" href="$class_tag_widget.html" title=" " alt="" coords="323,208,406,235"/>
+<area shape="poly" id="edge19_Node000005_Node000007" title=" " alt="" coords="246,186,326,210,320,210,245,191"/>
 </map>

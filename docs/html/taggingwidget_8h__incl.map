@@ -1,0 +1,9 @@
+<map id="taggingwidget.h" name="taggingwidget.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="78,5,191,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,75,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,32,70,73,67,68,116,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="98,80,171,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="136,31,137,66,132,63,133,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="196,80,258,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="152,30,202,70,196,71,150,35"/>
+</map>

@@ -123,7 +123,12 @@ Collaboration diagram for MainWindow:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a996c5a2b6f77944776856f08ec30858d" id="r_a996c5a2b6f77944776856f08ec30858d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a996c5a2b6f77944776856f08ec30858d">MainWindow</a> (QWidget *parent=nullptr)</td></tr>
 <tr class="memitem:ae98d00a93bc118200eeef9f9bba1dba7" id="r_ae98d00a93bc118200eeef9f9bba1dba7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae98d00a93bc118200eeef9f9bba1dba7">~MainWindow</a> ()</td></tr>
+<tr class="memitem:a385141ecb8e37eceb78cb64f68a4c706" id="r_a385141ecb8e37eceb78cb64f68a4c706"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a385141ecb8e37eceb78cb64f68a4c706">setRootFolder</a> ()</td></tr>
 <tr class="memitem:a2b165548de96b2ce566501f01078e6cb" id="r_a2b165548de96b2ce566501f01078e6cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b165548de96b2ce566501f01078e6cb">freshenPreview</a> ()</td></tr>
+<tr class="memitem:a70f1571a374bc94df84f935f8af0fffe" id="r_a70f1571a374bc94df84f935f8af0fffe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70f1571a374bc94df84f935f8af0fffe">clearPreview</a> ()</td></tr>
+<tr class="memitem:aca5c9eb33d047612d55528a0abfd7d05" id="r_aca5c9eb33d047612d55528a0abfd7d05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca5c9eb33d047612d55528a0abfd7d05">refreshNavTagLibrary</a> ()</td></tr>
+<tr class="memitem:a3d32035c5a2e69fdb73b66bab8e62ca8" id="r_a3d32035c5a2e69fdb73b66bab8e62ca8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d32035c5a2e69fdb73b66bab8e62ca8">refreshTagAssignmentArea</a> ()</td></tr>
+<tr class="memitem:ac5901d3d7006ac0f0114162453bff817" id="r_ac5901d3d7006ac0f0114162453bff817"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5901d3d7006ac0f0114162453bff817">refreshTagFilterArea</a> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -132,10 +137,6 @@ Public Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aad75236c74a5c340c3e18749a9b5eb4f" id="r_aad75236c74a5c340c3e18749a9b5eb4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad75236c74a5c340c3e18749a9b5eb4f">resizeEvent</a> (QResizeEvent *event) override</td></tr>
-<tr class="memitem:a385141ecb8e37eceb78cb64f68a4c706" id="r_a385141ecb8e37eceb78cb64f68a4c706"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a385141ecb8e37eceb78cb64f68a4c706">setRootFolder</a> ()</td></tr>
-<tr class="memitem:a70f1571a374bc94df84f935f8af0fffe" id="r_a70f1571a374bc94df84f935f8af0fffe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70f1571a374bc94df84f935f8af0fffe">clearPreview</a> ()</td></tr>
-<tr class="memitem:aca5c9eb33d047612d55528a0abfd7d05" id="r_aca5c9eb33d047612d55528a0abfd7d05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca5c9eb33d047612d55528a0abfd7d05">refreshNavTagLibrary</a> ()</td></tr>
-<tr class="memitem:a3d32035c5a2e69fdb73b66bab8e62ca8" id="r_a3d32035c5a2e69fdb73b66bab8e62ca8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d32035c5a2e69fdb73b66bab8e62ca8">refreshTagAssignmentArea</a> ()</td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a996c5a2b6f77944776856f08ec30858d" name="a996c5a2b6f77944776856f08ec30858d"></a>
@@ -152,24 +153,6 @@ Protected Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a996c5a2b6f77944776856f08ec30858d_cgraph.png" border="0" usemap="#aclass_main_window_a996c5a2b6f77944776856f08ec30858d_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a996c5a2b6f77944776856f08ec30858d_cgraph" id="aclass_main_window_a996c5a2b6f77944776856f08ec30858d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,185,56"/>
-<area shape="poly" title=" " alt="" coords="64,28,59,21,63,11,75,5,95,3,117,5,129,14,124,14,115,10,95,8,76,10,66,15,64,20,69,29"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a996c5a2b6f77944776856f08ec30858d_icgraph.png" border="0" usemap="#aclass_main_window_a996c5a2b6f77944776856f08ec30858d_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a996c5a2b6f77944776856f08ec30858d_icgraph" id="aclass_main_window_a996c5a2b6f77944776856f08ec30858d_icgraph">
-<area shape="rect" title=" " alt="" coords="5,29,185,56"/>
-<area shape="poly" title=" " alt="" coords="124,14,115,10,95,8,76,10,66,15,64,20,69,29,64,28,59,21,63,11,75,5,95,3,117,5,129,14"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -196,9 +179,6 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void MainWindow::clearPreview </td>
@@ -207,22 +187,7 @@ Here is the caller graph for this function:</div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a70f1571a374bc94df84f935f8af0fffe_icgraph.png" border="0" usemap="#aclass_main_window_a70f1571a374bc94df84f935f8af0fffe_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a70f1571a374bc94df84f935f8af0fffe_icgraph" id="aclass_main_window_a70f1571a374bc94df84f935f8af0fffe_icgraph">
-<area shape="rect" title=" " alt="" coords="240,5,419,32"/>
-<area shape="rect" href="class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706" title=" " alt="" coords="5,5,192,32"/>
-<area shape="poly" title=" " alt="" coords="221,19,192,21,192,16,226,19"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -240,16 +205,6 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a2b165548de96b2ce566501f01078e6cb_icgraph.png" border="0" usemap="#aclass_main_window_a2b165548de96b2ce566501f01078e6cb_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a2b165548de96b2ce566501f01078e6cb_icgraph" id="aclass_main_window_a2b165548de96b2ce566501f01078e6cb_icgraph">
-<area shape="rect" title=" " alt="" coords="227,5,421,32"/>
-<area shape="rect" href="class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f" title=" " alt="" coords="5,5,179,32"/>
-<area shape="poly" title=" " alt="" coords="209,19,179,21,179,16,214,19"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -258,9 +213,6 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void MainWindow::refreshNavTagLibrary </td>
@@ -269,22 +221,7 @@ Here is the caller graph for this function:</div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_aca5c9eb33d047612d55528a0abfd7d05_icgraph.png" border="0" usemap="#aclass_main_window_aca5c9eb33d047612d55528a0abfd7d05_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_aca5c9eb33d047612d55528a0abfd7d05_icgraph" id="aclass_main_window_aca5c9eb33d047612d55528a0abfd7d05_icgraph">
-<area shape="rect" title=" " alt="" coords="240,5,429,48"/>
-<area shape="rect" href="class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706" title=" " alt="" coords="5,13,192,40"/>
-<area shape="poly" title=" " alt="" coords="221,27,192,29,192,24,227,26"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -293,9 +230,6 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void MainWindow::refreshTagAssignmentArea </td>
@@ -304,22 +238,24 @@ Here is the caller graph for this function:</div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a3d32035c5a2e69fdb73b66bab8e62ca8_icgraph.png" border="0" usemap="#aclass_main_window_a3d32035c5a2e69fdb73b66bab8e62ca8_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a3d32035c5a2e69fdb73b66bab8e62ca8_icgraph" id="aclass_main_window_a3d32035c5a2e69fdb73b66bab8e62ca8_icgraph">
-<area shape="rect" title=" " alt="" coords="240,5,501,32"/>
-<area shape="rect" href="class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706" title=" " alt="" coords="5,5,192,32"/>
-<area shape="poly" title=" " alt="" coords="221,19,192,21,192,16,227,19"/>
-</map>
+
 </div>
+</div>
+<a id="ac5901d3d7006ac0f0114162453bff817" name="ac5901d3d7006ac0f0114162453bff817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5901d3d7006ac0f0114162453bff817">&#9670;&#160;</a></span>refreshTagFilterArea()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::refreshTagFilterArea </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -345,16 +281,6 @@ Here is the caller graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_aad75236c74a5c340c3e18749a9b5eb4f_cgraph.png" border="0" usemap="#aclass_main_window_aad75236c74a5c340c3e18749a9b5eb4f_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_aad75236c74a5c340c3e18749a9b5eb4f_cgraph" id="aclass_main_window_aad75236c74a5c340c3e18749a9b5eb4f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,179,32"/>
-<area shape="rect" href="class_main_window.html#a2b165548de96b2ce566501f01078e6cb" title=" " alt="" coords="227,5,421,32"/>
-<area shape="poly" title=" " alt="" coords="179,16,214,19,208,19,179,21"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -363,9 +289,6 @@ Here is the call graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void MainWindow::setRootFolder </td>
@@ -374,26 +297,7 @@ Here is the call graph for this function:</div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a385141ecb8e37eceb78cb64f68a4c706_cgraph.png" border="0" usemap="#aclass_main_window_a385141ecb8e37eceb78cb64f68a4c706_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a385141ecb8e37eceb78cb64f68a4c706_cgraph" id="aclass_main_window_a385141ecb8e37eceb78cb64f68a4c706_cgraph">
-<area shape="rect" title=" " alt="" coords="5,64,192,91"/>
-<area shape="rect" href="class_main_window.html#a70f1571a374bc94df84f935f8af0fffe" title=" " alt="" coords="281,5,460,32"/>
-<area shape="poly" title=" " alt="" coords="155,61,239,41,283,35,278,36,240,47,157,66"/>
-<area shape="rect" href="class_main_window.html#aca5c9eb33d047612d55528a0abfd7d05" title=" " alt="" coords="276,56,465,99"/>
-<area shape="poly" title=" " alt="" coords="192,75,262,77,257,78,192,80"/>
-<area shape="rect" href="class_main_window.html#a3d32035c5a2e69fdb73b66bab8e62ca8" title=" " alt="" coords="240,123,501,149"/>
-<area shape="poly" title=" " alt="" coords="156,89,240,108,283,119,278,119,239,113,156,94"/>
-</map>
-</div>
 
 </div>
 </div>

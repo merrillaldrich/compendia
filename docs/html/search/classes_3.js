@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mainwindow_0',['MainWindow',['../class_main_window.html',1,'']]]
+  ['luminismcore_0',['LuminismCore',['../class_luminism_core.html',1,'']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['luminismcore_2ecpp_0',['luminismcore.cpp',['../luminismcore_8cpp.html',1,'']]],
-  ['luminismcore_2eh_1',['luminismcore.h',['../luminismcore_8h.html',1,'']]]
+  ['icongenerator_2ecpp_0',['icongenerator.cpp',['../icongenerator_8cpp.html',1,'']]],
+  ['icongenerator_2eh_1',['icongenerator.h',['../icongenerator_8h.html',1,'']]]
 ];

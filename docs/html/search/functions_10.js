@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unapplytag_0',['unApplyTag',['../class_luminism_core.html#affa952341ea7e8a1fb8e68dc98ae3572',1,'LuminismCore::unApplyTag()'],['../class_tag_assignment_container.html#a8cb54550e378f6c34f29c89b31431c07',1,'TagAssignmentContainer::unApplyTag()'],['../class_tagged_file_collection.html#a8f55219577a78f416c05f0e9eee6eb53',1,'TaggedFileCollection::unApplyTag()']]]
+  ['unapplytag_0',['unapplyTag',['../class_luminism_core.html#afcaca78856376adf435f53370ad21c79',1,'LuminismCore::unapplyTag(TaggedFile *file, Tag *tag)'],['../class_luminism_core.html#a9ea5b72a3da4d89678635d1ea8972a03',1,'LuminismCore::unapplyTag(Tag *tag)']]]
 ];

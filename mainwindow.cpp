@@ -1,15 +1,15 @@
 #include "mainwindow.h"
+
+#include <QFileDialog>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
+#include <QDebug>
+
 #include "./ui_mainwindow.h"
 #include "luminismcore.h"
 #include "tagwidget.h"
 #include "tagfamilywidget.h"
 #include "flowlayout.h"
-#include <QFileDialog>
-#include <QGraphicsView>
-#include <QGraphicsPixmapItem>
-
-#include <QDebug>
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -115,6 +115,7 @@ void MainWindow::setRootFolder(){
     ui->navFilterContainer->clear();
     ui->fileListTagAssignmentContainer->clear();
     ui->navLibraryContainer->clear();
+    TagFamily::restartColorSequence();
 
     core->setRootDirectory(folder);
 

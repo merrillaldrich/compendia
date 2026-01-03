@@ -13,6 +13,7 @@ private:
     QString tag_family_name_;
     QColor tag_family_color_;
     static int next_hue_; // Default for static val set in implementation file
+    static int starting_hue_;
     static QColor generateNextColor();
 
 public:
@@ -23,6 +24,7 @@ public:
     void setName(QString tagFamilyName);
     QString getName() const;
     QColor getColor() const;
+    static void restartColorSequence();
 
 protected:
 

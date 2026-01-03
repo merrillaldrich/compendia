@@ -118,13 +118,18 @@ Collaboration diagram for FilterProxyModel:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab54b4d26d99c470733a09fffd4b5fd4d" id="r_ab54b4d26d99c470733a09fffd4b5fd4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab54b4d26d99c470733a09fffd4b5fd4d">FilterProxyModel</a> (QObject *parent=nullptr)</td></tr>
+<tr class="memitem:a7113f86982695f24a02bac4d80919cf7" id="r_a7113f86982695f24a02bac4d80919cf7"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7113f86982695f24a02bac4d80919cf7">getFilterTags</a> ()</td></tr>
 <tr class="memitem:a4d7c210bd3074ee125fbb2770a5db80b" id="r_a4d7c210bd3074ee125fbb2770a5db80b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d7c210bd3074ee125fbb2770a5db80b">setNameFilter</a> (QString filterText)</td></tr>
+<tr class="memitem:a99ec3b50d952a2094bb4623c68221d1b" id="r_a99ec3b50d952a2094bb4623c68221d1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99ec3b50d952a2094bb4623c68221d1b">setFolderFilter</a> (QString filterText)</td></tr>
+<tr class="memitem:a24702ad7e993c6b687edffa866a1309f" id="r_a24702ad7e993c6b687edffa866a1309f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24702ad7e993c6b687edffa866a1309f">addTagFilter</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memitem:a2dee4b7929c110ee0f1f0d218eb794e6" id="r_a2dee4b7929c110ee0f1f0d218eb794e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dee4b7929c110ee0f1f0d218eb794e6">removeTagFilter</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 <tr class="memitem:a938e8b371f366de31c071e03e1c904ce" id="r_a938e8b371f366de31c071e03e1c904ce"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a938e8b371f366de31c071e03e1c904ce">getFilterCreationDate</a> () const</td></tr>
 <tr class="memitem:afc9f487c037cdf1619d195639724113b" id="r_afc9f487c037cdf1619d195639724113b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc9f487c037cdf1619d195639724113b">setFilterCreationDate</a> (QDate creationDate)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a66604d5844f6f75a6503e22f05eeda6d" id="r_a66604d5844f6f75a6503e22f05eeda6d"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66604d5844f6f75a6503e22f05eeda6d">name_filter_</a></td></tr>
+<tr class="memitem:ae0b1b3f621c5bf450c730d06ec1eb856" id="r_ae0b1b3f621c5bf450c730d06ec1eb856"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0b1b3f621c5bf450c730d06ec1eb856">folder_filter_</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -157,6 +162,23 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a24702ad7e993c6b687edffa866a1309f" name="a24702ad7e993c6b687edffa866a1309f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24702ad7e993c6b687edffa866a1309f">&#9670;&#160;</a></span>addTagFilter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilterProxyModel::addTagFilter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ae3b628e58b77cf9e8f0a45ae7b4aec1b" name="ae3b628e58b77cf9e8f0a45ae7b4aec1b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae3b628e58b77cf9e8f0a45ae7b4aec1b">&#9670;&#160;</a></span>filterAcceptsRow()</h2>
 
@@ -211,6 +233,40 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a7113f86982695f24a02bac4d80919cf7" name="a7113f86982695f24a02bac4d80919cf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7113f86982695f24a02bac4d80919cf7">&#9670;&#160;</a></span>getFilterTags()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; * FilterProxyModel::getFilterTags </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2dee4b7929c110ee0f1f0d218eb794e6" name="a2dee4b7929c110ee0f1f0d218eb794e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dee4b7929c110ee0f1f0d218eb794e6">&#9670;&#160;</a></span>removeTagFilter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilterProxyModel::removeTagFilter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="afc9f487c037cdf1619d195639724113b" name="afc9f487c037cdf1619d195639724113b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afc9f487c037cdf1619d195639724113b">&#9670;&#160;</a></span>setFilterCreationDate()</h2>
 
@@ -221,6 +277,23 @@ Protected Member Functions</h2></td></tr>
           <td class="memname">void FilterProxyModel::setFilterCreationDate </td>
           <td>(</td>
           <td class="paramtype">QDate</td>          <td class="paramname"><span class="paramname"><em>creationDate</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a99ec3b50d952a2094bb4623c68221d1b" name="a99ec3b50d952a2094bb4623c68221d1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99ec3b50d952a2094bb4623c68221d1b">&#9670;&#160;</a></span>setFolderFilter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilterProxyModel::setFolderFilter </td>
+          <td>(</td>
+          <td class="paramtype">QString</td>          <td class="paramname"><span class="paramname"><em>filterText</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -246,6 +319,20 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ae0b1b3f621c5bf450c730d06ec1eb856" name="ae0b1b3f621c5bf450c730d06ec1eb856"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0b1b3f621c5bf450c730d06ec1eb856">&#9670;&#160;</a></span>folder_filter_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString FilterProxyModel::folder_filter_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a66604d5844f6f75a6503e22f05eeda6d" name="a66604d5844f6f75a6503e22f05eeda6d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a66604d5844f6f75a6503e22f05eeda6d">&#9670;&#160;</a></span>name_filter_</h2>
 

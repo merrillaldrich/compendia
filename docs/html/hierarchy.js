@@ -16,11 +16,11 @@ var hierarchy =
       [ "MainWindow", "class_main_window.html", null ]
     ] ],
     [ "QObject", null, [
+      [ "IconGenerator", "class_icon_generator.html", null ],
       [ "LuminismCore", "class_luminism_core.html", null ],
       [ "Tag", "class_tag.html", null ],
       [ "TagFamily", "class_tag_family.html", null ],
-      [ "TaggedFile", "class_tagged_file.html", null ],
-      [ "TaggedFileCollection", "class_tagged_file_collection.html", null ]
+      [ "TaggedFile", "class_tagged_file.html", null ]
     ] ],
     [ "QPushButton", null, [
       [ "TagWidgetCloseButton", "class_tag_widget_close_button.html", null ]
@@ -29,10 +29,15 @@ var hierarchy =
       [ "FilterProxyModel", "class_filter_proxy_model.html", null ]
     ] ],
     [ "QWidget", null, [
-      [ "NavLibraryContainer", "class_nav_library_container.html", null ],
-      [ "TagAssignmentContainer", "class_tag_assignment_container.html", null ],
-      [ "TagFamilyWidget", "class_tag_family_widget.html", null ],
-      [ "TagWidget", "class_tag_widget.html", null ]
+      [ "TagContainer", "class_tag_container.html", [
+        [ "NavFilterContainer", "class_nav_filter_container.html", null ],
+        [ "NavLibraryContainer", "class_nav_library_container.html", null ],
+        [ "TagAssignmentContainer", "class_tag_assignment_container.html", null ]
+      ] ],
+      [ "TaggingWidget", "class_tagging_widget.html", [
+        [ "TagFamilyWidget", "class_tag_family_widget.html", null ],
+        [ "TagWidget", "class_tag_widget.html", null ]
+      ] ]
     ] ],
     [ "TagSet", "class_tag_set.html", null ]
 ];

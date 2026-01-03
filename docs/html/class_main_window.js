@@ -6,6 +6,7 @@ var class_main_window =
     [ "freshenPreview", "class_main_window.html#a2b165548de96b2ce566501f01078e6cb", null ],
     [ "refreshNavTagLibrary", "class_main_window.html#aca5c9eb33d047612d55528a0abfd7d05", null ],
     [ "refreshTagAssignmentArea", "class_main_window.html#a3d32035c5a2e69fdb73b66bab8e62ca8", null ],
+    [ "refreshTagFilterArea", "class_main_window.html#ac5901d3d7006ac0f0114162453bff817", null ],
     [ "resizeEvent", "class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f", null ],
     [ "setRootFolder", "class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706", null ],
     [ "core", "class_main_window.html#aacbe910633e17d081e6b36467feb8e53", null ]

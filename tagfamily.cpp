@@ -2,7 +2,8 @@
 
 // Single static variable to hold the hue (color wheel angle) of the last
 // used dynamic tag color
-int TagFamily::next_hue_ = 20;
+int TagFamily::starting_hue_ = 20;
+int TagFamily::next_hue_ = starting_hue_;
 
 TagFamily::TagFamily(QObject *parent)
     : QObject{parent}{
@@ -65,4 +66,8 @@ QColor TagFamily::generateNextColor(){
     QColor color = QColor();
     color.setHsv(current_hue, current_saturation, current_value);
     return color;
+}
+
+void TagFamily::restartColorSequence(){
+    next_hue_ = starting_hue_;
 }

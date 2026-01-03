@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['luminismcore_0',['LuminismCore',['../class_luminism_core.html',1,'']]]
+  ['icongenerator_0',['IconGenerator',['../class_icon_generator.html',1,'']]]
 ];

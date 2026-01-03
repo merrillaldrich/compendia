@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['variablewidthlineedit_0',['VariableWidthLineEdit',['../class_variable_width_line_edit.html',1,'VariableWidthLineEdit'],['../class_variable_width_line_edit.html#a71c9e0944213a1eda23cc43c8be2370d',1,'VariableWidthLineEdit::VariableWidthLineEdit()']]],
-  ['variablewidthlineedit_2ecpp_1',['variablewidthlineedit.cpp',['../variablewidthlineedit_8cpp.html',1,'']]],
-  ['variablewidthlineedit_2eh_2',['variablewidthlineedit.h',['../variablewidthlineedit_8h.html',1,'']]],
-  ['verticalspacing_3',['verticalSpacing',['../class_flow_layout.html#a06210851533f6e9d0d09477968aa0eb5',1,'FlowLayout']]]
+  ['ui_0',['Ui',['../namespace_ui.html',1,'']]],
+  ['unapplytag_1',['unapplyTag',['../class_luminism_core.html#afcaca78856376adf435f53370ad21c79',1,'LuminismCore::unapplyTag(TaggedFile *file, Tag *tag)'],['../class_luminism_core.html#a9ea5b72a3da4d89678635d1ea8972a03',1,'LuminismCore::unapplyTag(Tag *tag)']]]
 ];

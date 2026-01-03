@@ -1,12 +1,16 @@
 var searchData=
 [
-  ['getassignedtags_0',['getAssignedTags',['../class_luminism_core.html#a0ce8ff76fc0457058162381e4bf4331f',1,'LuminismCore::getAssignedTags()'],['../class_tagged_file_collection.html#a45a6855e893c93182be6d417b45984e5',1,'TaggedFileCollection::getAssignedTags()']]],
-  ['getassignedtags_5ffilteredfiles_1',['getAssignedTags_FilteredFiles',['../class_luminism_core.html#ab94d6cae69aa49c88e5c0df6d06d01ba',1,'LuminismCore::getAssignedTags_FilteredFiles()'],['../class_tagged_file_collection.html#a48f02fcecff6e80c342fc08bd40d185e',1,'TaggedFileCollection::getAssignedTags_FilteredFiles()']]],
-  ['getfiltercreationdate_2',['getFilterCreationDate',['../class_filter_proxy_model.html#a938e8b371f366de31c071e03e1c904ce',1,'FilterProxyModel']]],
-  ['getitemmodel_3',['getItemModel',['../class_luminism_core.html#abde1217c9f067c103db0d1f903880a9c',1,'LuminismCore::getItemModel()'],['../class_tagged_file_collection.html#afe5b1a73f7892294bfef0716d7b514bc',1,'TaggedFileCollection::getItemModel()']]],
-  ['getitemmodelproxy_4',['getItemModelProxy',['../class_luminism_core.html#affb257e3d695377774c5fbb6531cbc32',1,'LuminismCore::getItemModelProxy()'],['../class_tagged_file_collection.html#a05c1524a43ae0dbbe44627110baa8f9d',1,'TaggedFileCollection::getItemModelProxy()']]],
-  ['getlibrarytags_5',['getLibraryTags',['../class_luminism_core.html#a92ca175522004a3fa53f458f773fb97c',1,'LuminismCore::getLibraryTags()'],['../class_tagged_file_collection.html#af0685a06f744c8604a61c15bd2abd8ff',1,'TaggedFileCollection::getLibraryTags()']]],
-  ['getname_6',['getName',['../class_tag.html#a43ca27cdad4847fa79c48741d4bb567a',1,'Tag::getName()'],['../class_tag_family.html#a9d344211abfce9b2852e454d98507949',1,'TagFamily::getName()']]],
-  ['gettag_7',['getTag',['../class_luminism_core.html#ab3abeb957ed6015b509e1022568377de',1,'LuminismCore::getTag()'],['../class_tagged_file_collection.html#a3f8358b95712d17c0e5716bec1037f86',1,'TaggedFileCollection::getTag()'],['../class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0',1,'TagWidget::getTag()']]],
-  ['gettagfamily_8',['getTagFamily',['../class_luminism_core.html#ab1bfb52f20623c4aaca07a3ddda3a513',1,'LuminismCore::getTagFamily()'],['../class_tag_family_widget.html#a3a79a93c476ad39e34381641bb97a187',1,'TagFamilyWidget::getTagFamily()'],['../class_tagged_file_collection.html#a972da14a9161a300f6296421a18d0cdf',1,'TaggedFileCollection::getTagFamily()']]]
+  ['filecreationdatetime_0',['fileCreationDateTime',['../class_tagged_file.html#a7e54143de1a32c5f3de94bb599425978',1,'TaggedFile']]],
+  ['filemodificationdatetime_1',['fileModificationDateTime',['../class_tagged_file.html#a67d08ef165cbfa1788e401a0c336fa1e',1,'TaggedFile']]],
+  ['filename_2',['fileName',['../class_tagged_file.html#a395e15a9eb8834de8951d68136ba4c81',1,'TaggedFile']]],
+  ['filepath_3',['filePath',['../class_tagged_file.html#a6cd8d12c7a36b3422f78a895e4f73d76',1,'TaggedFile']]],
+  ['filteracceptsrow_4',['filterAcceptsRow',['../class_filter_proxy_model.html#ae3b628e58b77cf9e8f0a45ae7b4aec1b',1,'FilterProxyModel']]],
+  ['filterproxymodel_5',['FilterProxyModel',['../class_filter_proxy_model.html',1,'FilterProxyModel'],['../class_filter_proxy_model.html#ab54b4d26d99c470733a09fffd4b5fd4d',1,'FilterProxyModel::FilterProxyModel()']]],
+  ['filterproxymodel_2ecpp_6',['filterproxymodel.cpp',['../filterproxymodel_8cpp.html',1,'']]],
+  ['filterproxymodel_2eh_7',['filterproxymodel.h',['../filterproxymodel_8h.html',1,'']]],
+  ['flowlayout_8',['FlowLayout',['../class_flow_layout.html',1,'FlowLayout'],['../class_flow_layout.html#afd3623cad3b02592123eb8a4dd01546f',1,'FlowLayout::FlowLayout(QWidget *parent, int margin=-1, int hSpacing=-1, int vSpacing=-1)'],['../class_flow_layout.html#a76357c75560d6bcbee7a4782c852ca07',1,'FlowLayout::FlowLayout(int margin=-1, int hSpacing=-1, int vSpacing=-1)']]],
+  ['flowlayout_2ecpp_9',['flowlayout.cpp',['../flowlayout_8cpp.html',1,'']]],
+  ['flowlayout_2eh_10',['flowlayout.h',['../flowlayout_8h.html',1,'']]],
+  ['folder_5ffilter_5f_11',['folder_filter_',['../class_filter_proxy_model.html#ae0b1b3f621c5bf450c730d06ec1eb856',1,'FilterProxyModel']]],
+  ['freshenpreview_12',['freshenPreview',['../class_main_window.html#a2b165548de96b2ce566501f01078e6cb',1,'MainWindow']]]
 ];

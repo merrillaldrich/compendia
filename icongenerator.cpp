@@ -19,7 +19,7 @@ QImage IconGenerator::generateIcon(const QString absoluteFileName)
         int size = 100;
         QImageReader ir(absoluteFileName);
         ir.setAutoTransform(true);
-        QImage iconPic = ir.read();
+        iconPic = ir.read();
         iconPic = iconPic.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
         bool cached = saveIconToCache(absoluteFileName, iconPic);
@@ -27,6 +27,7 @@ QImage IconGenerator::generateIcon(const QString absoluteFileName)
         if(cached)
             qDebug() << "Cached icon image";
     }
+
     return iconPic;
 }
 
