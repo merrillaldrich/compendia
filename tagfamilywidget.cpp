@@ -52,6 +52,10 @@ void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
     layout()->addWidget(tw);
     tw->show();
 
+    // Put the new tag in edit mode immediately so the user doesn't have to
+    // click on it to enter the name
+    tw->startEdit();
+
     // Here we need to force one extra layout computation to get this widget
     // to resized to accomodate the new child widget. Without this
     // the vertical expansion of this tagfamilywidget lags one tag
@@ -64,9 +68,6 @@ void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
     // children
     this->setMinimumHeight(childrenRect().height() + 4);
 
-    // Put the new tag in edit mode immediately so the user doesn't have to
-    // click on it to enter the name
-    tw->startEdit();
     event->accept();
 
     //QWidget::mouseReleaseEvent(event); // Do not call parent b/c we handled the event fully

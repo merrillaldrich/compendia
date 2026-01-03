@@ -8,6 +8,7 @@
 #include <QMouseEvent>
 #include <QMimeData>
 #include <QApplication>
+#include <QLayout>
 #include "tag.h"
 #include "clickablelabel.h"
 #include "variablewidthlineedit.h"
@@ -36,13 +37,13 @@ public:
     void startEdit();
     void endEdit();
     Tag* getTag();
+    QSize sizeHint() const override;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    void adjustSize();
-    QSize sizeHint() const override;
+    void adjustCustomWidth();
 
 private slots:
     void onLineEditEditingFinished();
