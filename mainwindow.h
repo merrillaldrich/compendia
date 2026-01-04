@@ -10,6 +10,7 @@
 #include <QProgressBar>
 #include "luminismcore.h"
 #include "facerecognizer.h"
+#include "exifparser.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -66,6 +67,8 @@ private slots:
     void on_metadata_saved();
 
     void on_actionFind_Faces_triggered();
+
+    void on_actionShow_EXIF_data_triggered();
 
 protected:
     // Override resizeEvent to handle window resizing

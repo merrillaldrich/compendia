@@ -15,6 +15,12 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Concurrent)
 find_package(dlib)
 
+#find_package(libexif REQUIRED) # this doesn't work
+
+# libexif does not provide CMAKE config, so link straight to files
+set(LIBEXIF_INCLUDE_DIR "3rdParty/src/libexif")
+set(LIBEXIF_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/lib/exif.lib") # or libexif.so / libexif.lib
+
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
@@ -47,6 +53,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         tagcontainer.h tagcontainer.cpp
         taggingwidget.h taggingwidget.cpp
         facerecognizer.h facerecognizer.cpp
+        exifparser.h exifparser.cpp
 
     )
 
@@ -72,12 +79,16 @@ endif()
 
 # Add dlib library from 3rdParty subdirectory
 add_subdirectory(3rdParty/src/dlib)
+target_link_libraries(luminism PRIVATE dlib)
+
 
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent)
 
-target_link_libraries(luminism PRIVATE dlib)
+# Add libexif library from 3rdParty subdirectory
+target_include_directories(luminism PRIVATE ${LIBEXIF_INCLUDE_DIR})
+target_link_libraries(luminism PRIVATE ${LIBEXIF_LIBRARY})
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
