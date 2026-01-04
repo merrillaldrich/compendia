@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QProgressBar>
 #include "luminismcore.h"
+#include "facerecognizer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -63,6 +64,8 @@ private slots:
 
     void on_icon_updated();
     void on_metadata_saved();
+
+    void on_actionFind_Faces_triggered();
 
 protected:
     // Override resizeEvent to handle window resizing

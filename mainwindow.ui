@@ -53,8 +53,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>64</width>
-           <height>64</height>
+           <width>49</width>
+           <height>49</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -74,8 +74,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>64</width>
-           <height>64</height>
+           <width>49</width>
+           <height>49</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -274,8 +274,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>598</width>
-              <height>64</height>
+              <width>615</width>
+              <height>49</height>
              </rect>
             </property>
            </widget>
@@ -459,7 +459,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>18</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -484,8 +484,15 @@ border-bottom: 1px solid #DDD; /* width, style, color */</string>
     <addaction name="actionCreation_Date"/>
     <addaction name="actionModification_Date"/>
    </widget>
+   <widget class="QMenu" name="menuAutos">
+    <property name="title">
+     <string>Autos</string>
+    </property>
+    <addaction name="actionFind_Faces"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilter"/>
+   <addaction name="menuAutos"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="styleSheet">
@@ -528,6 +535,11 @@ border-top: 1px solid #DDD; /* width, style, color */
   <action name="actionModification_Date">
    <property name="text">
     <string>Modification Date</string>
+   </property>
+  </action>
+  <action name="actionFind_Faces">
+   <property name="text">
+    <string>Find Faces</string>
    </property>
   </action>
  </widget>

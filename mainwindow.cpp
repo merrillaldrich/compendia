@@ -214,24 +214,12 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         QImageReader ir( itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName );
         ir.setAutoTransform(true);
 
-        QString format = ir.format().toLower();
-        QString subType = ir.subType().toLower();
-
-        qDebug() << "Preview image";
-        qDebug() << format;
-        qDebug() << subType;
-
         // Load the image
         QImage image = ir.read();
         if (image.isNull()) {
             QMessageBox::critical(nullptr, "Error", "Failed to load image: " + ir.errorString());
             //return -1;
         }
-
-        //QPixmap pixmap(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
-        //    QMessageBox::critical(nullptr, "Error", "Failed to load image.");
-        //    return -1;
-        //}
 
         // Replace the image in the scene
         scene->clear();
@@ -363,3 +351,60 @@ void MainWindow::on_metadata_saved(){
         progress_bar_->setValue(0);
     }
 }
+
+void MainWindow::on_actionFind_Faces_triggered(){
+
+    // Get the first selected image and run face identification on it
+    // Show the results in the previewer
+
+    FaceRecognizer fr = FaceRecognizer(this);
+
+    QItemSelectionModel *selModel = ui->fileListView->selectionModel();
+    QModelIndexList selectedIndexes = selModel->selectedRows();
+
+    QModelIndex proxyIndex;
+    if (!selectedIndexes.isEmpty()) {
+        proxyIndex = selectedIndexes.first(); // First selected row
+    } else {
+        return;
+    }
+
+    // Map proxy index used by the view to source index in the model
+    QModelIndex sourceIndex = core->getItemModelProxy()->mapToSource(proxyIndex);
+
+    // Get the absolute path to the selected file
+    QVariant selectedImage = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
+    TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
+
+    QImageReader ir( itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName );
+    ir.setAutoTransform(true);
+
+    // Load the image
+    QImage sourceImage = ir.read();
+    if (sourceImage.isNull()) {
+        QMessageBox::critical(nullptr, "Error", "Failed to load image: " + ir.errorString());
+        //return -1;
+    }
+
+    QImage imgWithFaces = fr.imageWithFaceBoxes(sourceImage);
+
+    // Get the previewer scene
+    QGraphicsView* view = ui->previewGraphicsView;
+    QGraphicsScene* scene = view->scene();
+
+    scene->clear();
+
+    QGraphicsPixmapItem *item = new QGraphicsPixmapItem(QPixmap::fromImage(imgWithFaces));
+    scene->addItem(item);
+
+    item->setTransformationMode(Qt::SmoothTransformation);
+
+    // Fix up zoom and such
+    view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
+    view->setRenderHint(QPainter::Antialiasing);
+    view->setRenderHint(QPainter::SmoothPixmapTransform);
+    view->setDragMode(QGraphicsView::ScrollHandDrag);
+    view->show();
+
+}
+

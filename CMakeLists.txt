@@ -13,6 +13,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Concurrent)
+find_package(dlib)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -45,6 +46,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         navfiltercontainer.h navfiltercontainer.cpp
         tagcontainer.h tagcontainer.cpp
         taggingwidget.h taggingwidget.cpp
+        facerecognizer.h facerecognizer.cpp
 
     )
 
@@ -68,9 +70,15 @@ else()
     endif()
 endif()
 
+# Add dlib library from 3rdParty subdirectory
+add_subdirectory(3rdParty/src/dlib)
+
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent)
+
+target_link_libraries(luminism PRIVATE dlib)
+
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
