@@ -62,3 +62,104 @@ void ExifParser::printExifEntry(ExifEntry *entry, void *user_data) {
     }
 }
 
+int ExifParser::getExifHeif(QString absoluteFileName){
+
+    // Change QString to char array
+    // Convert to UTF-8 QByteArray
+    QByteArray byteArray = absoluteFileName.toUtf8();
+
+    // Allocate and copy
+    char* filename = new char[byteArray.size() + 1];
+    std::strcpy(filename, byteArray.constData());
+
+    heif_context* ctx = heif_context_alloc();
+    if (!ctx) {
+        qWarning() << "Failed to allocate HEIF context.\n";
+        return 1;
+    }
+
+    // Read HEIF file
+    heif_error err = heif_context_read_from_file(ctx, filename, nullptr);
+    if (err.code != heif_error_Ok) {
+        qWarning() << "Error reading HEIF file: " << err.message << "\n";
+        heif_context_free(ctx);
+        return 1;
+    }
+
+    // Get primary image handle
+    heif_image_handle* handle = nullptr;
+    err = heif_context_get_primary_image_handle(ctx, &handle);
+    if (err.code != heif_error_Ok) {
+        qWarning() << "Error getting primary image handle: " << err.message << "\n";
+        heif_context_free(ctx);
+        return 1;
+    }
+
+    // Get list of EXIF metadata IDs
+    int count = heif_image_handle_get_number_of_metadata_blocks(handle, "Exif");
+    if (count <= 0) {
+        qWarning() << "No EXIF metadata found.\n";
+        heif_image_handle_release(handle);
+        heif_context_free(ctx);
+        return 1;
+    }
+
+    std::vector<heif_item_id> ids(count);
+    heif_image_handle_get_list_of_metadata_block_IDs(handle, "Exif", ids.data(), count);
+
+    // Read the first EXIF block
+    size_t exif_size = heif_image_handle_get_metadata_size(handle, ids[0]);
+    std::vector<uint8_t> exif_buf(exif_size);
+
+    err = heif_image_handle_get_metadata(handle, ids[0], exif_buf.data());
+    if (err.code != heif_error_Ok) {
+        qWarning() << "Error reading EXIF metadata: " << err.message << "\n";
+        heif_image_handle_release(handle);
+        heif_context_free(ctx);
+        return 1;
+    }
+
+    // Skip the first 4 bytes (offset to TIFF header)
+    if (exif_buf.size() <= 4) {
+        qWarning() << "Invalid EXIF data size.\n";
+        heif_image_handle_release(handle);
+        heif_context_free(ctx);
+        return 1;
+    }
+
+    const unsigned char* exif_bytes = exif_buf.data() + 4;
+    size_t exif_len = exif_buf.size() - 4;
+
+    // Parse EXIF using libexif
+    ExifData* ed = exif_data_new_from_data(exif_bytes, exif_len);
+    if (!ed) {
+        qWarning() << "Failed to parse EXIF data.\n";
+    } else {
+        print_exif_tags(ed);
+        exif_data_unref(ed);
+    }
+
+    // Cleanup
+    heif_image_handle_release(handle);
+    heif_context_free(ctx);
+
+    return 0;
+}
+
+// Function to print EXIF tags
+void ExifParser::print_exif_tags(ExifData* ed) {
+    for (int i = 0; i < EXIF_IFD_COUNT; i++) {
+        ExifContent* content = ed->ifd[i];
+        if (!content) continue;
+
+        for (unsigned int j = 0; j < content->count; j++) {
+            ExifEntry* entry = content->entries[j];
+            char value[1024];
+            exif_entry_get_value(entry, value, sizeof(value));
+            if (*value) {
+                qDebug() << exif_tag_get_name(entry->tag) << ": " << value << "\n";
+            }
+        }
+    }
+}
+

@@ -490,6 +490,7 @@ border-bottom: 1px solid #DDD; /* width, style, color */</string>
     </property>
     <addaction name="actionFind_Faces"/>
     <addaction name="actionShow_EXIF_data"/>
+    <addaction name="actionShow_EXIF_data_HEIF"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilter"/>
@@ -546,6 +547,11 @@ border-top: 1px solid #DDD; /* width, style, color */
   <action name="actionShow_EXIF_data">
    <property name="text">
     <string>Show EXIF data</string>
+   </property>
+  </action>
+  <action name="actionShow_EXIF_data_HEIF">
+   <property name="text">
+    <string>Show EXIF data (HEIF)</string>
    </property>
   </action>
  </widget>

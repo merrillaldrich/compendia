@@ -410,7 +410,6 @@ void MainWindow::on_actionFind_Faces_triggered(){
 
 void MainWindow::on_actionShow_EXIF_data_triggered()
 {
-    ExifParser ep = ExifParser(this);
 
     QItemSelectionModel *selModel = ui->fileListView->selectionModel();
     QModelIndexList selectedIndexes = selModel->selectedRows();
@@ -432,5 +431,32 @@ void MainWindow::on_actionShow_EXIF_data_triggered()
     QString fullPath = ( itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName );
 
     ExifParser::readEXIF(fullPath);
+}
+
+
+void MainWindow::on_actionShow_EXIF_data_HEIF_triggered()
+{
+
+    QItemSelectionModel *selModel = ui->fileListView->selectionModel();
+    QModelIndexList selectedIndexes = selModel->selectedRows();
+
+    QModelIndex proxyIndex;
+    if (!selectedIndexes.isEmpty()) {
+        proxyIndex = selectedIndexes.first(); // First selected row
+    } else {
+        return;
+    }
+
+    // Map proxy index used by the view to source index in the model
+    QModelIndex sourceIndex = core->getItemModelProxy()->mapToSource(proxyIndex);
+
+    // Get the absolute path to the selected file
+    QVariant selectedImage = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
+    TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
+
+    QString fullPath = ( itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName );
+
+    ExifParser::getExifHeif(fullPath);
+
 }
 

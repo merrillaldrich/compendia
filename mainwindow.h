@@ -70,6 +70,8 @@ private slots:
 
     void on_actionShow_EXIF_data_triggered();
 
+    void on_actionShow_EXIF_data_HEIF_triggered();
+
 protected:
     // Override resizeEvent to handle window resizing
     void resizeEvent(QResizeEvent *event) override;
