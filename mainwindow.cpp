@@ -50,10 +50,6 @@ MainWindow::MainWindow(QWidget *parent)
         qWarning() << "Connecting assignment delete function didn't work";
     }
 
-    // Set up the preview area
-    QGraphicsScene* scene = new QGraphicsScene();
-    ui->previewGraphicsView->setScene(scene);
-
     // Set up the status bar
     progress_label_ = new QLabel("Progress:", this);
     ui->statusBar->addPermanentWidget(progress_label_);
@@ -189,12 +185,14 @@ void MainWindow::refreshTagFilterArea(){
 
 void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
 
+
     // Get the previewer scene
-    QGraphicsView* view = ui->previewGraphicsView;
-    QGraphicsScene* scene = view->scene();
+    //QGraphicsView* view = ui->previewGraphicsView;
+    //QGraphicsScene* scene = view->scene();
 
     if( selected.isEmpty()){
-        scene->clear();
+        //scene->clear();
+        ui->previewContainer->clear();
         ui->previewFileNameValue->setText("-");
         ui->previewFileLocationValue->setText("-");
         ui->previewFileCreatedValue->setText("-");
@@ -211,31 +209,9 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         QVariant selectedImage = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
 
-        QImageReader ir( itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName );
-        ir.setAutoTransform(true);
+        ui->previewContainer->preview(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
 
-        // Load the image
-        QImage image = ir.read();
-        if (image.isNull()) {
-            QMessageBox::critical(nullptr, "Error", "Failed to load image: " + ir.errorString());
-            //return -1;
-        }
-
-        // Replace the image in the scene
-        scene->clear();
-
-        QGraphicsPixmapItem *item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-        scene->addItem(item);
-
-        item->setTransformationMode(Qt::SmoothTransformation);
-
-        // Fix up zoom and such
-        view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
-        view->setRenderHint(QPainter::Antialiasing);
-        view->setRenderHint(QPainter::SmoothPixmapTransform);
-        view->setDragMode(QGraphicsView::ScrollHandDrag);
-        view->show();
-
+        // Properties area
         QLocale locale = QLocale::system();
 
         ui->previewFileNameValue->setText(itemAsTaggedFile->fileName);
@@ -270,17 +246,11 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
 }
 
 void MainWindow::freshenPreview(){
-    QGraphicsView* view = ui->previewGraphicsView;
-    if (view->scene() != nullptr){
-        view->fitInView(view->scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
-    }
+    ui->previewContainer->freshen();
 }
 
 void MainWindow::clearPreview(){
-    QGraphicsView* view = ui->previewGraphicsView;
-    if (view->scene() != nullptr){
-        view->scene()->clear();
-    }
+    ui->previewContainer->clear();
 }
 
 void MainWindow::on_previewSplitter_splitterMoved(int pos, int index)
@@ -295,7 +265,6 @@ void MainWindow::on_windowBodySplitter_splitterMoved(int pos, int index)
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
 
-    // Be careful not to do anything before the window actually contains a view and image
     freshenPreview();
     QMainWindow::resizeEvent(event);
 }
@@ -387,25 +356,7 @@ void MainWindow::on_actionFind_Faces_triggered(){
     }
 
     QImage imgWithFaces = fr.imageWithFaceBoxes(sourceImage);
-
-    // Get the previewer scene
-    QGraphicsView* view = ui->previewGraphicsView;
-    QGraphicsScene* scene = view->scene();
-
-    scene->clear();
-
-    QGraphicsPixmapItem *item = new QGraphicsPixmapItem(QPixmap::fromImage(imgWithFaces));
-    scene->addItem(item);
-
-    item->setTransformationMode(Qt::SmoothTransformation);
-
-    // Fix up zoom and such
-    view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
-    view->setRenderHint(QPainter::Antialiasing);
-    view->setRenderHint(QPainter::SmoothPixmapTransform);
-    view->setDragMode(QGraphicsView::ScrollHandDrag);
-    view->show();
-
+    ui->previewContainer->preview(imgWithFaces);
 }
 
 void MainWindow::on_actionShow_EXIF_data_triggered()

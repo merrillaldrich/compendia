@@ -13,6 +13,9 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Concurrent)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Multimedia)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS MultimediaWidgets)
+
 find_package(dlib)
 
 #find_package(libexif REQUIRED) # this doesn't work
@@ -59,6 +62,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         taggingwidget.h taggingwidget.cpp
         facerecognizer.h facerecognizer.cpp
         exifparser.h exifparser.cpp
+        previewcontainer.h previewcontainer.cpp
 
     )
 
@@ -89,6 +93,8 @@ target_link_libraries(luminism PRIVATE dlib)
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent)
+target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Multimedia)
+target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::MultimediaWidgets)
 
 # Add libexif library from 3rdParty subdirectory
 target_include_directories(luminism PRIVATE ${LIBEXIF_INCLUDE_DIR})
