@@ -6,9 +6,10 @@
 #include <QImageReader>
 #include <QGraphicsScene>
 #include <QGraphicsVideoItem>
-#include <QGraphicsView>
+
 #include <QMediaPlayer>
 #include <QMessageBox>
+#include "zoomablegraphicsview.h"
 
 class PreviewContainer : public QWidget
 {
@@ -26,7 +27,7 @@ signals:
 
 private:
     QGraphicsScene* scene = nullptr;
-    QGraphicsView* view = nullptr;
+    ZoomableGraphicsView* view = nullptr;
     QMediaPlayer* mediaPlayer = nullptr;
     QGraphicsVideoItem* videoItem = nullptr;
     //QAbstractButton* playButton = nullptr;

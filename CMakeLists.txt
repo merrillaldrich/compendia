@@ -63,6 +63,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         facerecognizer.h facerecognizer.cpp
         exifparser.h exifparser.cpp
         previewcontainer.h previewcontainer.cpp
+        zoomablegraphicsview.h zoomablegraphicsview.cpp
 
     )
 

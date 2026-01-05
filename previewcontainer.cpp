@@ -5,7 +5,7 @@ PreviewContainer::PreviewContainer(QWidget *parent)
 {
 
     scene = new QGraphicsScene(this);
-    view = new QGraphicsView(scene, this);
+    view = new ZoomableGraphicsView(scene, this);
     QVBoxLayout *layout = new QVBoxLayout;
     setLayout(layout);
     layout->addWidget(view);
@@ -20,7 +20,7 @@ void PreviewContainer::preview(QImage image){
 
     QGraphicsPixmapItem *item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
     scene->addItem(item);
-    scene->setSceneRect(scene->itemsBoundingRect());
+    scene->setSceneRect(scene->itemsBoundingRect()); // Prevents incorrect scrollbar extents
 
     item->setTransformationMode(Qt::SmoothTransformation);
 
