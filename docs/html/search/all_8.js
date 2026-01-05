@@ -3,5 +3,7 @@ var searchData=
   ['icongenerator_0',['IconGenerator',['../class_icon_generator.html',1,'IconGenerator'],['../class_icon_generator.html#a652a80ddba7d314d790062d65a58d30c',1,'IconGenerator::IconGenerator()']]],
   ['icongenerator_2ecpp_1',['icongenerator.cpp',['../icongenerator_8cpp.html',1,'']]],
   ['icongenerator_2eh_2',['icongenerator.h',['../icongenerator_8h.html',1,'']]],
-  ['itemat_3',['itemAt',['../class_flow_layout.html#a14c3661044dd9b97ef0c0a34d0692ce4',1,'FlowLayout']]]
+  ['iconupdated_3',['iconUpdated',['../class_luminism_core.html#ad935634d9d59823babd5df1ccea851ab',1,'LuminismCore']]],
+  ['imagewithfaceboxes_4',['imageWithFaceBoxes',['../class_face_recognizer.html#af93df5538e86dfc4d4baf33ea0eeba21',1,'FaceRecognizer']]],
+  ['itemat_5',['itemAt',['../class_flow_layout.html#a14c3661044dd9b97ef0c0a34d0692ce4',1,'FlowLayout']]]
 ];

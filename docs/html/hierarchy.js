@@ -1,5 +1,8 @@
 var hierarchy =
 [
+    [ "QGraphicsView", null, [
+      [ "ZoomableGraphicsView", "class_zoomable_graphics_view.html", null ]
+    ] ],
     [ "QLabel", null, [
       [ "ClickableLabel", "class_clickable_label.html", null ]
     ] ],
@@ -16,6 +19,8 @@ var hierarchy =
       [ "MainWindow", "class_main_window.html", null ]
     ] ],
     [ "QObject", null, [
+      [ "ExifParser", "class_exif_parser.html", null ],
+      [ "FaceRecognizer", "class_face_recognizer.html", null ],
       [ "IconGenerator", "class_icon_generator.html", null ],
       [ "LuminismCore", "class_luminism_core.html", null ],
       [ "Tag", "class_tag.html", null ],
@@ -29,6 +34,7 @@ var hierarchy =
       [ "FilterProxyModel", "class_filter_proxy_model.html", null ]
     ] ],
     [ "QWidget", null, [
+      [ "PreviewContainer", "class_preview_container.html", null ],
       [ "TagContainer", "class_tag_container.html", [
         [ "NavFilterContainer", "class_nav_filter_container.html", null ],
         [ "NavLibraryContainer", "class_nav_library_container.html", null ],

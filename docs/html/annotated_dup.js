@@ -1,6 +1,8 @@
 var annotated_dup =
 [
     [ "ClickableLabel", "class_clickable_label.html", "class_clickable_label" ],
+    [ "ExifParser", "class_exif_parser.html", "class_exif_parser" ],
+    [ "FaceRecognizer", "class_face_recognizer.html", "class_face_recognizer" ],
     [ "FilterProxyModel", "class_filter_proxy_model.html", "class_filter_proxy_model" ],
     [ "FlowLayout", "class_flow_layout.html", "class_flow_layout" ],
     [ "IconGenerator", "class_icon_generator.html", "class_icon_generator" ],
@@ -8,6 +10,7 @@ var annotated_dup =
     [ "MainWindow", "class_main_window.html", "class_main_window" ],
     [ "NavFilterContainer", "class_nav_filter_container.html", "class_nav_filter_container" ],
     [ "NavLibraryContainer", "class_nav_library_container.html", "class_nav_library_container" ],
+    [ "PreviewContainer", "class_preview_container.html", "class_preview_container" ],
     [ "Tag", "class_tag.html", "class_tag" ],
     [ "TagAssignmentContainer", "class_tag_assignment_container.html", "class_tag_assignment_container" ],
     [ "TagContainer", "class_tag_container.html", "class_tag_container" ],
@@ -19,5 +22,6 @@ var annotated_dup =
     [ "TagSet", "class_tag_set.html", "class_tag_set" ],
     [ "TagWidget", "class_tag_widget.html", "class_tag_widget" ],
     [ "TagWidgetCloseButton", "class_tag_widget_close_button.html", "class_tag_widget_close_button" ],
-    [ "VariableWidthLineEdit", "class_variable_width_line_edit.html", "class_variable_width_line_edit" ]
+    [ "VariableWidthLineEdit", "class_variable_width_line_edit.html", "class_variable_width_line_edit" ],
+    [ "ZoomableGraphicsView", "class_zoomable_graphics_view.html", "class_zoomable_graphics_view" ]
 ];

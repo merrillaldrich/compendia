@@ -1,16 +1,20 @@
 var searchData=
 [
-  ['filecreationdatetime_0',['fileCreationDateTime',['../class_tagged_file.html#a7e54143de1a32c5f3de94bb599425978',1,'TaggedFile']]],
-  ['filemodificationdatetime_1',['fileModificationDateTime',['../class_tagged_file.html#a67d08ef165cbfa1788e401a0c336fa1e',1,'TaggedFile']]],
-  ['filename_2',['fileName',['../class_tagged_file.html#a395e15a9eb8834de8951d68136ba4c81',1,'TaggedFile']]],
-  ['filepath_3',['filePath',['../class_tagged_file.html#a6cd8d12c7a36b3422f78a895e4f73d76',1,'TaggedFile']]],
-  ['filteracceptsrow_4',['filterAcceptsRow',['../class_filter_proxy_model.html#ae3b628e58b77cf9e8f0a45ae7b4aec1b',1,'FilterProxyModel']]],
-  ['filterproxymodel_5',['FilterProxyModel',['../class_filter_proxy_model.html',1,'FilterProxyModel'],['../class_filter_proxy_model.html#ab54b4d26d99c470733a09fffd4b5fd4d',1,'FilterProxyModel::FilterProxyModel()']]],
-  ['filterproxymodel_2ecpp_6',['filterproxymodel.cpp',['../filterproxymodel_8cpp.html',1,'']]],
-  ['filterproxymodel_2eh_7',['filterproxymodel.h',['../filterproxymodel_8h.html',1,'']]],
-  ['flowlayout_8',['FlowLayout',['../class_flow_layout.html',1,'FlowLayout'],['../class_flow_layout.html#afd3623cad3b02592123eb8a4dd01546f',1,'FlowLayout::FlowLayout(QWidget *parent, int margin=-1, int hSpacing=-1, int vSpacing=-1)'],['../class_flow_layout.html#a76357c75560d6bcbee7a4782c852ca07',1,'FlowLayout::FlowLayout(int margin=-1, int hSpacing=-1, int vSpacing=-1)']]],
-  ['flowlayout_2ecpp_9',['flowlayout.cpp',['../flowlayout_8cpp.html',1,'']]],
-  ['flowlayout_2eh_10',['flowlayout.h',['../flowlayout_8h.html',1,'']]],
-  ['folder_5ffilter_5f_11',['folder_filter_',['../class_filter_proxy_model.html#ae0b1b3f621c5bf450c730d06ec1eb856',1,'FilterProxyModel']]],
-  ['freshenpreview_12',['freshenPreview',['../class_main_window.html#a2b165548de96b2ce566501f01078e6cb',1,'MainWindow']]]
+  ['facerecognizer_0',['FaceRecognizer',['../class_face_recognizer.html',1,'FaceRecognizer'],['../class_face_recognizer.html#a1525ce62bb6ec64e80e81020f9874e88',1,'FaceRecognizer::FaceRecognizer()']]],
+  ['facerecognizer_2ecpp_1',['facerecognizer.cpp',['../facerecognizer_8cpp.html',1,'']]],
+  ['facerecognizer_2eh_2',['facerecognizer.h',['../facerecognizer_8h.html',1,'']]],
+  ['filecreationdatetime_3',['fileCreationDateTime',['../class_tagged_file.html#a7e54143de1a32c5f3de94bb599425978',1,'TaggedFile']]],
+  ['filemodificationdatetime_4',['fileModificationDateTime',['../class_tagged_file.html#a67d08ef165cbfa1788e401a0c336fa1e',1,'TaggedFile']]],
+  ['filename_5',['fileName',['../class_tagged_file.html#a395e15a9eb8834de8951d68136ba4c81',1,'TaggedFile']]],
+  ['filepath_6',['filePath',['../class_tagged_file.html#a6cd8d12c7a36b3422f78a895e4f73d76',1,'TaggedFile']]],
+  ['filteracceptsrow_7',['filterAcceptsRow',['../class_filter_proxy_model.html#ae3b628e58b77cf9e8f0a45ae7b4aec1b',1,'FilterProxyModel']]],
+  ['filterproxymodel_8',['FilterProxyModel',['../class_filter_proxy_model.html',1,'FilterProxyModel'],['../class_filter_proxy_model.html#ab54b4d26d99c470733a09fffd4b5fd4d',1,'FilterProxyModel::FilterProxyModel()']]],
+  ['filterproxymodel_2ecpp_9',['filterproxymodel.cpp',['../filterproxymodel_8cpp.html',1,'']]],
+  ['filterproxymodel_2eh_10',['filterproxymodel.h',['../filterproxymodel_8h.html',1,'']]],
+  ['flowlayout_11',['FlowLayout',['../class_flow_layout.html',1,'FlowLayout'],['../class_flow_layout.html#afd3623cad3b02592123eb8a4dd01546f',1,'FlowLayout::FlowLayout(QWidget *parent, int margin=-1, int hSpacing=-1, int vSpacing=-1)'],['../class_flow_layout.html#a76357c75560d6bcbee7a4782c852ca07',1,'FlowLayout::FlowLayout(int margin=-1, int hSpacing=-1, int vSpacing=-1)']]],
+  ['flowlayout_2ecpp_12',['flowlayout.cpp',['../flowlayout_8cpp.html',1,'']]],
+  ['flowlayout_2eh_13',['flowlayout.h',['../flowlayout_8h.html',1,'']]],
+  ['folder_5ffilter_5f_14',['folder_filter_',['../class_filter_proxy_model.html#ae0b1b3f621c5bf450c730d06ec1eb856',1,'FilterProxyModel']]],
+  ['freshen_15',['freshen',['../class_preview_container.html#a39a08a4a1b9d935018c37b5b1788a11c',1,'PreviewContainer']]],
+  ['freshenpreview_16',['freshenPreview',['../class_main_window.html#a2b165548de96b2ce566501f01078e6cb',1,'MainWindow']]]
 ];

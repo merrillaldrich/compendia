@@ -2,6 +2,10 @@ var files_dup =
 [
     [ "clickablelabel.cpp", "clickablelabel_8cpp.html", null ],
     [ "clickablelabel.h", "clickablelabel_8h.html", "clickablelabel_8h" ],
+    [ "exifparser.cpp", "exifparser_8cpp.html", null ],
+    [ "exifparser.h", "exifparser_8h.html", "exifparser_8h" ],
+    [ "facerecognizer.cpp", "facerecognizer_8cpp.html", null ],
+    [ "facerecognizer.h", "facerecognizer_8h.html", "facerecognizer_8h" ],
     [ "filterproxymodel.cpp", "filterproxymodel_8cpp.html", null ],
     [ "filterproxymodel.h", "filterproxymodel_8h.html", "filterproxymodel_8h" ],
     [ "flowlayout.cpp", "flowlayout_8cpp.html", null ],
@@ -17,6 +21,8 @@ var files_dup =
     [ "navfiltercontainer.h", "navfiltercontainer_8h.html", "navfiltercontainer_8h" ],
     [ "navlibrarycontainer.cpp", "navlibrarycontainer_8cpp.html", null ],
     [ "navlibrarycontainer.h", "navlibrarycontainer_8h.html", "navlibrarycontainer_8h" ],
+    [ "previewcontainer.cpp", "previewcontainer_8cpp.html", null ],
+    [ "previewcontainer.h", "previewcontainer_8h.html", "previewcontainer_8h" ],
     [ "tag.cpp", "tag_8cpp.html", "tag_8cpp" ],
     [ "tag.h", "tag_8h.html", "tag_8h" ],
     [ "tagassignmentcontainer.cpp", "tagassignmentcontainer_8cpp.html", null ],
@@ -40,5 +46,7 @@ var files_dup =
     [ "tagwidgetclosebutton.cpp", "tagwidgetclosebutton_8cpp.html", null ],
     [ "tagwidgetclosebutton.h", "tagwidgetclosebutton_8h.html", "tagwidgetclosebutton_8h" ],
     [ "variablewidthlineedit.cpp", "variablewidthlineedit_8cpp.html", null ],
-    [ "variablewidthlineedit.h", "variablewidthlineedit_8h.html", "variablewidthlineedit_8h" ]
+    [ "variablewidthlineedit.h", "variablewidthlineedit_8h.html", "variablewidthlineedit_8h" ],
+    [ "zoomablegraphicsview.cpp", "zoomablegraphicsview_8cpp.html", null ],
+    [ "zoomablegraphicsview.h", "zoomablegraphicsview_8h.html", "zoomablegraphicsview_8h" ]
 ];
