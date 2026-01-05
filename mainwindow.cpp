@@ -311,6 +311,7 @@ void MainWindow::on_icon_updated(){
         progress_bar_->setValue(0);
     }
 }
+
 void MainWindow::on_metadata_saved(){
     if(progress_label_->text() != "Saving")
         progress_label_->setText("Saving");
@@ -320,6 +321,7 @@ void MainWindow::on_metadata_saved(){
         progress_bar_->setValue(0);
     }
 }
+
 
 void MainWindow::on_actionFind_Faces_triggered(){
 
@@ -383,7 +385,6 @@ void MainWindow::on_actionShow_EXIF_data_triggered()
 
     ExifParser::readEXIF(fullPath);
 }
-
 
 void MainWindow::on_actionShow_EXIF_data_HEIF_triggered()
 {

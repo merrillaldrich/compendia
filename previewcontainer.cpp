@@ -48,9 +48,22 @@ void PreviewContainer::preview(QString absoluteFilePath){
 }
 
 void PreviewContainer::freshen(){
-    if (view->scene() != nullptr){
+
+    // Compare the size of the image to the viewport, and if the image is smaller
+    // or equal then zoom extents to fill the viewport
+
+    QRectF itemsRect = scene->itemsBoundingRect();
+    QRectF viewportRect = view->mapToScene(view->viewport()->rect()).boundingRect();
+
+    if (itemsRect.width() > viewportRect.width() + 30 ||
+        itemsRect.height() > viewportRect.height() + 30) {
+        // Image is zoomed in, do nothing
+    } else {
+        // Image is close in size to the viewport, zoom extents to "glue" the edges
+        // of the image to the frame and resize with it
         view->fitInView(view->scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
     }
+
 }
 
 void PreviewContainer::clear(){
