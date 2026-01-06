@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Luminism</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -274,7 +274,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>598</width>
+              <width>853</width>
               <height>64</height>
              </rect>
             </property>
@@ -489,8 +489,6 @@ border-bottom: 1px solid #DDD; /* width, style, color */</string>
      <string>Autos</string>
     </property>
     <addaction name="actionFind_Faces"/>
-    <addaction name="actionShow_EXIF_data"/>
-    <addaction name="actionShow_EXIF_data_HEIF"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilter"/>

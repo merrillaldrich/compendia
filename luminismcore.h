@@ -8,9 +8,12 @@
 #include <QMutex>
 #include <QTimer>
 #include <QtConcurrent>
+#include <QMap>
+
 #include "tagset.h"
 #include "filterproxymodel.h"
 #include "icongenerator.h"
+#include "exifparser.h"
 
 class LuminismCore : public QObject
 {
@@ -25,13 +28,13 @@ private:
     FilterProxyModel *tagged_files_proxy_;
 
     QMutex resultsMutex_;
-    QVector<std::tuple<QString, QString, QImage>> results_; // fileName, path, image
+    QVector<std::tuple<QString, QString, QMap<QString, QString>, QImage>> results_; // fileName, path, EXIF dict, image
     QTimer uiFlushTimer_;
 
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
 
     void flushIconGeneratorQueue();
-    void applyIconToModel(const QString &fileName, const QString &absoluteFilePathName, const QImage &image);
+    void applyBackfillMetadataToModel(const QString &fileName, const QString &absoluteFilePathName, const QImage &image);
 
 public:
 
@@ -45,7 +48,7 @@ public:
     void addFile(QFileInfo fileInfo);
     void addFile(QFileInfo fileInfo, QJsonObject tagsJson);
     void addFile(QFileInfo fileInfo, QList<TagSet> tags);
-    void populateIcons();
+    void backfillMetadata();
 
 
     void writeFileMetadata();

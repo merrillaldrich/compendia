@@ -4,17 +4,36 @@ ExifParser::ExifParser(QObject *parent)
     : QObject{parent}
 {}
 
-int ExifParser::readEXIF(QString filePath){
+QMap<QString, QString> ExifParser::getExifMap(QString filePath){
+    QMap<QString, QString> exifMap;
+
+    ExifData* ed = nullptr;
+
+    if (filePath.toLower().endsWith(".jpg")){
+        ed = getExifStandard(filePath);
+    } else if (filePath.toLower().endsWith(".heic")) {
+        ed = getExifHeif(filePath);
+    }
+
+    if(ed != nullptr){
+        exifMap = exifTagsToMap(ed);
+    }
+    exif_data_unref(ed);
+
+    return exifMap;
+}
+
+ExifData* ExifParser::getExifStandard(QString filePath){
 
     // Read file into memory
     QFile file(filePath);
     if (!file.exists()) {
         qCritical() << "File does not exist:" << filePath;
-        return 1;
+        return nullptr;
     }
     if (!file.open(QIODevice::ReadOnly)) {
         qCritical() << "Failed to open file:" << file.errorString();
-        return 1;
+        return nullptr;
     }
 
     QByteArray imageData = file.readAll();
@@ -22,7 +41,7 @@ int ExifParser::readEXIF(QString filePath){
 
     if (imageData.isEmpty()) {
         qCritical() << "File is empty or could not be read.";
-        return 1;
+        return nullptr;
     }
 
     // Load EXIF data from memory
@@ -33,40 +52,23 @@ int ExifParser::readEXIF(QString filePath){
 
     if (!exifData) {
         qCritical() << "No EXIF data found in file.";
-        return 1;
+        return nullptr;
     }
 
     // Iterate and print EXIF tags
-    exif_data_foreach_content(exifData, printExifContent, nullptr);
+    //exif_data_foreach_content(exifData, printExifContent, nullptr);
 
     // Free EXIF data
-    exif_data_unref(exifData);
+    //exif_data_unref(exifData);
 
-    return 0;
+    return exifData;
 }
 
-// Iterate over all EXIF content
-void ExifParser::printExifContent(ExifContent *content, void *user_data) {
-    exif_content_foreach_entry(content, printExifEntry, user_data);
-}
-
-// Callback function for iterating over EXIF entries
-void ExifParser::printExifEntry(ExifEntry *entry, void *user_data) {
-    char value[1024];
-    exif_entry_get_value(entry, value, sizeof(value));
-
-    if (*value) { // Only print if value is not empty
-        QString tagName = QString::fromUtf8(exif_tag_get_name(entry->tag));
-        QString tagValue = QString::fromUtf8(value);
-        qDebug().noquote() << tagName << ":" << tagValue;
-    }
-}
-
-int ExifParser::getExifHeif(QString absoluteFileName){
+ExifData* ExifParser::getExifHeif(QString filePath){
 
     // Change QString to char array
     // Convert to UTF-8 QByteArray
-    QByteArray byteArray = absoluteFileName.toUtf8();
+    QByteArray byteArray = filePath.toUtf8();
 
     // Allocate and copy
     char* filename = new char[byteArray.size() + 1];
@@ -75,7 +77,7 @@ int ExifParser::getExifHeif(QString absoluteFileName){
     heif_context* ctx = heif_context_alloc();
     if (!ctx) {
         qWarning() << "Failed to allocate HEIF context.\n";
-        return 1;
+        return nullptr;
     }
 
     // Read HEIF file
@@ -83,7 +85,7 @@ int ExifParser::getExifHeif(QString absoluteFileName){
     if (err.code != heif_error_Ok) {
         qWarning() << "Error reading HEIF file: " << err.message << "\n";
         heif_context_free(ctx);
-        return 1;
+        return nullptr;
     }
 
     // Get primary image handle
@@ -92,7 +94,7 @@ int ExifParser::getExifHeif(QString absoluteFileName){
     if (err.code != heif_error_Ok) {
         qWarning() << "Error getting primary image handle: " << err.message << "\n";
         heif_context_free(ctx);
-        return 1;
+        return nullptr;
     }
 
     // Get list of EXIF metadata IDs
@@ -101,7 +103,7 @@ int ExifParser::getExifHeif(QString absoluteFileName){
         qWarning() << "No EXIF metadata found.\n";
         heif_image_handle_release(handle);
         heif_context_free(ctx);
-        return 1;
+        return nullptr;
     }
 
     std::vector<heif_item_id> ids(count);
@@ -116,7 +118,7 @@ int ExifParser::getExifHeif(QString absoluteFileName){
         qWarning() << "Error reading EXIF metadata: " << err.message << "\n";
         heif_image_handle_release(handle);
         heif_context_free(ctx);
-        return 1;
+        return nullptr;
     }
 
     // Skip the first 4 bytes (offset to TIFF header)
@@ -124,7 +126,7 @@ int ExifParser::getExifHeif(QString absoluteFileName){
         qWarning() << "Invalid EXIF data size.\n";
         heif_image_handle_release(handle);
         heif_context_free(ctx);
-        return 1;
+        return nullptr;
     }
 
     const unsigned char* exif_bytes = exif_buf.data() + 4;
@@ -134,20 +136,19 @@ int ExifParser::getExifHeif(QString absoluteFileName){
     ExifData* ed = exif_data_new_from_data(exif_bytes, exif_len);
     if (!ed) {
         qWarning() << "Failed to parse EXIF data.\n";
-    } else {
-        print_exif_tags(ed);
-        exif_data_unref(ed);
     }
 
-    // Cleanup
+    // Clean up
     heif_image_handle_release(handle);
     heif_context_free(ctx);
+    delete[] filename;
 
-    return 0;
+    return ed;
 }
 
-// Function to print EXIF tags
-void ExifParser::print_exif_tags(ExifData* ed) {
+QMap<QString, QString> ExifParser::exifTagsToMap(ExifData* ed) {
+    QMap<QString, QString> map;
+
     for (int i = 0; i < EXIF_IFD_COUNT; i++) {
         ExifContent* content = ed->ifd[i];
         if (!content) continue;
@@ -158,8 +159,9 @@ void ExifParser::print_exif_tags(ExifData* ed) {
             exif_entry_get_value(entry, value, sizeof(value));
             if (*value) {
                 qDebug() << exif_tag_get_name(entry->tag) << ": " << value << "\n";
+                map.insert(exif_tag_get_name(entry->tag), value);
             }
         }
     }
+    return map;
 }
-

@@ -17,7 +17,7 @@ LuminismCore::LuminismCore(QObject *parent)
 
 void LuminismCore::flushIconGeneratorQueue(){
     const int maxPerTick = 8;
-    QVector<std::tuple<QString, QString, QImage>> batch;
+    QVector<std::tuple<QString, QString, QMap<QString, QString>, QImage>> batch;
     {
         QMutexLocker lock(&resultsMutex_);
         int take = qMin(maxPerTick, results_.size());
@@ -28,15 +28,16 @@ void LuminismCore::flushIconGeneratorQueue(){
     for (auto &t : batch) {
         const QString &fileName = std::get<0>(t);
         const QString &path = std::get<1>(t);
-        QImage img = std::get<2>(t);
+        QMap<QString, QString> exifMap = std::get<2>(t);
+        QImage img = std::get<3>(t);
 
         // Update the model using an icon based on the image
-        applyIconToModel(fileName, path, img);
+        applyBackfillMetadataToModel(fileName, path, img);
         emit iconUpdated();
     }
 }
 
-void LuminismCore::applyIconToModel(const QString &fileName, const QString &absoluteFilePathName, const QImage &image)
+void LuminismCore::applyBackfillMetadataToModel(const QString &fileName, const QString &absoluteFilePathName, const QImage &image)
 {
     // There could be files in different folders having the same name, but to make things quick
     // we find all files with a matching name in the model, and then zero in on the specific one
@@ -50,10 +51,11 @@ void LuminismCore::applyIconToModel(const QString &fileName, const QString &abso
 
     // Handle duplicate file names by comparing on the full path
     QStandardItem* item = nullptr;
+    TaggedFile* tf = nullptr;
     for (int i = 0; i < matches.count(); ++i){
         QStandardItem* currentItem = matches[i];
         QVariant var = currentItem->data(Qt::UserRole + 1);
-        TaggedFile* tf = var.value<TaggedFile*>();
+        tf = var.value<TaggedFile*>();
 
         if((tf->filePath + "/" + tf->fileName) == absoluteFilePathName)
             item = currentItem;
@@ -74,6 +76,8 @@ void LuminismCore::applyIconToModel(const QString &fileName, const QString &abso
         painter.end();
 
         item->setIcon(square);
+        //tf-> TODO: set metadata from Exif map
+
     } else {
         qDebug() << "Could not locate " + absoluteFilePathName + " to set icon";
     }
@@ -131,8 +135,8 @@ void LuminismCore::loadRootDirectory(){
             addFile(fileInfo);
         }
     }
-    // Queue populating icons on another thread
-    populateIcons();
+    // Queue populating icons & EXIF data on another thread
+    backfillMetadata();
 }
 
 bool LuminismCore::containsFiles(){
@@ -200,7 +204,7 @@ void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags){
     tagged_files_->appendRow(i);
 }
 
-void LuminismCore::populateIcons(){
+void LuminismCore::backfillMetadata(){
 
     QStringList files;
     for (int i = 0; i < tagged_files_->rowCount(); ++i) {
@@ -210,19 +214,22 @@ void LuminismCore::populateIcons(){
         files << (tf->filePath + "/" + tf->fileName);
     }
 
-    // run one async task per file explicitly, to avoid map overload ambiguity
+    // run one async task per file explicitly, via lamba to avoid map overload ambiguity
     for (const QString &path : files) {
         // queue icon generation to thread pool
         // but place the results in a threadsafe vector instead of trying
         // to apply directly, so we can throttle this appropriately
         QtConcurrent::run([this, path]() {
+
             QImage img = IconGenerator::generateIcon(path);
+            QMap<QString, QString> exifMap = ExifParser::getExifMap(path);
+
             QString fileName = QFileInfo(path).fileName();
 
             // store result (thread-safe)
             {
                 QMutexLocker lock(&resultsMutex_);
-                results_.emplace_back(fileName, path, std::move(img));
+                results_.emplace_back(fileName, path, exifMap, std::move(img));
             }
             // ensure timer is running on GUI thread to flush results
             QMetaObject::invokeMethod(this, "ensureUiFlushTimerRunning", Qt::QueuedConnection);
