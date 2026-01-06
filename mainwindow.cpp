@@ -195,6 +195,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         ui->previewContainer->clear();
         ui->previewFileNameValue->setText("-");
         ui->previewFileLocationValue->setText("-");
+        ui->previewImageCapturedValue->setText("-");
         ui->previewFileCreatedValue->setText("-");
         ui->previewFileModifiedValue->setText("-");
         ui->previewFileTagsValue->setText("-");
@@ -216,6 +217,8 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
 
         ui->previewFileNameValue->setText(itemAsTaggedFile->fileName);
         ui->previewFileLocationValue->setText(itemAsTaggedFile->filePath);
+        if (ui->previewImageCapturedValue != nullptr)
+            ui->previewImageCapturedValue->setText(locale.toString(itemAsTaggedFile->imageCaptureDateTime, QLocale::ShortFormat));
         ui->previewFileCreatedValue->setText(locale.toString(itemAsTaggedFile->fileCreationDateTime, QLocale::ShortFormat));
         ui->previewFileModifiedValue->setText(locale.toString(itemAsTaggedFile->fileModificationDateTime, QLocale::ShortFormat));
 

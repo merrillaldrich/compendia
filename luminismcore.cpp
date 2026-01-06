@@ -32,12 +32,15 @@ void LuminismCore::flushIconGeneratorQueue(){
         QImage img = std::get<3>(t);
 
         // Update the model using an icon based on the image
-        applyBackfillMetadataToModel(fileName, path, img);
+        applyBackfillMetadataToModel(fileName, path, exifMap, img);
         emit iconUpdated();
     }
 }
 
-void LuminismCore::applyBackfillMetadataToModel(const QString &fileName, const QString &absoluteFilePathName, const QImage &image)
+void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
+                                                const QString &absoluteFilePathName,
+                                                const QMap<QString, QString> exifMap,
+                                                const QImage &image)
 {
     // There could be files in different folders having the same name, but to make things quick
     // we find all files with a matching name in the model, and then zero in on the specific one
@@ -76,7 +79,13 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName, const Q
         painter.end();
 
         item->setIcon(square);
-        //tf-> TODO: set metadata from Exif map
+        //QDateTime::fromString("2026-01-06 14:35:00", "yyyy-MM-dd HH:mm:ss");
+
+        // NOTE: EXIF uses colons in BOTH the date and the time, not dashes
+        QString captureDateString = exifMap["DateTime"];
+        QDateTime captureDateTime = QDateTime::fromString(captureDateString, "yyyy:MM:dd HH:mm:ss");
+        tf->imageCaptureDateTime = captureDateTime;
+        tf->exifMap = exifMap;
 
     } else {
         qDebug() << "Could not locate " + absoluteFilePathName + " to set icon";

@@ -17,8 +17,10 @@ class TaggedFile : public QObject {
 public:
     QString filePath = "";
     QString fileName = "";
+    QDateTime imageCaptureDateTime;
     QDateTime fileCreationDateTime;
     QDateTime fileModificationDateTime;
+    QMap<QString, QString> exifMap;
 
     QSet<Tag*>* tags = new QSet<Tag*>;
 

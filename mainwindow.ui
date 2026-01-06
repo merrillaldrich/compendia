@@ -311,10 +311,7 @@
         </layout>
        </widget>
        <widget class="QWidget" name="previewWidget" native="true">
-        <layout class="QFormLayout" name="previewFormLayout">
-         <property name="leftMargin">
-          <number>10</number>
-         </property>
+        <layout class="QFormLayout" name="formLayout">
          <item row="0" column="0">
           <widget class="QLabel" name="previewFileNameLabel">
            <property name="font">
@@ -348,7 +345,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Location</string>
+            <string>File Location</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
@@ -369,14 +366,14 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="previewFileCreatedLabel">
+          <widget class="QLabel" name="previewImageCapturedLabel">
            <property name="font">
             <font>
              <bold>true</bold>
             </font>
            </property>
            <property name="text">
-            <string>Created</string>
+            <string>Image Captured</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
@@ -384,6 +381,31 @@
           </widget>
          </item>
          <item row="2" column="1">
+          <widget class="QLabel" name="previewImageCapturedValue">
+           <property name="text">
+            <string>Captured</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="previewFileCreatedLabel">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>File Created</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
           <widget class="QLabel" name="previewFileCreatedValue">
            <property name="text">
             <string>Created</string>
@@ -393,7 +415,7 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
+         <item row="4" column="0">
           <widget class="QLabel" name="previewFileModifiedLabel">
            <property name="font">
             <font>
@@ -401,14 +423,14 @@
             </font>
            </property>
            <property name="text">
-            <string>Modified</string>
+            <string>File Modified</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="4" column="1">
           <widget class="QLabel" name="previewFileModifiedValue">
            <property name="text">
             <string>Modified</string>
@@ -418,7 +440,7 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="5" column="0">
           <widget class="QLabel" name="previewFileTagsLabel">
            <property name="font">
             <font>
@@ -433,7 +455,7 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="5" column="1">
           <widget class="QLabel" name="previewFileTagsValue">
            <property name="text">
             <string>Tags</string>
