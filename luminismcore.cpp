@@ -85,7 +85,7 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
         QString captureDateString = exifMap["DateTime"];
         QDateTime captureDateTime = QDateTime::fromString(captureDateString, "yyyy:MM:dd HH:mm:ss");
         tf->imageCaptureDateTime = captureDateTime;
-        tf->exifMap = exifMap;
+        tf->setExifMap(exifMap);
 
     } else {
         qDebug() << "Could not locate " + absoluteFilePathName + " to set icon";
@@ -296,7 +296,7 @@ QSet<Tag*>* LuminismCore::getAssignedTags(){
         QStandardItem* item = tagged_files_->item(i);
         QVariant var = item->data();
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-        QSet<Tag*> &tgs = *itemAsTaggedFile->tags;
+        QSet<Tag*> &tgs = *itemAsTaggedFile->tags();
         distinctTags->unite(tgs);
     }
     return distinctTags;
@@ -317,7 +317,7 @@ QSet<Tag*>* LuminismCore::getAssignedTags_FilteredFiles(){
         QVariant var = sourceIndex.data(Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
 
-        QSet<Tag*> &tgs = *itemAsTaggedFile->tags;
+        QSet<Tag*> &tgs = *itemAsTaggedFile->tags();
         distinctTags->unite(tgs);
     }
     return distinctTags;
@@ -438,13 +438,13 @@ void LuminismCore::applyTag(Tag* tag){
         QModelIndex sourceIndex = tagged_files_proxy_->mapToSource(proxyIndex);
         QVariant var = sourceIndex.data(Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-        itemAsTaggedFile->tags->insert(tag);
+        itemAsTaggedFile->tags()->insert(tag);
     }
 }
 
 void LuminismCore::applyTag(TaggedFile* f, TagSet t){
     Tag* tag = getTag(t.tagFamilyName, t.tagName);
-    f->tags->insert(tag);
+    f->tags()->insert(tag);
 }
 
 void LuminismCore::unapplyTag(Tag* tag){
@@ -456,7 +456,7 @@ void LuminismCore::unapplyTag(Tag* tag){
         QModelIndex sourceIndex = tagged_files_proxy_->mapToSource(proxyIndex);
         QVariant var = sourceIndex.data(Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-        itemAsTaggedFile->tags->remove(tag);
+        itemAsTaggedFile->tags()->remove(tag);
     }
 }
 
@@ -467,7 +467,7 @@ void LuminismCore::unapplyTag(TaggedFile* file, Tag* tag){
         QVariant var = item->data();
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
         if(itemAsTaggedFile == file)
-            itemAsTaggedFile->tags->remove(tag);
+            itemAsTaggedFile->tags()->remove(tag);
     }
 }
 

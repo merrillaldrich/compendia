@@ -225,7 +225,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         QString tagText("");
         QMap<QString, QList<QString>> dict;
 
-        QSetIterator<Tag*> it(*itemAsTaggedFile->tags);
+        QSetIterator<Tag*> it(*itemAsTaggedFile->tags());
         while (it.hasNext()) {
             Tag* t = it.next(); // Advances iterator and returns the element
             QString famName = t->tagFamily->getName();

@@ -1,5 +1,6 @@
 #include "taggedfile.h"
 
+
 TaggedFile::TaggedFile(QObject *parent)
     : QObject{parent}{
 
@@ -11,7 +12,7 @@ TaggedFile::TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QObject *parent)
     this->fileName = fileInfo.fileName();
     this->fileCreationDateTime = fileInfo.birthTime();
     this->fileModificationDateTime = fileInfo.lastModified();
-    this->tags = tags;
+    this->tags_ = tags;
 }
 
 QString TaggedFile::TaggedFileJSON(){
@@ -22,7 +23,7 @@ QString TaggedFile::TaggedFileJSON(){
     Tag* t;
     QString fn;
 
-    QSetIterator<Tag *> i(*tags);
+    QSetIterator<Tag *> i(*tags_);
     while (i.hasNext()) {
         Tag* t = i.next();
         fn = t->tagFamily->getName();
@@ -36,4 +37,25 @@ QString TaggedFile::TaggedFileJSON(){
     QJsonDocument doc(families);
     QString strJson(doc.toJson());
     return strJson;
+}
+
+QMap<QString, QString> TaggedFile::exifMap() const
+{
+    return exif_map_;
+}
+
+void TaggedFile::setExifMap(const QMap<QString, QString> &newExifMap)
+{
+    exif_map_ = newExifMap;
+    dirty_flag_ = true;
+}
+
+QSet<Tag *> *TaggedFile::tags()
+{
+    return tags_;
+}
+
+bool TaggedFile::dirtyFlag() const
+{
+    return dirty_flag_;
 }

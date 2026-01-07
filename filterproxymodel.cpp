@@ -36,7 +36,7 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
     if (tags_.isEmpty()){
         tagResult = true;
     } else {
-        const QSet<Tag*> tagsconst = *itemAsTaggedFile->tags;
+        const QSet<Tag*> tagsconst = *itemAsTaggedFile->tags();
         tagResult = tags_.intersects(tagsconst);
     }
 
