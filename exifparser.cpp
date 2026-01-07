@@ -55,24 +55,14 @@ ExifData* ExifParser::getExifStandard(QString filePath){
         return nullptr;
     }
 
-    // Iterate and print EXIF tags
-    //exif_data_foreach_content(exifData, printExifContent, nullptr);
-
-    // Free EXIF data
-    //exif_data_unref(exifData);
-
     return exifData;
 }
 
 ExifData* ExifParser::getExifHeif(QString filePath){
 
     // Change QString to char array
-    // Convert to UTF-8 QByteArray
     QByteArray byteArray = filePath.toUtf8();
-
-    // Allocate and copy
-    char* filename = new char[byteArray.size() + 1];
-    std::strcpy(filename, byteArray.constData());
+    const char* filename = byteArray.constData();
 
     heif_context* ctx = heif_context_alloc();
     if (!ctx) {
@@ -141,7 +131,6 @@ ExifData* ExifParser::getExifHeif(QString filePath){
     // Clean up
     heif_image_handle_release(handle);
     heif_context_free(ctx);
-    delete[] filename;
 
     return ed;
 }
@@ -158,7 +147,6 @@ QMap<QString, QString> ExifParser::exifTagsToMap(ExifData* ed) {
             char value[1024];
             exif_entry_get_value(entry, value, sizeof(value));
             if (*value) {
-                qDebug() << exif_tag_get_name(entry->tag) << ": " << value << "\n";
                 map.insert(exif_tag_get_name(entry->tag), value);
             }
         }
