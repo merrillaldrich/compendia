@@ -28,7 +28,7 @@ public:
 
 
     TaggedFile(QObject *parent = nullptr);
-    TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QObject *parent = nullptr);
+    TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QMap<QString, QString>* exifMap, QObject *parent = nullptr);
 
     QString TaggedFileJSON();
 

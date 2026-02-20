@@ -202,7 +202,7 @@ void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags){
     }
 
     // Then add it
-    TaggedFile *tf = new TaggedFile(fileInfo, newOrExistingTags);
+    TaggedFile *tf = new TaggedFile(fileInfo, newOrExistingTags, new QMap<QString, QString>, this);
     // Standard items have just an icon and text
 
     // Make an icon moved to run async

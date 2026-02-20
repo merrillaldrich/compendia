@@ -6,7 +6,7 @@ TaggedFile::TaggedFile(QObject *parent)
 
 }
 
-TaggedFile::TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QObject *parent)
+TaggedFile::TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QMap<QString, QString>* exifMap, QObject *parent)
     : QObject{parent}{
     this->filePath = fileInfo.absolutePath();
     this->fileName = fileInfo.fileName();
@@ -46,8 +46,10 @@ QMap<QString, QString> TaggedFile::exifMap() const
 
 void TaggedFile::setExifMap(const QMap<QString, QString> &newExifMap)
 {
-    exif_map_ = newExifMap;
-    dirty_flag_ = true;
+    if (newExifMap != exif_map_){
+        exif_map_ = newExifMap;
+        dirty_flag_ = true;
+    }
 }
 
 QSet<Tag *> *TaggedFile::tags()
