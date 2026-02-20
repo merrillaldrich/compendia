@@ -34,6 +34,8 @@ private:
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
 
     void flushIconGeneratorQueue();
+    bool needsWrite(const TaggedFile* file) const;
+    void clearAllDirtyFlags();
     void applyBackfillMetadataToModel(const QString &fileName,
                                       const QString &absoluteFilePathName,
                                       const QMap<QString, QString> exifMap,

@@ -37,6 +37,17 @@ void LuminismCore::flushIconGeneratorQueue(){
     }
 }
 
+bool LuminismCore::needsWrite(const TaggedFile* file) const
+{
+    if (file->dirtyFlag())
+        return true;
+    for (Tag* tag : *file->tags()) {
+        if (tag->dirtyFlag() || tag->tagFamily->dirtyFlag())
+            return true;
+    }
+    return false;
+}
+
 void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
                                                 const QString &absoluteFilePathName,
                                                 const QMap<QString, QString> exifMap,
@@ -260,16 +271,7 @@ void LuminismCore::writeFileMetadata(){
         QVariant fi = tagged_files_->item(row)->data();
         TaggedFile* itemAsTaggedFile = fi.value<TaggedFile*>();
 
-        bool shouldWrite = itemAsTaggedFile->dirtyFlag();
-        if (!shouldWrite) {
-            for (Tag* tag : *itemAsTaggedFile->tags()) {
-                if (tag->dirtyFlag() || tag->tagFamily->dirtyFlag()) {
-                    shouldWrite = true;
-                    break;
-                }
-            }
-        }
-        if (!shouldWrite)
+        if (!needsWrite(itemAsTaggedFile))
             continue;
 
         QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
@@ -291,10 +293,16 @@ void LuminismCore::writeFileMetadata(){
         QTextStream out(&metaFile);
         out << itemAsTaggedFile->TaggedFileJSON();
         metaFile.close();
-        itemAsTaggedFile->clearDirtyFlag();
         emit metadataSaved();
     }
 
+    clearAllDirtyFlags();
+}
+
+void LuminismCore::clearAllDirtyFlags()
+{
+    for (int row = 0; row < tagged_files_->rowCount(); ++row)
+        tagged_files_->item(row)->data().value<TaggedFile*>()->clearDirtyFlag();
     for (Tag* tag : *tags_)
         tag->clearDirtyFlag();
     for (TagFamily* family : *tag_families_)
