@@ -15,8 +15,19 @@ Tag::Tag(TagFamily* tf, QString t, QObject *parent)
 void Tag::setName(QString tagName){
     if(tag_name_ != tagName){
         tag_name_ = tagName;
+        dirty_flag_ = true;
         emit nameChanged();
     }
+}
+
+bool Tag::dirtyFlag() const
+{
+    return dirty_flag_;
+}
+
+void Tag::clearDirtyFlag()
+{
+    dirty_flag_ = false;
 }
 
 QString Tag::getName() const {

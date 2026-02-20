@@ -11,6 +11,7 @@ class Tag : public QObject
 
 private:
     QString tag_name_;
+    bool dirty_flag_ = false;
 
 public:
     explicit Tag(QObject *parent = nullptr);
@@ -21,6 +22,8 @@ public:
 
     void setName(QString tagName);
     QString getName() const;
+    bool dirtyFlag() const;
+    void clearDirtyFlag();
 
     bool operator==(const Tag& other) const;
 

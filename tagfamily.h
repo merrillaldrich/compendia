@@ -12,6 +12,7 @@ class TagFamily : public QObject
 private:
     QString tag_family_name_;
     QColor tag_family_color_;
+    bool dirty_flag_ = false;
     static int next_hue_; // Default for static val set in implementation file
     static int starting_hue_;
     static QColor generateNextColor();
@@ -24,6 +25,8 @@ public:
     void setName(QString tagFamilyName);
     QString getName() const;
     QColor getColor() const;
+    bool dirtyFlag() const;
+    void clearDirtyFlag();
     static void restartColorSequence();
 
 protected:

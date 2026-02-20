@@ -260,7 +260,16 @@ void LuminismCore::writeFileMetadata(){
         QVariant fi = tagged_files_->item(row)->data();
         TaggedFile* itemAsTaggedFile = fi.value<TaggedFile*>();
 
-        if (!itemAsTaggedFile->dirtyFlag())
+        bool shouldWrite = itemAsTaggedFile->dirtyFlag();
+        if (!shouldWrite) {
+            for (Tag* tag : *itemAsTaggedFile->tags()) {
+                if (tag->dirtyFlag() || tag->tagFamily->dirtyFlag()) {
+                    shouldWrite = true;
+                    break;
+                }
+            }
+        }
+        if (!shouldWrite)
             continue;
 
         QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
@@ -285,6 +294,11 @@ void LuminismCore::writeFileMetadata(){
         itemAsTaggedFile->clearDirtyFlag();
         emit metadataSaved();
     }
+
+    for (Tag* tag : *tags_)
+        tag->clearDirtyFlag();
+    for (TagFamily* family : *tag_families_)
+        family->clearDirtyFlag();
 }
 
 QSet<Tag*>* LuminismCore::getLibraryTags(){

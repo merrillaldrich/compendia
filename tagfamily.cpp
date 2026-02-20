@@ -20,8 +20,19 @@ TagFamily::TagFamily(QString tf, QObject *parent = nullptr)
 void TagFamily::setName(QString tagFamilyName){
     if(tag_family_name_ != tagFamilyName){
         tag_family_name_ = tagFamilyName;
+        dirty_flag_ = true;
         emit nameChanged();
     }
+}
+
+bool TagFamily::dirtyFlag() const
+{
+    return dirty_flag_;
+}
+
+void TagFamily::clearDirtyFlag()
+{
+    dirty_flag_ = false;
 }
 
 QString TagFamily::getName() const {
