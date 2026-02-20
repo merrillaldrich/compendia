@@ -260,6 +260,9 @@ void LuminismCore::writeFileMetadata(){
         QVariant fi = tagged_files_->item(row)->data();
         TaggedFile* itemAsTaggedFile = fi.value<TaggedFile*>();
 
+        if (!itemAsTaggedFile->dirtyFlag())
+            continue;
+
         QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
         QFileInfo fileInfo(origFile);
         QString metaFilePath = itemAsTaggedFile->filePath + "/" +fileInfo.baseName() + ".json";
@@ -279,6 +282,7 @@ void LuminismCore::writeFileMetadata(){
         QTextStream out(&metaFile);
         out << itemAsTaggedFile->TaggedFileJSON();
         metaFile.close();
+        itemAsTaggedFile->clearDirtyFlag();
         emit metadataSaved();
     }
 }
@@ -438,13 +442,13 @@ void LuminismCore::applyTag(Tag* tag){
         QModelIndex sourceIndex = tagged_files_proxy_->mapToSource(proxyIndex);
         QVariant var = sourceIndex.data(Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-        itemAsTaggedFile->tags()->insert(tag);
+        itemAsTaggedFile->addTag(tag);
     }
 }
 
 void LuminismCore::applyTag(TaggedFile* f, TagSet t){
     Tag* tag = getTag(t.tagFamilyName, t.tagName);
-    f->tags()->insert(tag);
+    f->addTag(tag);
 }
 
 void LuminismCore::unapplyTag(Tag* tag){
@@ -456,7 +460,7 @@ void LuminismCore::unapplyTag(Tag* tag){
         QModelIndex sourceIndex = tagged_files_proxy_->mapToSource(proxyIndex);
         QVariant var = sourceIndex.data(Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-        itemAsTaggedFile->tags()->remove(tag);
+        itemAsTaggedFile->removeTag(tag);
     }
 }
 
@@ -467,7 +471,7 @@ void LuminismCore::unapplyTag(TaggedFile* file, Tag* tag){
         QVariant var = item->data();
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
         if(itemAsTaggedFile == file)
-            itemAsTaggedFile->tags()->remove(tag);
+            itemAsTaggedFile->removeTag(tag);
     }
 }
 

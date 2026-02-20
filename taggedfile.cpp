@@ -57,7 +57,29 @@ QSet<Tag *> *TaggedFile::tags()
     return tags_;
 }
 
+void TaggedFile::addTag(Tag* tag)
+{
+    tags_->insert(tag);
+    dirty_flag_ = true;
+}
+
+void TaggedFile::removeTag(Tag* tag)
+{
+    tags_->remove(tag);
+    dirty_flag_ = true;
+}
+
 bool TaggedFile::dirtyFlag() const
 {
     return dirty_flag_;
+}
+
+void TaggedFile::markDirty()
+{
+    dirty_flag_ = true;
+}
+
+void TaggedFile::clearDirtyFlag()
+{
+    dirty_flag_ = false;
 }

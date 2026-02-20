@@ -36,7 +36,11 @@ public:
     void setExifMap(const QMap<QString, QString> &newExifMap);
 
     QSet<Tag *> *tags();
+    void addTag(Tag* tag);
+    void removeTag(Tag* tag);
     bool dirtyFlag() const;
+    void markDirty();
+    void clearDirtyFlag();
 };
 
 Q_DECLARE_METATYPE(TaggedFile)
