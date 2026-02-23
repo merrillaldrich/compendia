@@ -416,4 +416,40 @@ void MainWindow::on_actionFind_Faces_triggered(){
     ui->previewContainer->preview(imgWithFaces);
 }
 
+/*! \brief Slot for the Quit menu action; closes the main window. */
+void MainWindow::on_actionQuit_triggered()
+{
+    close();
+}
 
+/*! \brief Intercepts the window close event to prompt for unsaved changes.
+ *
+ * \param event The close event to accept or ignore.
+ */
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (!core->hasUnsavedChanges()) {
+        event->accept();
+        return;
+    }
+
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Unsaved Changes");
+    msgBox.setText("There are unsaved changes.");
+    msgBox.setInformativeText("Would you like to save before quitting?");
+
+    QPushButton *saveAndQuit = msgBox.addButton("Save and Quit", QMessageBox::AcceptRole);
+    QPushButton *quitAnyway  = msgBox.addButton("Discard Changes and Quit",   QMessageBox::DestructiveRole);
+    /*QPushButton *cancel    =*/ msgBox.addButton("Cancel",       QMessageBox::RejectRole);
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == saveAndQuit) {
+        core->writeFileMetadata();
+        event->accept();
+    } else if (msgBox.clickedButton() == quitAnyway) {
+        event->accept();
+    } else {
+        event->ignore();
+    }
+}

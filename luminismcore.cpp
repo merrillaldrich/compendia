@@ -307,6 +307,19 @@ void LuminismCore::ensureUiFlushTimerRunning(){
     if (!uiFlushTimer_.isActive()) uiFlushTimer_.start();
 }
 
+/*! \brief Returns true if any file in the model has unsaved changes.
+ *
+ * \return True when at least one TaggedFile has a dirty flag set.
+ */
+bool LuminismCore::hasUnsavedChanges()
+{
+    for (int row = 0; row < tagged_files_->rowCount(); ++row) {
+        if (tagged_files_->item(row)->data().value<TaggedFile*>()->dirtyFlag())
+            return true;
+    }
+    return false;
+}
+
 /*! \brief Writes JSON sidecar files for every file with unsaved changes. */
 void LuminismCore::writeFileMetadata(){
 

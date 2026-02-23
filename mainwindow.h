@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QCloseEvent>
 #include <QItemSelection>
 #include <QResizeEvent>
 #include <QGraphicsView>
@@ -67,6 +68,9 @@ private slots:
 
     /*! \brief Slot for the Open Folder menu action; delegates to setRootFolder(). */
     void on_actionOpen_Folder_triggered();
+
+    /*! \brief Slot for the Quit menu action; closes the main window. */
+    void on_actionQuit_triggered();
 
     /*! \brief Updates the preview and property panel when the file-list selection changes.
      *
@@ -137,6 +141,12 @@ protected:
      * \param event The resize event containing the new window size.
      */
     void resizeEvent(QResizeEvent *event) override;
+
+    /*! \brief Intercepts the window close event to prompt for unsaved changes.
+     *
+     * \param event The close event to accept or ignore.
+     */
+    void closeEvent(QCloseEvent *event) override;
 };
 
 #endif // MAINWINDOW_H

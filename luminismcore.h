@@ -109,6 +109,12 @@ public:
     /*! \brief Writes JSON sidecar files for every file with unsaved changes. */
     void writeFileMetadata();
 
+    /*! \brief Returns true if any file in the model has unsaved changes.
+     *
+     * \return True when at least one TaggedFile has a dirty flag set.
+     */
+    bool hasUnsavedChanges();
+
     /*! \brief Returns a pointer to the complete tag library.
      *
      * \return Pointer to the set of all known Tag objects.

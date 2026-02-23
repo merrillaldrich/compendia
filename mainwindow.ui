@@ -524,6 +524,8 @@ border-bottom: 1px solid #DDD; /* width, style, color */</string>
     <addaction name="separator"/>
     <addaction name="actionSave_All"/>
     <addaction name="actionSave_Visible"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuFilter">
     <property name="title">
@@ -590,6 +592,11 @@ border-top: 1px solid #DDD; /* width, style, color */
   <action name="actionFind_Faces">
    <property name="text">
     <string>Find Faces</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
    </property>
   </action>
   <action name="actionShow_EXIF_data">
