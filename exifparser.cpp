@@ -1,4 +1,8 @@
 #include "exifparser.h"
+#include <QDir>
+#include <QFileInfo>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 /*! \brief Constructs an ExifParser (rarely needed; prefer the static interface).
  *
@@ -8,15 +12,91 @@ ExifParser::ExifParser(QObject *parent)
     : QObject{parent}
 {}
 
+/*! \brief Returns the absolute path to the JSON EXIF cache file for a given source image.
+ *
+ * \param filePath Absolute path to the source image file.
+ * \return Absolute path to the corresponding EXIF cache file.
+ */
+QString ExifParser::cacheFilePath(const QString &filePath)
+{
+    QFileInfo fi(filePath);
+    return fi.absolutePath() + "/.luminism_cache/" + fi.baseName() + "_exif.json";
+}
+
+/*! \brief Saves an EXIF map to the per-folder cache directory as a JSON file.
+ *
+ * \param filePath Absolute path to the original image (used to derive the cache path).
+ * \param exifMap  The EXIF key-value map to persist.
+ * \return True if the file was written successfully.
+ */
+bool ExifParser::saveExifToCache(const QString &filePath, const QMap<QString, QString> &exifMap)
+{
+    QFileInfo fi(filePath);
+    QString cachePath = fi.absolutePath() + "/.luminism_cache";
+    QDir dir(cachePath);
+
+    if (!dir.exists()) {
+        if (!dir.mkpath(".")) {
+            qWarning() << "Failed to create cache directory:" << cachePath;
+            return false;
+        }
+    }
+
+    QJsonObject obj;
+    for (auto it = exifMap.cbegin(); it != exifMap.cend(); ++it)
+        obj.insert(it.key(), it.value());
+
+    QFile file(cacheFilePath(filePath));
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Cannot open EXIF cache file for writing:" << file.errorString();
+        return false;
+    }
+
+    file.write(QJsonDocument(obj).toJson());
+    return true;
+}
+
+/*! \brief Attempts to load a cached EXIF map for the given source file.
+ *
+ * \param filePath Absolute path to the original image (used to derive the cache path).
+ * \return The cached EXIF map, or an empty map if no valid cache entry exists.
+ */
+QMap<QString, QString> ExifParser::loadExifFromCache(const QString &filePath)
+{
+    QFile file(cacheFilePath(filePath));
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Cannot open EXIF cache file for reading:" << file.errorString();
+        return {};
+    }
+
+    QJsonObject obj = QJsonDocument::fromJson(file.readAll()).object();
+    QMap<QString, QString> exifMap;
+    for (auto it = obj.begin(); it != obj.end(); ++it)
+        exifMap.insert(it.key(), it.value().toString());
+
+    return exifMap;
+}
+
 /*! \brief Returns a map of EXIF key-value pairs for the given image file.
  *
- * Dispatches to getExifStandard() for .jpg files and getExifHeif() for
- * .heic files; returns an empty map for unsupported formats or on error.
+ * Checks the on-disk JSON cache first. The cache is bypassed when the source
+ * image has been modified more recently than the cached file. On a miss or
+ * stale cache the EXIF data is parsed from the image and saved to cache.
  *
  * \param filePath Absolute path to the image file.
  * \return A map of EXIF tag name strings to value strings.
  */
 QMap<QString, QString> ExifParser::getExifMap(QString filePath){
+
+    QFileInfo sourceInfo(filePath);
+    QFileInfo cacheInfo(cacheFilePath(filePath));
+
+    bool cacheCurrent = cacheInfo.exists() &&
+                        cacheInfo.lastModified() >= sourceInfo.lastModified();
+
+    if (cacheCurrent)
+        return loadExifFromCache(filePath);
+
     QMap<QString, QString> exifMap;
 
     ExifData* ed = nullptr;
@@ -27,10 +107,13 @@ QMap<QString, QString> ExifParser::getExifMap(QString filePath){
         ed = getExifHeif(filePath);
     }
 
-    if(ed != nullptr){
+    if (ed != nullptr){
         exifMap = exifTagsToMap(ed);
     }
     exif_data_unref(ed);
+
+    if (!exifMap.isEmpty())
+        saveExifToCache(filePath, exifMap);
 
     return exifMap;
 }
