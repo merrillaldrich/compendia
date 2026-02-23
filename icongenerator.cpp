@@ -10,10 +10,22 @@ IconGenerator::IconGenerator(QObject *parent)
 
 }
 
+/*! \brief Returns the absolute path to the .qimg cache file for a given source image.
+ *
+ * \param absoluteFileName Absolute path to the source image file.
+ * \return Absolute path to the corresponding cache file.
+ */
+QString IconGenerator::cacheFilePath(const QString &absoluteFileName)
+{
+    QFileInfo fi(absoluteFileName);
+    return fi.absolutePath() + "/.luminism_cache/" + fi.baseName() + "_100.qimg";
+}
+
 /*! \brief Returns a 100-pixel-bounded thumbnail for the given image file.
  *
- * Checks the on-disk cache first; on a miss the original image is decoded,
- * scaled, saved to the cache, and returned.
+ * Checks the on-disk cache first. The cache is bypassed when the source image
+ * has been modified more recently than the cached file. On a miss or stale
+ * cache the original image is decoded, scaled, saved to cache, and returned.
  *
  * \param absoluteFileName Absolute path to the source image file.
  * \return A QImage containing the scaled thumbnail, or a null QImage on error.
@@ -22,9 +34,15 @@ QImage IconGenerator::generateIcon(const QString absoluteFileName)
 {
     QImage iconPic;
 
-    iconPic = loadIconFromCache(absoluteFileName);
+    QFileInfo sourceInfo(absoluteFileName);
+    QFileInfo cacheInfo(cacheFilePath(absoluteFileName));
 
-    // For cache miss, process the original image, save the result to cache, and also return it
+    bool cacheCurrent = cacheInfo.exists() &&
+                        cacheInfo.lastModified() >= sourceInfo.lastModified();
+
+    if (cacheCurrent)
+        iconPic = loadIconFromCache(absoluteFileName);
+
     if (iconPic.isNull()) {
         qDebug() << "Icon cache miss";
 
@@ -52,18 +70,17 @@ QImage IconGenerator::generateIcon(const QString absoluteFileName)
 bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImage &pict) {
 
     QFileInfo fi(absoluteFileName);
-    QString cachePath = fi.absolutePath() + "/" + ".luminism_cache";
+    QString cachePath = fi.absolutePath() + "/.luminism_cache";
     QDir dir(cachePath);
 
     if (!dir.exists()) {
-        if (dir.mkpath(".")) {
-        } else {
+        if (!dir.mkpath(".")) {
             qWarning() << "Failed to create directory:" << cachePath;
             return false;
         }
     }
 
-    QString filePath = cachePath + "/" + fi.baseName() + "_100" + ".qimg";
+    QString filePath = cacheFilePath(absoluteFileName);
 
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -85,16 +102,12 @@ bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImag
  */
 QImage IconGenerator::loadIconFromCache(const QString &absoluteFileName){
 
-    QFileInfo fi(absoluteFileName);
-    QString cachePath = fi.absolutePath() + "/" + ".luminism_cache";
-    QDir dir(cachePath);
+    QString filePath = cacheFilePath(absoluteFileName);
 
-    if (!dir.exists()) {
-        qWarning() << "There is no cache folder for absoluteFileName";
+    if (!QFile::exists(filePath)) {
+        qWarning() << "There is no cache file for" << absoluteFileName;
         return QImage();
     }
-
-    QString filePath = cachePath + "/" + fi.baseName() + "_100" + ".qimg";
 
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {

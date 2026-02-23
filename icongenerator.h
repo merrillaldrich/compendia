@@ -53,6 +53,13 @@ private:
      */
     static QImage loadIconFromCache(const QString &absoluteFileName);
 
+    /*! \brief Returns the absolute path to the .qimg cache file for a given source image.
+     *
+     * \param absoluteFileName Absolute path to the source image file.
+     * \return Absolute path to the corresponding cache file.
+     */
+    static QString cacheFilePath(const QString &absoluteFileName);
+
 };
 
 #endif // ICONGENERATOR_H
