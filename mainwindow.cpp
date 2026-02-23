@@ -199,6 +199,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         ui->previewFileCreatedValue->setText("-");
         ui->previewFileModifiedValue->setText("-");
         ui->previewFileTagsValue->setText("-");
+        ui->previewExifValue->setText("-");
     }
     else {
         QModelIndex proxyIndex = selected.indexes().first();
@@ -244,6 +245,13 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         }
 
         ui->previewFileTagsValue->setText(tagText);
+
+        QString exifText;
+        const QMap<QString, QString> exifMap = itemAsTaggedFile->exifMap();
+        for (auto [key, value] : exifMap.asKeyValueRange()) {
+            exifText += key + ": " + value + "  ";
+        }
+        ui->previewExifValue->setText(exifText);
 
     }
 }
