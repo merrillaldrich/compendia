@@ -1,8 +1,11 @@
 #ifndef TAGGEDFILE_H
 #define TAGGEDFILE_H
 
+#include <optional>
 #include <QObject>
 #include <QList>
+#include <QMap>
+#include <QRect>
 #include <QString>
 #include <QMetaType>
 #include <QJsonArray>
@@ -23,6 +26,7 @@ class TaggedFile : public QObject {
 private:
     QMap<QString, QString> exif_map_;
     QSet<Tag*>* tags_ = new QSet<Tag*>;
+    QMap<Tag*, QRect> tag_rects_;
     bool dirty_flag_ = false;
 
 
@@ -83,6 +87,34 @@ public:
      * \param tag The Tag pointer to add.
      */
     void addTag(Tag* tag);
+
+    /*! \brief Adds a tag with a bounding rectangle to this file and marks the file dirty.
+     *
+     * \param tag  The Tag pointer to add.
+     * \param rect The bounding rectangle within the image for this tag.
+     */
+    void addTag(Tag* tag, QRect rect);
+
+    /*! \brief Sets or updates the bounding rectangle for an existing tag assignment and marks dirty.
+     *
+     * \param tag  The Tag pointer already applied to this file.
+     * \param rect The new bounding rectangle.
+     */
+    void setTagRect(Tag* tag, QRect rect);
+
+    /*! \brief Sets a bounding rectangle without marking the file dirty (used during load).
+     *
+     * \param tag  The Tag pointer already applied to this file.
+     * \param rect The bounding rectangle to initialise from.
+     */
+    void initTagRect(Tag* tag, QRect rect);
+
+    /*! \brief Returns the bounding rectangle for a tag assignment, if one is set.
+     *
+     * \param tag The Tag pointer to query.
+     * \return The bounding rectangle, or std::nullopt if no rect is set.
+     */
+    std::optional<QRect> tagRect(Tag* tag) const;
 
     /*! \brief Removes a tag from this file and marks the file dirty.
      *

@@ -245,10 +245,11 @@ public:
 
     /*! \brief Parses a JSON object of tag-family to tag-name arrays into a TagSet list.
      *
-     * \param tagsJson A JSON object mapping family name strings to arrays of tag name strings.
+     * \param tagsJson     A JSON object mapping family name strings to arrays of tag name strings.
+     * \param tagRectsJson Optional JSON object mapping family → tag → [x,y,w,h] for bounding rects.
      * \return A list of TagSet values parsed from the JSON.
      */
-    QList<TagSet> parseTagJson(QJsonObject tagsJson);
+    QList<TagSet> parseTagJson(QJsonObject tagsJson, QJsonObject tagRectsJson = QJsonObject());
 
 public slots:
 

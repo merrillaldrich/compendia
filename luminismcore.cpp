@@ -192,7 +192,8 @@ void LuminismCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
 
     if (tagsJson.contains("tags")) {
         // New format: tags and exif are under separate keys
-        tagSets = parseTagJson(tagsJson["tags"].toObject());
+        QJsonObject tagRectsJson = tagsJson["tag_rects"].toObject();
+        tagSets = parseTagJson(tagsJson["tags"].toObject(), tagRectsJson);
         QJsonObject exifObj = tagsJson["exif"].toObject();
         for (auto it = exifObj.begin(); it != exifObj.end(); ++it) {
             exifMap.insert(it.key(), it.value().toString());
@@ -254,6 +255,15 @@ void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString,
     // Then add it
     TaggedFile *tf = new TaggedFile(fileInfo, newOrExistingTags, new QMap<QString, QString>, this);
     tf->initExifMap(initialExif);
+
+    // Apply any bounding rectangles carried in the TagSets (without dirtying)
+    for (const TagSet &ts : tags) {
+        if (ts.rect.has_value()) {
+            Tag* tag = getTag(ts.tagFamilyName, ts.tagName);
+            if (tag) tf->initTagRect(tag, ts.rect.value());
+        }
+    }
+
     // Standard items have just an icon and text
 
     // Make an icon moved to run async
@@ -641,16 +651,32 @@ void LuminismCore::removeTagFilter(Tag* tag){
 
 /*! \brief Parses a JSON object of tag-family to tag-name arrays into a TagSet list.
  *
- * \param tagsJson A JSON object mapping family name strings to arrays of tag name strings.
+ * \param tagsJson     A JSON object mapping family name strings to arrays of tag name strings.
+ * \param tagRectsJson Optional JSON object mapping family → tag → [x,y,w,h] for bounding rects.
  * \return A list of TagSet values parsed from the JSON.
  */
-QList<TagSet> LuminismCore::parseTagJson(QJsonObject tagsJson){
+QList<TagSet> LuminismCore::parseTagJson(QJsonObject tagsJson, QJsonObject tagRectsJson){
     QList<TagSet> tagSets;
 
     for (auto it = tagsJson.begin(); it != tagsJson.end(); ++it) {
+        QString familyName = it.key();
         QJsonArray array = it.value().toArray();
         for (const QJsonValue &value : array){
-            tagSets.append(TagSet(it.key(),value.toString()));
+            QString tagName = value.toString();
+            TagSet ts(familyName, tagName);
+
+            if (tagRectsJson.contains(familyName)) {
+                QJsonObject familyRects = tagRectsJson[familyName].toObject();
+                if (familyRects.contains(tagName)) {
+                    QJsonArray rectArr = familyRects[tagName].toArray();
+                    if (rectArr.size() == 4) {
+                        ts.rect = QRect(rectArr[0].toInt(), rectArr[1].toInt(),
+                                        rectArr[2].toInt(), rectArr[3].toInt());
+                    }
+                }
+            }
+
+            tagSets.append(ts);
         }
     }
 

@@ -45,15 +45,34 @@ QString TaggedFile::TaggedFileJSON(){
         families[fn] = tags;
     }
 
+    // Build tag_rects object (only non-empty entries)
+    QJsonObject tagRectsObj;
+    for (auto it = tag_rects_.cbegin(); it != tag_rects_.cend(); ++it) {
+        Tag* t = it.key();
+        const QRect& r = it.value();
+        QString fn = t->tagFamily->getName();
+        QString tn = t->getName();
+        QJsonObject familyRects = tagRectsObj[fn].toObject();
+        QJsonArray rectArr;
+        rectArr.append(r.x());
+        rectArr.append(r.y());
+        rectArr.append(r.width());
+        rectArr.append(r.height());
+        familyRects.insert(tn, rectArr);
+        tagRectsObj[fn] = familyRects;
+    }
+
     // Build exif object
     QJsonObject exifObj;
     for (auto it = exif_map_.cbegin(); it != exif_map_.cend(); ++it) {
         exifObj.insert(it.key(), it.value());
     }
 
-    // Wrap both under top-level keys
+    // Wrap under top-level keys
     QJsonObject root;
     root.insert("tags", families);
+    if (!tagRectsObj.isEmpty())
+        root.insert("tag_rects", tagRectsObj);
     root.insert("exif", exifObj);
 
     QJsonDocument doc(root);
@@ -109,6 +128,51 @@ void TaggedFile::addTag(Tag* tag)
     dirty_flag_ = true;
 }
 
+/*! \brief Adds a tag with a bounding rectangle to this file and marks the file dirty.
+ *
+ * \param tag  The Tag pointer to add.
+ * \param rect The bounding rectangle within the image for this tag.
+ */
+void TaggedFile::addTag(Tag* tag, QRect rect)
+{
+    tags_->insert(tag);
+    tag_rects_.insert(tag, rect);
+    dirty_flag_ = true;
+}
+
+/*! \brief Sets or updates the bounding rectangle for an existing tag assignment and marks dirty.
+ *
+ * \param tag  The Tag pointer already applied to this file.
+ * \param rect The new bounding rectangle.
+ */
+void TaggedFile::setTagRect(Tag* tag, QRect rect)
+{
+    tag_rects_.insert(tag, rect);
+    dirty_flag_ = true;
+}
+
+/*! \brief Sets a bounding rectangle without marking the file dirty (used during load).
+ *
+ * \param tag  The Tag pointer already applied to this file.
+ * \param rect The bounding rectangle to initialise from.
+ */
+void TaggedFile::initTagRect(Tag* tag, QRect rect)
+{
+    tag_rects_.insert(tag, rect);
+}
+
+/*! \brief Returns the bounding rectangle for a tag assignment, if one is set.
+ *
+ * \param tag The Tag pointer to query.
+ * \return The bounding rectangle, or std::nullopt if no rect is set.
+ */
+std::optional<QRect> TaggedFile::tagRect(Tag* tag) const
+{
+    if (tag_rects_.contains(tag))
+        return tag_rects_.value(tag);
+    return std::nullopt;
+}
+
 /*! \brief Removes a tag from this file and marks the file dirty.
  *
  * \param tag The Tag pointer to remove.
@@ -116,6 +180,7 @@ void TaggedFile::addTag(Tag* tag)
 void TaggedFile::removeTag(Tag* tag)
 {
     tags_->remove(tag);
+    tag_rects_.remove(tag);
     dirty_flag_ = true;
 }
 
