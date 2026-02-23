@@ -19,6 +19,7 @@ private:
     QSet<Tag*>* tags_ = new QSet<Tag*>;
     bool dirty_flag_ = false;
 
+
 public:
     QString filePath = "";
     QString fileName = "";
@@ -34,6 +35,7 @@ public:
 
     QMap<QString, QString> exifMap() const;
     void setExifMap(const QMap<QString, QString> &newExifMap);
+    void initExifMap(const QMap<QString, QString> &exifMap);
 
     QSet<Tag *> *tags();
     void addTag(Tag* tag);

@@ -37,16 +37,6 @@ void LuminismCore::flushIconGeneratorQueue(){
     }
 }
 
-bool LuminismCore::needsWrite(const TaggedFile* file) const
-{
-    if (file->dirtyFlag())
-        return true;
-    for (Tag* tag : *file->tags()) {
-        if (tag->dirtyFlag() || tag->tagFamily->dirtyFlag())
-            return true;
-    }
-    return false;
-}
 
 void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
                                                 const QString &absoluteFilePathName,
@@ -168,11 +158,25 @@ void LuminismCore::addFile(QFileInfo fileInfo){
 }
 
 void LuminismCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
-    QList<TagSet> tagSets = parseTagJson(tagsJson);
-    addFile(fileInfo, tagSets);
+    QList<TagSet> tagSets;
+    QMap<QString, QString> exifMap;
+
+    if (tagsJson.contains("tags")) {
+        // New format: tags and exif are under separate keys
+        tagSets = parseTagJson(tagsJson["tags"].toObject());
+        QJsonObject exifObj = tagsJson["exif"].toObject();
+        for (auto it = exifObj.begin(); it != exifObj.end(); ++it) {
+            exifMap.insert(it.key(), it.value().toString());
+        }
+    } else {
+        // Old format: top-level object is the tags map
+        tagSets = parseTagJson(tagsJson);
+    }
+
+    addFile(fileInfo, tagSets, exifMap);
 }
 
-void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags){
+void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif){
     // Add to to the Tagged Object collection and collect links to its tags and tag families
 
     // For each item in the tag set add the family, if it doesn't already exist,
@@ -214,6 +218,7 @@ void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags){
 
     // Then add it
     TaggedFile *tf = new TaggedFile(fileInfo, newOrExistingTags, new QMap<QString, QString>, this);
+    tf->initExifMap(initialExif);
     // Standard items have just an icon and text
 
     // Make an icon moved to run async
@@ -271,7 +276,7 @@ void LuminismCore::writeFileMetadata(){
         QVariant fi = tagged_files_->item(row)->data();
         TaggedFile* itemAsTaggedFile = fi.value<TaggedFile*>();
 
-        if (!needsWrite(itemAsTaggedFile))
+        if (!itemAsTaggedFile->dirtyFlag())
             continue;
 
         QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;

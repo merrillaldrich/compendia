@@ -17,26 +17,33 @@ TaggedFile::TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QMap<QString, QStri
 
 QString TaggedFile::TaggedFileJSON(){
 
-    // Return all the families and associated tags for a file
-
+    // Build tags object
     QJsonObject families;
-    Tag* t;
-    QString fn;
-
     QSetIterator<Tag *> i(*tags_);
     while (i.hasNext()) {
         Tag* t = i.next();
-        fn = t->tagFamily->getName();
+        QString fn = t->tagFamily->getName();
         if(!families.contains(fn)) {
             families.insert(fn, QJsonArray());
         }
         QJsonArray tags = families[fn].toArray();
         tags.append(t->getName());
-        families[fn]=tags;
+        families[fn] = tags;
     }
-    QJsonDocument doc(families);
-    QString strJson(doc.toJson());
-    return strJson;
+
+    // Build exif object
+    QJsonObject exifObj;
+    for (auto it = exif_map_.cbegin(); it != exif_map_.cend(); ++it) {
+        exifObj.insert(it.key(), it.value());
+    }
+
+    // Wrap both under top-level keys
+    QJsonObject root;
+    root.insert("tags", families);
+    root.insert("exif", exifObj);
+
+    QJsonDocument doc(root);
+    return QString(doc.toJson());
 }
 
 QMap<QString, QString> TaggedFile::exifMap() const
@@ -50,6 +57,11 @@ void TaggedFile::setExifMap(const QMap<QString, QString> &newExifMap)
         exif_map_ = newExifMap;
         dirty_flag_ = true;
     }
+}
+
+void TaggedFile::initExifMap(const QMap<QString, QString> &exifMap)
+{
+    exif_map_ = exifMap;
 }
 
 QSet<Tag *> *TaggedFile::tags()
@@ -71,7 +83,13 @@ void TaggedFile::removeTag(Tag* tag)
 
 bool TaggedFile::dirtyFlag() const
 {
-    return dirty_flag_;
+    if (dirty_flag_)
+        return true;
+    for (Tag* tag : *tags_) {
+        if (tag->dirtyFlag() || tag->tagFamily->dirtyFlag())
+            return true;
+    }
+    return false;
 }
 
 void TaggedFile::markDirty()
