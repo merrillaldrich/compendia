@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
+#include <QPair>
 #include <QDebug>
 
 #include "./ui_mainwindow.h"
@@ -223,6 +224,16 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
 
         ui->previewContainer->preview(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
 
+        // Build tag rect overlays and push to the preview container
+        QList<QPair<QRectF, QColor>> tagRects;
+        for (Tag* tag : *itemAsTaggedFile->tags()) {
+            auto r = itemAsTaggedFile->tagRect(tag);
+            if (r.has_value())
+                tagRects.append({r.value(), tag->tagFamily->getColor()});
+        }
+        ui->previewContainer->setTagRects(tagRects);
+        ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
+
         // Properties area
         QLocale locale = QLocale::system();
 
@@ -422,6 +433,15 @@ void MainWindow::on_actionFind_Faces_triggered(){
 
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
+}
+
+/*! \brief Shows or hides tag region overlays in the preview when the checkbox is toggled.
+ *
+ * \param state The new checkbox state (Qt::Checked or Qt::Unchecked).
+ */
+void MainWindow::on_showTaggedRegionsCheckbox_stateChanged(int state)
+{
+    ui->previewContainer->setTagRectsVisible(state == Qt::Checked);
 }
 
 /*! \brief Slot for the Quit menu action; closes the main window. */

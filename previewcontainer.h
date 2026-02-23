@@ -1,9 +1,15 @@
 #ifndef PREVIEWCONTAINER_H
 #define PREVIEWCONTAINER_H
 
+#include <QColor>
+#include <QList>
+#include <QPair>
+#include <QRectF>
+#include <QSizeF>
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QImageReader>
+#include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QGraphicsVideoItem>
 
@@ -45,6 +51,22 @@ public:
     /*! \brief Clears the graphics scene, removing any displayed image. */
     void clear();
 
+    /*! \brief Adds normalised bounding-rectangle overlays on top of the current image.
+     *
+     * Each rect is given as normalised coordinates in [0.0, 1.0] relative to the image
+     * dimensions, paired with the colour to draw its outline.  Any previously set
+     * overlays are removed and replaced.
+     *
+     * \param normalizedRects List of (normalised QRectF, QColor) pairs.
+     */
+    void setTagRects(const QList<QPair<QRectF, QColor>> &normalizedRects);
+
+    /*! \brief Shows or hides the tag rectangle overlays without removing them from the scene.
+     *
+     * \param visible True to show overlays, false to hide them.
+     */
+    void setTagRectsVisible(bool visible);
+
 signals:
 
 
@@ -53,6 +75,8 @@ private:
     ZoomableGraphicsView* view = nullptr;
     QMediaPlayer* mediaPlayer = nullptr;
     QGraphicsVideoItem* videoItem = nullptr;
+    QList<QGraphicsItem*> tag_rect_items_;
+    QSizeF image_size_;
     //QAbstractButton* playButton = nullptr;
     //QSlider* positionSlider = nullptr;
 

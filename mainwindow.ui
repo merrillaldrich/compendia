@@ -274,7 +274,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>802</width>
+              <width>761</width>
               <height>64</height>
              </rect>
             </property>
@@ -289,24 +289,31 @@
         <enum>Qt::Orientation::Vertical</enum>
        </property>
        <widget class="QWidget" name="horizontalLayoutWidget_2">
-        <layout class="QHBoxLayout" name="previewLayout">
+        <layout class="QVBoxLayout" name="previewLayout">
          <property name="spacing">
           <number>5</number>
          </property>
          <property name="leftMargin">
-          <number>5</number>
+          <number>2</number>
          </property>
          <property name="topMargin">
-          <number>5</number>
+          <number>2</number>
          </property>
          <property name="rightMargin">
-          <number>5</number>
+          <number>2</number>
          </property>
          <property name="bottomMargin">
-          <number>5</number>
+          <number>2</number>
          </property>
          <item>
           <widget class="PreviewContainer" name="previewContainer" native="true"/>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="showTaggedRegionsCheckbox">
+           <property name="text">
+            <string>Show Tagged Regions</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

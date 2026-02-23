@@ -131,8 +131,14 @@ private slots:
     /*! \brief Advances the save progress bar when a metadata file is written. */
     void on_metadata_saved();
 
-    /*! \brief Runs face detection on the first selected image and displays the result. */
+    /*! \brief Runs face detection on every selected image and stores face regions as tagged rectangles. */
     void on_actionFind_Faces_triggered();
+
+    /*! \brief Shows or hides tag region overlays in the preview when the checkbox is toggled.
+     *
+     * \param state The new checkbox state (Qt::Checked or Qt::Unchecked).
+     */
+    void on_showTaggedRegionsCheckbox_stateChanged(int state);
 
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
