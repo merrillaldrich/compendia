@@ -1,5 +1,9 @@
 #include "variablewidthlineedit.h"
 
+/*! \brief Constructs the line edit and sets an initial minimum width based on font metrics.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 VariableWidthLineEdit::VariableWidthLineEdit(QWidget* parent)
     : QLineEdit(parent) {
     QFontMetrics fm = QFontMetrics(font());
@@ -10,6 +14,10 @@ VariableWidthLineEdit::VariableWidthLineEdit(QWidget* parent)
 
 }
 
+/*! \brief Overrides the Qt base-class key-press handler to resize the widget after each keystroke.
+ *
+ * \param e The key press event.
+ */
 void VariableWidthLineEdit::keyPressEvent(QKeyEvent *e) {
     // Set the width of the text edit to fit at least 3 W characters, or the physical length of the
     // value, plus the room for padding/decoration of the box itself
@@ -20,8 +28,10 @@ void VariableWidthLineEdit::keyPressEvent(QKeyEvent *e) {
 
 }
 
+/*! \brief Returns the minimum size as the size hint so the widget never grows unnecessarily.
+ *
+ * \return The minimum size.
+ */
 QSize VariableWidthLineEdit::sizeHint() const {
     return minimumSize();
 }
-
-

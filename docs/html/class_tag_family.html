@@ -93,13 +93,16 @@ $(function(){initNavTree('class_tag_family.html','','class_tag_family-members');
 </div><!--header-->
 <div class="contents">
 
+<p>Represents a named group of related tags, each with an auto-assigned colour.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="tagfamily_8h_source.html">tagfamily.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for TagFamily:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag_family__inherit__graph.png" border="0" usemap="#a_tag_family_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_tag_family_inherit__map" id="a_tag_family_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,87,107"/>
+<area shape="rect" title="Represents a named group of related tags, each with an auto&#45;assigned colour." alt="" coords="5,80,87,107"/>
 <area shape="rect" title=" " alt="" coords="11,5,81,32"/>
 <area shape="poly" title=" " alt="" coords="48,46,49,80,43,79,44,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for TagFamily:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag_family__coll__graph.png" border="0" usemap="#a_tag_family_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_tag_family_coll__map" id="a_tag_family_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,87,107"/>
+<area shape="rect" title="Represents a named group of related tags, each with an auto&#45;assigned colour." alt="" coords="5,80,87,107"/>
 <area shape="rect" title=" " alt="" coords="11,5,81,32"/>
 <area shape="poly" title=" " alt="" coords="48,46,49,80,43,79,44,50"/>
 </map>
@@ -118,20 +121,34 @@ Collaboration diagram for TagFamily:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a722daa0913c95fd78e08a8cd9040860e" id="r_a722daa0913c95fd78e08a8cd9040860e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a722daa0913c95fd78e08a8cd9040860e">nameChanged</a> ()</td></tr>
+<tr class="memdesc:a722daa0913c95fd78e08a8cd9040860e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the family name is changed via <a class="el" href="#a8cb81c8dd65532fcf6552960fd515608" title="Sets the family name and marks the dirty flag if the name changed.">setName()</a>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a88c3c36aeb7f46ae7b6ad984ccc6fcc7" id="r_a88c3c36aeb7f46ae7b6ad984ccc6fcc7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88c3c36aeb7f46ae7b6ad984ccc6fcc7">TagFamily</a> (QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:a88c3c36aeb7f46ae7b6ad984ccc6fcc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> with an empty name and an auto-assigned colour.  <br /></td></tr>
 <tr class="memitem:ad984137ef12707072c2048bd926636b2" id="r_ad984137ef12707072c2048bd926636b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad984137ef12707072c2048bd926636b2">TagFamily</a> (QString tf, QObject *parent)</td></tr>
+<tr class="memdesc:ad984137ef12707072c2048bd926636b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> with the given name and an auto-assigned colour.  <br /></td></tr>
 <tr class="memitem:a8cb81c8dd65532fcf6552960fd515608" id="r_a8cb81c8dd65532fcf6552960fd515608"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8cb81c8dd65532fcf6552960fd515608">setName</a> (QString tagFamilyName)</td></tr>
+<tr class="memdesc:a8cb81c8dd65532fcf6552960fd515608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the family name and marks the dirty flag if the name changed.  <br /></td></tr>
 <tr class="memitem:a9d344211abfce9b2852e454d98507949" id="r_a9d344211abfce9b2852e454d98507949"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d344211abfce9b2852e454d98507949">getName</a> () const</td></tr>
+<tr class="memdesc:a9d344211abfce9b2852e454d98507949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current family name.  <br /></td></tr>
 <tr class="memitem:add056f5d6128b49387a4923bd3a3198d" id="r_add056f5d6128b49387a4923bd3a3198d"><td class="memItemLeft" align="right" valign="top">QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add056f5d6128b49387a4923bd3a3198d">getColor</a> () const</td></tr>
+<tr class="memdesc:add056f5d6128b49387a4923bd3a3198d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the colour assigned to this family.  <br /></td></tr>
+<tr class="memitem:a523d8565f13ea691c99f74d4389abc2a" id="r_a523d8565f13ea691c99f74d4389abc2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a523d8565f13ea691c99f74d4389abc2a">dirtyFlag</a> () const</td></tr>
+<tr class="memdesc:a523d8565f13ea691c99f74d4389abc2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the family name has been modified since the last save.  <br /></td></tr>
+<tr class="memitem:a7ff45e76026cd5ad9fe7a800009dd5fc" id="r_a7ff45e76026cd5ad9fe7a800009dd5fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ff45e76026cd5ad9fe7a800009dd5fc">clearDirtyFlag</a> ()</td></tr>
+<tr class="memdesc:a7ff45e76026cd5ad9fe7a800009dd5fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the dirty flag after changes have been persisted.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:acf9648243726db04d1233589fea6a7e1" id="r_acf9648243726db04d1233589fea6a7e1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf9648243726db04d1233589fea6a7e1">restartColorSequence</a> ()</td></tr>
+<tr class="memdesc:acf9648243726db04d1233589fea6a7e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the colour-generation sequence back to the starting hue.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents a named group of related tags, each with an auto-assigned colour. </p>
+<p><a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> acts as the conceptual container for one or more <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> objects. Colours are assigned automatically from a rotating hue sequence so that different families are visually distinct. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a88c3c36aeb7f46ae7b6ad984ccc6fcc7" name="a88c3c36aeb7f46ae7b6ad984ccc6fcc7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a88c3c36aeb7f46ae7b6ad984ccc6fcc7">&#9670;&#160;</a></span>TagFamily() <span class="overload">[1/2]</span></h2>
 
@@ -155,6 +172,14 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> with an empty name and an auto-assigned colour. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ad984137ef12707072c2048bd926636b2" name="ad984137ef12707072c2048bd926636b2"></a>
@@ -176,9 +201,57 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Constructs a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> with the given name and an auto-assigned colour. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tf</td><td>The family name string. </td></tr>
+    <tr><td class="paramname">parent</td><td>Qt parent object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a7ff45e76026cd5ad9fe7a800009dd5fc" name="a7ff45e76026cd5ad9fe7a800009dd5fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ff45e76026cd5ad9fe7a800009dd5fc">&#9670;&#160;</a></span>clearDirtyFlag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagFamily::clearDirtyFlag </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clears the dirty flag after changes have been persisted. </p>
+
+</div>
+</div>
+<a id="a523d8565f13ea691c99f74d4389abc2a" name="a523d8565f13ea691c99f74d4389abc2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a523d8565f13ea691c99f74d4389abc2a">&#9670;&#160;</a></span>dirtyFlag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool TagFamily::dirtyFlag </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns whether the family name has been modified since the last save. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the dirty flag is set. </dd></dl>
+
+</div>
+</div>
 <a id="add056f5d6128b49387a4923bd3a3198d" name="add056f5d6128b49387a4923bd3a3198d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#add056f5d6128b49387a4923bd3a3198d">&#9670;&#160;</a></span>getColor()</h2>
 
@@ -193,6 +266,21 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the colour assigned to this family. </p>
+<dl class="section return"><dt>Returns</dt><dd>The family colour. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_family_add056f5d6128b49387a4923bd3a3198d_icgraph.png" border="0" usemap="#aclass_tag_family_add056f5d6128b49387a4923bd3a3198d_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_family_add056f5d6128b49387a4923bd3a3198d_icgraph" id="aclass_tag_family_add056f5d6128b49387a4923bd3a3198d_icgraph">
+<area shape="rect" title="Returns the colour assigned to this family." alt="" coords="244,43,382,69"/>
+<area shape="rect" href="class_tag_family_widget.html#aafc6de5e5fbc7740ad587c6f4199af44" title="Constructs a TagFamilyWidget bound to the given TagFamily." alt="" coords="5,5,196,48"/>
+<area shape="poly" title=" " alt="" coords="226,45,196,43,196,37,231,44"/>
+<area shape="rect" href="class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="24,72,177,99"/>
+<area shape="poly" title=" " alt="" coords="231,67,178,77,177,72,226,68"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -210,6 +298,45 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the current family name. </p>
+<dl class="section return"><dt>Returns</dt><dd>The family name string. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_family_a9d344211abfce9b2852e454d98507949_icgraph.png" border="0" usemap="#aclass_tag_family_a9d344211abfce9b2852e454d98507949_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_family_a9d344211abfce9b2852e454d98507949_icgraph" id="aclass_tag_family_a9d344211abfce9b2852e454d98507949_icgraph">
+<area shape="rect" title="Returns the current family name." alt="" coords="697,241,840,268"/>
+<area shape="rect" href="class_luminism_core.html#ad136cbd828e921887cd0e766cec7aca3" title="Creates or retrieves a tag family in the library by name." alt="" coords="464,48,638,91"/>
+<area shape="poly" title=" " alt="" coords="744,228,702,182,648,130,594,94,595,89,651,126,706,178,750,230"/>
+<area shape="rect" href="class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="475,140,627,167"/>
+<area shape="poly" title=" " alt="" coords="735,231,695,206,648,181,618,170,618,165,650,176,698,202,740,232"/>
+<area shape="rect" href="class_luminism_core.html#ab1bfb52f20623c4aaca07a3ddda3a513" title="Retrieve a tag family from the library by name." alt="" coords="456,191,647,217"/>
+<area shape="poly" title=" " alt="" coords="690,237,612,221,612,215,696,237"/>
+<area shape="rect" href="class_tag_widget.html#af7a7bc637053188b7106dba0e533f20e" title="Overrides the Qt base&#45;class mouse&#45;move handler to initiate a drag operation." alt="" coords="453,241,649,268"/>
+<area shape="poly" title=" " alt="" coords="679,255,650,257,650,252,684,254"/>
+<area shape="rect" href="tagfamily_8cpp.html#a135f021827fb1e5886707e355e28ca18" title="Serialises a TagFamily&#39;s name to a QDataStream for drag&#45;and&#45;drop transfer." alt="" coords="509,292,593,319"/>
+<area shape="poly" title=" " alt="" coords="696,272,594,298,593,293,690,273"/>
+<area shape="rect" href="class_tag.html#ac573654c99464b6f22d53af4cd12be8c" title="Equality operator comparing tag name and family name." alt="" coords="494,343,608,369"/>
+<area shape="poly" title=" " alt="" coords="740,277,698,307,650,333,609,347,608,342,648,328,695,303,735,279"/>
+<area shape="rect" href="class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="456,393,647,420"/>
+<area shape="poly" title=" " alt="" coords="752,280,710,334,682,361,651,384,625,395,624,390,648,379,679,357,706,330,747,282"/>
+<area shape="rect" href="class_luminism_core.html#a1c32ba0f603caecb8cc8d52233f3603b" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="200,5,394,32"/>
+<area shape="poly" title=" " alt="" coords="446,50,368,35,367,30,451,48"/>
+<area shape="rect" href="class_tag_family_widget.html#a1b322fec8851b3248f2abe24e426c6c4" title="Commits the edited family name and switches back to read mode." alt="" coords="210,56,384,83"/>
+<area shape="poly" title=" " alt="" coords="446,70,385,72,384,67,451,68"/>
+<area shape="rect" href="class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="5,5,141,32"/>
+<area shape="poly" title=" " alt="" coords="182,20,143,21,140,16,186,17"/>
+<area shape="rect" href="class_luminism_core.html#acf6b3ddfa22ee738d40c7304edff0ce3" title="Applies the tag identified by a TagSet to a specific file." alt="" coords="214,107,380,133"/>
+<area shape="poly" title=" " alt="" coords="457,142,380,133,380,128,462,141"/>
+<area shape="rect" href="class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="232,157,362,200"/>
+<area shape="poly" title=" " alt="" coords="457,164,363,175,362,170,462,161"/>
+<area shape="rect" href="class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="213,224,380,267"/>
+<area shape="poly" title=" " alt="" coords="467,173,454,181,430,197,406,214,379,226,377,221,404,210,427,193,452,176,472,171"/>
+<area shape="rect" href="class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="189,393,405,420"/>
+<area shape="poly" title=" " alt="" coords="437,407,406,409,405,404,442,407"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -236,6 +363,22 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Emitted when the family name is changed via <a class="el" href="#a8cb81c8dd65532fcf6552960fd515608" title="Sets the family name and marks the dirty flag if the name changed.">setName()</a>. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_family_a722daa0913c95fd78e08a8cd9040860e_icgraph.png" border="0" usemap="#aclass_tag_family_a722daa0913c95fd78e08a8cd9040860e_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_family_a722daa0913c95fd78e08a8cd9040860e_icgraph" id="aclass_tag_family_a722daa0913c95fd78e08a8cd9040860e_icgraph">
+<area shape="rect" title="Emitted when the family name is changed via setName()." alt="" coords="376,35,549,61"/>
+<area shape="rect" href="class_tag_family.html#a8cb81c8dd65532fcf6552960fd515608" title="Sets the family name and marks the dirty flag if the name changed." alt="" coords="162,5,304,32"/>
+<area shape="poly" title=" " alt="" coords="358,35,305,30,305,25,363,35"/>
+<area shape="rect" href="class_tag_family_widget.html#aafc6de5e5fbc7740ad587c6f4199af44" title="Constructs a TagFamilyWidget bound to the given TagFamily." alt="" coords="138,56,328,99"/>
+<area shape="poly" title=" " alt="" coords="363,61,329,68,328,63,358,61"/>
+<area shape="rect" href="tagfamily_8cpp.html#afdfd98b759c396c438841712c3eb57a5" title="Deserialises a TagFamily&#39;s name from a QDataStream during drag&#45;and&#45;drop." alt="" coords="5,5,90,32"/>
+<area shape="poly" title=" " alt="" coords="144,20,90,21,89,16,149,17"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="acf9648243726db04d1233589fea6a7e1" name="acf9648243726db04d1233589fea6a7e1"></a>
@@ -261,6 +404,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Resets the colour-generation sequence back to the starting hue. </p>
+
 </div>
 </div>
 <a id="a8cb81c8dd65532fcf6552960fd515608" name="a8cb81c8dd65532fcf6552960fd515608"></a>
@@ -277,6 +422,34 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the family name and marks the dirty flag if the name changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagFamilyName</td><td>The new name for this family. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_family_a8cb81c8dd65532fcf6552960fd515608_cgraph.png" border="0" usemap="#aclass_tag_family_a8cb81c8dd65532fcf6552960fd515608_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_family_a8cb81c8dd65532fcf6552960fd515608_cgraph" id="aclass_tag_family_a8cb81c8dd65532fcf6552960fd515608_cgraph">
+<area shape="rect" title="Sets the family name and marks the dirty flag if the name changed." alt="" coords="5,5,148,32"/>
+<area shape="rect" href="class_tag_family.html#a722daa0913c95fd78e08a8cd9040860e" title="Emitted when the family name is changed via setName()." alt="" coords="196,5,369,32"/>
+<area shape="poly" title=" " alt="" coords="148,16,183,19,177,19,148,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_family_a8cb81c8dd65532fcf6552960fd515608_icgraph.png" border="0" usemap="#aclass_tag_family_a8cb81c8dd65532fcf6552960fd515608_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_family_a8cb81c8dd65532fcf6552960fd515608_icgraph" id="aclass_tag_family_a8cb81c8dd65532fcf6552960fd515608_icgraph">
+<area shape="rect" title="Sets the family name and marks the dirty flag if the name changed." alt="" coords="138,5,280,32"/>
+<area shape="rect" href="tagfamily_8cpp.html#afdfd98b759c396c438841712c3eb57a5" title="Deserialises a TagFamily&#39;s name from a QDataStream during drag&#45;and&#45;drop." alt="" coords="5,5,90,32"/>
+<area shape="poly" title=" " alt="" coords="120,19,90,21,90,16,125,18"/>
+</map>
+</div>
 
 </div>
 </div>

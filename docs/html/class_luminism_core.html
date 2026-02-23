@@ -93,13 +93,16 @@ $(function(){initNavTree('class_luminism_core.html','','class_luminism_core-memb
 </div><!--header-->
 <div class="contents">
 
+<p>Central controller that owns all application data and business logic.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="luminismcore_8h_source.html">luminismcore.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for LuminismCore:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_luminism_core__inherit__graph.png" border="0" usemap="#a_luminism_core_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_luminism_core_inherit__map" id="a_luminism_core_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,111,107"/>
+<area shape="rect" title="Central controller that owns all application data and business logic." alt="" coords="5,80,111,107"/>
 <area shape="rect" title=" " alt="" coords="23,5,93,32"/>
 <area shape="poly" title=" " alt="" coords="60,46,61,80,55,79,56,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for LuminismCore:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_luminism_core__coll__graph.png" border="0" usemap="#a_luminism_core_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_luminism_core_coll__map" id="a_luminism_core_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,111,107"/>
+<area shape="rect" title="Central controller that owns all application data and business logic." alt="" coords="5,80,111,107"/>
 <area shape="rect" title=" " alt="" coords="23,5,93,32"/>
 <area shape="poly" title=" " alt="" coords="60,46,61,80,55,79,56,50"/>
 </map>
@@ -118,46 +121,82 @@ Collaboration diagram for LuminismCore:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-slots" class="groupheader"><a id="pub-slots" name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr class="memitem:a574cd1e6d24ad77fc8f5c92a4430ef24" id="r_a574cd1e6d24ad77fc8f5c92a4430ef24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a574cd1e6d24ad77fc8f5c92a4430ef24">ensureUiFlushTimerRunning</a> ()</td></tr>
+<tr class="memdesc:a574cd1e6d24ad77fc8f5c92a4430ef24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the UI flush timer if it is not already running.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:ad935634d9d59823babd5df1ccea851ab" id="r_ad935634d9d59823babd5df1ccea851ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad935634d9d59823babd5df1ccea851ab">iconUpdated</a> ()</td></tr>
+<tr class="memdesc:ad935634d9d59823babd5df1ccea851ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted each time a thumbnail icon is applied to the model.  <br /></td></tr>
 <tr class="memitem:a76277bedc09c6d3fa112620cad940151" id="r_a76277bedc09c6d3fa112620cad940151"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76277bedc09c6d3fa112620cad940151">metadataSaved</a> ()</td></tr>
+<tr class="memdesc:a76277bedc09c6d3fa112620cad940151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted each time a sidecar metadata file is written successfully.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3934fffde12ddceb6394a338b76a9021" id="r_a3934fffde12ddceb6394a338b76a9021"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3934fffde12ddceb6394a338b76a9021">LuminismCore</a> (QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:a3934fffde12ddceb6394a338b76a9021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs <a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a> and initialises empty model and tag-library containers.  <br /></td></tr>
 <tr class="memitem:a5ee748e28577573181f5a442a71e2f29" id="r_a5ee748e28577573181f5a442a71e2f29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ee748e28577573181f5a442a71e2f29">setRootDirectory</a> (QString path)</td></tr>
+<tr class="memdesc:a5ee748e28577573181f5a442a71e2f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the root directory path and immediately loads it.  <br /></td></tr>
 <tr class="memitem:a797e7ab9f7b0c18348eb182c08abb980" id="r_a797e7ab9f7b0c18348eb182c08abb980"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a797e7ab9f7b0c18348eb182c08abb980">loadRootDirectory</a> ()</td></tr>
+<tr class="memdesc:a797e7ab9f7b0c18348eb182c08abb980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all existing data and reloads files from the current root directory.  <br /></td></tr>
 <tr class="memitem:a7d3911b03d851bc2111456b424d8e8c9" id="r_a7d3911b03d851bc2111456b424d8e8c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d3911b03d851bc2111456b424d8e8c9">containsFiles</a> ()</td></tr>
+<tr class="memdesc:a7d3911b03d851bc2111456b424d8e8c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the model currently contains at least one file.  <br /></td></tr>
 <tr class="memitem:ab45cd00fe04fbc92f6bd6c67b3fd6e66" id="r_ab45cd00fe04fbc92f6bd6c67b3fd6e66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab45cd00fe04fbc92f6bd6c67b3fd6e66">addFile</a> (QFileInfo fileInfo)</td></tr>
+<tr class="memdesc:ab45cd00fe04fbc92f6bd6c67b3fd6e66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a file to the model with no tags.  <br /></td></tr>
 <tr class="memitem:ace04e0d11d898ab69a5821c3e2be5fbf" id="r_ace04e0d11d898ab69a5821c3e2be5fbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace04e0d11d898ab69a5821c3e2be5fbf">addFile</a> (QFileInfo fileInfo, QJsonObject tagsJson)</td></tr>
-<tr class="memitem:a1964edb29637a9fd394fbaf81e5dcab2" id="r_a1964edb29637a9fd394fbaf81e5dcab2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1964edb29637a9fd394fbaf81e5dcab2">addFile</a> (QFileInfo fileInfo, QList&lt; <a class="el" href="class_tag_set.html">TagSet</a> &gt; tags)</td></tr>
-<tr class="memitem:a4dcc0a311c94af1c634b791224acdfe1" id="r_a4dcc0a311c94af1c634b791224acdfe1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dcc0a311c94af1c634b791224acdfe1">populateIcons</a> ()</td></tr>
+<tr class="memdesc:ace04e0d11d898ab69a5821c3e2be5fbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a file to the model, parsing tags and EXIF from a JSON object.  <br /></td></tr>
+<tr class="memitem:a59ad1f5d267dd567fdbcaf7cb71510e4" id="r_a59ad1f5d267dd567fdbcaf7cb71510e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59ad1f5d267dd567fdbcaf7cb71510e4">addFile</a> (QFileInfo fileInfo, QList&lt; <a class="el" href="class_tag_set.html">TagSet</a> &gt; tags, QMap&lt; QString, QString &gt; initialExif={})</td></tr>
+<tr class="memdesc:a59ad1f5d267dd567fdbcaf7cb71510e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a file to the model with an explicit tag list and optional initial EXIF map.  <br /></td></tr>
+<tr class="memitem:a4145e9c6809094544c45f8a3a2fcf180" id="r_a4145e9c6809094544c45f8a3a2fcf180"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4145e9c6809094544c45f8a3a2fcf180">backfillMetadata</a> ()</td></tr>
+<tr class="memdesc:a4145e9c6809094544c45f8a3a2fcf180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Launches background thumbnail and EXIF generation for all files in the model.  <br /></td></tr>
 <tr class="memitem:a7c0abeb7e6ddf61af205da0e435cb5cc" id="r_a7c0abeb7e6ddf61af205da0e435cb5cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c0abeb7e6ddf61af205da0e435cb5cc">writeFileMetadata</a> ()</td></tr>
+<tr class="memdesc:a7c0abeb7e6ddf61af205da0e435cb5cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes JSON sidecar files for every file with unsaved changes.  <br /></td></tr>
 <tr class="memitem:a92ca175522004a3fa53f458f773fb97c" id="r_a92ca175522004a3fa53f458f773fb97c"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92ca175522004a3fa53f458f773fb97c">getLibraryTags</a> ()</td></tr>
+<tr class="memdesc:a92ca175522004a3fa53f458f773fb97c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the complete tag library.  <br /></td></tr>
 <tr class="memitem:a0ce8ff76fc0457058162381e4bf4331f" id="r_a0ce8ff76fc0457058162381e4bf4331f"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ce8ff76fc0457058162381e4bf4331f">getAssignedTags</a> ()</td></tr>
+<tr class="memdesc:a0ce8ff76fc0457058162381e4bf4331f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a new set of tags that are assigned to at least one file.  <br /></td></tr>
 <tr class="memitem:ab94d6cae69aa49c88e5c0df6d06d01ba" id="r_ab94d6cae69aa49c88e5c0df6d06d01ba"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab94d6cae69aa49c88e5c0df6d06d01ba">getAssignedTags_FilteredFiles</a> ()</td></tr>
+<tr class="memdesc:ab94d6cae69aa49c88e5c0df6d06d01ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a new set of tags assigned to any currently visible (filtered) file.  <br /></td></tr>
 <tr class="memitem:a72a92192e4a842f8b2896cdfc1d00956" id="r_a72a92192e4a842f8b2896cdfc1d00956"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72a92192e4a842f8b2896cdfc1d00956">getFilterTags</a> ()</td></tr>
+<tr class="memdesc:a72a92192e4a842f8b2896cdfc1d00956"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the set of tags currently active as filters.  <br /></td></tr>
 <tr class="memitem:ab3abeb957ed6015b509e1022568377de" id="r_ab3abeb957ed6015b509e1022568377de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tag.html">Tag</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab3abeb957ed6015b509e1022568377de">getTag</a> (QString tagFamilyName, QString tagName)</td></tr>
+<tr class="memdesc:ab3abeb957ed6015b509e1022568377de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a tag from the library by name.  <br /></td></tr>
 <tr class="memitem:ab1bfb52f20623c4aaca07a3ddda3a513" id="r_ab1bfb52f20623c4aaca07a3ddda3a513"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tag_family.html">TagFamily</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1bfb52f20623c4aaca07a3ddda3a513">getTagFamily</a> (QString tagFamilyName)</td></tr>
+<tr class="memdesc:ab1bfb52f20623c4aaca07a3ddda3a513"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a tag family from the library by name.  <br /></td></tr>
 <tr class="memitem:a1c32ba0f603caecb8cc8d52233f3603b" id="r_a1c32ba0f603caecb8cc8d52233f3603b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tag.html">Tag</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c32ba0f603caecb8cc8d52233f3603b">addLibraryTag</a> (QString tagFamily, QString tagName)</td></tr>
+<tr class="memdesc:a1c32ba0f603caecb8cc8d52233f3603b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates or retrieves a tag in the library by family name and tag name.  <br /></td></tr>
 <tr class="memitem:aa9cc9a4251c66e30d65f6d49ff8d3ce2" id="r_aa9cc9a4251c66e30d65f6d49ff8d3ce2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9cc9a4251c66e30d65f6d49ff8d3ce2">addLibraryTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:aa9cc9a4251c66e30d65f6d49ff8d3ce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an existing <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to the library if it is not already present.  <br /></td></tr>
 <tr class="memitem:ad136cbd828e921887cd0e766cec7aca3" id="r_ad136cbd828e921887cd0e766cec7aca3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tag_family.html">TagFamily</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad136cbd828e921887cd0e766cec7aca3">addLibraryTagFamily</a> (QString tagFamilyName)</td></tr>
+<tr class="memdesc:ad136cbd828e921887cd0e766cec7aca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates or retrieves a tag family in the library by name.  <br /></td></tr>
 <tr class="memitem:a2321522660ecc253186b31a78962d382" id="r_a2321522660ecc253186b31a78962d382"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2321522660ecc253186b31a78962d382">addLibraryTagFamily</a> (<a class="el" href="class_tag_family.html">TagFamily</a> *tagFamily)</td></tr>
+<tr class="memdesc:a2321522660ecc253186b31a78962d382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an existing <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> pointer to the library if not already present.  <br /></td></tr>
 <tr class="memitem:a9fe93be3e6f05b1d8901f307f09a0880" id="r_a9fe93be3e6f05b1d8901f307f09a0880"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9fe93be3e6f05b1d8901f307f09a0880">applyTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:a9fe93be3e6f05b1d8901f307f09a0880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a tag to all files currently visible in the filtered file list.  <br /></td></tr>
 <tr class="memitem:acf6b3ddfa22ee738d40c7304edff0ce3" id="r_acf6b3ddfa22ee738d40c7304edff0ce3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf6b3ddfa22ee738d40c7304edff0ce3">applyTag</a> (<a class="el" href="class_tagged_file.html">TaggedFile</a> *file, <a class="el" href="class_tag_set.html">TagSet</a> tagSet)</td></tr>
+<tr class="memdesc:acf6b3ddfa22ee738d40c7304edff0ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the tag identified by a <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name.">TagSet</a> to a specific file.  <br /></td></tr>
 <tr class="memitem:afcaca78856376adf435f53370ad21c79" id="r_afcaca78856376adf435f53370ad21c79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afcaca78856376adf435f53370ad21c79">unapplyTag</a> (<a class="el" href="class_tagged_file.html">TaggedFile</a> *file, <a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:afcaca78856376adf435f53370ad21c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from a specific file.  <br /></td></tr>
 <tr class="memitem:a9ea5b72a3da4d89678635d1ea8972a03" id="r_a9ea5b72a3da4d89678635d1ea8972a03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ea5b72a3da4d89678635d1ea8972a03">unapplyTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:a9ea5b72a3da4d89678635d1ea8972a03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from all files currently visible in the filtered file list.  <br /></td></tr>
 <tr class="memitem:aed94dc1d19284de5297c7af2aa3e998a" id="r_aed94dc1d19284de5297c7af2aa3e998a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed94dc1d19284de5297c7af2aa3e998a">setFileNameFilter</a> (QString filterText)</td></tr>
+<tr class="memdesc:aed94dc1d19284de5297c7af2aa3e998a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the filename substring filter on the proxy model.  <br /></td></tr>
 <tr class="memitem:a311e4b07abafcd8e245026cff4470a10" id="r_a311e4b07abafcd8e245026cff4470a10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a311e4b07abafcd8e245026cff4470a10">setFolderFilter</a> (QString filterText)</td></tr>
+<tr class="memdesc:a311e4b07abafcd8e245026cff4470a10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the folder path substring filter on the proxy model.  <br /></td></tr>
 <tr class="memitem:a568072953f671155a65d020732277e78" id="r_a568072953f671155a65d020732277e78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a568072953f671155a65d020732277e78">addTagFilter</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:a568072953f671155a65d020732277e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a tag to the active tag filter set.  <br /></td></tr>
 <tr class="memitem:a4372312da59031b44ef885ffaed656d1" id="r_a4372312da59031b44ef885ffaed656d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4372312da59031b44ef885ffaed656d1">removeTagFilter</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:a4372312da59031b44ef885ffaed656d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from the active tag filter set.  <br /></td></tr>
 <tr class="memitem:abde1217c9f067c103db0d1f903880a9c" id="r_abde1217c9f067c103db0d1f903880a9c"><td class="memItemLeft" align="right" valign="top">QStandardItemModel *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abde1217c9f067c103db0d1f903880a9c">getItemModel</a> ()</td></tr>
+<tr class="memdesc:abde1217c9f067c103db0d1f903880a9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the underlying QStandardItemModel containing all file items.  <br /></td></tr>
 <tr class="memitem:affb257e3d695377774c5fbb6531cbc32" id="r_affb257e3d695377774c5fbb6531cbc32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_filter_proxy_model.html">FilterProxyModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#affb257e3d695377774c5fbb6531cbc32">getItemModelProxy</a> ()</td></tr>
+<tr class="memdesc:affb257e3d695377774c5fbb6531cbc32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_filter_proxy_model.html" title="Proxy model that filters the tagged-file list by name, folder, and tags.">FilterProxyModel</a> used by the file list view.  <br /></td></tr>
 <tr class="memitem:ab6241f20ee49b0eb237ad9871b81a052" id="r_ab6241f20ee49b0eb237ad9871b81a052"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="class_tag_set.html">TagSet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6241f20ee49b0eb237ad9871b81a052">parseTagJson</a> (QJsonObject tagsJson)</td></tr>
+<tr class="memdesc:ab6241f20ee49b0eb237ad9871b81a052"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a JSON object of tag-family to tag-name arrays into a <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name.">TagSet</a> list.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Central controller that owns all application data and business logic. </p>
+<p><a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a> manages the file list model, the tag library, and coordinates asynchronous thumbnail generation with a timer-driven flush mechanism. <a class="el" href="class_main_window.html" title="The application&#39;s main window, wiring UI widgets to LuminismCore operations.">MainWindow</a> holds a single instance of this class and delegates all data operations to it. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3934fffde12ddceb6394a338b76a9021" name="a3934fffde12ddceb6394a338b76a9021"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3934fffde12ddceb6394a338b76a9021">&#9670;&#160;</a></span>LuminismCore()</h2>
 
@@ -181,6 +220,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs <a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a> and initialises empty model and tag-library containers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -198,6 +245,38 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Adds a file to the model with no tags. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileInfo</td><td>File-system info for the file to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ab45cd00fe04fbc92f6bd6c67b3fd6e66_cgraph.png" border="0" usemap="#aclass_luminism_core_ab45cd00fe04fbc92f6bd6c67b3fd6e66_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ab45cd00fe04fbc92f6bd6c67b3fd6e66_cgraph" id="aclass_luminism_core_ab45cd00fe04fbc92f6bd6c67b3fd6e66_cgraph">
+<area shape="rect" title="Adds a file to the model with no tags." alt="" coords="5,29,161,56"/>
+<area shape="poly" title=" " alt="" coords="56,28,51,21,55,11,65,5,83,3,102,5,113,14,108,14,100,10,83,8,67,10,59,15,57,20,61,29"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ab45cd00fe04fbc92f6bd6c67b3fd6e66_icgraph.png" border="0" usemap="#aclass_luminism_core_ab45cd00fe04fbc92f6bd6c67b3fd6e66_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ab45cd00fe04fbc92f6bd6c67b3fd6e66_icgraph" id="aclass_luminism_core_ab45cd00fe04fbc92f6bd6c67b3fd6e66_icgraph">
+<area shape="rect" title="Adds a file to the model with no tags." alt="" coords="532,31,687,57"/>
+<area shape="poly" title=" " alt="" coords="649,15,637,12,610,9,585,11,571,16,568,21,575,31,570,29,563,22,568,12,584,6,610,4,638,7,654,16"/>
+<area shape="rect" href="class_luminism_core.html#ace04e0d11d898ab69a5821c3e2be5fbf" title="Adds a file to the model, parsing tags and EXIF from a JSON object." alt="" coords="297,5,452,32"/>
+<area shape="poly" title=" " alt="" coords="514,34,453,30,453,24,519,34"/>
+<area shape="rect" href="class_luminism_core.html#a797e7ab9f7b0c18348eb182c08abb980" title="Clears all existing data and reloads files from the current root directory." alt="" coords="266,56,484,83"/>
+<area shape="poly" title=" " alt="" coords="519,54,484,60,484,55,514,54"/>
+<area shape="rect" href="class_luminism_core.html#a5ee748e28577573181f5a442a71e2f29" title="Sets the root directory path and immediately loads it." alt="" coords="5,56,218,83"/>
+<area shape="poly" title=" " alt="" coords="248,69,218,72,218,67,253,69"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -220,10 +299,32 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Adds a file to the model, parsing tags and EXIF from a JSON object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileInfo</td><td>The file-system info for the file to add. </td></tr>
+    <tr><td class="paramname">tagsJson</td><td>A JSON object containing tag and optional EXIF data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ace04e0d11d898ab69a5821c3e2be5fbf_cgraph.png" border="0" usemap="#aclass_luminism_core_ace04e0d11d898ab69a5821c3e2be5fbf_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ace04e0d11d898ab69a5821c3e2be5fbf_cgraph" id="aclass_luminism_core_ace04e0d11d898ab69a5821c3e2be5fbf_cgraph">
+<area shape="rect" title="Adds a file to the model, parsing tags and EXIF from a JSON object." alt="" coords="5,55,161,81"/>
+<area shape="rect" href="class_luminism_core.html#ab45cd00fe04fbc92f6bd6c67b3fd6e66" title="Adds a file to the model with no tags." alt="" coords="228,29,384,56"/>
+<area shape="poly" title=" " alt="" coords="160,57,215,53,210,54,161,62"/>
+<area shape="rect" href="class_luminism_core.html#ab6241f20ee49b0eb237ad9871b81a052" title="Parses a JSON object of tag&#45;family to tag&#45;name arrays into a TagSet list." alt="" coords="209,80,403,107"/>
+<area shape="poly" title=" " alt="" coords="161,74,196,80,190,81,161,79"/>
+<area shape="poly" title=" " alt="" coords="268,28,261,21,266,11,281,5,306,3,332,5,348,14,343,14,331,10,306,8,282,10,270,15,267,20,273,30"/>
+</map>
+</div>
+
 </div>
 </div>
-<a id="a1964edb29637a9fd394fbaf81e5dcab2" name="a1964edb29637a9fd394fbaf81e5dcab2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1964edb29637a9fd394fbaf81e5dcab2">&#9670;&#160;</a></span>addFile() <span class="overload">[3/3]</span></h2>
+<a id="a59ad1f5d267dd567fdbcaf7cb71510e4" name="a59ad1f5d267dd567fdbcaf7cb71510e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59ad1f5d267dd567fdbcaf7cb71510e4">&#9670;&#160;</a></span>addFile() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,10 +337,37 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QList&lt; <a class="el" href="class_tag_set.html">TagSet</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>tags</em></span>&#160;)</td>
+          <td class="paramtype">QList&lt; <a class="el" href="class_tag_set.html">TagSet</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>tags</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QMap&lt; QString, QString &gt;</td>          <td class="paramname"><span class="paramname"><em>initialExif</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Adds a file to the model with an explicit tag list and optional initial EXIF map. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileInfo</td><td>File-system info for the file to add. </td></tr>
+    <tr><td class="paramname">tags</td><td>List of <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name.">TagSet</a> values describing tags to apply. </td></tr>
+    <tr><td class="paramname">initialExif</td><td>Optional pre-loaded EXIF key-value map. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a59ad1f5d267dd567fdbcaf7cb71510e4_cgraph.png" border="0" usemap="#aclass_luminism_core_a59ad1f5d267dd567fdbcaf7cb71510e4_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a59ad1f5d267dd567fdbcaf7cb71510e4_cgraph" id="aclass_luminism_core_a59ad1f5d267dd567fdbcaf7cb71510e4_cgraph">
+<area shape="rect" title="Adds a file to the model with an explicit tag list and optional initial EXIF map." alt="" coords="5,5,161,32"/>
+<area shape="rect" href="class_tagged_file.html#a0293e71d352a09803da0f5462f2e48ac" title="Sets the EXIF map without marking the file dirty (used during load)." alt="" coords="209,5,366,32"/>
+<area shape="poly" title=" " alt="" coords="161,16,195,19,190,19,161,21"/>
+<area shape="rect" href="class_tagged_file.html#a6bc53d43fb454cb93148835a39da63d8" title="Returns a copy of the EXIF map." alt="" coords="414,5,552,32"/>
+<area shape="poly" title=" " alt="" coords="366,16,401,19,396,19,366,21"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -261,14 +389,49 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create a tag in the library using just its family name and tag name as strings</p>
+
+<p>Creates or retrieves a tag in the library by family name and tag name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tagFamilyName</td><td></td></tr>
-    <tr><td class="paramname">tagName</td><td></td></tr>
+    <tr><td class="paramname">tagFamily</td><td>The name of the family the tag belongs to. </td></tr>
+    <tr><td class="paramname">tagName</td><td>The name of the tag to create or find. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the new or existing <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a>.</dd></dl>
+<p>Create a tag in the library using just its family name and tag name as strings</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagFamilyName</td><td>The name of the family the tag belongs to. </td></tr>
+    <tr><td class="paramname">tagName</td><td>The name of the tag to create or find. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the new or existing <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a>. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a1c32ba0f603caecb8cc8d52233f3603b_cgraph.png" border="0" usemap="#aclass_luminism_core_a1c32ba0f603caecb8cc8d52233f3603b_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a1c32ba0f603caecb8cc8d52233f3603b_cgraph" id="aclass_luminism_core_a1c32ba0f603caecb8cc8d52233f3603b_cgraph">
+<area shape="rect" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="5,43,200,69"/>
+<area shape="rect" href="class_luminism_core.html#ad136cbd828e921887cd0e766cec7aca3" title="Creates or retrieves a tag family in the library by name." alt="" coords="248,5,421,48"/>
+<area shape="poly" title=" " alt="" coords="199,41,235,39,229,40,200,46"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="283,72,386,99"/>
+<area shape="poly" title=" " alt="" coords="200,66,270,77,265,77,200,71"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="469,13,611,40"/>
+<area shape="poly" title=" " alt="" coords="421,24,456,26,451,27,421,29"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a1c32ba0f603caecb8cc8d52233f3603b_icgraph.png" border="0" usemap="#aclass_luminism_core_a1c32ba0f603caecb8cc8d52233f3603b_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a1c32ba0f603caecb8cc8d52233f3603b_icgraph" id="aclass_luminism_core_a1c32ba0f603caecb8cc8d52233f3603b_icgraph">
+<area shape="rect" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="189,5,383,32"/>
+<area shape="rect" href="class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="5,5,141,32"/>
+<area shape="poly" title=" " alt="" coords="170,19,141,21,141,16,176,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -286,10 +449,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Adds an existing <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to the library if it is not already present. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to insert.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Add a tag to the library if it doesn't exist</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tag</td><td></td></tr>
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to insert. </td></tr>
   </table>
   </dd>
 </dl>
@@ -311,6 +482,39 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Creates or retrieves a tag family in the library by name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagFamilyName</td><td>The family name to create or find. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the new or existing <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ad136cbd828e921887cd0e766cec7aca3_cgraph.png" border="0" usemap="#aclass_luminism_core_ad136cbd828e921887cd0e766cec7aca3_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ad136cbd828e921887cd0e766cec7aca3_cgraph" id="aclass_luminism_core_ad136cbd828e921887cd0e766cec7aca3_cgraph">
+<area shape="rect" title="Creates or retrieves a tag family in the library by name." alt="" coords="5,5,179,48"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="227,13,369,40"/>
+<area shape="poly" title=" " alt="" coords="179,24,214,26,209,27,179,29"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ad136cbd828e921887cd0e766cec7aca3_icgraph.png" border="0" usemap="#aclass_luminism_core_ad136cbd828e921887cd0e766cec7aca3_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ad136cbd828e921887cd0e766cec7aca3_icgraph" id="aclass_luminism_core_ad136cbd828e921887cd0e766cec7aca3_icgraph">
+<area shape="rect" title="Creates or retrieves a tag family in the library by name." alt="" coords="431,23,604,65"/>
+<area shape="rect" href="class_luminism_core.html#a1c32ba0f603caecb8cc8d52233f3603b" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="189,5,383,32"/>
+<area shape="poly" title=" " alt="" coords="412,33,384,32,384,27,418,33"/>
+<area shape="rect" href="class_tag_family_widget.html#a1b322fec8851b3248f2abe24e426c6c4" title="Commits the edited family name and switches back to read mode." alt="" coords="199,56,373,83"/>
+<area shape="poly" title=" " alt="" coords="418,55,374,62,373,57,413,55"/>
+<area shape="rect" href="class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="5,5,141,32"/>
+<area shape="poly" title=" " alt="" coords="170,19,141,21,140,16,176,18"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a2321522660ecc253186b31a78962d382" name="a2321522660ecc253186b31a78962d382"></a>
@@ -327,6 +531,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Adds an existing <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> pointer to the library if not already present. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagFamily</td><td>The <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> pointer to insert. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -345,6 +557,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Adds a tag to the active tag filter set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to add to the filter. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a568072953f671155a65d020732277e78_icgraph.png" border="0" usemap="#aclass_luminism_core_a568072953f671155a65d020732277e78_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a568072953f671155a65d020732277e78_icgraph" id="aclass_luminism_core_a568072953f671155a65d020732277e78_icgraph">
+<area shape="rect" title="Adds a tag to the active tag filter set." alt="" coords="184,13,368,40"/>
+<area shape="rect" href="class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="5,5,136,48"/>
+<area shape="poly" title=" " alt="" coords="166,27,136,29,136,24,171,26"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a9fe93be3e6f05b1d8901f307f09a0880" name="a9fe93be3e6f05b1d8901f307f09a0880"></a>
@@ -362,6 +592,36 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Applies a tag to all files currently visible in the filtered file list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to apply. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a9fe93be3e6f05b1d8901f307f09a0880_cgraph.png" border="0" usemap="#aclass_luminism_core_a9fe93be3e6f05b1d8901f307f09a0880_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a9fe93be3e6f05b1d8901f307f09a0880_cgraph" id="aclass_luminism_core_a9fe93be3e6f05b1d8901f307f09a0880_cgraph">
+<area shape="rect" title="Applies a tag to all files currently visible in the filtered file list." alt="" coords="5,5,171,32"/>
+<area shape="rect" href="class_tagged_file.html#abbe4ad626b1573e223002a76f8afdc18" title="Adds a tag to this file and marks the file dirty." alt="" coords="219,5,353,32"/>
+<area shape="poly" title=" " alt="" coords="171,16,206,19,201,19,171,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a9fe93be3e6f05b1d8901f307f09a0880_icgraph.png" border="0" usemap="#aclass_luminism_core_a9fe93be3e6f05b1d8901f307f09a0880_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a9fe93be3e6f05b1d8901f307f09a0880_icgraph" id="aclass_luminism_core_a9fe93be3e6f05b1d8901f307f09a0880_icgraph">
+<area shape="rect" title="Applies a tag to all files currently visible in the filtered file list." alt="" coords="244,43,409,69"/>
+<area shape="rect" href="class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="17,5,184,48"/>
+<area shape="poly" title=" " alt="" coords="226,44,185,40,185,35,231,43"/>
+<area shape="rect" href="class_taggable_list_view.html#a2d9f17879b7b75759d6b4efb14467d85" title="Overrides the Qt base&#45;class handler to apply a dropped tag to the target file(s)." alt="" coords="5,72,196,99"/>
+<area shape="poly" title=" " alt="" coords="226,69,196,76,196,70,231,68"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="acf6b3ddfa22ee738d40c7304edff0ce3" name="acf6b3ddfa22ee738d40c7304edff0ce3"></a>
@@ -373,15 +633,85 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void LuminismCore::applyTag </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_tagged_file.html">TaggedFile</a> *</td>          <td class="paramname"><span class="paramname"><em>file</em></span>, </td>
+          <td class="paramtype"><a class="el" href="class_tagged_file.html">TaggedFile</a> *</td>          <td class="paramname"><span class="paramname"><em>f</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_tag_set.html">TagSet</a></td>          <td class="paramname"><span class="paramname"><em>tagSet</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="class_tag_set.html">TagSet</a></td>          <td class="paramname"><span class="paramname"><em>t</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Applies the tag identified by a <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name.">TagSet</a> to a specific file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>The <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> to tag. </td></tr>
+    <tr><td class="paramname">tagSet</td><td>The <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name.">TagSet</a> identifying the tag to apply.</td></tr>
+    <tr><td class="paramname">f</td><td>The <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> to tag. </td></tr>
+    <tr><td class="paramname">t</td><td>The <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name.">TagSet</a> identifying the tag to apply. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_acf6b3ddfa22ee738d40c7304edff0ce3_cgraph.png" border="0" usemap="#aclass_luminism_core_acf6b3ddfa22ee738d40c7304edff0ce3_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_acf6b3ddfa22ee738d40c7304edff0ce3_cgraph" id="aclass_luminism_core_acf6b3ddfa22ee738d40c7304edff0ce3_cgraph">
+<area shape="rect" title="Applies the tag identified by a TagSet to a specific file." alt="" coords="5,31,171,57"/>
+<area shape="rect" href="class_tagged_file.html#abbe4ad626b1573e223002a76f8afdc18" title="Adds a tag to this file and marks the file dirty." alt="" coords="228,5,362,32"/>
+<area shape="poly" title=" " alt="" coords="171,31,215,28,210,30,172,36"/>
+<area shape="rect" href="class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="219,56,371,83"/>
+<area shape="poly" title=" " alt="" coords="171,51,206,58,201,59,171,57"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="438,31,542,57"/>
+<area shape="poly" title=" " alt="" coords="371,57,426,52,421,53,372,62"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="419,81,561,108"/>
+<area shape="poly" title=" " alt="" coords="371,77,406,84,401,83,371,82"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4145e9c6809094544c45f8a3a2fcf180" name="a4145e9c6809094544c45f8a3a2fcf180"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4145e9c6809094544c45f8a3a2fcf180">&#9670;&#160;</a></span>backfillMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::backfillMetadata </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Launches background thumbnail and EXIF generation for all files in the model. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a4145e9c6809094544c45f8a3a2fcf180_cgraph.png" border="0" usemap="#aclass_luminism_core_a4145e9c6809094544c45f8a3a2fcf180_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a4145e9c6809094544c45f8a3a2fcf180_cgraph" id="aclass_luminism_core_a4145e9c6809094544c45f8a3a2fcf180_cgraph">
+<area shape="rect" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="5,31,214,57"/>
+<area shape="rect" href="class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27" title="Returns a 100&#45;pixel&#45;bounded thumbnail for the given image file." alt="" coords="262,5,448,32"/>
+<area shape="poly" title=" " alt="" coords="214,31,249,29,244,30,215,36"/>
+<area shape="rect" href="class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7" title="Returns a map of EXIF key&#45;value pairs for the given image file." alt="" coords="277,56,433,83"/>
+<area shape="poly" title=" " alt="" coords="214,52,264,60,258,60,214,57"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a4145e9c6809094544c45f8a3a2fcf180_icgraph.png" border="0" usemap="#aclass_luminism_core_a4145e9c6809094544c45f8a3a2fcf180_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a4145e9c6809094544c45f8a3a2fcf180_icgraph" id="aclass_luminism_core_a4145e9c6809094544c45f8a3a2fcf180_icgraph">
+<area shape="rect" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="532,5,740,32"/>
+<area shape="rect" href="class_luminism_core.html#a797e7ab9f7b0c18348eb182c08abb980" title="Clears all existing data and reloads files from the current root directory." alt="" coords="266,5,484,32"/>
+<area shape="poly" title=" " alt="" coords="514,19,484,21,484,16,519,19"/>
+<area shape="rect" href="class_luminism_core.html#a5ee748e28577573181f5a442a71e2f29" title="Sets the root directory path and immediately loads it." alt="" coords="5,5,218,32"/>
+<area shape="poly" title=" " alt="" coords="248,19,218,21,218,16,253,19"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -399,6 +729,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns true if the model currently contains at least one file. </p>
+<dl class="section return"><dt>Returns</dt><dd>True when the model row count is greater than zero. </dd></dl>
 
 </div>
 </div>
@@ -425,6 +758,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Starts the UI flush timer if it is not already running. </p>
+<p>Invoked from background threads via a queued connection so the timer runs on the GUI thread. </p>
+
 </div>
 </div>
 <a id="a0ce8ff76fc0457058162381e4bf4331f" name="a0ce8ff76fc0457058162381e4bf4331f"></a>
@@ -441,6 +777,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns a new set of tags that are assigned to at least one file. </p>
+<dl class="section return"><dt>Returns</dt><dd>Heap-allocated set of assigned <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointers (caller takes ownership). </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a0ce8ff76fc0457058162381e4bf4331f_cgraph.png" border="0" usemap="#aclass_luminism_core_a0ce8ff76fc0457058162381e4bf4331f_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a0ce8ff76fc0457058162381e4bf4331f_cgraph" id="aclass_luminism_core_a0ce8ff76fc0457058162381e4bf4331f_cgraph">
+<area shape="rect" title="Returns a new set of tags that are assigned to at least one file." alt="" coords="5,5,219,32"/>
+<area shape="rect" href="class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="267,5,384,32"/>
+<area shape="poly" title=" " alt="" coords="219,16,254,19,248,19,219,21"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -459,6 +808,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns a new set of tags assigned to any currently visible (filtered) file. </p>
+<dl class="section return"><dt>Returns</dt><dd>Heap-allocated set of <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointers (caller takes ownership). </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ab94d6cae69aa49c88e5c0df6d06d01ba_cgraph.png" border="0" usemap="#aclass_luminism_core_ab94d6cae69aa49c88e5c0df6d06d01ba_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ab94d6cae69aa49c88e5c0df6d06d01ba_cgraph" id="aclass_luminism_core_ab94d6cae69aa49c88e5c0df6d06d01ba_cgraph">
+<area shape="rect" title="Returns a new set of tags assigned to any currently visible (filtered) file." alt="" coords="5,5,191,48"/>
+<area shape="rect" href="class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="239,13,356,40"/>
+<area shape="poly" title=" " alt="" coords="191,24,226,26,220,27,191,29"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a72a92192e4a842f8b2896cdfc1d00956" name="a72a92192e4a842f8b2896cdfc1d00956"></a>
@@ -475,6 +837,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns a pointer to the set of tags currently active as filters. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the proxy model's internal filter tag set. </dd></dl>
 
 </div>
 </div>
@@ -493,6 +858,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the underlying QStandardItemModel containing all file items. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the source item model. </dd></dl>
+
 </div>
 </div>
 <a id="affb257e3d695377774c5fbb6531cbc32" name="affb257e3d695377774c5fbb6531cbc32"></a>
@@ -510,6 +878,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the <a class="el" href="class_filter_proxy_model.html" title="Proxy model that filters the tagged-file list by name, folder, and tags.">FilterProxyModel</a> used by the file list view. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the proxy model. </dd></dl>
+
 </div>
 </div>
 <a id="a92ca175522004a3fa53f458f773fb97c" name="a92ca175522004a3fa53f458f773fb97c"></a>
@@ -526,6 +897,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns a pointer to the complete tag library. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the set of all known <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> objects. </dd></dl>
 
 </div>
 </div>
@@ -547,14 +921,51 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieve a tag from the library by name.</p>
+
+<p>Retrieve a tag from the library by name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tagFamilyName</td><td></td></tr>
-    <tr><td class="paramname">tagName</td><td></td></tr>
+    <tr><td class="paramname">tagFamilyName</td><td>The name of the tag family to search within. </td></tr>
+    <tr><td class="paramname">tagName</td><td>The tag name to find. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the matching <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a>, or nullptr if not found.</dd></dl>
+<p>Retrieve a tag from the library by name.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagFamilyName</td><td>The name of the tag family to search within. </td></tr>
+    <tr><td class="paramname">tagName</td><td>The tag name to find. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the matching <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a>, or nullptr if not found. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ab3abeb957ed6015b509e1022568377de_cgraph.png" border="0" usemap="#aclass_luminism_core_ab3abeb957ed6015b509e1022568377de_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ab3abeb957ed6015b509e1022568377de_cgraph" id="aclass_luminism_core_ab3abeb957ed6015b509e1022568377de_cgraph">
+<area shape="rect" title="Retrieve a tag from the library by name." alt="" coords="5,31,158,57"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="225,5,328,32"/>
+<area shape="poly" title=" " alt="" coords="157,32,212,27,207,28,158,37"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="206,56,348,83"/>
+<area shape="poly" title=" " alt="" coords="158,51,193,58,188,58,158,57"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ab3abeb957ed6015b509e1022568377de_icgraph.png" border="0" usemap="#aclass_luminism_core_ab3abeb957ed6015b509e1022568377de_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ab3abeb957ed6015b509e1022568377de_icgraph" id="aclass_luminism_core_ab3abeb957ed6015b509e1022568377de_icgraph">
+<area shape="rect" title="Retrieve a tag from the library by name." alt="" coords="221,64,373,91"/>
+<area shape="rect" href="class_luminism_core.html#acf6b3ddfa22ee738d40c7304edff0ce3" title="Applies the tag identified by a TagSet to a specific file." alt="" coords="6,5,172,32"/>
+<area shape="poly" title=" " alt="" coords="230,61,139,35,139,30,234,58"/>
+<area shape="rect" href="class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="24,56,154,99"/>
+<area shape="poly" title=" " alt="" coords="202,78,155,80,154,75,207,76"/>
+<area shape="rect" href="class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,123,173,165"/>
+<area shape="poly" title=" " alt="" coords="241,95,159,125,157,119,235,97"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -572,13 +983,33 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieve a tag family from the library by name.</p>
+
+<p>Retrieve a tag family from the library by name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tagFamilyName</td><td></td></tr>
+    <tr><td class="paramname">tagFamilyName</td><td>The family name to find. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the matching <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>, or nullptr if not found.</dd></dl>
+<p>Retrieve a tag family from the library by name.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagFamilyName</td><td>The family name to find. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the matching <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>, or nullptr if not found. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ab1bfb52f20623c4aaca07a3ddda3a513_cgraph.png" border="0" usemap="#aclass_luminism_core_ab1bfb52f20623c4aaca07a3ddda3a513_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ab1bfb52f20623c4aaca07a3ddda3a513_cgraph" id="aclass_luminism_core_ab1bfb52f20623c4aaca07a3ddda3a513_cgraph">
+<area shape="rect" title="Retrieve a tag family from the library by name." alt="" coords="5,5,197,32"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="245,5,387,32"/>
+<area shape="poly" title=" " alt="" coords="197,16,232,19,227,19,197,21"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -605,6 +1036,19 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Emitted each time a thumbnail icon is applied to the model. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ad935634d9d59823babd5df1ccea851ab_icgraph.png" border="0" usemap="#aclass_luminism_core_ad935634d9d59823babd5df1ccea851ab_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ad935634d9d59823babd5df1ccea851ab_icgraph" id="aclass_luminism_core_ad935634d9d59823babd5df1ccea851ab_icgraph">
+<area shape="rect" title="Emitted each time a thumbnail icon is applied to the model." alt="" coords="233,29,419,56"/>
+<area shape="rect" href="class_main_window.html#a996c5a2b6f77944776856f08ec30858d" title="Constructs the main window, sets up layouts, status bar, and default pane sizes." alt="" coords="5,29,185,56"/>
+<area shape="poly" title=" " alt="" coords="215,43,185,45,185,40,220,43"/>
+<area shape="poly" title=" " alt="" coords="134,15,122,10,95,8,71,10,58,15,54,20,61,29,56,29,49,21,54,11,70,5,95,3,123,5,139,14"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a797e7ab9f7b0c18348eb182c08abb980" name="a797e7ab9f7b0c18348eb182c08abb980"></a>
@@ -621,6 +1065,35 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Clears all existing data and reloads files from the current root directory. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a797e7ab9f7b0c18348eb182c08abb980_cgraph.png" border="0" usemap="#aclass_luminism_core_a797e7ab9f7b0c18348eb182c08abb980_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a797e7ab9f7b0c18348eb182c08abb980_cgraph" id="aclass_luminism_core_a797e7ab9f7b0c18348eb182c08abb980_cgraph">
+<area shape="rect" title="Clears all existing data and reloads files from the current root directory." alt="" coords="5,55,224,81"/>
+<area shape="rect" href="class_luminism_core.html#ab45cd00fe04fbc92f6bd6c67b3fd6e66" title="Adds a file to the model with no tags." alt="" coords="298,29,454,56"/>
+<area shape="poly" title=" " alt="" coords="224,55,285,51,280,52,224,60"/>
+<area shape="rect" href="class_luminism_core.html#a4145e9c6809094544c45f8a3a2fcf180" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="272,80,480,107"/>
+<area shape="poly" title=" " alt="" coords="224,76,259,81,254,82,224,81"/>
+<area shape="poly" title=" " alt="" coords="334,28,327,21,332,11,349,5,376,3,405,5,422,15,417,14,404,10,376,8,350,10,336,15,333,20,339,30"/>
+<area shape="rect" href="class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27" title="Returns a 100&#45;pixel&#45;bounded thumbnail for the given image file." alt="" coords="528,55,714,81"/>
+<area shape="poly" title=" " alt="" coords="480,80,510,79,515,79,481,85"/>
+<area shape="rect" href="class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7" title="Returns a map of EXIF key&#45;value pairs for the given image file." alt="" coords="543,105,699,132"/>
+<area shape="poly" title=" " alt="" coords="481,101,530,109,525,109,480,107"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a797e7ab9f7b0c18348eb182c08abb980_icgraph.png" border="0" usemap="#aclass_luminism_core_a797e7ab9f7b0c18348eb182c08abb980_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a797e7ab9f7b0c18348eb182c08abb980_icgraph" id="aclass_luminism_core_a797e7ab9f7b0c18348eb182c08abb980_icgraph">
+<area shape="rect" title="Clears all existing data and reloads files from the current root directory." alt="" coords="266,5,484,32"/>
+<area shape="rect" href="class_luminism_core.html#a5ee748e28577573181f5a442a71e2f29" title="Sets the root directory path and immediately loads it." alt="" coords="5,5,218,32"/>
+<area shape="poly" title=" " alt="" coords="248,19,218,21,218,16,253,19"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -647,6 +1120,21 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Emitted each time a sidecar metadata file is written successfully. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a76277bedc09c6d3fa112620cad940151_icgraph.png" border="0" usemap="#aclass_luminism_core_a76277bedc09c6d3fa112620cad940151_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a76277bedc09c6d3fa112620cad940151_icgraph" id="aclass_luminism_core_a76277bedc09c6d3fa112620cad940151_icgraph">
+<area shape="rect" title="Emitted each time a sidecar metadata file is written successfully." alt="" coords="270,55,474,81"/>
+<area shape="rect" href="class_main_window.html#a996c5a2b6f77944776856f08ec30858d" title="Constructs the main window, sets up layouts, status bar, and default pane sizes." alt="" coords="24,29,203,56"/>
+<area shape="poly" title=" " alt="" coords="252,57,204,54,204,49,257,56"/>
+<area shape="rect" href="class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,80,222,107"/>
+<area shape="poly" title=" " alt="" coords="251,80,222,85,222,80,257,79"/>
+<area shape="poly" title=" " alt="" coords="157,15,143,10,113,8,86,10,71,15,68,20,75,29,70,29,62,21,68,11,85,5,114,3,145,5,162,14"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="ab6241f20ee49b0eb237ad9871b81a052" name="ab6241f20ee49b0eb237ad9871b81a052"></a>
@@ -664,22 +1152,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Parses a JSON object of tag-family to tag-name arrays into a <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name.">TagSet</a> list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagsJson</td><td>A JSON object mapping family name strings to arrays of tag name strings. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A list of <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name.">TagSet</a> values parsed from the JSON. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_ab6241f20ee49b0eb237ad9871b81a052_icgraph.png" border="0" usemap="#aclass_luminism_core_ab6241f20ee49b0eb237ad9871b81a052_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_ab6241f20ee49b0eb237ad9871b81a052_icgraph" id="aclass_luminism_core_ab6241f20ee49b0eb237ad9871b81a052_icgraph">
+<area shape="rect" title="Parses a JSON object of tag&#45;family to tag&#45;name arrays into a TagSet list." alt="" coords="209,5,403,32"/>
+<area shape="rect" href="class_luminism_core.html#ace04e0d11d898ab69a5821c3e2be5fbf" title="Adds a file to the model, parsing tags and EXIF from a JSON object." alt="" coords="5,5,161,32"/>
+<area shape="poly" title=" " alt="" coords="191,19,161,21,161,16,196,19"/>
+</map>
 </div>
-</div>
-<a id="a4dcc0a311c94af1c634b791224acdfe1" name="a4dcc0a311c94af1c634b791224acdfe1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dcc0a311c94af1c634b791224acdfe1">&#9670;&#160;</a></span>populateIcons()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LuminismCore::populateIcons </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -698,6 +1188,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Removes a tag from the active tag filter set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to remove from the filter. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="aed94dc1d19284de5297c7af2aa3e998a" name="aed94dc1d19284de5297c7af2aa3e998a"></a>
@@ -714,6 +1212,24 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the filename substring filter on the proxy model. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filterText</td><td>The substring to match against file names. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_aed94dc1d19284de5297c7af2aa3e998a_cgraph.png" border="0" usemap="#aclass_luminism_core_aed94dc1d19284de5297c7af2aa3e998a_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_aed94dc1d19284de5297c7af2aa3e998a_cgraph" id="aclass_luminism_core_aed94dc1d19284de5297c7af2aa3e998a_cgraph">
+<area shape="rect" title="Sets the filename substring filter on the proxy model." alt="" coords="5,5,193,48"/>
+<area shape="rect" href="class_filter_proxy_model.html#a4d7c210bd3074ee125fbb2770a5db80b" title="Sets the filename substring filter and re&#45;applies the filter." alt="" coords="241,5,421,48"/>
+<area shape="poly" title=" " alt="" coords="193,24,228,26,223,27,193,29"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -732,6 +1248,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Sets the folder path substring filter on the proxy model. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filterText</td><td>The substring to match against folder paths. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a5ee748e28577573181f5a442a71e2f29" name="a5ee748e28577573181f5a442a71e2f29"></a>
@@ -749,6 +1273,33 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Sets the root directory path and immediately loads it. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>Absolute path to the media folder to load. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a5ee748e28577573181f5a442a71e2f29_cgraph.png" border="0" usemap="#aclass_luminism_core_a5ee748e28577573181f5a442a71e2f29_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a5ee748e28577573181f5a442a71e2f29_cgraph" id="aclass_luminism_core_a5ee748e28577573181f5a442a71e2f29_cgraph">
+<area shape="rect" title="Sets the root directory path and immediately loads it." alt="" coords="5,55,218,81"/>
+<area shape="rect" href="class_luminism_core.html#a797e7ab9f7b0c18348eb182c08abb980" title="Clears all existing data and reloads files from the current root directory." alt="" coords="266,55,484,81"/>
+<area shape="poly" title=" " alt="" coords="218,65,253,68,248,68,218,71"/>
+<area shape="rect" href="class_luminism_core.html#ab45cd00fe04fbc92f6bd6c67b3fd6e66" title="Adds a file to the model with no tags." alt="" coords="558,29,714,56"/>
+<area shape="poly" title=" " alt="" coords="484,55,546,51,541,52,485,60"/>
+<area shape="rect" href="class_luminism_core.html#a4145e9c6809094544c45f8a3a2fcf180" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="532,80,740,107"/>
+<area shape="poly" title=" " alt="" coords="484,76,519,82,514,82,484,81"/>
+<area shape="poly" title=" " alt="" coords="595,28,588,21,593,11,609,5,636,3,666,5,683,15,677,14,664,10,636,8,610,10,596,15,593,20,600,30"/>
+<area shape="rect" href="class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27" title="Returns a 100&#45;pixel&#45;bounded thumbnail for the given image file." alt="" coords="788,55,975,81"/>
+<area shape="poly" title=" " alt="" coords="741,80,770,79,775,79,741,85"/>
+<area shape="rect" href="class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7" title="Returns a map of EXIF key&#45;value pairs for the given image file." alt="" coords="803,105,960,132"/>
+<area shape="poly" title=" " alt="" coords="741,101,790,109,785,109,741,107"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a9ea5b72a3da4d89678635d1ea8972a03" name="a9ea5b72a3da4d89678635d1ea8972a03"></a>
@@ -765,6 +1316,24 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Removes a tag from all files currently visible in the filtered file list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a9ea5b72a3da4d89678635d1ea8972a03_cgraph.png" border="0" usemap="#aclass_luminism_core_a9ea5b72a3da4d89678635d1ea8972a03_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a9ea5b72a3da4d89678635d1ea8972a03_cgraph" id="aclass_luminism_core_a9ea5b72a3da4d89678635d1ea8972a03_cgraph">
+<area shape="rect" title="Removes a tag from all files currently visible in the filtered file list." alt="" coords="5,5,185,32"/>
+<area shape="rect" href="class_tagged_file.html#a1f4a54d6c439d062fbc0144494f44960" title="Removes a tag from this file and marks the file dirty." alt="" coords="233,5,389,32"/>
+<area shape="poly" title=" " alt="" coords="185,16,219,19,214,19,185,21"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -787,6 +1356,25 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Removes a tag from a specific file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>The <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> to remove the tag from. </td></tr>
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_afcaca78856376adf435f53370ad21c79_cgraph.png" border="0" usemap="#aclass_luminism_core_afcaca78856376adf435f53370ad21c79_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_afcaca78856376adf435f53370ad21c79_cgraph" id="aclass_luminism_core_afcaca78856376adf435f53370ad21c79_cgraph">
+<area shape="rect" title="Removes a tag from a specific file." alt="" coords="5,5,185,32"/>
+<area shape="rect" href="class_tagged_file.html#a1f4a54d6c439d062fbc0144494f44960" title="Removes a tag from this file and marks the file dirty." alt="" coords="233,5,389,32"/>
+<area shape="poly" title=" " alt="" coords="185,16,219,19,214,19,185,21"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a7c0abeb7e6ddf61af205da0e435cb5cc" name="a7c0abeb7e6ddf61af205da0e435cb5cc"></a>
@@ -803,6 +1391,28 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Writes JSON sidecar files for every file with unsaved changes. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_luminism_core_a7c0abeb7e6ddf61af205da0e435cb5cc_cgraph.png" border="0" usemap="#aclass_luminism_core_a7c0abeb7e6ddf61af205da0e435cb5cc_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_luminism_core_a7c0abeb7e6ddf61af205da0e435cb5cc_cgraph" id="aclass_luminism_core_a7c0abeb7e6ddf61af205da0e435cb5cc_cgraph">
+<area shape="rect" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,56,222,83"/>
+<area shape="rect" href="class_tagged_file.html#a13484167b27d2d3a20869742d082fd62" title="Returns true if this file has unsaved changes." alt="" coords="301,5,443,32"/>
+<area shape="poly" title=" " alt="" coords="185,53,287,34,283,37,186,58"/>
+<area shape="rect" href="class_luminism_core.html#a76277bedc09c6d3fa112620cad940151" title="Emitted each time a sidecar metadata file is written successfully." alt="" coords="270,56,474,83"/>
+<area shape="poly" title=" " alt="" coords="222,67,257,69,252,70,223,72"/>
+<area shape="rect" href="class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="276,107,468,133"/>
+<area shape="poly" title=" " alt="" coords="185,81,288,102,283,104,185,86"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="542,56,645,83"/>
+<area shape="poly" title=" " alt="" coords="433,103,523,85,529,84,434,109"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="522,107,664,133"/>
+<area shape="poly" title=" " alt="" coords="468,117,509,120,504,120,468,123"/>
+<area shape="rect" href="class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="534,157,652,184"/>
+<area shape="poly" title=" " alt="" coords="434,131,522,154,517,154,433,137"/>
+</map>
+</div>
 
 </div>
 </div>

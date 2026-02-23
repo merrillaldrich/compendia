@@ -1,5 +1,5 @@
 <map id="ExifParser" name="ExifParser">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,80,88,107"/>
+<area shape="rect" id="Node000001" title="Utility class for extracting EXIF metadata from JPEG and HEIF/HEIC image files." alt="" coords="5,80,88,107"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="12,5,81,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="48,46,49,80,44,79,45,50"/>
 </map>

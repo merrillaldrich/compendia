@@ -103,26 +103,28 @@ $(function(){initNavTree('icongenerator_8h_source.html','',''); });
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QDir&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;QDataStream&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;QDebug&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_icon_generator.html">   13</a></span><span class="keyword">class </span><a class="code hl_function" href="class_icon_generator.html#a652a80ddba7d314d790062d65a58d30c">IconGenerator</a> : <span class="keyword">public</span> QObject</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    Q_OBJECT</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_function" href="class_icon_generator.html#a652a80ddba7d314d790062d65a58d30c">IconGenerator</a>(QObject *parent);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">static</span> QImage <a class="code hl_function" href="class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27">generateIcon</a>(<span class="keyword">const</span> QString absoluteFileName);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> saveIconToCache(<span class="keyword">const</span> QString &amp;absoluteFileName, <span class="keyword">const</span> QImage &amp;pict);</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">static</span> QImage loadIconFromCache(<span class="keyword">const</span> QString &amp;absoluteFileName);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>};</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span></div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="class_icon_generator.html">   19</a></span><span class="keyword">class </span><a class="code hl_function" href="class_icon_generator.html#a652a80ddba7d314d790062d65a58d30c">IconGenerator</a> : <span class="keyword">public</span> QObject</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    Q_OBJECT</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_function" href="class_icon_generator.html#a652a80ddba7d314d790062d65a58d30c">IconGenerator</a>(QObject *parent);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">static</span> QImage <a class="code hl_function" href="class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27">generateIcon</a>(<span class="keyword">const</span> QString absoluteFileName);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> saveIconToCache(<span class="keyword">const</span> QString &amp;absoluteFileName, <span class="keyword">const</span> QImage &amp;pict);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">static</span> QImage loadIconFromCache(<span class="keyword">const</span> QString &amp;absoluteFileName);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>};</div>
 </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif </span><span class="comment">// ICONGENERATOR_H</span></div>
-<div class="ttc" id="aclass_icon_generator_html_a652a80ddba7d314d790062d65a58d30c"><div class="ttname"><a href="class_icon_generator.html#a652a80ddba7d314d790062d65a58d30c">IconGenerator::IconGenerator</a></div><div class="ttdeci">IconGenerator(QObject *parent)</div><div class="ttdef"><b>Definition</b> icongenerator.cpp:4</div></div>
-<div class="ttc" id="aclass_icon_generator_html_a7ba8f2daa30729dc5167d0187ba0cf27"><div class="ttname"><a href="class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27">IconGenerator::generateIcon</a></div><div class="ttdeci">static QImage generateIcon(const QString absoluteFileName)</div><div class="ttdef"><b>Definition</b> icongenerator.cpp:9</div></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#endif </span><span class="comment">// ICONGENERATOR_H</span></div>
+<div class="ttc" id="aclass_icon_generator_html_a652a80ddba7d314d790062d65a58d30c"><div class="ttname"><a href="class_icon_generator.html#a652a80ddba7d314d790062d65a58d30c">IconGenerator::IconGenerator</a></div><div class="ttdeci">IconGenerator(QObject *parent)</div><div class="ttdoc">Constructs an IconGenerator.</div><div class="ttdef"><b>Definition</b> icongenerator.cpp:8</div></div>
+<div class="ttc" id="aclass_icon_generator_html_a7ba8f2daa30729dc5167d0187ba0cf27"><div class="ttname"><a href="class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27">IconGenerator::generateIcon</a></div><div class="ttdeci">static QImage generateIcon(const QString absoluteFileName)</div><div class="ttdoc">Returns a 100-pixel-bounded thumbnail for the given image file.</div><div class="ttdef"><b>Definition</b> icongenerator.cpp:21</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

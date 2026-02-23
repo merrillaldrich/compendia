@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['icongenerator_0',['IconGenerator',['../class_icon_generator.html#a652a80ddba7d314d790062d65a58d30c',1,'IconGenerator']]],
-  ['iconupdated_1',['iconUpdated',['../class_luminism_core.html#ad935634d9d59823babd5df1ccea851ab',1,'LuminismCore']]],
-  ['imagewithfaceboxes_2',['imageWithFaceBoxes',['../class_face_recognizer.html#af93df5538e86dfc4d4baf33ea0eeba21',1,'FaceRecognizer']]],
-  ['itemat_3',['itemAt',['../class_flow_layout.html#a14c3661044dd9b97ef0c0a34d0692ce4',1,'FlowLayout']]]
+  ['hasheightforwidth_0',['hasHeightForWidth',['../class_flow_layout.html#a224599955b4bc40e73b615236d9803ee',1,'FlowLayout']]],
+  ['heightforwidth_1',['heightForWidth',['../class_flow_layout.html#a119d89f83aa3f8ccb6e66ed1a125452e',1,'FlowLayout']]],
+  ['horizontalspacing_2',['horizontalSpacing',['../class_flow_layout.html#a05a9929bf2d7749c8d45afe1fc15b27e',1,'FlowLayout']]]
 ];

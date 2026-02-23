@@ -1,5 +1,9 @@
 #include "taggablelistview.h"
 
+/*! \brief Constructs the view and configures it for drop-only drag-and-drop.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 TaggableListView::TaggableListView(QWidget *parent)
     : QListView{parent}
 {
@@ -10,6 +14,10 @@ TaggableListView::TaggableListView(QWidget *parent)
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 }
 
+/*! \brief Overrides the Qt base-class handler to apply a dropped tag to the target file(s).
+ *
+ * \param event The drop event containing the dragged tag data.
+ */
 void TaggableListView::dropEvent(QDropEvent *event) {
     // Map the drop position to a model index
     QModelIndex index = indexAt(event->position().toPoint());
@@ -53,8 +61,11 @@ void TaggableListView::dropEvent(QDropEvent *event) {
     QListView::dropEvent(event);
 }
 
+/*! \brief Overrides the Qt base-class handler to accept tag drag-enter events.
+ *
+ * \param event The drag-enter event to evaluate.
+ */
 void TaggableListView::dragEnterEvent(QDragEnterEvent *event) {
-    //qDebug() << "Drag Enter!";
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
@@ -67,6 +78,10 @@ void TaggableListView::dragEnterEvent(QDragEnterEvent *event) {
     }
 }
 
+/*! \brief Overrides the Qt base-class handler to keep accepting tag drag-move events.
+ *
+ * \param event The drag-move event to evaluate.
+ */
 void TaggableListView::dragMoveEvent(QDragMoveEvent *event) {
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         if (event->source() == this) {

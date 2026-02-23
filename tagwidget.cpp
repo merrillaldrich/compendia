@@ -1,9 +1,18 @@
 #include "tagwidget.h"
 
+/*! \brief Constructs a default, empty TagWidget.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 TagWidget::TagWidget(QWidget *parent)
     : TaggingWidget{parent}
 {}
 
+/*! \brief Constructs a TagWidget bound to the given Tag and styled with its family colour.
+ *
+ * \param tag    The Tag this widget represents.
+ * \param parent Qt parent widget.
+ */
 TagWidget::TagWidget(Tag *tag, QWidget *parent)
     : TaggingWidget{parent}{
     tag_ = tag;
@@ -49,26 +58,29 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
 
     connect(line_edit_, &QLineEdit::editingFinished, this, &TagWidget::onLineEditEditingFinished);
     connect(label_, &ClickableLabel::clicked, this, &TagWidget::onLabelClicked);
-
-
-    //qDebug() << "Size at end of constructor " << this->sizeHint().width();
-
 }
 
+/*! \brief Slot called when the line edit finishes editing; commits the change via endEdit(). */
 void TagWidget::onLineEditEditingFinished(){
     endEdit();
 }
 
+/*! \brief Slot called when the label is clicked; enters inline-edit mode via startEdit().
+ *
+ * \param event The mouse event from the click.
+ */
 void TagWidget::onLabelClicked(QMouseEvent *event){
     qDebug() << "Tag label clicked";
     startEdit();
     event->accept();
 }
 
+/*! \brief Slot called as the user types in the line edit; adjusts the widget width. */
 void TagWidget::onTextEdited(){
     adjustCustomWidth();
 }
 
+/*! \brief Slot called when the close button is clicked; emits deleteRequested(). */
 void TagWidget::onCloseButtonClicked(){
     qDebug() << "Tag close button clicked";
     qDebug() << "Request deletion of tag" << this->tag_->getName();
@@ -76,6 +88,10 @@ void TagWidget::onCloseButtonClicked(){
     emit(deleteRequested(this->tag_));
 }
 
+/*! \brief Overrides the Qt base-class paint handler to draw the coloured rounded-rectangle background.
+ *
+ * \param event The paint event.
+ */
 void TagWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
 
@@ -97,9 +113,8 @@ void TagWidget::paintEvent(QPaintEvent *event) {
     painter.drawRoundedRect(QRect(leftX, topY, rightX, bottomY), cornerRadius, cornerRadius);
 }
 
+/*! \brief Switches the widget into inline-edit mode, showing the line edit. */
 void TagWidget::startEdit(){
-
-    //qDebug() << "Enter tag edit mode";
 
     edit_status_ = "Edit";
     label_->hide();
@@ -109,9 +124,8 @@ void TagWidget::startEdit(){
     line_edit_->setFocus();
 }
 
+/*! \brief Commits the edited name to the Tag and switches back to read mode. */
 void TagWidget::endEdit(){
-
-    //qDebug() << "Leave tag edit mode";
 
     edit_status_ = "Read";
     tag_->setName(line_edit_->text());
@@ -133,6 +147,10 @@ void TagWidget::endEdit(){
     label_->show();
 }
 
+/*! \brief Overrides the Qt base-class mouse-press handler to record the drag start position.
+ *
+ * \param event The mouse press event.
+ */
 void TagWidget::mousePressEvent(QMouseEvent *event){
 
     // To determine if this should be a drag operation or just a click, record the location of the mouse when left button pressed
@@ -144,6 +162,10 @@ void TagWidget::mousePressEvent(QMouseEvent *event){
 
 }
 
+/*! \brief Overrides the Qt base-class mouse-move handler to initiate a drag operation.
+ *
+ * \param event The mouse move event.
+ */
 void TagWidget::mouseMoveEvent(QMouseEvent *event){
 
     // Start a drag, but only if the mouse was moved with the left button pressed
@@ -157,8 +179,6 @@ void TagWidget::mouseMoveEvent(QMouseEvent *event){
     Tag* t = draggedTag->tag_;
     QString tagName = t->getName();
     QString tagFamilyName = t->tagFamily->getName();
-
-    //qDebug() << draggedTag->tag_->tagName;
 
     // Render the dragged widget into an image to show what is draggin'
     QPixmap dragimage = this->grab();
@@ -176,11 +196,9 @@ void TagWidget::mouseMoveEvent(QMouseEvent *event){
     drag->setPixmap(dragimage);
     drag->setHotSpot(event->position().toPoint());
     drag->exec();
-
-    // Do this only if you want to actually move the object on drop. Note this seems to be f'd with by layouts:
-    //draggedTag->move(event->position().toPoint() - drag->hotSpot());
 }
 
+/*! \brief Slot called when the underlying Tag's name changes; updates the label text. */
 void TagWidget::onTagNameChanged(){
     label_->setText(tag_->getName());
     label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
@@ -188,18 +206,31 @@ void TagWidget::onTagNameChanged(){
     emit tagNameChanged(tag_);
 }
 
+/*! \brief Returns the Tag pointer this widget represents.
+ *
+ * \return The associated Tag.
+ */
 Tag* TagWidget::getTag(){
     return tag_;
 }
 
+/*! \brief Returns the preferred size of the widget.
+ *
+ * \return The size hint.
+ */
 QSize TagWidget::sizeHint() const {
     return minimumSize();
 }
 
+/*! \brief Returns the minimum size of the widget.
+ *
+ * \return The minimum size hint.
+ */
 QSize TagWidget::minimumSizeHint() const {
     return minimumSize();
 }
 
+/*! \brief Recalculates and applies the widget width to fit the current label or line-edit text. */
 void TagWidget::adjustCustomWidth(){
     // Set the width of this widget to a custom size based on the tag name, but only if the tag name
     // has a value. Otherwise we need the default width so it doesn't collapse

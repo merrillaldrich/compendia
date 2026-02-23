@@ -1,5 +1,5 @@
 <map id="ClickableLabel::mouseReleaseEvent" name="ClickableLabel::mouseReleaseEvent">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,207,48"/>
-<area shape="rect" id="Node000002" href="$class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e" title=" " alt="" coords="255,13,410,40"/>
+<area shape="rect" id="Node000001" title="Overrides the Qt base&#45;class handler to emit the clicked() signal." alt="" coords="5,5,207,48"/>
+<area shape="rect" id="Node000002" href="$class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e" title="Emitted when the label is released with the mouse button." alt="" coords="255,13,410,40"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,24,241,26,236,27,207,29"/>
 </map>

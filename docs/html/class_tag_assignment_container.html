@@ -93,14 +93,17 @@ $(function(){initNavTree('class_tag_assignment_container.html','','class_tag_ass
 </div><!--header-->
 <div class="contents">
 
+<p><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> container showing tags assigned to the current file selection, accepting tag drops.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="tagassignmentcontainer_8h_source.html">tagassignmentcontainer.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for TagAssignmentContainer:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag_assignment_container__inherit__graph.png" border="0" usemap="#a_tag_assignment_container_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_tag_assignment_container_inherit__map" id="a_tag_assignment_container_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,155,173,181"/>
-<area shape="rect" href="class_tag_container.html" title=" " alt="" coords="40,80,138,107"/>
+<area shape="rect" title="Tag container showing tags assigned to the current file selection, accepting tag drops." alt="" coords="5,155,173,181"/>
+<area shape="rect" href="class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items." alt="" coords="40,80,138,107"/>
 <area shape="poly" title=" " alt="" coords="91,121,91,155,87,153,87,124"/>
 <area shape="rect" title=" " alt="" coords="53,5,125,32"/>
 <area shape="poly" title=" " alt="" coords="90,45,92,80,86,79,88,50"/>
@@ -111,8 +114,8 @@ Collaboration diagram for TagAssignmentContainer:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag_assignment_container__coll__graph.png" border="0" usemap="#a_tag_assignment_container_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_tag_assignment_container_coll__map" id="a_tag_assignment_container_coll__map">
-<area shape="rect" title=" " alt="" coords="5,155,173,181"/>
-<area shape="rect" href="class_tag_container.html" title=" " alt="" coords="40,80,138,107"/>
+<area shape="rect" title="Tag container showing tags assigned to the current file selection, accepting tag drops." alt="" coords="5,155,173,181"/>
+<area shape="rect" href="class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items." alt="" coords="40,80,138,107"/>
 <area shape="poly" title=" " alt="" coords="91,121,91,155,87,153,87,124"/>
 <area shape="rect" title=" " alt="" coords="53,5,125,32"/>
 <area shape="poly" title=" " alt="" coords="90,45,92,80,86,79,88,50"/>
@@ -122,25 +125,38 @@ Collaboration diagram for TagAssignmentContainer:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a50559469a54b9da5d0889cf184d3d830" id="r_a50559469a54b9da5d0889cf184d3d830"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a50559469a54b9da5d0889cf184d3d830">TagAssignmentContainer</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:a50559469a54b9da5d0889cf184d3d830"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty <a class="el" href="class_tag_assignment_container.html" title="Tag container showing tags assigned to the current file selection, accepting tag drops.">TagAssignmentContainer</a>.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_tag_container"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_tag_container')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_tag_container.html">TagContainer</a></td></tr>
 <tr class="memitem:afb444c43d124279f636dcb76b2dcc57d inherit pub_methods_class_tag_container" id="r_afb444c43d124279f636dcb76b2dcc57d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#afb444c43d124279f636dcb76b2dcc57d">TagContainer</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:afb444c43d124279f636dcb76b2dcc57d inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty <a class="el" href="class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items.">TagContainer</a>.  <br /></td></tr>
 <tr class="memitem:a3445dd238a7a7f43cfb10322e8492ca6 inherit pub_methods_class_tag_container" id="r_a3445dd238a7a7f43cfb10322e8492ca6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6">refresh</a> (QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *tags)</td></tr>
+<tr class="memdesc:a3445dd238a7a7f43cfb10322e8492ca6 inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rebuilds the widget hierarchy to display exactly the given set of tags.  <br /></td></tr>
 <tr class="memitem:ad384fe1eaa145f6d34fa4777792412b7 inherit pub_methods_class_tag_container" id="r_ad384fe1eaa145f6d34fa4777792412b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#ad384fe1eaa145f6d34fa4777792412b7">clear</a> ()</td></tr>
+<tr class="memdesc:ad384fe1eaa145f6d34fa4777792412b7 inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all child <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> and <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a> items from the layout.  <br /></td></tr>
 <tr class="memitem:a6e7ec330ab93a0c21ec4e1f0864ad56f inherit pub_methods_class_tag_container" id="r_a6e7ec330ab93a0c21ec4e1f0864ad56f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#a6e7ec330ab93a0c21ec4e1f0864ad56f">onTagDeleteRequested</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:a6e7ec330ab93a0c21ec4e1f0864ad56f inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards a tag-delete request up to the tagDeleteRequested signal.  <br /></td></tr>
 <tr class="memitem:a702b14de4154b65fabee32cd7fbc1c7a inherit pub_methods_class_tag_container" id="r_a702b14de4154b65fabee32cd7fbc1c7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#a702b14de4154b65fabee32cd7fbc1c7a">sort</a> ()</td></tr>
+<tr class="memdesc:a702b14de4154b65fabee32cd7fbc1c7a inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts all <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> children alphabetically by family name, and sorts tags within each family alphabetically by tag name.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aa38bdffa0d58b7a983def087fe0ddd43" id="r_aa38bdffa0d58b7a983def087fe0ddd43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa38bdffa0d58b7a983def087fe0ddd43">dragEnterEvent</a> (QDragEnterEvent *event) override</td></tr>
+<tr class="memdesc:aa38bdffa0d58b7a983def087fe0ddd43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class handler to accept tag drag-enter events.  <br /></td></tr>
 <tr class="memitem:a0109e800c07b54b925e3c81891216496" id="r_a0109e800c07b54b925e3c81891216496"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0109e800c07b54b925e3c81891216496">dragMoveEvent</a> (QDragMoveEvent *event) override</td></tr>
+<tr class="memdesc:a0109e800c07b54b925e3c81891216496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class handler to keep accepting tag drag-move events.  <br /></td></tr>
 <tr class="memitem:acc294e5cea082d4375b9be7876b828de" id="r_acc294e5cea082d4375b9be7876b828de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc294e5cea082d4375b9be7876b828de">dropEvent</a> (QDropEvent *event) override</td></tr>
+<tr class="memdesc:acc294e5cea082d4375b9be7876b828de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class handler to apply the dropped tag to all filtered files.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header signals_class_tag_container"><td colspan="2" onclick="javascript:dynsection.toggleInherit('signals_class_tag_container')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Signals inherited from <a class="el" href="class_tag_container.html">TagContainer</a></td></tr>
 <tr class="memitem:a77602fc59503bc656061e5f1fc096791 inherit signals_class_tag_container" id="r_a77602fc59503bc656061e5f1fc096791"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#a77602fc59503bc656061e5f1fc096791">tagDeleteRequested</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:a77602fc59503bc656061e5f1fc096791 inherit signals_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user requests removal of a tag from this container.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> container showing tags assigned to the current file selection, accepting tag drops. </p>
+<p>Extends <a class="el" href="class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items.">TagContainer</a> with drag-and-drop support so the user can drag a tag from the library area and drop it here to apply it to all currently visible (filtered) files. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a50559469a54b9da5d0889cf184d3d830" name="a50559469a54b9da5d0889cf184d3d830"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a50559469a54b9da5d0889cf184d3d830">&#9670;&#160;</a></span>TagAssignmentContainer()</h2>
 
@@ -163,6 +179,24 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs an empty <a class="el" href="class_tag_assignment_container.html" title="Tag container showing tags assigned to the current file selection, accepting tag drops.">TagAssignmentContainer</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_assignment_container_a50559469a54b9da5d0889cf184d3d830_cgraph.png" border="0" usemap="#aclass_tag_assignment_container_a50559469a54b9da5d0889cf184d3d830_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_assignment_container_a50559469a54b9da5d0889cf184d3d830_cgraph" id="aclass_tag_assignment_container_a50559469a54b9da5d0889cf184d3d830_cgraph">
+<area shape="rect" title="Constructs an empty TagAssignmentContainer." alt="" coords="5,5,181,48"/>
+<area shape="rect" href="class_tag_container.html#afb444c43d124279f636dcb76b2dcc57d" title="Constructs an empty TagContainer." alt="" coords="229,13,412,40"/>
+<area shape="poly" title=" " alt="" coords="181,24,216,26,211,27,181,29"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -190,6 +224,14 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Overrides the Qt base-class handler to accept tag drag-enter events. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The drag-enter event to evaluate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a0109e800c07b54b925e3c81891216496" name="a0109e800c07b54b925e3c81891216496"></a>
@@ -215,6 +257,14 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Overrides the Qt base-class handler to keep accepting tag drag-move events. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The drag-move event to evaluate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="acc294e5cea082d4375b9be7876b828de" name="acc294e5cea082d4375b9be7876b828de"></a>
@@ -239,6 +289,42 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Overrides the Qt base-class handler to apply the dropped tag to all filtered files. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The drop event containing the dragged tag data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph.png" border="0" usemap="#aclass_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph" id="aclass_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph">
+<area shape="rect" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,124,173,167"/>
+<area shape="rect" href="class_luminism_core.html#a9fe93be3e6f05b1d8901f307f09a0880" title="Applies a tag to all files currently visible in the filtered file list." alt="" coords="242,5,408,32"/>
+<area shape="poly" title=" " alt="" coords="110,122,158,81,188,60,219,42,238,36,234,39,222,46,191,64,161,85,114,125"/>
+<area shape="rect" href="class_tag_widget.html#a1d3fa53f2f5ad9b93b553431bce2c67b" title="Emitted when the user clicks the close button to remove the tag." alt="" coords="230,56,420,83"/>
+<area shape="poly" title=" " alt="" coords="140,121,220,92,249,86,244,89,221,97,143,126"/>
+<area shape="rect" href="class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="249,107,401,133"/>
+<area shape="poly" title=" " alt="" coords="172,134,236,128,231,131,174,139"/>
+<area shape="rect" href="class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title="Returns the Tag pointer this widget represents." alt="" coords="260,157,390,184"/>
+<area shape="poly" title=" " alt="" coords="173,152,247,161,242,163,174,157"/>
+<area shape="rect" href="class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3" title="Returns the TagFamily pointer this widget represents." alt="" coords="221,208,429,235"/>
+<area shape="poly" title=" " alt="" coords="142,164,221,193,249,203,244,204,220,199,142,170"/>
+<area shape="rect" href="class_tag_container.html#a6e7ec330ab93a0c21ec4e1f0864ad56f" title="Forwards a tag&#45;delete request up to the tagDeleteRequested signal." alt="" coords="235,259,414,301"/>
+<area shape="poly" title=" " alt="" coords="114,164,162,205,222,244,234,252,229,252,219,249,159,209,113,170"/>
+<area shape="rect" href="class_tagged_file.html#abbe4ad626b1573e223002a76f8afdc18" title="Adds a tag to this file and marks the file dirty." alt="" coords="522,5,657,32"/>
+<area shape="poly" title=" " alt="" coords="407,16,509,18,504,20,409,21"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="538,81,641,108"/>
+<area shape="poly" title=" " alt="" coords="401,110,525,100,520,102,402,115"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="518,132,661,159"/>
+<area shape="poly" title=" " alt="" coords="401,125,505,136,500,138,402,130"/>
+<area shape="rect" href="class_tag_container.html#a77602fc59503bc656061e5f1fc096791" title="Emitted when the user requests removal of a tag from this container." alt="" coords="477,267,702,293"/>
+<area shape="poly" title=" " alt="" coords="415,277,464,280,459,280,415,283"/>
+</map>
+</div>
 
 </div>
 </div>

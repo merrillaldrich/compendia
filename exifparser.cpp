@@ -1,9 +1,21 @@
 #include "exifparser.h"
 
+/*! \brief Constructs an ExifParser (rarely needed; prefer the static interface).
+ *
+ * \param parent Optional Qt parent object.
+ */
 ExifParser::ExifParser(QObject *parent)
     : QObject{parent}
 {}
 
+/*! \brief Returns a map of EXIF key-value pairs for the given image file.
+ *
+ * Dispatches to getExifStandard() for .jpg files and getExifHeif() for
+ * .heic files; returns an empty map for unsupported formats or on error.
+ *
+ * \param filePath Absolute path to the image file.
+ * \return A map of EXIF tag name strings to value strings.
+ */
 QMap<QString, QString> ExifParser::getExifMap(QString filePath){
     QMap<QString, QString> exifMap;
 
@@ -23,6 +35,11 @@ QMap<QString, QString> ExifParser::getExifMap(QString filePath){
     return exifMap;
 }
 
+/*! \brief Loads raw EXIF data from a standard JPEG file using libexif.
+ *
+ * \param filePath Absolute path to the JPEG file.
+ * \return A heap-allocated ExifData pointer, or nullptr on failure.
+ */
 ExifData* ExifParser::getExifStandard(QString filePath){
 
     // Read file into memory
@@ -58,6 +75,11 @@ ExifData* ExifParser::getExifStandard(QString filePath){
     return exifData;
 }
 
+/*! \brief Loads raw EXIF data from a HEIF/HEIC file using libheif then libexif.
+ *
+ * \param filePath Absolute path to the HEIC file.
+ * \return A heap-allocated ExifData pointer, or nullptr on failure.
+ */
 ExifData* ExifParser::getExifHeif(QString filePath){
 
     // Change QString to char array
@@ -135,6 +157,11 @@ ExifData* ExifParser::getExifHeif(QString filePath){
     return ed;
 }
 
+/*! \brief Converts a libexif ExifData structure into a Qt key-value string map.
+ *
+ * \param ed The libexif data structure to iterate.
+ * \return A map of EXIF tag names to their string values.
+ */
 QMap<QString, QString> ExifParser::exifTagsToMap(ExifData* ed) {
     QMap<QString, QString> map;
 

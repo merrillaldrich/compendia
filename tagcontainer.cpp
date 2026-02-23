@@ -1,9 +1,17 @@
 #include "tagcontainer.h"
 
+/*! \brief Constructs an empty TagContainer.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 TagContainer::TagContainer(QWidget *parent)
     : QWidget{parent}
 {}
 
+/*! \brief Rebuilds the widget hierarchy to display exactly the given set of tags.
+ *
+ * \param tags Pointer to the set of Tag pointers to display.
+ */
 void TagContainer::refresh(QSet<Tag*>* tags){
 
     clear();
@@ -63,6 +71,7 @@ void TagContainer::refresh(QSet<Tag*>* tags){
     this->sort();
 }
 
+/*! \brief Removes all child TagFamilyWidget and TagWidget items from the layout. */
 void TagContainer::clear(){
     // Remove existing tag filter widgets
     QLayoutItem* item;
@@ -74,10 +83,17 @@ void TagContainer::clear(){
     }
 
 }
+
+/*! \brief Forwards a tag-delete request up to the tagDeleteRequested signal.
+ *
+ * \param tag The Tag whose deletion was requested.
+ */
 void TagContainer::onTagDeleteRequested(Tag* tag){
     emit tagDeleteRequested(tag);
 }
 
+/*! \brief Sorts all TagFamilyWidget children alphabetically by family name,
+ *  and sorts tags within each family alphabetically by tag name. */
 void TagContainer::sort() {
     QList<TagFamilyWidget*> fwlist;
     QLayoutItem* item = nullptr;

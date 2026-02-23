@@ -2,6 +2,10 @@
 #include <QDirIterator>
 #include <QDebug>
 
+/*! \brief Constructs LuminismCore and initialises empty model and tag-library containers.
+ *
+ * \param parent Optional Qt parent object.
+ */
 LuminismCore::LuminismCore(QObject *parent)
     : QObject{parent}{
 
@@ -15,6 +19,7 @@ LuminismCore::LuminismCore(QObject *parent)
 
 }
 
+/*! \brief Moves up to a fixed number of pending icon results from the background queue into the model. */
 void LuminismCore::flushIconGeneratorQueue(){
     const int maxPerTick = 8;
     QVector<std::tuple<QString, QString, QMap<QString, QString>, QImage>> batch;
@@ -37,7 +42,13 @@ void LuminismCore::flushIconGeneratorQueue(){
     }
 }
 
-
+/*! \brief Applies a generated thumbnail and EXIF data to the matching model item.
+ *
+ * \param fileName             The file name used to locate the model item.
+ * \param absoluteFilePathName Full path used to disambiguate duplicate file names.
+ * \param exifMap              EXIF key-value data to store on the TaggedFile.
+ * \param image                Scaled thumbnail image to use as the item icon.
+ */
 void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
                                                 const QString &absoluteFilePathName,
                                                 const QMap<QString, QString> exifMap,
@@ -80,7 +91,6 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
         painter.end();
 
         item->setIcon(square);
-        //QDateTime::fromString("2026-01-06 14:35:00", "yyyy-MM-dd HH:mm:ss");
 
         // NOTE: EXIF uses colons in BOTH the date and the time, not dashes
         QString captureDateString = exifMap["DateTime"];
@@ -93,11 +103,16 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
     }
 }
 
+/*! \brief Sets the root directory path and immediately loads it.
+ *
+ * \param path Absolute path to the media folder to load.
+ */
 void LuminismCore::setRootDirectory(QString path){
     root_directory_ = path;
     loadRootDirectory();
 }
 
+/*! \brief Clears all existing data and reloads files from the current root directory. */
 void LuminismCore::loadRootDirectory(){
 
     // Pointing to a new folder means we have to clear any data already loaded:
@@ -149,14 +164,28 @@ void LuminismCore::loadRootDirectory(){
     backfillMetadata();
 }
 
+/*! \brief Returns true if the model currently contains at least one file.
+ *
+ * \return True when the model row count is greater than zero.
+ */
 bool LuminismCore::containsFiles(){
     return ( tagged_files_->rowCount() > 0 );
 }
+
+/*! \brief Adds a file to the model with no tags.
+ *
+ * \param fileInfo File-system info for the file to add.
+ */
 void LuminismCore::addFile(QFileInfo fileInfo){
     QList<TagSet> tagSets;
     addFile(fileInfo, tagSets);
 }
 
+/*! \brief Adds a file to the model, parsing tags and EXIF from a JSON object.
+ *
+ * \param fileInfo The file-system info for the file to add.
+ * \param tagsJson A JSON object containing tag and optional EXIF data.
+ */
 void LuminismCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
     QList<TagSet> tagSets;
     QMap<QString, QString> exifMap;
@@ -176,6 +205,12 @@ void LuminismCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
     addFile(fileInfo, tagSets, exifMap);
 }
 
+/*! \brief Adds a file to the model with an explicit tag list and optional initial EXIF map.
+ *
+ * \param fileInfo    File-system info for the file to add.
+ * \param tags        List of TagSet values describing tags to apply.
+ * \param initialExif Optional pre-loaded EXIF key-value map.
+ */
 void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif){
     // Add to to the Tagged Object collection and collect links to its tags and tag families
 
@@ -229,6 +264,7 @@ void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString,
     tagged_files_->appendRow(i);
 }
 
+/*! \brief Launches background thumbnail and EXIF generation for all files in the model. */
 void LuminismCore::backfillMetadata(){
 
     QStringList files;
@@ -266,10 +302,12 @@ void LuminismCore::backfillMetadata(){
     uiFlushTimer_.setInterval(50);
 }
 
+/*! \brief Starts the UI flush timer if it is not already running. */
 void LuminismCore::ensureUiFlushTimerRunning(){
     if (!uiFlushTimer_.isActive()) uiFlushTimer_.start();
 }
 
+/*! \brief Writes JSON sidecar files for every file with unsaved changes. */
 void LuminismCore::writeFileMetadata(){
 
     for (int row = 0; row < tagged_files_->rowCount(); ++row) {
@@ -283,16 +321,10 @@ void LuminismCore::writeFileMetadata(){
         QFileInfo fileInfo(origFile);
         QString metaFilePath = itemAsTaggedFile->filePath + "/" +fileInfo.baseName() + ".json";
 
-
-        //qDebug() << "Write to " << metaFilePath;
-        //qDebug() << itemAsTaggedFile->TaggedFileJSON();
-
         QFile metaFile(metaFilePath);
 
         if (!metaFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
             qDebug() << "Could not open file for writing:" << metaFile.errorString();
-            //qCritical() << "Could not open file for writing:" << metaFile.errorString();
-            //return 1;
         }
 
         QTextStream out(&metaFile);
@@ -304,6 +336,7 @@ void LuminismCore::writeFileMetadata(){
     clearAllDirtyFlags();
 }
 
+/*! \brief Clears the dirty flag on every file, tag, and tag family. */
 void LuminismCore::clearAllDirtyFlags()
 {
     for (int row = 0; row < tagged_files_->rowCount(); ++row)
@@ -314,10 +347,18 @@ void LuminismCore::clearAllDirtyFlags()
         family->clearDirtyFlag();
 }
 
+/*! \brief Returns a pointer to the complete tag library.
+ *
+ * \return Pointer to the set of all known Tag objects.
+ */
 QSet<Tag*>* LuminismCore::getLibraryTags(){
     return tags_;
 }
 
+/*! \brief Returns a new set of tags that are assigned to at least one file.
+ *
+ * \return Heap-allocated set of assigned Tag pointers (caller takes ownership).
+ */
 QSet<Tag*>* LuminismCore::getAssignedTags(){
     // Loop over files and make a distinct list of all tags that
     // are assigned to a file
@@ -333,6 +374,10 @@ QSet<Tag*>* LuminismCore::getAssignedTags(){
     return distinctTags;
 }
 
+/*! \brief Returns a new set of tags assigned to any currently visible (filtered) file.
+ *
+ * \return Heap-allocated set of Tag pointers (caller takes ownership).
+ */
 QSet<Tag*>* LuminismCore::getAssignedTags_FilteredFiles(){
     // Loop over files and make a distinct list of all tags that
     // are assigned to a visible file
@@ -354,16 +399,19 @@ QSet<Tag*>* LuminismCore::getAssignedTags_FilteredFiles(){
     return distinctTags;
 }
 
+/*! \brief Returns a pointer to the set of tags currently active as filters.
+ *
+ * \return Pointer to the proxy model's internal filter tag set.
+ */
 QSet<Tag*>* LuminismCore::getFilterTags(){
-    // Loop over files and make a distinct list of all tags that
-    // are assigned to a file
     return tagged_files_proxy_->getFilterTags();
 }
 
 /*! Retrieve a tag from the library by name.
  *
- * \param tagFamilyName
- * \param tagName
+ * \param tagFamilyName The name of the tag family to search within.
+ * \param tagName       The tag name to find.
+ * \return Pointer to the matching Tag, or nullptr if not found.
  */
 Tag* LuminismCore::getTag(QString tagFamilyName, QString tagName){
     Tag* matchingTag = nullptr;
@@ -382,7 +430,8 @@ Tag* LuminismCore::getTag(QString tagFamilyName, QString tagName){
 
 /*! Retrieve a tag family from the library by name.
  *
- * \param tagFamilyName
+ * \param tagFamilyName The family name to find.
+ * \return Pointer to the matching TagFamily, or nullptr if not found.
  */
 TagFamily* LuminismCore::getTagFamily(QString tagFamilyName){
     TagFamily* matchingTagFamily = nullptr;
@@ -401,8 +450,9 @@ TagFamily* LuminismCore::getTagFamily(QString tagFamilyName){
 
 /*! Create a tag in the library using just its family name and tag name as strings
  *
- *  \param tagFamilyName
- *  \param tagName
+ *  \param tagFamilyName The name of the family the tag belongs to.
+ *  \param tagName       The name of the tag to create or find.
+ *  \return Pointer to the new or existing Tag.
  */
 Tag* LuminismCore::addLibraryTag(QString tagFamilyName, QString tagName){
 
@@ -427,13 +477,17 @@ Tag* LuminismCore::addLibraryTag(QString tagFamilyName, QString tagName){
 
 /*! Add a tag to the library if it doesn't exist
  *
- * \param tag
+ * \param tag The Tag pointer to insert.
  */
 void LuminismCore::addLibraryTag(Tag* tag){
     tags_->insert(tag);
 }
 
-
+/*! \brief Creates or retrieves a tag family in the library by name.
+ *
+ * \param tagFamilyName The family name to create or find.
+ * \return Pointer to the new or existing TagFamily.
+ */
 TagFamily* LuminismCore::addLibraryTagFamily(QString tagFamilyName){
 
     TagFamily* matchingFam = nullptr;
@@ -454,12 +508,20 @@ TagFamily* LuminismCore::addLibraryTagFamily(QString tagFamilyName){
     return matchingFam;
 }
 
+/*! \brief Adds an existing TagFamily pointer to the library if not already present.
+ *
+ * \param tagFamily The TagFamily pointer to insert.
+ */
 void LuminismCore::addLibraryTagFamily(TagFamily* tagFamily){
     if(! tag_families_->contains(tagFamily)){
         tag_families_->insert(tagFamily);
     }
 }
 
+/*! \brief Applies a tag to all files currently visible in the filtered file list.
+ *
+ * \param tag The Tag to apply.
+ */
 void LuminismCore::applyTag(Tag* tag){
     // Apply tag to all the files in the filtered file list
     for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i){
@@ -473,11 +535,20 @@ void LuminismCore::applyTag(Tag* tag){
     }
 }
 
+/*! \brief Applies the tag identified by a TagSet to a specific file.
+ *
+ * \param f The TaggedFile to tag.
+ * \param t The TagSet identifying the tag to apply.
+ */
 void LuminismCore::applyTag(TaggedFile* f, TagSet t){
     Tag* tag = getTag(t.tagFamilyName, t.tagName);
     f->addTag(tag);
 }
 
+/*! \brief Removes a tag from all files currently visible in the filtered file list.
+ *
+ * \param tag The Tag to remove.
+ */
 void LuminismCore::unapplyTag(Tag* tag){
     // Remove tag from all the files in the filtered file list
     for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i){
@@ -491,6 +562,11 @@ void LuminismCore::unapplyTag(Tag* tag){
     }
 }
 
+/*! \brief Removes a tag from a specific file.
+ *
+ * \param file The TaggedFile to remove the tag from.
+ * \param tag  The Tag to remove.
+ */
 void LuminismCore::unapplyTag(TaggedFile* file, Tag* tag){
     // Locate the file and remove the indicated tag from it
     for( int i = 0; i < tagged_files_->rowCount(); ++i ){
@@ -502,38 +578,65 @@ void LuminismCore::unapplyTag(TaggedFile* file, Tag* tag){
     }
 }
 
+/*! \brief Returns the underlying QStandardItemModel containing all file items.
+ *
+ * \return Pointer to the source item model.
+ */
 QStandardItemModel* LuminismCore::getItemModel(){
     return tagged_files_;
 }
 
+/*! \brief Returns the FilterProxyModel used by the file list view.
+ *
+ * \return Pointer to the proxy model.
+ */
 FilterProxyModel* LuminismCore::getItemModelProxy(){
     return tagged_files_proxy_;
 }
 
+/*! \brief Sets the filename substring filter on the proxy model.
+ *
+ * \param filterText The substring to match against file names.
+ */
 void LuminismCore::setFileNameFilter(QString filterText){
     tagged_files_proxy_->setNameFilter(filterText);
 }
 
+/*! \brief Sets the folder path substring filter on the proxy model.
+ *
+ * \param filterText The substring to match against folder paths.
+ */
 void LuminismCore::setFolderFilter(QString filterText){
     tagged_files_proxy_->setFolderFilter(filterText);
 }
 
+/*! \brief Adds a tag to the active tag filter set.
+ *
+ * \param tag The Tag to add to the filter.
+ */
 void LuminismCore::addTagFilter(Tag* tag){
     tagged_files_proxy_->addTagFilter(tag);
 }
 
+/*! \brief Removes a tag from the active tag filter set.
+ *
+ * \param tag The Tag to remove from the filter.
+ */
 void LuminismCore::removeTagFilter(Tag* tag){
     tagged_files_proxy_->removeTagFilter(tag);
 }
 
+/*! \brief Parses a JSON object of tag-family to tag-name arrays into a TagSet list.
+ *
+ * \param tagsJson A JSON object mapping family name strings to arrays of tag name strings.
+ * \return A list of TagSet values parsed from the JSON.
+ */
 QList<TagSet> LuminismCore::parseTagJson(QJsonObject tagsJson){
     QList<TagSet> tagSets;
 
     for (auto it = tagsJson.begin(); it != tagsJson.end(); ++it) {
-        //qDebug() << "Key:" << it.key() << "Value:" << it.value();
         QJsonArray array = it.value().toArray();
         for (const QJsonValue &value : array){
-            //qDebug() << "Tag:" << value.toString();
             tagSets.append(TagSet(it.key(),value.toString()));
         }
     }

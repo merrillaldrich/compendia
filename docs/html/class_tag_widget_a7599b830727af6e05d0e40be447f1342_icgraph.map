@@ -1,5 +1,5 @@
 <map id="TagWidget::startEdit" name="TagWidget::startEdit">
-<area shape="rect" id="Node000001" title=" " alt="" coords="271,13,411,40"/>
-<area shape="rect" id="Node000002" href="$class_tag_family_widget.html#af7aab0ad85ea39f3836363aa365d1f2b" title=" " alt="" coords="5,5,223,48"/>
+<area shape="rect" id="Node000001" title="Switches the widget into inline&#45;edit mode, showing the line edit." alt="" coords="271,13,411,40"/>
+<area shape="rect" id="Node000002" href="$class_tag_family_widget.html#af7aab0ad85ea39f3836363aa365d1f2b" title="Overrides the Qt base&#45;class mouse&#45;release handler to add a new tag on click." alt="" coords="5,5,223,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="253,27,223,29,223,24,258,27"/>
 </map>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['zoomablegraphicsview_0',['ZoomableGraphicsView',['../class_zoomable_graphics_view.html#a3615bbe28257af383607c6076a00ecb0',1,'ZoomableGraphicsView::ZoomableGraphicsView(QWidget *parent=nullptr)'],['../class_zoomable_graphics_view.html#a877e7dc2885180eeb2de7efd95c3c550',1,'ZoomableGraphicsView::ZoomableGraphicsView(QGraphicsScene *scene, QWidget *parent=nullptr)']]]
+  ['wheelevent_0',['wheelEvent',['../class_zoomable_graphics_view.html#ac9369ca9bad87c801280cb80268ded94',1,'ZoomableGraphicsView']]],
+  ['writefilemetadata_1',['writeFileMetadata',['../class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc',1,'LuminismCore']]]
 ];

@@ -190,11 +190,14 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:Tag" id="r_Tag"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag.html">Tag</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a single tag that can be applied to media files.  <a href="class_tag.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a53842d615ae3cb82bfa54db2f4268a0b" id="r_a53842d615ae3cb82bfa54db2f4268a0b"><td class="memItemLeft" align="right" valign="top">QDataStream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53842d615ae3cb82bfa54db2f4268a0b">operator&lt;&lt;</a> (QDataStream &amp;out, const <a class="el" href="class_tag.html">Tag</a> &amp;t)</td></tr>
+<tr class="memdesc:a53842d615ae3cb82bfa54db2f4268a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialises a <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a>'s name to a QDataStream for drag-and-drop transfer.  <br /></td></tr>
 <tr class="memitem:a22ce4f25d0ac346526919e53f02e9949" id="r_a22ce4f25d0ac346526919e53f02e9949"><td class="memItemLeft" align="right" valign="top">QDataStream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22ce4f25d0ac346526919e53f02e9949">operator&gt;&gt;</a> (QDataStream &amp;in, <a class="el" href="class_tag.html">Tag</a> &amp;t)</td></tr>
+<tr class="memdesc:a22ce4f25d0ac346526919e53f02e9949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialises a <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a>'s name from a QDataStream during drag-and-drop.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a53842d615ae3cb82bfa54db2f4268a0b" name="a53842d615ae3cb82bfa54db2f4268a0b"></a>
@@ -216,6 +219,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Serialises a <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a>'s name to a QDataStream for drag-and-drop transfer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>The output data stream. </td></tr>
+    <tr><td class="paramname">t</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to serialise. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The output stream after writing. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="tag_8h_a53842d615ae3cb82bfa54db2f4268a0b_cgraph.png" border="0" usemap="#atag_8h_a53842d615ae3cb82bfa54db2f4268a0b_cgraph" loading="lazy" alt=""/></div>
+<map name="atag_8h_a53842d615ae3cb82bfa54db2f4268a0b_cgraph" id="atag_8h_a53842d615ae3cb82bfa54db2f4268a0b_cgraph">
+<area shape="rect" title="Serialises a Tag&#39;s name to a QDataStream for drag&#45;and&#45;drop transfer." alt="" coords="5,5,90,32"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="138,5,241,32"/>
+<area shape="poly" title=" " alt="" coords="90,16,125,18,119,19,90,21"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a22ce4f25d0ac346526919e53f02e9949" name="a22ce4f25d0ac346526919e53f02e9949"></a>
@@ -236,6 +259,28 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Deserialises a <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a>'s name from a QDataStream during drag-and-drop. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in</td><td>The input data stream. </td></tr>
+    <tr><td class="paramname">t</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to populate with the read name. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The input stream after reading. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="tag_8h_a22ce4f25d0ac346526919e53f02e9949_cgraph.png" border="0" usemap="#atag_8h_a22ce4f25d0ac346526919e53f02e9949_cgraph" loading="lazy" alt=""/></div>
+<map name="atag_8h_a22ce4f25d0ac346526919e53f02e9949_cgraph" id="atag_8h_a22ce4f25d0ac346526919e53f02e9949_cgraph">
+<area shape="rect" title="Deserialises a Tag&#39;s name from a QDataStream during drag&#45;and&#45;drop." alt="" coords="5,5,90,32"/>
+<area shape="rect" href="class_tag.html#a1cef34da4131dc5bd8bcc0869b22a492" title="Sets the tag name and marks the dirty flag if the name changed." alt="" coords="138,5,241,32"/>
+<area shape="poly" title=" " alt="" coords="90,16,125,18,119,19,90,21"/>
+<area shape="rect" href="class_tag.html#a1529679fece67dd8a8cd704aeb703e4d" title="Emitted when the tag name is changed via setName()." alt="" coords="289,5,423,32"/>
+<area shape="poly" title=" " alt="" coords="241,16,276,19,270,19,241,21"/>
+</map>
+</div>
 
 </div>
 </div>

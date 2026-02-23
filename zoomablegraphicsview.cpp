@@ -1,10 +1,20 @@
 #include "zoomablegraphicsview.h"
 
+/*! \brief Constructs a ZoomableGraphicsView with no initial scene.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 ZoomableGraphicsView::ZoomableGraphicsView(QWidget *parent)
     : QGraphicsView(parent)
 {
     setRenderHint(QPainter::Antialiasing);
 }
+
+/*! \brief Constructs a ZoomableGraphicsView bound to the given scene.
+ *
+ * \param scene  The QGraphicsScene to display.
+ * \param parent Optional Qt parent widget.
+ */
 ZoomableGraphicsView::ZoomableGraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(parent)
 {
@@ -12,6 +22,10 @@ ZoomableGraphicsView::ZoomableGraphicsView(QGraphicsScene *scene, QWidget *paren
     setRenderHint(QPainter::Antialiasing);
 }
 
+/*! \brief Overrides the Qt base-class wheel handler to perform cursor-centred zoom.
+ *
+ * \param event The wheel event containing delta and cursor position.
+ */
 void ZoomableGraphicsView::wheelEvent(QWheelEvent* event)
 {
     // Zoom on scroll wheel movement, but limit the lower end of image size

@@ -1,5 +1,9 @@
 #include "previewcontainer.h"
 
+/*! \brief Constructs the preview container and sets up the internal scene and view.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 PreviewContainer::PreviewContainer(QWidget *parent)
     : QWidget{parent}
 {
@@ -14,6 +18,10 @@ PreviewContainer::PreviewContainer(QWidget *parent)
     //videoItem = new QGraphicsVideoItem;
 }
 
+/*! \brief Displays the given QImage in the preview pane.
+ *
+ * \param image The image to display.
+ */
 void PreviewContainer::preview(QImage image){
     // Replace the image in the scene
     scene->clear();
@@ -32,6 +40,10 @@ void PreviewContainer::preview(QImage image){
     view->show();
 }
 
+/*! \brief Loads and displays the image at the given absolute file path.
+ *
+ * \param absoluteFilePath Absolute path to the image file to display.
+ */
 void PreviewContainer::preview(QString absoluteFilePath){
 
     QImageReader ir(absoluteFilePath);
@@ -47,6 +59,7 @@ void PreviewContainer::preview(QString absoluteFilePath){
     preview(image);
 }
 
+/*! \brief Re-fits the displayed image to the viewport if it has not been zoomed in. */
 void PreviewContainer::freshen(){
 
     // Compare the size of the image to the viewport, and if the image is smaller
@@ -66,6 +79,7 @@ void PreviewContainer::freshen(){
 
 }
 
+/*! \brief Clears the graphics scene, removing any displayed image. */
 void PreviewContainer::clear(){
     if (view->scene() != nullptr){
         view->scene()->clear();

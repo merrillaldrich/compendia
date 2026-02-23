@@ -1,0 +1,5 @@
+<map id="FlowLayout::minimumSize" name="FlowLayout::minimumSize">
+<area shape="rect" id="Node000001" title="Returns the minimum size needed to display at least one item with margins." alt="" coords="5,5,181,32"/>
+<area shape="rect" id="Node000002" href="$class_flow_layout.html#a119d89f83aa3f8ccb6e66ed1a125452e" title="Overrides the Qt base&#45;class method to compute the required height for a given width." alt="" coords="229,5,413,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,16,216,19,210,19,181,21"/>
+</map>

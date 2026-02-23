@@ -93,13 +93,16 @@ $(function(){initNavTree('class_face_recognizer.html','','class_face_recognizer-
 </div><!--header-->
 <div class="contents">
 
+<p>Detects faces in a QImage using the dlib frontal-face detector.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="facerecognizer_8h_source.html">facerecognizer.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for FaceRecognizer:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_face_recognizer__inherit__graph.png" border="0" usemap="#a_face_recognizer_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_face_recognizer_inherit__map" id="a_face_recognizer_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,122,107"/>
+<area shape="rect" title="Detects faces in a QImage using the dlib frontal&#45;face detector." alt="" coords="5,80,122,107"/>
 <area shape="rect" title=" " alt="" coords="29,5,98,32"/>
 <area shape="poly" title=" " alt="" coords="65,46,66,80,61,79,62,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for FaceRecognizer:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_face_recognizer__coll__graph.png" border="0" usemap="#a_face_recognizer_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_face_recognizer_coll__map" id="a_face_recognizer_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,122,107"/>
+<area shape="rect" title="Detects faces in a QImage using the dlib frontal&#45;face detector." alt="" coords="5,80,122,107"/>
 <area shape="rect" title=" " alt="" coords="29,5,98,32"/>
 <area shape="poly" title=" " alt="" coords="65,46,66,80,61,79,62,50"/>
 </map>
@@ -118,9 +121,14 @@ Collaboration diagram for FaceRecognizer:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1525ce62bb6ec64e80e81020f9874e88" id="r_a1525ce62bb6ec64e80e81020f9874e88"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1525ce62bb6ec64e80e81020f9874e88">FaceRecognizer</a> (QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:a1525ce62bb6ec64e80e81020f9874e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_face_recognizer.html" title="Detects faces in a QImage using the dlib frontal-face detector.">FaceRecognizer</a>.  <br /></td></tr>
 <tr class="memitem:af93df5538e86dfc4d4baf33ea0eeba21" id="r_af93df5538e86dfc4d4baf33ea0eeba21"><td class="memItemLeft" align="right" valign="top">QImage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af93df5538e86dfc4d4baf33ea0eeba21">imageWithFaceBoxes</a> (QImage sourceImage)</td></tr>
+<tr class="memdesc:af93df5538e86dfc4d4baf33ea0eeba21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a copy of the source image with face bounding boxes drawn on it.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Detects faces in a QImage using the dlib frontal-face detector. </p>
+<p>Converts a QImage to the dlib pixel format, runs the HOG-based frontal face detector, and can return an annotated copy of the image with bounding boxes drawn around each detected face. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1525ce62bb6ec64e80e81020f9874e88" name="a1525ce62bb6ec64e80e81020f9874e88"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1525ce62bb6ec64e80e81020f9874e88">&#9670;&#160;</a></span>FaceRecognizer()</h2>
 
@@ -144,6 +152,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a <a class="el" href="class_face_recognizer.html" title="Detects faces in a QImage using the dlib frontal-face detector.">FaceRecognizer</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -161,6 +177,15 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns a copy of the source image with face bounding boxes drawn on it. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sourceImage</td><td>The image to run face detection on. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A copy of the source image annotated with green face rectangles. </dd></dl>
 
 </div>
 </div>

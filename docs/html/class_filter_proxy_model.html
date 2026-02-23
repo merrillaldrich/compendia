@@ -93,13 +93,16 @@ $(function(){initNavTree('class_filter_proxy_model.html','','class_filter_proxy_
 </div><!--header-->
 <div class="contents">
 
+<p>Proxy model that filters the tagged-file list by name, folder, and tags.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="filterproxymodel_8h_source.html">filterproxymodel.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for FilterProxyModel:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_filter_proxy_model__inherit__graph.png" border="0" usemap="#a_filter_proxy_model_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_filter_proxy_model_inherit__map" id="a_filter_proxy_model_inherit__map">
-<area shape="rect" title=" " alt="" coords="22,80,142,107"/>
+<area shape="rect" title="Proxy model that filters the tagged&#45;file list by name, folder, and tags." alt="" coords="22,80,142,107"/>
 <area shape="rect" title=" " alt="" coords="5,5,159,32"/>
 <area shape="poly" title=" " alt="" coords="84,46,85,81,79,79,80,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for FilterProxyModel:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_filter_proxy_model__coll__graph.png" border="0" usemap="#a_filter_proxy_model_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_filter_proxy_model_coll__map" id="a_filter_proxy_model_coll__map">
-<area shape="rect" title=" " alt="" coords="22,80,142,107"/>
+<area shape="rect" title="Proxy model that filters the tagged&#45;file list by name, folder, and tags." alt="" coords="22,80,142,107"/>
 <area shape="rect" title=" " alt="" coords="5,5,159,32"/>
 <area shape="poly" title=" " alt="" coords="84,46,85,81,79,79,80,50"/>
 </map>
@@ -118,24 +121,38 @@ Collaboration diagram for FilterProxyModel:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab54b4d26d99c470733a09fffd4b5fd4d" id="r_ab54b4d26d99c470733a09fffd4b5fd4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab54b4d26d99c470733a09fffd4b5fd4d">FilterProxyModel</a> (QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:ab54b4d26d99c470733a09fffd4b5fd4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the proxy model and sets up the parent.  <br /></td></tr>
 <tr class="memitem:a7113f86982695f24a02bac4d80919cf7" id="r_a7113f86982695f24a02bac4d80919cf7"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7113f86982695f24a02bac4d80919cf7">getFilterTags</a> ()</td></tr>
+<tr class="memdesc:a7113f86982695f24a02bac4d80919cf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the set of tags currently used for filtering.  <br /></td></tr>
 <tr class="memitem:a4d7c210bd3074ee125fbb2770a5db80b" id="r_a4d7c210bd3074ee125fbb2770a5db80b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d7c210bd3074ee125fbb2770a5db80b">setNameFilter</a> (QString filterText)</td></tr>
+<tr class="memdesc:a4d7c210bd3074ee125fbb2770a5db80b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the filename substring filter and re-applies the filter.  <br /></td></tr>
 <tr class="memitem:a99ec3b50d952a2094bb4623c68221d1b" id="r_a99ec3b50d952a2094bb4623c68221d1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99ec3b50d952a2094bb4623c68221d1b">setFolderFilter</a> (QString filterText)</td></tr>
+<tr class="memdesc:a99ec3b50d952a2094bb4623c68221d1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the folder path substring filter and re-applies the filter.  <br /></td></tr>
 <tr class="memitem:a24702ad7e993c6b687edffa866a1309f" id="r_a24702ad7e993c6b687edffa866a1309f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24702ad7e993c6b687edffa866a1309f">addTagFilter</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:a24702ad7e993c6b687edffa866a1309f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a tag to the active tag filter set and re-applies the filter.  <br /></td></tr>
 <tr class="memitem:a2dee4b7929c110ee0f1f0d218eb794e6" id="r_a2dee4b7929c110ee0f1f0d218eb794e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dee4b7929c110ee0f1f0d218eb794e6">removeTagFilter</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:a2dee4b7929c110ee0f1f0d218eb794e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from the active tag filter set and re-applies the filter.  <br /></td></tr>
 <tr class="memitem:a938e8b371f366de31c071e03e1c904ce" id="r_a938e8b371f366de31c071e03e1c904ce"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a938e8b371f366de31c071e03e1c904ce">getFilterCreationDate</a> () const</td></tr>
+<tr class="memdesc:a938e8b371f366de31c071e03e1c904ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the creation-date filter value.  <br /></td></tr>
 <tr class="memitem:afc9f487c037cdf1619d195639724113b" id="r_afc9f487c037cdf1619d195639724113b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc9f487c037cdf1619d195639724113b">setFilterCreationDate</a> (QDate creationDate)</td></tr>
+<tr class="memdesc:afc9f487c037cdf1619d195639724113b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the creation-date filter and re-applies the filter.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a66604d5844f6f75a6503e22f05eeda6d" id="r_a66604d5844f6f75a6503e22f05eeda6d"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66604d5844f6f75a6503e22f05eeda6d">name_filter_</a></td></tr>
+<tr class="memdesc:a66604d5844f6f75a6503e22f05eeda6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current filename substring filter (empty means no filtering).  <br /></td></tr>
 <tr class="memitem:ae0b1b3f621c5bf450c730d06ec1eb856" id="r_ae0b1b3f621c5bf450c730d06ec1eb856"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0b1b3f621c5bf450c730d06ec1eb856">folder_filter_</a></td></tr>
+<tr class="memdesc:ae0b1b3f621c5bf450c730d06ec1eb856"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current folder path substring filter (empty means no filtering).  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae3b628e58b77cf9e8f0a45ae7b4aec1b" id="r_ae3b628e58b77cf9e8f0a45ae7b4aec1b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae3b628e58b77cf9e8f0a45ae7b4aec1b">filterAcceptsRow</a> (int sourceRow, const QModelIndex &amp;sourceParent) const override</td></tr>
+<tr class="memdesc:ae3b628e58b77cf9e8f0a45ae7b4aec1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class row-acceptance test to apply all active filters.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Proxy model that filters the tagged-file list by name, folder, and tags. </p>
+<p>Wraps a QStandardItemModel containing <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> items and exposes only the rows that satisfy the currently active name-substring, folder-substring, and tag-intersection filters. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab54b4d26d99c470733a09fffd4b5fd4d" name="ab54b4d26d99c470733a09fffd4b5fd4d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab54b4d26d99c470733a09fffd4b5fd4d">&#9670;&#160;</a></span>FilterProxyModel()</h2>
 
@@ -159,6 +176,14 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs the proxy model and sets up the parent. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -176,6 +201,14 @@ Protected Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Adds a tag to the active tag filter set and re-applies the filter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to add to the filter. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -206,6 +239,26 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Overrides the Qt base-class row-acceptance test to apply all active filters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sourceRow</td><td>The row index in the source model to test. </td></tr>
+    <tr><td class="paramname">sourceParent</td><td>The parent index in the source model. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the row passes all active filters. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_filter_proxy_model_ae3b628e58b77cf9e8f0a45ae7b4aec1b_cgraph.png" border="0" usemap="#aclass_filter_proxy_model_ae3b628e58b77cf9e8f0a45ae7b4aec1b_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_filter_proxy_model_ae3b628e58b77cf9e8f0a45ae7b4aec1b_cgraph" id="aclass_filter_proxy_model_ae3b628e58b77cf9e8f0a45ae7b4aec1b_cgraph">
+<area shape="rect" title="Overrides the Qt base&#45;class row&#45;acceptance test to apply all active filters." alt="" coords="5,5,158,48"/>
+<area shape="rect" href="class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="206,13,323,40"/>
+<area shape="poly" title=" " alt="" coords="158,24,193,26,188,27,158,29"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a938e8b371f366de31c071e03e1c904ce" name="a938e8b371f366de31c071e03e1c904ce"></a>
@@ -231,6 +284,9 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the creation-date filter value. </p>
+<dl class="section return"><dt>Returns</dt><dd>The currently active creation-date filter. </dd></dl>
+
 </div>
 </div>
 <a id="a7113f86982695f24a02bac4d80919cf7" name="a7113f86982695f24a02bac4d80919cf7"></a>
@@ -247,6 +303,9 @@ Protected Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns a pointer to the set of tags currently used for filtering. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the internal active-filter tag set. </dd></dl>
 
 </div>
 </div>
@@ -265,6 +324,14 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Removes a tag from the active tag filter set and re-applies the filter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to remove from the filter. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="afc9f487c037cdf1619d195639724113b" name="afc9f487c037cdf1619d195639724113b"></a>
@@ -281,6 +348,14 @@ Protected Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the creation-date filter and re-applies the filter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">creationDate</td><td>The date to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -299,6 +374,14 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Sets the folder path substring filter and re-applies the filter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filterText</td><td>The substring to match against folder paths. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a4d7c210bd3074ee125fbb2770a5db80b" name="a4d7c210bd3074ee125fbb2770a5db80b"></a>
@@ -316,6 +399,24 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Sets the filename substring filter and re-applies the filter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filterText</td><td>The substring to match against file names. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_filter_proxy_model_a4d7c210bd3074ee125fbb2770a5db80b_icgraph.png" border="0" usemap="#aclass_filter_proxy_model_a4d7c210bd3074ee125fbb2770a5db80b_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_filter_proxy_model_a4d7c210bd3074ee125fbb2770a5db80b_icgraph" id="aclass_filter_proxy_model_a4d7c210bd3074ee125fbb2770a5db80b_icgraph">
+<area shape="rect" title="Sets the filename substring filter and re&#45;applies the filter." alt="" coords="241,5,421,48"/>
+<area shape="rect" href="class_luminism_core.html#aed94dc1d19284de5297c7af2aa3e998a" title="Sets the filename substring filter on the proxy model." alt="" coords="5,5,193,48"/>
+<area shape="poly" title=" " alt="" coords="223,27,193,29,193,24,228,26"/>
+</map>
+</div>
+
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
@@ -331,6 +432,8 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Current folder path substring filter (empty means no filtering). </p>
+
 </div>
 </div>
 <a id="a66604d5844f6f75a6503e22f05eeda6d" name="a66604d5844f6f75a6503e22f05eeda6d"></a>
@@ -344,6 +447,8 @@ Protected Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Current filename substring filter (empty means no filtering). </p>
 
 </div>
 </div>

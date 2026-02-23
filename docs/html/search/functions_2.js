@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['deleterequested_0',['deleteRequested',['../class_tag_widget.html#a1d3fa53f2f5ad9b93b553431bce2c67b',1,'TagWidget']]],
-  ['dragenterevent_1',['dragEnterEvent',['../class_nav_filter_container.html#ac5b72553980ebe78f1850f8fd5b72cd1',1,'NavFilterContainer::dragEnterEvent()'],['../class_tag_assignment_container.html#aa38bdffa0d58b7a983def087fe0ddd43',1,'TagAssignmentContainer::dragEnterEvent()'],['../class_taggable_list_view.html#a18ae59c850992e2f2519e030cc16c17d',1,'TaggableListView::dragEnterEvent()']]],
-  ['dragmoveevent_2',['dragMoveEvent',['../class_nav_filter_container.html#ac4dbece2a875cf69929b8224b97c43df',1,'NavFilterContainer::dragMoveEvent()'],['../class_tag_assignment_container.html#a0109e800c07b54b925e3c81891216496',1,'TagAssignmentContainer::dragMoveEvent()'],['../class_taggable_list_view.html#a161dbc4b2ed79cd91669b32579cbe224',1,'TaggableListView::dragMoveEvent()']]],
-  ['dropevent_3',['dropEvent',['../class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7',1,'NavFilterContainer::dropEvent()'],['../class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de',1,'TagAssignmentContainer::dropEvent()'],['../class_taggable_list_view.html#a2d9f17879b7b75759d6b4efb14467d85',1,'TaggableListView::dropEvent()']]]
+  ['clear_0',['clear',['../class_preview_container.html#af820d1ea99343d488aa4b47203bb8521',1,'PreviewContainer::clear()'],['../class_tag_container.html#ad384fe1eaa145f6d34fa4777792412b7',1,'TagContainer::clear()']]],
+  ['cleardirtyflag_1',['clearDirtyFlag',['../class_tag.html#ae09ed0e850e3a92547b0701f190edd97',1,'Tag::clearDirtyFlag()'],['../class_tag_family.html#a7ff45e76026cd5ad9fe7a800009dd5fc',1,'TagFamily::clearDirtyFlag()'],['../class_tagged_file.html#a5ca873b8ca2baff54f8e8fbf19a98c1f',1,'TaggedFile::clearDirtyFlag()']]],
+  ['clearpreview_2',['clearPreview',['../class_main_window.html#a70f1571a374bc94df84f935f8af0fffe',1,'MainWindow']]],
+  ['clickablelabel_3',['ClickableLabel',['../class_clickable_label.html#ad9ae3203cbf6f6746312a1391c218951',1,'ClickableLabel']]],
+  ['clicked_4',['clicked',['../class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e',1,'ClickableLabel']]],
+  ['containsfiles_5',['containsFiles',['../class_luminism_core.html#a7d3911b03d851bc2111456b424d8e8c9',1,'LuminismCore']]],
+  ['count_6',['count',['../class_flow_layout.html#a35bdf8dac35631d59767d0c0fedc7248',1,'FlowLayout']]]
 ];

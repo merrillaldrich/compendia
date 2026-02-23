@@ -1,7 +1,11 @@
 var searchData=
 [
-  ['ontagdeleterequested_0',['onTagDeleteRequested',['../class_tag_container.html#a6e7ec330ab93a0c21ec4e1f0864ad56f',1,'TagContainer']]],
-  ['operator_3c_3c_1',['operator&lt;&lt;',['../tag_8cpp.html#a53842d615ae3cb82bfa54db2f4268a0b',1,'operator&lt;&lt;(QDataStream &amp;out, const Tag &amp;t):&#160;tag.cpp'],['../tag_8h.html#a53842d615ae3cb82bfa54db2f4268a0b',1,'operator&lt;&lt;(QDataStream &amp;out, const Tag &amp;t):&#160;tag.cpp'],['../tagfamily_8cpp.html#a135f021827fb1e5886707e355e28ca18',1,'operator&lt;&lt;(QDataStream &amp;out, const TagFamily &amp;t):&#160;tagfamily.cpp'],['../tagfamily_8h.html#a135f021827fb1e5886707e355e28ca18',1,'operator&lt;&lt;(QDataStream &amp;out, const TagFamily &amp;t):&#160;tagfamily.cpp']]],
-  ['operator_3d_3d_2',['operator==',['../class_tag.html#ac573654c99464b6f22d53af4cd12be8c',1,'Tag']]],
-  ['operator_3e_3e_3',['operator&gt;&gt;',['../tag_8cpp.html#a22ce4f25d0ac346526919e53f02e9949',1,'operator&gt;&gt;(QDataStream &amp;in, Tag &amp;t):&#160;tag.cpp'],['../tag_8h.html#a22ce4f25d0ac346526919e53f02e9949',1,'operator&gt;&gt;(QDataStream &amp;in, Tag &amp;t):&#160;tag.cpp'],['../tagfamily_8cpp.html#afdfd98b759c396c438841712c3eb57a5',1,'operator&gt;&gt;(QDataStream &amp;in, TagFamily &amp;t):&#160;tagfamily.cpp'],['../tagfamily_8h.html#afdfd98b759c396c438841712c3eb57a5',1,'operator&gt;&gt;(QDataStream &amp;in, TagFamily &amp;t):&#160;tagfamily.cpp']]]
+  ['name_5ffilter_5f_0',['name_filter_',['../class_filter_proxy_model.html#a66604d5844f6f75a6503e22f05eeda6d',1,'FilterProxyModel']]],
+  ['namechanged_1',['nameChanged',['../class_tag.html#a1529679fece67dd8a8cd704aeb703e4d',1,'Tag::nameChanged()'],['../class_tag_family.html#a722daa0913c95fd78e08a8cd9040860e',1,'TagFamily::nameChanged()']]],
+  ['navfiltercontainer_2',['NavFilterContainer',['../class_nav_filter_container.html',1,'NavFilterContainer'],['../class_nav_filter_container.html#a4d697feda26ed061165d2aaa7c3fcfc6',1,'NavFilterContainer::NavFilterContainer()']]],
+  ['navfiltercontainer_2ecpp_3',['navfiltercontainer.cpp',['../navfiltercontainer_8cpp.html',1,'']]],
+  ['navfiltercontainer_2eh_4',['navfiltercontainer.h',['../navfiltercontainer_8h.html',1,'']]],
+  ['navlibrarycontainer_5',['NavLibraryContainer',['../class_nav_library_container.html',1,'NavLibraryContainer'],['../class_nav_library_container.html#a1f20c6dbe3c1f30c792035676fb205d6',1,'NavLibraryContainer::NavLibraryContainer()']]],
+  ['navlibrarycontainer_2ecpp_6',['navlibrarycontainer.cpp',['../navlibrarycontainer_8cpp.html',1,'']]],
+  ['navlibrarycontainer_2eh_7',['navlibrarycontainer.h',['../navlibrarycontainer_8h.html',1,'']]]
 ];

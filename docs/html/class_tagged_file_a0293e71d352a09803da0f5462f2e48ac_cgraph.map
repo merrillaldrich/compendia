@@ -1,0 +1,5 @@
+<map id="TaggedFile::initExifMap" name="TaggedFile::initExifMap">
+<area shape="rect" id="Node000001" title="Sets the EXIF map without marking the file dirty (used during load)." alt="" coords="5,5,163,32"/>
+<area shape="rect" id="Node000002" href="$class_tagged_file.html#a6bc53d43fb454cb93148835a39da63d8" title="Returns a copy of the EXIF map." alt="" coords="211,5,349,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,16,198,19,193,19,163,21"/>
+</map>

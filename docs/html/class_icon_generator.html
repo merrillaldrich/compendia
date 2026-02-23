@@ -93,13 +93,16 @@ $(function(){initNavTree('class_icon_generator.html','','class_icon_generator-me
 </div><!--header-->
 <div class="contents">
 
+<p>Utility class that generates and caches scaled thumbnail images for media files.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="icongenerator_8h_source.html">icongenerator.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for IconGenerator:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_icon_generator__inherit__graph.png" border="0" usemap="#a_icon_generator_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_icon_generator_inherit__map" id="a_icon_generator_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,109,107"/>
+<area shape="rect" title="Utility class that generates and caches scaled thumbnail images for media files." alt="" coords="5,80,109,107"/>
 <area shape="rect" title=" " alt="" coords="22,5,92,32"/>
 <area shape="poly" title=" " alt="" coords="59,46,60,80,54,79,55,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for IconGenerator:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_icon_generator__coll__graph.png" border="0" usemap="#a_icon_generator_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_icon_generator_coll__map" id="a_icon_generator_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,109,107"/>
+<area shape="rect" title="Utility class that generates and caches scaled thumbnail images for media files." alt="" coords="5,80,109,107"/>
 <area shape="rect" title=" " alt="" coords="22,5,92,32"/>
 <area shape="poly" title=" " alt="" coords="59,46,60,80,54,79,55,50"/>
 </map>
@@ -118,12 +121,17 @@ Collaboration diagram for IconGenerator:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a652a80ddba7d314d790062d65a58d30c" id="r_a652a80ddba7d314d790062d65a58d30c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a652a80ddba7d314d790062d65a58d30c">IconGenerator</a> (QObject *parent)</td></tr>
+<tr class="memdesc:a652a80ddba7d314d790062d65a58d30c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="class_icon_generator.html" title="Utility class that generates and caches scaled thumbnail images for media files.">IconGenerator</a>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a7ba8f2daa30729dc5167d0187ba0cf27" id="r_a7ba8f2daa30729dc5167d0187ba0cf27"><td class="memItemLeft" align="right" valign="top">static QImage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ba8f2daa30729dc5167d0187ba0cf27">generateIcon</a> (const QString absoluteFileName)</td></tr>
+<tr class="memdesc:a7ba8f2daa30729dc5167d0187ba0cf27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a 100-pixel-bounded thumbnail for the given image file.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Utility class that generates and caches scaled thumbnail images for media files. </p>
+<p>Thumbnails are stored as serialised QImage files in a hidden <code></code>.luminism_cache subdirectory alongside each media file so that subsequent loads skip the expensive image-decode step. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a652a80ddba7d314d790062d65a58d30c" name="a652a80ddba7d314d790062d65a58d30c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a652a80ddba7d314d790062d65a58d30c">&#9670;&#160;</a></span>IconGenerator()</h2>
 
@@ -138,6 +146,14 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructs an <a class="el" href="class_icon_generator.html" title="Utility class that generates and caches scaled thumbnail images for media files.">IconGenerator</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Qt parent object. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -164,6 +180,30 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Returns a 100-pixel-bounded thumbnail for the given image file. </p>
+<p>Checks the on-disk cache first; on a miss the original image is decoded, scaled, saved to the cache, and returned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">absoluteFileName</td><td>Absolute path to the source image file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A QImage containing the scaled thumbnail, or a null QImage on error. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_icon_generator_a7ba8f2daa30729dc5167d0187ba0cf27_icgraph.png" border="0" usemap="#aclass_icon_generator_a7ba8f2daa30729dc5167d0187ba0cf27_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_icon_generator_a7ba8f2daa30729dc5167d0187ba0cf27_icgraph" id="aclass_icon_generator_a7ba8f2daa30729dc5167d0187ba0cf27_icgraph">
+<area shape="rect" title="Returns a 100&#45;pixel&#45;bounded thumbnail for the given image file." alt="" coords="788,5,975,32"/>
+<area shape="rect" href="class_luminism_core.html#a4145e9c6809094544c45f8a3a2fcf180" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="532,5,740,32"/>
+<area shape="poly" title=" " alt="" coords="770,19,741,21,741,16,775,19"/>
+<area shape="rect" href="class_luminism_core.html#a797e7ab9f7b0c18348eb182c08abb980" title="Clears all existing data and reloads files from the current root directory." alt="" coords="266,5,484,32"/>
+<area shape="poly" title=" " alt="" coords="514,19,484,21,484,16,519,19"/>
+<area shape="rect" href="class_luminism_core.html#a5ee748e28577573181f5a442a71e2f29" title="Sets the root directory path and immediately loads it." alt="" coords="5,5,218,32"/>
+<area shape="poly" title=" " alt="" coords="248,19,218,21,218,16,253,19"/>
+</map>
+</div>
 
 </div>
 </div>

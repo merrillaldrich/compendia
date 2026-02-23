@@ -93,16 +93,19 @@ $(function(){initNavTree('class_tagging_widget.html','','class_tagging_widget-me
 </div><!--header-->
 <div class="contents">
 
+<p>Base widget class that carries a base colour for tag and tag-family widgets.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="taggingwidget_8h_source.html">taggingwidget.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for TaggingWidget:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tagging_widget__inherit__graph.png" border="0" usemap="#a_tagging_widget_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_tagging_widget_inherit__map" id="a_tagging_widget_inherit__map">
-<area shape="rect" title=" " alt="" coords="76,80,183,107"/>
-<area shape="rect" href="class_tag_family_widget.html" title=" " alt="" coords="5,155,128,181"/>
+<area shape="rect" title="Base widget class that carries a base colour for tag and tag&#45;family widgets." alt="" coords="76,80,183,107"/>
+<area shape="rect" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items." alt="" coords="5,155,128,181"/>
 <area shape="poly" title=" " alt="" coords="111,118,79,156,75,152,106,120"/>
-<area shape="rect" href="class_tag_widget.html" title=" " alt="" coords="152,155,235,181"/>
+<area shape="rect" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag&#45;and&#45;drop." alt="" coords="152,155,235,181"/>
 <area shape="poly" title=" " alt="" coords="152,116,185,154,179,154,149,121"/>
 <area shape="rect" title=" " alt="" coords="93,5,165,32"/>
 <area shape="poly" title=" " alt="" coords="131,46,132,80,127,79,128,50"/>
@@ -113,7 +116,7 @@ Collaboration diagram for TaggingWidget:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tagging_widget__coll__graph.png" border="0" usemap="#a_tagging_widget_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_tagging_widget_coll__map" id="a_tagging_widget_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,113,107"/>
+<area shape="rect" title="Base widget class that carries a base colour for tag and tag&#45;family widgets." alt="" coords="5,80,113,107"/>
 <area shape="rect" title=" " alt="" coords="23,5,95,32"/>
 <area shape="poly" title=" " alt="" coords="61,46,62,80,56,79,57,50"/>
 </map>
@@ -122,13 +125,19 @@ Collaboration diagram for TaggingWidget:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a527b1e071b7771cc0389895101d89d74" id="r_a527b1e071b7771cc0389895101d89d74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a527b1e071b7771cc0389895101d89d74">TaggingWidget</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:a527b1e071b7771cc0389895101d89d74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a> with no explicit colour set.  <br /></td></tr>
 <tr class="memitem:aa6691ae072b8f48dfbd299bdee032cfe" id="r_aa6691ae072b8f48dfbd299bdee032cfe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6691ae072b8f48dfbd299bdee032cfe">TaggingWidget</a> (QColor color, QWidget *parent)</td></tr>
+<tr class="memdesc:aa6691ae072b8f48dfbd299bdee032cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a> with the given base colour.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a4d2d007bdc2b04c09d035ef1330e9fa6" id="r_a4d2d007bdc2b04c09d035ef1330e9fa6"><td class="memItemLeft" align="right" valign="top">QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d2d007bdc2b04c09d035ef1330e9fa6">base_color_</a></td></tr>
+<tr class="memdesc:a4d2d007bdc2b04c09d035ef1330e9fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base colour used for painting this widget and its close button.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Base widget class that carries a base colour for tag and tag-family widgets. </p>
+<p><a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a> and <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> both inherit from this class so that child widgets such as <a class="el" href="class_tag_widget_close_button.html" title="A custom circular close button used inside TagWidget.">TagWidgetCloseButton</a> can retrieve the parent's colour without a dynamic cast to a specific subclass. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a527b1e071b7771cc0389895101d89d74" name="a527b1e071b7771cc0389895101d89d74"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a527b1e071b7771cc0389895101d89d74">&#9670;&#160;</a></span>TaggingWidget() <span class="overload">[1/2]</span></h2>
 
@@ -152,6 +161,32 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a> with no explicit colour set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tagging_widget_a527b1e071b7771cc0389895101d89d74_icgraph.png" border="0" usemap="#aclass_tagging_widget_a527b1e071b7771cc0389895101d89d74_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tagging_widget_a527b1e071b7771cc0389895101d89d74_icgraph" id="aclass_tagging_widget_a527b1e071b7771cc0389895101d89d74_icgraph">
+<area shape="rect" title="Constructs a TaggingWidget with no explicit colour set." alt="" coords="488,109,689,136"/>
+<area shape="rect" href="class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158" title="Constructs a default, empty TagFamilyWidget." alt="" coords="250,5,440,48"/>
+<area shape="poly" title=" " alt="" coords="540,103,439,62,409,51,410,46,441,58,545,103"/>
+<area shape="rect" href="class_tag_family_widget.html#aafc6de5e5fbc7740ad587c6f4199af44" title="Constructs a TagFamilyWidget bound to the given TagFamily." alt="" coords="250,72,440,115"/>
+<area shape="poly" title=" " alt="" coords="470,109,441,107,440,102,475,108"/>
+<area shape="rect" href="class_tag_widget.html#a50de81724fb26ba24274b5fac5279867" title="Constructs a default, empty TagWidget." alt="" coords="268,139,422,165"/>
+<area shape="poly" title=" " alt="" coords="470,137,422,145,422,140,475,136"/>
+<area shape="rect" href="class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="268,189,422,216"/>
+<area shape="poly" title=" " alt="" coords="541,142,441,180,402,191,400,186,439,175,536,143"/>
+<area shape="rect" href="class_tag_widget.html#af7a7bc637053188b7106dba0e533f20e" title="Overrides the Qt base&#45;class mouse&#45;move handler to initiate a drag operation." alt="" coords="5,139,202,165"/>
+<area shape="poly" title=" " alt="" coords="250,153,202,155,202,149,256,151"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="aa6691ae072b8f48dfbd299bdee032cfe" name="aa6691ae072b8f48dfbd299bdee032cfe"></a>
@@ -173,6 +208,15 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Constructs a <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a> with the given base colour. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">color</td><td>The colour to store in base_color_. </td></tr>
+    <tr><td class="paramname">parent</td><td>Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
@@ -187,6 +231,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The base colour used for painting this widget and its close button. </p>
 
 </div>
 </div>

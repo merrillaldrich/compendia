@@ -1,0 +1,9 @@
+<map id="TagWidget::deleteRequested" name="TagWidget::deleteRequested">
+<area shape="rect" id="Node000001" title="Emitted when the user clicks the close button to remove the tag." alt="" coords="221,80,410,107"/>
+<area shape="rect" id="Node000002" href="$class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="24,5,154,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="250,76,154,48,155,43,255,74"/>
+<area shape="rect" id="Node000003" href="$class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,72,173,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,94,174,96,173,91,208,93"/>
+<area shape="rect" id="Node000004" href="$class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="16,139,162,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="249,111,144,141,143,136,244,111"/>
+</map>

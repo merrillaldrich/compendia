@@ -93,13 +93,16 @@ $(function(){initNavTree('class_tag_widget_close_button.html','','class_tag_widg
 </div><!--header-->
 <div class="contents">
 
+<p>A custom circular close button used inside <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a>.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="tagwidgetclosebutton_8h_source.html">tagwidgetclosebutton.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for TagWidgetCloseButton:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag_widget_close_button__inherit__graph.png" border="0" usemap="#a_tag_widget_close_button_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_tag_widget_close_button_inherit__map" id="a_tag_widget_close_button_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,161,107"/>
+<area shape="rect" title="A custom circular close button used inside TagWidget." alt="" coords="5,80,161,107"/>
 <area shape="rect" title=" " alt="" coords="33,5,133,32"/>
 <area shape="poly" title=" " alt="" coords="85,46,86,81,80,79,81,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for TagWidgetCloseButton:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag_widget_close_button__coll__graph.png" border="0" usemap="#a_tag_widget_close_button_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_tag_widget_close_button_coll__map" id="a_tag_widget_close_button_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,161,107"/>
+<area shape="rect" title="A custom circular close button used inside TagWidget." alt="" coords="5,80,161,107"/>
 <area shape="rect" title=" " alt="" coords="33,5,133,32"/>
 <area shape="poly" title=" " alt="" coords="85,46,86,81,80,79,81,50"/>
 </map>
@@ -118,14 +121,21 @@ Collaboration diagram for TagWidgetCloseButton:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a42eee9be5756ad63e9c540db235fb5ad" id="r_a42eee9be5756ad63e9c540db235fb5ad"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42eee9be5756ad63e9c540db235fb5ad">TagWidgetCloseButton</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:a42eee9be5756ad63e9c540db235fb5ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the button, deriving its colour from the parent <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a0c40ab99e5b36bc2a48f69e721b60fcb" id="r_a0c40ab99e5b36bc2a48f69e721b60fcb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c40ab99e5b36bc2a48f69e721b60fcb">paintEvent</a> (QPaintEvent *event) override</td></tr>
+<tr class="memdesc:a0c40ab99e5b36bc2a48f69e721b60fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class paint handler to draw the circular button and 'x'.  <br /></td></tr>
 <tr class="memitem:ac1ed97260f88ac26cda27421f744f0a2" id="r_ac1ed97260f88ac26cda27421f744f0a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac1ed97260f88ac26cda27421f744f0a2">enterEvent</a> (QEnterEvent *event) override</td></tr>
+<tr class="memdesc:ac1ed97260f88ac26cda27421f744f0a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class enter-event handler to apply the hover colour.  <br /></td></tr>
 <tr class="memitem:a6f760d60c5b11e596d5fb6134a435ce6" id="r_a6f760d60c5b11e596d5fb6134a435ce6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f760d60c5b11e596d5fb6134a435ce6">leaveEvent</a> (QEvent *event) override</td></tr>
+<tr class="memdesc:a6f760d60c5b11e596d5fb6134a435ce6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class leave-event handler to restore the normal colour.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A custom circular close button used inside <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a>. </p>
+<p>Draws a small rounded-rectangle button with a painted 'x' symbol. The button colour is derived from the parent <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a>'s base_color_ and brightens slightly on mouse-over to give a hover effect. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a42eee9be5756ad63e9c540db235fb5ad" name="a42eee9be5756ad63e9c540db235fb5ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a42eee9be5756ad63e9c540db235fb5ad">&#9670;&#160;</a></span>TagWidgetCloseButton()</h2>
 
@@ -148,6 +158,14 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs the button, deriving its colour from the parent <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>The parent widget; expected to be a <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a> subclass. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -175,6 +193,14 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Overrides the Qt base-class enter-event handler to apply the hover colour. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The enter event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a6f760d60c5b11e596d5fb6134a435ce6" name="a6f760d60c5b11e596d5fb6134a435ce6"></a>
@@ -200,6 +226,14 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Overrides the Qt base-class leave-event handler to restore the normal colour. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The leave event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a0c40ab99e5b36bc2a48f69e721b60fcb" name="a0c40ab99e5b36bc2a48f69e721b60fcb"></a>
@@ -224,6 +258,14 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Overrides the Qt base-class paint handler to draw the circular button and 'x'. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The paint event. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

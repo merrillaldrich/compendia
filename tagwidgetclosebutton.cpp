@@ -1,5 +1,9 @@
 #include "tagwidgetclosebutton.h"
 
+/*! \brief Constructs the button, deriving its colour from the parent TaggingWidget.
+ *
+ * \param parent The parent widget; expected to be a TaggingWidget subclass.
+ */
 TagWidgetCloseButton::TagWidgetCloseButton(QWidget *parent)
     : QPushButton(parent) {
 
@@ -22,6 +26,10 @@ TagWidgetCloseButton::TagWidgetCloseButton(QWidget *parent)
     shadow_edge_color_ = QColor::fromHsv(background_color_.hue(), background_color_.saturation(), shadow_value);
 }
 
+/*! \brief Overrides the Qt base-class paint handler to draw the circular button and 'x'.
+ *
+ * \param event The paint event.
+ */
 void TagWidgetCloseButton::paintEvent(QPaintEvent *event){
 
     QPainter painter(this);
@@ -66,11 +74,19 @@ void TagWidgetCloseButton::paintEvent(QPaintEvent *event){
     painter.drawPath(path);
 }
 
+/*! \brief Overrides the Qt base-class enter-event handler to apply the hover colour.
+ *
+ * \param event The enter event.
+ */
 void TagWidgetCloseButton::enterEvent(QEnterEvent *event) {
     effective_color_ = mouse_over_color_;
     QPushButton::enterEvent(event);
 }
 
+/*! \brief Overrides the Qt base-class leave-event handler to restore the normal colour.
+ *
+ * \param event The leave event.
+ */
 void TagWidgetCloseButton::leaveEvent(QEvent *event) {
     effective_color_ = background_color_;
     QPushButton::leaveEvent(event);

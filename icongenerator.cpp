@@ -1,11 +1,23 @@
 #include "icongenerator.h"
 #include <qimagereader.h>
 
+/*! \brief Constructs an IconGenerator.
+ *
+ * \param parent Qt parent object.
+ */
 IconGenerator::IconGenerator(QObject *parent)
     : QObject(parent){
 
 }
 
+/*! \brief Returns a 100-pixel-bounded thumbnail for the given image file.
+ *
+ * Checks the on-disk cache first; on a miss the original image is decoded,
+ * scaled, saved to the cache, and returned.
+ *
+ * \param absoluteFileName Absolute path to the source image file.
+ * \return A QImage containing the scaled thumbnail, or a null QImage on error.
+ */
 QImage IconGenerator::generateIcon(const QString absoluteFileName)
 {
     QImage iconPic;
@@ -31,6 +43,12 @@ QImage IconGenerator::generateIcon(const QString absoluteFileName)
     return iconPic;
 }
 
+/*! \brief Saves a thumbnail image to the per-folder cache directory.
+ *
+ * \param absoluteFileName Absolute path to the original image (used to derive the cache path).
+ * \param pict             The thumbnail image to save.
+ * \return True if the image was written successfully.
+ */
 bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImage &pict) {
 
     QFileInfo fi(absoluteFileName);
@@ -60,6 +78,11 @@ bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImag
     return true;
 }
 
+/*! \brief Attempts to load a cached thumbnail for the given source file.
+ *
+ * \param absoluteFileName Absolute path to the original image (used to derive the cache path).
+ * \return The cached QImage, or a null QImage if no valid cache entry exists.
+ */
 QImage IconGenerator::loadIconFromCache(const QString &absoluteFileName){
 
     QFileInfo fi(absoluteFileName);

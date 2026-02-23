@@ -1,5 +1,5 @@
 <map id="Tag::setName" name="Tag::setName">
-<area shape="rect" id="Node000001" title=" " alt="" coords="138,5,241,32"/>
-<area shape="rect" id="Node000002" href="$tag_8cpp.html#a22ce4f25d0ac346526919e53f02e9949" title=" " alt="" coords="5,5,90,32"/>
+<area shape="rect" id="Node000001" title="Sets the tag name and marks the dirty flag if the name changed." alt="" coords="138,5,241,32"/>
+<area shape="rect" id="Node000002" href="$tag_8cpp.html#a22ce4f25d0ac346526919e53f02e9949" title="Deserialises a Tag&#39;s name from a QDataStream during drag&#45;and&#45;drop." alt="" coords="5,5,90,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,19,90,21,90,16,125,18"/>
 </map>

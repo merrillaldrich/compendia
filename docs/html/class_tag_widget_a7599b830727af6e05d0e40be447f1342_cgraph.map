@@ -1,0 +1,5 @@
+<map id="TagWidget::startEdit" name="TagWidget::startEdit">
+<area shape="rect" id="Node000001" title="Switches the widget into inline&#45;edit mode, showing the line edit." alt="" coords="5,5,146,32"/>
+<area shape="rect" id="Node000002" href="$class_tag_widget.html#af9fde8396dc704d7b7233970e3fda9fe" title="Recalculates and applies the widget width to fit the current label or line&#45;edit text." alt="" coords="194,5,400,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,16,181,19,176,19,146,21"/>
+</map>

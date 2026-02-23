@@ -1,0 +1,5 @@
+<map id="FilterProxyModel::filterAcceptsRow" name="FilterProxyModel::filterAcceptsRow">
+<area shape="rect" id="Node000001" title="Overrides the Qt base&#45;class row&#45;acceptance test to apply all active filters." alt="" coords="5,5,158,48"/>
+<area shape="rect" id="Node000002" href="$class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="206,13,323,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,24,193,26,188,27,158,29"/>
+</map>

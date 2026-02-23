@@ -1,23 +1,31 @@
 <map id="TagFamily::getName" name="TagFamily::getName">
-<area shape="rect" id="Node000001" title=" " alt="" coords="514,205,656,232"/>
-<area shape="rect" id="Node000002" href="$class_tagged_file_collection.html#afb7a9fb67490ea9e0c855b73fbf51704" title=" " alt="" coords="293,5,442,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="568,191,527,128,498,92,464,62,443,49,443,44,468,58,502,89,532,124,573,192"/>
-<area shape="rect" id="Node000004" href="$class_tagged_file_collection.html#a3f8358b95712d17c0e5716bec1037f86" title=" " alt="" coords="297,72,439,115"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="555,194,515,162,465,129,440,117,440,112,467,124,518,158,561,195"/>
-<area shape="rect" id="Node000006" href="$class_tagged_file_collection.html#a972da14a9161a300f6296421a18d0cdf" title=" " alt="" coords="297,139,439,181"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="516,201,440,182,440,177,521,200"/>
-<area shape="rect" id="Node000007" href="$class_tag_widget.html#af7a7bc637053188b7106dba0e533f20e" title=" " alt="" coords="270,205,466,232"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="496,219,467,221,466,216,501,218"/>
-<area shape="rect" id="Node000008" href="$tagfamily_8cpp.html#a135f021827fb1e5886707e355e28ca18" title=" " alt="" coords="326,256,410,283"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="507,237,411,262,410,257,512,235"/>
-<area shape="rect" id="Node000009" href="$class_tag.html#ac573654c99464b6f22d53af4cd12be8c" title=" " alt="" coords="311,307,424,333"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="557,241,515,271,467,297,426,311,424,306,465,292,512,267,552,243"/>
-<area shape="rect" id="Node000010" href="$class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title=" " alt="" coords="272,357,464,384"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="569,244,527,298,499,325,467,348,442,359,441,354,465,343,495,321,523,294,564,246"/>
-<area shape="rect" id="Node000003" href="$class_tagged_file_collection.html#adcb7c9ac635de9df3b7068025a49367d" title=" " alt="" coords="42,5,185,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="276,28,186,29,184,24,280,25"/>
-<area shape="rect" id="Node000005" href="$class_tagged_file_collection.html#ae0cbbcbe0e5d9837f435ce7d732af93e" title=" " alt="" coords="42,72,185,115"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="279,95,186,96,184,91,283,92"/>
-<area shape="rect" id="Node000011" href="$class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title=" " alt="" coords="5,357,222,384"/>
-<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="254,371,222,373,222,368,259,371"/>
+<area shape="rect" id="Node000001" title="Returns the current family name." alt="" coords="697,241,840,268"/>
+<area shape="rect" id="Node000002" href="$class_luminism_core.html#ad136cbd828e921887cd0e766cec7aca3" title="Creates or retrieves a tag family in the library by name." alt="" coords="464,48,638,91"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="744,228,702,182,648,130,594,94,595,89,651,126,706,178,750,230"/>
+<area shape="rect" id="Node000006" href="$class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="475,140,627,167"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="735,231,695,206,648,181,618,170,618,165,650,176,698,202,740,232"/>
+<area shape="rect" id="Node000010" href="$class_luminism_core.html#ab1bfb52f20623c4aaca07a3ddda3a513" title="Retrieve a tag family from the library by name." alt="" coords="456,191,647,217"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="690,237,612,221,612,215,696,237"/>
+<area shape="rect" id="Node000011" href="$class_tag_widget.html#af7a7bc637053188b7106dba0e533f20e" title="Overrides the Qt base&#45;class mouse&#45;move handler to initiate a drag operation." alt="" coords="453,241,649,268"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="679,255,650,257,650,252,684,254"/>
+<area shape="rect" id="Node000012" href="$tagfamily_8cpp.html#a135f021827fb1e5886707e355e28ca18" title="Serialises a TagFamily&#39;s name to a QDataStream for drag&#45;and&#45;drop transfer." alt="" coords="509,292,593,319"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="696,272,594,298,593,293,690,273"/>
+<area shape="rect" id="Node000013" href="$class_tag.html#ac573654c99464b6f22d53af4cd12be8c" title="Equality operator comparing tag name and family name." alt="" coords="494,343,608,369"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="740,277,698,307,650,333,609,347,608,342,648,328,695,303,735,279"/>
+<area shape="rect" id="Node000014" href="$class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="456,393,647,420"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="752,280,710,334,682,361,651,384,625,395,624,390,648,379,679,357,706,330,747,282"/>
+<area shape="rect" id="Node000003" href="$class_luminism_core.html#a1c32ba0f603caecb8cc8d52233f3603b" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="200,5,394,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="446,50,368,35,367,30,451,48"/>
+<area shape="rect" id="Node000005" href="$class_tag_family_widget.html#a1b322fec8851b3248f2abe24e426c6c4" title="Commits the edited family name and switches back to read mode." alt="" coords="210,56,384,83"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="446,70,385,72,384,67,451,68"/>
+<area shape="rect" id="Node000004" href="$class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="5,5,141,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="182,20,143,21,140,16,186,17"/>
+<area shape="rect" id="Node000007" href="$class_luminism_core.html#acf6b3ddfa22ee738d40c7304edff0ce3" title="Applies the tag identified by a TagSet to a specific file." alt="" coords="214,107,380,133"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="457,142,380,133,380,128,462,141"/>
+<area shape="rect" id="Node000008" href="$class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="232,157,362,200"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="457,164,363,175,362,170,462,161"/>
+<area shape="rect" id="Node000009" href="$class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="213,224,380,267"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="467,173,454,181,430,197,406,214,379,226,377,221,404,210,427,193,452,176,472,171"/>
+<area shape="rect" id="Node000015" href="$class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="189,393,405,420"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="437,407,406,409,405,404,442,407"/>
 </map>

@@ -93,13 +93,16 @@ $(function(){initNavTree('class_preview_container.html','','class_preview_contai
 </div><!--header-->
 <div class="contents">
 
+<p>Widget that displays a full-size image preview inside a zoomable graphics view.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="previewcontainer_8h_source.html">previewcontainer.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for PreviewContainer:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_preview_container__inherit__graph.png" border="0" usemap="#a_preview_container_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_preview_container_inherit__map" id="a_preview_container_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,130,107"/>
+<area shape="rect" title="Widget that displays a full&#45;size image preview inside a zoomable graphics view." alt="" coords="5,80,130,107"/>
 <area shape="rect" title=" " alt="" coords="31,5,104,32"/>
 <area shape="poly" title=" " alt="" coords="69,46,70,80,65,79,66,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for PreviewContainer:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_preview_container__coll__graph.png" border="0" usemap="#a_preview_container_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_preview_container_coll__map" id="a_preview_container_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,130,107"/>
+<area shape="rect" title="Widget that displays a full&#45;size image preview inside a zoomable graphics view." alt="" coords="5,80,130,107"/>
 <area shape="rect" title=" " alt="" coords="31,5,104,32"/>
 <area shape="poly" title=" " alt="" coords="69,46,70,80,65,79,66,50"/>
 </map>
@@ -118,12 +121,20 @@ Collaboration diagram for PreviewContainer:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af9dab801b59a13dfbecf87cde477c908" id="r_af9dab801b59a13dfbecf87cde477c908"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9dab801b59a13dfbecf87cde477c908">PreviewContainer</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:af9dab801b59a13dfbecf87cde477c908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the preview container and sets up the internal scene and view.  <br /></td></tr>
 <tr class="memitem:a604d21a80e3aef06e485701209d85b16" id="r_a604d21a80e3aef06e485701209d85b16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a604d21a80e3aef06e485701209d85b16">preview</a> (QImage image)</td></tr>
+<tr class="memdesc:a604d21a80e3aef06e485701209d85b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays the given QImage in the preview pane.  <br /></td></tr>
 <tr class="memitem:a10cdd4a21c08f38fab99b28bdcc5fc83" id="r_a10cdd4a21c08f38fab99b28bdcc5fc83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10cdd4a21c08f38fab99b28bdcc5fc83">preview</a> (QString absoluteFilePath)</td></tr>
+<tr class="memdesc:a10cdd4a21c08f38fab99b28bdcc5fc83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads and displays the image at the given absolute file path.  <br /></td></tr>
 <tr class="memitem:a39a08a4a1b9d935018c37b5b1788a11c" id="r_a39a08a4a1b9d935018c37b5b1788a11c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39a08a4a1b9d935018c37b5b1788a11c">freshen</a> ()</td></tr>
+<tr class="memdesc:a39a08a4a1b9d935018c37b5b1788a11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-fits the displayed image to the viewport if it has not been zoomed in.  <br /></td></tr>
 <tr class="memitem:af820d1ea99343d488aa4b47203bb8521" id="r_af820d1ea99343d488aa4b47203bb8521"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af820d1ea99343d488aa4b47203bb8521">clear</a> ()</td></tr>
+<tr class="memdesc:af820d1ea99343d488aa4b47203bb8521"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the graphics scene, removing any displayed image.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Widget that displays a full-size image preview inside a zoomable graphics view. </p>
+<p>Wraps a <a class="el" href="class_zoomable_graphics_view.html" title="A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.">ZoomableGraphicsView</a> and a QGraphicsScene. The preview can be loaded from a file path or directly from a QImage. The <a class="el" href="#a39a08a4a1b9d935018c37b5b1788a11c" title="Re-fits the displayed image to the viewport if it has not been zoomed in.">freshen()</a> method re-fits the image to the viewport when the containing pane is resized. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af9dab801b59a13dfbecf87cde477c908" name="af9dab801b59a13dfbecf87cde477c908"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af9dab801b59a13dfbecf87cde477c908">&#9670;&#160;</a></span>PreviewContainer()</h2>
 
@@ -147,6 +158,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs the preview container and sets up the internal scene and view. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -165,6 +184,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Clears the graphics scene, removing any displayed image. </p>
+
 </div>
 </div>
 <a id="a39a08a4a1b9d935018c37b5b1788a11c" name="a39a08a4a1b9d935018c37b5b1788a11c"></a>
@@ -181,6 +202,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Re-fits the displayed image to the viewport if it has not been zoomed in. </p>
 
 </div>
 </div>
@@ -199,6 +222,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Displays the given QImage in the preview pane. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">image</td><td>The image to display. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_preview_container_a604d21a80e3aef06e485701209d85b16_icgraph.png" border="0" usemap="#aclass_preview_container_a604d21a80e3aef06e485701209d85b16_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_preview_container_a604d21a80e3aef06e485701209d85b16_icgraph" id="aclass_preview_container_a604d21a80e3aef06e485701209d85b16_icgraph">
+<area shape="rect" title="Displays the given QImage in the preview pane." alt="" coords="231,5,408,32"/>
+<area shape="rect" href="class_preview_container.html#a10cdd4a21c08f38fab99b28bdcc5fc83" title="Loads and displays the image at the given absolute file path." alt="" coords="5,5,183,32"/>
+<area shape="poly" title=" " alt="" coords="213,19,183,21,183,16,218,19"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a10cdd4a21c08f38fab99b28bdcc5fc83" name="a10cdd4a21c08f38fab99b28bdcc5fc83"></a>
@@ -215,6 +256,24 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Loads and displays the image at the given absolute file path. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">absoluteFilePath</td><td>Absolute path to the image file to display. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_preview_container_a10cdd4a21c08f38fab99b28bdcc5fc83_cgraph.png" border="0" usemap="#aclass_preview_container_a10cdd4a21c08f38fab99b28bdcc5fc83_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_preview_container_a10cdd4a21c08f38fab99b28bdcc5fc83_cgraph" id="aclass_preview_container_a10cdd4a21c08f38fab99b28bdcc5fc83_cgraph">
+<area shape="rect" title="Loads and displays the image at the given absolute file path." alt="" coords="5,5,183,32"/>
+<area shape="rect" href="class_preview_container.html#a604d21a80e3aef06e485701209d85b16" title="Displays the given QImage in the preview pane." alt="" coords="231,5,408,32"/>
+<area shape="poly" title=" " alt="" coords="183,16,218,19,212,19,183,21"/>
+</map>
+</div>
 
 </div>
 </div>

@@ -1,0 +1,5 @@
+<map id="TagContainer::onTagDeleteRequested" name="TagContainer::onTagDeleteRequested">
+<area shape="rect" id="Node000001" title="Forwards a tag&#45;delete request up to the tagDeleteRequested signal." alt="" coords="5,5,185,48"/>
+<area shape="rect" id="Node000002" href="$class_tag_container.html#a77602fc59503bc656061e5f1fc096791" title="Emitted when the user requests removal of a tag from this container." alt="" coords="233,13,458,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,24,220,26,214,27,185,29"/>
+</map>

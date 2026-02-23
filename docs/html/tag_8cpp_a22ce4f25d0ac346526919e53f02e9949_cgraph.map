@@ -1,7 +1,7 @@
 <map id="operator&gt;&gt;" name="operator&gt;&gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,90,32"/>
-<area shape="rect" id="Node000002" href="$class_tag.html#a1cef34da4131dc5bd8bcc0869b22a492" title=" " alt="" coords="138,5,241,32"/>
+<area shape="rect" id="Node000001" title="Deserialises a Tag&#39;s name from a QDataStream during drag&#45;and&#45;drop." alt="" coords="5,5,90,32"/>
+<area shape="rect" id="Node000002" href="$class_tag.html#a1cef34da4131dc5bd8bcc0869b22a492" title="Sets the tag name and marks the dirty flag if the name changed." alt="" coords="138,5,241,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,16,125,18,119,19,90,21"/>
-<area shape="rect" id="Node000003" href="$class_tag.html#a1529679fece67dd8a8cd704aeb703e4d" title=" " alt="" coords="289,5,423,32"/>
+<area shape="rect" id="Node000003" href="$class_tag.html#a1529679fece67dd8a8cd704aeb703e4d" title="Emitted when the tag name is changed via setName()." alt="" coords="289,5,423,32"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="241,16,276,19,270,19,241,21"/>
 </map>

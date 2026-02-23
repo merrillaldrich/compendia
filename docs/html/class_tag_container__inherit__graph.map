@@ -1,10 +1,10 @@
 <map id="TagContainer" name="TagContainer">
-<area shape="rect" id="Node000001" title=" " alt="" coords="181,80,280,107"/>
-<area shape="rect" id="Node000003" href="$class_nav_filter_container.html" title=" " alt="" coords="5,155,136,181"/>
+<area shape="rect" id="Node000001" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items." alt="" coords="181,80,280,107"/>
+<area shape="rect" id="Node000003" href="$class_nav_filter_container.html" title="Tag container that displays the active filter tags and accepts tag drops to add filters." alt="" coords="5,155,136,181"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="191,115,100,156,98,152,186,112"/>
-<area shape="rect" id="Node000004" href="$class_nav_library_container.html" title=" " alt="" coords="160,155,301,181"/>
+<area shape="rect" id="Node000004" href="$class_nav_library_container.html" title="Tag container that displays the full tag library and allows new families to be created." alt="" coords="160,155,301,181"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="232,121,233,156,228,153,229,124"/>
-<area shape="rect" id="Node000005" href="$class_tag_assignment_container.html" title=" " alt="" coords="324,155,492,181"/>
+<area shape="rect" id="Node000005" href="$class_tag_assignment_container.html" title="Tag container showing tags assigned to the current file selection, accepting tag drops." alt="" coords="324,155,492,181"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="276,110,379,154,374,154,275,116"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="194,5,267,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,46,233,81,228,78,229,50"/>

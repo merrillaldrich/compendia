@@ -1,5 +1,5 @@
 <map id="FlowLayout::takeAt" name="FlowLayout::takeAt">
-<area shape="rect" id="Node000001" title=" " alt="" coords="225,5,359,32"/>
-<area shape="rect" id="Node000002" href="$class_flow_layout.html#abcbfd03a4758b98bcf13d44f5e673551" title="[1]" alt="" coords="5,5,177,32"/>
+<area shape="rect" id="Node000001" title="Removes and returns the layout item at the given index." alt="" coords="225,5,359,32"/>
+<area shape="rect" id="Node000002" href="$class_flow_layout.html#abcbfd03a4758b98bcf13d44f5e673551" title="Destroys the layout and deletes all managed layout items." alt="" coords="5,5,177,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,19,177,21,177,16,212,19"/>
 </map>

@@ -1,7 +1,9 @@
 <map id="TaggedFile::TaggedFileJSON" name="TaggedFile::TaggedFileJSON">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,197,57"/>
-<area shape="rect" id="Node000002" href="$class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title=" " alt="" coords="264,5,368,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,30,251,26,246,27,198,35"/>
-<area shape="rect" id="Node000003" href="$class_tag_family.html#a9d344211abfce9b2852e454d98507949" title=" " alt="" coords="245,56,387,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="197,53,232,59,227,59,197,58"/>
+<area shape="rect" id="Node000001" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="5,56,197,83"/>
+<area shape="rect" id="Node000002" href="$class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="264,5,368,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,53,251,33,247,36,162,58"/>
+<area shape="rect" id="Node000003" href="$class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="245,56,387,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="197,67,232,69,227,70,198,72"/>
+<area shape="rect" id="Node000004" href="$class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="257,107,374,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="161,81,244,102,239,103,161,86"/>
 </map>

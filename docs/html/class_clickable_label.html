@@ -93,13 +93,16 @@ $(function(){initNavTree('class_clickable_label.html','','class_clickable_label-
 </div><!--header-->
 <div class="contents">
 
+<p>A QLabel that emits a <a class="el" href="#a49e69616b4bd73cb64ae0d1946bf6b2e" title="Emitted when the label is released with the mouse button.">clicked()</a> signal on mouse release.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="clickablelabel_8h_source.html">clickablelabel.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for ClickableLabel:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_clickable_label__inherit__graph.png" border="0" usemap="#a_clickable_label_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_clickable_label_inherit__map" id="a_clickable_label_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,112,107"/>
+<area shape="rect" title="A QLabel that emits a clicked() signal on mouse release." alt="" coords="5,80,112,107"/>
 <area shape="rect" title=" " alt="" coords="27,5,90,32"/>
 <area shape="poly" title=" " alt="" coords="60,46,61,80,56,79,57,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for ClickableLabel:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_clickable_label__coll__graph.png" border="0" usemap="#a_clickable_label_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_clickable_label_coll__map" id="a_clickable_label_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,112,107"/>
+<area shape="rect" title="A QLabel that emits a clicked() signal on mouse release." alt="" coords="5,80,112,107"/>
 <area shape="rect" title=" " alt="" coords="27,5,90,32"/>
 <area shape="poly" title=" " alt="" coords="60,46,61,80,56,79,57,50"/>
 </map>
@@ -118,16 +121,22 @@ Collaboration diagram for ClickableLabel:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a49e69616b4bd73cb64ae0d1946bf6b2e" id="r_a49e69616b4bd73cb64ae0d1946bf6b2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49e69616b4bd73cb64ae0d1946bf6b2e">clicked</a> (QMouseEvent *event)</td></tr>
+<tr class="memdesc:a49e69616b4bd73cb64ae0d1946bf6b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the label is released with the mouse button.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad9ae3203cbf6f6746312a1391c218951" id="r_ad9ae3203cbf6f6746312a1391c218951"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9ae3203cbf6f6746312a1391c218951">ClickableLabel</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:ad9ae3203cbf6f6746312a1391c218951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the label and sets the cursor to a pointing hand.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ac5a79122f2c24b65a4080652f0641c34" id="r_ac5a79122f2c24b65a4080652f0641c34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5a79122f2c24b65a4080652f0641c34">mouseReleaseEvent</a> (QMouseEvent *event)</td></tr>
+<tr class="memdesc:ac5a79122f2c24b65a4080652f0641c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class handler to emit the <a class="el" href="#a49e69616b4bd73cb64ae0d1946bf6b2e" title="Emitted when the label is released with the mouse button.">clicked()</a> signal.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A QLabel that emits a <a class="el" href="#a49e69616b4bd73cb64ae0d1946bf6b2e" title="Emitted when the label is released with the mouse button.">clicked()</a> signal on mouse release. </p>
+<p>Used inside tag and tag-family widgets so that clicking on the text label enters inline-edit mode. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad9ae3203cbf6f6746312a1391c218951" name="ad9ae3203cbf6f6746312a1391c218951"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad9ae3203cbf6f6746312a1391c218951">&#9670;&#160;</a></span>ClickableLabel()</h2>
 
@@ -150,6 +159,14 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs the label and sets the cursor to a pointing hand. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -177,6 +194,28 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Emitted when the label is released with the mouse button. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The mouse event from the release. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_clickable_label_a49e69616b4bd73cb64ae0d1946bf6b2e_icgraph.png" border="0" usemap="#aclass_clickable_label_a49e69616b4bd73cb64ae0d1946bf6b2e_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_clickable_label_a49e69616b4bd73cb64ae0d1946bf6b2e_icgraph" id="aclass_clickable_label_a49e69616b4bd73cb64ae0d1946bf6b2e_icgraph">
+<area shape="rect" title="Emitted when the label is released with the mouse button." alt="" coords="255,80,410,107"/>
+<area shape="rect" href="class_clickable_label.html#ac5a79122f2c24b65a4080652f0641c34" title="Overrides the Qt base&#45;class handler to emit the clicked() signal." alt="" coords="5,5,207,48"/>
+<area shape="poly" title=" " alt="" coords="267,76,181,51,181,46,272,74"/>
+<area shape="rect" href="class_tag_family_widget.html#aafc6de5e5fbc7740ad587c6f4199af44" title="Constructs a TagFamilyWidget bound to the given TagFamily." alt="" coords="11,72,201,115"/>
+<area shape="poly" title=" " alt="" coords="236,94,202,96,201,91,241,93"/>
+<area shape="rect" href="class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="29,139,183,165"/>
+<area shape="poly" title=" " alt="" coords="268,111,207,129,163,141,162,135,206,124,262,112"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="ac5a79122f2c24b65a4080652f0641c34" name="ac5a79122f2c24b65a4080652f0641c34"></a>
@@ -201,6 +240,24 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Overrides the Qt base-class handler to emit the <a class="el" href="#a49e69616b4bd73cb64ae0d1946bf6b2e" title="Emitted when the label is released with the mouse button.">clicked()</a> signal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The mouse release event. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_clickable_label_ac5a79122f2c24b65a4080652f0641c34_cgraph.png" border="0" usemap="#aclass_clickable_label_ac5a79122f2c24b65a4080652f0641c34_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_clickable_label_ac5a79122f2c24b65a4080652f0641c34_cgraph" id="aclass_clickable_label_ac5a79122f2c24b65a4080652f0641c34_cgraph">
+<area shape="rect" title="Overrides the Qt base&#45;class handler to emit the clicked() signal." alt="" coords="5,5,207,48"/>
+<area shape="rect" href="class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e" title="Emitted when the label is released with the mouse button." alt="" coords="255,13,410,40"/>
+<area shape="poly" title=" " alt="" coords="207,24,241,26,236,27,207,29"/>
+</map>
+</div>
 
 </div>
 </div>

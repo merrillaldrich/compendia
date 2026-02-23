@@ -1,13 +1,19 @@
 #include "tagassignmentcontainer.h"
 
+/*! \brief Constructs an empty TagAssignmentContainer.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 TagAssignmentContainer::TagAssignmentContainer(QWidget *parent)
     : TagContainer{parent}
 {}
 
+/*! \brief Overrides the Qt base-class handler to accept tag drag-enter events.
+ *
+ * \param event The drag-enter event to evaluate.
+ */
 void TagAssignmentContainer::dragEnterEvent(QDragEnterEvent *event)
 {
-    //qDebug() << "Drag enter event!";
-
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
@@ -20,10 +26,12 @@ void TagAssignmentContainer::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 
+/*! \brief Overrides the Qt base-class handler to keep accepting tag drag-move events.
+ *
+ * \param event The drag-move event to evaluate.
+ */
 void TagAssignmentContainer::dragMoveEvent(QDragMoveEvent *event)
 {
-    //qDebug() << "Drag move event!";
-
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
@@ -36,13 +44,13 @@ void TagAssignmentContainer::dragMoveEvent(QDragMoveEvent *event)
     }
 }
 
+/*! \brief Overrides the Qt base-class handler to apply the dropped tag to all filtered files.
+ *
+ * \param event The drop event containing the dragged tag data.
+ */
 void TagAssignmentContainer::dropEvent(QDropEvent *event)
 {
-    //qDebug() << "Drop event!";
-
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
-
-        //qDebug() << "Drop!";
 
         // Convert the dropped data
         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
@@ -117,7 +125,3 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
         event->ignore();
     }
 }
-
-
-
-

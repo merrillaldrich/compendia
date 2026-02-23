@@ -1,9 +1,18 @@
 #include "tagfamilywidget.h"
 
+/*! \brief Constructs a default, empty TagFamilyWidget.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 TagFamilyWidget::TagFamilyWidget(QWidget *parent)
     : TaggingWidget{parent}
 {}
 
+/*! \brief Constructs a TagFamilyWidget bound to the given TagFamily.
+ *
+ * \param tagFamily The TagFamily this widget represents.
+ * \param parent    Qt parent widget.
+ */
 TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     : TaggingWidget{parent}
 {
@@ -45,6 +54,10 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     connect(label_, &ClickableLabel::clicked, this, &TagFamilyWidget::onLabelClicked);
 }
 
+/*! \brief Overrides the Qt base-class mouse-release handler to add a new tag on click.
+ *
+ * \param event The mouse release event.
+ */
 void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
 
     Tag* t = new Tag(tag_family_, "", this);
@@ -69,19 +82,26 @@ void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
     this->setMinimumHeight(childrenRect().height() + 4);
 
     event->accept();
-
-    //QWidget::mouseReleaseEvent(event); // Do not call parent b/c we handled the event fully
 }
 
+/*! \brief Slot called when the line edit finishes editing; commits via endEdit(). */
 void TagFamilyWidget::onLineEditEditingFinished(){
     endEdit();
 }
 
+/*! \brief Slot called when the family name label is clicked; enters edit mode via startEdit().
+ *
+ * \param event The mouse event from the click.
+ */
 void TagFamilyWidget::onLabelClicked(QMouseEvent *event){
     startEdit();
     event->accept();
 }
 
+/*! \brief Overrides the Qt base-class paint handler to draw the family border and label area.
+ *
+ * \param event The paint event.
+ */
 void TagFamilyWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -116,6 +136,7 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
     painter.drawPath(path);
 }
 
+/*! \brief Switches the widget into inline-edit mode for the family name. */
 void TagFamilyWidget::startEdit(){
     edit_status_ = "Edit";
     label_->hide();
@@ -124,6 +145,7 @@ void TagFamilyWidget::startEdit(){
     line_edit_->setFocus();
 }
 
+/*! \brief Commits the edited family name and switches back to read mode. */
 void TagFamilyWidget::endEdit(){
     edit_status_ = "Read";
     tag_family_->setName(line_edit_->text());
@@ -143,24 +165,35 @@ void TagFamilyWidget::endEdit(){
     label_->show();
 }
 
+/*! \brief Slot called when the underlying TagFamily name changes; refreshes the label. */
 void TagFamilyWidget::onTagFamilyNameChanged(){
     label_->setText(tag_family_->getName());
     label_->adjustSize(); // Note this is only changing the width, height is fixed with a policy
     update(0, 0, width(), 26); // Paint a band across the widget for the case where the label became shorter after edit
 }
 
+/*! \brief Slot called when a child tag name changes; re-sorts the tag widgets. */
 void TagFamilyWidget::onTagNameChanged(){
     sort();
 }
 
+/*! \brief Returns the TagFamily pointer this widget represents.
+ *
+ * \return The associated TagFamily.
+ */
 TagFamily *TagFamilyWidget::getTagFamily() const{
     return tag_family_;
 }
 
+/*! \brief Returns the minimum size as the size hint.
+ *
+ * \return The size hint.
+ */
 QSize TagFamilyWidget::sizeHint() const {
     return minimumSize();
 }
 
+/*! \brief Sorts the child TagWidget items alphabetically by tag name. */
 void TagFamilyWidget::sort() {
     QList<TagWidget*> twlist;
     QLayoutItem* item = nullptr;

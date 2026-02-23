@@ -1,5 +1,7 @@
 <map id="TagFamilyWidget::mouseReleaseEvent" name="TagFamilyWidget::mouseReleaseEvent">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,223,48"/>
-<area shape="rect" id="Node000002" href="$class_tag_widget.html#a7599b830727af6e05d0e40be447f1342" title=" " alt="" coords="271,13,411,40"/>
+<area shape="rect" id="Node000001" title="Overrides the Qt base&#45;class mouse&#45;release handler to add a new tag on click." alt="" coords="5,5,223,48"/>
+<area shape="rect" id="Node000002" href="$class_tag_widget.html#a7599b830727af6e05d0e40be447f1342" title="Switches the widget into inline&#45;edit mode, showing the line edit." alt="" coords="271,13,411,40"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,24,258,27,253,27,223,29"/>
+<area shape="rect" id="Node000003" href="$class_tag_widget.html#af9fde8396dc704d7b7233970e3fda9fe" title="Recalculates and applies the widget width to fit the current label or line&#45;edit text." alt="" coords="459,13,665,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="411,24,446,27,441,27,411,29"/>
 </map>

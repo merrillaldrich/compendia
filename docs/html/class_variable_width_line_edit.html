@@ -93,13 +93,16 @@ $(function(){initNavTree('class_variable_width_line_edit.html','','class_variabl
 </div><!--header-->
 <div class="contents">
 
+<p>A QLineEdit that automatically resizes its width to fit its text content.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="variablewidthlineedit_8h_source.html">variablewidthlineedit.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for VariableWidthLineEdit:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_variable_width_line_edit__inherit__graph.png" border="0" usemap="#a_variable_width_line_edit_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_variable_width_line_edit_inherit__map" id="a_variable_width_line_edit_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,154,107"/>
+<area shape="rect" title="A QLineEdit that automatically resizes its width to fit its text content." alt="" coords="5,80,154,107"/>
 <area shape="rect" title=" " alt="" coords="40,5,119,32"/>
 <area shape="poly" title=" " alt="" coords="81,46,82,80,77,79,78,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for VariableWidthLineEdit:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_variable_width_line_edit__coll__graph.png" border="0" usemap="#a_variable_width_line_edit_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_variable_width_line_edit_coll__map" id="a_variable_width_line_edit_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,154,107"/>
+<area shape="rect" title="A QLineEdit that automatically resizes its width to fit its text content." alt="" coords="5,80,154,107"/>
 <area shape="rect" title=" " alt="" coords="40,5,119,32"/>
 <area shape="poly" title=" " alt="" coords="81,46,82,80,77,79,78,50"/>
 </map>
@@ -118,12 +121,17 @@ Collaboration diagram for VariableWidthLineEdit:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a71c9e0944213a1eda23cc43c8be2370d" id="r_a71c9e0944213a1eda23cc43c8be2370d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71c9e0944213a1eda23cc43c8be2370d">VariableWidthLineEdit</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:a71c9e0944213a1eda23cc43c8be2370d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the line edit and sets an initial minimum width based on font metrics.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a2194dc214a9e46dad84755dca46bd726" id="r_a2194dc214a9e46dad84755dca46bd726"><td class="memItemLeft" align="right" valign="top">QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2194dc214a9e46dad84755dca46bd726">sizeHint</a> () const</td></tr>
+<tr class="memdesc:a2194dc214a9e46dad84755dca46bd726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the minimum size as the size hint so the widget never grows unnecessarily.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A QLineEdit that automatically resizes its width to fit its text content. </p>
+<p>The widget maintains a minimum width equivalent to three 'W' characters and expands as the user types so that the current value is always fully visible. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a71c9e0944213a1eda23cc43c8be2370d" name="a71c9e0944213a1eda23cc43c8be2370d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a71c9e0944213a1eda23cc43c8be2370d">&#9670;&#160;</a></span>VariableWidthLineEdit()</h2>
 
@@ -146,6 +154,14 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs the line edit and sets an initial minimum width based on font metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -172,6 +188,9 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Returns the minimum size as the size hint so the widget never grows unnecessarily. </p>
+<dl class="section return"><dt>Returns</dt><dd>The minimum size. </dd></dl>
 
 </div>
 </div>

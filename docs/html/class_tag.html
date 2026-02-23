@@ -93,13 +93,16 @@ $(function(){initNavTree('class_tag.html','','class_tag-members'); });
 </div><!--header-->
 <div class="contents">
 
+<p>Represents a single tag that can be applied to media files.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="tag_8h_source.html">tag.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Tag:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag__inherit__graph.png" border="0" usemap="#a_tag_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_tag_inherit__map" id="a_tag_inherit__map">
-<area shape="rect" title=" " alt="" coords="19,80,61,107"/>
+<area shape="rect" title="Represents a single tag that can be applied to media files." alt="" coords="19,80,61,107"/>
 <area shape="rect" title=" " alt="" coords="5,5,75,32"/>
 <area shape="poly" title=" " alt="" coords="42,46,43,80,37,79,38,50"/>
 </map>
@@ -109,10 +112,10 @@ Collaboration diagram for Tag:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag__coll__graph.png" border="0" usemap="#a_tag_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_tag_coll__map" id="a_tag_coll__map">
-<area shape="rect" title=" " alt="" coords="24,180,66,207"/>
+<area shape="rect" title="Represents a single tag that can be applied to media files." alt="" coords="24,180,66,207"/>
 <area shape="rect" title=" " alt="" coords="5,5,75,32"/>
 <area shape="poly" title=" " alt="" coords="43,47,48,180,42,180,38,48"/>
-<area shape="rect" href="class_tag_family.html" title=" " alt="" coords="62,81,143,108"/>
+<area shape="rect" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto&#45;assigned colour." alt="" coords="62,81,143,108"/>
 <area shape="poly" title=" " alt="" coords="60,41,95,80,90,82,60,46"/>
 <area shape="poly" title=" " alt="" coords="90,122,55,181,50,178,85,121"/>
 </map>
@@ -121,20 +124,34 @@ Collaboration diagram for Tag:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a1529679fece67dd8a8cd704aeb703e4d" id="r_a1529679fece67dd8a8cd704aeb703e4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1529679fece67dd8a8cd704aeb703e4d">nameChanged</a> ()</td></tr>
+<tr class="memdesc:a1529679fece67dd8a8cd704aeb703e4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the tag name is changed via <a class="el" href="#a1cef34da4131dc5bd8bcc0869b22a492" title="Sets the tag name and marks the dirty flag if the name changed.">setName()</a>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab5bc29164dba636637c19eb80fa5ce45" id="r_ab5bc29164dba636637c19eb80fa5ce45"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5bc29164dba636637c19eb80fa5ce45">Tag</a> (QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:ab5bc29164dba636637c19eb80fa5ce45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a default <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> with an empty name and a new default <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>.  <br /></td></tr>
 <tr class="memitem:a9dbbc2265eb7abb1f2a798c269725fad" id="r_a9dbbc2265eb7abb1f2a798c269725fad"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9dbbc2265eb7abb1f2a798c269725fad">Tag</a> (<a class="el" href="class_tag_family.html">TagFamily</a> *tf, QString t, QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:a9dbbc2265eb7abb1f2a798c269725fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> belonging to the given family with the given name.  <br /></td></tr>
 <tr class="memitem:a1cef34da4131dc5bd8bcc0869b22a492" id="r_a1cef34da4131dc5bd8bcc0869b22a492"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1cef34da4131dc5bd8bcc0869b22a492">setName</a> (QString tagName)</td></tr>
+<tr class="memdesc:a1cef34da4131dc5bd8bcc0869b22a492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the tag name and marks the dirty flag if the name changed.  <br /></td></tr>
 <tr class="memitem:a43ca27cdad4847fa79c48741d4bb567a" id="r_a43ca27cdad4847fa79c48741d4bb567a"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43ca27cdad4847fa79c48741d4bb567a">getName</a> () const</td></tr>
+<tr class="memdesc:a43ca27cdad4847fa79c48741d4bb567a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current tag name.  <br /></td></tr>
+<tr class="memitem:a0f4a341db369da475a9bffae4e59f896" id="r_a0f4a341db369da475a9bffae4e59f896"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f4a341db369da475a9bffae4e59f896">dirtyFlag</a> () const</td></tr>
+<tr class="memdesc:a0f4a341db369da475a9bffae4e59f896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the tag name has been modified since the last save.  <br /></td></tr>
+<tr class="memitem:ae09ed0e850e3a92547b0701f190edd97" id="r_ae09ed0e850e3a92547b0701f190edd97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae09ed0e850e3a92547b0701f190edd97">clearDirtyFlag</a> ()</td></tr>
+<tr class="memdesc:ae09ed0e850e3a92547b0701f190edd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the dirty flag after changes have been persisted.  <br /></td></tr>
 <tr class="memitem:ac573654c99464b6f22d53af4cd12be8c" id="r_ac573654c99464b6f22d53af4cd12be8c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac573654c99464b6f22d53af4cd12be8c">operator==</a> (const <a class="el" href="class_tag.html">Tag</a> &amp;other) const</td></tr>
+<tr class="memdesc:ac573654c99464b6f22d53af4cd12be8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality operator comparing tag name and family name.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a28ce045081340c85313dde649630f0aa" id="r_a28ce045081340c85313dde649630f0aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tag_family.html">TagFamily</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28ce045081340c85313dde649630f0aa">tagFamily</a></td></tr>
+<tr class="memdesc:a28ce045081340c85313dde649630f0aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> that owns this tag.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents a single tag that can be applied to media files. </p>
+<p>Each <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> has a name, a pointer to its owning <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>, and a dirty flag that is set when the name is changed so that unsaved changes can be detected. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab5bc29164dba636637c19eb80fa5ce45" name="ab5bc29164dba636637c19eb80fa5ce45"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab5bc29164dba636637c19eb80fa5ce45">&#9670;&#160;</a></span>Tag() <span class="overload">[1/2]</span></h2>
 
@@ -157,6 +174,24 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a default <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> with an empty name and a new default <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_ab5bc29164dba636637c19eb80fa5ce45_icgraph.png" border="0" usemap="#aclass_tag_ab5bc29164dba636637c19eb80fa5ce45_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_ab5bc29164dba636637c19eb80fa5ce45_icgraph" id="aclass_tag_ab5bc29164dba636637c19eb80fa5ce45_icgraph">
+<area shape="rect" title="Constructs a default Tag with an empty name and a new default TagFamily." alt="" coords="167,5,238,32"/>
+<area shape="rect" href="class_tag.html#ac573654c99464b6f22d53af4cd12be8c" title="Equality operator comparing tag name and family name." alt="" coords="5,5,119,32"/>
+<area shape="poly" title=" " alt="" coords="148,19,119,21,119,16,154,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -184,9 +219,58 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Constructs a <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> belonging to the given family with the given name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tf</td><td>The <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> this tag belongs to. </td></tr>
+    <tr><td class="paramname">t</td><td>The tag name string. </td></tr>
+    <tr><td class="paramname">parent</td><td>Optional Qt parent object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ae09ed0e850e3a92547b0701f190edd97" name="ae09ed0e850e3a92547b0701f190edd97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae09ed0e850e3a92547b0701f190edd97">&#9670;&#160;</a></span>clearDirtyFlag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Tag::clearDirtyFlag </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clears the dirty flag after changes have been persisted. </p>
+
+</div>
+</div>
+<a id="a0f4a341db369da475a9bffae4e59f896" name="a0f4a341db369da475a9bffae4e59f896"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f4a341db369da475a9bffae4e59f896">&#9670;&#160;</a></span>dirtyFlag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Tag::dirtyFlag </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns whether the tag name has been modified since the last save. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the dirty flag is set. </dd></dl>
+
+</div>
+</div>
 <a id="a43ca27cdad4847fa79c48741d4bb567a" name="a43ca27cdad4847fa79c48741d4bb567a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a43ca27cdad4847fa79c48741d4bb567a">&#9670;&#160;</a></span>getName()</h2>
 
@@ -201,6 +285,41 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the current tag name. </p>
+<dl class="section return"><dt>Returns</dt><dd>The tag name string. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_a43ca27cdad4847fa79c48741d4bb567a_icgraph.png" border="0" usemap="#aclass_tag_a43ca27cdad4847fa79c48741d4bb567a_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_a43ca27cdad4847fa79c48741d4bb567a_icgraph" id="aclass_tag_a43ca27cdad4847fa79c48741d4bb567a_icgraph">
+<area shape="rect" title="Returns the current tag name." alt="" coords="514,201,617,228"/>
+<area shape="rect" href="class_luminism_core.html#a1c32ba0f603caecb8cc8d52233f3603b" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="271,35,465,61"/>
+<area shape="poly" title=" " alt="" coords="547,187,513,139,490,113,464,90,441,76,417,65,416,59,443,71,468,86,494,109,517,136,552,188"/>
+<area shape="rect" href="class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="292,100,444,127"/>
+<area shape="poly" title=" " alt="" coords="537,190,504,166,465,141,437,130,437,125,467,136,507,161,542,191"/>
+<area shape="rect" href="class_tag_widget.html#af7a7bc637053188b7106dba0e533f20e" title="Overrides the Qt base&#45;class mouse&#45;move handler to initiate a drag operation." alt="" coords="270,151,466,177"/>
+<area shape="poly" title=" " alt="" coords="496,198,423,181,423,175,502,197"/>
+<area shape="rect" href="tag_8cpp.html#a53842d615ae3cb82bfa54db2f4268a0b" title="Serialises a Tag&#39;s name to a QDataStream for drag&#45;and&#45;drop transfer." alt="" coords="326,201,410,228"/>
+<area shape="poly" title=" " alt="" coords="496,215,411,217,410,212,501,214"/>
+<area shape="rect" href="class_tag.html#ac573654c99464b6f22d53af4cd12be8c" title="Equality operator comparing tag name and family name." alt="" coords="311,252,424,279"/>
+<area shape="poly" title=" " alt="" coords="496,232,423,254,422,249,502,231"/>
+<area shape="rect" href="class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="272,303,464,329"/>
+<area shape="poly" title=" " alt="" coords="542,238,507,268,467,293,437,305,436,300,465,288,504,264,537,240"/>
+<area shape="rect" href="class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="291,353,444,380"/>
+<area shape="poly" title=" " alt="" coords="553,240,519,295,495,321,467,344,444,355,443,350,465,339,491,317,514,291,548,243"/>
+<area shape="rect" href="class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="46,5,181,32"/>
+<area shape="poly" title=" " alt="" coords="253,37,183,29,181,24,257,34"/>
+<area shape="rect" href="class_luminism_core.html#acf6b3ddfa22ee738d40c7304edff0ce3" title="Applies the tag identified by a TagSet to a specific file." alt="" coords="31,56,196,83"/>
+<area shape="poly" title=" " alt="" coords="274,99,195,86,194,81,279,96"/>
+<area shape="rect" href="class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="48,107,179,149"/>
+<area shape="poly" title=" " alt="" coords="274,120,180,127,178,122,278,117"/>
+<area shape="rect" href="class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="30,173,197,216"/>
+<area shape="poly" title=" " alt="" coords="289,133,271,141,223,164,191,175,188,171,221,159,269,136,294,130"/>
+<area shape="rect" href="class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,303,222,329"/>
+<area shape="poly" title=" " alt="" coords="254,316,222,319,222,313,259,316"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -227,6 +346,22 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Emitted when the tag name is changed via <a class="el" href="#a1cef34da4131dc5bd8bcc0869b22a492" title="Sets the tag name and marks the dirty flag if the name changed.">setName()</a>. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_a1529679fece67dd8a8cd704aeb703e4d_icgraph.png" border="0" usemap="#aclass_tag_a1529679fece67dd8a8cd704aeb703e4d_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_a1529679fece67dd8a8cd704aeb703e4d_icgraph" id="aclass_tag_a1529679fece67dd8a8cd704aeb703e4d_icgraph">
+<area shape="rect" title="Emitted when the tag name is changed via setName()." alt="" coords="339,31,473,57"/>
+<area shape="rect" href="class_tag.html#a1cef34da4131dc5bd8bcc0869b22a492" title="Sets the tag name and marks the dirty flag if the name changed." alt="" coords="163,5,266,32"/>
+<area shape="poly" title=" " alt="" coords="321,33,267,28,267,23,327,33"/>
+<area shape="rect" href="class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="138,56,291,83"/>
+<area shape="poly" title=" " alt="" coords="326,55,291,62,291,57,321,55"/>
+<area shape="rect" href="tag_8cpp.html#a22ce4f25d0ac346526919e53f02e9949" title="Deserialises a Tag&#39;s name from a QDataStream during drag&#45;and&#45;drop." alt="" coords="5,5,90,32"/>
+<area shape="poly" title=" " alt="" coords="145,20,91,21,90,16,150,17"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="ac573654c99464b6f22d53af4cd12be8c" name="ac573654c99464b6f22d53af4cd12be8c"></a>
@@ -243,6 +378,29 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Equality operator comparing tag name and family name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to compare against. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if both the tag name and family name match. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_ac573654c99464b6f22d53af4cd12be8c_cgraph.png" border="0" usemap="#aclass_tag_ac573654c99464b6f22d53af4cd12be8c_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_ac573654c99464b6f22d53af4cd12be8c_cgraph" id="aclass_tag_ac573654c99464b6f22d53af4cd12be8c_cgraph">
+<area shape="rect" title="Equality operator comparing tag name and family name." alt="" coords="5,56,119,83"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="186,5,290,32"/>
+<area shape="poly" title=" " alt="" coords="110,53,176,35,172,38,112,58"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="167,56,309,83"/>
+<area shape="poly" title=" " alt="" coords="119,67,154,68,148,70,120,72"/>
+<area shape="rect" href="class_tag.html#ab5bc29164dba636637c19eb80fa5ce45" title="Constructs a default Tag with an empty name and a new default TagFamily." alt="" coords="202,107,274,133"/>
+<area shape="poly" title=" " alt="" coords="111,81,189,104,185,107,111,86"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -261,6 +419,34 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Sets the tag name and marks the dirty flag if the name changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tagName</td><td>The new name for this tag. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_a1cef34da4131dc5bd8bcc0869b22a492_cgraph.png" border="0" usemap="#aclass_tag_a1cef34da4131dc5bd8bcc0869b22a492_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_a1cef34da4131dc5bd8bcc0869b22a492_cgraph" id="aclass_tag_a1cef34da4131dc5bd8bcc0869b22a492_cgraph">
+<area shape="rect" title="Sets the tag name and marks the dirty flag if the name changed." alt="" coords="5,5,109,32"/>
+<area shape="rect" href="class_tag.html#a1529679fece67dd8a8cd704aeb703e4d" title="Emitted when the tag name is changed via setName()." alt="" coords="157,5,291,32"/>
+<area shape="poly" title=" " alt="" coords="109,16,143,18,138,19,109,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_a1cef34da4131dc5bd8bcc0869b22a492_icgraph.png" border="0" usemap="#aclass_tag_a1cef34da4131dc5bd8bcc0869b22a492_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_a1cef34da4131dc5bd8bcc0869b22a492_icgraph" id="aclass_tag_a1cef34da4131dc5bd8bcc0869b22a492_icgraph">
+<area shape="rect" title="Sets the tag name and marks the dirty flag if the name changed." alt="" coords="138,5,241,32"/>
+<area shape="rect" href="tag_8cpp.html#a22ce4f25d0ac346526919e53f02e9949" title="Deserialises a Tag&#39;s name from a QDataStream during drag&#45;and&#45;drop." alt="" coords="5,5,90,32"/>
+<area shape="poly" title=" " alt="" coords="119,19,90,21,90,16,125,18"/>
+</map>
+</div>
+
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
@@ -275,6 +461,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Pointer to the <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> that owns this tag. </p>
 
 </div>
 </div>

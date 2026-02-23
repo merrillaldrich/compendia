@@ -25,6 +25,12 @@
 var NAVTREE =
 [
   [ "Luminism", "index.html", [
+    [ "CLAUDE.md", "md__c_l_a_u_d_e.html", [
+      [ "About", "md__c_l_a_u_d_e.html#autotoc_md1", null ],
+      [ "Build", "md__c_l_a_u_d_e.html#autotoc_md2", null ],
+      [ "Architecture", "md__c_l_a_u_d_e.html#autotoc_md3", null ],
+      [ "Key dependencies", "md__c_l_a_u_d_e.html#autotoc_md4", null ]
+    ] ],
     [ "luminism", "md__r_e_a_d_m_e.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
@@ -52,7 +58,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"tagfamily_8h.html#afdfd98b759c396c438841712c3eb57a5"
+"tag_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

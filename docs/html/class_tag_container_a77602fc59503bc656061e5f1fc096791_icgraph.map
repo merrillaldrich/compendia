@@ -1,0 +1,14 @@
+<map id="TagContainer::tagDeleteRequested" name="TagContainer::tagDeleteRequested">
+<area shape="rect" id="Node000001" title="Emitted when the user requests removal of a tag from this container." alt="" coords="448,59,673,85"/>
+<area shape="rect" id="Node000002" href="$class_main_window.html#a996c5a2b6f77944776856f08ec30858d" title="Constructs the main window, sets up layouts, status bar, and default pane sizes." alt="" coords="221,29,400,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="430,57,401,56,400,51,435,57"/>
+<area shape="rect" id="Node000003" href="$class_tag_container.html#a6e7ec330ab93a0c21ec4e1f0864ad56f" title="Forwards a tag&#45;delete request up to the tagDeleteRequested signal." alt="" coords="221,80,400,123"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="430,87,401,93,400,88,435,87"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="347,14,335,10,310,8,287,10,274,15,272,20,278,29,273,28,266,21,271,11,286,5,310,3,337,5,352,14"/>
+<area shape="rect" id="Node000004" href="$class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="24,13,154,56"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="220,76,155,57,155,52,225,74"/>
+<area shape="rect" id="Node000005" href="$class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,80,173,123"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="202,102,174,104,173,99,208,101"/>
+<area shape="rect" id="Node000006" href="$class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="16,147,162,173"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="216,127,143,149,141,144,210,128"/>
+</map>

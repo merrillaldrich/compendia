@@ -1,16 +1,21 @@
 #include "navfiltercontainer.h"
 
+/*! \brief Constructs an empty NavFilterContainer.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 NavFilterContainer::NavFilterContainer(QWidget *parent)
     : TagContainer{parent}
 {
 
 }
 
-
+/*! \brief Overrides the Qt base-class handler to accept tag drag-enter events.
+ *
+ * \param event The drag-enter event to evaluate.
+ */
 void NavFilterContainer::dragEnterEvent(QDragEnterEvent *event)
 {
-    //qDebug() << "Drag enter event!";
-
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
@@ -23,10 +28,12 @@ void NavFilterContainer::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 
+/*! \brief Overrides the Qt base-class handler to keep accepting tag drag-move events.
+ *
+ * \param event The drag-move event to evaluate.
+ */
 void NavFilterContainer::dragMoveEvent(QDragMoveEvent *event)
 {
-    //qDebug() << "Drag move event!";
-
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
@@ -39,13 +46,13 @@ void NavFilterContainer::dragMoveEvent(QDragMoveEvent *event)
     }
 }
 
+/*! \brief Overrides the Qt base-class handler to apply the dropped tag as a filter.
+ *
+ * \param event The drop event containing the dragged tag data.
+ */
 void NavFilterContainer::dropEvent(QDropEvent *event)
 {
-    //qDebug() << "Drop event!";
-
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
-
-        //qDebug() << "Drop!";
 
         // Convert the dropped data
         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
@@ -123,5 +130,3 @@ void NavFilterContainer::dropEvent(QDropEvent *event)
         event->ignore();
     }
 }
-
-

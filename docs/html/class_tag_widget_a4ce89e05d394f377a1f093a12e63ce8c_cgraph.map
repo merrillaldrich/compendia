@@ -1,5 +1,13 @@
 <map id="TagWidget::endEdit" name="TagWidget::endEdit">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,141,32"/>
-<area shape="rect" id="Node000002" href="$class_luminism_core.html#a1c32ba0f603caecb8cc8d52233f3603b" title=" " alt="" coords="189,5,383,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,16,176,18,170,19,141,21"/>
+<area shape="rect" id="Node000001" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="5,68,141,95"/>
+<area shape="rect" id="Node000002" href="$class_luminism_core.html#a1c32ba0f603caecb8cc8d52233f3603b" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="195,43,389,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,71,182,68,177,70,141,76"/>
+<area shape="rect" id="Node000006" href="$class_tag_widget.html#af9fde8396dc704d7b7233970e3fda9fe" title="Recalculates and applies the widget width to fit the current label or line&#45;edit text." alt="" coords="189,93,395,120"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="141,86,176,93,171,93,141,92"/>
+<area shape="rect" id="Node000003" href="$class_luminism_core.html#ad136cbd828e921887cd0e766cec7aca3" title="Creates or retrieves a tag family in the library by name." alt="" coords="443,5,616,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="389,41,430,39,425,40,390,47"/>
+<area shape="rect" id="Node000005" href="$class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="478,72,581,99"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="390,65,465,77,460,77,389,71"/>
+<area shape="rect" id="Node000004" href="$class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="664,13,807,40"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="616,24,652,26,646,27,617,29"/>
 </map>

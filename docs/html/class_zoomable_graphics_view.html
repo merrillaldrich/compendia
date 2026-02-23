@@ -93,13 +93,16 @@ $(function(){initNavTree('class_zoomable_graphics_view.html','','class_zoomable_
 </div><!--header-->
 <div class="contents">
 
+<p>A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="zoomablegraphicsview_8h_source.html">zoomablegraphicsview.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for ZoomableGraphicsView:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_zoomable_graphics_view__inherit__graph.png" border="0" usemap="#a_zoomable_graphics_view_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_zoomable_graphics_view_inherit__map" id="a_zoomable_graphics_view_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,165,107"/>
+<area shape="rect" title="A QGraphicsView subclass that supports mouse&#45;wheel zoom centred on the cursor." alt="" coords="5,80,165,107"/>
 <area shape="rect" title=" " alt="" coords="29,5,141,32"/>
 <area shape="poly" title=" " alt="" coords="87,46,87,81,83,79,83,50"/>
 </map>
@@ -109,7 +112,7 @@ Collaboration diagram for ZoomableGraphicsView:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_zoomable_graphics_view__coll__graph.png" border="0" usemap="#a_zoomable_graphics_view_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_zoomable_graphics_view_coll__map" id="a_zoomable_graphics_view_coll__map">
-<area shape="rect" title=" " alt="" coords="5,80,165,107"/>
+<area shape="rect" title="A QGraphicsView subclass that supports mouse&#45;wheel zoom centred on the cursor." alt="" coords="5,80,165,107"/>
 <area shape="rect" title=" " alt="" coords="29,5,141,32"/>
 <area shape="poly" title=" " alt="" coords="87,46,87,81,83,79,83,50"/>
 </map>
@@ -118,13 +121,19 @@ Collaboration diagram for ZoomableGraphicsView:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3615bbe28257af383607c6076a00ecb0" id="r_a3615bbe28257af383607c6076a00ecb0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3615bbe28257af383607c6076a00ecb0">ZoomableGraphicsView</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:a3615bbe28257af383607c6076a00ecb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_zoomable_graphics_view.html" title="A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.">ZoomableGraphicsView</a> with no initial scene.  <br /></td></tr>
 <tr class="memitem:a877e7dc2885180eeb2de7efd95c3c550" id="r_a877e7dc2885180eeb2de7efd95c3c550"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a877e7dc2885180eeb2de7efd95c3c550">ZoomableGraphicsView</a> (QGraphicsScene *scene, QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:a877e7dc2885180eeb2de7efd95c3c550"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_zoomable_graphics_view.html" title="A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.">ZoomableGraphicsView</a> bound to the given scene.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ac9369ca9bad87c801280cb80268ded94" id="r_ac9369ca9bad87c801280cb80268ded94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9369ca9bad87c801280cb80268ded94">wheelEvent</a> (QWheelEvent *event) override</td></tr>
+<tr class="memdesc:ac9369ca9bad87c801280cb80268ded94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class wheel handler to perform cursor-centred zoom.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor. </p>
+<p>Scrolling the mouse wheel zooms in or out while keeping the point under the cursor stationary. Zooming out further than the viewport size is prevented so the image cannot be shrunk to nothing. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3615bbe28257af383607c6076a00ecb0" name="a3615bbe28257af383607c6076a00ecb0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3615bbe28257af383607c6076a00ecb0">&#9670;&#160;</a></span>ZoomableGraphicsView() <span class="overload">[1/2]</span></h2>
 
@@ -148,6 +157,14 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a <a class="el" href="class_zoomable_graphics_view.html" title="A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.">ZoomableGraphicsView</a> with no initial scene. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a877e7dc2885180eeb2de7efd95c3c550" name="a877e7dc2885180eeb2de7efd95c3c550"></a>
@@ -168,6 +185,15 @@ Protected Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="class_zoomable_graphics_view.html" title="A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.">ZoomableGraphicsView</a> bound to the given scene. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scene</td><td>The QGraphicsScene to display. </td></tr>
+    <tr><td class="paramname">parent</td><td>Optional Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -194,6 +220,14 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Overrides the Qt base-class wheel handler to perform cursor-centred zoom. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The wheel event containing delta and cursor position. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

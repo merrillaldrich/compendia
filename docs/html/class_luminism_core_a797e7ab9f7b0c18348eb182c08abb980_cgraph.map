@@ -1,0 +1,12 @@
+<map id="LuminismCore::loadRootDirectory" name="LuminismCore::loadRootDirectory">
+<area shape="rect" id="Node000001" title="Clears all existing data and reloads files from the current root directory." alt="" coords="5,55,224,81"/>
+<area shape="rect" id="Node000002" href="$class_luminism_core.html#ab45cd00fe04fbc92f6bd6c67b3fd6e66" title="Adds a file to the model with no tags." alt="" coords="298,29,454,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,55,285,51,280,52,224,60"/>
+<area shape="rect" id="Node000003" href="$class_luminism_core.html#a4145e9c6809094544c45f8a3a2fcf180" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="272,80,480,107"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="224,76,259,81,254,82,224,81"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="334,28,327,21,332,11,349,5,376,3,405,5,422,15,417,14,404,10,376,8,350,10,336,15,333,20,339,30"/>
+<area shape="rect" id="Node000004" href="$class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27" title="Returns a 100&#45;pixel&#45;bounded thumbnail for the given image file." alt="" coords="528,55,714,81"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="480,80,510,79,515,79,481,85"/>
+<area shape="rect" id="Node000005" href="$class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7" title="Returns a map of EXIF key&#45;value pairs for the given image file." alt="" coords="543,105,699,132"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="481,101,530,109,525,109,480,107"/>
+</map>

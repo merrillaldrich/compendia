@@ -11,6 +11,10 @@
 #include "tagfamilywidget.h"
 #include "flowlayout.h"
 
+/*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
+ *
+ * \param parent Optional Qt parent widget.
+ */
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -101,23 +105,26 @@ MainWindow::MainWindow(QWidget *parent)
     }
 }
 
+/*! \brief Destroys the main window and releases owned UI and core resources. */
 MainWindow::~MainWindow()
 {
     delete ui;
     delete core;
 }
 
-
+/*! \brief Slot for the Open Folder menu action; delegates to setRootFolder(). */
 void MainWindow::on_actionOpen_Folder_triggered()
 {
     setRootFolder();
 }
 
+/*! \brief Slot for the browse button; delegates to setRootFolder(). */
 void MainWindow::on_mediaFolderBrowseButton_clicked()
 {
     setRootFolder();
 }
 
+/*! \brief Loads the folder path typed directly into the media folder line edit. */
 void MainWindow::on_mediaFolderLineEdit_returnPressed()
 {
     QObject *obj = sender();
@@ -131,6 +138,7 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
     lv->show();
 }
 
+/*! \brief Opens a folder-picker dialog and loads the selected folder into core. */
 void MainWindow::setRootFolder(){
     QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
 
@@ -155,6 +163,7 @@ void MainWindow::setRootFolder(){
     progress_bar_->setMaximum(core->getItemModel()->rowCount());
 }
 
+/*! \brief Rebuilds the tag-library navigation area from the current library tags. */
 void MainWindow::refreshNavTagLibrary(){
 
     // Update the display of the tag library to show all the tag families and tags
@@ -163,6 +172,7 @@ void MainWindow::refreshNavTagLibrary(){
     ui->navLibraryContainer->refresh(libTags);
 }
 
+/*! \brief Rebuilds the tag-assignment area from tags on the currently filtered files. */
 void MainWindow::refreshTagAssignmentArea(){
 
     // Update the display of the tag assignment area to show all the tag families and tags that are
@@ -173,6 +183,7 @@ void MainWindow::refreshTagAssignmentArea(){
 
 }
 
+/*! \brief Rebuilds the tag-filter area from the currently active filter tags. */
 void MainWindow::refreshTagFilterArea(){
 
     // Update the display of the tag filter area to show all the tag families and tags that are
@@ -183,15 +194,14 @@ void MainWindow::refreshTagFilterArea(){
 
 }
 
+/*! \brief Updates the preview and property panel when the file-list selection changes.
+ *
+ * \param selected   The newly selected model indexes.
+ * \param deselected The previously selected model indexes that are now deselected.
+ */
 void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
 
-
-    // Get the previewer scene
-    //QGraphicsView* view = ui->previewGraphicsView;
-    //QGraphicsScene* scene = view->scene();
-
     if( selected.isEmpty()){
-        //scene->clear();
         ui->previewContainer->clear();
         ui->previewFileNameValue->setText("-");
         ui->previewFileLocationValue->setText("-");
@@ -256,35 +266,55 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
     }
 }
 
+/*! \brief Refreshes the preview pane to reflect the current viewport size. */
 void MainWindow::freshenPreview(){
     ui->previewContainer->freshen();
 }
 
+/*! \brief Clears the preview pane of any displayed image. */
 void MainWindow::clearPreview(){
     ui->previewContainer->clear();
 }
 
+/*! \brief Refreshes the preview when the preview splitter is moved.
+ *
+ * \param pos   New splitter handle position.
+ * \param index Index of the splitter handle that moved.
+ */
 void MainWindow::on_previewSplitter_splitterMoved(int pos, int index)
 {
     freshenPreview();
 }
 
+/*! \brief Refreshes the preview when the window body splitter is moved.
+ *
+ * \param pos   New splitter handle position.
+ * \param index Index of the splitter handle that moved.
+ */
 void MainWindow::on_windowBodySplitter_splitterMoved(int pos, int index)
 {
     freshenPreview();
 }
 
+/*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
+ *
+ * \param event The resize event containing the new window size.
+ */
 void MainWindow::resizeEvent(QResizeEvent *event) {
 
     freshenPreview();
     QMainWindow::resizeEvent(event);
 }
 
+/*! \brief Slot for the Save button; writes metadata for all dirty files. */
 void MainWindow::on_saveButton_clicked(){
     core->writeFileMetadata();
 }
 
-
+/*! \brief Updates the filename filter as the user types in the filter line edit.
+ *
+ * \param arg1 The current text of the filename filter line edit.
+ */
 void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
 {
     core->setFileNameFilter(ui->fileNameFilterLineEdit->text());
@@ -294,16 +324,28 @@ void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
     refreshTagAssignmentArea();
 }
 
+/*! \brief Removes a tag from all filtered files when an unassign is requested.
+ *
+ * \param tag The Tag to unassign from the filtered files.
+ */
 void MainWindow::on_tagUnassign_Requested(Tag* tag){
     core->unapplyTag(tag);
     refreshTagAssignmentArea();
 }
 
+/*! \brief Removes a tag from the active filter set when a filter-remove is requested.
+ *
+ * \param tag The Tag to remove from the filter.
+ */
 void MainWindow::on_tagFilterRemove_Requested(Tag* tag){
     core->removeTagFilter(tag);
     refreshTagFilterArea();
 }
 
+/*! \brief Updates the folder filter as the user types in the folder filter line edit.
+ *
+ * \param arg1 The current text of the folder filter line edit.
+ */
 void MainWindow::on_folderFilterLineEdit_textChanged(const QString &arg1)
 {
     core->setFolderFilter(ui->folderFilterLineEdit->text());
@@ -313,6 +355,7 @@ void MainWindow::on_folderFilterLineEdit_textChanged(const QString &arg1)
     refreshTagAssignmentArea();
 }
 
+/*! \brief Advances the icon-generation progress bar when a thumbnail is ready. */
 void MainWindow::on_icon_updated(){
     if(progress_label_->text() != "Generating Icons")
         progress_label_->setText("Generating Icons");
@@ -323,6 +366,7 @@ void MainWindow::on_icon_updated(){
     }
 }
 
+/*! \brief Advances the save progress bar when a metadata file is written. */
 void MainWindow::on_metadata_saved(){
     if(progress_label_->text() != "Saving")
         progress_label_->setText("Saving");
@@ -333,7 +377,7 @@ void MainWindow::on_metadata_saved(){
     }
 }
 
-
+/*! \brief Runs face detection on the first selected image and displays the result. */
 void MainWindow::on_actionFind_Faces_triggered(){
 
     // Get the first selected image and run face identification on it

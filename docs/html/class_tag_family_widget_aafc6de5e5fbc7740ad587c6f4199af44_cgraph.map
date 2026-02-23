@@ -1,7 +1,11 @@
 <map id="TagFamilyWidget::TagFamilyWidget" name="TagFamilyWidget::TagFamilyWidget">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,23,196,65"/>
-<area shape="rect" id="Node000002" href="$class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e" title=" " alt="" coords="253,5,408,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,31,240,28,235,29,197,36"/>
-<area shape="rect" id="Node000003" href="$class_tag_family.html#a722daa0913c95fd78e08a8cd9040860e" title=" " alt="" coords="244,56,417,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,52,231,58,226,58,196,57"/>
+<area shape="rect" id="Node000001" title="Constructs a TagFamilyWidget bound to the given TagFamily." alt="" coords="5,73,196,116"/>
+<area shape="rect" id="Node000002" href="$class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e" title="Emitted when the label is released with the mouse button." alt="" coords="267,5,422,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,70,243,41,272,35,267,38,244,47,160,75"/>
+<area shape="rect" id="Node000003" href="$class_tag_family.html#add056f5d6128b49387a4923bd3a3198d" title="Returns the colour assigned to this family." alt="" coords="275,56,414,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,82,262,77,257,79,197,87"/>
+<area shape="rect" id="Node000004" href="$class_tag_family.html#a722daa0913c95fd78e08a8cd9040860e" title="Emitted when the family name is changed via setName()." alt="" coords="258,107,431,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="196,102,245,109,239,110,196,107"/>
+<area shape="rect" id="Node000005" href="$class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74" title="Constructs a TaggingWidget with no explicit colour set." alt="" coords="244,157,445,184"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="160,114,244,143,272,153,267,153,243,148,159,119"/>
 </map>

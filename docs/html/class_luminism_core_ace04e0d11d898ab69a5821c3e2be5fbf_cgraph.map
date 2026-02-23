@@ -1,0 +1,8 @@
+<map id="LuminismCore::addFile" name="LuminismCore::addFile">
+<area shape="rect" id="Node000001" title="Adds a file to the model, parsing tags and EXIF from a JSON object." alt="" coords="5,55,161,81"/>
+<area shape="rect" id="Node000002" href="$class_luminism_core.html#ab45cd00fe04fbc92f6bd6c67b3fd6e66" title="Adds a file to the model with no tags." alt="" coords="228,29,384,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,57,215,53,210,54,161,62"/>
+<area shape="rect" id="Node000003" href="$class_luminism_core.html#ab6241f20ee49b0eb237ad9871b81a052" title="Parses a JSON object of tag&#45;family to tag&#45;name arrays into a TagSet list." alt="" coords="209,80,403,107"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="161,74,196,80,190,81,161,79"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="268,28,261,21,266,11,281,5,306,3,332,5,348,14,343,14,331,10,306,8,282,10,270,15,267,20,273,30"/>
+</map>

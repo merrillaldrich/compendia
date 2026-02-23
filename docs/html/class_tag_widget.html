@@ -93,14 +93,17 @@ $(function(){initNavTree('class_tag_widget.html','','class_tag_widget-members');
 </div><!--header-->
 <div class="contents">
 
+<p>Visual widget representing a single tag, supporting inline editing and drag-and-drop.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="tagwidget_8h_source.html">tagwidget.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for TagWidget:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag_widget__inherit__graph.png" border="0" usemap="#a_tag_widget_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_tag_widget_inherit__map" id="a_tag_widget_inherit__map">
-<area shape="rect" title=" " alt="" coords="17,155,101,181"/>
-<area shape="rect" href="class_tagging_widget.html" title=" " alt="" coords="5,80,113,107"/>
+<area shape="rect" title="Visual widget representing a single tag, supporting inline editing and drag&#45;and&#45;drop." alt="" coords="17,155,101,181"/>
+<area shape="rect" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag&#45;family widgets." alt="" coords="5,80,113,107"/>
 <area shape="poly" title=" " alt="" coords="61,121,62,155,56,154,57,124"/>
 <area shape="rect" title=" " alt="" coords="23,5,95,32"/>
 <area shape="poly" title=" " alt="" coords="60,45,62,80,56,79,58,50"/>
@@ -111,8 +114,8 @@ Collaboration diagram for TagWidget:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_tag_widget__coll__graph.png" border="0" usemap="#a_tag_widget_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_tag_widget_coll__map" id="a_tag_widget_coll__map">
-<area shape="rect" title=" " alt="" coords="17,155,101,181"/>
-<area shape="rect" href="class_tagging_widget.html" title=" " alt="" coords="5,80,113,107"/>
+<area shape="rect" title="Visual widget representing a single tag, supporting inline editing and drag&#45;and&#45;drop." alt="" coords="17,155,101,181"/>
+<area shape="rect" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag&#45;family widgets." alt="" coords="5,80,113,107"/>
 <area shape="poly" title=" " alt="" coords="61,121,62,155,56,154,57,124"/>
 <area shape="rect" title=" " alt="" coords="23,5,95,32"/>
 <area shape="poly" title=" " alt="" coords="60,45,62,80,56,79,58,50"/>
@@ -122,34 +125,53 @@ Collaboration diagram for TagWidget:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a1d3fa53f2f5ad9b93b553431bce2c67b" id="r_a1d3fa53f2f5ad9b93b553431bce2c67b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1d3fa53f2f5ad9b93b553431bce2c67b">deleteRequested</a> (<a class="el" href="class_tag.html">Tag</a> *t)</td></tr>
+<tr class="memdesc:a1d3fa53f2f5ad9b93b553431bce2c67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user clicks the close button to remove the tag.  <br /></td></tr>
 <tr class="memitem:ac5b6dedfc17ed661099ebad0978cdac8" id="r_ac5b6dedfc17ed661099ebad0978cdac8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5b6dedfc17ed661099ebad0978cdac8">tagNameChanged</a> (<a class="el" href="class_tag.html">Tag</a> *t)</td></tr>
+<tr class="memdesc:ac5b6dedfc17ed661099ebad0978cdac8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted after the tag name has been successfully changed.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a50de81724fb26ba24274b5fac5279867" id="r_a50de81724fb26ba24274b5fac5279867"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a50de81724fb26ba24274b5fac5279867">TagWidget</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:a50de81724fb26ba24274b5fac5279867"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a default, empty <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a>.  <br /></td></tr>
 <tr class="memitem:af0dfbb7badba109187359087285c99e8" id="r_af0dfbb7badba109187359087285c99e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0dfbb7badba109187359087285c99e8">TagWidget</a> (<a class="el" href="class_tag.html">Tag</a> *tag, QWidget *parent)</td></tr>
+<tr class="memdesc:af0dfbb7badba109187359087285c99e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a> bound to the given <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> and styled with its family colour.  <br /></td></tr>
 <tr class="memitem:a7599b830727af6e05d0e40be447f1342" id="r_a7599b830727af6e05d0e40be447f1342"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7599b830727af6e05d0e40be447f1342">startEdit</a> ()</td></tr>
+<tr class="memdesc:a7599b830727af6e05d0e40be447f1342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switches the widget into inline-edit mode, showing the line edit.  <br /></td></tr>
 <tr class="memitem:a4ce89e05d394f377a1f093a12e63ce8c" id="r_a4ce89e05d394f377a1f093a12e63ce8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ce89e05d394f377a1f093a12e63ce8c">endEdit</a> ()</td></tr>
+<tr class="memdesc:a4ce89e05d394f377a1f093a12e63ce8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commits the edited name to the <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> and switches back to read mode.  <br /></td></tr>
 <tr class="memitem:ae92137283e581ac1970ddcd5241348d0" id="r_ae92137283e581ac1970ddcd5241348d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tag.html">Tag</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae92137283e581ac1970ddcd5241348d0">getTag</a> ()</td></tr>
+<tr class="memdesc:ae92137283e581ac1970ddcd5241348d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer this widget represents.  <br /></td></tr>
 <tr class="memitem:a443ad3965b1d89f97363596f9b69b0ca" id="r_a443ad3965b1d89f97363596f9b69b0ca"><td class="memItemLeft" align="right" valign="top">QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a443ad3965b1d89f97363596f9b69b0ca">sizeHint</a> () const override</td></tr>
+<tr class="memdesc:a443ad3965b1d89f97363596f9b69b0ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the preferred size of the widget.  <br /></td></tr>
 <tr class="memitem:a9a26b6d251cdf5a553a1ad059298910e" id="r_a9a26b6d251cdf5a553a1ad059298910e"><td class="memItemLeft" align="right" valign="top">QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a26b6d251cdf5a553a1ad059298910e">minimumSizeHint</a> () const override</td></tr>
+<tr class="memdesc:a9a26b6d251cdf5a553a1ad059298910e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the minimum size of the widget.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_tagging_widget"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_tagging_widget')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_tagging_widget.html">TaggingWidget</a></td></tr>
 <tr class="memitem:a527b1e071b7771cc0389895101d89d74 inherit pub_methods_class_tagging_widget" id="r_a527b1e071b7771cc0389895101d89d74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74">TaggingWidget</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:a527b1e071b7771cc0389895101d89d74 inherit pub_methods_class_tagging_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a> with no explicit colour set.  <br /></td></tr>
 <tr class="memitem:aa6691ae072b8f48dfbd299bdee032cfe inherit pub_methods_class_tagging_widget" id="r_aa6691ae072b8f48dfbd299bdee032cfe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tagging_widget.html#aa6691ae072b8f48dfbd299bdee032cfe">TaggingWidget</a> (QColor color, QWidget *parent)</td></tr>
+<tr class="memdesc:aa6691ae072b8f48dfbd299bdee032cfe inherit pub_methods_class_tagging_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag-family widgets.">TaggingWidget</a> with the given base colour.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:af348897e1f4ae96a8552c0d397119018" id="r_af348897e1f4ae96a8552c0d397119018"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af348897e1f4ae96a8552c0d397119018">paintEvent</a> (QPaintEvent *event) override</td></tr>
+<tr class="memdesc:af348897e1f4ae96a8552c0d397119018"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class paint handler to draw the coloured rounded-rectangle background.  <br /></td></tr>
 <tr class="memitem:a28e9998a671e072a29ed023597ec43a1" id="r_a28e9998a671e072a29ed023597ec43a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28e9998a671e072a29ed023597ec43a1">mousePressEvent</a> (QMouseEvent *event) override</td></tr>
+<tr class="memdesc:a28e9998a671e072a29ed023597ec43a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class mouse-press handler to record the drag start position.  <br /></td></tr>
 <tr class="memitem:af7a7bc637053188b7106dba0e533f20e" id="r_af7a7bc637053188b7106dba0e533f20e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7a7bc637053188b7106dba0e533f20e">mouseMoveEvent</a> (QMouseEvent *event) override</td></tr>
+<tr class="memdesc:af7a7bc637053188b7106dba0e533f20e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class mouse-move handler to initiate a drag operation.  <br /></td></tr>
 <tr class="memitem:af9fde8396dc704d7b7233970e3fda9fe" id="r_af9fde8396dc704d7b7233970e3fda9fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9fde8396dc704d7b7233970e3fda9fe">adjustCustomWidth</a> ()</td></tr>
+<tr class="memdesc:af9fde8396dc704d7b7233970e3fda9fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recalculates and applies the widget width to fit the current label or line-edit text.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_attribs_class_tagging_widget"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_class_tagging_widget')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Attributes inherited from <a class="el" href="class_tagging_widget.html">TaggingWidget</a></td></tr>
 <tr class="memitem:a4d2d007bdc2b04c09d035ef1330e9fa6 inherit pub_attribs_class_tagging_widget" id="r_a4d2d007bdc2b04c09d035ef1330e9fa6"><td class="memItemLeft" align="right" valign="top">QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tagging_widget.html#a4d2d007bdc2b04c09d035ef1330e9fa6">base_color_</a></td></tr>
+<tr class="memdesc:a4d2d007bdc2b04c09d035ef1330e9fa6 inherit pub_attribs_class_tagging_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base colour used for painting this widget and its close button.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Visual widget representing a single tag, supporting inline editing and drag-and-drop. </p>
+<p>Displays a rounded-rectangle pill containing a close button, and a <a class="el" href="class_clickable_label.html" title="A QLabel that emits a clicked() signal on mouse release.">ClickableLabel</a> that switches to a <a class="el" href="class_variable_width_line_edit.html" title="A QLineEdit that automatically resizes its width to fit its text content.">VariableWidthLineEdit</a> for inline name editing. The widget can be dragged onto <a class="el" href="class_taggable_list_view.html" title="A QListView subclass that accepts tag drops to apply tags to media files.">TaggableListView</a> or container targets to apply the tag. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a50de81724fb26ba24274b5fac5279867" name="a50de81724fb26ba24274b5fac5279867"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a50de81724fb26ba24274b5fac5279867">&#9670;&#160;</a></span>TagWidget() <span class="overload">[1/2]</span></h2>
 
@@ -173,6 +195,34 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a default, empty <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_a50de81724fb26ba24274b5fac5279867_cgraph.png" border="0" usemap="#aclass_tag_widget_a50de81724fb26ba24274b5fac5279867_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_a50de81724fb26ba24274b5fac5279867_cgraph" id="aclass_tag_widget_a50de81724fb26ba24274b5fac5279867_cgraph">
+<area shape="rect" title="Constructs a default, empty TagWidget." alt="" coords="5,5,159,32"/>
+<area shape="rect" href="class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74" title="Constructs a TaggingWidget with no explicit colour set." alt="" coords="207,5,408,32"/>
+<area shape="poly" title=" " alt="" coords="159,16,194,19,189,19,159,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_a50de81724fb26ba24274b5fac5279867_icgraph.png" border="0" usemap="#aclass_tag_widget_a50de81724fb26ba24274b5fac5279867_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_a50de81724fb26ba24274b5fac5279867_icgraph" id="aclass_tag_widget_a50de81724fb26ba24274b5fac5279867_icgraph">
+<area shape="rect" title="Constructs a default, empty TagWidget." alt="" coords="250,5,403,32"/>
+<area shape="rect" href="class_tag_widget.html#af7a7bc637053188b7106dba0e533f20e" title="Overrides the Qt base&#45;class mouse&#45;move handler to initiate a drag operation." alt="" coords="5,5,202,32"/>
+<area shape="poly" title=" " alt="" coords="231,19,202,21,202,16,237,19"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="af0dfbb7badba109187359087285c99e8" name="af0dfbb7badba109187359087285c99e8"></a>
@@ -193,6 +243,35 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a> bound to the given <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> and styled with its family colour. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> this widget represents. </td></tr>
+    <tr><td class="paramname">parent</td><td>Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_af0dfbb7badba109187359087285c99e8_cgraph.png" border="0" usemap="#aclass_tag_widget_af0dfbb7badba109187359087285c99e8_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_af0dfbb7badba109187359087285c99e8_cgraph" id="aclass_tag_widget_af0dfbb7badba109187359087285c99e8_cgraph">
+<area shape="rect" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="5,132,159,159"/>
+<area shape="rect" href="class_tag_widget.html#af9fde8396dc704d7b7233970e3fda9fe" title="Recalculates and applies the widget width to fit the current label or line&#45;edit text." alt="" coords="207,5,413,32"/>
+<area shape="poly" title=" " alt="" coords="94,130,140,86,171,62,205,42,223,36,219,39,208,46,174,67,144,90,98,133"/>
+<area shape="rect" href="class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e" title="Emitted when the label is released with the mouse button." alt="" coords="232,56,388,83"/>
+<area shape="poly" title=" " alt="" coords="112,129,206,92,234,86,230,89,208,97,115,134"/>
+<area shape="rect" href="class_tag_family.html#add056f5d6128b49387a4923bd3a3198d" title="Returns the colour assigned to this family." alt="" coords="241,107,379,133"/>
+<area shape="poly" title=" " alt="" coords="158,134,228,128,223,131,160,139"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="258,157,362,184"/>
+<area shape="poly" title=" " alt="" coords="159,151,245,162,240,165,159,156"/>
+<area shape="rect" href="class_tag.html#a1529679fece67dd8a8cd704aeb703e4d" title="Emitted when the tag name is changed via setName()." alt="" coords="243,208,377,235"/>
+<area shape="poly" title=" " alt="" coords="114,157,208,193,234,203,229,204,206,199,114,162"/>
+<area shape="rect" href="class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74" title="Constructs a TaggingWidget with no explicit colour set." alt="" coords="209,259,410,285"/>
+<area shape="poly" title=" " alt="" coords="97,157,144,200,174,224,208,244,224,253,219,253,205,249,171,229,140,204,95,162"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -220,6 +299,24 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Recalculates and applies the widget width to fit the current label or line-edit text. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_af9fde8396dc704d7b7233970e3fda9fe_icgraph.png" border="0" usemap="#aclass_tag_widget_af9fde8396dc704d7b7233970e3fda9fe_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_af9fde8396dc704d7b7233970e3fda9fe_icgraph" id="aclass_tag_widget_af9fde8396dc704d7b7233970e3fda9fe_icgraph">
+<area shape="rect" title="Recalculates and applies the widget width to fit the current label or line&#45;edit text." alt="" coords="472,56,678,83"/>
+<area shape="rect" href="class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="280,5,415,32"/>
+<area shape="poly" title=" " alt="" coords="494,52,410,35,411,30,500,52"/>
+<area shape="rect" href="class_tag_widget.html#a7599b830727af6e05d0e40be447f1342" title="Switches the widget into inline&#45;edit mode, showing the line edit." alt="" coords="277,56,418,83"/>
+<area shape="poly" title=" " alt="" coords="454,70,418,72,418,67,460,69"/>
+<area shape="rect" href="class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="271,107,424,133"/>
+<area shape="poly" title=" " alt="" coords="500,86,411,109,410,103,494,87"/>
+<area shape="rect" href="class_tag_family_widget.html#af7aab0ad85ea39f3836363aa365d1f2b" title="Overrides the Qt base&#45;class mouse&#45;release handler to add a new tag on click." alt="" coords="5,48,223,91"/>
+<area shape="poly" title=" " alt="" coords="259,70,224,72,223,67,264,69"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a1d3fa53f2f5ad9b93b553431bce2c67b" name="a1d3fa53f2f5ad9b93b553431bce2c67b"></a>
@@ -245,6 +342,28 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Emitted when the user clicks the close button to remove the tag. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to be removed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_a1d3fa53f2f5ad9b93b553431bce2c67b_icgraph.png" border="0" usemap="#aclass_tag_widget_a1d3fa53f2f5ad9b93b553431bce2c67b_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_a1d3fa53f2f5ad9b93b553431bce2c67b_icgraph" id="aclass_tag_widget_a1d3fa53f2f5ad9b93b553431bce2c67b_icgraph">
+<area shape="rect" title="Emitted when the user clicks the close button to remove the tag." alt="" coords="221,80,410,107"/>
+<area shape="rect" href="class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="24,5,154,48"/>
+<area shape="poly" title=" " alt="" coords="250,76,154,48,155,43,255,74"/>
+<area shape="rect" href="class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,72,173,115"/>
+<area shape="poly" title=" " alt="" coords="203,94,174,96,173,91,208,93"/>
+<area shape="rect" href="class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="16,139,162,165"/>
+<area shape="poly" title=" " alt="" coords="249,111,144,141,143,136,244,111"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a4ce89e05d394f377a1f093a12e63ce8c" name="a4ce89e05d394f377a1f093a12e63ce8c"></a>
@@ -262,6 +381,26 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Commits the edited name to the <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> and switches back to read mode. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_a4ce89e05d394f377a1f093a12e63ce8c_cgraph.png" border="0" usemap="#aclass_tag_widget_a4ce89e05d394f377a1f093a12e63ce8c_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_a4ce89e05d394f377a1f093a12e63ce8c_cgraph" id="aclass_tag_widget_a4ce89e05d394f377a1f093a12e63ce8c_cgraph">
+<area shape="rect" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="5,68,141,95"/>
+<area shape="rect" href="class_luminism_core.html#a1c32ba0f603caecb8cc8d52233f3603b" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="195,43,389,69"/>
+<area shape="poly" title=" " alt="" coords="140,71,182,68,177,70,141,76"/>
+<area shape="rect" href="class_tag_widget.html#af9fde8396dc704d7b7233970e3fda9fe" title="Recalculates and applies the widget width to fit the current label or line&#45;edit text." alt="" coords="189,93,395,120"/>
+<area shape="poly" title=" " alt="" coords="141,86,176,93,171,93,141,92"/>
+<area shape="rect" href="class_luminism_core.html#ad136cbd828e921887cd0e766cec7aca3" title="Creates or retrieves a tag family in the library by name." alt="" coords="443,5,616,48"/>
+<area shape="poly" title=" " alt="" coords="389,41,430,39,425,40,390,47"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="478,72,581,99"/>
+<area shape="poly" title=" " alt="" coords="390,65,465,77,460,77,389,71"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="664,13,807,40"/>
+<area shape="poly" title=" " alt="" coords="616,24,652,26,646,27,617,29"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="ae92137283e581ac1970ddcd5241348d0" name="ae92137283e581ac1970ddcd5241348d0"></a>
@@ -278,6 +417,23 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer this widget represents. </p>
+<dl class="section return"><dt>Returns</dt><dd>The associated <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a>. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_ae92137283e581ac1970ddcd5241348d0_icgraph.png" border="0" usemap="#aclass_tag_widget_ae92137283e581ac1970ddcd5241348d0_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_ae92137283e581ac1970ddcd5241348d0_icgraph" id="aclass_tag_widget_ae92137283e581ac1970ddcd5241348d0_icgraph">
+<area shape="rect" title="Returns the Tag pointer this widget represents." alt="" coords="221,80,351,107"/>
+<area shape="rect" href="class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="24,5,154,48"/>
+<area shape="poly" title=" " alt="" coords="227,76,154,51,154,46,232,74"/>
+<area shape="rect" href="class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,72,173,115"/>
+<area shape="poly" title=" " alt="" coords="203,94,173,96,173,91,208,93"/>
+<area shape="rect" href="class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="16,139,162,165"/>
+<area shape="poly" title=" " alt="" coords="227,111,137,141,136,136,222,112"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -304,6 +460,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the minimum size of the widget. </p>
+<dl class="section return"><dt>Returns</dt><dd>The minimum size hint. </dd></dl>
+
 </div>
 </div>
 <a id="af7a7bc637053188b7106dba0e533f20e" name="af7a7bc637053188b7106dba0e533f20e"></a>
@@ -328,6 +487,30 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Overrides the Qt base-class mouse-move handler to initiate a drag operation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The mouse move event. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_af7a7bc637053188b7106dba0e533f20e_cgraph.png" border="0" usemap="#aclass_tag_widget_af7a7bc637053188b7106dba0e533f20e_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_af7a7bc637053188b7106dba0e533f20e_cgraph" id="aclass_tag_widget_af7a7bc637053188b7106dba0e533f20e_cgraph">
+<area shape="rect" title="Overrides the Qt base&#45;class mouse&#45;move handler to initiate a drag operation." alt="" coords="5,56,202,83"/>
+<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="275,5,378,32"/>
+<area shape="poly" title=" " alt="" coords="165,53,262,33,257,35,166,58"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="255,56,398,83"/>
+<area shape="poly" title=" " alt="" coords="202,67,242,69,237,70,202,72"/>
+<area shape="rect" href="class_tag_widget.html#a50de81724fb26ba24274b5fac5279867" title="Constructs a default, empty TagWidget." alt="" coords="250,107,403,133"/>
+<area shape="poly" title=" " alt="" coords="166,81,252,102,247,103,165,86"/>
+<area shape="rect" href="class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74" title="Constructs a TaggingWidget with no explicit colour set." alt="" coords="451,107,652,133"/>
+<area shape="poly" title=" " alt="" coords="403,117,438,120,433,120,403,123"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -354,6 +537,14 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Overrides the Qt base-class mouse-press handler to record the drag start position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The mouse press event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="af348897e1f4ae96a8552c0d397119018" name="af348897e1f4ae96a8552c0d397119018"></a>
@@ -378,6 +569,14 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Overrides the Qt base-class paint handler to draw the coloured rounded-rectangle background. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The paint event. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -404,6 +603,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the preferred size of the widget. </p>
+<dl class="section return"><dt>Returns</dt><dd>The size hint. </dd></dl>
+
 </div>
 </div>
 <a id="a7599b830727af6e05d0e40be447f1342" name="a7599b830727af6e05d0e40be447f1342"></a>
@@ -420,6 +622,28 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Switches the widget into inline-edit mode, showing the line edit. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_a7599b830727af6e05d0e40be447f1342_cgraph.png" border="0" usemap="#aclass_tag_widget_a7599b830727af6e05d0e40be447f1342_cgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_a7599b830727af6e05d0e40be447f1342_cgraph" id="aclass_tag_widget_a7599b830727af6e05d0e40be447f1342_cgraph">
+<area shape="rect" title="Switches the widget into inline&#45;edit mode, showing the line edit." alt="" coords="5,5,146,32"/>
+<area shape="rect" href="class_tag_widget.html#af9fde8396dc704d7b7233970e3fda9fe" title="Recalculates and applies the widget width to fit the current label or line&#45;edit text." alt="" coords="194,5,400,32"/>
+<area shape="poly" title=" " alt="" coords="146,16,181,19,176,19,146,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_tag_widget_a7599b830727af6e05d0e40be447f1342_icgraph.png" border="0" usemap="#aclass_tag_widget_a7599b830727af6e05d0e40be447f1342_icgraph" loading="lazy" alt=""/></div>
+<map name="aclass_tag_widget_a7599b830727af6e05d0e40be447f1342_icgraph" id="aclass_tag_widget_a7599b830727af6e05d0e40be447f1342_icgraph">
+<area shape="rect" title="Switches the widget into inline&#45;edit mode, showing the line edit." alt="" coords="271,13,411,40"/>
+<area shape="rect" href="class_tag_family_widget.html#af7aab0ad85ea39f3836363aa365d1f2b" title="Overrides the Qt base&#45;class mouse&#45;release handler to add a new tag on click." alt="" coords="5,5,223,48"/>
+<area shape="poly" title=" " alt="" coords="253,27,223,29,223,24,258,27"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -445,6 +669,14 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Emitted after the tag name has been successfully changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> whose name changed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

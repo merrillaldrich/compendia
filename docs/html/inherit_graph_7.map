@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="Node000000" title=" " alt="" coords="5,5,105,32"/>
-<area shape="rect" id="Node000001" href="$class_tag_widget_close_button.html" title=" " alt="" coords="153,5,308,32"/>
+<area shape="rect" id="Node000001" href="$class_tag_widget_close_button.html" title="A custom circular close button used inside TagWidget." alt="" coords="153,5,308,32"/>
 <area shape="poly" id="edge14_Node000000_Node000001" title=" " alt="" coords="120,16,155,18,150,19,120,21"/>
 </map>

@@ -1,5 +1,5 @@
 <map id="MainWindow::refreshTagAssignmentArea" name="MainWindow::refreshTagAssignmentArea">
-<area shape="rect" id="Node000001" title=" " alt="" coords="240,5,501,32"/>
-<area shape="rect" id="Node000002" href="$class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706" title=" " alt="" coords="5,5,192,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,19,192,21,192,16,227,19"/>
+<area shape="rect" id="Node000001" title="Rebuilds the tag&#45;assignment area from tags on the currently filtered files." alt="" coords="244,5,505,32"/>
+<area shape="rect" id="Node000002" href="$class_taggable_list_view.html#a2d9f17879b7b75759d6b4efb14467d85" title="Overrides the Qt base&#45;class handler to apply a dropped tag to the target file(s)." alt="" coords="5,5,196,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,19,196,21,196,16,231,19"/>
 </map>

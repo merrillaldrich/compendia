@@ -1,0 +1,13 @@
+<map id="TaggingWidget::TaggingWidget" name="TaggingWidget::TaggingWidget">
+<area shape="rect" id="Node000001" title="Constructs a TaggingWidget with no explicit colour set." alt="" coords="488,109,689,136"/>
+<area shape="rect" id="Node000002" href="$class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158" title="Constructs a default, empty TagFamilyWidget." alt="" coords="250,5,440,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="540,103,439,62,409,51,410,46,441,58,545,103"/>
+<area shape="rect" id="Node000003" href="$class_tag_family_widget.html#aafc6de5e5fbc7740ad587c6f4199af44" title="Constructs a TagFamilyWidget bound to the given TagFamily." alt="" coords="250,72,440,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="470,109,441,107,440,102,475,108"/>
+<area shape="rect" id="Node000004" href="$class_tag_widget.html#a50de81724fb26ba24274b5fac5279867" title="Constructs a default, empty TagWidget." alt="" coords="268,139,422,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="470,137,422,145,422,140,475,136"/>
+<area shape="rect" id="Node000006" href="$class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="268,189,422,216"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="541,142,441,180,402,191,400,186,439,175,536,143"/>
+<area shape="rect" id="Node000005" href="$class_tag_widget.html#af7a7bc637053188b7106dba0e533f20e" title="Overrides the Qt base&#45;class mouse&#45;move handler to initiate a drag operation." alt="" coords="5,139,202,165"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="250,153,202,155,202,149,256,151"/>
+</map>

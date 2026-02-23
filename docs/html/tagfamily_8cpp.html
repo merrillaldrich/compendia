@@ -113,7 +113,9 @@ Include dependency graph for tagfamily.cpp:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a135f021827fb1e5886707e355e28ca18" id="r_a135f021827fb1e5886707e355e28ca18"><td class="memItemLeft" align="right" valign="top">QDataStream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a135f021827fb1e5886707e355e28ca18">operator&lt;&lt;</a> (QDataStream &amp;out, const <a class="el" href="class_tag_family.html">TagFamily</a> &amp;t)</td></tr>
+<tr class="memdesc:a135f021827fb1e5886707e355e28ca18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialises a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>'s name to a QDataStream for drag-and-drop transfer.  <br /></td></tr>
 <tr class="memitem:afdfd98b759c396c438841712c3eb57a5" id="r_afdfd98b759c396c438841712c3eb57a5"><td class="memItemLeft" align="right" valign="top">QDataStream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdfd98b759c396c438841712c3eb57a5">operator&gt;&gt;</a> (QDataStream &amp;in, <a class="el" href="class_tag_family.html">TagFamily</a> &amp;t)</td></tr>
+<tr class="memdesc:afdfd98b759c396c438841712c3eb57a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialises a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>'s name from a QDataStream during drag-and-drop.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a135f021827fb1e5886707e355e28ca18" name="a135f021827fb1e5886707e355e28ca18"></a>
@@ -135,6 +137,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Serialises a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>'s name to a QDataStream for drag-and-drop transfer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>The output data stream. </td></tr>
+    <tr><td class="paramname">t</td><td>The <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> to serialise. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The output stream after writing. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="tagfamily_8cpp_a135f021827fb1e5886707e355e28ca18_cgraph.png" border="0" usemap="#atagfamily_8cpp_a135f021827fb1e5886707e355e28ca18_cgraph" loading="lazy" alt=""/></div>
+<map name="atagfamily_8cpp_a135f021827fb1e5886707e355e28ca18_cgraph" id="atagfamily_8cpp_a135f021827fb1e5886707e355e28ca18_cgraph">
+<area shape="rect" title="Serialises a TagFamily&#39;s name to a QDataStream for drag&#45;and&#45;drop transfer." alt="" coords="5,5,90,32"/>
+<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="138,5,280,32"/>
+<area shape="poly" title=" " alt="" coords="90,16,125,18,120,19,90,21"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="afdfd98b759c396c438841712c3eb57a5" name="afdfd98b759c396c438841712c3eb57a5"></a>
@@ -155,6 +177,28 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Deserialises a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a>'s name from a QDataStream during drag-and-drop. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in</td><td>The input data stream. </td></tr>
+    <tr><td class="paramname">t</td><td>The <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> to populate with the read name. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The input stream after reading. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="tagfamily_8cpp_afdfd98b759c396c438841712c3eb57a5_cgraph.png" border="0" usemap="#atagfamily_8cpp_afdfd98b759c396c438841712c3eb57a5_cgraph" loading="lazy" alt=""/></div>
+<map name="atagfamily_8cpp_afdfd98b759c396c438841712c3eb57a5_cgraph" id="atagfamily_8cpp_afdfd98b759c396c438841712c3eb57a5_cgraph">
+<area shape="rect" title="Deserialises a TagFamily&#39;s name from a QDataStream during drag&#45;and&#45;drop." alt="" coords="5,5,90,32"/>
+<area shape="rect" href="class_tag_family.html#a8cb81c8dd65532fcf6552960fd515608" title="Sets the family name and marks the dirty flag if the name changed." alt="" coords="138,5,280,32"/>
+<area shape="poly" title=" " alt="" coords="90,16,125,18,120,19,90,21"/>
+<area shape="rect" href="class_tag_family.html#a722daa0913c95fd78e08a8cd9040860e" title="Emitted when the family name is changed via setName()." alt="" coords="328,5,501,32"/>
+<area shape="poly" title=" " alt="" coords="281,16,315,19,310,19,281,21"/>
+</map>
+</div>
 
 </div>
 </div>
