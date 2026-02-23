@@ -7,6 +7,7 @@ TaggableListView::TaggableListView(QWidget *parent)
     viewport()->setAcceptDrops(true);
     setDefaultDropAction(Qt::CopyAction);
     setDragDropMode(QAbstractItemView::DropOnly);
+    setSelectionMode(QAbstractItemView::ExtendedSelection);
 }
 
 void TaggableListView::dropEvent(QDropEvent *event) {
@@ -14,16 +15,6 @@ void TaggableListView::dropEvent(QDropEvent *event) {
     QModelIndex index = indexAt(event->position().toPoint());
 
     if (index.isValid()) {
-        //qDebug() << "Dropped on row:" << index.row()
-        //<< "data:" << index.data().toString();
-
-        // Assign the dropped tag to the item
-
-        // Retrieve the file associated with the item at the drop location
-        //QStandardItem* item = index.model()->data(index);
-        QVariant var = index.data(Qt::UserRole + 1);
-        TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
-
         // Unpack the mime data from the drop event and convert it to a tagset
         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
@@ -36,9 +27,21 @@ void TaggableListView::dropEvent(QDropEvent *event) {
 
         TagSet ts = TagSet(tagFamilyName, tagName);
 
-        // Apply the tagset to the item
         MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
-        mainWin->core->applyTag(itemAsTaggedFile, ts);
+
+        if (selectionModel()->isSelected(index)) {
+            // Drop on a selected item: apply to every selected file
+            const QModelIndexList selected = selectionModel()->selectedIndexes();
+            for (const QModelIndex &idx : selected) {
+                TaggedFile* tf = idx.data(Qt::UserRole + 1).value<TaggedFile*>();
+                mainWin->core->applyTag(tf, ts);
+            }
+        } else {
+            // Drop on an unselected item: apply only to that file
+            TaggedFile* tf = index.data(Qt::UserRole + 1).value<TaggedFile*>();
+            mainWin->core->applyTag(tf, ts);
+        }
+
         mainWin->refreshTagAssignmentArea();
 
     } else {
