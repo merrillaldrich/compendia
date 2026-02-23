@@ -49,7 +49,7 @@ QString TaggedFile::TaggedFileJSON(){
     QJsonObject tagRectsObj;
     for (auto it = tag_rects_.cbegin(); it != tag_rects_.cend(); ++it) {
         Tag* t = it.key();
-        const QRect& r = it.value();
+        const QRectF& r = it.value();
         QString fn = t->tagFamily->getName();
         QString tn = t->getName();
         QJsonObject familyRects = tagRectsObj[fn].toObject();
@@ -133,40 +133,40 @@ void TaggedFile::addTag(Tag* tag)
  * \param tag  The Tag pointer to add.
  * \param rect The bounding rectangle within the image for this tag.
  */
-void TaggedFile::addTag(Tag* tag, QRect rect)
+void TaggedFile::addTag(Tag* tag, QRectF rect)
 {
     tags_->insert(tag);
     tag_rects_.insert(tag, rect);
     dirty_flag_ = true;
 }
 
-/*! \brief Sets or updates the bounding rectangle for an existing tag assignment and marks dirty.
+/*! \brief Sets or updates the normalised bounding rectangle for an existing tag assignment and marks dirty.
  *
  * \param tag  The Tag pointer already applied to this file.
- * \param rect The new bounding rectangle.
+ * \param rect The new bounding rectangle in normalised image coordinates (0.0–1.0).
  */
-void TaggedFile::setTagRect(Tag* tag, QRect rect)
+void TaggedFile::setTagRect(Tag* tag, QRectF rect)
 {
     tag_rects_.insert(tag, rect);
     dirty_flag_ = true;
 }
 
-/*! \brief Sets a bounding rectangle without marking the file dirty (used during load).
+/*! \brief Sets a normalised bounding rectangle without marking the file dirty (used during load).
  *
  * \param tag  The Tag pointer already applied to this file.
- * \param rect The bounding rectangle to initialise from.
+ * \param rect The bounding rectangle in normalised image coordinates (0.0–1.0).
  */
-void TaggedFile::initTagRect(Tag* tag, QRect rect)
+void TaggedFile::initTagRect(Tag* tag, QRectF rect)
 {
     tag_rects_.insert(tag, rect);
 }
 
-/*! \brief Returns the bounding rectangle for a tag assignment, if one is set.
+/*! \brief Returns the normalised bounding rectangle for a tag assignment, if one is set.
  *
  * \param tag The Tag pointer to query.
- * \return The bounding rectangle, or std::nullopt if no rect is set.
+ * \return The bounding rectangle in normalised image coordinates (0.0–1.0), or std::nullopt if not set.
  */
-std::optional<QRect> TaggedFile::tagRect(Tag* tag) const
+std::optional<QRectF> TaggedFile::tagRect(Tag* tag) const
 {
     if (tag_rects_.contains(tag))
         return tag_rects_.value(tag);

@@ -17,7 +17,7 @@ class TagSet
 public:
     QString tagFamilyName = "";
     QString tagName = "";
-    std::optional<QRect> rect;
+    std::optional<QRectF> rect;
 
     /*! \brief Initialises the tag-set with the given family and tag name strings.
      *
@@ -26,13 +26,13 @@ public:
      */
     TagSet(QString tfn, QString tn);
 
-    /*! \brief Initialises the tag-set with a family name, tag name, and a bounding rectangle.
+    /*! \brief Initialises the tag-set with a family name, tag name, and a normalised bounding rectangle.
      *
      * \param tfn  The tag-family name.
      * \param tn   The tag name.
-     * \param rect The bounding rectangle within the image.
+     * \param rect The bounding rectangle in normalised image coordinates (0.0–1.0).
      */
-    TagSet(QString tfn, QString tn, QRect rect);
+    TagSet(QString tfn, QString tn, QRectF rect);
 
 signals:
 };

@@ -3,11 +3,9 @@
 
 #include <QObject>
 
-#include <QApplication>
-#include <QLabel>
-#include <QPixmap>
-#include <QPainter>
 #include <QImage>
+#include <QList>
+#include <QRect>
 #include <QString>
 #include <QDebug>
 #include <vector>
@@ -18,9 +16,8 @@
 
 /*! \brief Detects faces in a QImage using the dlib frontal-face detector.
  *
- * Converts a QImage to the dlib pixel format, runs the HOG-based frontal face
- * detector, and can return an annotated copy of the image with bounding boxes
- * drawn around each detected face.
+ * Converts a QImage to the dlib pixel format and runs the HOG-based frontal
+ * face detector, returning a list of bounding rectangles for each detected face.
  */
 class FaceRecognizer : public QObject
 {
@@ -34,13 +31,6 @@ private:
      */
     dlib::array2d<dlib::rgb_pixel> qimageToDlibArray(const QImage &qimg);
 
-    /*! \brief Draws green bounding-box rectangles for each detected face onto a QImage.
-     *
-     * \param img   The image to annotate (modified in place).
-     * \param faces A vector of dlib rectangle structures describing detected faces.
-     */
-    void drawFaceBoxes(QImage &img, const std::vector<dlib::rectangle> &faces);
-
 public:
     /*! \brief Constructs a FaceRecognizer.
      *
@@ -48,12 +38,12 @@ public:
      */
     explicit FaceRecognizer(QObject *parent = nullptr);
 
-    /*! \brief Returns a copy of the source image with face bounding boxes drawn on it.
+    /*! \brief Runs face detection on the source image and returns normalised bounding rectangles.
      *
      * \param sourceImage The image to run face detection on.
-     * \return A copy of the source image annotated with green face rectangles.
+     * \return A list of QRectF values, one per detected face, in normalised image coordinates (0.0–1.0).
      */
-    QImage imageWithFaceBoxes(QImage sourceImage);
+    QList<QRectF> detectFaces(const QImage &sourceImage);
 
 signals:
 };

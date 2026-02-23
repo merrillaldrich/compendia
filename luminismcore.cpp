@@ -670,8 +670,8 @@ QList<TagSet> LuminismCore::parseTagJson(QJsonObject tagsJson, QJsonObject tagRe
                 if (familyRects.contains(tagName)) {
                     QJsonArray rectArr = familyRects[tagName].toArray();
                     if (rectArr.size() == 4) {
-                        ts.rect = QRect(rectArr[0].toInt(), rectArr[1].toInt(),
-                                        rectArr[2].toInt(), rectArr[3].toInt());
+                        ts.rect = QRectF(rectArr[0].toDouble(), rectArr[1].toDouble(),
+                                         rectArr[2].toDouble(), rectArr[3].toDouble());
                     }
                 }
             }

@@ -11,7 +11,6 @@
 #include <QProgressBar>
 #include "luminismcore.h"
 #include "facerecognizer.h"
-#include "exifparser.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

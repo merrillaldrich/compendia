@@ -8,26 +8,30 @@ FaceRecognizer::FaceRecognizer(QObject *parent)
     : QObject{parent}
 {}
 
-/*! \brief Returns a copy of the source image with face bounding boxes drawn on it.
+/*! \brief Runs face detection on the source image and returns normalised bounding rectangles.
  *
  * \param sourceImage The image to run face detection on.
- * \return A copy of the source image annotated with green face rectangles.
+ * \return A list of QRectF values, one per detected face, in normalised image coordinates (0.0–1.0).
  */
-QImage FaceRecognizer::imageWithFaceBoxes(QImage sourceImage){
+QList<QRectF> FaceRecognizer::detectFaces(const QImage &sourceImage){
 
     dlib::array2d<dlib::rgb_pixel> dlibImg = qimageToDlibArray(sourceImage);
 
-    // Create face detector
     dlib::frontal_face_detector detector = dlib::get_frontal_face_detector();
 
-    // Detect faces
     qDebug() << "Start face detection";
     std::vector<dlib::rectangle> faces = detector(dlibImg);
     qDebug() << "End face detection";
 
-    drawFaceBoxes(sourceImage, faces);
+    const double w = sourceImage.width();
+    const double h = sourceImage.height();
 
-    return sourceImage;
+    QList<QRectF> rects;
+    for (const auto &face : faces)
+        rects.append(QRectF(face.left() / w, face.top() / h,
+                            face.width() / w, face.height() / h));
+
+    return rects;
 }
 
 /*! \brief Converts a QImage to a dlib RGB pixel array for use with the detector.
@@ -52,18 +56,4 @@ dlib::array2d<dlib::rgb_pixel> FaceRecognizer::qimageToDlibArray(const QImage &q
     return dlibImage;
 }
 
-/*! \brief Draws green bounding-box rectangles for each detected face onto a QImage.
- *
- * \param img   The image to annotate (modified in place).
- * \param faces A vector of dlib rectangle structures describing detected faces.
- */
-void FaceRecognizer::drawFaceBoxes(QImage &img, const std::vector<dlib::rectangle> &faces) {
-    QPainter painter(&img);
-    painter.setPen(QPen(Qt::green, 2));
-    for (const auto &face : faces) {
-        QRect rect(face.left(), face.top(),
-                   face.width(), face.height());
-        painter.drawRect(rect);
-    }
-    painter.end();
-}
+

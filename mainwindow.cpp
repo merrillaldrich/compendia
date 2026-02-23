@@ -377,43 +377,51 @@ void MainWindow::on_metadata_saved(){
     }
 }
 
-/*! \brief Runs face detection on the first selected image and displays the result. */
+/*! \brief Runs face detection on every selected image and stores face regions as tagged rectangles. */
 void MainWindow::on_actionFind_Faces_triggered(){
 
-    // Get the first selected image and run face identification on it
-    // Show the results in the previewer
-
-    FaceRecognizer fr = FaceRecognizer(this);
+    FaceRecognizer fr(this);
 
     QItemSelectionModel *selModel = ui->fileListView->selectionModel();
     QModelIndexList selectedIndexes = selModel->selectedRows();
 
-    QModelIndex proxyIndex;
-    if (!selectedIndexes.isEmpty()) {
-        proxyIndex = selectedIndexes.first(); // First selected row
-    } else {
+    if (selectedIndexes.isEmpty())
         return;
+
+    for (const QModelIndex &proxyIndex : selectedIndexes) {
+
+        QModelIndex sourceIndex = core->getItemModelProxy()->mapToSource(proxyIndex);
+        QVariant var = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
+        TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+
+        QImageReader ir(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
+        ir.setAutoTransform(true);
+        QImage sourceImage = ir.read();
+        if (sourceImage.isNull()) {
+            QMessageBox::critical(this, "Error", "Failed to load image: " + ir.errorString());
+            continue;
+        }
+
+        // Remove any previously auto-located face tags from this file
+        QSet<Tag*> toRemove;
+        for (Tag* t : *itemAsTaggedFile->tags()) {
+            if (t->tagFamily->getName() == "People" && t->getName().startsWith("AutoLocatedFace"))
+                toRemove.insert(t);
+        }
+        for (Tag* t : toRemove)
+            itemAsTaggedFile->removeTag(t);
+
+        // Detect faces and assign a numbered tag with rect for each one
+        const QList<QRectF> faces = fr.detectFaces(sourceImage);
+        for (int i = 0; i < faces.size(); ++i) {
+            QString tagName = QString("AutoLocatedFace%1").arg(i + 1, 2, 10, QChar('0'));
+            Tag* tag = core->addLibraryTag("People", tagName);
+            itemAsTaggedFile->addTag(tag, faces[i]);
+        }
     }
 
-    // Map proxy index used by the view to source index in the model
-    QModelIndex sourceIndex = core->getItemModelProxy()->mapToSource(proxyIndex);
-
-    // Get the absolute path to the selected file
-    QVariant selectedImage = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
-    TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
-
-    QImageReader ir( itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName );
-    ir.setAutoTransform(true);
-
-    // Load the image
-    QImage sourceImage = ir.read();
-    if (sourceImage.isNull()) {
-        QMessageBox::critical(nullptr, "Error", "Failed to load image: " + ir.errorString());
-        //return -1;
-    }
-
-    QImage imgWithFaces = fr.imageWithFaceBoxes(sourceImage);
-    ui->previewContainer->preview(imgWithFaces);
+    refreshNavTagLibrary();
+    refreshTagAssignmentArea();
 }
 
 /*! \brief Slot for the Quit menu action; closes the main window. */

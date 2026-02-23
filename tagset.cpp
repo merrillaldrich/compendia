@@ -10,13 +10,13 @@ TagSet::TagSet(QString tfn, QString tn){
     tagName = tn;
 }
 
-/*! \brief Initialises the tag-set with a family name, tag name, and a bounding rectangle.
+/*! \brief Initialises the tag-set with a family name, tag name, and a normalised bounding rectangle.
  *
  * \param tfn  The tag-family name.
  * \param tn   The tag name.
- * \param r    The bounding rectangle within the image.
+ * \param r    The bounding rectangle in normalised image coordinates (0.0–1.0).
  */
-TagSet::TagSet(QString tfn, QString tn, QRect r){
+TagSet::TagSet(QString tfn, QString tn, QRectF r){
     tagFamilyName = tfn;
     tagName = tn;
     rect = r;
