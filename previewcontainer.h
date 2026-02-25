@@ -77,8 +77,7 @@ private:
     QGraphicsVideoItem* videoItem = nullptr;
     QList<QGraphicsItem*> tag_rect_items_;
     QSizeF image_size_;
-    //QAbstractButton* playButton = nullptr;
-    //QSlider* positionSlider = nullptr;
+    bool is_video_ = false;
 
 };
 

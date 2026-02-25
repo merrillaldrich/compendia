@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QPair>
@@ -399,11 +400,16 @@ void MainWindow::on_actionFind_Faces_triggered(){
     if (selectedIndexes.isEmpty())
         return;
 
+    static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
+
     for (const QModelIndex &proxyIndex : selectedIndexes) {
 
         QModelIndex sourceIndex = core->getItemModelProxy()->mapToSource(proxyIndex);
         QVariant var = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
         TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+
+        if (videoExts.contains(QFileInfo(itemAsTaggedFile->fileName).suffix().toLower()))
+            continue;
 
         QImageReader ir(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
         ir.setAutoTransform(true);

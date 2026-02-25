@@ -1,5 +1,26 @@
 #include "icongenerator.h"
 #include <qimagereader.h>
+#include <QFileInfo>
+
+static bool isVideoFile(const QString &path)
+{
+    static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
+    return videoExts.contains(QFileInfo(path).suffix().toLower());
+}
+
+static QImage videoPlaceholderIcon()
+{
+    QImage img(100, 100, QImage::Format_RGB32);
+    img.fill(QColor(30, 30, 30));
+    QPainter p(&img);
+    p.setRenderHint(QPainter::Antialiasing);
+    p.setBrush(Qt::white);
+    p.setPen(Qt::NoPen);
+    QPointF pts[3] = { {35.0, 25.0}, {35.0, 75.0}, {75.0, 50.0} };
+    p.drawPolygon(pts, 3);
+    p.end();
+    return img;
+}
 
 /*! \brief Constructs an IconGenerator.
  *
@@ -46,11 +67,15 @@ QImage IconGenerator::generateIcon(const QString absoluteFileName)
     if (iconPic.isNull()) {
         qDebug() << "Icon cache miss";
 
-        int size = 100;
-        QImageReader ir(absoluteFileName);
-        ir.setAutoTransform(true);
-        iconPic = ir.read();
-        iconPic = iconPic.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        if (isVideoFile(absoluteFileName)) {
+            iconPic = videoPlaceholderIcon();
+        } else {
+            int size = 100;
+            QImageReader ir(absoluteFileName);
+            ir.setAutoTransform(true);
+            iconPic = ir.read();
+            iconPic = iconPic.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        }
 
         bool cached = saveIconToCache(absoluteFileName, iconPic);
 

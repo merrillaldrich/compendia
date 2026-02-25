@@ -131,7 +131,18 @@ void LuminismCore::loadRootDirectory(){
 
 
     // Iterate over the entire root directory recursively and populate the model
-    QDirIterator it(root_directory_, QStringList() << "*.jpg" << "*.JPG" << "*.heic" << "*.HEIC" << "*.png" << "*.PNG", QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    QDirIterator it(root_directory_, QStringList()
+                        << "*.jpg" << "*.JPG"
+                        << "*.heic" << "*.HEIC"
+                        << "*.png" << "*.PNG"
+                        << "*.mp4" << "*.MP4"
+                        << "*.mov" << "*.MOV"
+                        << "*.avi" << "*.AVI"
+                        << "*.mkv" << "*.MKV"
+                        << "*.wmv" << "*.WMV"
+                        << "*.webm" << "*.WEBM"
+                        << "*.m4v" << "*.M4V",
+                    QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
     while (it.hasNext()) {
         QFile f(it.next());
         QFileInfo fileInfo(f.fileName());

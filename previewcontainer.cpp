@@ -1,6 +1,14 @@
 #include "previewcontainer.h"
 #include <QPainter>
 #include <QPen>
+#include <QFileInfo>
+#include <QUrl>
+
+static bool isVideoFile(const QString &path)
+{
+    static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
+    return videoExts.contains(QFileInfo(path).suffix().toLower());
+}
 
 // File-local item that draws a rounded rectangle with a cosmetic pen whose corner
 // radius is expressed in screen pixels rather than scene units.  This keeps the
@@ -49,8 +57,7 @@ PreviewContainer::PreviewContainer(QWidget *parent)
     setLayout(layout);
     layout->addWidget(view);
 
-    //mediaPlayer = new QMediaPlayer(this);
-    //videoItem = new QGraphicsVideoItem;
+    mediaPlayer = new QMediaPlayer(this);
 }
 
 /*! \brief Displays the given QImage in the preview pane.
@@ -58,8 +65,11 @@ PreviewContainer::PreviewContainer(QWidget *parent)
  * \param image The image to display.
  */
 void PreviewContainer::preview(QImage image){
+    mediaPlayer->stop();
+    is_video_ = false;
     // Replace the image in the scene; scene->clear() deletes all items including overlays
     scene->clear();
+    videoItem = nullptr; // scene->clear() deleted it if it was present
     tag_rect_items_.clear();
     image_size_ = image.size();
 
@@ -83,6 +93,33 @@ void PreviewContainer::preview(QImage image){
  */
 void PreviewContainer::preview(QString absoluteFilePath){
 
+    if (isVideoFile(absoluteFilePath)) {
+        mediaPlayer->stop();
+        scene->clear();
+        videoItem = nullptr;
+        tag_rect_items_.clear();
+        image_size_ = QSizeF();
+
+        videoItem = new QGraphicsVideoItem;
+        scene->addItem(videoItem);
+
+        connect(videoItem, &QGraphicsVideoItem::nativeSizeChanged, this, [this](const QSizeF &size) {
+            if (size.isEmpty()) return;
+            videoItem->setSize(size);
+            scene->setSceneRect(videoItem->boundingRect());
+            view->fitInView(videoItem, Qt::KeepAspectRatio);
+        });
+
+        is_video_ = true;
+        mediaPlayer->setVideoSink(videoItem->videoSink());
+        mediaPlayer->setSource(QUrl::fromLocalFile(absoluteFilePath));
+        mediaPlayer->play();
+
+        view->setDragMode(QGraphicsView::NoDrag);
+        view->show();
+        return;
+    }
+
     QImageReader ir(absoluteFilePath);
     ir.setAutoTransform(true);
 
@@ -90,14 +127,23 @@ void PreviewContainer::preview(QString absoluteFilePath){
     QImage image = ir.read();
     if (image.isNull()) {
         QMessageBox::critical(nullptr, "Error", "Failed to load image: " + ir.errorString());
-        //return -1;
     }
 
     preview(image);
 }
 
-/*! \brief Re-fits the displayed image to the viewport if it has not been zoomed in. */
+/*! \brief Re-fits the displayed content to the viewport.
+ *
+ * For video, always re-fits so the playback fills the pane at any size.
+ * For images, only re-fits when the image has not been zoomed in by the user.
+ */
 void PreviewContainer::freshen(){
+
+    if (is_video_) {
+        if (videoItem && !videoItem->boundingRect().isEmpty())
+            view->fitInView(videoItem, Qt::KeepAspectRatio);
+        return;
+    }
 
     // Compare the size of the image to the viewport, and if the image is smaller
     // or equal then zoom extents to fill the viewport
@@ -118,8 +164,11 @@ void PreviewContainer::freshen(){
 
 /*! \brief Clears the graphics scene, removing any displayed image. */
 void PreviewContainer::clear(){
+    mediaPlayer->stop();
+    is_video_ = false;
     if (view->scene() != nullptr){
         view->scene()->clear();
+        videoItem = nullptr; // scene->clear() deleted it
         tag_rect_items_.clear();
         image_size_ = QSizeF();
     }
