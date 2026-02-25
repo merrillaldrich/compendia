@@ -58,6 +58,78 @@ PreviewContainer::PreviewContainer(QWidget *parent)
     layout->addWidget(view);
 
     mediaPlayer = new QMediaPlayer(this);
+    audioOutput_ = new QAudioOutput(this);
+    mediaPlayer->setAudioOutput(audioOutput_);
+
+    // Control bar (hidden until a video is displayed)
+    controlBar_ = new QWidget(this);
+    QHBoxLayout *controlLayout = new QHBoxLayout(controlBar_);
+    controlLayout->setContentsMargins(4, 2, 4, 2);
+
+    playPauseButton_ = new QPushButton("Pause", controlBar_);
+    playPauseButton_->setFixedWidth(60);
+    controlLayout->addWidget(playPauseButton_);
+
+    positionSlider_ = new QSlider(Qt::Horizontal, controlBar_);
+    positionSlider_->setRange(0, 0);
+    controlLayout->addWidget(positionSlider_);
+
+    timeLabel_ = new QLabel("0:00 / 0:00", controlBar_);
+    timeLabel_->setFixedWidth(90);
+    timeLabel_->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    controlLayout->addWidget(timeLabel_);
+
+    layout->addWidget(controlBar_);
+    controlBar_->hide();
+
+    // Play/pause button toggles playback state
+    connect(playPauseButton_, &QPushButton::clicked, this, [this]() {
+        if (mediaPlayer->playbackState() == QMediaPlayer::PlayingState)
+            mediaPlayer->pause();
+        else
+            mediaPlayer->play();
+    });
+
+    // Keep button label in sync with actual playback state
+    connect(mediaPlayer, &QMediaPlayer::playbackStateChanged, this,
+            [this](QMediaPlayer::PlaybackState state) {
+        playPauseButton_->setText(state == QMediaPlayer::PlayingState ? "Pause" : "Play");
+    });
+
+    // When duration is known, configure slider range
+    connect(mediaPlayer, &QMediaPlayer::durationChanged, this, [this](qint64 duration) {
+        positionSlider_->setMaximum(static_cast<int>(duration));
+        updateTimeLabel(mediaPlayer->position(), duration);
+    });
+
+    // Advance slider as playback proceeds (suppressed while user is dragging)
+    connect(mediaPlayer, &QMediaPlayer::positionChanged, this, [this](qint64 position) {
+        if (!slider_being_dragged_)
+            positionSlider_->setValue(static_cast<int>(position));
+        updateTimeLabel(position, mediaPlayer->duration());
+    });
+
+    // Track drag state to avoid fighting the player's position updates
+    connect(positionSlider_, &QSlider::sliderPressed,   this, [this]() { slider_being_dragged_ = true; });
+    connect(positionSlider_, &QSlider::sliderReleased,  this, [this]() {
+        slider_being_dragged_ = false;
+        mediaPlayer->setPosition(positionSlider_->value());
+    });
+
+    // Update time label in real time while scrubbing
+    connect(positionSlider_, &QSlider::sliderMoved, this, [this](int value) {
+        updateTimeLabel(value, mediaPlayer->duration());
+    });
+}
+
+/*! \brief Updates the time label to show current position and total duration. */
+void PreviewContainer::updateTimeLabel(qint64 position, qint64 duration)
+{
+    auto fmt = [](qint64 ms) -> QString {
+        qint64 s = ms / 1000;
+        return QString("%1:%2").arg(s / 60).arg(s % 60, 2, 10, QChar('0'));
+    };
+    timeLabel_->setText(fmt(position) + " / " + fmt(duration));
 }
 
 /*! \brief Displays the given QImage in the preview pane.
@@ -67,6 +139,7 @@ PreviewContainer::PreviewContainer(QWidget *parent)
 void PreviewContainer::preview(QImage image){
     mediaPlayer->stop();
     is_video_ = false;
+    controlBar_->hide();
     // Replace the image in the scene; scene->clear() deletes all items including overlays
     scene->clear();
     videoItem = nullptr; // scene->clear() deleted it if it was present
@@ -111,6 +184,7 @@ void PreviewContainer::preview(QString absoluteFilePath){
         });
 
         is_video_ = true;
+        controlBar_->show();
         mediaPlayer->setVideoSink(videoItem->videoSink());
         mediaPlayer->setSource(QUrl::fromLocalFile(absoluteFilePath));
         mediaPlayer->play();
@@ -166,6 +240,10 @@ void PreviewContainer::freshen(){
 void PreviewContainer::clear(){
     mediaPlayer->stop();
     is_video_ = false;
+    controlBar_->hide();
+    positionSlider_->setValue(0);
+    positionSlider_->setMaximum(0);
+    timeLabel_->setText("0:00 / 0:00");
     if (view->scene() != nullptr){
         view->scene()->clear();
         videoItem = nullptr; // scene->clear() deleted it

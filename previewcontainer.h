@@ -8,13 +8,18 @@
 #include <QSizeF>
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QImageReader>
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QGraphicsVideoItem>
 
 #include <QMediaPlayer>
+#include <QAudioOutput>
 #include <QMessageBox>
+#include <QPushButton>
+#include <QSlider>
+#include <QLabel>
 #include "zoomablegraphicsview.h"
 
 /*! \brief Widget that displays a full-size image preview inside a zoomable graphics view.
@@ -71,13 +76,22 @@ signals:
 
 
 private:
-    QGraphicsScene* scene = nullptr;
+    void updateTimeLabel(qint64 position, qint64 duration);
+
+    QGraphicsScene*    scene = nullptr;
     ZoomableGraphicsView* view = nullptr;
-    QMediaPlayer* mediaPlayer = nullptr;
+    QMediaPlayer*      mediaPlayer = nullptr;
+    QAudioOutput*      audioOutput_ = nullptr;
     QGraphicsVideoItem* videoItem = nullptr;
     QList<QGraphicsItem*> tag_rect_items_;
-    QSizeF image_size_;
-    bool is_video_ = false;
+    QSizeF             image_size_;
+    bool               is_video_ = false;
+
+    QWidget*           controlBar_ = nullptr;
+    QPushButton*       playPauseButton_ = nullptr;
+    QSlider*           positionSlider_ = nullptr;
+    QLabel*            timeLabel_ = nullptr;
+    bool               slider_being_dragged_ = false;
 
 };
 
