@@ -140,9 +140,7 @@ void FileNameDelegate::paint(QPainter *painter,
 
     painter->save();
     painter->setFont(opt.font);
-    painter->setPen((opt.state & QStyle::State_Selected)
-                    ? opt.palette.highlightedText().color()
-                    : opt.palette.text().color());
+    painter->setPen(opt.palette.text().color());
 
     int y = textTop;
     for (const QString &line : lines) {
