@@ -8,12 +8,23 @@
 #include <QTimer>
 #include <QUrl>
 
+/*! \brief Returns true if \a path has a recognised video file extension.
+ *
+ * \param path Absolute or relative file path to test.
+ * \return True when the file extension matches a known video format.
+ */
 static bool isVideoFile(const QString &path)
 {
     static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
     return videoExts.contains(QFileInfo(path).suffix().toLower());
 }
 
+/*! \brief Generates a fallback 100×100 dark thumbnail with a white play triangle.
+ *
+ * Used when frame capture from a video file fails or times out.
+ *
+ * \return A QImage containing the placeholder icon.
+ */
 static QImage videoPlaceholderIcon()
 {
     QImage img(100, 100, QImage::Format_RGB32);
@@ -28,8 +39,16 @@ static QImage videoPlaceholderIcon()
     return img;
 }
 
-// Seek to a short time into the video and capture the first frame that arrives.
-// Returns a null QImage if the video cannot be decoded or times out.
+/*! \brief Seeks to ~2 seconds into a video file and returns the first decoded frame.
+ *
+ * Creates a QMediaPlayer and QVideoSink on the calling thread and runs a local
+ * QEventLoop so that the asynchronous multimedia pipeline can deliver callbacks
+ * without blocking the main event loop.  A 5-second timeout guards against
+ * unresponsive or unsupported files.
+ *
+ * \param absoluteFileName Absolute path to the video file.
+ * \return The captured frame scaled to at most 100×100 px, or a null QImage on failure.
+ */
 static QImage captureVideoFrame(const QString &absoluteFileName)
 {
     QImage result;
@@ -90,8 +109,15 @@ static QImage captureVideoFrame(const QString &absoluteFileName)
     return result;
 }
 
-// Paints filmstrip bands (left + right) and a centred play-button triangle
-// over a 100×100 video thumbnail.
+/*! \brief Composites filmstrip and play-button decorations onto a video thumbnail.
+ *
+ * Paints dark vertical bands along the left and right edges with evenly-spaced
+ * near-white sprocket holes centred vertically, then draws a semi-transparent
+ * play-button disc and triangle in the centre of the image.
+ *
+ * \param source The 100×100 thumbnail frame to decorate.
+ * \return A new QImage with the decorations composited over \a source.
+ */
 static QImage overlayVideoDecorations(const QImage &source)
 {
     QImage img = source.convertToFormat(QImage::Format_ARGB32_Premultiplied);

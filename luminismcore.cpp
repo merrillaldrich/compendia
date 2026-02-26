@@ -441,7 +441,7 @@ QSet<Tag*>* LuminismCore::getFilterTags(){
     return tagged_files_proxy_->getFilterTags();
 }
 
-/*! Retrieve a tag from the library by name.
+/*! \brief Retrieve a tag from the library by name.
  *
  * \param tagFamilyName The name of the tag family to search within.
  * \param tagName       The tag name to find.
@@ -462,7 +462,7 @@ Tag* LuminismCore::getTag(QString tagFamilyName, QString tagName){
     return matchingTag;
 }
 
-/*! Retrieve a tag family from the library by name.
+/*! \brief Retrieve a tag family from the library by name.
  *
  * \param tagFamilyName The family name to find.
  * \return Pointer to the matching TagFamily, or nullptr if not found.
@@ -482,7 +482,7 @@ TagFamily* LuminismCore::getTagFamily(QString tagFamilyName){
     return matchingTagFamily;
 }
 
-/*! Create a tag in the library using just its family name and tag name as strings
+/*! \brief Create a tag in the library using just its family name and tag name as strings.
  *
  *  \param tagFamilyName The name of the family the tag belongs to.
  *  \param tagName       The name of the tag to create or find.
@@ -509,7 +509,7 @@ Tag* LuminismCore::addLibraryTag(QString tagFamilyName, QString tagName){
     return matchingTag;
 }
 
-/*! Add a tag to the library if it doesn't exist
+/*! \brief Add a tag to the library if it doesn't exist.
  *
  * \param tag The Tag pointer to insert.
  */

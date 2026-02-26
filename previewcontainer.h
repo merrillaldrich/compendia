@@ -76,6 +76,11 @@ signals:
 
 
 private:
+    /*! \brief Formats \a position and \a duration as "m:ss / m:ss" and updates the time label.
+     *
+     * \param position Current playback position in milliseconds.
+     * \param duration  Total media duration in milliseconds.
+     */
     void updateTimeLabel(qint64 position, qint64 duration);
 
     QGraphicsScene*    scene = nullptr;
