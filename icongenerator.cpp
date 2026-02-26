@@ -8,6 +8,9 @@
 #include <QTimer>
 #include <QUrl>
 
+/*! \brief The discrete pixel sizes generated and cached for each media file. */
+const QVector<int> IconGenerator::kIconSizes = {50, 100, 200, 400};
+
 /*! \brief Returns true if \a path has a recognised video file extension.
  *
  * \param path Absolute or relative file path to test.
@@ -19,21 +22,24 @@ static bool isVideoFile(const QString &path)
     return videoExts.contains(QFileInfo(path).suffix().toLower());
 }
 
-/*! \brief Generates a fallback 100×100 dark thumbnail with a white play triangle.
+/*! \brief Generates a fallback dark thumbnail with a white play triangle at the given size.
  *
  * Used when frame capture from a video file fails or times out.
  *
+ * \param size Side length in pixels of the square placeholder image.
  * \return A QImage containing the placeholder icon.
  */
-static QImage videoPlaceholderIcon()
+static QImage videoPlaceholderIcon(int size)
 {
-    QImage img(100, 100, QImage::Format_RGB32);
+    QImage img(size, size, QImage::Format_RGB32);
     img.fill(QColor(30, 30, 30));
     QPainter p(&img);
     p.setRenderHint(QPainter::Antialiasing);
     p.setBrush(Qt::white);
     p.setPen(Qt::NoPen);
-    QPointF pts[3] = { {35.0, 25.0}, {35.0, 75.0}, {75.0, 50.0} };
+    // Scale triangle points proportionally: original was designed for 100px
+    const double s = size / 100.0;
+    QPointF pts[3] = { {35.0*s, 25.0*s}, {35.0*s, 75.0*s}, {75.0*s, 50.0*s} };
     p.drawPolygon(pts, 3);
     p.end();
     return img;
@@ -47,7 +53,7 @@ static QImage videoPlaceholderIcon()
  * unresponsive or unsupported files.
  *
  * \param absoluteFileName Absolute path to the video file.
- * \return The captured frame scaled to at most 100×100 px, or a null QImage on failure.
+ * \return The captured frame scaled to at most 400×400 px, or a null QImage on failure.
  */
 static QImage captureVideoFrame(const QString &absoluteFileName)
 {
@@ -104,7 +110,7 @@ static QImage captureVideoFrame(const QString &absoluteFileName)
     loop.exec();  // process multimedia events on this thread until a frame arrives
 
     if (!result.isNull())
-        result = result.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        result = result.scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     return result;
 }
@@ -113,9 +119,11 @@ static QImage captureVideoFrame(const QString &absoluteFileName)
  *
  * Paints dark vertical bands along the left and right edges with evenly-spaced
  * near-white sprocket holes centred vertically, then draws a semi-transparent
- * play-button disc and triangle in the centre of the image.
+ * play-button disc and triangle in the centre of the image.  All measurements
+ * are proportional to the image width so the decoration looks correct at any
+ * of the four cached sizes.
  *
- * \param source The 100×100 thumbnail frame to decorate.
+ * \param source The thumbnail frame to decorate (any square size).
  * \return A new QImage with the decorations composited over \a source.
  */
 static QImage overlayVideoDecorations(const QImage &source)
@@ -126,18 +134,18 @@ static QImage overlayVideoDecorations(const QImage &source)
 
     const int w     = img.width();
     const int h     = img.height();
-    const int bandW = 10;  // 13 * 0.75 ≈ 10 px — side bands
+    const int bandW = qMax(3, w / 10);  // at 100px → 10, at 400px → 40
 
     // --- Filmstrip bands (left and right) ---
     p.fillRect(0,         0, bandW, h, QColor(15, 15, 15, 225));
     p.fillRect(w - bandW, 0, bandW, h, QColor(15, 15, 15, 225));
 
-    // Sprocket holes: fixed-gap group centred vertically inside each side band
-    const int    holeW      = 6;
-    const int    holeH      = 6;
-    const int    numHoles   = 6;
-    const int    holeGap    = 4;
-    const double holeRadius = 1.5;
+    // Sprocket holes: proportional size, centred vertically inside each side band
+    const int    holeW      = qMax(2, bandW * 3 / 5);   // at 100px → 6
+    const int    holeH      = holeW;                     // square holes
+    const int    holeGap    = qMax(1, holeH * 2 / 3);   // at 100px → 4
+    const double holeRadius = holeW * 0.25;              // at 100px → 1.5
+    const int    numHoles   = qMin(6, h / qMax(1, holeH + holeGap));
     const int    blockH     = numHoles * holeH + (numHoles - 1) * holeGap;
     const int    startY     = (h - blockH) / 2;
     const int    xLeft      = (bandW - holeW) / 2;
@@ -151,19 +159,20 @@ static QImage overlayVideoDecorations(const QImage &source)
         p.drawRoundedRect(QRectF(xRight, y, holeW, holeH), holeRadius, holeRadius);
     }
 
-    // --- Play button (50 % smaller than original) ---
+    // --- Play button (proportional to image width) ---
     const double cx = w * 0.5;
     const double cy = h * 0.5;
 
     // Semi-transparent dark disc — keeps the triangle readable over bright frames
+    const double discR = w * 0.085;  // at 100px → 8.5
     p.setBrush(QColor(0, 0, 0, 110));
     p.setPen(Qt::NoPen);
-    p.drawEllipse(QPointF(cx, cy), 8.5, 8.5);
+    p.drawEllipse(QPointF(cx, cy), discR, discR);
 
     // White triangle: nudge right so its visual centroid sits at (cx, cy)
-    const double th = 7.0;             // half-height of triangle
-    const double tl = cx - th * 0.50; // left edge x
-    const double tr = cx + th * 0.90; // tip x
+    const double th = w * 0.07;           // half-height; at 100px → 7.0
+    const double tl = cx - th * 0.50;    // left edge x
+    const double tr = cx + th * 0.90;    // tip x
     QPointF pts[3] = {
         { tl, cy - th },
         { tl, cy + th },
@@ -185,72 +194,94 @@ IconGenerator::IconGenerator(QObject *parent)
 
 }
 
-/*! \brief Returns the absolute path to the .qimg cache file for a given source image.
+/*! \brief Returns the absolute path to the .qimg cache file for a given source image and size.
  *
  * \param absoluteFileName Absolute path to the source image file.
+ * \param size             The pixel bound embedded in the cache file name.
  * \return Absolute path to the corresponding cache file.
  */
-QString IconGenerator::cacheFilePath(const QString &absoluteFileName)
+QString IconGenerator::cacheFilePath(const QString &absoluteFileName, int size)
 {
     QFileInfo fi(absoluteFileName);
-    return fi.absolutePath() + "/.luminism_cache/" + fi.baseName() + "_100.qimg";
+    return fi.absolutePath() + "/.luminism_cache/" + fi.baseName()
+           + "_" + QString::number(size) + ".qimg";
 }
 
-/*! \brief Returns a 100-pixel-bounded thumbnail for the given image file.
+/*! \brief Returns thumbnails at all cached sizes for the given media file.
  *
- * Checks the on-disk cache first. The cache is bypassed when the source image
- * has been modified more recently than the cached file. On a miss or stale
- * cache the original image is decoded, scaled, saved to cache, and returned.
+ * Checks the on-disk cache for every size first.  If all four caches are
+ * current (newer than the source file) they are loaded and returned without
+ * re-decoding the source.  On any miss the source is decoded once (or a video
+ * frame captured at 400 px), scaled to each of the four sizes, cached, and
+ * returned as a QVector ordered smallest-to-largest.
  *
- * \param absoluteFileName Absolute path to the source image file.
- * \return A QImage containing the scaled thumbnail, or a null QImage on error.
+ * \param absoluteFileName Absolute path to the source media file.
+ * \return A QVector of QImages (one per kIconSizes entry), or an empty vector
+ *         on error.
  */
-QImage IconGenerator::generateIcon(const QString absoluteFileName)
+QVector<QImage> IconGenerator::generateIcon(const QString absoluteFileName)
 {
-    QImage iconPic;
-
     QFileInfo sourceInfo(absoluteFileName);
-    QFileInfo cacheInfo(cacheFilePath(absoluteFileName));
 
-    bool cacheCurrent = cacheInfo.exists() &&
-                        cacheInfo.lastModified() >= sourceInfo.lastModified();
-
-    if (cacheCurrent)
-        iconPic = loadIconFromCache(absoluteFileName);
-
-    if (iconPic.isNull()) {
-        qDebug() << "Icon cache miss";
-
-        if (isVideoFile(absoluteFileName)) {
-            iconPic = captureVideoFrame(absoluteFileName);
-            if (!iconPic.isNull())
-                iconPic = overlayVideoDecorations(iconPic);
-            else
-                iconPic = videoPlaceholderIcon();
-        } else {
-            int size = 100;
-            QImageReader ir(absoluteFileName);
-            ir.setAutoTransform(true);
-            iconPic = ir.read();
-            iconPic = iconPic.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    // Check whether all four size caches are current
+    bool allCached = true;
+    for (int size : kIconSizes) {
+        QFileInfo cacheInfo(cacheFilePath(absoluteFileName, size));
+        if (!cacheInfo.exists() || cacheInfo.lastModified() < sourceInfo.lastModified()) {
+            allCached = false;
+            break;
         }
-
-        bool cached = saveIconToCache(absoluteFileName, iconPic);
-
-        if(cached)
-            qDebug() << "Cached icon image";
     }
 
-    return iconPic;
+    if (allCached) {
+        QVector<QImage> images;
+        bool allLoaded = true;
+        for (int size : kIconSizes) {
+            QImage img = loadIconFromCache(absoluteFileName, size);
+            if (img.isNull()) { allLoaded = false; break; }
+            images.append(img);
+        }
+        if (allLoaded) return images;
+    }
+
+    qDebug() << "Icon cache miss";
+
+    // Decode/capture once at the largest size, then scale down
+    QImage base;
+    if (isVideoFile(absoluteFileName)) {
+        base = captureVideoFrame(absoluteFileName);  // already scaled to ≤400px
+        if (!base.isNull())
+            base = overlayVideoDecorations(base);
+        else
+            base = videoPlaceholderIcon(400);
+    } else {
+        QImageReader ir(absoluteFileName);
+        ir.setAutoTransform(true);
+        base = ir.read();
+        base = base.scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
+
+    if (base.isNull())
+        return {};
+
+    QVector<QImage> images;
+    for (int size : kIconSizes) {
+        QImage scaled = base.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        saveIconToCache(absoluteFileName, scaled, size);
+        images.append(scaled);
+    }
+
+    return images;
 }
 
 /*! \brief Saves a thumbnail image to the per-folder cache directory.
  *
  * \param absoluteFileName Absolute path to the original image (used to derive the cache path).
  * \param pict             The thumbnail image to save.
+ * \param size             The pixel bound this thumbnail was scaled to.
  * \return True if the image was written successfully.
  */
-bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImage &pict) {
+bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImage &pict, int size) {
 
     QFileInfo fi(absoluteFileName);
     QString cachePath = fi.absolutePath() + "/.luminism_cache";
@@ -263,7 +294,7 @@ bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImag
         }
     }
 
-    QString filePath = cacheFilePath(absoluteFileName);
+    QString filePath = cacheFilePath(absoluteFileName, size);
 
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -281,11 +312,12 @@ bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImag
 /*! \brief Attempts to load a cached thumbnail for the given source file.
  *
  * \param absoluteFileName Absolute path to the original image (used to derive the cache path).
+ * \param size             The pixel bound of the cached thumbnail to load.
  * \return The cached QImage, or a null QImage if no valid cache entry exists.
  */
-QImage IconGenerator::loadIconFromCache(const QString &absoluteFileName){
+QImage IconGenerator::loadIconFromCache(const QString &absoluteFileName, int size){
 
-    QString filePath = cacheFilePath(absoluteFileName);
+    QString filePath = cacheFilePath(absoluteFileName, size);
 
     if (!QFile::exists(filePath)) {
         qWarning() << "There is no cache file for" << absoluteFileName;

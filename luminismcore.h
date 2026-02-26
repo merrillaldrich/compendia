@@ -9,6 +9,8 @@
 #include <QTimer>
 #include <QtConcurrent>
 #include <QMap>
+#include <QVector>
+#include <QImage>
 
 #include "tagset.h"
 #include "filterproxymodel.h"
@@ -35,7 +37,7 @@ private:
     FilterProxyModel *tagged_files_proxy_;
 
     QMutex resultsMutex_;
-    QVector<std::tuple<QString, QString, QMap<QString, QString>, QImage>> results_; // fileName, path, EXIF dict, image
+    QVector<std::tuple<QString, QString, QMap<QString, QString>, QVector<QImage>>> results_; // fileName, path, EXIF dict, images
     QTimer uiFlushTimer_;
 
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
@@ -57,7 +59,7 @@ private:
     void applyBackfillMetadataToModel(const QString &fileName,
                                       const QString &absoluteFilePathName,
                                       const QMap<QString, QString> exifMap,
-                                      const QImage &image);
+                                      const QVector<QImage> &images);
 
 public:
 

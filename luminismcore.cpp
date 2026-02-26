@@ -1,6 +1,7 @@
 #include "luminismcore.h"
 #include <QDirIterator>
 #include <QDebug>
+#include <QIcon>
 
 /*! \brief Constructs LuminismCore and initialises empty model and tag-library containers.
  *
@@ -22,7 +23,7 @@ LuminismCore::LuminismCore(QObject *parent)
 /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model. */
 void LuminismCore::flushIconGeneratorQueue(){
     const int maxPerTick = 8;
-    QVector<std::tuple<QString, QString, QMap<QString, QString>, QImage>> batch;
+    QVector<std::tuple<QString, QString, QMap<QString, QString>, QVector<QImage>>> batch;
     {
         QMutexLocker lock(&resultsMutex_);
         int take = qMin(maxPerTick, results_.size());
@@ -34,25 +35,26 @@ void LuminismCore::flushIconGeneratorQueue(){
         const QString &fileName = std::get<0>(t);
         const QString &path = std::get<1>(t);
         QMap<QString, QString> exifMap = std::get<2>(t);
-        QImage img = std::get<3>(t);
+        QVector<QImage> images = std::get<3>(t);
 
-        // Update the model using an icon based on the image
-        applyBackfillMetadataToModel(fileName, path, exifMap, img);
+        // Update the model using a multi-size icon built from the image vector
+        applyBackfillMetadataToModel(fileName, path, exifMap, images);
         emit iconUpdated();
     }
 }
 
-/*! \brief Applies a generated thumbnail and EXIF data to the matching model item.
+/*! \brief Applies generated thumbnails and EXIF data to the matching model item.
  *
  * \param fileName             The file name used to locate the model item.
  * \param absoluteFilePathName Full path used to disambiguate duplicate file names.
  * \param exifMap              EXIF key-value data to store on the TaggedFile.
- * \param image                Scaled thumbnail image to use as the item icon.
+ * \param images               Scaled thumbnail images (one per kIconSizes entry) used to
+ *                             build a multi-size QIcon so Qt always downscales cleanly.
  */
 void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
                                                 const QString &absoluteFilePathName,
                                                 const QMap<QString, QString> exifMap,
-                                                const QImage &image)
+                                                const QVector<QImage> &images)
 {
     // There could be files in different folders having the same name, but to make things quick
     // we find all files with a matching name in the model, and then zero in on the specific one
@@ -78,19 +80,21 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
 
     if( item != nullptr){
 
-        int size = 100;
-        // Create a transparent square pixmap
-        QPixmap square(size, size);
-        square.fill(Qt::transparent);
-
-        // Center the scaled image in the square
-        QPainter painter(&square);
-        int x = (size - image.width()) / 2;
-        int y = (size - image.height()) / 2;
-        painter.drawImage(x, y, image);
-        painter.end();
-
-        item->setIcon(square);
+        // Build a multi-size QIcon so Qt picks the best-fit size at every zoom level.
+        // Each image is letterboxed into a square pixmap to keep consistent icon geometry.
+        QIcon icon;
+        for (const QImage &image : images) {
+            int sz = qMax(image.width(), image.height());
+            QPixmap square(sz, sz);
+            square.fill(Qt::transparent);
+            QPainter painter(&square);
+            int x = (sz - image.width()) / 2;
+            int y = (sz - image.height()) / 2;
+            painter.drawImage(x, y, image);
+            painter.end();
+            icon.addPixmap(square);
+        }
+        item->setIcon(icon);
 
         // NOTE: EXIF uses colons in BOTH the date and the time, not dashes
         QString captureDateString = exifMap["DateTime"];
@@ -303,7 +307,7 @@ void LuminismCore::backfillMetadata(){
         // to apply directly, so we can throttle this appropriately
         QtConcurrent::run([this, path]() {
 
-            QImage img = IconGenerator::generateIcon(path);
+            QVector<QImage> images = IconGenerator::generateIcon(path);
             QMap<QString, QString> exifMap = ExifParser::getExifMap(path);
 
             QString fileName = QFileInfo(path).fileName();
@@ -311,7 +315,7 @@ void LuminismCore::backfillMetadata(){
             // store result (thread-safe)
             {
                 QMutexLocker lock(&resultsMutex_);
-                results_.emplace_back(fileName, path, exifMap, std::move(img));
+                results_.emplace_back(fileName, path, exifMap, std::move(images));
             }
             // ensure timer is running on GUI thread to flush results
             QMetaObject::invokeMethod(this, "ensureUiFlushTimerRunning", Qt::QueuedConnection);
