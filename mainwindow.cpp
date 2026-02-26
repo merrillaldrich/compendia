@@ -12,6 +12,7 @@
 #include "tagwidget.h"
 #include "tagfamilywidget.h"
 #include "flowlayout.h"
+#include "filenamedelegate.h"
 
 /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
  *
@@ -106,6 +107,14 @@ MainWindow::MainWindow(QWidget *parent)
     } else {
         QThreadPool::globalInstance()->setMaxThreadCount(idealThreads - 2);
     }
+
+    // Install multi-line filename delegate on the file list view
+    ui->fileListView->setItemDelegate(new FileNameDelegate(ui->fileListView));
+
+    // on_iconZoomSlider_valueChanged is auto-connected after setupUi sets the slider
+    // value, so the initial grid height is never updated from the .ui default.
+    // Apply it explicitly here to match the slider's starting position.
+    on_iconZoomSlider_valueChanged(ui->iconZoomSlider->value());
 }
 
 /*! \brief Destroys the main window and releases owned UI and core resources. */
@@ -379,7 +388,9 @@ void MainWindow::on_iconZoomSlider_valueChanged(int value)
 {
     int iconSize = static_cast<int>(25 + value * 3.75);
     ui->fileListView->setIconSize(QSize(iconSize, iconSize));
-    ui->fileListView->setGridSize(QSize(iconSize + 20, iconSize + 20));
+    // Reserve height for up to 3 wrapped text lines below the icon.
+    const int textH = 4 + 3 * ui->fileListView->fontMetrics().lineSpacing() + 4;
+    ui->fileListView->setGridSize(QSize(iconSize + 20, iconSize + textH));
 }
 
 /*! \brief Updates the file-count label to show visible vs. total file counts.

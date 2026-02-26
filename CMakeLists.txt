@@ -64,6 +64,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         exifparser.h exifparser.cpp
         previewcontainer.h previewcontainer.cpp
         zoomablegraphicsview.h zoomablegraphicsview.cpp
+        filenamedelegate.h filenamedelegate.cpp
 
     )
 
