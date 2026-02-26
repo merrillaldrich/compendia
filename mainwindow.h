@@ -48,6 +48,16 @@ public:
     /*! \brief Opens a folder-picker dialog and loads the selected folder into core. */
     void setRootFolder();
 
+    /*! \brief Updates the file-count label to show visible vs. total file counts. */
+    void updateFileCountLabel();
+
+    /*! \brief Connects the file-count label to the current proxy model's signals.
+     *
+     * Must be called after every folder load because loadRootDirectory() recreates
+     * the proxy model, invalidating any previously established connections.
+     */
+    void connectFileCountLabel();
+
     /*! \brief Refreshes the preview pane to reflect the current viewport size. */
     void freshenPreview();
 
@@ -64,6 +74,12 @@ public:
     void refreshTagFilterArea();
 
 private slots:
+
+    /*! \brief Adjusts the file-list icon and grid size when the zoom slider moves.
+     *
+     * \param value The new slider position (0–100).
+     */
+    void on_iconZoomSlider_valueChanged(int value);
 
     /*! \brief Slot for the Open Folder menu action; delegates to setRootFolder(). */
     void on_actionOpen_Folder_triggered();

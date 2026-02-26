@@ -86,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(core, &LuminismCore::iconUpdated, this, &MainWindow::on_icon_updated);
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::on_metadata_saved);
 
+
     // Default pane sizes
     resize(1400, 900);
 
@@ -136,6 +137,7 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
 
     QListView* lv = ui->fileListView;
     lv->setModel(core->getItemModelProxy());
+    connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
 }
@@ -157,6 +159,7 @@ void MainWindow::setRootFolder(){
 
     le->setText(folder);
     lv->setModel(core->getItemModelProxy());
+    connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
     refreshNavTagLibrary();
@@ -368,6 +371,47 @@ void MainWindow::on_folderFilterLineEdit_textChanged(const QString &arg1)
 }
 
 /*! \brief Advances the icon-generation progress bar when a thumbnail is ready. */
+/*! \brief Adjusts the file-list icon and grid size when the zoom slider moves.
+ *
+ * \param value The new slider position (0–100).
+ */
+void MainWindow::on_iconZoomSlider_valueChanged(int value)
+{
+    int iconSize = static_cast<int>(25 + value * 3.75);
+    ui->fileListView->setIconSize(QSize(iconSize, iconSize));
+    ui->fileListView->setGridSize(QSize(iconSize + 20, iconSize + 20));
+}
+
+/*! \brief Updates the file-count label to show visible vs. total file counts.
+ *
+ * Displays "<total> Files" when all files pass the filter, or
+ * "<shown> of <total> Files" when a filter is active.
+ */
+void MainWindow::updateFileCountLabel()
+{
+    int total = core->getItemModel()->rowCount();
+    int shown = core->getItemModelProxy()->rowCount();
+    if (shown == total)
+        ui->fileCountLabel->setText(QString("%1 Files").arg(total));
+    else
+        ui->fileCountLabel->setText(QString("%1 of %2 Files").arg(shown).arg(total));
+}
+
+/*! \brief Connects the file-count label to the current proxy model's signals.
+ *
+ * Must be called after every folder load because loadRootDirectory() recreates
+ * the proxy model, invalidating any previously established connections.
+ */
+void MainWindow::connectFileCountLabel()
+{
+    auto* proxy = core->getItemModelProxy();
+    connect(proxy, &QAbstractItemModel::rowsInserted,  this, [this](const QModelIndex&, int, int){ updateFileCountLabel(); });
+    connect(proxy, &QAbstractItemModel::rowsRemoved,   this, [this](const QModelIndex&, int, int){ updateFileCountLabel(); });
+    connect(proxy, &QAbstractItemModel::modelReset,    this, [this](){ updateFileCountLabel(); });
+    connect(proxy, &QAbstractItemModel::layoutChanged, this, [this](const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint){ updateFileCountLabel(); });
+    updateFileCountLabel();
+}
+
 void MainWindow::on_icon_updated(){
     if(progress_label_->text() != "Generating Icons")
         progress_label_->setText("Generating Icons");
