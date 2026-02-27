@@ -121,13 +121,13 @@ private slots:
      *
      * \param tag The Tag to unassign from the filtered files.
      */
-    void on_tagUnassign_Requested(Tag* tag);
+    void on_fileListTagAssignmentContainer_tagDeleteRequested(Tag* tag);
 
     /*! \brief Removes a tag from the active filter set when a filter-remove is requested.
      *
      * \param tag The Tag to remove from the filter.
      */
-    void on_tagFilterRemove_Requested(Tag* tag);
+    void on_navFilterContainer_tagDeleteRequested(Tag* tag);
 
     /*! \brief Updates the filename filter as the user types in the filter line edit.
      *
@@ -142,10 +142,10 @@ private slots:
     void on_folderFilterLineEdit_textChanged(const QString &arg1);
 
     /*! \brief Advances the icon-generation progress bar when a thumbnail is ready. */
-    void on_icon_updated();
+    void onIconUpdated();
 
     /*! \brief Advances the save progress bar when a metadata file is written. */
-    void on_metadata_saved();
+    void onMetadataSaved();
 
     /*! \brief Runs face detection on every selected image and stores face regions as tagged rectangles. */
     void on_actionFind_Faces_triggered();

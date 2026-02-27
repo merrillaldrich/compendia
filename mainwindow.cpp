@@ -42,20 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
     //ui->navFilterScrollArea->setStyleSheet("background-color: rgb(96, 174, 233)");
     //ui->navFilterScrollArea->viewport()->setStyleSheet("background-color: rgb(96, 174, 233)");
 
-    if (connect(ui->navFilterContainer, &NavFilterContainer::tagDeleteRequested, this, &MainWindow::on_tagFilterRemove_Requested)){
-
-    } else {
-        qWarning() << "Connecting nav filter delete function didn't work";
-    }
-
     // Set up the tag assignment area
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
-    if (connect(ui->fileListTagAssignmentContainer, &TagAssignmentContainer::tagDeleteRequested, this, &MainWindow::on_tagUnassign_Requested)){
-
-    } else {
-        qWarning() << "Connecting assignment delete function didn't work";
-    }
 
     // Set up the status bar
     progress_label_ = new QLabel("Progress:", this);
@@ -69,8 +58,8 @@ MainWindow::MainWindow(QWidget *parent)
     progress_bar_->setValue(0);
 
     ui->statusBar->addPermanentWidget(progress_bar_);
-    connect(core, &LuminismCore::iconUpdated, this, &MainWindow::on_icon_updated);
-    connect(core, &LuminismCore::metadataSaved, this, &MainWindow::on_metadata_saved);
+    connect(core, &LuminismCore::iconUpdated, this, &MainWindow::onIconUpdated);
+    connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
 
 
     // Default pane sizes
@@ -348,7 +337,7 @@ void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
  *
  * \param tag The Tag to unassign from the filtered files.
  */
-void MainWindow::on_tagUnassign_Requested(Tag* tag){
+void MainWindow::on_fileListTagAssignmentContainer_tagDeleteRequested(Tag* tag){
     core->unapplyTag(tag);
     refreshTagAssignmentArea();
 }
@@ -357,7 +346,7 @@ void MainWindow::on_tagUnassign_Requested(Tag* tag){
  *
  * \param tag The Tag to remove from the filter.
  */
-void MainWindow::on_tagFilterRemove_Requested(Tag* tag){
+void MainWindow::on_navFilterContainer_tagDeleteRequested(Tag* tag){
     core->removeTagFilter(tag);
     refreshTagFilterArea();
 }
@@ -419,7 +408,7 @@ void MainWindow::connectFileCountLabel()
     updateFileCountLabel();
 }
 
-void MainWindow::on_icon_updated(){
+void MainWindow::onIconUpdated(){
     if(progress_label_->text() != "Generating Icons")
         progress_label_->setText("Generating Icons");
     progress_bar_->setValue(progress_bar_->value() + 1);
@@ -432,7 +421,7 @@ void MainWindow::on_icon_updated(){
 }
 
 /*! \brief Advances the save progress bar when a metadata file is written. */
-void MainWindow::on_metadata_saved(){
+void MainWindow::onMetadataSaved(){
     if(progress_label_->text() != "Saving")
         progress_label_->setText("Saving");
     progress_bar_->setValue(progress_bar_->value() + 1);
