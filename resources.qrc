@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/NoImagePreviewIcon.png</file>
+        <file>resources/luminism.qss</file>
     </qresource>
 </RCC>

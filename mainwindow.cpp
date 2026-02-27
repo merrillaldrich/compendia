@@ -68,21 +68,6 @@ MainWindow::MainWindow(QWidget *parent)
     progress_bar_->setFixedSize(300, 12);
     progress_bar_->setValue(0);
 
-    progress_bar_->setStyleSheet(R"(
-        QProgressBar {
-        border: 1px solid #AAAAAA;
-        border-radius: 1px;
-        text-align: center;
-        background-color: #E0E0E0;
-        color: grey;
-        }
-        QProgressBar::chunk {
-        background-color: #4CAF50;
-        width: 12px;
-        }
-        )"
-    );
-
     ui->statusBar->addPermanentWidget(progress_bar_);
     connect(core, &LuminismCore::iconUpdated, this, &MainWindow::on_icon_updated);
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::on_metadata_saved);

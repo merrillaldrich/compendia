@@ -33,10 +33,6 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
       <widget class="QSplitter" name="navSplitter">
-       <property name="styleSheet">
-        <string notr="true">QWidget#navSplitter { background-color: rgb(96, 174, 233) }
-</string>
-       </property>
        <property name="orientation">
         <enum>Qt::Orientation::Vertical</enum>
        </property>
@@ -61,7 +57,7 @@
          <item>
           <layout class="QHBoxLayout" name="tagFilterModeLayout">
            <property name="spacing">
-            <number>6</number>
+            <number>3</number>
            </property>
            <item>
             <widget class="QLabel" name="tagFilterModeLabel">
@@ -104,9 +100,6 @@
          </item>
          <item>
           <widget class="QScrollArea" name="navFilterScrollArea">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
@@ -119,18 +112,12 @@
               <height>497</height>
              </rect>
             </property>
-            <property name="styleSheet">
-             <string notr="true">#navFilterContainer { background-color: rgb(96, 174, 233) }</string>
-            </property>
            </widget>
           </widget>
          </item>
         </layout>
        </widget>
        <widget class="QScrollArea" name="navLibraryScrollArea">
-        <property name="styleSheet">
-         <string notr="true">QWidget#navLibraryContainer { background-color: rgb(96, 174, 233) }</string>
-        </property>
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
@@ -142,9 +129,6 @@
            <width>417</width>
            <height>67</height>
           </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#navLibraryContainer { background-color: rgb(96, 174, 233) }</string>
          </property>
         </widget>
        </widget>
@@ -611,10 +595,6 @@
      <height>18</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 117, 183);
-border-bottom: 1px solid #DDD; /* width, style, color */</string>
-   </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
@@ -645,14 +625,8 @@ border-bottom: 1px solid #DDD; /* width, style, color */</string>
    <addaction name="menuFilter"/>
    <addaction name="menuAutos"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar">
-   <property name="styleSheet">
-    <string notr="true">#statusBar {
-background-color: rgb(0, 120, 186);
-border-top: 1px solid #DDD; /* width, style, color */
-}</string>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+
   <action name="actionOpen_Folder">
    <property name="text">
     <string>Open Folder...</string>

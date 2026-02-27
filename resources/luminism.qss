@@ -1,0 +1,56 @@
+/* Color tokens — values are substituted at load time in main.cpp:
+ *   @NAV_BLUE    — lighter blue used throughout the navigation panel
+ *   @MENU_BLUE   — darker blue used on the menu bar and status bar
+ */
+
+/* ── Navigation panel ──────────────────────────────── */
+QSplitter#navSplitter,
+QSplitter#navSplitter::handle {
+    background-color: @NAV_BLUE;
+}
+
+QWidget#navFilterSection,
+QScrollArea#navFilterScrollArea,
+QWidget#navFilterContainer {
+    background-color: @NAV_BLUE;
+}
+
+QScrollArea#navFilterScrollArea,
+QScrollArea#navLibraryScrollArea {
+    border: none;
+}
+
+QScrollArea#navLibraryScrollArea,
+QWidget#navLibraryContainer {
+    background-color: @NAV_BLUE;
+}
+
+/* ── Menu bar ──────────────────────────────────────── */
+QMenuBar {
+    background-color: @MENU_BLUE;
+    border-bottom: 1px solid #DDD;
+}
+
+QMenu {
+    border-radius: 0px;
+}
+
+/* ── Status bar ────────────────────────────────────── */
+QStatusBar#statusBar {
+    background-color: @MENU_BLUE;
+    border-top: 1px solid #DDD;
+}
+
+/* ── Progress bar ──────────────────────────────────── */
+QProgressBar {
+    border: 1px solid #AAAAAA;
+    border-radius: 1px;
+    text-align: center;
+    background-color: #E0E0E0;
+    color: grey;
+}
+
+QProgressBar::chunk {
+    background-color: #4CAF50;
+    width: 12px;
+}
