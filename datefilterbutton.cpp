@@ -31,11 +31,13 @@ DateFilterButton::DateFilterButton(QWidget *parent)
 
     lineEdit_->setPlaceholderText("Any date");
     lineEdit_->setFixedWidth(lineEdit_->fontMetrics().horizontalAdvance("00/00/0000") + 12);
+    lineEdit_->setFixedHeight(24);
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 
     calendarButton_->setText("▾");
     calendarButton_->setFocusPolicy(Qt::NoFocus);
+    calendarButton_->setFixedHeight(24);
 
     lineEdit_->installEventFilter(this);
 
@@ -74,6 +76,16 @@ void DateFilterButton::showCalendar()
     layout->setSpacing(0);
 
     auto *cal = new QCalendarWidget(popup);
+    cal->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+
+    // Apply stylesheet to remove the month menu arrow b/c it looks sloppy
+    cal->setStyleSheet(
+        "QToolButton#qt_calendar_monthbutton::menu-indicator {"
+        "    image: none;"   // Remove arrow image
+        "    width: 0px;"    // Remove space for arrow
+        "}"
+    );
+
     if (date_.isValid())
         cal->setSelectedDate(date_);
 
