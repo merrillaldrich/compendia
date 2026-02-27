@@ -134,6 +134,7 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
     core->setRootDirectory(le->text());
     le->clearFocus();
     ui->dateEdit->setAvailableDates(core->getFileDates());
+    ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
 
     QListView* lv = ui->fileListView;
     lv->setModel(core->getItemModelProxy());
@@ -158,6 +159,7 @@ void MainWindow::setRootFolder(){
 
     core->setRootDirectory(folder);
     ui->dateEdit->setAvailableDates(core->getFileDates());
+    ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
 
     le->setText(folder);
     lv->setModel(core->getItemModelProxy());

@@ -234,6 +234,12 @@ public:
      */
     QList<QDate> getFileDates() const;
 
+    /*! \brief Returns a sorted list of unique folder paths across all loaded files.
+     *
+     * Used to populate the folder-filter autocomplete.
+     */
+    QList<QString> getFileFolders() const;
+
     /*! \brief Adds a tag to the active tag filter set.
      *
      * \param tag The Tag to add to the filter.

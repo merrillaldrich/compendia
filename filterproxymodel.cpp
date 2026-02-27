@@ -33,11 +33,15 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
     QString folderName = itemAsTaggedFile->filePath;
     bool folderResult = false;
 
-    if (folder_filter_ == ""){
+    if (folder_filter_ == "") {
         folderResult = true;
     }
     else {
-        folderResult = folderName.contains(folder_filter_, Qt::CaseInsensitive);
+        // Append a delimiter to the path so that a filter like "italy/" matches the
+        // final segment "/pictures/vacation/italy" without any special-casing.
+        // Mid-path delimiters in the filter ("pictures/", "vacation/") continue to
+        // match normally since they are already present in the path.
+        folderResult = (folderName + QLatin1Char('/')).contains(folder_filter_, Qt::CaseInsensitive);
     }
 
     bool tagResult = false;

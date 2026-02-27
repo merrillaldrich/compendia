@@ -680,6 +680,23 @@ QList<QDate> LuminismCore::getFileDates() const
     return sorted;
 }
 
+/*! \brief Returns a sorted list of unique folder paths across all loaded files.
+ *
+ * Used to populate the folder-filter autocomplete.
+ */
+QList<QString> LuminismCore::getFileFolders() const
+{
+    QSet<QString> seen;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        TaggedFile *tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf || tf->filePath.isEmpty()) continue;
+        seen.insert(tf->filePath);
+    }
+    QList<QString> sorted = QList<QString>(seen.cbegin(), seen.cend());
+    std::sort(sorted.begin(), sorted.end());
+    return sorted;
+}
+
 /*! \brief Adds a tag to the active tag filter set.
  *
  * \param tag The Tag to add to the filter.
