@@ -1,4 +1,5 @@
 #include "icongenerator.h"
+#include "constants.h"
 #include <QImageReader>
 #include <QFileInfo>
 #include <QMediaPlayer>
@@ -203,7 +204,7 @@ IconGenerator::IconGenerator(QObject *parent)
 QString IconGenerator::cacheFilePath(const QString &absoluteFileName, int size)
 {
     QFileInfo fi(absoluteFileName);
-    return fi.absolutePath() + "/.luminism_cache/" + fi.baseName()
+    return fi.absolutePath() + "/" + Luminism::CacheFolderName + "/" + fi.baseName()
            + "_" + QString::number(size) + ".qimg";
 }
 
@@ -284,7 +285,7 @@ QVector<QImage> IconGenerator::generateIcon(const QString absoluteFileName)
 bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImage &pict, int size) {
 
     QFileInfo fi(absoluteFileName);
-    QString cachePath = fi.absolutePath() + "/.luminism_cache";
+    QString cachePath = fi.absolutePath() + "/" + Luminism::CacheFolderName;
     QDir dir(cachePath);
 
     if (!dir.exists()) {

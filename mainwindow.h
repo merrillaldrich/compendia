@@ -74,6 +74,15 @@ public:
     /*! \brief Rebuilds the tag-filter area from the currently active filter tags. */
     void refreshTagFilterArea();
 
+private:
+    /*! \brief Checks whether a luminismcache folder exists in \p folder and, if not,
+     *         prompts the user for confirmation before creating one.
+     *
+     * \param folder The root folder the user is about to load.
+     * \return \c true if loading should proceed; \c false if the user cancelled.
+     */
+    bool confirmCacheFolder(const QString &folder);
+
 private slots:
 
     /*! \brief Adjusts the file-list icon and grid size when the zoom slider moves.

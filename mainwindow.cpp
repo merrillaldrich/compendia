@@ -1,5 +1,7 @@
 #include "mainwindow.h"
+#include "constants.h"
 
+#include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QGraphicsView>
@@ -123,6 +125,8 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
 {
     QObject *obj = sender();
     QLineEdit *le = qobject_cast<QLineEdit*>(obj);
+    if (!confirmCacheFolder(le->text()))
+        return;
     core->setRootDirectory(le->text());
     QSettings(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism")
         .setValue("folder/lastPath", le->text());
@@ -138,11 +142,32 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
     lv->show();
 }
 
+/*! \brief Checks for a luminismcache folder and prompts the user if none exists.
+ *
+ * \param folder The root folder the user is about to load.
+ * \return \c true if loading should proceed; \c false if the user cancelled.
+ */
+bool MainWindow::confirmCacheFolder(const QString &folder)
+{
+    if (QDir(folder).exists(Luminism::CacheFolderName))
+        return true;
+
+    QMessageBox mb(this);
+    mb.setWindowTitle("Luminism");
+    mb.setText("For performance with large libraries of images, luminism will make a cache "
+               "folder alongside your files, for thumbnails. Is that OK?");
+    mb.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    mb.setDefaultButton(QMessageBox::Ok);
+    return mb.exec() == QMessageBox::Ok;
+}
+
 /*! \brief Opens a folder-picker dialog and loads the selected folder into core. */
 void MainWindow::setRootFolder(){
     QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
 
     QString folder = QFileDialog::getExistingDirectory(this, "Open Folder", le->text());
+    if (!folder.isEmpty() && !confirmCacheFolder(folder))
+        return;
     QListView* lv = ui->fileListView;
     lv->setModel(nullptr);
 
