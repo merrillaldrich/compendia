@@ -1,9 +1,13 @@
 #include "datefilterbutton.h"
 
+#include <algorithm>
+
 #include <QCalendarWidget>
 #include <QDate>
+#include <QEvent>
 #include <QFrame>
 #include <QHBoxLayout>
+#include <QKeyEvent>
 #include <QLineEdit>
 #include <QLocale>
 #include <QPushButton>
@@ -33,7 +37,10 @@ DateFilterButton::DateFilterButton(QWidget *parent)
     calendarButton_->setText("▾");
     calendarButton_->setFocusPolicy(Qt::NoFocus);
 
+    lineEdit_->installEventFilter(this);
+
     connect(lineEdit_, &QLineEdit::editingFinished, this, &DateFilterButton::onEditingFinished);
+    connect(lineEdit_, &QLineEdit::textEdited,      this, &DateFilterButton::onTextEdited);
     connect(calendarButton_, &QToolButton::clicked,  this, &DateFilterButton::showCalendar);
 }
 
@@ -90,6 +97,78 @@ void DateFilterButton::showCalendar()
 
     popup->move(mapToGlobal(QPoint(0, height())));
     popup->show();
+}
+
+/*! \brief Supplies the sorted list of dates that autocomplete draws from.
+ *
+ * \param dates The available dates; will be sorted chronologically internally.
+ */
+void DateFilterButton::setAvailableDates(const QList<QDate> &dates)
+{
+    availableDates_ = dates;
+    std::sort(availableDates_.begin(), availableDates_.end());
+}
+
+/*! \brief Performs inline autocomplete as the user types.
+ *
+ * Searches availableDates_ for the first chronological match and shows the
+ * remaining characters as a selected suffix.  Backspace/Delete on the
+ * completion dismisses it without re-triggering autocomplete.
+ * \param text The current line edit text as typed by the user.
+ */
+void DateFilterButton::onTextEdited(const QString &text)
+{
+    if (suppressNextCompletion_) {
+        suppressNextCompletion_ = false;
+        return;
+    }
+
+    if (text.isEmpty() || availableDates_.isEmpty())
+        return;
+
+    QLocale locale;
+    for (const QDate &d : availableDates_) {
+        QString formatted = locale.toString(d, QLocale::ShortFormat);
+        if (formatted.startsWith(text, Qt::CaseInsensitive)) {
+            lineEdit_->setText(formatted);
+            lineEdit_->setSelection(text.length(), formatted.length() - text.length());
+            return;
+        }
+    }
+}
+
+/*! \brief Intercepts key events on the line edit to handle completion acceptance and dismissal.
+ *
+ * \param obj   The watched object.
+ * \param event The incoming event.
+ * \return True if the event was consumed, false to let it propagate.
+ */
+bool DateFilterButton::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == lineEdit_ && event->type() == QEvent::KeyPress) {
+        QKeyEvent *ke = static_cast<QKeyEvent*>(event);
+
+        if (lineEdit_->hasSelectedText()) {
+            if (ke->key() == Qt::Key_Backspace || ke->key() == Qt::Key_Delete) {
+                // Dismiss the completion without re-triggering autocomplete
+                suppressNextCompletion_ = true;
+                lineEdit_->setText(lineEdit_->text().left(lineEdit_->selectionStart()));
+                return true;
+            }
+            if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter) {
+                // Accept completion: deselect and move cursor to end, keep focus here.
+                // Let the event propagate so editingFinished fires and applies the filter.
+                lineEdit_->setCursorPosition(lineEdit_->text().length());
+                return false;
+            }
+            if (ke->key() == Qt::Key_Tab) {
+                // Accept completion: move cursor to end, then let Tab change focus normally
+                lineEdit_->setCursorPosition(lineEdit_->text().length());
+                return false;
+            }
+        }
+    }
+    return QWidget::eventFilter(obj, event);
 }
 
 /*! \brief Attempts to parse \a text as a date using locale and common formats.

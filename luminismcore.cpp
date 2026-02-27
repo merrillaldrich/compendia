@@ -1,7 +1,9 @@
 #include "luminismcore.h"
+#include <algorithm>
 #include <QDirIterator>
 #include <QDebug>
 #include <QIcon>
+#include <QSet>
 
 /*! \brief Constructs LuminismCore and initialises empty model and tag-library containers.
  *
@@ -654,6 +656,28 @@ void LuminismCore::setFolderFilter(QString filterText){
  */
 void LuminismCore::setCreationDateFilter(QDate date) {
     tagged_files_proxy_->setFilterCreationDate(date);
+}
+
+/*! \brief Returns a chronologically sorted list of unique effective dates across all loaded files.
+ *
+ * Each file's effective date is its EXIF capture date when present, falling back to the
+ * filesystem creation date.  Used to populate the date-filter autocomplete.
+ */
+QList<QDate> LuminismCore::getFileDates() const
+{
+    QSet<QDate> seen;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        TaggedFile *tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+        QDate d = tf->imageCaptureDateTime.isValid()
+            ? tf->imageCaptureDateTime.date()
+            : tf->fileCreationDateTime.date();
+        if (d.isValid())
+            seen.insert(d);
+    }
+    QList<QDate> sorted = QList<QDate>(seen.cbegin(), seen.cend());
+    std::sort(sorted.begin(), sorted.end());
+    return sorted;
 }
 
 /*! \brief Adds a tag to the active tag filter set.

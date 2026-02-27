@@ -227,6 +227,13 @@ public:
      */
     void setCreationDateFilter(QDate date);
 
+    /*! \brief Returns a chronologically sorted list of unique effective dates across all loaded files.
+     *
+     * Each file's effective date is its EXIF capture date when present, falling back to the
+     * filesystem creation date.  Used to populate the date-filter autocomplete.
+     */
+    QList<QDate> getFileDates() const;
+
     /*! \brief Adds a tag to the active tag filter set.
      *
      * \param tag The Tag to add to the filter.

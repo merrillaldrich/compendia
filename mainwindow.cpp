@@ -133,6 +133,7 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
     QLineEdit *le = qobject_cast<QLineEdit*>(obj);
     core->setRootDirectory(le->text());
     le->clearFocus();
+    ui->dateEdit->setAvailableDates(core->getFileDates());
 
     QListView* lv = ui->fileListView;
     lv->setModel(core->getItemModelProxy());
@@ -156,6 +157,7 @@ void MainWindow::setRootFolder(){
     TagFamily::restartColorSequence();
 
     core->setRootDirectory(folder);
+    ui->dateEdit->setAvailableDates(core->getFileDates());
 
     le->setText(folder);
     lv->setModel(core->getItemModelProxy());
@@ -422,6 +424,8 @@ void MainWindow::on_icon_updated(){
     if(progress_bar_->value() >= progress_bar_->maximum()){
         progress_label_->setText("Icons Complete");
         progress_bar_->setValue(0);
+        // EXIF capture dates are now fully loaded — refresh the autocomplete date list
+        ui->dateEdit->setAvailableDates(core->getFileDates());
     }
 }
 
