@@ -4,9 +4,16 @@
  */
 
 /* ── Navigation panel ──────────────────────────────── */
-QSplitter#navSplitter,
+QSplitter#navSplitter {
+    background-color: @NAV_BLUE;
+}
+
 QSplitter#navSplitter::handle {
     background-color: @NAV_BLUE;
+    height: 6px;
+    background-image: url(:/resources/splitter-grip.svg);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 QWidget#navFilterSection,
@@ -23,6 +30,20 @@ QScrollArea#navLibraryScrollArea {
 QScrollArea#navLibraryScrollArea,
 QWidget#navLibraryContainer {
     background-color: @NAV_BLUE;
+}
+
+/* ── Other splitters (light background) ───────────────── */
+QSplitter#fileListSplitter::handle,
+QSplitter#previewSplitter::handle {
+    background-image: url(:/resources/splitter-grip-dark.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+QSplitter#windowBodySplitter::handle {
+    background-image: url(:/resources/splitter-grip-dark-v.svg);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* ── Menu bar ──────────────────────────────────────── */
