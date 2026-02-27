@@ -108,7 +108,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>409</width>
+              <width>399</width>
               <height>497</height>
              </rect>
             </property>
@@ -126,7 +126,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>417</width>
+           <width>407</width>
            <height>67</height>
           </rect>
          </property>
@@ -220,14 +220,14 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="dateEditLabel">
                <property name="text">
                 <string>Creation Date</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QDateEdit" name="dateEdit">
+              <widget class="DateFilterButton" name="dateEdit">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -350,7 +350,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>519</width>
+              <width>526</width>
               <height>67</height>
              </rect>
             </property>
@@ -626,7 +626,6 @@
    <addaction name="menuAutos"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-
   <action name="actionOpen_Folder">
    <property name="text">
     <string>Open Folder...</string>
@@ -712,6 +711,11 @@
    <extends>QWidget</extends>
    <header>previewcontainer.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DateFilterButton</class>
+   <extends>QWidget</extends>
+   <header>datefilterbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -65,6 +65,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         previewcontainer.h previewcontainer.cpp
         zoomablegraphicsview.h zoomablegraphicsview.cpp
         filenamedelegate.h filenamedelegate.cpp
+        datefilterbutton.h datefilterbutton.cpp
 
     )
 

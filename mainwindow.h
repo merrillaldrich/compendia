@@ -162,6 +162,13 @@ private slots:
      */
     void on_tagFilterAllRadio_toggled(bool checked);
 
+    /*! \brief Slot — forwards creation-date filter changes to the core.
+     *
+     * A date equal to the widget's minimum is treated as "no filter" (null QDate).
+     * \param date The newly selected date.
+     */
+    void on_dateEdit_dateChanged(const QDate &date);
+
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
      *

@@ -509,6 +509,16 @@ void MainWindow::on_tagFilterAllRadio_toggled(bool checked)
     core->getItemModelProxy()->setTagFilterMode(mode);
 }
 
+/*! \brief Slot — forwards creation-date filter changes to the core.
+ *
+ * A date equal to the widget's minimum is treated as "no filter" (null QDate).
+ * \param date The newly selected date.
+ */
+void MainWindow::on_dateEdit_dateChanged(const QDate &date)
+{
+    core->setCreationDateFilter(date);  // invalid QDate = no filter
+}
+
 /*! \brief Slot for the Quit menu action; closes the main window. */
 void MainWindow::on_actionQuit_triggered()
 {

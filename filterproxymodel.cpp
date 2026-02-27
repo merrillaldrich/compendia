@@ -60,7 +60,18 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
         }
     }
 
-    return nameResult && folderResult && tagResult;
+    bool dateResult = false;
+    if (!creation_date_.isValid()) {
+        dateResult = true;
+    } else {
+        // Prefer EXIF capture date; fall back to filesystem creation date
+        QDate effectiveDate = itemAsTaggedFile->imageCaptureDateTime.isValid()
+            ? itemAsTaggedFile->imageCaptureDateTime.date()
+            : itemAsTaggedFile->fileCreationDateTime.date();
+        dateResult = effectiveDate == creation_date_;
+    }
+
+    return nameResult && folderResult && tagResult && dateResult;
 }
 
 /*! \brief Sets the filename substring filter and re-applies the filter.
@@ -105,6 +116,15 @@ void FilterProxyModel::removeTagFilter(Tag* tag){
  */
 QSet<Tag*>* FilterProxyModel::getFilterTags(){
     return &tags_;
+}
+
+/*! \brief Sets the creation-date filter and re-applies the filter.
+ *
+ * \param creationDate The date to filter by; an invalid QDate clears the filter.
+ */
+void FilterProxyModel::setFilterCreationDate(QDate creationDate) {
+    creation_date_ = creationDate;
+    invalidateFilter();
 }
 
 /*! \brief Sets the tag-filter mode and re-applies the filter.

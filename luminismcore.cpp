@@ -648,6 +648,14 @@ void LuminismCore::setFolderFilter(QString filterText){
     tagged_files_proxy_->setFolderFilter(filterText);
 }
 
+/*! \brief Sets the creation-date filter on the proxy model.
+ *
+ * \param date The date to filter by; an invalid QDate clears the filter.
+ */
+void LuminismCore::setCreationDateFilter(QDate date) {
+    tagged_files_proxy_->setFilterCreationDate(date);
+}
+
 /*! \brief Adds a tag to the active tag filter set.
  *
  * \param tag The Tag to add to the filter.
