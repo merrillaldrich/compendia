@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
 #include <QCloseEvent>
 #include <QItemSelection>
 #include <QResizeEvent>

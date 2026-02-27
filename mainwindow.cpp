@@ -28,7 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Default Root Folder
     QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
-    le->setText("C:/Users/merri/OneDrive/Pictures/");
+    {
+        QSettings s(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism");
+        le->setText(s.value("folder/lastPath").toString());
+    }
 
     // Set up the tag library area
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
@@ -121,6 +124,8 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
     QObject *obj = sender();
     QLineEdit *le = qobject_cast<QLineEdit*>(obj);
     core->setRootDirectory(le->text());
+    QSettings(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism")
+        .setValue("folder/lastPath", le->text());
     le->clearFocus();
     ui->dateEdit->setAvailableDates(core->getFileDates());
     ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
@@ -151,6 +156,8 @@ void MainWindow::setRootFolder(){
     ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
 
     le->setText(folder);
+    QSettings(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism")
+        .setValue("folder/lastPath", folder);
     lv->setModel(core->getItemModelProxy());
     connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
