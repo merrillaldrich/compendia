@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "constants.h"
 
+#include <QCheckBox>
 #include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
@@ -152,13 +153,25 @@ bool MainWindow::confirmCacheFolder(const QString &folder)
     if (QDir(folder).exists(Luminism::CacheFolderName))
         return true;
 
+    QSettings s(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism");
+    if (s.value("warnings/skipCacheFolderWarning", false).toBool())
+        return true;
+
     QMessageBox mb(this);
     mb.setWindowTitle("Luminism");
     mb.setText("For performance with large libraries of images, luminism will make a cache "
                "folder alongside your files, for thumbnails. Is that OK?");
     mb.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     mb.setDefaultButton(QMessageBox::Ok);
-    return mb.exec() == QMessageBox::Ok;
+
+    QCheckBox* cb = new QCheckBox("Don't ask me again");
+    mb.setCheckBox(cb);
+
+    int result = mb.exec();
+    if (result == QMessageBox::Ok && cb->isChecked())
+        s.setValue("warnings/skipCacheFolderWarning", true);
+
+    return result == QMessageBox::Ok;
 }
 
 /*! \brief Opens a folder-picker dialog and loads the selected folder into core. */
