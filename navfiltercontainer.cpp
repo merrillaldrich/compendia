@@ -116,8 +116,9 @@ void NavFilterContainer::dropEvent(QDropEvent *event)
             tw->show();
         }
 
-        // Apply the dropped tag to the filter
+        // Apply the dropped tag to the filter and refresh dependent UI
         mainWin->core->addTagFilter(t);
+        mainWin->refreshTagAssignmentArea();
 
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);

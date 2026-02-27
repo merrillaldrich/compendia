@@ -41,26 +41,91 @@
         <enum>Qt::Orientation::Vertical</enum>
        </property>
        <widget class="QWidget" name="navTopContainer" native="true"/>
-       <widget class="QScrollArea" name="navFilterScrollArea">
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="NavFilterContainer" name="navFilterContainer">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>64</width>
-           <height>64</height>
-          </rect>
+       <widget class="QWidget" name="navFilterSection">
+        <layout class="QVBoxLayout" name="navFilterSectionLayout">
+         <property name="spacing">
+          <number>4</number>
          </property>
-         <property name="styleSheet">
-          <string notr="true">#navFilterContainer { background-color: rgb(96, 174, 233) }</string>
+         <property name="leftMargin">
+          <number>4</number>
          </property>
-        </widget>
+         <property name="topMargin">
+          <number>4</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="tagFilterModeLayout">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="tagFilterModeLabel">
+             <property name="text">
+              <string>Show files with</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="tagFilterAnyRadio">
+             <property name="text">
+              <string>ANY</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="tagFilterAllRadio">
+             <property name="text">
+              <string>ALL of these tags</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="tagFilterModeSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QScrollArea" name="navFilterScrollArea">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="NavFilterContainer" name="navFilterContainer">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>409</width>
+              <height>497</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#navFilterContainer { background-color: rgb(96, 174, 233) }</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
        <widget class="QScrollArea" name="navLibraryScrollArea">
         <property name="styleSheet">
@@ -74,8 +139,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>64</width>
-           <height>64</height>
+           <width>417</width>
+           <height>67</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -301,8 +366,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>761</width>
-              <height>64</height>
+              <width>519</width>
+              <height>67</height>
              </rect>
             </property>
            </widget>

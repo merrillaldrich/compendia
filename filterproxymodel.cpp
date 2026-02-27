@@ -42,11 +42,22 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
 
     bool tagResult = false;
 
-    if (tags_.isEmpty()){
+    if (tags_.isEmpty()) {
         tagResult = true;
     } else {
-        const QSet<Tag*> tagsconst = *itemAsTaggedFile->tags();
-        tagResult = tags_.intersects(tagsconst);
+        const QSet<Tag*> &fileTags = *itemAsTaggedFile->tags();
+        if (tagFilterMode_ == AnyTag) {
+            tagResult = tags_.intersects(fileTags);
+        } else {
+            // AllTags: every filter tag must be present on the file
+            tagResult = true;
+            for (Tag* t : tags_) {
+                if (!fileTags.contains(t)) {
+                    tagResult = false;
+                    break;
+                }
+            }
+        }
     }
 
     return nameResult && folderResult && tagResult;
@@ -57,9 +68,8 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
  * \param filterText The substring to match against file names.
  */
 void FilterProxyModel::setNameFilter(QString filterText){
-    beginFilterChange();
     name_filter_ = filterText;
-    endFilterChange(QSortFilterProxyModel::Direction::Rows);
+    invalidateFilter();
 }
 
 /*! \brief Sets the folder path substring filter and re-applies the filter.
@@ -67,9 +77,8 @@ void FilterProxyModel::setNameFilter(QString filterText){
  * \param filterText The substring to match against folder paths.
  */
 void FilterProxyModel::setFolderFilter(QString filterText){
-    beginFilterChange();
     folder_filter_ = filterText;
-    endFilterChange(QSortFilterProxyModel::Direction::Rows);
+    invalidateFilter();
 }
 
 /*! \brief Adds a tag to the active tag filter set and re-applies the filter.
@@ -77,9 +86,8 @@ void FilterProxyModel::setFolderFilter(QString filterText){
  * \param tag The Tag pointer to add to the filter.
  */
 void FilterProxyModel::addTagFilter(Tag* tag){
-    beginFilterChange();
     tags_.insert(tag);
-    endFilterChange(QSortFilterProxyModel::Direction::Rows);
+    invalidateFilter();
 }
 
 /*! \brief Removes a tag from the active tag filter set and re-applies the filter.
@@ -87,9 +95,8 @@ void FilterProxyModel::addTagFilter(Tag* tag){
  * \param tag The Tag pointer to remove from the filter.
  */
 void FilterProxyModel::removeTagFilter(Tag* tag){
-    beginFilterChange();
     tags_.remove(tag);
-    endFilterChange(QSortFilterProxyModel::Direction::Rows);
+    invalidateFilter();
 }
 
 /*! \brief Returns a pointer to the set of tags currently used for filtering.
@@ -98,4 +105,13 @@ void FilterProxyModel::removeTagFilter(Tag* tag){
  */
 QSet<Tag*>* FilterProxyModel::getFilterTags(){
     return &tags_;
+}
+
+/*! \brief Sets the tag-filter mode and re-applies the filter.
+ *
+ * \param mode AnyTag (OR) or AllTags (AND).
+ */
+void FilterProxyModel::setTagFilterMode(TagFilterMode mode) {
+    tagFilterMode_ = mode;
+    invalidateFilter();
 }

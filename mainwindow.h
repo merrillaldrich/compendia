@@ -156,6 +156,12 @@ private slots:
      */
     void on_showTaggedRegionsCheckbox_stateChanged(int state);
 
+    /*! \brief Switches the tag filter between ALL-tags (AND) and ANY-tag (OR) mode.
+     *
+     * \param checked True when the "ALL tags" radio button is selected.
+     */
+    void on_tagFilterAllRadio_toggled(bool checked);
+
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
      *

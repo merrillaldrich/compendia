@@ -115,6 +115,11 @@ MainWindow::MainWindow(QWidget *parent)
     // value, so the initial grid height is never updated from the .ui default.
     // Apply it explicitly here to match the slider's starting position.
     on_iconZoomSlider_valueChanged(ui->iconZoomSlider->value());
+
+    // Same timing issue applies to the tag filter mode radio buttons: the toggled
+    // signal fires before the auto-connection exists, so the proxy never receives
+    // the initial state.  Sync it explicitly here and after every folder load.
+    on_tagFilterAllRadio_toggled(ui->tagFilterAllRadio->isChecked());
 }
 
 /*! \brief Destroys the main window and releases owned UI and core resources. */
@@ -148,6 +153,7 @@ void MainWindow::on_mediaFolderLineEdit_returnPressed()
     lv->setModel(core->getItemModelProxy());
     connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
+    on_tagFilterAllRadio_toggled(ui->tagFilterAllRadio->isChecked());
     lv->show();
 }
 
@@ -170,6 +176,7 @@ void MainWindow::setRootFolder(){
     lv->setModel(core->getItemModelProxy());
     connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
+    on_tagFilterAllRadio_toggled(ui->tagFilterAllRadio->isChecked());
     lv->show();
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
@@ -503,6 +510,18 @@ void MainWindow::on_actionFind_Faces_triggered(){
 void MainWindow::on_showTaggedRegionsCheckbox_stateChanged(int state)
 {
     ui->previewContainer->setTagRectsVisible(state == Qt::Checked);
+}
+
+/*! \brief Switches the tag filter between ALL-tags (AND) and ANY-tag (OR) mode.
+ *
+ * \param checked True when the "ALL tags" radio button is selected.
+ */
+void MainWindow::on_tagFilterAllRadio_toggled(bool checked)
+{
+    FilterProxyModel::TagFilterMode mode = checked
+        ? FilterProxyModel::AllTags
+        : FilterProxyModel::AnyTag;
+    core->getItemModelProxy()->setTagFilterMode(mode);
 }
 
 /*! \brief Slot for the Quit menu action; closes the main window. */
