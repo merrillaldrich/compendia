@@ -83,6 +83,25 @@ private:
      */
     bool confirmCacheFolder(const QString &folder);
 
+    /*! \brief Validates that \p folder is a non-empty, existing, readable directory.
+     *
+     * Shows a warning dialog describing the problem if validation fails.
+     * Returns \c false silently (no dialog) when \p folder is empty, so that
+     * a cancelled file-picker dialog does not produce a spurious error message.
+     *
+     * \param folder The path to validate.
+     * \return \c true if the path is safe to pass to core; \c false otherwise.
+     */
+    bool validateFolder(const QString &folder);
+
+    /*! \brief Validates \p folder, confirms cache creation if needed, then performs
+     *         a full load: clears existing state, loads files into core, and refreshes
+     *         all UI areas. Both the Browse and Return-key paths delegate here.
+     *
+     * \param folder Absolute path to the media folder to load.
+     */
+    void loadFolder(const QString &folder);
+
 private slots:
 
     /*! \brief Adjusts the file-list icon and grid size when the zoom slider moves.

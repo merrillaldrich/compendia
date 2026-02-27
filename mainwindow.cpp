@@ -124,23 +124,41 @@ void MainWindow::on_mediaFolderBrowseButton_clicked()
 /*! \brief Loads the folder path typed directly into the media folder line edit. */
 void MainWindow::on_mediaFolderLineEdit_returnPressed()
 {
-    QObject *obj = sender();
-    QLineEdit *le = qobject_cast<QLineEdit*>(obj);
-    if (!confirmCacheFolder(le->text()))
-        return;
-    core->setRootDirectory(le->text());
-    QSettings(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism")
-        .setValue("folder/lastPath", le->text());
-    le->clearFocus();
-    ui->dateEdit->setAvailableDates(core->getFileDates());
-    ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
+    QLineEdit *le = qobject_cast<QLineEdit*>(sender());
+    loadFolder(le->text());
+}
 
-    QListView* lv = ui->fileListView;
-    lv->setModel(core->getItemModelProxy());
-    connectFileCountLabel();
-    connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
-    on_tagFilterAllRadio_toggled(ui->tagFilterAllRadio->isChecked());
-    lv->show();
+/*! \brief Validates that \p folder is a non-empty, existing, readable directory.
+ *
+ * \param folder The path to validate.
+ * \return \c true if the path is safe to pass to core; \c false otherwise.
+ */
+bool MainWindow::validateFolder(const QString &folder)
+{
+    if (folder.trimmed().isEmpty())
+        return false;  // silent — nothing typed, or file-picker was cancelled
+
+    QFileInfo fi(folder);
+
+    if (!fi.exists()) {
+        QMessageBox::warning(this, "Luminism",
+            QString("The folder \"%1\" does not exist.").arg(folder));
+        return false;
+    }
+
+    if (!fi.isDir()) {
+        QMessageBox::warning(this, "Luminism",
+            QString("\"%1\" is not a folder.").arg(folder));
+        return false;
+    }
+
+    if (!fi.isReadable()) {
+        QMessageBox::warning(this, "Luminism",
+            QString("The folder \"%1\" cannot be read. Check that you have permission to access it.").arg(folder));
+        return false;
+    }
+
+    return true;
 }
 
 /*! \brief Checks for a luminismcache folder and prompts the user if none exists.
@@ -175,15 +193,29 @@ bool MainWindow::confirmCacheFolder(const QString &folder)
 }
 
 /*! \brief Opens a folder-picker dialog and loads the selected folder into core. */
-void MainWindow::setRootFolder(){
+void MainWindow::setRootFolder()
+{
     QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
-
     QString folder = QFileDialog::getExistingDirectory(this, "Open Folder", le->text());
-    if (!folder.isEmpty() && !confirmCacheFolder(folder))
-        return;
-    QListView* lv = ui->fileListView;
-    lv->setModel(nullptr);
+    loadFolder(folder);
+}
 
+/*! \brief Validates \p folder, confirms cache creation if needed, then performs a full
+ *         load: clears existing state, loads files into core, and refreshes all UI areas.
+ *
+ * \param folder Absolute path to the media folder to load.
+ */
+void MainWindow::loadFolder(const QString &folder)
+{
+    if (!validateFolder(folder))
+        return;
+    if (!confirmCacheFolder(folder))
+        return;
+
+    QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
+    QListView* lv = ui->fileListView;
+
+    lv->setModel(nullptr);
     ui->navFilterContainer->clear();
     ui->fileListTagAssignmentContainer->clear();
     ui->navLibraryContainer->clear();
@@ -194,8 +226,10 @@ void MainWindow::setRootFolder(){
     ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
 
     le->setText(folder);
+    le->clearFocus();
     QSettings(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism")
         .setValue("folder/lastPath", folder);
+
     lv->setModel(core->getItemModelProxy());
     connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
