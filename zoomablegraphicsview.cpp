@@ -1,4 +1,7 @@
 #include "zoomablegraphicsview.h"
+#include <QByteArray>
+#include <QDataStream>
+#include <QMimeData>
 
 /*! \brief Constructs a ZoomableGraphicsView with no initial scene.
  *
@@ -63,4 +66,58 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event)
 
     // Accept the event to prevent it from being propagated
     event->accept();
+}
+
+/*! \brief Accepts tag drags carrying the custom MIME type and emits tagDragEntered.
+ *
+ * \param event The drag-enter event.
+ */
+void ZoomableGraphicsView::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
+        QByteArray data = event->mimeData()->data("application/x-dnditemdata");
+        QDataStream ds(&data, QIODevice::ReadOnly);
+        QString family, tagName;
+        QPoint offset;
+        ds >> family >> tagName >> offset;
+        emit tagDragEntered(family, tagName);
+        event->acceptProposedAction();
+    } else {
+        event->ignore();
+    }
+}
+
+/*! \brief Emits tagDragMoved with the current scene position as the drag advances.
+ *
+ * \param event The drag-move event.
+ */
+void ZoomableGraphicsView::dragMoveEvent(QDragMoveEvent *event)
+{
+    event->acceptProposedAction();
+    emit tagDragMoved(mapToScene(event->position().toPoint()));
+}
+
+/*! \brief Emits tagDragLeft when the drag leaves the view.
+ *
+ * \param event The drag-leave event.
+ */
+void ZoomableGraphicsView::dragLeaveEvent(QDragLeaveEvent *event)
+{
+    Q_UNUSED(event)
+    emit tagDragLeft();
+}
+
+/*! \brief Decodes the payload and emits tagDropped.
+ *
+ * \param event The drop event.
+ */
+void ZoomableGraphicsView::dropEvent(QDropEvent *event)
+{
+    QByteArray data = event->mimeData()->data("application/x-dnditemdata");
+    QDataStream ds(&data, QIODevice::ReadOnly);
+    QString family, tagName;
+    QPoint offset;
+    ds >> family >> tagName >> offset;
+    emit tagDropped(family, tagName, mapToScene(event->position().toPoint()));
+    event->acceptProposedAction();
 }

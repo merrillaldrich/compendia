@@ -12,6 +12,9 @@ namespace Luminism {
  */
 constexpr const char* CacheFolderName = ".luminism_cache";
 
+/*! \brief Default normalized side length for a manually dropped tag region. */
+constexpr qreal DefaultTagRectSize = 0.15;
+
 } // namespace Luminism
 
 #endif // CONSTANTS_H

@@ -191,6 +191,15 @@ private slots:
      */
     void on_tagFilterAllRadio_toggled(bool checked);
 
+    /*! \brief Handles a tag drop on the preview; stores the region and refreshes overlays.
+     *  \param family         Tag family name.
+     *  \param tagName        Tag name.
+     *  \param normalizedRect Normalized (0-1) bounding rect for the region.
+     */
+    void onTagDroppedOnPreview(const QString &family,
+                               const QString &tagName,
+                               const QRectF  &normalizedRect);
+
     /*! \brief Slot — forwards creation-date filter changes to the core.
      *
      * A date equal to the widget's minimum is treated as "no filter" (null QDate).

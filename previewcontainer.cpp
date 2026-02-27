@@ -1,4 +1,5 @@
 #include "previewcontainer.h"
+#include "constants.h"
 #include <QPainter>
 #include <QPen>
 #include <QFileInfo>
@@ -53,9 +54,19 @@ PreviewContainer::PreviewContainer(QWidget *parent)
 
     scene = new QGraphicsScene(this);
     view = new ZoomableGraphicsView(scene, this);
+    view->setAcceptDrops(true);
     QVBoxLayout *layout = new QVBoxLayout;
     setLayout(layout);
     layout->addWidget(view);
+
+    connect(view, &ZoomableGraphicsView::tagDragEntered, this,
+            &PreviewContainer::tagPreviewDragEntered);
+    connect(view, &ZoomableGraphicsView::tagDragMoved, this,
+            &PreviewContainer::updateDropPreviewRect);
+    connect(view, &ZoomableGraphicsView::tagDragLeft, this,
+            &PreviewContainer::clearDropPreviewRect);
+    connect(view, &ZoomableGraphicsView::tagDropped, this,
+            &PreviewContainer::handleTagDrop);
 
     mediaPlayer = new QMediaPlayer(this);
     audioOutput_ = new QAudioOutput(this);
@@ -139,8 +150,10 @@ void PreviewContainer::updateTimeLabel(qint64 position, qint64 duration)
 void PreviewContainer::preview(QImage image){
     mediaPlayer->stop();
     is_video_ = false;
+    view->setAcceptDrops(true);
     controlBar_->hide();
     // Replace the image in the scene; scene->clear() deletes all items including overlays
+    drop_preview_rect_ = nullptr; // scene->clear() below will delete it
     scene->clear();
     videoItem = nullptr; // scene->clear() deleted it if it was present
     tag_rect_items_.clear();
@@ -168,6 +181,7 @@ void PreviewContainer::preview(QString absoluteFilePath){
 
     if (isVideoFile(absoluteFilePath)) {
         mediaPlayer->stop();
+        drop_preview_rect_ = nullptr; // scene->clear() below will delete it
         scene->clear();
         videoItem = nullptr;
         tag_rect_items_.clear();
@@ -184,6 +198,7 @@ void PreviewContainer::preview(QString absoluteFilePath){
         });
 
         is_video_ = true;
+        view->setAcceptDrops(false);
         controlBar_->show();
         mediaPlayer->setVideoSink(videoItem->videoSink());
         mediaPlayer->setSource(QUrl::fromLocalFile(absoluteFilePath));
@@ -240,11 +255,13 @@ void PreviewContainer::freshen(){
 void PreviewContainer::clear(){
     mediaPlayer->stop();
     is_video_ = false;
+    view->setAcceptDrops(true);
     controlBar_->hide();
     positionSlider_->setValue(0);
     positionSlider_->setMaximum(0);
     timeLabel_->setText("0:00 / 0:00");
     if (view->scene() != nullptr){
+        drop_preview_rect_ = nullptr; // scene->clear() below will delete it
         view->scene()->clear();
         videoItem = nullptr; // scene->clear() deleted it
         tag_rect_items_.clear();
@@ -293,4 +310,76 @@ void PreviewContainer::setTagRectsVisible(bool visible)
 {
     for (QGraphicsItem* item : tag_rect_items_)
         item->setVisible(visible);
+}
+
+/*! \brief Sets the colour used to draw the drop-preview rectangle during a tag drag.
+ *
+ * \param color The tag family colour for the tag currently being dragged.
+ */
+void PreviewContainer::setDropPreviewColor(QColor color)
+{
+    drop_preview_color_ = color;
+}
+
+/*! \brief Converts scenePos to a square clamped normalized rect and emits tagDroppedOnPreview.
+ *
+ * The rect is square in pixel space: its side length is DefaultTagRectSize multiplied by
+ * the shorter image dimension.
+ *
+ * \param family   Tag family name.
+ * \param tagName  Tag name.
+ * \param scenePos Drop position in scene coordinates.
+ */
+void PreviewContainer::handleTagDrop(const QString &family,
+                                     const QString &tagName,
+                                     const QPointF &scenePos)
+{
+    if (image_size_.isEmpty() || is_video_) return;
+    clearDropPreviewRect();
+    qreal side_px = Luminism::DefaultTagRectSize * qMin(image_size_.width(), image_size_.height());
+    qreal norm_w  = side_px / image_size_.width();
+    qreal norm_h  = side_px / image_size_.height();
+    QRectF rect(
+        qBound(0.0, scenePos.x() / image_size_.width()  - norm_w / 2.0, 1.0 - norm_w),
+        qBound(0.0, scenePos.y() / image_size_.height() - norm_h / 2.0, 1.0 - norm_h),
+        norm_w, norm_h);
+    emit tagDroppedOnPreview(family, tagName, rect);
+}
+
+/*! \brief Creates or repositions the drop-preview rectangle during a drag.
+ *
+ * Uses the same TagRectItem (rounded, cosmetic pen) as committed tag overlays, drawn in
+ * the current drop_preview_color_.  The rect is square in pixel space.
+ *
+ * \param scenePos Current cursor position in scene coordinates.
+ */
+void PreviewContainer::updateDropPreviewRect(const QPointF &scenePos)
+{
+    if (image_size_.isEmpty()) return;
+    qreal side_px = Luminism::DefaultTagRectSize * qMin(image_size_.width(), image_size_.height());
+    qreal norm_w  = side_px / image_size_.width();
+    qreal norm_h  = side_px / image_size_.height();
+    QRectF sr(
+        qBound(0.0, scenePos.x() / image_size_.width()  - norm_w / 2.0, 1.0 - norm_w) * image_size_.width(),
+        qBound(0.0, scenePos.y() / image_size_.height() - norm_h / 2.0, 1.0 - norm_h) * image_size_.height(),
+        side_px, side_px);
+    // Delete and recreate so the new position is always in sync with the color
+    if (drop_preview_rect_) {
+        scene->removeItem(drop_preview_rect_);
+        delete drop_preview_rect_;
+    }
+    QPen pen(drop_preview_color_, 4);
+    pen.setCosmetic(true);
+    drop_preview_rect_ = new TagRectItem(sr, pen);
+    scene->addItem(drop_preview_rect_);
+}
+
+/*! \brief Removes and deletes the hover rectangle from the scene. */
+void PreviewContainer::clearDropPreviewRect()
+{
+    if (drop_preview_rect_) {
+        scene->removeItem(drop_preview_rect_);
+        delete drop_preview_rect_;
+        drop_preview_rect_ = nullptr;
+    }
 }

@@ -66,6 +66,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusBar->addPermanentWidget(progress_bar_);
     connect(core, &LuminismCore::iconUpdated, this, &MainWindow::onIconUpdated);
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
+    connect(ui->previewContainer, &PreviewContainer::tagDroppedOnPreview,
+            this, &MainWindow::onTagDroppedOnPreview);
+    connect(ui->previewContainer, &PreviewContainer::tagPreviewDragEntered,
+            this, [this](const QString &family, const QString &tagName) {
+        Tag* tag = core->getTag(family, tagName);
+        if (tag)
+            ui->previewContainer->setDropPreviewColor(tag->tagFamily->getColor());
+        ui->showTaggedRegionsCheckbox->setChecked(true);
+    });
 
 
     // Default pane sizes
@@ -352,6 +361,45 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         ui->previewExifValue->setText(exifText);
 
     }
+}
+
+/*! \brief Handles a tag drop on the preview; stores the region and refreshes overlays.
+ *  \param family         Tag family name.
+ *  \param tagName        Tag name.
+ *  \param normalizedRect Normalized (0-1) bounding rect for the region.
+ */
+void MainWindow::onTagDroppedOnPreview(const QString &family,
+                                       const QString &tagName,
+                                       const QRectF  &normalizedRect)
+{
+    QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
+    if (sel.isEmpty()) return;
+
+    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
+    TaggedFile* tf  = core->getItemModel()
+                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!tf) return;
+
+    Tag* tag = core->getTag(family, tagName);
+    if (!tag) return;
+
+    if (tf->tags()->contains(tag))
+        tf->setTagRect(tag, normalizedRect);
+    else
+        tf->addTag(tag, normalizedRect);
+
+    // Rebuild overlay list and push to preview
+    QList<QPair<QRectF, QColor>> tagRects;
+    for (Tag* t : *tf->tags()) {
+        auto r = tf->tagRect(t);
+        if (r.has_value())
+            tagRects.append({r.value(), t->tagFamily->getColor()});
+    }
+    ui->previewContainer->setTagRects(tagRects);
+    ui->previewContainer->setTagRectsVisible(
+        ui->showTaggedRegionsCheckbox->isChecked());
+
+    refreshTagAssignmentArea();
 }
 
 /*! \brief Refreshes the preview pane to reflect the current viewport size. */

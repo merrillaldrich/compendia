@@ -6,6 +6,10 @@
 #include <QWheelEvent>
 #include <QPointF>
 #include <QScrollBar>
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
+#include <QDragLeaveEvent>
+#include <QDropEvent>
 
 /*! \brief A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.
  *
@@ -31,12 +35,58 @@ public:
      */
     ZoomableGraphicsView(QGraphicsScene *scene, QWidget *parent = nullptr);
 
+signals:
+    /*! \brief Emitted once when a tag drag first enters the view.
+     *  \param family  Tag family name decoded from the drag payload.
+     *  \param tagName Tag name decoded from the drag payload.
+     */
+    void tagDragEntered(const QString &family, const QString &tagName);
+
+    /*! \brief Emitted while a tag drag moves over the view.
+     *  \param scenePos Scene coordinate under the cursor.
+     */
+    void tagDragMoved(const QPointF &scenePos);
+
+    /*! \brief Emitted when a tag drag leaves the view without dropping. */
+    void tagDragLeft();
+
+    /*! \brief Emitted when a tag is dropped on the view.
+     *  \param family   Tag family name from the drag payload.
+     *  \param tagName  Tag name from the drag payload.
+     *  \param scenePos Scene coordinate of the drop point.
+     */
+    void tagDropped(const QString &family, const QString &tagName, const QPointF &scenePos);
+
 protected:
     /*! \brief Overrides the Qt base-class wheel handler to perform cursor-centred zoom.
      *
      * \param event The wheel event containing delta and cursor position.
      */
     void wheelEvent(QWheelEvent* event) override;
+
+    /*! \brief Accepts tag drags carrying the custom MIME type.
+     *
+     * \param event The drag-enter event.
+     */
+    void dragEnterEvent(QDragEnterEvent *event) override;
+
+    /*! \brief Emits tagDragMoved with the current scene position as the drag advances.
+     *
+     * \param event The drag-move event.
+     */
+    void dragMoveEvent(QDragMoveEvent *event) override;
+
+    /*! \brief Emits tagDragLeft when the drag leaves the view.
+     *
+     * \param event The drag-leave event.
+     */
+    void dragLeaveEvent(QDragLeaveEvent *event) override;
+
+    /*! \brief Decodes the payload and emits tagDropped.
+     *
+     * \param event The drop event.
+     */
+    void dropEvent(QDropEvent *event) override;
 
 };
 

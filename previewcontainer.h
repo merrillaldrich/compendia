@@ -72,8 +72,27 @@ public:
      */
     void setTagRectsVisible(bool visible);
 
-signals:
+    /*! \brief Sets the colour used to draw the drop-preview rectangle during a tag drag.
+     *
+     * \param color The tag family colour for the tag currently being dragged.
+     */
+    void setDropPreviewColor(QColor color);
 
+signals:
+    /*! \brief Emitted when a tag is dropped on the preview image.
+     *  \param familyName     Tag family name decoded from the drag payload.
+     *  \param tagName        Tag name decoded from the drag payload.
+     *  \param normalizedRect Normalized (0–1) rect centred on the drop point.
+     */
+    void tagDroppedOnPreview(const QString &familyName,
+                             const QString &tagName,
+                             const QRectF  &normalizedRect);
+
+    /*! \brief Emitted once when a tag drag first enters the preview view.
+     *  \param family  Tag family name decoded from the drag payload.
+     *  \param tagName Tag name decoded from the drag payload.
+     */
+    void tagPreviewDragEntered(const QString &family, const QString &tagName);
 
 private:
     /*! \brief Formats \a position and \a duration as "m:ss / m:ss" and updates the time label.
@@ -83,12 +102,32 @@ private:
      */
     void updateTimeLabel(qint64 position, qint64 duration);
 
+    /*! \brief Converts scenePos to a clamped normalized rect and emits tagDroppedOnPreview.
+     *
+     * \param family   Tag family name.
+     * \param tagName  Tag name.
+     * \param scenePos Drop position in scene coordinates.
+     */
+    void handleTagDrop(const QString &family, const QString &tagName,
+                       const QPointF &scenePos);
+
+    /*! \brief Creates or repositions the hover rectangle during a drag.
+     *
+     * \param scenePos Current cursor position in scene coordinates.
+     */
+    void updateDropPreviewRect(const QPointF &scenePos);
+
+    /*! \brief Removes and deletes the hover rectangle from the scene. */
+    void clearDropPreviewRect();
+
     QGraphicsScene*    scene = nullptr;
     ZoomableGraphicsView* view = nullptr;
     QMediaPlayer*      mediaPlayer = nullptr;
     QAudioOutput*      audioOutput_ = nullptr;
     QGraphicsVideoItem* videoItem = nullptr;
     QList<QGraphicsItem*> tag_rect_items_;
+    QGraphicsItem*     drop_preview_rect_ = nullptr;
+    QColor             drop_preview_color_ = Qt::white;
     QSizeF             image_size_;
     bool               is_video_ = false;
 
