@@ -34,8 +34,10 @@ class TagRectItem : public QGraphicsObject
     static constexpr qreal kHitPx   = 8.0;
     // Approximate folder-tab height reserved above the rect, in screen pixels.
     static constexpr qreal kTabPx   = 24.0;
+    // Minimum rect width and height enforced during resize, in screen pixels.
+    static constexpr qreal kMinPx   = 50.0;
 
-    enum Handle { None, Left, Right, Top, Bottom, TopLeft, TopRight, BottomLeft, BottomRight };
+    enum Handle { None, Left, Right, Top, Bottom, TopLeft, TopRight, BottomLeft, BottomRight, Tab };
 
     QRectF  rect_;
     QPen    pen_;
@@ -44,6 +46,20 @@ class TagRectItem : public QGraphicsObject
     Handle  active_handle_ = None;
     QPointF drag_start_scene_;
     QRectF  rect_at_drag_start_;
+
+    /*! \brief Returns the folder-tab's bounding rect in scene/item coordinates. */
+    QRectF tabSceneRect() const
+    {
+        qreal s = (scene() && !scene()->views().isEmpty())
+                  ? scene()->views().first()->transform().m11() : 1.0;
+        if (s <= 0.0) s = 1.0;
+        QFont font;
+        font.setPixelSize(11);
+        const QFontMetrics fm(font);
+        const qreal tabW = (fm.horizontalAdvance(label_) + 12) / s;  // 12 = 2 * hPad
+        const qreal tabH = (fm.height() + 6) / s;                    //  6 = 2 * vPad
+        return QRectF(rect_.left(), rect_.top() - tabH, tabW, tabH);
+    }
 
     /*! \brief Returns the hit margin in scene units based on current view zoom. */
     qreal hitMargin() const
@@ -71,6 +87,7 @@ class TagRectItem : public QGraphicsObject
         if (onR && inV) return Right;
         if (onT && inH) return Top;
         if (onB && inH) return Bottom;
+        if (!label_.isEmpty() && tabSceneRect().contains(pos)) return Tab;
         return None;
     }
 
@@ -82,6 +99,7 @@ class TagRectItem : public QGraphicsObject
         case Top:   case Bottom:        return Qt::SizeVerCursor;
         case TopLeft: case BottomRight: return Qt::SizeFDiagCursor;
         case TopRight: case BottomLeft: return Qt::SizeBDiagCursor;
+        case Tab:                       return Qt::SizeAllCursor;
         default:                        return Qt::ArrowCursor;
         }
     }
@@ -98,9 +116,9 @@ class TagRectItem : public QGraphicsObject
         case TopRight:    r.setTopRight(r.topRight()       + delta);     break;
         case BottomLeft:  r.setBottomLeft(r.bottomLeft()   + delta);     break;
         case BottomRight: r.setBottomRight(r.bottomRight() + delta);     break;
+        case Tab:         r.translate(delta);                             break;
         default: break;
         }
-        r = r.normalized();
     }
 
 public:
@@ -254,10 +272,30 @@ public:
         QPointF delta = event->scenePos() - drag_start_scene_;
         QRectF r = rect_at_drag_start_;
         applyHandle(active_handle_, delta, r);
-        if (r.width() > 0 && r.height() > 0) {
-            prepareGeometryChange();
-            rect_ = r;
+
+        // Enforce minimum size: clamp whichever edge is moving so the rect
+        // cannot shrink below kMinPx screen pixels or fold through the opposite edge.
+        if (active_handle_ != Tab) {
+            qreal s = (scene() && !scene()->views().isEmpty())
+                      ? scene()->views().first()->transform().m11() : 1.0;
+            if (s <= 0.0) s = 1.0;
+            const qreal minScene = kMinPx / s;
+            if (r.width() < minScene) {
+                if (active_handle_ == Left || active_handle_ == TopLeft || active_handle_ == BottomLeft)
+                    r.setLeft(r.right() - minScene);
+                else
+                    r.setRight(r.left() + minScene);
+            }
+            if (r.height() < minScene) {
+                if (active_handle_ == Top || active_handle_ == TopLeft || active_handle_ == TopRight)
+                    r.setTop(r.bottom() - minScene);
+                else
+                    r.setBottom(r.top() + minScene);
+            }
         }
+
+        prepareGeometryChange();
+        rect_ = r;
         event->accept();
     }
 
