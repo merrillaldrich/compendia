@@ -22,6 +22,17 @@
 #include <QLabel>
 #include "zoomablegraphicsview.h"
 
+/*! \brief Describes a single tag region overlay for display in the preview pane.
+ *
+ * Bundles the normalised bounding rectangle, the tag family colour, and the tag
+ * name that will be rendered in the folder-tab label above the rectangle.
+ */
+struct TagRectDescriptor {
+    QRectF  rect;   ///< Normalised bounding rectangle in [0, 1] × [0, 1].
+    QColor  color;  ///< Tag family colour, used for the rectangle outline and tab fill.
+    QString label;  ///< Tag name rendered inside the folder-tab above the rectangle.
+};
+
 /*! \brief Widget that displays a full-size image preview inside a zoomable graphics view.
  *
  * Wraps a ZoomableGraphicsView and a QGraphicsScene.  The preview can be loaded
@@ -58,13 +69,13 @@ public:
 
     /*! \brief Adds normalised bounding-rectangle overlays on top of the current image.
      *
-     * Each rect is given as normalised coordinates in [0.0, 1.0] relative to the image
-     * dimensions, paired with the colour to draw its outline.  Any previously set
-     * overlays are removed and replaced.
+     * Each descriptor carries a normalised rect, a colour for the outline and
+     * folder-tab fill, and a label string rendered inside the tab.  Any previously
+     * set overlays are removed and replaced.
      *
-     * \param normalizedRects List of (normalised QRectF, QColor) pairs.
+     * \param rects List of TagRectDescriptor values.
      */
-    void setTagRects(const QList<QPair<QRectF, QColor>> &normalizedRects);
+    void setTagRects(const QList<TagRectDescriptor> &rects);
 
     /*! \brief Shows or hides the tag rectangle overlays without removing them from the scene.
      *

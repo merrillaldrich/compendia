@@ -1,7 +1,9 @@
 #include "previewcontainer.h"
 #include "constants.h"
 #include <QPainter>
+#include <QPainterPath>
 #include <QPen>
+#include <QFontMetrics>
 #include <QFileInfo>
 #include <QUrl>
 #include <QGraphicsSceneHoverEvent>
@@ -29,13 +31,16 @@ class TagRectItem : public QGraphicsObject
     Q_OBJECT
 
     // Hit-test margin in screen pixels.
-    static constexpr qreal kHitPx = 8.0;
+    static constexpr qreal kHitPx   = 8.0;
+    // Approximate folder-tab height reserved above the rect, in screen pixels.
+    static constexpr qreal kTabPx   = 24.0;
 
     enum Handle { None, Left, Right, Top, Bottom, TopLeft, TopRight, BottomLeft, BottomRight };
 
     QRectF  rect_;
     QPen    pen_;
     bool    interactive_;
+    QString label_;
     Handle  active_handle_ = None;
     QPointF drag_start_scene_;
     QRectF  rect_at_drag_start_;
@@ -104,31 +109,114 @@ public:
      * \param rect        Scene-coordinate bounding rect.
      * \param pen         Pen used to draw the outline (typically cosmetic).
      * \param interactive When true, hover and resize mouse events are enabled.
+     * \param label       Optional tag name rendered in the folder-tab above the rect.
      */
-    TagRectItem(const QRectF &rect, const QPen &pen, bool interactive = false)
-        : rect_(rect), pen_(pen), interactive_(interactive)
+    TagRectItem(const QRectF &rect, const QPen &pen, bool interactive = false,
+                const QString &label = {})
+        : rect_(rect), pen_(pen), interactive_(interactive), label_(label)
     {
         setFlag(QGraphicsItem::ItemIsSelectable, false);
         if (interactive_)
             setAcceptHoverEvents(true);
     }
 
-    /*! \brief Returns the bounding rect, expanded by the hit margin when interactive. */
+    /*! \brief Returns the bounding rect, expanded by the hit margin and the folder-tab
+     *  height above the top edge. */
     QRectF boundingRect() const override
     {
         qreal m = interactive_ ? hitMargin() : 1.0;
-        return rect_.adjusted(-m, -m, m, m);
+        qreal s = (scene() && !scene()->views().isEmpty())
+                  ? scene()->views().first()->transform().m11() : 1.0;
+        if (s <= 0.0) s = 1.0;
+        return rect_.adjusted(-m, -m - kTabPx / s, m, m);
     }
 
-    /*! \brief Paints the rounded rectangle with a screen-pixel-constant corner radius. */
+    /*! \brief Paints the rounded rectangle and the filled folder-tab above the top-left
+     *  corner — everything drawn in screen (device) space so that the tab's left stroke
+     *  and the rectangle's left stroke share the exact same pixel column at any zoom level. */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override
     {
+        // Capture all four corners in screen space before resetting the transform.
+        const QTransform wt = painter->worldTransform();
+        const qreal sl = wt.map(rect_.topLeft()).x();       // screen left
+        const qreal st = wt.map(rect_.topLeft()).y();       // screen top
+        const qreal sr = wt.map(rect_.bottomRight()).x();   // screen right
+        const qreal sb = wt.map(rect_.bottomRight()).y();   // screen bottom
+
+        const qreal cr   = 4.0;          // rect corner radius (screen px)
+        const qreal tabR = cr * 0.75;    // tab corner radius (screen px)
+
+        painter->save();
+        painter->resetTransform();
+
+        // Folder-tab geometry (constant screen-pixel size).
+        const QColor fillColor = pen_.color();
+        QFont font;
+        font.setPixelSize(11);
+        const QFontMetrics fm(font);
+        const int hPad  = 6;
+        const int vPad  = 3;
+        const int textW = fm.horizontalAdvance(label_);
+        const int tabW  = textW + 2 * hPad;
+        const int tabH  = fm.height() + 2 * vPad;
+
+        const qreal tabLeft   = sl;
+        const qreal tabRight  = sl + tabW;
+        const qreal tabBottom = st;   // tab bottom flush with rect top
+        const qreal tabTop    = st - tabH;
+
+        // 1. Tab fill — closed path, no stroke, drawn before the outline so the
+        //    outline sits on top of the fill edge.
+        QPainterPath tabFill;
+        tabFill.moveTo(tabLeft, tabBottom);
+        tabFill.lineTo(tabLeft, tabTop + tabR);
+        tabFill.quadTo(tabLeft, tabTop, tabLeft + tabR, tabTop);
+        tabFill.lineTo(tabRight - tabR, tabTop);
+        tabFill.quadTo(tabRight, tabTop, tabRight, tabTop + tabR);
+        tabFill.lineTo(tabRight, tabBottom);
+        tabFill.closeSubpath();
+        painter->fillPath(tabFill, QBrush(fillColor));
+
+        // 2. Single unified outline — rect and tab as one closed path, one draw call.
+        //    The left edge of the tab continues directly into the left edge of the
+        //    rectangle (closeSubpath), so there is only one rasterised stroke for that
+        //    edge and alignment is structurally guaranteed.
+        //
+        //    Winding: start at bottom-left of rect, go clockwise around the rect,
+        //    detour up through the tab at the top-left, close back down the left edge.
+        QPainterPath outline;
+        outline.moveTo(sl, sb - cr);
+        outline.quadTo(sl, sb,  sl + cr, sb);       // bottom-left corner
+        outline.lineTo(sr - cr, sb);                // bottom edge
+        outline.quadTo(sr, sb,  sr, sb - cr);       // bottom-right corner
+        outline.lineTo(sr, st + cr);                // right edge
+        outline.quadTo(sr, st,  sr - cr, st);       // top-right corner
+        outline.lineTo(tabRight, st);               // rect top edge → tab
+        outline.lineTo(tabRight, tabTop + tabR);    // tab right edge up
+        outline.quadTo(tabRight, tabTop,  tabRight - tabR, tabTop);   // tab top-right
+        outline.lineTo(tabLeft  + tabR, tabTop);    // tab top edge
+        outline.quadTo(tabLeft,  tabTop, tabLeft,  tabTop + tabR);    // tab top-left
+        outline.lineTo(sl, st);                     // tab left edge down to rect corner
+        outline.closeSubpath();                     // rect left edge (sl) back to start
+
+        // Second subpath: the rect top edge under the tab.  The outer contour skips
+        // this segment, so it must be added explicitly to complete the visual line.
+        outline.moveTo(tabLeft, tabBottom);
+        outline.lineTo(tabRight, tabBottom);
+
         painter->setPen(pen_);
         painter->setBrush(Qt::NoBrush);
-        const qreal screenRadius = 4.0;
-        const qreal scaleX = painter->worldTransform().m11();
-        const qreal cornerRadius = (scaleX > 0.0) ? screenRadius / scaleX : screenRadius;
-        painter->drawRoundedRect(rect_, cornerRadius, cornerRadius);
+        painter->drawPath(outline);
+
+        // 3. Label text — white on dark colours, black on light ones.
+        const qreal luma = 0.299 * fillColor.redF()
+                         + 0.587 * fillColor.greenF()
+                         + 0.114 * fillColor.blueF();
+        painter->setPen(luma > 0.5 ? Qt::black : Qt::white);
+        painter->setFont(font);
+        painter->drawText(QRectF(tabLeft + hPad, tabTop, textW, tabH), Qt::AlignVCenter, label_);
+
+        painter->restore();
     }
 
     /*! \brief Updates the cursor to reflect which handle the cursor is over. */
@@ -419,13 +507,13 @@ void PreviewContainer::clear(){
 
 /*! \brief Adds normalised bounding-rectangle overlays on top of the current image.
  *
- * Each rect is given as normalised coordinates in [0.0, 1.0] relative to the image
- * dimensions, paired with the colour to draw its outline.  Any previously set
- * overlays are removed and replaced.
+ * Each descriptor carries a normalised rect, a colour for the outline and
+ * folder-tab fill, and a label string rendered inside the tab.  Any previously
+ * set overlays are removed and replaced.
  *
- * \param normalizedRects List of (normalised QRectF, QColor) pairs.
+ * \param rects List of TagRectDescriptor values.
  */
-void PreviewContainer::setTagRects(const QList<QPair<QRectF, QColor>> &normalizedRects)
+void PreviewContainer::setTagRects(const QList<TagRectDescriptor> &rects)
 {
     // Delete existing overlay items (QGraphicsItem destructor removes itself from scene)
     for (QGraphicsItem* item : tag_rect_items_)
@@ -434,24 +522,24 @@ void PreviewContainer::setTagRects(const QList<QPair<QRectF, QColor>> &normalize
 
     if (image_size_.isEmpty()) return;
 
-    for (const auto &[normRect, color] : normalizedRects) {
+    for (const auto &desc : rects) {
         QRectF sceneRect(
-            normRect.x()      * image_size_.width(),
-            normRect.y()      * image_size_.height(),
-            normRect.width()  * image_size_.width(),
-            normRect.height() * image_size_.height()
+            desc.rect.x()      * image_size_.width(),
+            desc.rect.y()      * image_size_.height(),
+            desc.rect.width()  * image_size_.width(),
+            desc.rect.height() * image_size_.height()
         );
-        QPen pen(color);
+        QPen pen(desc.color);
         pen.setWidth(4);
         pen.setCosmetic(true);
-        TagRectItem* item = new TagRectItem(sceneRect, pen, /*interactive=*/true);
+        TagRectItem* item = new TagRectItem(sceneRect, pen, /*interactive=*/true, desc.label);
         scene->addItem(item);
         tag_rect_items_.append(item);
 
         // When the user finishes resizing, convert back to normalized coords and signal up.
         // normRectPtr is shared so the lambda can update it after each commit,
         // keeping oldNorm in sync for subsequent resizes on the same item.
-        auto normRectPtr = std::make_shared<QRectF>(normRect);
+        auto normRectPtr = std::make_shared<QRectF>(desc.rect);
         connect(item, &TagRectItem::rectChanged, this,
                 [this, normRectPtr](const QRectF &newSceneRect) {
             if (image_size_.isEmpty()) return;

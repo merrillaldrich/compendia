@@ -7,7 +7,6 @@
 #include <QFileInfo>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
-#include <QPair>
 #include <QDebug>
 
 #include "./ui_mainwindow.h"
@@ -313,11 +312,11 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         ui->previewContainer->preview(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
 
         // Build tag rect overlays and push to the preview container
-        QList<QPair<QRectF, QColor>> tagRects;
+        QList<TagRectDescriptor> tagRects;
         for (Tag* tag : *itemAsTaggedFile->tags()) {
             auto r = itemAsTaggedFile->tagRect(tag);
             if (r.has_value())
-                tagRects.append({r.value(), tag->tagFamily->getColor()});
+                tagRects.append({r.value(), tag->tagFamily->getColor(), tag->getName()});
         }
         ui->previewContainer->setTagRects(tagRects);
         ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
@@ -391,11 +390,11 @@ void MainWindow::onTagDroppedOnPreview(const QString &family,
         tf->addTag(tag, normalizedRect);
 
     // Rebuild overlay list and push to preview
-    QList<QPair<QRectF, QColor>> tagRects;
+    QList<TagRectDescriptor> tagRects;
     for (Tag* t : *tf->tags()) {
         auto r = tf->tagRect(t);
         if (r.has_value())
-            tagRects.append({r.value(), t->tagFamily->getColor()});
+            tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
     }
     ui->previewContainer->setTagRects(tagRects);
     ui->previewContainer->setTagRectsVisible(
