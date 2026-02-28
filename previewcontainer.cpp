@@ -4,6 +4,9 @@
 #include <QPen>
 #include <QFileInfo>
 #include <QUrl>
+#include <QGraphicsSceneHoverEvent>
+#include <QGraphicsSceneMouseEvent>
+#include <memory>
 
 static bool isVideoFile(const QString &path)
 {
@@ -11,37 +14,182 @@ static bool isVideoFile(const QString &path)
     return videoExts.contains(QFileInfo(path).suffix().toLower());
 }
 
-// File-local item that draws a rounded rectangle with a cosmetic pen whose corner
-// radius is expressed in screen pixels rather than scene units.  This keeps the
-// rounding constant at any zoom level, matching the behaviour of the cosmetic pen.
-class TagRectItem : public QGraphicsItem
+/*! \brief Graphics item that draws a rounded rectangle overlay and supports edge/corner dragging.
+ *
+ * When constructed with \p interactive = true the item accepts hover events and
+ * left-button press/move/release events.  Hovering near any of the eight edge or
+ * corner handles changes the cursor; dragging one of those handles resizes the rect
+ * live.  On mouse release \c rectChanged is emitted with the new scene-coordinate rect.
+ *
+ * The corner radius and pen width are expressed in screen pixels (cosmetic), so they
+ * remain constant at any zoom level.
+ */
+class TagRectItem : public QGraphicsObject
 {
-    QRectF rect_;
-    QPen   pen_;
-public:
-    TagRectItem(const QRectF &rect, const QPen &pen)
-        : rect_(rect), pen_(pen) { setFlag(QGraphicsItem::ItemIsSelectable, false); }
+    Q_OBJECT
 
-    QRectF boundingRect() const override
+    // Hit-test margin in screen pixels.
+    static constexpr qreal kHitPx = 8.0;
+
+    enum Handle { None, Left, Right, Top, Bottom, TopLeft, TopRight, BottomLeft, BottomRight };
+
+    QRectF  rect_;
+    QPen    pen_;
+    bool    interactive_;
+    Handle  active_handle_ = None;
+    QPointF drag_start_scene_;
+    QRectF  rect_at_drag_start_;
+
+    /*! \brief Returns the hit margin in scene units based on current view zoom. */
+    qreal hitMargin() const
     {
-        // Cosmetic pens don't consume scene space; add 1-unit padding so Qt's
-        // dirty-region tracking includes the stroke.
-        return rect_.adjusted(-1, -1, 1, 1);
+        if (!scene() || scene()->views().isEmpty()) return kHitPx;
+        qreal s = scene()->views().first()->transform().m11();
+        return s > 0.0 ? kHitPx / s : kHitPx;
     }
 
+    /*! \brief Returns which handle (if any) the local-coordinate point \p pos is over. */
+    Handle hitTest(const QPointF &pos) const
+    {
+        qreal m = hitMargin();
+        bool onL = qAbs(pos.x() - rect_.left())   < m;
+        bool onR = qAbs(pos.x() - rect_.right())  < m;
+        bool onT = qAbs(pos.y() - rect_.top())    < m;
+        bool onB = qAbs(pos.y() - rect_.bottom()) < m;
+        bool inH = pos.x() > rect_.left()  - m && pos.x() < rect_.right()  + m;
+        bool inV = pos.y() > rect_.top()   - m && pos.y() < rect_.bottom() + m;
+        if (onL && onT) return TopLeft;
+        if (onR && onT) return TopRight;
+        if (onL && onB) return BottomLeft;
+        if (onR && onB) return BottomRight;
+        if (onL && inV) return Left;
+        if (onR && inV) return Right;
+        if (onT && inH) return Top;
+        if (onB && inH) return Bottom;
+        return None;
+    }
+
+    /*! \brief Maps a handle to the appropriate resize cursor shape. */
+    static Qt::CursorShape cursorForHandle(Handle h)
+    {
+        switch (h) {
+        case Left:  case Right:         return Qt::SizeHorCursor;
+        case Top:   case Bottom:        return Qt::SizeVerCursor;
+        case TopLeft: case BottomRight: return Qt::SizeFDiagCursor;
+        case TopRight: case BottomLeft: return Qt::SizeBDiagCursor;
+        default:                        return Qt::ArrowCursor;
+        }
+    }
+
+    /*! \brief Applies \p delta to the edge indicated by \p h, then normalizes the rect. */
+    void applyHandle(Handle h, const QPointF &delta, QRectF &r) const
+    {
+        switch (h) {
+        case Left:        r.setLeft(r.left()               + delta.x()); break;
+        case Right:       r.setRight(r.right()             + delta.x()); break;
+        case Top:         r.setTop(r.top()                 + delta.y()); break;
+        case Bottom:      r.setBottom(r.bottom()           + delta.y()); break;
+        case TopLeft:     r.setTopLeft(r.topLeft()         + delta);     break;
+        case TopRight:    r.setTopRight(r.topRight()       + delta);     break;
+        case BottomLeft:  r.setBottomLeft(r.bottomLeft()   + delta);     break;
+        case BottomRight: r.setBottomRight(r.bottomRight() + delta);     break;
+        default: break;
+        }
+        r = r.normalized();
+    }
+
+public:
+    /*! \brief Constructs a TagRectItem.
+     *
+     * \param rect        Scene-coordinate bounding rect.
+     * \param pen         Pen used to draw the outline (typically cosmetic).
+     * \param interactive When true, hover and resize mouse events are enabled.
+     */
+    TagRectItem(const QRectF &rect, const QPen &pen, bool interactive = false)
+        : rect_(rect), pen_(pen), interactive_(interactive)
+    {
+        setFlag(QGraphicsItem::ItemIsSelectable, false);
+        if (interactive_)
+            setAcceptHoverEvents(true);
+    }
+
+    /*! \brief Returns the bounding rect, expanded by the hit margin when interactive. */
+    QRectF boundingRect() const override
+    {
+        qreal m = interactive_ ? hitMargin() : 1.0;
+        return rect_.adjusted(-m, -m, m, m);
+    }
+
+    /*! \brief Paints the rounded rectangle with a screen-pixel-constant corner radius. */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override
     {
         painter->setPen(pen_);
         painter->setBrush(Qt::NoBrush);
-
-        // Convert the fixed 4-screen-pixel corner radius to scene units using
-        // the current horizontal scale of the world transform.
         const qreal screenRadius = 4.0;
         const qreal scaleX = painter->worldTransform().m11();
         const qreal cornerRadius = (scaleX > 0.0) ? screenRadius / scaleX : screenRadius;
-
         painter->drawRoundedRect(rect_, cornerRadius, cornerRadius);
     }
+
+    /*! \brief Updates the cursor to reflect which handle the cursor is over. */
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override
+    {
+        setCursor(cursorForHandle(hitTest(event->pos())));
+        QGraphicsObject::hoverMoveEvent(event);
+    }
+
+    /*! \brief Restores the default cursor when the cursor leaves the item. */
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override
+    {
+        unsetCursor();
+        QGraphicsObject::hoverLeaveEvent(event);
+    }
+
+    /*! \brief Begins a resize drag if the press lands on an edge or corner handle. */
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override
+    {
+        if (event->button() != Qt::LeftButton) { event->ignore(); return; }
+        active_handle_ = hitTest(event->pos());
+        if (active_handle_ != None) {
+            drag_start_scene_  = event->scenePos();
+            rect_at_drag_start_ = rect_;
+            event->accept();
+        } else {
+            event->ignore();
+        }
+    }
+
+    /*! \brief Updates the rect live while dragging a handle. */
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override
+    {
+        if (active_handle_ == None) { event->ignore(); return; }
+        QPointF delta = event->scenePos() - drag_start_scene_;
+        QRectF r = rect_at_drag_start_;
+        applyHandle(active_handle_, delta, r);
+        if (r.width() > 0 && r.height() > 0) {
+            prepareGeometryChange();
+            rect_ = r;
+        }
+        event->accept();
+    }
+
+    /*! \brief Commits the resize and emits rectChanged with the final scene rect. */
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override
+    {
+        if (event->button() == Qt::LeftButton && active_handle_ != None) {
+            active_handle_ = None;
+            event->accept();
+            emit rectChanged(rect_);
+            return;
+        }
+        event->ignore();
+    }
+
+signals:
+    /*! \brief Emitted when the user finishes resizing the rect.
+     *  \param newSceneRect The final scene-coordinate rect after resizing.
+     */
+    void rectChanged(const QRectF &newSceneRect);
 };
 
 /*! \brief Constructs the preview container and sets up the internal scene and view.
@@ -169,7 +317,7 @@ void PreviewContainer::preview(QImage image){
     view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
     view->setRenderHint(QPainter::Antialiasing);
     view->setRenderHint(QPainter::SmoothPixmapTransform);
-    view->setDragMode(QGraphicsView::ScrollHandDrag);
+    view->setDragMode(QGraphicsView::NoDrag);
     view->show();
 }
 
@@ -296,9 +444,25 @@ void PreviewContainer::setTagRects(const QList<QPair<QRectF, QColor>> &normalize
         QPen pen(color);
         pen.setWidth(4);
         pen.setCosmetic(true);
-        TagRectItem* item = new TagRectItem(sceneRect, pen);
+        TagRectItem* item = new TagRectItem(sceneRect, pen, /*interactive=*/true);
         scene->addItem(item);
         tag_rect_items_.append(item);
+
+        // When the user finishes resizing, convert back to normalized coords and signal up.
+        // normRectPtr is shared so the lambda can update it after each commit,
+        // keeping oldNorm in sync for subsequent resizes on the same item.
+        auto normRectPtr = std::make_shared<QRectF>(normRect);
+        connect(item, &TagRectItem::rectChanged, this,
+                [this, normRectPtr](const QRectF &newSceneRect) {
+            if (image_size_.isEmpty()) return;
+            QRectF newNorm(
+                newSceneRect.x()      / image_size_.width(),
+                newSceneRect.y()      / image_size_.height(),
+                newSceneRect.width()  / image_size_.width(),
+                newSceneRect.height() / image_size_.height());
+            emit tagRectResized(*normRectPtr, newNorm);
+            *normRectPtr = newNorm;
+        });
     }
 }
 
@@ -383,3 +547,6 @@ void PreviewContainer::clearDropPreviewRect()
         drop_preview_rect_ = nullptr;
     }
 }
+
+// Required so that moc processes TagRectItem (Q_OBJECT in a .cpp file).
+#include "previewcontainer.moc"

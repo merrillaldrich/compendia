@@ -121,3 +121,57 @@ void ZoomableGraphicsView::dropEvent(QDropEvent *event)
     emit tagDropped(family, tagName, mapToScene(event->position().toPoint()));
     event->acceptProposedAction();
 }
+
+/*! \brief Begins a pan operation when no scene item grabs the press.
+ *
+ * Left-button presses are forwarded to the scene first so interactive items
+ * (e.g. resize handles on tag rects) get priority.  Panning only starts when
+ * no item becomes the mouse grabber.
+ *
+ * \param event The mouse press event.
+ */
+void ZoomableGraphicsView::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        QGraphicsView::mousePressEvent(event);
+        if (!scene() || !scene()->mouseGrabberItem()) {
+            panning_   = true;
+            pan_start_ = event->pos();
+            setCursor(Qt::ClosedHandCursor);
+        }
+        return;
+    }
+    QGraphicsView::mousePressEvent(event);
+}
+
+/*! \brief Scrolls the view while panning, otherwise forwards to the scene.
+ *
+ * \param event The mouse move event.
+ */
+void ZoomableGraphicsView::mouseMoveEvent(QMouseEvent *event)
+{
+    if (panning_) {
+        QPoint delta = event->pos() - pan_start_;
+        pan_start_   = event->pos();
+        horizontalScrollBar()->setValue(horizontalScrollBar()->value() - delta.x());
+        verticalScrollBar()->setValue(verticalScrollBar()->value()     - delta.y());
+        event->accept();
+        return;
+    }
+    QGraphicsView::mouseMoveEvent(event);
+}
+
+/*! \brief Ends the pan operation on left-button release.
+ *
+ * \param event The mouse release event.
+ */
+void ZoomableGraphicsView::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (panning_ && event->button() == Qt::LeftButton) {
+        panning_ = false;
+        setCursor(Qt::ArrowCursor);
+        event->accept();
+        return;
+    }
+    QGraphicsView::mouseReleaseEvent(event);
+}

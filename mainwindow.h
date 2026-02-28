@@ -200,6 +200,12 @@ private slots:
                                const QString &tagName,
                                const QRectF  &normalizedRect);
 
+    /*! \brief Persists a resized tag region back to the TaggedFile.
+     *  \param oldNorm Normalized rect before the resize (used to identify the tag).
+     *  \param newNorm Normalized rect after the resize.
+     */
+    void onTagRectResized(const QRectF &oldNorm, const QRectF &newNorm);
+
     /*! \brief Slot — forwards creation-date filter changes to the core.
      *
      * A date equal to the widget's minimum is treated as "no filter" (null QDate).

@@ -10,6 +10,7 @@
 #include <QDragMoveEvent>
 #include <QDragLeaveEvent>
 #include <QDropEvent>
+#include <QMouseEvent>
 
 /*! \brief A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.
  *
@@ -88,6 +89,27 @@ protected:
      */
     void dropEvent(QDropEvent *event) override;
 
+    /*! \brief Begins a pan operation when no scene item grabs the press.
+     *
+     * \param event The mouse press event.
+     */
+    void mousePressEvent(QMouseEvent *event) override;
+
+    /*! \brief Scrolls the view while panning.
+     *
+     * \param event The mouse move event.
+     */
+    void mouseMoveEvent(QMouseEvent *event) override;
+
+    /*! \brief Ends the pan operation on button release.
+     *
+     * \param event The mouse release event.
+     */
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
+private:
+    bool   panning_   = false;
+    QPoint pan_start_;
 };
 
 #endif // ZOOMABLEGRAPHICSVIEW_H

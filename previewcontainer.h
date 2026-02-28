@@ -94,6 +94,12 @@ signals:
      */
     void tagPreviewDragEntered(const QString &family, const QString &tagName);
 
+    /*! \brief Emitted when the user finishes resizing a tag region overlay.
+     *  \param oldNormalizedRect The region's normalized rect before the resize.
+     *  \param newNormalizedRect The region's normalized rect after the resize.
+     */
+    void tagRectResized(const QRectF &oldNormalizedRect, const QRectF &newNormalizedRect);
+
 private:
     /*! \brief Formats \a position and \a duration as "m:ss / m:ss" and updates the time label.
      *

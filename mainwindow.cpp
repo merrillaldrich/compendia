@@ -68,6 +68,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
     connect(ui->previewContainer, &PreviewContainer::tagDroppedOnPreview,
             this, &MainWindow::onTagDroppedOnPreview);
+    connect(ui->previewContainer, &PreviewContainer::tagRectResized,
+            this, &MainWindow::onTagRectResized);
     connect(ui->previewContainer, &PreviewContainer::tagPreviewDragEntered,
             this, [this](const QString &family, const QString &tagName) {
         Tag* tag = core->getTag(family, tagName);
@@ -400,6 +402,34 @@ void MainWindow::onTagDroppedOnPreview(const QString &family,
         ui->showTaggedRegionsCheckbox->isChecked());
 
     refreshTagAssignmentArea();
+}
+
+/*! \brief Persists a resized tag region back to the TaggedFile.
+ *
+ * Identifies the affected tag by matching \p oldNorm against stored tag rects, then
+ * calls setTagRect() with \p newNorm.  No overlay rebuild is needed because the
+ * TagRectItem already displays the new rect live.
+ *
+ *  \param oldNorm Normalized rect before the resize (used to identify the tag).
+ *  \param newNorm Normalized rect after the resize.
+ */
+void MainWindow::onTagRectResized(const QRectF &oldNorm, const QRectF &newNorm)
+{
+    QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
+    if (sel.isEmpty()) return;
+
+    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
+    TaggedFile* tf  = core->getItemModel()
+                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!tf) return;
+
+    for (Tag* tag : *tf->tags()) {
+        auto r = tf->tagRect(tag);
+        if (r.has_value() && r.value() == oldNorm) {
+            tf->setTagRect(tag, newNorm);
+            break;
+        }
+    }
 }
 
 /*! \brief Refreshes the preview pane to reflect the current viewport size. */
