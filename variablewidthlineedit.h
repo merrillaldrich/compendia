@@ -25,6 +25,13 @@ public:
      */
     explicit VariableWidthLineEdit(QWidget* parent = nullptr);
 
+    /*! \brief Resizes the widget to fit the current text content.
+     *
+     * Call this after programmatically setting text (e.g. via setText()) to ensure
+     * the widget width reflects the new value before it is shown.
+     */
+    void updateWidth();
+
 protected:
     /*! \brief Returns the minimum size as the size hint so the widget never grows unnecessarily.
      *

@@ -119,6 +119,7 @@ void TagWidget::startEdit(){
     edit_status_ = "Edit";
     label_->hide();
     line_edit_->setText(tag_->getName());
+    line_edit_->updateWidth();   // size the line edit for the pre-loaded text before adjustCustomWidth reads it
     adjustCustomWidth();
     line_edit_->show();
     line_edit_->setFocus();
