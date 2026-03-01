@@ -63,6 +63,16 @@ signals:
      * \param tag The Tag to be removed.
      */
     void tagDeleteRequested(Tag* tag);
+
+    /*! \brief Emitted when any tag displayed in this container has its name changed.
+     *
+     * Forwarded from the TagWidget::tagNameChanged signal of each child widget
+     * created during refresh().  Allows MainWindow to update the preview overlay
+     * labels without polling.
+     *
+     * \param tag The Tag whose name was changed.
+     */
+    void tagNameChanged(Tag* tag);
 };
 
 #endif // TAGCONTAINER_H

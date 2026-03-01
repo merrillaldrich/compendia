@@ -223,6 +223,16 @@ private slots:
      */
     void on_dateEdit_dateChanged(const QDate &date);
 
+    /*! \brief Rebuilds the tag-region overlays in the preview when a tag is renamed.
+     *
+     * Called whenever any TagContainer emits tagNameChanged().  Re-reads the
+     * selected file's tag rects (which now carry the updated name) and pushes
+     * them to the preview container so every overlay label reflects the new name.
+     *
+     * \param tag The Tag whose name was changed.
+     */
+    void onTagNameChanged(Tag* tag);
+
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
      *

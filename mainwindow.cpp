@@ -70,6 +70,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusBar->addPermanentWidget(progress_bar_);
     connect(core, &LuminismCore::iconUpdated, this, &MainWindow::onIconUpdated);
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
+    connect(ui->navLibraryContainer,          &TagContainer::tagNameChanged,
+            this, &MainWindow::onTagNameChanged);
+    connect(ui->fileListTagAssignmentContainer, &TagContainer::tagNameChanged,
+            this, &MainWindow::onTagNameChanged);
     connect(ui->previewContainer, &PreviewContainer::tagDroppedOnPreview,
             this, &MainWindow::onTagDroppedOnPreview);
     connect(ui->previewContainer, &PreviewContainer::tagRectResized,
@@ -274,6 +278,39 @@ void MainWindow::refreshTagAssignmentArea(){
     QSet<Tag*>* assignedTags = core->getAssignedTags_FilteredFiles();
     ui->fileListTagAssignmentContainer->refresh(assignedTags);
 
+}
+
+/*! \brief Rebuilds the tag-region overlays in the preview when a tag is renamed.
+ *
+ * Re-reads the selected file's tag rects (now carrying the updated name) and
+ * pushes them to the preview container so every overlay label reflects the new name.
+ *
+ * \param tag The Tag whose name was changed.
+ */
+void MainWindow::onTagNameChanged(Tag* tag)
+{
+    Q_UNUSED(tag)
+
+    QItemSelectionModel* selModel = ui->fileListView->selectionModel();
+    if (!selModel)
+        return;
+    QModelIndexList sel = selModel->selectedIndexes();
+    if (sel.isEmpty())
+        return;
+
+    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
+    TaggedFile* tf  = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!tf)
+        return;
+
+    QList<TagRectDescriptor> tagRects;
+    for (Tag* t : *tf->tags()) {
+        auto r = tf->tagRect(t);
+        if (r.has_value())
+            tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
+    }
+    ui->previewContainer->setTagRects(tagRects);
+    ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
 }
 
 /*! \brief Rebuilds the tag-filter area from the currently active filter tags. */

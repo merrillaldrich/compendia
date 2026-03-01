@@ -58,6 +58,7 @@ void TagContainer::refresh(QSet<Tag*>* tags){
             tw = new TagWidget(currentTag, w);
             if (! connect(tw, &TagWidget::deleteRequested, this, &TagContainer::onTagDeleteRequested))
                 qWarning() << "Failed to connect tag widget delete to container delete";
+            connect(tw, &TagWidget::tagNameChanged, this, &TagContainer::tagNameChanged);
             w->layout()->addWidget(tw);
             tw->show();
 
