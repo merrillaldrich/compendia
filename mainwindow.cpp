@@ -320,6 +320,7 @@ void MainWindow::onTagLibraryChanged()
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
     refreshTagFilterArea();
+    onTagNameChanged(nullptr);  // refresh preview tag-region overlays
 }
 
 /*! \brief Rebuilds the tag-filter area from the currently active filter tags. */
