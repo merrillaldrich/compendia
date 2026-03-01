@@ -1,5 +1,17 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,159,32"/>
-<area shape="rect" id="Node000001" href="$class_filter_proxy_model.html" title="Proxy model that filters the tagged&#45;file list by name, folder, and tags." alt="" coords="207,5,326,32"/>
-<area shape="poly" id="edge15_Node000000_Node000001" title=" " alt="" coords="175,16,209,19,204,19,175,21"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,157,75,184"/>
+<area shape="rect" id="Node000001" href="$class_exif_parser.html" title="Utility class for extracting EXIF metadata from JPEG and HEIF/HEIC image files." alt="" coords="140,5,222,32"/>
+<area shape="poly" id="edge9_Node000000_Node000001" title=" " alt="" coords="51,142,79,92,98,65,121,42,142,30,139,35,124,46,102,69,83,95,56,144"/>
+<area shape="rect" id="Node000002" href="$class_face_recognizer.html" title="Detects and recognises faces across images using dlib&#39;s HOG detector and ResNet embeddings." alt="" coords="123,56,239,83"/>
+<area shape="poly" id="edge10_Node000000_Node000002" title=" " alt="" coords="61,145,89,118,121,92,145,81,142,85,124,97,92,122,66,148"/>
+<area shape="rect" id="Node000003" href="$class_icon_generator.html" title="Utility class that generates and caches scaled thumbnail images for media files." alt="" coords="129,107,232,133"/>
+<area shape="poly" id="edge11_Node000000_Node000003" title=" " alt="" coords="88,151,143,132,140,136,91,155"/>
+<area shape="rect" id="Node000004" href="$class_luminism_core.html" title="Central controller that owns all application data and business logic." alt="" coords="128,157,234,184"/>
+<area shape="poly" id="edge12_Node000000_Node000004" title=" " alt="" coords="89,168,130,169,126,172,91,173"/>
+<area shape="rect" id="Node000005" href="$class_tag.html" title="Represents a single tag that can be applied to media files." alt="" coords="160,208,202,235"/>
+<area shape="poly" id="edge13_Node000000_Node000005" title=" " alt="" coords="89,186,162,212,157,215,90,191"/>
+<area shape="rect" id="Node000006" href="$class_tag_family.html" title="Represents a named group of related tags, each with an auto&#45;assigned colour." alt="" coords="140,259,222,285"/>
+<area shape="poly" id="edge14_Node000000_Node000006" title=" " alt="" coords="64,193,92,220,124,244,146,258,141,259,121,249,89,224,63,198"/>
+<area shape="rect" id="Node000007" href="$class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism." alt="" coords="139,309,223,336"/>
+<area shape="poly" id="edge15_Node000000_Node000007" title=" " alt="" coords="54,196,83,247,102,272,124,295,143,309,138,309,121,299,98,276,79,249,52,201"/>
 </map>

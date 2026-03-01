@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['filecreationdatetime_0',['fileCreationDateTime',['../class_tagged_file.html#a7e54143de1a32c5f3de94bb599425978',1,'TaggedFile']]],
-  ['filemodificationdatetime_1',['fileModificationDateTime',['../class_tagged_file.html#a67d08ef165cbfa1788e401a0c336fa1e',1,'TaggedFile']]],
-  ['filename_2',['fileName',['../class_tagged_file.html#a395e15a9eb8834de8951d68136ba4c81',1,'TaggedFile']]],
-  ['filepath_3',['filePath',['../class_tagged_file.html#a6cd8d12c7a36b3422f78a895e4f73d76',1,'TaggedFile']]],
-  ['folder_5ffilter_5f_4',['folder_filter_',['../class_filter_proxy_model.html#ae0b1b3f621c5bf450c730d06ec1eb856',1,'FilterProxyModel']]]
+  ['cachefoldername_0',['CacheFolderName',['../namespace_luminism.html#a52ead6400c81b7f6edbd8e6e17d94374',1,'Luminism']]],
+  ['color_1',['color',['../struct_tag_rect_descriptor.html#ac81e5e1877fab79da6060d1f5870ff2d',1,'TagRectDescriptor']]],
+  ['core_2',['core',['../class_main_window.html#aacbe910633e17d081e6b36467feb8e53',1,'MainWindow']]]
 ];

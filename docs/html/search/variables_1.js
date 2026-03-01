@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['core_0',['core',['../class_main_window.html#aacbe910633e17d081e6b36467feb8e53',1,'MainWindow']]]
+  ['base_5fcolor_5f_0',['base_color_',['../class_tagging_widget.html#a4d2d007bdc2b04c09d035ef1330e9fa6',1,'TaggingWidget']]]
 ];

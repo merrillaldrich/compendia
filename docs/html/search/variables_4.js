@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['name_5ffilter_5f_0',['name_filter_',['../class_filter_proxy_model.html#a66604d5844f6f75a6503e22f05eeda6d',1,'FilterProxyModel']]]
+  ['embedding_0',['embedding',['../struct_face_descriptor.html#aa90fe7b98f36c58a16e5114e389b524b',1,'FaceDescriptor']]]
 ];

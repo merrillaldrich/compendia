@@ -118,6 +118,17 @@ Collaboration diagram for ZoomableGraphicsView:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:ae00895810742c9a482d9a567bae8af82" id="r_ae00895810742c9a482d9a567bae8af82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae00895810742c9a482d9a567bae8af82">tagDragEntered</a> (const QString &amp;family, const QString &amp;tagName)</td></tr>
+<tr class="memdesc:ae00895810742c9a482d9a567bae8af82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted once when a tag drag first enters the view.  <br /></td></tr>
+<tr class="memitem:a751daba4b4d7b42bc1113bfe0c833352" id="r_a751daba4b4d7b42bc1113bfe0c833352"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a751daba4b4d7b42bc1113bfe0c833352">tagDragMoved</a> (const QPointF &amp;scenePos)</td></tr>
+<tr class="memdesc:a751daba4b4d7b42bc1113bfe0c833352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted while a tag drag moves over the view.  <br /></td></tr>
+<tr class="memitem:ad3519cfc366a34fafd4281563f5d46d4" id="r_ad3519cfc366a34fafd4281563f5d46d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3519cfc366a34fafd4281563f5d46d4">tagDragLeft</a> ()</td></tr>
+<tr class="memdesc:ad3519cfc366a34fafd4281563f5d46d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a tag drag leaves the view without dropping.  <br /></td></tr>
+<tr class="memitem:ab989c337d1ab61581f5938adedc4f899" id="r_ab989c337d1ab61581f5938adedc4f899"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab989c337d1ab61581f5938adedc4f899">tagDropped</a> (const QString &amp;family, const QString &amp;tagName, const QPointF &amp;scenePos)</td></tr>
+<tr class="memdesc:ab989c337d1ab61581f5938adedc4f899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a tag is dropped on the view.  <br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3615bbe28257af383607c6076a00ecb0" id="r_a3615bbe28257af383607c6076a00ecb0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3615bbe28257af383607c6076a00ecb0">ZoomableGraphicsView</a> (QWidget *parent=nullptr)</td></tr>
@@ -129,6 +140,20 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ac9369ca9bad87c801280cb80268ded94" id="r_ac9369ca9bad87c801280cb80268ded94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9369ca9bad87c801280cb80268ded94">wheelEvent</a> (QWheelEvent *event) override</td></tr>
 <tr class="memdesc:ac9369ca9bad87c801280cb80268ded94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class wheel handler to perform cursor-centred zoom.  <br /></td></tr>
+<tr class="memitem:a8949d6be13e048770f119e28b56b1e50" id="r_a8949d6be13e048770f119e28b56b1e50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8949d6be13e048770f119e28b56b1e50">dragEnterEvent</a> (QDragEnterEvent *event) override</td></tr>
+<tr class="memdesc:a8949d6be13e048770f119e28b56b1e50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accepts tag drags carrying the custom MIME type.  <br /></td></tr>
+<tr class="memitem:ad6356cc31f07572574f9b2d9e9ffdb92" id="r_ad6356cc31f07572574f9b2d9e9ffdb92"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6356cc31f07572574f9b2d9e9ffdb92">dragMoveEvent</a> (QDragMoveEvent *event) override</td></tr>
+<tr class="memdesc:ad6356cc31f07572574f9b2d9e9ffdb92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emits tagDragMoved with the current scene position as the drag advances.  <br /></td></tr>
+<tr class="memitem:a4682bf7187252b66ccb0cadc84fedb1e" id="r_a4682bf7187252b66ccb0cadc84fedb1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4682bf7187252b66ccb0cadc84fedb1e">dragLeaveEvent</a> (QDragLeaveEvent *event) override</td></tr>
+<tr class="memdesc:a4682bf7187252b66ccb0cadc84fedb1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emits tagDragLeft when the drag leaves the view.  <br /></td></tr>
+<tr class="memitem:ac1a6f50d24c76c7d645c62d85b346aca" id="r_ac1a6f50d24c76c7d645c62d85b346aca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac1a6f50d24c76c7d645c62d85b346aca">dropEvent</a> (QDropEvent *event) override</td></tr>
+<tr class="memdesc:ac1a6f50d24c76c7d645c62d85b346aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes the payload and emits tagDropped.  <br /></td></tr>
+<tr class="memitem:a92ed994398821a7c6d66b20708d98f4e" id="r_a92ed994398821a7c6d66b20708d98f4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92ed994398821a7c6d66b20708d98f4e">mousePressEvent</a> (QMouseEvent *event) override</td></tr>
+<tr class="memdesc:a92ed994398821a7c6d66b20708d98f4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins a pan operation when no scene item grabs the press.  <br /></td></tr>
+<tr class="memitem:acd9356bf861c9b18c0b2c9aac0f8bc4a" id="r_acd9356bf861c9b18c0b2c9aac0f8bc4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd9356bf861c9b18c0b2c9aac0f8bc4a">mouseMoveEvent</a> (QMouseEvent *event) override</td></tr>
+<tr class="memdesc:acd9356bf861c9b18c0b2c9aac0f8bc4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scrolls the view while panning.  <br /></td></tr>
+<tr class="memitem:ac57ba327a99f96d7db0a5d024fdf0825" id="r_ac57ba327a99f96d7db0a5d024fdf0825"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac57ba327a99f96d7db0a5d024fdf0825">mouseReleaseEvent</a> (QMouseEvent *event) override</td></tr>
+<tr class="memdesc:ac57ba327a99f96d7db0a5d024fdf0825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the pan operation on button release.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor. </p>
@@ -198,6 +223,389 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a8949d6be13e048770f119e28b56b1e50" name="a8949d6be13e048770f119e28b56b1e50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8949d6be13e048770f119e28b56b1e50">&#9670;&#160;</a></span>dragEnterEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::dragEnterEvent </td>
+          <td>(</td>
+          <td class="paramtype">QDragEnterEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Accepts tag drags carrying the custom MIME type. </p>
+<p>Accepts tag drags carrying the custom MIME type and emits tagDragEntered.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The drag-enter event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4682bf7187252b66ccb0cadc84fedb1e" name="a4682bf7187252b66ccb0cadc84fedb1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4682bf7187252b66ccb0cadc84fedb1e">&#9670;&#160;</a></span>dragLeaveEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::dragLeaveEvent </td>
+          <td>(</td>
+          <td class="paramtype">QDragLeaveEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emits tagDragLeft when the drag leaves the view. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The drag-leave event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad6356cc31f07572574f9b2d9e9ffdb92" name="ad6356cc31f07572574f9b2d9e9ffdb92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6356cc31f07572574f9b2d9e9ffdb92">&#9670;&#160;</a></span>dragMoveEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::dragMoveEvent </td>
+          <td>(</td>
+          <td class="paramtype">QDragMoveEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emits tagDragMoved with the current scene position as the drag advances. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The drag-move event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac1a6f50d24c76c7d645c62d85b346aca" name="ac1a6f50d24c76c7d645c62d85b346aca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1a6f50d24c76c7d645c62d85b346aca">&#9670;&#160;</a></span>dropEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::dropEvent </td>
+          <td>(</td>
+          <td class="paramtype">QDropEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decodes the payload and emits tagDropped. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The drop event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acd9356bf861c9b18c0b2c9aac0f8bc4a" name="acd9356bf861c9b18c0b2c9aac0f8bc4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd9356bf861c9b18c0b2c9aac0f8bc4a">&#9670;&#160;</a></span>mouseMoveEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::mouseMoveEvent </td>
+          <td>(</td>
+          <td class="paramtype">QMouseEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Scrolls the view while panning. </p>
+<p>Scrolls the view while panning, otherwise forwards to the scene.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The mouse move event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a92ed994398821a7c6d66b20708d98f4e" name="a92ed994398821a7c6d66b20708d98f4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92ed994398821a7c6d66b20708d98f4e">&#9670;&#160;</a></span>mousePressEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::mousePressEvent </td>
+          <td>(</td>
+          <td class="paramtype">QMouseEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Begins a pan operation when no scene item grabs the press. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The mouse press event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Left-button presses are forwarded to the scene first so interactive items (e.g. resize handles on tag rects) get priority. Panning only starts when no item becomes the mouse grabber.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The mouse press event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac57ba327a99f96d7db0a5d024fdf0825" name="ac57ba327a99f96d7db0a5d024fdf0825"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac57ba327a99f96d7db0a5d024fdf0825">&#9670;&#160;</a></span>mouseReleaseEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::mouseReleaseEvent </td>
+          <td>(</td>
+          <td class="paramtype">QMouseEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Ends the pan operation on button release. </p>
+<p>Ends the pan operation on left-button release.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The mouse release event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae00895810742c9a482d9a567bae8af82" name="ae00895810742c9a482d9a567bae8af82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae00895810742c9a482d9a567bae8af82">&#9670;&#160;</a></span>tagDragEntered</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::tagDragEntered </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>family</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>tagName</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted once when a tag drag first enters the view. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">family</td><td><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> family name decoded from the drag payload. </td></tr>
+    <tr><td class="paramname">tagName</td><td><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> name decoded from the drag payload. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad3519cfc366a34fafd4281563f5d46d4" name="ad3519cfc366a34fafd4281563f5d46d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3519cfc366a34fafd4281563f5d46d4">&#9670;&#160;</a></span>tagDragLeft</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::tagDragLeft </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when a tag drag leaves the view without dropping. </p>
+
+</div>
+</div>
+<a id="a751daba4b4d7b42bc1113bfe0c833352" name="a751daba4b4d7b42bc1113bfe0c833352"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a751daba4b4d7b42bc1113bfe0c833352">&#9670;&#160;</a></span>tagDragMoved</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::tagDragMoved </td>
+          <td>(</td>
+          <td class="paramtype">const QPointF &amp;</td>          <td class="paramname"><span class="paramname"><em>scenePos</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted while a tag drag moves over the view. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scenePos</td><td>Scene coordinate under the cursor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab989c337d1ab61581f5938adedc4f899" name="ab989c337d1ab61581f5938adedc4f899"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab989c337d1ab61581f5938adedc4f899">&#9670;&#160;</a></span>tagDropped</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ZoomableGraphicsView::tagDropped </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>family</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>tagName</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QPointF &amp;</td>          <td class="paramname"><span class="paramname"><em>scenePos</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when a tag is dropped on the view. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">family</td><td><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> family name from the drag payload. </td></tr>
+    <tr><td class="paramname">tagName</td><td><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> name from the drag payload. </td></tr>
+    <tr><td class="paramname">scenePos</td><td>Scene coordinate of the drop point. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ac9369ca9bad87c801280cb80268ded94" name="ac9369ca9bad87c801280cb80268ded94"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac9369ca9bad87c801280cb80268ded94">&#9670;&#160;</a></span>wheelEvent()</h2>
 

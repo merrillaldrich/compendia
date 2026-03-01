@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['paintevent_0',['paintEvent',['../class_tag_family_widget.html#a7e83db845e69074ba2207de3c78a6ef3',1,'TagFamilyWidget::paintEvent()'],['../class_tag_widget.html#af348897e1f4ae96a8552c0d397119018',1,'TagWidget::paintEvent()'],['../class_tag_widget_close_button.html#a0c40ab99e5b36bc2a48f69e721b60fcb',1,'TagWidgetCloseButton::paintEvent()']]],
-  ['parsetagjson_1',['parseTagJson',['../class_luminism_core.html#ab6241f20ee49b0eb237ad9871b81a052',1,'LuminismCore']]],
-  ['preview_2',['preview',['../class_preview_container.html#a604d21a80e3aef06e485701209d85b16',1,'PreviewContainer::preview(QImage image)'],['../class_preview_container.html#a10cdd4a21c08f38fab99b28bdcc5fc83',1,'PreviewContainer::preview(QString absoluteFilePath)']]],
-  ['previewcontainer_3',['PreviewContainer',['../class_preview_container.html#af9dab801b59a13dfbecf87cde477c908',1,'PreviewContainer']]]
+  ['ontagdeleterequested_0',['onTagDeleteRequested',['../class_tag_container.html#a6e7ec330ab93a0c21ec4e1f0864ad56f',1,'TagContainer']]],
+  ['operator_3c_3c_1',['operator&lt;&lt;',['../tag_8cpp.html#a53842d615ae3cb82bfa54db2f4268a0b',1,'operator&lt;&lt;(QDataStream &amp;out, const Tag &amp;t):&#160;tag.cpp'],['../tag_8h.html#a53842d615ae3cb82bfa54db2f4268a0b',1,'operator&lt;&lt;(QDataStream &amp;out, const Tag &amp;t):&#160;tag.cpp'],['../tagfamily_8cpp.html#a135f021827fb1e5886707e355e28ca18',1,'operator&lt;&lt;(QDataStream &amp;out, const TagFamily &amp;t):&#160;tagfamily.cpp'],['../tagfamily_8h.html#a135f021827fb1e5886707e355e28ca18',1,'operator&lt;&lt;(QDataStream &amp;out, const TagFamily &amp;t):&#160;tagfamily.cpp']]],
+  ['operator_3d_3d_2',['operator==',['../class_tag.html#ac573654c99464b6f22d53af4cd12be8c',1,'Tag']]],
+  ['operator_3e_3e_3',['operator&gt;&gt;',['../tag_8cpp.html#a22ce4f25d0ac346526919e53f02e9949',1,'operator&gt;&gt;(QDataStream &amp;in, Tag &amp;t):&#160;tag.cpp'],['../tag_8h.html#a22ce4f25d0ac346526919e53f02e9949',1,'operator&gt;&gt;(QDataStream &amp;in, Tag &amp;t):&#160;tag.cpp'],['../tagfamily_8cpp.html#afdfd98b759c396c438841712c3eb57a5',1,'operator&gt;&gt;(QDataStream &amp;in, TagFamily &amp;t):&#160;tagfamily.cpp'],['../tagfamily_8h.html#afdfd98b759c396c438841712c3eb57a5',1,'operator&gt;&gt;(QDataStream &amp;in, TagFamily &amp;t):&#160;tagfamily.cpp']]]
 ];

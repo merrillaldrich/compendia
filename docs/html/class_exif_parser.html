@@ -197,21 +197,15 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>A map of EXIF tag name strings to value strings.</dd></dl>
+<p>Checks the on-disk JSON cache first. The cache is bypassed when the source image has been modified more recently than the cached file. On a miss or stale cache the EXIF data is parsed from the image and saved to cache.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filePath</td><td>Absolute path to the image file. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>A map of EXIF tag name strings to value strings. </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_exif_parser_a14e14eb1a9d0407854e3e118571ed6d7_icgraph.png" border="0" usemap="#aclass_exif_parser_a14e14eb1a9d0407854e3e118571ed6d7_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_exif_parser_a14e14eb1a9d0407854e3e118571ed6d7_icgraph" id="aclass_exif_parser_a14e14eb1a9d0407854e3e118571ed6d7_icgraph">
-<area shape="rect" title="Returns a map of EXIF key&#45;value pairs for the given image file." alt="" coords="788,5,945,32"/>
-<area shape="rect" href="class_luminism_core.html#a4145e9c6809094544c45f8a3a2fcf180" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="532,5,740,32"/>
-<area shape="poly" title=" " alt="" coords="770,19,741,21,741,16,775,19"/>
-<area shape="rect" href="class_luminism_core.html#a797e7ab9f7b0c18348eb182c08abb980" title="Clears all existing data and reloads files from the current root directory." alt="" coords="266,5,484,32"/>
-<area shape="poly" title=" " alt="" coords="514,19,484,21,484,16,519,19"/>
-<area shape="rect" href="class_luminism_core.html#a5ee748e28577573181f5a442a71e2f29" title="Sets the root directory path and immediately loads it." alt="" coords="5,5,218,32"/>
-<area shape="poly" title=" " alt="" coords="248,19,218,21,218,16,253,19"/>
-</map>
-</div>
 
 </div>
 </div>

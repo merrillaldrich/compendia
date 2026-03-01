@@ -1,11 +1,8 @@
 var searchData=
 [
-  ['refresh_0',['refresh',['../class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6',1,'TagContainer']]],
-  ['refreshnavtaglibrary_1',['refreshNavTagLibrary',['../class_main_window.html#aca5c9eb33d047612d55528a0abfd7d05',1,'MainWindow']]],
-  ['refreshtagassignmentarea_2',['refreshTagAssignmentArea',['../class_main_window.html#a3d32035c5a2e69fdb73b66bab8e62ca8',1,'MainWindow']]],
-  ['refreshtagfilterarea_3',['refreshTagFilterArea',['../class_main_window.html#ac5901d3d7006ac0f0114162453bff817',1,'MainWindow']]],
-  ['removetag_4',['removeTag',['../class_tagged_file.html#a1f4a54d6c439d062fbc0144494f44960',1,'TaggedFile']]],
-  ['removetagfilter_5',['removeTagFilter',['../class_filter_proxy_model.html#a2dee4b7929c110ee0f1f0d218eb794e6',1,'FilterProxyModel::removeTagFilter()'],['../class_luminism_core.html#a4372312da59031b44ef885ffaed656d1',1,'LuminismCore::removeTagFilter()']]],
-  ['resizeevent_6',['resizeEvent',['../class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f',1,'MainWindow']]],
-  ['restartcolorsequence_7',['restartColorSequence',['../class_tag_family.html#acf9648243726db04d1233589fea6a7e1',1,'TagFamily']]]
+  ['paint_0',['paint',['../class_file_name_delegate.html#a9f042f0c2a123d56088d5f224927507b',1,'FileNameDelegate::paint()'],['../class_tag_rect_item.html#a427d1bc6af42276d7e22def1955cc171',1,'TagRectItem::paint()']]],
+  ['paintevent_1',['paintEvent',['../class_tag_family_widget.html#a7e83db845e69074ba2207de3c78a6ef3',1,'TagFamilyWidget::paintEvent()'],['../class_tag_widget.html#af348897e1f4ae96a8552c0d397119018',1,'TagWidget::paintEvent()'],['../class_tag_widget_close_button.html#a0c40ab99e5b36bc2a48f69e721b60fcb',1,'TagWidgetCloseButton::paintEvent()']]],
+  ['parsetagjson_2',['parseTagJson',['../class_luminism_core.html#ad3a3a85ccc4f351a753e49af45686218',1,'LuminismCore']]],
+  ['preview_3',['preview',['../class_preview_container.html#a604d21a80e3aef06e485701209d85b16',1,'PreviewContainer::preview(QImage image)'],['../class_preview_container.html#a10cdd4a21c08f38fab99b28bdcc5fc83',1,'PreviewContainer::preview(QString absoluteFilePath)']]],
+  ['previewcontainer_4',['PreviewContainer',['../class_preview_container.html#af9dab801b59a13dfbecf87cde477c908',1,'PreviewContainer']]]
 ];

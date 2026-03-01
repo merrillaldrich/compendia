@@ -93,7 +93,7 @@ $(function(){initNavTree('class_tagged_file.html','','class_tagged_file-members'
 </div><!--header-->
 <div class="contents">
 
-<p>Holds all data associated with a single media file managed by Luminism.  
+<p>Holds all data associated with a single media file managed by <a class="el" href="namespace_luminism.html" title="Project-wide compile-time constants for Luminism.">Luminism</a>.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="taggedfile_8h_source.html">taggedfile.h</a>&gt;</code></p>
@@ -136,6 +136,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a8edb5df0c37cdb939972049814b20e7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the set of tags currently applied to this file.  <br /></td></tr>
 <tr class="memitem:abbe4ad626b1573e223002a76f8afdc18" id="r_abbe4ad626b1573e223002a76f8afdc18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abbe4ad626b1573e223002a76f8afdc18">addTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 <tr class="memdesc:abbe4ad626b1573e223002a76f8afdc18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a tag to this file and marks the file dirty.  <br /></td></tr>
+<tr class="memitem:acdd9621dfa2b2a528e8b69ddbc7b09d1" id="r_acdd9621dfa2b2a528e8b69ddbc7b09d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acdd9621dfa2b2a528e8b69ddbc7b09d1">addTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag, QRectF rect)</td></tr>
+<tr class="memdesc:acdd9621dfa2b2a528e8b69ddbc7b09d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a tag with a normalised bounding rectangle to this file and marks the file dirty.  <br /></td></tr>
+<tr class="memitem:ae9de78c171110ad722a7362aee49415f" id="r_ae9de78c171110ad722a7362aee49415f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9de78c171110ad722a7362aee49415f">setTagRect</a> (<a class="el" href="class_tag.html">Tag</a> *tag, QRectF rect)</td></tr>
+<tr class="memdesc:ae9de78c171110ad722a7362aee49415f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets or updates the normalised bounding rectangle for an existing tag assignment and marks dirty.  <br /></td></tr>
+<tr class="memitem:a545faeb645f4e753b20f86951410a650" id="r_a545faeb645f4e753b20f86951410a650"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a545faeb645f4e753b20f86951410a650">initTagRect</a> (<a class="el" href="class_tag.html">Tag</a> *tag, QRectF rect)</td></tr>
+<tr class="memdesc:a545faeb645f4e753b20f86951410a650"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a normalised bounding rectangle without marking the file dirty (used during load).  <br /></td></tr>
+<tr class="memitem:af417da0b80b202e812bb9f397499c585" id="r_af417da0b80b202e812bb9f397499c585"><td class="memItemLeft" align="right" valign="top">std::optional&lt; QRectF &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af417da0b80b202e812bb9f397499c585">tagRect</a> (<a class="el" href="class_tag.html">Tag</a> *tag) const</td></tr>
+<tr class="memdesc:af417da0b80b202e812bb9f397499c585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the normalised bounding rectangle for a tag assignment, if one is set.  <br /></td></tr>
 <tr class="memitem:a1f4a54d6c439d062fbc0144494f44960" id="r_a1f4a54d6c439d062fbc0144494f44960"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f4a54d6c439d062fbc0144494f44960">removeTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 <tr class="memdesc:a1f4a54d6c439d062fbc0144494f44960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from this file and marks the file dirty.  <br /></td></tr>
 <tr class="memitem:a13484167b27d2d3a20869742d082fd62" id="r_a13484167b27d2d3a20869742d082fd62"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13484167b27d2d3a20869742d082fd62">dirtyFlag</a> () const</td></tr>
@@ -154,7 +162,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a67d08ef165cbfa1788e401a0c336fa1e" id="r_a67d08ef165cbfa1788e401a0c336fa1e"><td class="memItemLeft" align="right" valign="top">QDateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67d08ef165cbfa1788e401a0c336fa1e">fileModificationDateTime</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Holds all data associated with a single media file managed by Luminism. </p>
+<div class="textblock"><p>Holds all data associated with a single media file managed by <a class="el" href="namespace_luminism.html" title="Project-wide compile-time constants for Luminism.">Luminism</a>. </p>
 <p>Stores the file path, timestamps, applied tags, and EXIF metadata for one image file. A dirty flag tracks whether unsaved changes exist, either on the <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> itself or on any of its applied Tags or their families. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a43c3f4264871eb417ea34e0cfbdf354f" name="a43c3f4264871eb417ea34e0cfbdf354f"></a>
@@ -221,24 +229,12 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_accc28242518fddd41f54d454f3adb5ca_cgraph.png" border="0" usemap="#aclass_tagged_file_accc28242518fddd41f54d454f3adb5ca_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_accc28242518fddd41f54d454f3adb5ca_cgraph" id="aclass_tagged_file_accc28242518fddd41f54d454f3adb5ca_cgraph">
-<area shape="rect" title="Constructs a TaggedFile from a QFileInfo, a tag set, and an EXIF map." alt="" coords="5,31,161,57"/>
-<area shape="rect" href="class_tagged_file.html#a6bc53d43fb454cb93148835a39da63d8" title="Returns a copy of the EXIF map." alt="" coords="209,5,347,32"/>
-<area shape="poly" title=" " alt="" coords="160,31,196,29,191,30,161,37"/>
-<area shape="rect" href="class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="219,56,336,83"/>
-<area shape="poly" title=" " alt="" coords="161,51,206,60,201,60,161,57"/>
-</map>
-</div>
 
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="abbe4ad626b1573e223002a76f8afdc18" name="abbe4ad626b1573e223002a76f8afdc18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbe4ad626b1573e223002a76f8afdc18">&#9670;&#160;</a></span>addTag()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abbe4ad626b1573e223002a76f8afdc18">&#9670;&#160;</a></span>addTag() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,22 +255,39 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_abbe4ad626b1573e223002a76f8afdc18_icgraph.png" border="0" usemap="#aclass_tagged_file_abbe4ad626b1573e223002a76f8afdc18_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_abbe4ad626b1573e223002a76f8afdc18_icgraph" id="aclass_tagged_file_abbe4ad626b1573e223002a76f8afdc18_icgraph">
-<area shape="rect" title="Adds a tag to this file and marks the file dirty." alt="" coords="457,68,591,95"/>
-<area shape="rect" href="class_luminism_core.html#a9fe93be3e6f05b1d8901f307f09a0880" title="Applies a tag to all files currently visible in the filtered file list." alt="" coords="244,43,409,69"/>
-<area shape="poly" title=" " alt="" coords="439,71,410,69,410,64,444,71"/>
-<area shape="rect" href="class_luminism_core.html#acf6b3ddfa22ee738d40c7304edff0ce3" title="Applies the tag identified by a TagSet to a specific file." alt="" coords="244,93,409,120"/>
-<area shape="poly" title=" " alt="" coords="444,92,410,99,409,93,439,92"/>
-<area shape="rect" href="class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="17,5,184,48"/>
-<area shape="poly" title=" " alt="" coords="226,44,185,40,185,35,231,43"/>
-<area shape="rect" href="class_taggable_list_view.html#a2d9f17879b7b75759d6b4efb14467d85" title="Overrides the Qt base&#45;class handler to apply a dropped tag to the target file(s)." alt="" coords="5,72,196,99"/>
-<area shape="poly" title=" " alt="" coords="226,69,197,76,196,70,231,68"/>
-</map>
+
 </div>
+</div>
+<a id="acdd9621dfa2b2a528e8b69ddbc7b09d1" name="acdd9621dfa2b2a528e8b69ddbc7b09d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdd9621dfa2b2a528e8b69ddbc7b09d1">&#9670;&#160;</a></span>addTag() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TaggedFile::addTag </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QRectF</td>          <td class="paramname"><span class="paramname"><em>rect</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a tag with a normalised bounding rectangle to this file and marks the file dirty. </p>
+<p>Adds a tag with a bounding rectangle to this file and marks the file dirty.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to add. </td></tr>
+    <tr><td class="paramname">rect</td><td>The bounding rectangle in normalised image coordinates (0.0–1.0).</td></tr>
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to add. </td></tr>
+    <tr><td class="paramname">rect</td><td>The bounding rectangle within the image for this tag. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -315,16 +328,6 @@ Here is the caller graph for this function:</div>
 <p>Returns true if this file has unsaved changes. </p>
 <p>Also returns true if any applied tag or its family has unsaved name changes.</p>
 <dl class="section return"><dt>Returns</dt><dd>True if a save is needed. </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_a13484167b27d2d3a20869742d082fd62_icgraph.png" border="0" usemap="#aclass_tagged_file_a13484167b27d2d3a20869742d082fd62_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_a13484167b27d2d3a20869742d082fd62_icgraph" id="aclass_tagged_file_a13484167b27d2d3a20869742d082fd62_icgraph">
-<area shape="rect" title="Returns true if this file has unsaved changes." alt="" coords="270,5,412,32"/>
-<area shape="rect" href="class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,5,222,32"/>
-<area shape="poly" title=" " alt="" coords="251,19,222,21,222,16,257,19"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -345,20 +348,6 @@ Here is the caller graph for this function:</div>
 
 <p>Returns a copy of the EXIF map. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current EXIF key-value map. </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_a6bc53d43fb454cb93148835a39da63d8_icgraph.png" border="0" usemap="#aclass_tagged_file_a6bc53d43fb454cb93148835a39da63d8_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_a6bc53d43fb454cb93148835a39da63d8_icgraph" id="aclass_tagged_file_a6bc53d43fb454cb93148835a39da63d8_icgraph">
-<area shape="rect" title="Returns a copy of the EXIF map." alt="" coords="414,31,552,57"/>
-<area shape="rect" href="class_tagged_file.html#a0293e71d352a09803da0f5462f2e48ac" title="Sets the EXIF map without marking the file dirty (used during load)." alt="" coords="209,5,366,32"/>
-<area shape="poly" title=" " alt="" coords="396,33,366,32,366,26,401,33"/>
-<area shape="rect" href="class_tagged_file.html#accc28242518fddd41f54d454f3adb5ca" title="Constructs a TaggedFile from a QFileInfo, a tag set, and an EXIF map." alt="" coords="210,56,365,83"/>
-<area shape="poly" title=" " alt="" coords="401,55,366,62,365,57,396,55"/>
-<area shape="rect" href="class_luminism_core.html#a59ad1f5d267dd567fdbcaf7cb71510e4" title="Adds a file to the model with an explicit tag list and optional initial EXIF map." alt="" coords="5,5,161,32"/>
-<area shape="poly" title=" " alt="" coords="190,19,161,21,160,16,196,18"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -384,26 +373,36 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_a0293e71d352a09803da0f5462f2e48ac_cgraph.png" border="0" usemap="#aclass_tagged_file_a0293e71d352a09803da0f5462f2e48ac_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_a0293e71d352a09803da0f5462f2e48ac_cgraph" id="aclass_tagged_file_a0293e71d352a09803da0f5462f2e48ac_cgraph">
-<area shape="rect" title="Sets the EXIF map without marking the file dirty (used during load)." alt="" coords="5,5,163,32"/>
-<area shape="rect" href="class_tagged_file.html#a6bc53d43fb454cb93148835a39da63d8" title="Returns a copy of the EXIF map." alt="" coords="211,5,349,32"/>
-<area shape="poly" title=" " alt="" coords="163,16,198,19,193,19,163,21"/>
-</map>
+
 </div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_a0293e71d352a09803da0f5462f2e48ac_icgraph.png" border="0" usemap="#aclass_tagged_file_a0293e71d352a09803da0f5462f2e48ac_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_a0293e71d352a09803da0f5462f2e48ac_icgraph" id="aclass_tagged_file_a0293e71d352a09803da0f5462f2e48ac_icgraph">
-<area shape="rect" title="Sets the EXIF map without marking the file dirty (used during load)." alt="" coords="209,5,366,32"/>
-<area shape="rect" href="class_luminism_core.html#a59ad1f5d267dd567fdbcaf7cb71510e4" title="Adds a file to the model with an explicit tag list and optional initial EXIF map." alt="" coords="5,5,161,32"/>
-<area shape="poly" title=" " alt="" coords="190,19,161,21,161,16,196,19"/>
-</map>
 </div>
+<a id="a545faeb645f4e753b20f86951410a650" name="a545faeb645f4e753b20f86951410a650"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a545faeb645f4e753b20f86951410a650">&#9670;&#160;</a></span>initTagRect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TaggedFile::initTagRect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QRectF</td>          <td class="paramname"><span class="paramname"><em>rect</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets a normalised bounding rectangle without marking the file dirty (used during load). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer already applied to this file. </td></tr>
+    <tr><td class="paramname">rect</td><td>The bounding rectangle in normalised image coordinates (0.0–1.0). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -448,18 +447,6 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_a1f4a54d6c439d062fbc0144494f44960_icgraph.png" border="0" usemap="#aclass_tagged_file_a1f4a54d6c439d062fbc0144494f44960_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_a1f4a54d6c439d062fbc0144494f44960_icgraph" id="aclass_tagged_file_a1f4a54d6c439d062fbc0144494f44960_icgraph">
-<area shape="rect" title="Removes a tag from this file and marks the file dirty." alt="" coords="233,31,389,57"/>
-<area shape="rect" href="class_luminism_core.html#a9ea5b72a3da4d89678635d1ea8972a03" title="Removes a tag from all files currently visible in the filtered file list." alt="" coords="5,5,185,32"/>
-<area shape="poly" title=" " alt="" coords="215,33,185,32,185,27,220,33"/>
-<area shape="rect" href="class_luminism_core.html#afcaca78856376adf435f53370ad21c79" title="Removes a tag from a specific file." alt="" coords="5,56,185,83"/>
-<area shape="poly" title=" " alt="" coords="215,55,185,61,185,56,220,55"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -488,6 +475,36 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="ae9de78c171110ad722a7362aee49415f" name="ae9de78c171110ad722a7362aee49415f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9de78c171110ad722a7362aee49415f">&#9670;&#160;</a></span>setTagRect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TaggedFile::setTagRect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QRectF</td>          <td class="paramname"><span class="paramname"><em>rect</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets or updates the normalised bounding rectangle for an existing tag assignment and marks dirty. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer already applied to this file. </td></tr>
+    <tr><td class="paramname">rect</td><td>The new bounding rectangle in normalised image coordinates (0.0–1.0). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a8384506bb24ab3fcaa922a6515f9b688" name="a8384506bb24ab3fcaa922a6515f9b688"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8384506bb24ab3fcaa922a6515f9b688">&#9670;&#160;</a></span>TaggedFileJSON()</h2>
 
@@ -505,30 +522,32 @@ Here is the caller graph for this function:</div>
 
 <p>Serialises the file's tags and EXIF data to a JSON string. </p>
 <dl class="section return"><dt>Returns</dt><dd>A UTF-8 JSON document string suitable for writing to a sidecar file. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_a8384506bb24ab3fcaa922a6515f9b688_cgraph.png" border="0" usemap="#aclass_tagged_file_a8384506bb24ab3fcaa922a6515f9b688_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_a8384506bb24ab3fcaa922a6515f9b688_cgraph" id="aclass_tagged_file_a8384506bb24ab3fcaa922a6515f9b688_cgraph">
-<area shape="rect" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="5,56,197,83"/>
-<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="264,5,368,32"/>
-<area shape="poly" title=" " alt="" coords="160,53,251,33,247,36,162,58"/>
-<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="245,56,387,83"/>
-<area shape="poly" title=" " alt="" coords="197,67,232,69,227,70,198,72"/>
-<area shape="rect" href="class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="257,107,374,133"/>
-<area shape="poly" title=" " alt="" coords="161,81,244,102,239,103,161,86"/>
-</map>
+
 </div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_a8384506bb24ab3fcaa922a6515f9b688_icgraph.png" border="0" usemap="#aclass_tagged_file_a8384506bb24ab3fcaa922a6515f9b688_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_a8384506bb24ab3fcaa922a6515f9b688_icgraph" id="aclass_tagged_file_a8384506bb24ab3fcaa922a6515f9b688_icgraph">
-<area shape="rect" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="270,5,461,32"/>
-<area shape="rect" href="class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,5,222,32"/>
-<area shape="poly" title=" " alt="" coords="251,19,222,21,222,16,256,19"/>
-</map>
 </div>
+<a id="af417da0b80b202e812bb9f397499c585" name="af417da0b80b202e812bb9f397499c585"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af417da0b80b202e812bb9f397499c585">&#9670;&#160;</a></span>tagRect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; QRectF &gt; TaggedFile::tagRect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the normalised bounding rectangle for a tag assignment, if one is set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to query. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The bounding rectangle in normalised image coordinates (0.0–1.0), or std::nullopt if not set. </dd></dl>
 
 </div>
 </div>
@@ -549,26 +568,6 @@ Here is the caller graph for this function:</div>
 
 <p>Returns a pointer to the set of tags currently applied to this file. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the internal tag set. </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tagged_file_a8edb5df0c37cdb939972049814b20e7a_icgraph.png" border="0" usemap="#aclass_tagged_file_a8edb5df0c37cdb939972049814b20e7a_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tagged_file_a8edb5df0c37cdb939972049814b20e7a_icgraph" id="aclass_tagged_file_a8edb5df0c37cdb939972049814b20e7a_icgraph">
-<area shape="rect" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="531,131,648,157"/>
-<area shape="rect" href="class_filter_proxy_model.html#ae3b628e58b77cf9e8f0a45ae7b4aec1b" title="Overrides the Qt base&#45;class row&#45;acceptance test to apply all active filters." alt="" coords="300,5,452,48"/>
-<area shape="poly" title=" " alt="" coords="561,120,526,91,482,62,453,49,453,44,484,58,529,87,566,121"/>
-<area shape="rect" href="class_luminism_core.html#a0ce8ff76fc0457058162381e4bf4331f" title="Returns a new set of tags that are assigned to at least one file." alt="" coords="270,72,483,99"/>
-<area shape="poly" title=" " alt="" coords="529,125,482,113,439,102,439,97,484,108,535,125"/>
-<area shape="rect" href="class_luminism_core.html#ab94d6cae69aa49c88e5c0df6d06d01ba" title="Returns a new set of tags assigned to any currently visible (filtered) file." alt="" coords="284,123,469,165"/>
-<area shape="poly" title=" " alt="" coords="513,144,470,147,469,141,518,144"/>
-<area shape="rect" href="class_tagged_file.html#accc28242518fddd41f54d454f3adb5ca" title="Constructs a TaggedFile from a QFileInfo, a tag set, and an EXIF map." alt="" coords="299,189,454,216"/>
-<area shape="poly" title=" " alt="" coords="535,162,484,180,439,191,438,186,482,175,529,163"/>
-<area shape="rect" href="class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="281,240,472,267"/>
-<area shape="poly" title=" " alt="" coords="567,167,530,201,484,230,454,242,453,237,482,226,527,197,562,169"/>
-<area shape="rect" href="class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,240,222,267"/>
-<area shape="poly" title=" " alt="" coords="262,253,222,256,222,251,268,253"/>
-</map>
-</div>
 
 </div>
 </div>

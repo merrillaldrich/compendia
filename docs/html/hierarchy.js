@@ -1,5 +1,9 @@
 var hierarchy =
 [
+    [ "FaceDescriptor", "struct_face_descriptor.html", null ],
+    [ "QGraphicsObject", null, [
+      [ "TagRectItem", "class_tag_rect_item.html", null ]
+    ] ],
     [ "QGraphicsView", null, [
       [ "ZoomableGraphicsView", "class_zoomable_graphics_view.html", null ]
     ] ],
@@ -10,6 +14,7 @@ var hierarchy =
       [ "FlowLayout", "class_flow_layout.html", null ]
     ] ],
     [ "QLineEdit", null, [
+      [ "FolderFilterLineEdit", "class_folder_filter_line_edit.html", null ],
       [ "VariableWidthLineEdit", "class_variable_width_line_edit.html", null ]
     ] ],
     [ "QListView", null, [
@@ -33,7 +38,11 @@ var hierarchy =
     [ "QSortFilterProxyModel", null, [
       [ "FilterProxyModel", "class_filter_proxy_model.html", null ]
     ] ],
+    [ "QStyledItemDelegate", null, [
+      [ "FileNameDelegate", "class_file_name_delegate.html", null ]
+    ] ],
     [ "QWidget", null, [
+      [ "DateFilterButton", "class_date_filter_button.html", null ],
       [ "PreviewContainer", "class_preview_container.html", null ],
       [ "TagContainer", "class_tag_container.html", [
         [ "NavFilterContainer", "class_nav_filter_container.html", null ],
@@ -45,5 +54,6 @@ var hierarchy =
         [ "TagWidget", "class_tag_widget.html", null ]
       ] ]
     ] ],
+    [ "TagRectDescriptor", "struct_tag_rect_descriptor.html", null ],
     [ "TagSet", "class_tag_set.html", null ]
 ];

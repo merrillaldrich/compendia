@@ -130,6 +130,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae98d00a93bc118200eeef9f9bba1dba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the main window and releases owned UI and core resources.  <br /></td></tr>
 <tr class="memitem:a385141ecb8e37eceb78cb64f68a4c706" id="r_a385141ecb8e37eceb78cb64f68a4c706"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a385141ecb8e37eceb78cb64f68a4c706">setRootFolder</a> ()</td></tr>
 <tr class="memdesc:a385141ecb8e37eceb78cb64f68a4c706"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a folder-picker dialog and loads the selected folder into core.  <br /></td></tr>
+<tr class="memitem:a61753721c377d394196e2240f42fd130" id="r_a61753721c377d394196e2240f42fd130"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61753721c377d394196e2240f42fd130">updateFileCountLabel</a> ()</td></tr>
+<tr class="memdesc:a61753721c377d394196e2240f42fd130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the file-count label to show visible vs. total file counts.  <br /></td></tr>
+<tr class="memitem:a5922ea5b8d1a4ddb7ac1667feedb97e9" id="r_a5922ea5b8d1a4ddb7ac1667feedb97e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5922ea5b8d1a4ddb7ac1667feedb97e9">connectFileCountLabel</a> ()</td></tr>
+<tr class="memdesc:a5922ea5b8d1a4ddb7ac1667feedb97e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the file-count label to the current proxy model's signals.  <br /></td></tr>
 <tr class="memitem:a2b165548de96b2ce566501f01078e6cb" id="r_a2b165548de96b2ce566501f01078e6cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b165548de96b2ce566501f01078e6cb">freshenPreview</a> ()</td></tr>
 <tr class="memdesc:a2b165548de96b2ce566501f01078e6cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refreshes the preview pane to reflect the current viewport size.  <br /></td></tr>
 <tr class="memitem:a70f1571a374bc94df84f935f8af0fffe" id="r_a70f1571a374bc94df84f935f8af0fffe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70f1571a374bc94df84f935f8af0fffe">clearPreview</a> ()</td></tr>
@@ -150,6 +154,8 @@ Public Attributes</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aad75236c74a5c340c3e18749a9b5eb4f" id="r_aad75236c74a5c340c3e18749a9b5eb4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad75236c74a5c340c3e18749a9b5eb4f">resizeEvent</a> (QResizeEvent *event) override</td></tr>
 <tr class="memdesc:aad75236c74a5c340c3e18749a9b5eb4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class resize handler to freshen the preview on resize.  <br /></td></tr>
+<tr class="memitem:a05fb9d72c044aa3bb7d187b994704e2f" id="r_a05fb9d72c044aa3bb7d187b994704e2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05fb9d72c044aa3bb7d187b994704e2f">closeEvent</a> (QCloseEvent *event) override</td></tr>
+<tr class="memdesc:a05fb9d72c044aa3bb7d187b994704e2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intercepts the window close event to prompt for unsaved changes.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The application's main window, wiring UI widgets to <a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a> operations. </p>
@@ -177,30 +183,6 @@ Protected Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a996c5a2b6f77944776856f08ec30858d_cgraph.png" border="0" usemap="#aclass_main_window_a996c5a2b6f77944776856f08ec30858d_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a996c5a2b6f77944776856f08ec30858d_cgraph" id="aclass_main_window_a996c5a2b6f77944776856f08ec30858d_cgraph">
-<area shape="rect" title="Constructs the main window, sets up layouts, status bar, and default pane sizes." alt="" coords="5,56,185,83"/>
-<area shape="poly" title=" " alt="" coords="53,56,45,47,51,37,67,31,95,29,125,32,142,41,137,42,124,37,95,35,69,37,54,42,51,47,58,55"/>
-<area shape="rect" href="class_luminism_core.html#ad935634d9d59823babd5df1ccea851ab" title="Emitted each time a thumbnail icon is applied to the model." alt="" coords="252,5,438,32"/>
-<area shape="poly" title=" " alt="" coords="164,53,263,34,259,37,165,58"/>
-<area shape="rect" href="class_luminism_core.html#a76277bedc09c6d3fa112620cad940151" title="Emitted each time a sidecar metadata file is written successfully." alt="" coords="243,56,448,83"/>
-<area shape="poly" title=" " alt="" coords="185,67,231,69,225,70,185,72"/>
-<area shape="rect" href="class_tag_container.html#a77602fc59503bc656061e5f1fc096791" title="Emitted when the user requests removal of a tag from this container." alt="" coords="233,107,458,133"/>
-<area shape="poly" title=" " alt="" coords="165,81,263,102,258,104,164,86"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a996c5a2b6f77944776856f08ec30858d_icgraph.png" border="0" usemap="#aclass_main_window_a996c5a2b6f77944776856f08ec30858d_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a996c5a2b6f77944776856f08ec30858d_icgraph" id="aclass_main_window_a996c5a2b6f77944776856f08ec30858d_icgraph">
-<area shape="rect" title="Constructs the main window, sets up layouts, status bar, and default pane sizes." alt="" coords="5,29,185,56"/>
-<area shape="poly" title=" " alt="" coords="124,14,115,10,95,8,76,10,66,15,64,20,69,29,64,28,59,21,63,11,75,5,95,3,117,5,129,14"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -243,6 +225,59 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a05fb9d72c044aa3bb7d187b994704e2f" name="a05fb9d72c044aa3bb7d187b994704e2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05fb9d72c044aa3bb7d187b994704e2f">&#9670;&#160;</a></span>closeEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::closeEvent </td>
+          <td>(</td>
+          <td class="paramtype">QCloseEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Intercepts the window close event to prompt for unsaved changes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The close event to accept or ignore. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5922ea5b8d1a4ddb7ac1667feedb97e9" name="a5922ea5b8d1a4ddb7ac1667feedb97e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5922ea5b8d1a4ddb7ac1667feedb97e9">&#9670;&#160;</a></span>connectFileCountLabel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::connectFileCountLabel </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Connects the file-count label to the current proxy model's signals. </p>
+<p>Must be called after every folder load because loadRootDirectory() recreates the proxy model, invalidating any previously established connections. </p>
+
+</div>
+</div>
 <a id="a2b165548de96b2ce566501f01078e6cb" name="a2b165548de96b2ce566501f01078e6cb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b165548de96b2ce566501f01078e6cb">&#9670;&#160;</a></span>freshenPreview()</h2>
 
@@ -259,16 +294,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Refreshes the preview pane to reflect the current viewport size. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a2b165548de96b2ce566501f01078e6cb_icgraph.png" border="0" usemap="#aclass_main_window_a2b165548de96b2ce566501f01078e6cb_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a2b165548de96b2ce566501f01078e6cb_icgraph" id="aclass_main_window_a2b165548de96b2ce566501f01078e6cb_icgraph">
-<area shape="rect" title="Refreshes the preview pane to reflect the current viewport size." alt="" coords="227,5,421,32"/>
-<area shape="rect" href="class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f" title="Overrides the Qt base&#45;class resize handler to freshen the preview on resize." alt="" coords="5,5,179,32"/>
-<area shape="poly" title=" " alt="" coords="209,19,179,21,179,16,214,19"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -307,16 +332,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Rebuilds the tag-assignment area from tags on the currently filtered files. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_a3d32035c5a2e69fdb73b66bab8e62ca8_icgraph.png" border="0" usemap="#aclass_main_window_a3d32035c5a2e69fdb73b66bab8e62ca8_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_a3d32035c5a2e69fdb73b66bab8e62ca8_icgraph" id="aclass_main_window_a3d32035c5a2e69fdb73b66bab8e62ca8_icgraph">
-<area shape="rect" title="Rebuilds the tag&#45;assignment area from tags on the currently filtered files." alt="" coords="244,5,505,32"/>
-<area shape="rect" href="class_taggable_list_view.html#a2d9f17879b7b75759d6b4efb14467d85" title="Overrides the Qt base&#45;class handler to apply a dropped tag to the target file(s)." alt="" coords="5,5,196,32"/>
-<area shape="poly" title=" " alt="" coords="225,19,196,21,196,16,231,19"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -369,16 +384,6 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_main_window_aad75236c74a5c340c3e18749a9b5eb4f_cgraph.png" border="0" usemap="#aclass_main_window_aad75236c74a5c340c3e18749a9b5eb4f_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_main_window_aad75236c74a5c340c3e18749a9b5eb4f_cgraph" id="aclass_main_window_aad75236c74a5c340c3e18749a9b5eb4f_cgraph">
-<area shape="rect" title="Overrides the Qt base&#45;class resize handler to freshen the preview on resize." alt="" coords="5,5,179,32"/>
-<area shape="rect" href="class_main_window.html#a2b165548de96b2ce566501f01078e6cb" title="Refreshes the preview pane to reflect the current viewport size." alt="" coords="227,5,421,32"/>
-<area shape="poly" title=" " alt="" coords="179,16,214,19,208,19,179,21"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -398,6 +403,26 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Opens a folder-picker dialog and loads the selected folder into core. </p>
+
+</div>
+</div>
+<a id="a61753721c377d394196e2240f42fd130" name="a61753721c377d394196e2240f42fd130"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61753721c377d394196e2240f42fd130">&#9670;&#160;</a></span>updateFileCountLabel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::updateFileCountLabel </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates the file-count label to show visible vs. total file counts. </p>
+<p>Displays "&lt;total&gt; Files" when all files pass the filter, or "&lt;shown&gt; of &lt;total&gt; Files" when a filter is active. </p>
 
 </div>
 </div>

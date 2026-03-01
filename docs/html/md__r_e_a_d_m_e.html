@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Luminism: luminism</title>
+<title>Luminism: Luminism</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,14 +89,133 @@ $(function(){initNavTree('md__r_e_a_d_m_e.html','',''); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">luminism </div></div>
+  <div class="headertitle"><div class="title">Luminism </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="autotoc_md5"></a></p>
-<p>Media Asset Manager </p>
+<p>A media asset manager for vacationers, photographers, hobbyists, archivists, luminism's mission is to make our vast collections of photos and videos fun again! Browse large libraries, organise your photos and videos with a fully customizable set of labels. Interactively search and filter your collection by tags, folder, filename, or capture date — all without touching the files themselves.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+Features</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+Browsing &amp; Preview</h2>
+<ul>
+<li>Point <a class="el" href="namespace_luminism.html" title="Project-wide compile-time constants for Luminism.">Luminism</a> at any folder; it recursively discovers all images and videos, presenting them with high quality previews.</li>
+<li>Handles a LOT of images. luminism has been tested with libraries up to 100,000 files, the reality of our current cellphone camera lives!</li>
+<li>Click any thumbnail to open a full-size preview pane with smooth pinch/scroll zoom.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+Tagging</h2>
+<ul>
+<li>luminism's main organizing principle is easy and intuitive tagging.</li>
+<li>Apply tags to one or 100 or 1000+ selected files by dragging a tag onto the file, selection of files, or use the tag assignment panel below the preview for mass assignment to large numbers of files.</li>
+<li>Tags are organised into <b><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> Families</b>, each with a unique colour, for clear visual grouping.</li>
+<li>Tags and their bounding rectangles (e.g. for face regions) are persisted as <b>sidecar files</b> written alongside the originals — your directory structure and original files are never modified.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
+Filtering</h2>
+<p>Search thousands of files with ease</p>
+<ul>
+<li><b>Filename</b> — substring match, case-insensitive.</li>
+<li><b>Folder path</b> — substring match with shell-style inline autocomplete; Tab or Enter accepts the suggestion, Backspace dismisses it cleanly.</li>
+<li><b>Tags</b> — filter by one or more tags in <b>Any (OR)</b> or <b>All (AND)</b> mode.</li>
+<li><b>Capture date</b> — type a date or use the calendar popup; uses EXIF capture date when available, falls back to filesystem creation date. Leaving the field blank shows all files.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+EXIF Metadata</h2>
+<p>Get all the details from your photos with automatic support for EXIF data</p>
+<ul>
+<li>EXIF is available from JPEG and from HEIF/HEIC (iPhone) files.</li>
+<li>Extracted data is cached as JSON next to each folder so subsequent loads are instant.</li>
+<li>Capture date, camera model, lens, exposure settings and all other standard EXIF fields are available for display and filtering.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+Face Detection</h2>
+<ul>
+<li>The <b>Find Faces</b> action runs dlib's HOG-based frontal face detector over every selected image and stores each detected face as a tagged bounding rectangle in the sidecar file.</li>
+<li>Coming soon: fully offline/private face detection</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+Architecture</h1>
+<p>Built with <b>Qt 6 / C++17</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Component  </th><th class="markdownTableHeadNone">Role  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a></span>  </td><td class="markdownTableBodyNone">Central controller; owns the file model, proxy model, tag library, and async workers  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_main_window.html" title="The application&#39;s main window, wiring UI widgets to LuminismCore operations.">MainWindow</a></span>  </td><td class="markdownTableBodyNone">UI shell; wires widgets to core operations  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a></span>  </td><td class="markdownTableBodyNone">Per-file data object — path, timestamps, tag set, EXIF map, dirty flag  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_filter_proxy_model.html" title="Proxy model that filters the tagged-file list by name, folder, and tags.">FilterProxyModel</a></span>  </td><td class="markdownTableBodyNone"><span class="tt">QSortFilterProxyModel</span> subclass; applies filename / folder / tag / date filters  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_icon_generator.html" title="Utility class that generates and caches scaled thumbnail images for media files.">IconGenerator</a></span>  </td><td class="markdownTableBodyNone"><span class="tt">QtConcurrent</span>-based background thumbnail generator  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_exif_parser.html" title="Utility class for extracting EXIF metadata from JPEG and HEIF/HEIC image files.">ExifParser</a></span>  </td><td class="markdownTableBodyNone">Static EXIF reader for JPEG (libexif) and HEIF/HEIC (libheif) with JSON cache  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_face_recognizer.html" title="Detects and recognises faces across images using dlib&#39;s HOG detector and ResNet embeddings.">FaceRecognizer</a></span>  </td><td class="markdownTableBodyNone">dlib HOG face detector; returns normalised bounding rectangles  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_taggable_list_view.html" title="A QListView subclass that accepts tag drops to apply tags to media files.">TaggableListView</a></span>  </td><td class="markdownTableBodyNone"><span class="tt">QListView</span> subclass that accepts tag drag-drops  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_flow_layout.html" title="A custom QLayout that arranges child widgets in a wrapping flow, like inline text.">FlowLayout</a></span>  </td><td class="markdownTableBodyNone">Custom <span class="tt">QLayout</span> that wraps tag chips like inline text  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_date_filter_button.html" title="A date-entry widget combining a free-form line edit with a calendar popup button.">DateFilterButton</a></span>  </td><td class="markdownTableBodyNone">Custom widget — typed date entry with inline autocomplete + calendar popup  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_folder_filter_line_edit.html" title="A QLineEdit with shell-style path autocomplete for the folder filter.">FolderFilterLineEdit</a></span>  </td><td class="markdownTableBodyNone"><span class="tt">QLineEdit</span> subclass with shell-style path autocomplete  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_zoomable_graphics_view.html" title="A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.">ZoomableGraphicsView</a></span>  </td><td class="markdownTableBodyNone">Pinch/scroll-zoomable <span class="tt">QGraphicsView</span> for the full-size preview  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_preview_container.html" title="Widget that displays a full-size image preview inside a zoomable graphics view.">PreviewContainer</a></span>  </td><td class="markdownTableBodyNone">Full-size image and video preview panel  </td></tr>
+</table>
+<p><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> hierarchy: <b><a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a></b> (colour, conceptual group) → <b><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a></b> (name, pointer back to family).</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+Building</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+Prerequisites</h2>
+<ul>
+<li><b>Qt 6.x</b> — Widgets, Core, Concurrent, Multimedia, MultimediaWidgets</li>
+<li><b>CMake 3.16+</b></li>
+<li><b>C++17</b> compiler (MSVC, GCC, or Clang)</li>
+<li><b>dlib</b>, <b>libexif</b>, and <b>libheif</b> pre-built and placed under <span class="tt">3rdParty/</span>:</li>
+</ul>
+<div class="fragment"><div class="line">3rdParty/</div>
+<div class="line">  lib/</div>
+<div class="line">    exif.lib      # libexif static library</div>
+<div class="line">    heif.lib      # libheif static library</div>
+<div class="line">  src/</div>
+<div class="line">    libexif/      # libexif headers</div>
+<div class="line">    libheif/      # libheif headers</div>
+<div class="line">    dlib/         # dlib source tree</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p>The <span class="tt">3rdParty/</span> directory is excluded from the repository. Build or obtain these libraries separately and place them as shown above. </p>
+</blockquote>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+Configure and build</h2>
+<div class="fragment"><div class="line"># From the repository root</div>
+<div class="line">cmake -B build -S .</div>
+<div class="line">cmake --build build</div>
+</div><!-- fragment --><p>Or open <span class="tt">CMakeLists.txt</span> directly in <b>Qt Creator</b> and build from there.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+Tag persistence format</h1>
+<p>Each folder that contains tagged files gets a sidecar JSON file alongside the images. The JSON records tag assignments (including optional normalised face bounding rectangles) and EXIF data so that tag information travels with the files if you move the folder.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+License</h1>
+<p>GNU - See LICENSE file </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

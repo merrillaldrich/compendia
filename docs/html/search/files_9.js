@@ -1,25 +1,4 @@
 var searchData=
 [
-  ['tag_2ecpp_0',['tag.cpp',['../tag_8cpp.html',1,'']]],
-  ['tag_2eh_1',['tag.h',['../tag_8h.html',1,'']]],
-  ['tagassignmentcontainer_2ecpp_2',['tagassignmentcontainer.cpp',['../tagassignmentcontainer_8cpp.html',1,'']]],
-  ['tagassignmentcontainer_2eh_3',['tagassignmentcontainer.h',['../tagassignmentcontainer_8h.html',1,'']]],
-  ['tagcontainer_2ecpp_4',['tagcontainer.cpp',['../tagcontainer_8cpp.html',1,'']]],
-  ['tagcontainer_2eh_5',['tagcontainer.h',['../tagcontainer_8h.html',1,'']]],
-  ['tagfamily_2ecpp_6',['tagfamily.cpp',['../tagfamily_8cpp.html',1,'']]],
-  ['tagfamily_2eh_7',['tagfamily.h',['../tagfamily_8h.html',1,'']]],
-  ['tagfamilywidget_2ecpp_8',['tagfamilywidget.cpp',['../tagfamilywidget_8cpp.html',1,'']]],
-  ['tagfamilywidget_2eh_9',['tagfamilywidget.h',['../tagfamilywidget_8h.html',1,'']]],
-  ['taggablelistview_2ecpp_10',['taggablelistview.cpp',['../taggablelistview_8cpp.html',1,'']]],
-  ['taggablelistview_2eh_11',['taggablelistview.h',['../taggablelistview_8h.html',1,'']]],
-  ['taggedfile_2ecpp_12',['taggedfile.cpp',['../taggedfile_8cpp.html',1,'']]],
-  ['taggedfile_2eh_13',['taggedfile.h',['../taggedfile_8h.html',1,'']]],
-  ['taggingwidget_2ecpp_14',['taggingwidget.cpp',['../taggingwidget_8cpp.html',1,'']]],
-  ['taggingwidget_2eh_15',['taggingwidget.h',['../taggingwidget_8h.html',1,'']]],
-  ['tagset_2ecpp_16',['tagset.cpp',['../tagset_8cpp.html',1,'']]],
-  ['tagset_2eh_17',['tagset.h',['../tagset_8h.html',1,'']]],
-  ['tagwidget_2ecpp_18',['tagwidget.cpp',['../tagwidget_8cpp.html',1,'']]],
-  ['tagwidget_2eh_19',['tagwidget.h',['../tagwidget_8h.html',1,'']]],
-  ['tagwidgetclosebutton_2ecpp_20',['tagwidgetclosebutton.cpp',['../tagwidgetclosebutton_8cpp.html',1,'']]],
-  ['tagwidgetclosebutton_2eh_21',['tagwidgetclosebutton.h',['../tagwidgetclosebutton_8h.html',1,'']]]
+  ['readme_2emd_0',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]]
 ];

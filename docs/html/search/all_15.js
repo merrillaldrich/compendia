@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['zoomablegraphicsview_0',['ZoomableGraphicsView',['../class_zoomable_graphics_view.html',1,'ZoomableGraphicsView'],['../class_zoomable_graphics_view.html#a3615bbe28257af383607c6076a00ecb0',1,'ZoomableGraphicsView::ZoomableGraphicsView(QWidget *parent=nullptr)'],['../class_zoomable_graphics_view.html#a877e7dc2885180eeb2de7efd95c3c550',1,'ZoomableGraphicsView::ZoomableGraphicsView(QGraphicsScene *scene, QWidget *parent=nullptr)']]],
-  ['zoomablegraphicsview_2ecpp_1',['zoomablegraphicsview.cpp',['../zoomablegraphicsview_8cpp.html',1,'']]],
-  ['zoomablegraphicsview_2eh_2',['zoomablegraphicsview.h',['../zoomablegraphicsview_8h.html',1,'']]]
+  ['wheelevent_0',['wheelEvent',['../class_zoomable_graphics_view.html#ac9369ca9bad87c801280cb80268ded94',1,'ZoomableGraphicsView']]],
+  ['wrapfilename_1',['wrapFileName',['../class_file_name_delegate.html#a38fadee1df325e64aeeacc09fa73535d',1,'FileNameDelegate']]],
+  ['writefilemetadata_2',['writeFileMetadata',['../class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc',1,'LuminismCore']]]
 ];

@@ -128,6 +128,8 @@ Collaboration diagram for TagContainer:</div>
 Signals</h2></td></tr>
 <tr class="memitem:a77602fc59503bc656061e5f1fc096791" id="r_a77602fc59503bc656061e5f1fc096791"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77602fc59503bc656061e5f1fc096791">tagDeleteRequested</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 <tr class="memdesc:a77602fc59503bc656061e5f1fc096791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user requests removal of a tag from this container.  <br /></td></tr>
+<tr class="memitem:aa0dd55fb9a844b51f3fd5c7638e23016" id="r_aa0dd55fb9a844b51f3fd5c7638e23016"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0dd55fb9a844b51f3fd5c7638e23016">tagNameChanged</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:aa0dd55fb9a844b51f3fd5c7638e23016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when any tag displayed in this container has its name changed.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -176,20 +178,6 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tag_container_afb444c43d124279f636dcb76b2dcc57d_icgraph.png" border="0" usemap="#aclass_tag_container_afb444c43d124279f636dcb76b2dcc57d_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tag_container_afb444c43d124279f636dcb76b2dcc57d_icgraph" id="aclass_tag_container_afb444c43d124279f636dcb76b2dcc57d_icgraph">
-<area shape="rect" title="Constructs an empty TagContainer." alt="" coords="229,80,412,107"/>
-<area shape="rect" href="class_nav_filter_container.html#a4d697feda26ed061165d2aaa7c3fcfc6" title="Constructs an empty NavFilterContainer." alt="" coords="24,5,162,48"/>
-<area shape="poly" title=" " alt="" coords="255,76,163,50,163,44,260,74"/>
-<area shape="rect" href="class_nav_library_container.html#a1f20c6dbe3c1f30c792035676fb205d6" title="Constructs an empty NavLibraryContainer." alt="" coords="19,72,167,115"/>
-<area shape="poly" title=" " alt="" coords="211,94,168,96,167,91,216,92"/>
-<area shape="rect" href="class_tag_assignment_container.html#a50559469a54b9da5d0889cf184d3d830" title="Constructs an empty TagAssignmentContainer." alt="" coords="5,139,181,181"/>
-<area shape="poly" title=" " alt="" coords="260,111,169,141,168,135,255,112"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -210,16 +198,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Removes all child <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> and <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a> items from the layout. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tag_container_ad384fe1eaa145f6d34fa4777792412b7_icgraph.png" border="0" usemap="#aclass_tag_container_ad384fe1eaa145f6d34fa4777792412b7_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tag_container_ad384fe1eaa145f6d34fa4777792412b7_icgraph" id="aclass_tag_container_ad384fe1eaa145f6d34fa4777792412b7_icgraph">
-<area shape="rect" title="Removes all child TagFamilyWidget and TagWidget items from the layout." alt="" coords="200,5,334,32"/>
-<area shape="rect" href="class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="5,5,152,32"/>
-<area shape="poly" title=" " alt="" coords="182,19,152,21,152,16,187,19"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -245,30 +223,6 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tag_container_a6e7ec330ab93a0c21ec4e1f0864ad56f_cgraph.png" border="0" usemap="#aclass_tag_container_a6e7ec330ab93a0c21ec4e1f0864ad56f_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tag_container_a6e7ec330ab93a0c21ec4e1f0864ad56f_cgraph" id="aclass_tag_container_a6e7ec330ab93a0c21ec4e1f0864ad56f_cgraph">
-<area shape="rect" title="Forwards a tag&#45;delete request up to the tagDeleteRequested signal." alt="" coords="5,5,185,48"/>
-<area shape="rect" href="class_tag_container.html#a77602fc59503bc656061e5f1fc096791" title="Emitted when the user requests removal of a tag from this container." alt="" coords="233,13,458,40"/>
-<area shape="poly" title=" " alt="" coords="185,24,220,26,214,27,185,29"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tag_container_a6e7ec330ab93a0c21ec4e1f0864ad56f_icgraph.png" border="0" usemap="#aclass_tag_container_a6e7ec330ab93a0c21ec4e1f0864ad56f_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tag_container_a6e7ec330ab93a0c21ec4e1f0864ad56f_icgraph" id="aclass_tag_container_a6e7ec330ab93a0c21ec4e1f0864ad56f_icgraph">
-<area shape="rect" title="Forwards a tag&#45;delete request up to the tagDeleteRequested signal." alt="" coords="221,72,400,115"/>
-<area shape="rect" href="class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="24,5,154,48"/>
-<area shape="poly" title=" " alt="" coords="220,68,155,49,155,44,225,66"/>
-<area shape="rect" href="class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,72,173,115"/>
-<area shape="poly" title=" " alt="" coords="202,94,174,96,173,91,208,93"/>
-<area shape="rect" href="class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="16,139,162,165"/>
-<area shape="poly" title=" " alt="" coords="216,119,143,141,141,136,210,120"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -294,28 +248,6 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tag_container_a3445dd238a7a7f43cfb10322e8492ca6_cgraph.png" border="0" usemap="#aclass_tag_container_a3445dd238a7a7f43cfb10322e8492ca6_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tag_container_a3445dd238a7a7f43cfb10322e8492ca6_cgraph" id="aclass_tag_container_a3445dd238a7a7f43cfb10322e8492ca6_cgraph">
-<area shape="rect" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="5,132,152,159"/>
-<area shape="rect" href="class_tag_container.html#ad384fe1eaa145f6d34fa4777792412b7" title="Removes all child TagFamilyWidget and TagWidget items from the layout." alt="" coords="237,5,371,32"/>
-<area shape="poly" title=" " alt="" coords="90,130,135,86,165,62,198,42,224,33,219,36,201,46,168,66,138,90,94,133"/>
-<area shape="rect" href="class_tag_widget.html#a1d3fa53f2f5ad9b93b553431bce2c67b" title="Emitted when the user clicks the close button to remove the tag." alt="" coords="209,56,398,83"/>
-<area shape="poly" title=" " alt="" coords="107,129,199,92,227,86,222,89,201,97,110,134"/>
-<area shape="rect" href="class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title="Returns the Tag pointer this widget represents." alt="" coords="239,107,369,133"/>
-<area shape="poly" title=" " alt="" coords="151,135,225,127,221,131,153,140"/>
-<area shape="rect" href="class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3" title="Returns the TagFamily pointer this widget represents." alt="" coords="200,157,408,184"/>
-<area shape="poly" title=" " alt="" coords="152,151,187,156,182,158,153,156"/>
-<area shape="rect" href="class_tag_container.html#a6e7ec330ab93a0c21ec4e1f0864ad56f" title="Forwards a tag&#45;delete request up to the tagDeleteRequested signal." alt="" coords="214,208,394,251"/>
-<area shape="poly" title=" " alt="" coords="111,157,201,194,220,202,215,203,199,198,110,162"/>
-<area shape="rect" href="class_tag_container.html#a702b14de4154b65fabee32cd7fbc1c7a" title="Sorts all TagFamilyWidget children alphabetically by family name, and sorts tags within each family a..." alt="" coords="240,275,368,301"/>
-<area shape="poly" title=" " alt="" coords="91,156,135,208,166,236,201,260,227,274,222,273,198,265,163,241,132,212,89,161"/>
-<area shape="rect" href="class_tag_container.html#a77602fc59503bc656061e5f1fc096791" title="Emitted when the user requests removal of a tag from this container." alt="" coords="456,216,681,243"/>
-<area shape="poly" title=" " alt="" coords="394,227,443,229,438,230,394,232"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -335,16 +267,6 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Sorts all <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> children alphabetically by family name, and sorts tags within each family alphabetically by tag name. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tag_container_a702b14de4154b65fabee32cd7fbc1c7a_icgraph.png" border="0" usemap="#aclass_tag_container_a702b14de4154b65fabee32cd7fbc1c7a_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tag_container_a702b14de4154b65fabee32cd7fbc1c7a_icgraph" id="aclass_tag_container_a702b14de4154b65fabee32cd7fbc1c7a_icgraph">
-<area shape="rect" title="Sorts all TagFamilyWidget children alphabetically by family name, and sorts tags within each family a..." alt="" coords="200,5,328,32"/>
-<area shape="rect" href="class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="5,5,152,32"/>
-<area shape="poly" title=" " alt="" coords="181,19,152,21,152,16,186,19"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -378,25 +300,40 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tag_container_a77602fc59503bc656061e5f1fc096791_icgraph.png" border="0" usemap="#aclass_tag_container_a77602fc59503bc656061e5f1fc096791_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tag_container_a77602fc59503bc656061e5f1fc096791_icgraph" id="aclass_tag_container_a77602fc59503bc656061e5f1fc096791_icgraph">
-<area shape="rect" title="Emitted when the user requests removal of a tag from this container." alt="" coords="448,59,673,85"/>
-<area shape="rect" href="class_main_window.html#a996c5a2b6f77944776856f08ec30858d" title="Constructs the main window, sets up layouts, status bar, and default pane sizes." alt="" coords="221,29,400,56"/>
-<area shape="poly" title=" " alt="" coords="430,57,401,56,400,51,435,57"/>
-<area shape="rect" href="class_tag_container.html#a6e7ec330ab93a0c21ec4e1f0864ad56f" title="Forwards a tag&#45;delete request up to the tagDeleteRequested signal." alt="" coords="221,80,400,123"/>
-<area shape="poly" title=" " alt="" coords="430,87,401,93,400,88,435,87"/>
-<area shape="poly" title=" " alt="" coords="347,14,335,10,310,8,287,10,274,15,272,20,278,29,273,28,266,21,271,11,286,5,310,3,337,5,352,14"/>
-<area shape="rect" href="class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="24,13,154,56"/>
-<area shape="poly" title=" " alt="" coords="220,76,155,57,155,52,225,74"/>
-<area shape="rect" href="class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,80,173,123"/>
-<area shape="poly" title=" " alt="" coords="202,102,174,104,173,99,208,101"/>
-<area shape="rect" href="class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="16,147,162,173"/>
-<area shape="poly" title=" " alt="" coords="216,127,143,149,141,144,210,128"/>
-</map>
+
 </div>
+</div>
+<a id="aa0dd55fb9a844b51f3fd5c7638e23016" name="aa0dd55fb9a844b51f3fd5c7638e23016"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0dd55fb9a844b51f3fd5c7638e23016">&#9670;&#160;</a></span>tagNameChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagContainer::tagNameChanged </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when any tag displayed in this container has its name changed. </p>
+<p>Forwarded from the <a class="el" href="class_tag_widget.html#ac5b6dedfc17ed661099ebad0978cdac8" title="Emitted after the tag name has been successfully changed.">TagWidget::tagNameChanged</a> signal of each child widget created during <a class="el" href="#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags.">refresh()</a>. Allows <a class="el" href="class_main_window.html" title="The application&#39;s main window, wiring UI widgets to LuminismCore operations.">MainWindow</a> to update the preview overlay labels without polling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> whose name was changed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

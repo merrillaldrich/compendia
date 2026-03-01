@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['md_0',['CLAUDE.md',['../md__c_l_a_u_d_e.html',1,'']]]
+  ['key_20dependencies_0',['Key dependencies',['../md__c_l_a_u_d_e.html#autotoc_md4',1,'']]]
 ];

@@ -93,7 +93,7 @@ $(function(){initNavTree('class_tag_set.html','','class_tag_set-members'); });
 </div><!--header-->
 <div class="contents">
 
-<p>Lightweight value type pairing a tag-family name with a tag name.  
+<p>Lightweight value type pairing a tag-family name with a tag name, with an optional bounding rectangle within the image.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="tagset_8h_source.html">tagset.h</a>&gt;</code></p>
@@ -102,18 +102,21 @@ $(function(){initNavTree('class_tag_set.html','','class_tag_set-members'); });
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2f80becb68dc589245d1035cbcdd5f2c" id="r_a2f80becb68dc589245d1035cbcdd5f2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f80becb68dc589245d1035cbcdd5f2c">TagSet</a> (QString tfn, QString tn)</td></tr>
 <tr class="memdesc:a2f80becb68dc589245d1035cbcdd5f2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialises the tag-set with the given family and tag name strings.  <br /></td></tr>
+<tr class="memitem:ad9af47e743803e72b8b84194358732b6" id="r_ad9af47e743803e72b8b84194358732b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9af47e743803e72b8b84194358732b6">TagSet</a> (QString tfn, QString tn, QRectF <a class="el" href="#a15df06a91ca2a19ef000f0f5ddb1ebb7">rect</a>)</td></tr>
+<tr class="memdesc:ad9af47e743803e72b8b84194358732b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialises the tag-set with a family name, tag name, and a normalised bounding rectangle.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a6c9ddd32bf356a27cd4481c92aa3b5bc" id="r_a6c9ddd32bf356a27cd4481c92aa3b5bc"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c9ddd32bf356a27cd4481c92aa3b5bc">tagFamilyName</a> = &quot;&quot;</td></tr>
 <tr class="memitem:a1c000f57e28abed0cf90db5753bc97b4" id="r_a1c000f57e28abed0cf90db5753bc97b4"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c000f57e28abed0cf90db5753bc97b4">tagName</a> = &quot;&quot;</td></tr>
+<tr class="memitem:a15df06a91ca2a19ef000f0f5ddb1ebb7" id="r_a15df06a91ca2a19ef000f0f5ddb1ebb7"><td class="memItemLeft" align="right" valign="top">std::optional&lt; QRectF &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15df06a91ca2a19ef000f0f5ddb1ebb7">rect</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Lightweight value type pairing a tag-family name with a tag name. </p>
+<div class="textblock"><p>Lightweight value type pairing a tag-family name with a tag name, with an optional bounding rectangle within the image. </p>
 <p>Used primarily when parsing JSON sidecar files and when passing tag identity through drag-and-drop operations before full <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> objects are resolved. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2f80becb68dc589245d1035cbcdd5f2c" name="a2f80becb68dc589245d1035cbcdd5f2c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f80becb68dc589245d1035cbcdd5f2c">&#9670;&#160;</a></span>TagSet()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f80becb68dc589245d1035cbcdd5f2c">&#9670;&#160;</a></span>TagSet() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -142,7 +145,60 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ad9af47e743803e72b8b84194358732b6" name="ad9af47e743803e72b8b84194358732b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9af47e743803e72b8b84194358732b6">&#9670;&#160;</a></span>TagSet() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TagSet::TagSet </td>
+          <td>(</td>
+          <td class="paramtype">QString</td>          <td class="paramname"><span class="paramname"><em>tfn</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString</td>          <td class="paramname"><span class="paramname"><em>tn</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QRectF</td>          <td class="paramname"><span class="paramname"><em>r</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialises the tag-set with a family name, tag name, and a normalised bounding rectangle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tfn</td><td>The tag-family name. </td></tr>
+    <tr><td class="paramname">tn</td><td>The tag name. </td></tr>
+    <tr><td class="paramname">rect</td><td>The bounding rectangle in normalised image coordinates (0.0–1.0).</td></tr>
+    <tr><td class="paramname">tfn</td><td>The tag-family name. </td></tr>
+    <tr><td class="paramname">tn</td><td>The tag name. </td></tr>
+    <tr><td class="paramname">r</td><td>The bounding rectangle in normalised image coordinates (0.0–1.0). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a15df06a91ca2a19ef000f0f5ddb1ebb7" name="a15df06a91ca2a19ef000f0f5ddb1ebb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15df06a91ca2a19ef000f0f5ddb1ebb7">&#9670;&#160;</a></span>rect</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;QRectF&gt; TagSet::rect</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a6c9ddd32bf356a27cd4481c92aa3b5bc" name="a6c9ddd32bf356a27cd4481c92aa3b5bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c9ddd32bf356a27cd4481c92aa3b5bc">&#9670;&#160;</a></span>tagFamilyName</h2>
 

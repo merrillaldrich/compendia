@@ -125,12 +125,17 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a7ba8f2daa30729dc5167d0187ba0cf27" id="r_a7ba8f2daa30729dc5167d0187ba0cf27"><td class="memItemLeft" align="right" valign="top">static QImage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ba8f2daa30729dc5167d0187ba0cf27">generateIcon</a> (const QString absoluteFileName)</td></tr>
-<tr class="memdesc:a7ba8f2daa30729dc5167d0187ba0cf27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a 100-pixel-bounded thumbnail for the given image file.  <br /></td></tr>
+<tr class="memitem:a22dd0d573c38968177e8c097edb14563" id="r_a22dd0d573c38968177e8c097edb14563"><td class="memItemLeft" align="right" valign="top">static QVector&lt; QImage &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22dd0d573c38968177e8c097edb14563">generateIcon</a> (const QString absoluteFileName)</td></tr>
+<tr class="memdesc:a22dd0d573c38968177e8c097edb14563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns thumbnails at all cached sizes for the given media file.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ae7a21d99f35d0a67cebd6574e75497e3" id="r_ae7a21d99f35d0a67cebd6574e75497e3"><td class="memItemLeft" align="right" valign="top">static const QVector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7a21d99f35d0a67cebd6574e75497e3">kIconSizes</a> = {50, 100, 200, 400}</td></tr>
+<tr class="memdesc:ae7a21d99f35d0a67cebd6574e75497e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The discrete pixel sizes generated and cached for each media file.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility class that generates and caches scaled thumbnail images for media files. </p>
-<p>Thumbnails are stored as serialised QImage files in a hidden <code></code>.luminism_cache subdirectory alongside each media file so that subsequent loads skip the expensive image-decode step. </p>
+<p>Thumbnails are stored as serialised QImage files in a hidden <code></code>.luminism_cache subdirectory alongside each media file so that subsequent loads skip the expensive image-decode step. Four discrete sizes are generated and cached (50, 100, 200, 400 px) so that Qt can always downscale to any zoom level without upscaling artefacts. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a652a80ddba7d314d790062d65a58d30c" name="a652a80ddba7d314d790062d65a58d30c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a652a80ddba7d314d790062d65a58d30c">&#9670;&#160;</a></span>IconGenerator()</h2>
@@ -158,8 +163,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a7ba8f2daa30729dc5167d0187ba0cf27" name="a7ba8f2daa30729dc5167d0187ba0cf27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ba8f2daa30729dc5167d0187ba0cf27">&#9670;&#160;</a></span>generateIcon()</h2>
+<a id="a22dd0d573c38968177e8c097edb14563" name="a22dd0d573c38968177e8c097edb14563"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22dd0d573c38968177e8c097edb14563">&#9670;&#160;</a></span>generateIcon()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -168,7 +173,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">QImage IconGenerator::generateIcon </td>
+          <td class="memname">QVector&lt; QImage &gt; IconGenerator::generateIcon </td>
           <td>(</td>
           <td class="paramtype">const QString</td>          <td class="paramname"><span class="paramname"><em>absoluteFileName</em></span></td><td>)</td>
           <td></td>
@@ -181,29 +186,48 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns a 100-pixel-bounded thumbnail for the given image file. </p>
-<p>Checks the on-disk cache first; on a miss the original image is decoded, scaled, saved to the cache, and returned.</p>
+<p>Returns thumbnails at all cached sizes for the given media file. </p>
+<p>Checks the on-disk cache for every size first; if all caches are current they are loaded and returned immediately. On any miss the source is decoded once, scaled to each size, saved, and returned.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">absoluteFileName</td><td>Absolute path to the source image file. </td></tr>
+    <tr><td class="paramname">absoluteFileName</td><td>Absolute path to the source media file. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A QImage containing the scaled thumbnail, or a null QImage on error. </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_icon_generator_a7ba8f2daa30729dc5167d0187ba0cf27_icgraph.png" border="0" usemap="#aclass_icon_generator_a7ba8f2daa30729dc5167d0187ba0cf27_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_icon_generator_a7ba8f2daa30729dc5167d0187ba0cf27_icgraph" id="aclass_icon_generator_a7ba8f2daa30729dc5167d0187ba0cf27_icgraph">
-<area shape="rect" title="Returns a 100&#45;pixel&#45;bounded thumbnail for the given image file." alt="" coords="788,5,975,32"/>
-<area shape="rect" href="class_luminism_core.html#a4145e9c6809094544c45f8a3a2fcf180" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="532,5,740,32"/>
-<area shape="poly" title=" " alt="" coords="770,19,741,21,741,16,775,19"/>
-<area shape="rect" href="class_luminism_core.html#a797e7ab9f7b0c18348eb182c08abb980" title="Clears all existing data and reloads files from the current root directory." alt="" coords="266,5,484,32"/>
-<area shape="poly" title=" " alt="" coords="514,19,484,21,484,16,519,19"/>
-<area shape="rect" href="class_luminism_core.html#a5ee748e28577573181f5a442a71e2f29" title="Sets the root directory path and immediately loads it." alt="" coords="5,5,218,32"/>
-<area shape="poly" title=" " alt="" coords="248,19,218,21,218,16,253,19"/>
-</map>
+<dl class="section return"><dt>Returns</dt><dd>A QVector of QImages (one per entry in kIconSizes), or an empty vector on error.</dd></dl>
+<p>Checks the on-disk cache for every size first. If all four caches are current (newer than the source file) they are loaded and returned without re-decoding the source. On any miss the source is decoded once (or a video frame captured at 400 px), scaled to each of the four sizes, cached, and returned as a QVector ordered smallest-to-largest.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">absoluteFileName</td><td>Absolute path to the source media file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A QVector of QImages (one per kIconSizes entry), or an empty vector on error. </dd></dl>
+
 </div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ae7a21d99f35d0a67cebd6574e75497e3" name="ae7a21d99f35d0a67cebd6574e75497e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7a21d99f35d0a67cebd6574e75497e3">&#9670;&#160;</a></span>kIconSizes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVector&lt; int &gt; IconGenerator::kIconSizes = {50, 100, 200, 400}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The discrete pixel sizes generated and cached for each media file. </p>
 
 </div>
 </div>

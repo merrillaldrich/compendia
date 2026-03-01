@@ -118,6 +118,13 @@ Collaboration diagram for FilterProxyModel:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:aa60d4c14f6431fb80cd25bf579c07886" id="r_aa60d4c14f6431fb80cd25bf579c07886"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa60d4c14f6431fb80cd25bf579c07886">TagFilterMode</a> { <a class="el" href="#aa60d4c14f6431fb80cd25bf579c07886a928bd24129ac826caa8256f7364c76b8">AnyTag</a>
+, <a class="el" href="#aa60d4c14f6431fb80cd25bf579c07886ada903735a3e0764a39ffba0987342574">AllTags</a>
+ }</td></tr>
+<tr class="memdesc:aa60d4c14f6431fb80cd25bf579c07886"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls whether the tag filter requires any or all active tags.  <a href="#aa60d4c14f6431fb80cd25bf579c07886">More...</a><br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab54b4d26d99c470733a09fffd4b5fd4d" id="r_ab54b4d26d99c470733a09fffd4b5fd4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab54b4d26d99c470733a09fffd4b5fd4d">FilterProxyModel</a> (QObject *parent=nullptr)</td></tr>
@@ -132,6 +139,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a24702ad7e993c6b687edffa866a1309f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a tag to the active tag filter set and re-applies the filter.  <br /></td></tr>
 <tr class="memitem:a2dee4b7929c110ee0f1f0d218eb794e6" id="r_a2dee4b7929c110ee0f1f0d218eb794e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dee4b7929c110ee0f1f0d218eb794e6">removeTagFilter</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 <tr class="memdesc:a2dee4b7929c110ee0f1f0d218eb794e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from the active tag filter set and re-applies the filter.  <br /></td></tr>
+<tr class="memitem:af353110d9d103a55032c1c7736415ab6" id="r_af353110d9d103a55032c1c7736415ab6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af353110d9d103a55032c1c7736415ab6">setTagFilterMode</a> (<a class="el" href="#aa60d4c14f6431fb80cd25bf579c07886">TagFilterMode</a> mode)</td></tr>
+<tr class="memdesc:af353110d9d103a55032c1c7736415ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the tag-filter mode and re-applies the filter.  <br /></td></tr>
 <tr class="memitem:a938e8b371f366de31c071e03e1c904ce" id="r_a938e8b371f366de31c071e03e1c904ce"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a938e8b371f366de31c071e03e1c904ce">getFilterCreationDate</a> () const</td></tr>
 <tr class="memdesc:a938e8b371f366de31c071e03e1c904ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the creation-date filter value.  <br /></td></tr>
 <tr class="memitem:afc9f487c037cdf1619d195639724113b" id="r_afc9f487c037cdf1619d195639724113b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc9f487c037cdf1619d195639724113b">setFilterCreationDate</a> (QDate creationDate)</td></tr>
@@ -151,8 +160,31 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Proxy model that filters the tagged-file list by name, folder, and tags. </p>
-<p>Wraps a QStandardItemModel containing <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> items and exposes only the rows that satisfy the currently active name-substring, folder-substring, and tag-intersection filters. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p>Wraps a QStandardItemModel containing <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> items and exposes only the rows that satisfy the currently active name-substring, folder-substring, and tag filters. The tag filter can operate in AnyTag (OR) or AllTags (AND) mode. </p>
+</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
+<a id="aa60d4c14f6431fb80cd25bf579c07886" name="aa60d4c14f6431fb80cd25bf579c07886"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa60d4c14f6431fb80cd25bf579c07886">&#9670;&#160;</a></span>TagFilterMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#aa60d4c14f6431fb80cd25bf579c07886">FilterProxyModel::TagFilterMode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Controls whether the tag filter requires any or all active tags. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa60d4c14f6431fb80cd25bf579c07886a928bd24129ac826caa8256f7364c76b8" name="aa60d4c14f6431fb80cd25bf579c07886a928bd24129ac826caa8256f7364c76b8"></a>AnyTag&#160;</td><td class="fielddoc"><p>Show files that have at least one of the active filter tags (OR). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa60d4c14f6431fb80cd25bf579c07886ada903735a3e0764a39ffba0987342574" name="aa60d4c14f6431fb80cd25bf579c07886ada903735a3e0764a39ffba0987342574"></a>AllTags&#160;</td><td class="fielddoc"><p>Show files that have every active filter tag (AND). </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab54b4d26d99c470733a09fffd4b5fd4d" name="ab54b4d26d99c470733a09fffd4b5fd4d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab54b4d26d99c470733a09fffd4b5fd4d">&#9670;&#160;</a></span>FilterProxyModel()</h2>
 
@@ -248,16 +280,6 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the row passes all active filters. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_filter_proxy_model_ae3b628e58b77cf9e8f0a45ae7b4aec1b_cgraph.png" border="0" usemap="#aclass_filter_proxy_model_ae3b628e58b77cf9e8f0a45ae7b4aec1b_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_filter_proxy_model_ae3b628e58b77cf9e8f0a45ae7b4aec1b_cgraph" id="aclass_filter_proxy_model_ae3b628e58b77cf9e8f0a45ae7b4aec1b_cgraph">
-<area shape="rect" title="Overrides the Qt base&#45;class row&#45;acceptance test to apply all active filters." alt="" coords="5,5,158,48"/>
-<area shape="rect" href="class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="206,13,323,40"/>
-<area shape="poly" title=" " alt="" coords="158,24,193,26,188,27,158,29"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -352,7 +374,8 @@ Here is the call graph for this function:</div>
 <p>Sets the creation-date filter and re-applies the filter. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">creationDate</td><td>The date to filter by. </td></tr>
+    <tr><td class="paramname">creationDate</td><td>The date to filter by.</td></tr>
+    <tr><td class="paramname">creationDate</td><td>The date to filter by; an invalid QDate clears the filter. </td></tr>
   </table>
   </dd>
 </dl>
@@ -406,16 +429,31 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_filter_proxy_model_a4d7c210bd3074ee125fbb2770a5db80b_icgraph.png" border="0" usemap="#aclass_filter_proxy_model_a4d7c210bd3074ee125fbb2770a5db80b_icgraph" loading="lazy" alt=""/></div>
-<map name="aclass_filter_proxy_model_a4d7c210bd3074ee125fbb2770a5db80b_icgraph" id="aclass_filter_proxy_model_a4d7c210bd3074ee125fbb2770a5db80b_icgraph">
-<area shape="rect" title="Sets the filename substring filter and re&#45;applies the filter." alt="" coords="241,5,421,48"/>
-<area shape="rect" href="class_luminism_core.html#aed94dc1d19284de5297c7af2aa3e998a" title="Sets the filename substring filter on the proxy model." alt="" coords="5,5,193,48"/>
-<area shape="poly" title=" " alt="" coords="223,27,193,29,193,24,228,26"/>
-</map>
+
 </div>
+</div>
+<a id="af353110d9d103a55032c1c7736415ab6" name="af353110d9d103a55032c1c7736415ab6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af353110d9d103a55032c1c7736415ab6">&#9670;&#160;</a></span>setTagFilterMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilterProxyModel::setTagFilterMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#aa60d4c14f6431fb80cd25bf579c07886">TagFilterMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the tag-filter mode and re-applies the filter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>AnyTag (OR) or AllTags (AND). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

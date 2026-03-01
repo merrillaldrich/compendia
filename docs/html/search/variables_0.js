@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['base_5fcolor_5f_0',['base_color_',['../class_tagging_widget.html#a4d2d007bdc2b04c09d035ef1330e9fa6',1,'TaggingWidget']]]
+  ['autofacetagprefix_0',['AutoFaceTagPrefix',['../namespace_luminism.html#af20f2964b3cbd8b89167bec425aef4d2',1,'Luminism']]]
 ];

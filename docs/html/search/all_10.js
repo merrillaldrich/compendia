@@ -1,15 +1,16 @@
 var searchData=
 [
-  ['setexifmap_0',['setExifMap',['../class_tagged_file.html#a66d61b158c4fd7c6d433684060ef5d33',1,'TaggedFile']]],
-  ['setfilenamefilter_1',['setFileNameFilter',['../class_luminism_core.html#aed94dc1d19284de5297c7af2aa3e998a',1,'LuminismCore']]],
-  ['setfiltercreationdate_2',['setFilterCreationDate',['../class_filter_proxy_model.html#afc9f487c037cdf1619d195639724113b',1,'FilterProxyModel']]],
-  ['setfolderfilter_3',['setFolderFilter',['../class_filter_proxy_model.html#a99ec3b50d952a2094bb4623c68221d1b',1,'FilterProxyModel::setFolderFilter()'],['../class_luminism_core.html#a311e4b07abafcd8e245026cff4470a10',1,'LuminismCore::setFolderFilter()']]],
-  ['setgeometry_4',['setGeometry',['../class_flow_layout.html#a64fb2f42cfdb3bcabf4d511092d032af',1,'FlowLayout']]],
-  ['setname_5',['setName',['../class_tag.html#a1cef34da4131dc5bd8bcc0869b22a492',1,'Tag::setName()'],['../class_tag_family.html#a8cb81c8dd65532fcf6552960fd515608',1,'TagFamily::setName()']]],
-  ['setnamefilter_6',['setNameFilter',['../class_filter_proxy_model.html#a4d7c210bd3074ee125fbb2770a5db80b',1,'FilterProxyModel']]],
-  ['setrootdirectory_7',['setRootDirectory',['../class_luminism_core.html#a5ee748e28577573181f5a442a71e2f29',1,'LuminismCore']]],
-  ['setrootfolder_8',['setRootFolder',['../class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706',1,'MainWindow']]],
-  ['sizehint_9',['sizeHint',['../class_flow_layout.html#a44acc6a84aaeee36b9d119096f6aa30c',1,'FlowLayout::sizeHint()'],['../class_tag_family_widget.html#a65fd9d6a1890df1c17dd6f3189502ef0',1,'TagFamilyWidget::sizeHint()'],['../class_tag_widget.html#a443ad3965b1d89f97363596f9b69b0ca',1,'TagWidget::sizeHint()'],['../class_variable_width_line_edit.html#a2194dc214a9e46dad84755dca46bd726',1,'VariableWidthLineEdit::sizeHint()']]],
-  ['sort_10',['sort',['../class_tag_container.html#a702b14de4154b65fabee32cd7fbc1c7a',1,'TagContainer::sort()'],['../class_tag_family_widget.html#a836ad04e06566ec7876ebe1c4c53dff0',1,'TagFamilyWidget::sort()']]],
-  ['startedit_11',['startEdit',['../class_tag_family_widget.html#a0362dccefca972b3bb87a8cb41a37104',1,'TagFamilyWidget::startEdit()'],['../class_tag_widget.html#a7599b830727af6e05d0e40be447f1342',1,'TagWidget::startEdit()']]]
+  ['readme_2emd_0',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
+  ['rect_1',['rect',['../struct_tag_rect_descriptor.html#ac41cf44ae6302c41e20e8de7723b9926',1,'TagRectDescriptor::rect'],['../class_tag_set.html#a15df06a91ca2a19ef000f0f5ddb1ebb7',1,'TagSet::rect']]],
+  ['rectchanged_2',['rectChanged',['../class_tag_rect_item.html#a9916fea46ff19a0ab4528837cff2ef7b',1,'TagRectItem']]],
+  ['refresh_3',['refresh',['../class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6',1,'TagContainer']]],
+  ['refreshnavtaglibrary_4',['refreshNavTagLibrary',['../class_main_window.html#aca5c9eb33d047612d55528a0abfd7d05',1,'MainWindow']]],
+  ['refreshtagassignmentarea_5',['refreshTagAssignmentArea',['../class_main_window.html#a3d32035c5a2e69fdb73b66bab8e62ca8',1,'MainWindow']]],
+  ['refreshtagfilterarea_6',['refreshTagFilterArea',['../class_main_window.html#ac5901d3d7006ac0f0114162453bff817',1,'MainWindow']]],
+  ['removetag_7',['removeTag',['../class_tagged_file.html#a1f4a54d6c439d062fbc0144494f44960',1,'TaggedFile']]],
+  ['removetagfilter_8',['removeTagFilter',['../class_filter_proxy_model.html#a2dee4b7929c110ee0f1f0d218eb794e6',1,'FilterProxyModel::removeTagFilter()'],['../class_luminism_core.html#a4372312da59031b44ef885ffaed656d1',1,'LuminismCore::removeTagFilter()']]],
+  ['residual_9',['residual',['../namespace_face_net.html#a8b0b044113ef4ef3d789f44f477c83e1',1,'FaceNet']]],
+  ['residual_5fdown_10',['residual_down',['../namespace_face_net.html#acc4302cb443b4f53da24d2a77c0dbb10',1,'FaceNet']]],
+  ['resizeevent_11',['resizeEvent',['../class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f',1,'MainWindow']]],
+  ['restartcolorsequence_12',['restartColorSequence',['../class_tag_family.html#acf9648243726db04d1233589fea6a7e1',1,'TagFamily']]]
 ];

@@ -152,6 +152,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header signals_class_tag_container"><td colspan="2" onclick="javascript:dynsection.toggleInherit('signals_class_tag_container')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Signals inherited from <a class="el" href="class_tag_container.html">TagContainer</a></td></tr>
 <tr class="memitem:a77602fc59503bc656061e5f1fc096791 inherit signals_class_tag_container" id="r_a77602fc59503bc656061e5f1fc096791"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#a77602fc59503bc656061e5f1fc096791">tagDeleteRequested</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 <tr class="memdesc:a77602fc59503bc656061e5f1fc096791 inherit signals_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user requests removal of a tag from this container.  <br /></td></tr>
+<tr class="memitem:aa0dd55fb9a844b51f3fd5c7638e23016 inherit signals_class_tag_container" id="r_aa0dd55fb9a844b51f3fd5c7638e23016"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#aa0dd55fb9a844b51f3fd5c7638e23016">tagNameChanged</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:aa0dd55fb9a844b51f3fd5c7638e23016 inherit signals_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when any tag displayed in this container has its name changed.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> container showing tags assigned to the current file selection, accepting tag drops. </p>
@@ -187,16 +189,6 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tag_assignment_container_a50559469a54b9da5d0889cf184d3d830_cgraph.png" border="0" usemap="#aclass_tag_assignment_container_a50559469a54b9da5d0889cf184d3d830_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tag_assignment_container_a50559469a54b9da5d0889cf184d3d830_cgraph" id="aclass_tag_assignment_container_a50559469a54b9da5d0889cf184d3d830_cgraph">
-<area shape="rect" title="Constructs an empty TagAssignmentContainer." alt="" coords="5,5,181,48"/>
-<area shape="rect" href="class_tag_container.html#afb444c43d124279f636dcb76b2dcc57d" title="Constructs an empty TagContainer." alt="" coords="229,13,412,40"/>
-<area shape="poly" title=" " alt="" coords="181,24,216,26,211,27,181,29"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -297,34 +289,6 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph.png" border="0" usemap="#aclass_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph" loading="lazy" alt=""/></div>
-<map name="aclass_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph" id="aclass_tag_assignment_container_acc294e5cea082d4375b9be7876b828de_cgraph">
-<area shape="rect" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,124,173,167"/>
-<area shape="rect" href="class_luminism_core.html#a9fe93be3e6f05b1d8901f307f09a0880" title="Applies a tag to all files currently visible in the filtered file list." alt="" coords="242,5,408,32"/>
-<area shape="poly" title=" " alt="" coords="110,122,158,81,188,60,219,42,238,36,234,39,222,46,191,64,161,85,114,125"/>
-<area shape="rect" href="class_tag_widget.html#a1d3fa53f2f5ad9b93b553431bce2c67b" title="Emitted when the user clicks the close button to remove the tag." alt="" coords="230,56,420,83"/>
-<area shape="poly" title=" " alt="" coords="140,121,220,92,249,86,244,89,221,97,143,126"/>
-<area shape="rect" href="class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="249,107,401,133"/>
-<area shape="poly" title=" " alt="" coords="172,134,236,128,231,131,174,139"/>
-<area shape="rect" href="class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title="Returns the Tag pointer this widget represents." alt="" coords="260,157,390,184"/>
-<area shape="poly" title=" " alt="" coords="173,152,247,161,242,163,174,157"/>
-<area shape="rect" href="class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3" title="Returns the TagFamily pointer this widget represents." alt="" coords="221,208,429,235"/>
-<area shape="poly" title=" " alt="" coords="142,164,221,193,249,203,244,204,220,199,142,170"/>
-<area shape="rect" href="class_tag_container.html#a6e7ec330ab93a0c21ec4e1f0864ad56f" title="Forwards a tag&#45;delete request up to the tagDeleteRequested signal." alt="" coords="235,259,414,301"/>
-<area shape="poly" title=" " alt="" coords="114,164,162,205,222,244,234,252,229,252,219,249,159,209,113,170"/>
-<area shape="rect" href="class_tagged_file.html#abbe4ad626b1573e223002a76f8afdc18" title="Adds a tag to this file and marks the file dirty." alt="" coords="522,5,657,32"/>
-<area shape="poly" title=" " alt="" coords="407,16,509,18,504,20,409,21"/>
-<area shape="rect" href="class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="538,81,641,108"/>
-<area shape="poly" title=" " alt="" coords="401,110,525,100,520,102,402,115"/>
-<area shape="rect" href="class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="518,132,661,159"/>
-<area shape="poly" title=" " alt="" coords="401,125,505,136,500,138,402,130"/>
-<area shape="rect" href="class_tag_container.html#a77602fc59503bc656061e5f1fc096791" title="Emitted when the user requests removal of a tag from this container." alt="" coords="477,267,702,293"/>
-<area shape="poly" title=" " alt="" coords="415,277,464,280,459,280,415,283"/>
-</map>
-</div>
 
 </div>
 </div>

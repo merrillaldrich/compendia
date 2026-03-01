@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['_7eflowlayout_0',['~FlowLayout',['../class_flow_layout.html#abcbfd03a4758b98bcf13d44f5e673551',1,'FlowLayout']]],
-  ['_7emainwindow_1',['~MainWindow',['../class_main_window.html#ae98d00a93bc118200eeef9f9bba1dba7',1,'MainWindow']]]
+  ['wheelevent_0',['wheelEvent',['../class_zoomable_graphics_view.html#ac9369ca9bad87c801280cb80268ded94',1,'ZoomableGraphicsView']]],
+  ['wrapfilename_1',['wrapFileName',['../class_file_name_delegate.html#a38fadee1df325e64aeeacc09fa73535d',1,'FileNameDelegate']]],
+  ['writefilemetadata_2',['writeFileMetadata',['../class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc',1,'LuminismCore']]]
 ];

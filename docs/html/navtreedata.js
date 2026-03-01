@@ -31,18 +31,40 @@ var NAVTREE =
       [ "Architecture", "md__c_l_a_u_d_e.html#autotoc_md3", null ],
       [ "Key dependencies", "md__c_l_a_u_d_e.html#autotoc_md4", null ]
     ] ],
-    [ "luminism", "md__r_e_a_d_m_e.html", null ],
+    [ "Luminism", "md__r_e_a_d_m_e.html", [
+      [ "Features", "md__r_e_a_d_m_e.html#autotoc_md7", [
+        [ "Browsing &amp; Preview", "md__r_e_a_d_m_e.html#autotoc_md8", null ],
+        [ "Tagging", "md__r_e_a_d_m_e.html#autotoc_md9", null ],
+        [ "Filtering", "md__r_e_a_d_m_e.html#autotoc_md10", null ],
+        [ "EXIF Metadata", "md__r_e_a_d_m_e.html#autotoc_md11", null ],
+        [ "Face Detection", "md__r_e_a_d_m_e.html#autotoc_md12", null ]
+      ] ],
+      [ "Architecture", "md__r_e_a_d_m_e.html#autotoc_md14", null ],
+      [ "Building", "md__r_e_a_d_m_e.html#autotoc_md16", [
+        [ "Prerequisites", "md__r_e_a_d_m_e.html#autotoc_md17", null ],
+        [ "Configure and build", "md__r_e_a_d_m_e.html#autotoc_md18", null ]
+      ] ],
+      [ "Tag persistence format", "md__r_e_a_d_m_e.html#autotoc_md20", null ],
+      [ "License", "md__r_e_a_d_m_e.html#autotoc_md22", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Variables", "namespacemembers_vars.html", null ],
+        [ "Typedefs", "namespacemembers_type.html", null ]
+      ] ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ]
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", "functions_func" ],
+        [ "Variables", "functions_vars.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -58,7 +80,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"tag_8cpp.html"
+"class_variable_width_line_edit.html#a71c9e0944213a1eda23cc43c8be2370d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

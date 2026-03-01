@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ui_0',['Ui',['../namespace_ui.html',1,'']]]
+  ['facenet_0',['FaceNet',['../namespace_face_net.html',1,'']]]
 ];

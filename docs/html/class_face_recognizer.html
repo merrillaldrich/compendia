@@ -93,7 +93,7 @@ $(function(){initNavTree('class_face_recognizer.html','','class_face_recognizer-
 </div><!--header-->
 <div class="contents">
 
-<p>Detects faces in a QImage using the dlib frontal-face detector.  
+<p>Detects and recognises faces across images using dlib's HOG detector and ResNet embeddings.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="facerecognizer_8h_source.html">facerecognizer.h</a>&gt;</code></p>
@@ -102,7 +102,7 @@ Inheritance diagram for FaceRecognizer:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_face_recognizer__inherit__graph.png" border="0" usemap="#a_face_recognizer_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_face_recognizer_inherit__map" id="a_face_recognizer_inherit__map">
-<area shape="rect" title="Detects faces in a QImage using the dlib frontal&#45;face detector." alt="" coords="5,80,122,107"/>
+<area shape="rect" title="Detects and recognises faces across images using dlib&#39;s HOG detector and ResNet embeddings." alt="" coords="5,80,122,107"/>
 <area shape="rect" title=" " alt="" coords="29,5,98,32"/>
 <area shape="poly" title=" " alt="" coords="65,46,66,80,61,79,62,50"/>
 </map>
@@ -112,7 +112,7 @@ Collaboration diagram for FaceRecognizer:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_face_recognizer__coll__graph.png" border="0" usemap="#a_face_recognizer_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_face_recognizer_coll__map" id="a_face_recognizer_coll__map">
-<area shape="rect" title="Detects faces in a QImage using the dlib frontal&#45;face detector." alt="" coords="5,80,122,107"/>
+<area shape="rect" title="Detects and recognises faces across images using dlib&#39;s HOG detector and ResNet embeddings." alt="" coords="5,80,122,107"/>
 <area shape="rect" title=" " alt="" coords="29,5,98,32"/>
 <area shape="poly" title=" " alt="" coords="65,46,66,80,61,79,62,50"/>
 </map>
@@ -120,14 +120,31 @@ Collaboration diagram for FaceRecognizer:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a45e0f83f81d46878069ce5cfbe47d27c" id="r_a45e0f83f81d46878069ce5cfbe47d27c"><td class="memItemLeft" align="right" valign="top">dlib::array2d&lt; dlib::rgb_pixel &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45e0f83f81d46878069ce5cfbe47d27c">qimageToDlibArray</a> (const QImage &amp;qimg)</td></tr>
+<tr class="memdesc:a45e0f83f81d46878069ce5cfbe47d27c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a QImage to a dlib RGB pixel array for use with the detector.  <br /></td></tr>
 <tr class="memitem:a1525ce62bb6ec64e80e81020f9874e88" id="r_a1525ce62bb6ec64e80e81020f9874e88"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1525ce62bb6ec64e80e81020f9874e88">FaceRecognizer</a> (QObject *parent=nullptr)</td></tr>
-<tr class="memdesc:a1525ce62bb6ec64e80e81020f9874e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_face_recognizer.html" title="Detects faces in a QImage using the dlib frontal-face detector.">FaceRecognizer</a>.  <br /></td></tr>
-<tr class="memitem:af93df5538e86dfc4d4baf33ea0eeba21" id="r_af93df5538e86dfc4d4baf33ea0eeba21"><td class="memItemLeft" align="right" valign="top">QImage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af93df5538e86dfc4d4baf33ea0eeba21">imageWithFaceBoxes</a> (QImage sourceImage)</td></tr>
-<tr class="memdesc:af93df5538e86dfc4d4baf33ea0eeba21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a copy of the source image with face bounding boxes drawn on it.  <br /></td></tr>
+<tr class="memdesc:a1525ce62bb6ec64e80e81020f9874e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_face_recognizer.html" title="Detects and recognises faces across images using dlib&#39;s HOG detector and ResNet embeddings.">FaceRecognizer</a>.  <br /></td></tr>
+<tr class="memitem:a116c5898ca709e6b7937584702b9791d" id="r_a116c5898ca709e6b7937584702b9791d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a116c5898ca709e6b7937584702b9791d">loadModels</a> (const QString &amp;modelsDir)</td></tr>
+<tr class="memdesc:a116c5898ca709e6b7937584702b9791d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the shape predictor and face recognition model from <code class="param">modelsDir</code>.  <br /></td></tr>
+<tr class="memitem:a91d83d0dd1b81751fa38d2ca3e5e6b0c" id="r_a91d83d0dd1b81751fa38d2ca3e5e6b0c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91d83d0dd1b81751fa38d2ca3e5e6b0c">modelsLoaded</a> () const</td></tr>
+<tr class="memdesc:a91d83d0dd1b81751fa38d2ca3e5e6b0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the model files have been loaded successfully.  <br /></td></tr>
+<tr class="memitem:a2101aef223e12cf1eb899617c40ec01d" id="r_a2101aef223e12cf1eb899617c40ec01d"><td class="memItemLeft" align="right" valign="top">QList&lt; QRectF &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2101aef223e12cf1eb899617c40ec01d">detectFaces</a> (const QImage &amp;sourceImage)</td></tr>
+<tr class="memdesc:a2101aef223e12cf1eb899617c40ec01d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs face detection on the source image and returns normalised bounding rectangles.  <br /></td></tr>
+<tr class="memitem:a2ea1f1c2df07cbfa97977ef9f8e4b6bf" id="r_a2ea1f1c2df07cbfa97977ef9f8e4b6bf"><td class="memItemLeft" align="right" valign="top">QVector&lt; QPair&lt; QRectF, dlib::matrix&lt; float, 0, 1 &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ea1f1c2df07cbfa97977ef9f8e4b6bf">detectFacesWithEmbeddings</a> (const QImage &amp;img)</td></tr>
+<tr class="memdesc:a2ea1f1c2df07cbfa97977ef9f8e4b6bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detects faces in <code class="param">img</code> and returns each face's normalised rect and embedding.  <br /></td></tr>
+<tr class="memitem:a54c8d6730fc07a45b820b98e9732cc9d" id="r_a54c8d6730fc07a45b820b98e9732cc9d"><td class="memItemLeft" align="right" valign="top">dlib::matrix&lt; float, 0, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54c8d6730fc07a45b820b98e9732cc9d">computeEmbeddingFromRegion</a> (const QImage &amp;img, const QRectF &amp;normalizedRect)</td></tr>
+<tr class="memdesc:a54c8d6730fc07a45b820b98e9732cc9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a face embedding for a user-drawn region in <code class="param">img</code>.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:af2c86b611c231f4e3b3b6b1d99410bba" id="r_af2c86b611c231f4e3b3b6b1d99410bba"><td class="memItemLeft" align="right" valign="top">static std::optional&lt; QVector&lt; QPair&lt; QRectF, dlib::matrix&lt; float, 0, 1 &gt; &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2c86b611c231f4e3b3b6b1d99410bba">loadDescriptorCache</a> (const QString &amp;imagePath)</td></tr>
+<tr class="memdesc:af2c86b611c231f4e3b3b6b1d99410bba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to load cached face descriptors for <code class="param">imagePath</code>.  <br /></td></tr>
+<tr class="memitem:afc739a15d79b3c598129ecfd2ec8c690" id="r_afc739a15d79b3c598129ecfd2ec8c690"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc739a15d79b3c598129ecfd2ec8c690">saveDescriptorCache</a> (const QString &amp;imagePath, const QVector&lt; QPair&lt; QRectF, dlib::matrix&lt; float, 0, 1 &gt; &gt; &gt; &amp;descriptors)</td></tr>
+<tr class="memdesc:afc739a15d79b3c598129ecfd2ec8c690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes face descriptors for <code class="param">imagePath</code> to the descriptor cache.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Detects faces in a QImage using the dlib frontal-face detector. </p>
-<p>Converts a QImage to the dlib pixel format, runs the HOG-based frontal face detector, and can return an annotated copy of the image with bounding boxes drawn around each detected face. </p>
+<div class="textblock"><p>Detects and recognises faces across images using dlib's HOG detector and ResNet embeddings. </p>
+<p>Converts QImages to the dlib pixel format, runs the HOG-based frontal face detector, aligns detected faces via a 5-point shape predictor, and computes 128-d embeddings using a pre-trained ResNet model. Results can be cached to disk to avoid redundant computation on repeated scans. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1525ce62bb6ec64e80e81020f9874e88" name="a1525ce62bb6ec64e80e81020f9874e88"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1525ce62bb6ec64e80e81020f9874e88">&#9670;&#160;</a></span>FaceRecognizer()</h2>
@@ -152,7 +169,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs a <a class="el" href="class_face_recognizer.html" title="Detects faces in a QImage using the dlib frontal-face detector.">FaceRecognizer</a>. </p>
+<p>Constructs a <a class="el" href="class_face_recognizer.html" title="Detects and recognises faces across images using dlib&#39;s HOG detector and ResNet embeddings.">FaceRecognizer</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">parent</td><td>Optional Qt parent object. </td></tr>
@@ -163,29 +180,243 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="af93df5538e86dfc4d4baf33ea0eeba21" name="af93df5538e86dfc4d4baf33ea0eeba21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af93df5538e86dfc4d4baf33ea0eeba21">&#9670;&#160;</a></span>imageWithFaceBoxes()</h2>
+<a id="a54c8d6730fc07a45b820b98e9732cc9d" name="a54c8d6730fc07a45b820b98e9732cc9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54c8d6730fc07a45b820b98e9732cc9d">&#9670;&#160;</a></span>computeEmbeddingFromRegion()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QImage FaceRecognizer::imageWithFaceBoxes </td>
+          <td class="memname">dlib::matrix&lt; float, 0, 1 &gt; FaceRecognizer::computeEmbeddingFromRegion </td>
           <td>(</td>
-          <td class="paramtype">QImage</td>          <td class="paramname"><span class="paramname"><em>sourceImage</em></span></td><td>)</td>
+          <td class="paramtype">const QImage &amp;</td>          <td class="paramname"><span class="paramname"><em>img</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QRectF &amp;</td>          <td class="paramname"><span class="paramname"><em>normalizedRect</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes a face embedding for a user-drawn region in <code class="param">img</code>. </p>
+<p>Runs the HOG detector and picks the detection with the best IoU against <code class="param">normalizedRect</code>. Falls back to a synthetic rectangle from <code class="param">normalizedRect</code> if no detection has IoU &gt; 0.3.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">img</td><td>The source image. </td></tr>
+    <tr><td class="paramname">normalizedRect</td><td>The user-drawn region in normalised image coordinates (0.0–1.0). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A 128-d embedding, or an empty matrix if the embedding could not be computed. </dd></dl>
+
+</div>
+</div>
+<a id="a2101aef223e12cf1eb899617c40ec01d" name="a2101aef223e12cf1eb899617c40ec01d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2101aef223e12cf1eb899617c40ec01d">&#9670;&#160;</a></span>detectFaces()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; QRectF &gt; FaceRecognizer::detectFaces </td>
+          <td>(</td>
+          <td class="paramtype">const QImage &amp;</td>          <td class="paramname"><span class="paramname"><em>sourceImage</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a copy of the source image with face bounding boxes drawn on it. </p>
+<p>Runs face detection on the source image and returns normalised bounding rectangles. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sourceImage</td><td>The image to run face detection on. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A copy of the source image annotated with green face rectangles. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A list of QRectF values, one per detected face, in normalised image coordinates (0.0–1.0). </dd></dl>
+
+</div>
+</div>
+<a id="a2ea1f1c2df07cbfa97977ef9f8e4b6bf" name="a2ea1f1c2df07cbfa97977ef9f8e4b6bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ea1f1c2df07cbfa97977ef9f8e4b6bf">&#9670;&#160;</a></span>detectFacesWithEmbeddings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVector&lt; QPair&lt; QRectF, dlib::matrix&lt; float, 0, 1 &gt; &gt; &gt; FaceRecognizer::detectFacesWithEmbeddings </td>
+          <td>(</td>
+          <td class="paramtype">const QImage &amp;</td>          <td class="paramname"><span class="paramname"><em>img</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Detects faces in <code class="param">img</code> and returns each face's normalised rect and embedding. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">img</td><td>The source image. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of (normalised QRectF, 128-d embedding) pairs, one per detected face. </dd></dl>
+
+</div>
+</div>
+<a id="af2c86b611c231f4e3b3b6b1d99410bba" name="af2c86b611c231f4e3b3b6b1d99410bba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2c86b611c231f4e3b3b6b1d99410bba">&#9670;&#160;</a></span>loadDescriptorCache()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; QVector&lt; QPair&lt; QRectF, dlib::matrix&lt; float, 0, 1 &gt; &gt; &gt; &gt; FaceRecognizer::loadDescriptorCache </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>imagePath</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Attempts to load cached face descriptors for <code class="param">imagePath</code>. </p>
+<p>The cache is considered valid only when the stored source_file_mtime matches the image file's current last-modified timestamp.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imagePath</td><td>Absolute path to the source image file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The cached descriptors on a cache hit; std::nullopt on a miss or stale cache. </dd></dl>
+
+</div>
+</div>
+<a id="a116c5898ca709e6b7937584702b9791d" name="a116c5898ca709e6b7937584702b9791d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a116c5898ca709e6b7937584702b9791d">&#9670;&#160;</a></span>loadModels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FaceRecognizer::loadModels </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>modelsDir</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads the shape predictor and face recognition model from <code class="param">modelsDir</code>. </p>
+<p>Expects the following files in <code class="param">modelsDir:</code> </p><ul>
+<li>shape_predictor_5_face_landmarks.dat</li>
+<li>dlib_face_recognition_resnet_model_v1.dat</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">modelsDir</td><td>Absolute path to the directory containing the .dat files. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success; false if any file is missing or fails to deserialize.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">modelsDir</td><td>Absolute path to the directory containing the .dat files. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success; false if any file is missing or fails to deserialize. </dd></dl>
+
+</div>
+</div>
+<a id="a91d83d0dd1b81751fa38d2ca3e5e6b0c" name="a91d83d0dd1b81751fa38d2ca3e5e6b0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d83d0dd1b81751fa38d2ca3e5e6b0c">&#9670;&#160;</a></span>modelsLoaded()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FaceRecognizer::modelsLoaded </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns true if the model files have been loaded successfully. </p>
+
+</div>
+</div>
+<a id="a45e0f83f81d46878069ce5cfbe47d27c" name="a45e0f83f81d46878069ce5cfbe47d27c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45e0f83f81d46878069ce5cfbe47d27c">&#9670;&#160;</a></span>qimageToDlibArray()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">dlib::array2d&lt; dlib::rgb_pixel &gt; FaceRecognizer::qimageToDlibArray </td>
+          <td>(</td>
+          <td class="paramtype">const QImage &amp;</td>          <td class="paramname"><span class="paramname"><em>qimg</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts a QImage to a dlib RGB pixel array for use with the detector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">qimg</td><td>The source QImage (any format; will be converted internally to RGB888). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A dlib array2d of rgb_pixel values. </dd></dl>
+
+</div>
+</div>
+<a id="afc739a15d79b3c598129ecfd2ec8c690" name="afc739a15d79b3c598129ecfd2ec8c690"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc739a15d79b3c598129ecfd2ec8c690">&#9670;&#160;</a></span>saveDescriptorCache()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::saveDescriptorCache </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>imagePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVector&lt; QPair&lt; QRectF, dlib::matrix&lt; float, 0, 1 &gt; &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>descriptors</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Writes face descriptors for <code class="param">imagePath</code> to the descriptor cache. </p>
+<p>The cache file is written into the .luminism_cache sub-directory next to the image file. The directory is created if it does not exist.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imagePath</td><td>Absolute path to the source image file. </td></tr>
+    <tr><td class="paramname">descriptors</td><td>The (normalised rect, embedding) pairs to cache. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

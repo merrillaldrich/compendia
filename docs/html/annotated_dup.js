@@ -1,10 +1,14 @@
 var annotated_dup =
 [
     [ "ClickableLabel", "class_clickable_label.html", "class_clickable_label" ],
+    [ "DateFilterButton", "class_date_filter_button.html", "class_date_filter_button" ],
     [ "ExifParser", "class_exif_parser.html", "class_exif_parser" ],
+    [ "FaceDescriptor", "struct_face_descriptor.html", "struct_face_descriptor" ],
     [ "FaceRecognizer", "class_face_recognizer.html", "class_face_recognizer" ],
+    [ "FileNameDelegate", "class_file_name_delegate.html", "class_file_name_delegate" ],
     [ "FilterProxyModel", "class_filter_proxy_model.html", "class_filter_proxy_model" ],
     [ "FlowLayout", "class_flow_layout.html", "class_flow_layout" ],
+    [ "FolderFilterLineEdit", "class_folder_filter_line_edit.html", "class_folder_filter_line_edit" ],
     [ "IconGenerator", "class_icon_generator.html", "class_icon_generator" ],
     [ "LuminismCore", "class_luminism_core.html", "class_luminism_core" ],
     [ "MainWindow", "class_main_window.html", "class_main_window" ],
@@ -19,6 +23,8 @@ var annotated_dup =
     [ "TaggableListView", "class_taggable_list_view.html", "class_taggable_list_view" ],
     [ "TaggedFile", "class_tagged_file.html", "class_tagged_file" ],
     [ "TaggingWidget", "class_tagging_widget.html", "class_tagging_widget" ],
+    [ "TagRectDescriptor", "struct_tag_rect_descriptor.html", "struct_tag_rect_descriptor" ],
+    [ "TagRectItem", "class_tag_rect_item.html", "class_tag_rect_item" ],
     [ "TagSet", "class_tag_set.html", "class_tag_set" ],
     [ "TagWidget", "class_tag_widget.html", "class_tag_widget" ],
     [ "TagWidgetCloseButton", "class_tag_widget_close_button.html", "class_tag_widget_close_button" ],
