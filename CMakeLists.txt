@@ -94,6 +94,34 @@ endif()
 add_subdirectory(3rdParty/src/dlib)
 target_link_libraries(luminism PRIVATE dlib)
 
+# facerecognizer.cpp instantiates dlib's DNN templates, which generate an object
+# file with more than 65 535 COFF sections on Windows — exceeding the default
+# 32-bit PE/COFF limit.  Enable the extended ("big") object format for that
+# single translation unit to avoid the "file too big" assembler error.
+if (MSVC)
+    set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "/bigobj;/O2")
+else()
+    # -Wa,-mbig-obj : switch the assembler to extended COFF (section count > 65535)
+    # -O2           : aggressive inlining collapses per-instantiation functions,
+    #                 drastically reducing the number of .xdata$ COMDAT sections
+    # -g0           : disable debug-info emission for this file so the section-name
+    #                 string table stays well under the GNU assembler's 268 MB limit
+    set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "-Wa,-mbig-obj;-O2;-g0")
+endif()
+
+# ---------------------------------------------------------------------------
+# Face recognition model files (not part of the build — user must supply them)
+# ---------------------------------------------------------------------------
+# The cross-image face recognition feature (Find Faces menu action) requires two
+# pre-trained dlib model files downloaded separately from http://dlib.net/files/
+# and placed in a "models/" sub-directory next to the built executable:
+#
+#   models/shape_predictor_5_face_landmarks.dat       (~9.5 MB)
+#   models/dlib_face_recognition_resnet_model_v1.dat  (~21 MB)
+#
+# If these files are absent the action shows an informative warning and exits early.
+# ---------------------------------------------------------------------------
+
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent)

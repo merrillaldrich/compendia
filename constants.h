@@ -15,6 +15,15 @@ constexpr const char* CacheFolderName = ".luminism_cache";
 /*! \brief Default normalized side length for a manually dropped tag region. */
 constexpr qreal DefaultTagRectSize = 0.15;
 
+/*! \brief Filename suffix for the per-image face-descriptor cache file. */
+constexpr const char* FaceDescriptorCacheSuffix = "-face-descriptors.json";
+
+/*! \brief Prefix shared by all auto-detected face tags created during a recognition sweep. */
+constexpr const char* AutoFaceTagPrefix = "Auto Detected Face ";
+
+/*! \brief Maximum L2 distance between two face embeddings to be considered the same person. */
+constexpr double FaceMatchThreshold = 0.6;
+
 } // namespace Luminism
 
 #endif // CONSTANTS_H

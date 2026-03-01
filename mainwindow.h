@@ -32,6 +32,7 @@ private:
     Ui::MainWindow *ui;
     QProgressBar* progress_bar_;
     QLabel* progress_label_;
+    FaceRecognizer* face_recognizer_ = nullptr;
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
@@ -82,6 +83,15 @@ private:
      * \return \c true if loading should proceed; \c false if the user cancelled.
      */
     bool confirmCacheFolder(const QString &folder);
+
+    /*! \brief Lazily constructs face_recognizer_ and loads the DNN model files.
+     *
+     * Resolves the models/ directory from the application's executable directory,
+     * shows a QMessageBox with download instructions if the model files are absent.
+     *
+     * \return \c true if the recognizer is ready; \c false if model loading failed.
+     */
+    bool ensureFaceRecognizerLoaded();
 
     /*! \brief Validates that \p folder is a non-empty, existing, readable directory.
      *

@@ -1,13 +1,18 @@
 #include "mainwindow.h"
 #include "constants.h"
 
+#include <limits>
+
 #include <QCheckBox>
+#include <QCoreApplication>
 #include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QDebug>
+#include <QImageReader>
+#include <QProgressDialog>
 
 #include "./ui_mainwindow.h"
 #include "luminismcore.h"
@@ -587,54 +592,160 @@ void MainWindow::onMetadataSaved(){
     }
 }
 
-/*! \brief Runs face detection on every selected image and stores face regions as tagged rectangles. */
-void MainWindow::on_actionFind_Faces_triggered(){
+/*! \brief Lazily constructs face_recognizer_ and loads the DNN model files.
+ *
+ * Resolves the models/ directory from the application's executable directory,
+ * shows a QMessageBox with download instructions if the model files are absent.
+ *
+ * \return \c true if the recognizer is ready; \c false if model loading failed.
+ */
+bool MainWindow::ensureFaceRecognizerLoaded()
+{
+    if (!face_recognizer_)
+        face_recognizer_ = new FaceRecognizer(this);
 
-    FaceRecognizer fr(this);
+    if (face_recognizer_->modelsLoaded())
+        return true;
 
-    QItemSelectionModel *selModel = ui->fileListView->selectionModel();
-    QModelIndexList selectedIndexes = selModel->selectedRows();
+    QString modelsDir = QCoreApplication::applicationDirPath() + "/models";
+    if (face_recognizer_->loadModels(modelsDir))
+        return true;
 
-    if (selectedIndexes.isEmpty())
+    QMessageBox::warning(this, "Face Recognition Models Not Found",
+        "Face recognition requires two model files in the \"models\" folder "
+        "next to the application executable:\n\n"
+        "  shape_predictor_5_face_landmarks.dat  (~9.5 MB)\n"
+        "  dlib_face_recognition_resnet_model_v1.dat  (~21 MB)\n\n"
+        "Download them from http://dlib.net/files/ and place them in:\n"
+        + modelsDir);
+    return false;
+}
+
+/*! \brief Cross-image face recognition sweep across all loaded image files.
+ *
+ * Four phases:
+ *   1. Seed known-person embeddings from user-labeled tag regions.
+ *   2. Clear all previous auto-detected face tags from every file.
+ *   3. Scan every image file: load or compute face embeddings, match against
+ *      known faces (threshold 0.6), assign matched tags or create new auto tags.
+ *   4. Refresh the tag library and assignment UI areas.
+ */
+void MainWindow::on_actionFind_Faces_triggered()
+{
+    if (!ensureFaceRecognizerLoaded())
         return;
+
+    QStandardItemModel* model = core->getItemModel();
+    const int rowCount = model->rowCount();
 
     static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
 
-    for (const QModelIndex &proxyIndex : selectedIndexes) {
+    // Collect all TaggedFiles up front
+    QVector<TaggedFile*> allFiles;
+    allFiles.reserve(rowCount);
+    for (int r = 0; r < rowCount; ++r) {
+        TaggedFile* tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf)
+            allFiles.append(tf);
+    }
 
-        QModelIndex sourceIndex = core->getItemModelProxy()->mapToSource(proxyIndex);
-        QVariant var = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
-        TaggedFile* itemAsTaggedFile = var.value<TaggedFile*>();
+    QProgressDialog progress("Scanning for faces...", "Cancel", 0, allFiles.size(), this);
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setMinimumDuration(0);
+    progress.setValue(0);
 
-        if (videoExts.contains(QFileInfo(itemAsTaggedFile->fileName).suffix().toLower()))
-            continue;
-
-        QImageReader ir(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
-        ir.setAutoTransform(true);
-        QImage sourceImage = ir.read();
-        if (sourceImage.isNull()) {
-            QMessageBox::critical(this, "Error", "Failed to load image: " + ir.errorString());
-            continue;
-        }
-
-        // Remove any previously auto-located face tags from this file
-        QSet<Tag*> toRemove;
-        for (Tag* t : *itemAsTaggedFile->tags()) {
-            if (t->tagFamily->getName() == "People" && t->getName().startsWith("AutoLocatedFace"))
-                toRemove.insert(t);
-        }
-        for (Tag* t : toRemove)
-            itemAsTaggedFile->removeTag(t);
-
-        // Detect faces and assign a numbered tag with rect for each one
-        const QList<QRectF> faces = fr.detectFaces(sourceImage);
-        for (int i = 0; i < faces.size(); ++i) {
-            QString tagName = QString("AutoLocatedFace%1").arg(i + 1, 2, 10, QChar('0'));
-            Tag* tag = core->addLibraryTag("People", tagName);
-            itemAsTaggedFile->addTag(tag, faces[i]);
+    // ----- Phase 1: Seed known-person embeddings from user-labeled regions -----
+    QVector<FaceDescriptor> knownFaces;
+    for (TaggedFile* tf : allFiles) {
+        for (Tag* tag : *tf->tags()) {
+            if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
+                continue;
+            auto r = tf->tagRect(tag);
+            if (!r.has_value())
+                continue;
+            QImageReader ir(tf->filePath + "/" + tf->fileName);
+            ir.setAutoTransform(true);
+            QImage img = ir.read();
+            if (img.isNull())
+                continue;
+            dlib::matrix<float,0,1> emb =
+                face_recognizer_->computeEmbeddingFromRegion(img, r.value());
+            if (emb.size() == 0)
+                continue;
+            knownFaces.append({emb, tag});
         }
     }
 
+    // ----- Phase 2: Clear all previous auto-detected face tags -----
+    for (TaggedFile* tf : allFiles) {
+        QSet<Tag*> toRemove;
+        for (Tag* t : *tf->tags()) {
+            if (t->getName().startsWith(Luminism::AutoFaceTagPrefix))
+                toRemove.insert(t);
+        }
+        for (Tag* t : toRemove)
+            tf->removeTag(t);
+    }
+
+    // ----- Phase 3: Recognition sweep across all image files -----
+    int autoFaceCounter = 1;
+    for (int i = 0; i < allFiles.size(); ++i) {
+        if (progress.wasCanceled())
+            break;
+        progress.setValue(i);
+        QCoreApplication::processEvents();
+
+        TaggedFile* tf = allFiles[i];
+        if (videoExts.contains(QFileInfo(tf->fileName).suffix().toLower()))
+            continue;
+
+        QString imagePath = tf->filePath + "/" + tf->fileName;
+
+        // Try the descriptor cache first
+        auto cached = FaceRecognizer::loadDescriptorCache(imagePath);
+        QVector<QPair<QRectF, dlib::matrix<float,0,1>>> faces;
+        if (cached.has_value()) {
+            faces = cached.value();
+        } else {
+            QImageReader ir(imagePath);
+            ir.setAutoTransform(true);
+            QImage img = ir.read();
+            if (img.isNull())
+                continue;
+            faces = face_recognizer_->detectFacesWithEmbeddings(img);
+            FaceRecognizer::saveDescriptorCache(imagePath, faces);
+        }
+
+        for (const auto &[rect, embedding] : faces) {
+            // Find the closest known face by Euclidean distance
+            double minDist = std::numeric_limits<double>::max();
+            Tag*   bestTag = nullptr;
+            for (const FaceDescriptor &fd : knownFaces) {
+                double dist = dlib::length(fd.embedding - embedding);
+                if (dist < minDist) {
+                    minDist = dist;
+                    bestTag = fd.tag;
+                }
+            }
+
+            if (minDist < Luminism::FaceMatchThreshold && bestTag != nullptr) {
+                // Recognised person — assign the existing tag with this rect
+                tf->addTag(bestTag, rect);
+            } else {
+                // New person — create a sequential auto tag and seed future matching
+                QString tagName = QString("%1%2")
+                    .arg(Luminism::AutoFaceTagPrefix)
+                    .arg(autoFaceCounter++, 2, 10, QChar('0'));
+                Tag* newTag = core->addLibraryTag("People", tagName);
+                tf->addTag(newTag, rect);
+                knownFaces.append({embedding, newTag});
+            }
+        }
+    }
+
+    progress.setValue(allFiles.size());
+
+    // ----- Phase 4: Refresh UI -----
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
 }
