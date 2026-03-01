@@ -138,15 +138,14 @@ public:
             setAcceptHoverEvents(true);
     }
 
-    /*! \brief Returns the bounding rect, expanded by the hit margin and the folder-tab
-     *  height above the top edge. */
+    /*! \brief Returns the bounding rect, expanded by the hit margin and the actual
+     *  folder-tab geometry above and (when the label is wide) to the right. */
     QRectF boundingRect() const override
     {
         qreal m = interactive_ ? hitMargin() : 1.0;
-        qreal s = (scene() && !scene()->views().isEmpty())
-                  ? scene()->views().first()->transform().m11() : 1.0;
-        if (s <= 0.0) s = 1.0;
-        return rect_.adjusted(-m, -m - kTabPx / s, m, m);
+        // Unite the main rect with the tab rect so the bounding box covers the
+        // full painted area including any tab overhang to the right of rect_.
+        return rect_.united(tabSceneRect()).adjusted(-m, -m, m, m);
     }
 
     /*! \brief Paints the rounded rectangle and the filled folder-tab above the top-left
