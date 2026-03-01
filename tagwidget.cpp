@@ -124,18 +124,41 @@ void TagWidget::startEdit(){
     line_edit_->setFocus();
 }
 
-/*! \brief Commits the edited name to the Tag and switches back to read mode. */
+/*! \brief Commits the edited name to the Tag and switches back to read mode.
+ *
+ * If the new name matches an existing tag in the same family, the two tags are
+ * merged (this tag is folded into the pre-existing one) rather than creating a
+ * duplicate.
+ */
 void TagWidget::endEdit(){
 
     edit_status_ = "Read";
-    tag_->setName(line_edit_->text());
+
+    MainWindow* mainWin = qobject_cast<MainWindow*>(this->window());
+    const QString newName = line_edit_->text();
+
+    // --- Collision / merge check ---
+    Tag* collision = mainWin
+        ? mainWin->core->getTag(tag_->tagFamily->getName(), newName)
+        : nullptr;
+    if (collision && collision != tag_) {
+        // Disconnect before merge so a nameChanged on the dying object
+        // does not fire into this already-departing widget.
+        disconnect(tag_, &Tag::nameChanged, this, &TagWidget::onTagNameChanged);
+        mainWin->core->mergeTag(tag_, collision);
+        // tag_ is now scheduled for deletion; this widget is removed by the
+        // library refresh triggered inside mergeTag → tagLibraryChanged.
+        return;
+    }
+
+    // --- Normal rename ---
+    tag_->setName(newName);
 
     // If this tag isn't represented in the library then add it.
     // Should happen once on creation; After that edits already apply
     // in the library because this is holding a pointer
 
     if(! in_library_) {
-        MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
         mainWin->core->addLibraryTag(tag_);
         in_library_ = true;
     }

@@ -70,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusBar->addPermanentWidget(progress_bar_);
     connect(core, &LuminismCore::iconUpdated, this, &MainWindow::onIconUpdated);
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
+    connect(core, &LuminismCore::tagLibraryChanged, this, &MainWindow::onTagLibraryChanged);
     connect(ui->navLibraryContainer,          &TagContainer::tagNameChanged,
             this, &MainWindow::onTagNameChanged);
     connect(ui->fileListTagAssignmentContainer, &TagContainer::tagNameChanged,
@@ -311,6 +312,14 @@ void MainWindow::onTagNameChanged(Tag* tag)
     }
     ui->previewContainer->setTagRects(tagRects);
     ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
+}
+
+/*! \brief Refreshes all tag-related containers after a merge changes the library. */
+void MainWindow::onTagLibraryChanged()
+{
+    refreshNavTagLibrary();
+    refreshTagAssignmentArea();
+    refreshTagFilterArea();
 }
 
 /*! \brief Rebuilds the tag-filter area from the currently active filter tags. */

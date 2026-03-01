@@ -145,17 +145,41 @@ void TagFamilyWidget::startEdit(){
     line_edit_->setFocus();
 }
 
-/*! \brief Commits the edited family name and switches back to read mode. */
+/*! \brief Commits the edited family name and switches back to read mode.
+ *
+ * If the new name matches an existing tag family, the two families are merged
+ * (this family is folded into the pre-existing one) rather than creating a
+ * duplicate.
+ */
 void TagFamilyWidget::endEdit(){
     edit_status_ = "Read";
-    tag_family_->setName(line_edit_->text());
+
+    MainWindow* mainWin = qobject_cast<MainWindow*>(this->window());
+    const QString newName = line_edit_->text();
+
+    // --- Collision / merge check ---
+    TagFamily* collision = mainWin
+        ? mainWin->core->getTagFamily(newName)
+        : nullptr;
+    if (collision && collision != tag_family_) {
+        // Disconnect before merge so a nameChanged on the dying object
+        // does not fire into this already-departing widget.
+        disconnect(tag_family_, &TagFamily::nameChanged,
+                   this, &TagFamilyWidget::onTagFamilyNameChanged);
+        mainWin->core->mergeTagFamily(tag_family_, collision);
+        // This widget (and tag_family_) are scheduled for deletion by the
+        // library refresh triggered inside mergeTagFamily → tagLibraryChanged.
+        return;
+    }
+
+    // --- Normal rename ---
+    tag_family_->setName(newName);
 
     // If this tagfamily isn't represented in the library then add it.
     // Should happen once on creation; After that edits already apply
     // in the library because this is holding a pointer
 
     if(! in_library_) {
-        MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
         mainWin->core->addLibraryTagFamily(tag_family_);
         in_library_ = true;
     }

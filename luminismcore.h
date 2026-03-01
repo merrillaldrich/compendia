@@ -272,6 +272,14 @@ public:
      */
     QList<TagSet> parseTagJson(QJsonObject tagsJson, QJsonObject tagRectsJson = QJsonObject());
 
+    /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
+     *  Emits tagLibraryChanged() when done. */
+    void mergeTag(Tag* from, Tag* into);
+
+    /*! \brief Merges all tags of family \a from into family \a into, handling per-tag collisions
+     *  recursively, then removes and schedules \a from for deletion. Emits tagLibraryChanged(). */
+    void mergeTagFamily(TagFamily* from, TagFamily* into);
+
 public slots:
 
     /*! \brief Starts the UI flush timer if it is not already running.
@@ -286,6 +294,8 @@ signals:
     void iconUpdated();
     /*! \brief Emitted each time a sidecar metadata file is written successfully. */
     void metadataSaved();
+    /*! \brief Emitted after a tag or tag-family merge alters the library. */
+    void tagLibraryChanged();
 };
 
 #endif // LUMINISMCORE_H

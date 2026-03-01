@@ -713,6 +713,70 @@ void LuminismCore::removeTagFilter(Tag* tag){
     tagged_files_proxy_->removeTagFilter(tag);
 }
 
+/*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
+ *  Emits tagLibraryChanged() when done.
+ *
+ * \param from The Tag to be removed after merging.
+ * \param into The Tag that survives the merge and receives all file/filter references.
+ */
+void LuminismCore::mergeTag(Tag* from, Tag* into)
+{
+    // Re-route every file that carries 'from'
+    for (int row = 0; row < tagged_files_->rowCount(); ++row) {
+        QStandardItem* item = tagged_files_->item(row);
+        TaggedFile* tf = item->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf || !tf->tags()->contains(from))
+            continue;
+        // Transfer the bounding rect if 'into' has none yet
+        auto fromRect = tf->tagRect(from);
+        tf->removeTag(from);
+        if (!tf->tags()->contains(into)) {
+            if (fromRect.has_value())
+                tf->addTag(into, fromRect.value());
+            else
+                tf->addTag(into);
+        }
+    }
+
+    // Replace 'from' in the active filter set if it is a filter
+    if (getFilterTags()->contains(from)) {
+        removeTagFilter(from);
+        if (!getFilterTags()->contains(into))
+            addTagFilter(into);
+    }
+
+    tags_->remove(from);
+    from->deleteLater();
+    emit tagLibraryChanged();
+}
+
+/*! \brief Merges all tags of family \a from into family \a into, handling per-tag collisions
+ *  recursively, then removes and schedules \a from for deletion. Emits tagLibraryChanged().
+ *
+ * \param from The TagFamily to be removed after merging.
+ * \param into The TagFamily that survives and receives all tags.
+ */
+void LuminismCore::mergeTagFamily(TagFamily* from, TagFamily* into)
+{
+    // Iterate a snapshot because mergeTag may modify tags_
+    QList<Tag*> tagSnapshot(tags_->begin(), tags_->end());
+    for (Tag* t : tagSnapshot) {
+        if (t->tagFamily != from)
+            continue;
+        // Look for a same-name tag already in 'into'
+        Tag* collision = getTag(into->getName(), t->getName());
+        if (collision) {
+            mergeTag(t, collision);   // handles file re-routing and deletion
+        } else {
+            t->tagFamily = into;
+        }
+    }
+
+    tag_families_->remove(from);
+    from->deleteLater();
+    emit tagLibraryChanged();
+}
+
 /*! \brief Parses a JSON object of tag-family to tag-name arrays into a TagSet list.
  *
  * \param tagsJson     A JSON object mapping family name strings to arrays of tag name strings.

@@ -233,6 +233,9 @@ private slots:
      */
     void onTagNameChanged(Tag* tag);
 
+    /*! \brief Refreshes all tag-related containers after a merge changes the library. */
+    void onTagLibraryChanged();
+
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
      *
