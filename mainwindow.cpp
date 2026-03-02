@@ -548,6 +548,7 @@ void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
 void MainWindow::on_fileListTagAssignmentContainer_tagDeleteRequested(Tag* tag){
     core->unapplyTag(tag);
     refreshTagAssignmentArea();
+    onTagNameChanged(nullptr);  // refresh preview tag-region overlays if the current image was affected
 }
 
 /*! \brief Removes a tag from the active filter set when a filter-remove is requested.
