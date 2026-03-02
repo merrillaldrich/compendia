@@ -1,5 +1,42 @@
 #include "taggedfile.h"
 
+#include <QRegularExpression>
+
+/*! \brief Searches \p baseName for an embedded timestamp and converts it to a QDateTime.
+ *
+ * Looks for a run of exactly 14 or 8 consecutive digits that appears at the start of
+ * \p baseName or immediately after a non-digit character, and whose first four digits
+ * form a year in the range 2000–2999.  14-digit sequences are interpreted as
+ * YYYYMMDDHHmmss; 8-digit sequences as YYYYMMDD with a noon (12:00:00) time component.
+ * At each candidate position the 14-digit alternative is tested first, so a full
+ * timestamp always wins over a date-only prefix.
+ *
+ * \param baseName File base name (without extension) to search.
+ * \return A valid QDateTime on success; an invalid QDateTime when no match is found.
+ */
+static QDateTime inferDateTimeFromFileName(const QString &baseName)
+{
+    static const QRegularExpression re(
+        R"((?:^|(?<=[^\d]))(\d{14}|\d{8})(?=[^\d]|$))");
+    QRegularExpressionMatchIterator it = re.globalMatch(baseName);
+    while (it.hasNext()) {
+        QString seq = it.next().captured(1);
+        int year = seq.left(4).toInt();
+        if (year < 2000 || year > 2999)
+            continue;
+        if (seq.length() == 14) {
+            QDateTime dt = QDateTime::fromString(seq, "yyyyMMddHHmmss");
+            if (dt.isValid())
+                return dt;
+        } else {
+            QDate d = QDate::fromString(seq, "yyyyMMdd");
+            if (d.isValid())
+                return QDateTime(d, QTime(12, 0, 0));
+        }
+    }
+    return QDateTime();
+}
+
 /*! \brief Constructs a default, empty TaggedFile.
  *
  * \param parent Optional Qt parent object.
@@ -22,6 +59,7 @@ TaggedFile::TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QMap<QString, QStri
     this->fileName = fileInfo.fileName();
     this->fileCreationDateTime = fileInfo.birthTime();
     this->fileModificationDateTime = fileInfo.lastModified();
+    this->fileNameInferredDate = inferDateTimeFromFileName(fileInfo.completeBaseName());
     this->tags_ = tags;
 }
 

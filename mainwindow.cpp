@@ -348,6 +348,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         ui->previewImageCapturedValue->setText("-");
         ui->previewFileCreatedValue->setText("-");
         ui->previewFileModifiedValue->setText("-");
+        ui->previewFileNameTimestampValue->setText("-");
         ui->previewFileTagsValue->setText("-");
         ui->previewExifValue->setText("-");
     }
@@ -382,6 +383,10 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
             ui->previewImageCapturedValue->setText(locale.toString(itemAsTaggedFile->imageCaptureDateTime, QLocale::ShortFormat));
         ui->previewFileCreatedValue->setText(locale.toString(itemAsTaggedFile->fileCreationDateTime, QLocale::ShortFormat));
         ui->previewFileModifiedValue->setText(locale.toString(itemAsTaggedFile->fileModificationDateTime, QLocale::ShortFormat));
+        ui->previewFileNameTimestampValue->setText(
+            itemAsTaggedFile->fileNameInferredDate.isValid()
+                ? locale.toString(itemAsTaggedFile->fileNameInferredDate, QLocale::ShortFormat)
+                : "-");
 
         QString tagText("");
         QMap<QString, QList<QString>> dict;

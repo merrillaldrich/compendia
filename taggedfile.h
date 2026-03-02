@@ -37,6 +37,15 @@ public:
     QDateTime fileCreationDateTime;
     QDateTime fileModificationDateTime;
 
+    /*! \brief Date/time inferred from a timestamp embedded in the file name, if present.
+     *
+     * Populated at construction time by scanning the file's base name for an 8-digit
+     * (YYYYMMDD) or 14-digit (YYYYMMDDHHmmss) numeric sequence whose first four digits
+     * form a year in the range 2000–2999.  8-digit matches are given a noon (12:00:00)
+     * time component.  Remains invalid when no qualifying sequence is found.
+     */
+    QDateTime fileNameInferredDate;
+
     /*! \brief Constructs a default, empty TaggedFile.
      *
      * \param parent Optional Qt parent object.
