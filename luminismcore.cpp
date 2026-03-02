@@ -661,7 +661,8 @@ void LuminismCore::setCreationDateFilter(QDate date) {
 /*! \brief Returns a chronologically sorted list of unique effective dates across all loaded files.
  *
  * Each file's effective date is its EXIF capture date when present, falling back to the
- * filesystem creation date.  Used to populate the date-filter autocomplete.
+ * filename-inferred date, then the filesystem creation date.
+ * Used to populate the date-filter autocomplete.
  */
 QList<QDate> LuminismCore::getFileDates() const
 {
@@ -671,7 +672,9 @@ QList<QDate> LuminismCore::getFileDates() const
         if (!tf) continue;
         QDate d = tf->imageCaptureDateTime.isValid()
             ? tf->imageCaptureDateTime.date()
-            : tf->fileCreationDateTime.date();
+            : tf->fileNameInferredDate.isValid()
+                ? tf->fileNameInferredDate.date()
+                : tf->fileCreationDateTime.date();
         if (d.isValid())
             seen.insert(d);
     }
