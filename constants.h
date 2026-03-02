@@ -24,6 +24,13 @@ constexpr const char* AutoFaceTagPrefix = "Auto Detected Face ";
 /*! \brief Maximum L2 distance between two face embeddings to be considered the same person. */
 constexpr double FaceMatchThreshold = 0.6;
 
+/*! \brief Maximum number of auto-detected faces tagged per image during a recognition sweep.
+ *
+ *  Prevents crowd or large-group photos from flooding the library with dozens of
+ *  auto-generated tags that the user is unlikely to label or care about.
+ */
+constexpr int MaxAutoFacesPerImage = 5;
+
 } // namespace Luminism
 
 #endif // CONSTANTS_H

@@ -764,6 +764,7 @@ void MainWindow::on_actionFind_Faces_triggered()
             FaceRecognizer::saveDescriptorCache(imagePath, faces);
         }
 
+        int autoFacesTaggedThisImage = 0;
         for (const auto &[rect, embedding] : faces) {
             // Find the closest known face by Euclidean distance
             double minDist = std::numeric_limits<double>::max();
@@ -776,17 +777,32 @@ void MainWindow::on_actionFind_Faces_triggered()
                 }
             }
 
-            if (minDist < Luminism::FaceMatchThreshold && bestTag != nullptr) {
-                // Recognised person — assign the existing tag with this rect
+            const bool isUserNamedMatch = minDist < Luminism::FaceMatchThreshold
+                                          && bestTag != nullptr
+                                          && !bestTag->getName().startsWith(Luminism::AutoFaceTagPrefix);
+
+            if (isUserNamedMatch) {
+                // Always tag faces that match a user-named person, regardless of limit
                 tf->addTag(bestTag, rect);
             } else {
-                // New person — create a sequential auto tag and seed future matching
-                QString tagName = QString("%1%2")
-                    .arg(Luminism::AutoFaceTagPrefix)
-                    .arg(autoFaceCounter++, 2, 10, QChar('0'));
-                Tag* newTag = core->addLibraryTag("People", tagName);
-                tf->addTag(newTag, rect);
-                knownFaces.append({embedding, newTag});
+                // Auto-named match or unrecognised — apply the per-image limit.
+                // Use continue (not break) so later faces can still match user-named tags.
+                if (autoFacesTaggedThisImage >= Luminism::MaxAutoFacesPerImage)
+                    continue;
+
+                if (minDist < Luminism::FaceMatchThreshold && bestTag != nullptr) {
+                    // Recognised, but matched an auto-named tag
+                    tf->addTag(bestTag, rect);
+                } else {
+                    // New person — create a sequential auto tag and seed future matching
+                    QString tagName = QString("%1%2")
+                        .arg(Luminism::AutoFaceTagPrefix)
+                        .arg(autoFaceCounter++, 2, 10, QChar('0'));
+                    Tag* newTag = core->addLibraryTag("People", tagName);
+                    tf->addTag(newTag, rect);
+                    knownFaces.append({embedding, newTag});
+                }
+                ++autoFacesTaggedThisImage;
             }
         }
     }
