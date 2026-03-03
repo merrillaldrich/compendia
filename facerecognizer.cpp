@@ -33,6 +33,22 @@ static QString descriptorCacheFilePath(const QString &imagePath)
            + Luminism::FaceDescriptorCacheSuffix;
 }
 
+/*! \brief Returns the absolute path of the known-face embedding cache file for \p imagePath.
+ *
+ * The cache lives at: {imageDir}/.luminism_cache/{baseName}-known-faces.json
+ *
+ * \param imagePath Absolute path to the source image.
+ * \return Absolute path to the corresponding cache file.
+ */
+static QString knownFaceCacheFilePath(const QString &imagePath)
+{
+    QFileInfo fi(imagePath);
+    return fi.dir().absolutePath()
+           + "/" + Luminism::CacheFolderName
+           + "/" + fi.completeBaseName()
+           + Luminism::KnownFaceCacheSuffix;
+}
+
 // ---------------------------------------------------------------------------
 // Construction
 // ---------------------------------------------------------------------------
@@ -461,6 +477,118 @@ void FaceRecognizer::saveDescriptorCache(
         facesArr.append(faceObj);
     }
     root["faces"] = facesArr;
+
+    QFile f(cachePath);
+    if (f.open(QIODevice::WriteOnly))
+        f.write(QJsonDocument(root).toJson(QJsonDocument::Compact));
+}
+
+// ---------------------------------------------------------------------------
+// Known-face embedding cache
+// ---------------------------------------------------------------------------
+
+/*! \brief Attempts to load the known-face embedding cache for \p imagePath.
+ *
+ * The cache is considered valid only when the stored source_file_mtime matches
+ * the image file's current last-modified timestamp.  On a mismatch the entire
+ * cache for that file is considered stale.
+ *
+ * \param imagePath Absolute path to the source image file.
+ * \return The cached entries on a cache hit; std::nullopt on a miss or stale cache.
+ */
+std::optional<QVector<KnownFaceCacheEntry>>
+FaceRecognizer::loadKnownFaceCache(const QString &imagePath)
+{
+    QString cachePath = knownFaceCacheFilePath(imagePath);
+    QFile f(cachePath);
+    if (!f.open(QIODevice::ReadOnly))
+        return std::nullopt;
+
+    QJsonDocument doc = QJsonDocument::fromJson(f.readAll());
+    f.close();
+
+    if (!doc.isObject())
+        return std::nullopt;
+
+    QJsonObject root = doc.object();
+
+    // Validate mtime
+    QString storedMtime  = root["source_file_mtime"].toString();
+    QString currentMtime = QFileInfo(imagePath).lastModified().toString(Qt::ISODate);
+    if (storedMtime != currentMtime)
+        return std::nullopt;
+
+    QVector<KnownFaceCacheEntry> results;
+    const QJsonArray facesArr = root["known_faces"].toArray();
+
+    for (const QJsonValue &faceVal : facesArr) {
+        QJsonObject faceObj = faceVal.toObject();
+
+        const QJsonArray rectArr = faceObj["rect"].toArray();
+        if (rectArr.size() != 4)
+            continue;
+        QRectF rect(rectArr[0].toDouble(), rectArr[1].toDouble(),
+                    rectArr[2].toDouble(), rectArr[3].toDouble());
+
+        const QJsonArray embArr = faceObj["embedding"].toArray();
+        if (embArr.size() != 128)
+            continue;
+        dlib::matrix<float,0,1> emb(128);
+        for (int i = 0; i < 128; ++i)
+            emb(i) = static_cast<float>(embArr[i].toDouble());
+
+        KnownFaceCacheEntry entry;
+        entry.tagFamily = faceObj["tag_family"].toString();
+        entry.tagName   = faceObj["tag_name"].toString();
+        entry.rect      = rect;
+        entry.embedding = emb;
+        results.append(entry);
+    }
+
+    return results;
+}
+
+/*! \brief Writes known-face embedding entries for \p imagePath to the cache.
+ *
+ * The cache file is written into the .luminism_cache sub-directory next to
+ * the image file. The directory is created if it does not exist.
+ *
+ * \param imagePath Absolute path to the source image file.
+ * \param entries   The known-face cache entries to persist.
+ */
+void FaceRecognizer::saveKnownFaceCache(
+    const QString &imagePath,
+    const QVector<KnownFaceCacheEntry> &entries)
+{
+    QString cachePath = knownFaceCacheFilePath(imagePath);
+
+    // Ensure the cache directory exists
+    QDir().mkpath(QFileInfo(cachePath).dir().absolutePath());
+
+    QJsonObject root;
+    root["source_file_mtime"] = QFileInfo(imagePath).lastModified().toString(Qt::ISODate);
+
+    QJsonArray facesArr;
+    for (const KnownFaceCacheEntry &entry : entries) {
+        QJsonObject faceObj;
+        faceObj["tag_family"] = entry.tagFamily;
+        faceObj["tag_name"]   = entry.tagName;
+
+        QJsonArray rectArr;
+        rectArr.append(entry.rect.x());
+        rectArr.append(entry.rect.y());
+        rectArr.append(entry.rect.width());
+        rectArr.append(entry.rect.height());
+        faceObj["rect"] = rectArr;
+
+        QJsonArray embArr;
+        for (long i = 0; i < entry.embedding.size(); ++i)
+            embArr.append(static_cast<double>(entry.embedding(i)));
+        faceObj["embedding"] = embArr;
+
+        facesArr.append(faceObj);
+    }
+    root["known_faces"] = facesArr;
 
     QFile f(cachePath);
     if (f.open(QIODevice::WriteOnly))

@@ -718,9 +718,9 @@ void MainWindow::on_actionFind_Faces_triggered()
         msgBox.setWindowTitle(tr("Face Detection"));
         msgBox.setText(tr("Would you like to process all files, or a selection?"));
 
-        QPushButton *allBtn      = msgBox.addButton(tr("All Files"),      QMessageBox::AcceptRole);
-        QPushButton *visibleBtn  = isFiltered   ? msgBox.addButton(tr("Visible Files"),  QMessageBox::AcceptRole) : nullptr;
         QPushButton *selectedBtn = hasSelection ? msgBox.addButton(tr("Selected Files"), QMessageBox::AcceptRole) : nullptr;
+        QPushButton *visibleBtn  = isFiltered   ? msgBox.addButton(tr("Visible Files"),  QMessageBox::AcceptRole) : nullptr;
+        QPushButton *allBtn      = msgBox.addButton(tr("All Files"),      QMessageBox::AcceptRole);
         msgBox.addButton(QMessageBox::Cancel);
 
         msgBox.exec();
@@ -757,23 +757,80 @@ void MainWindow::on_actionFind_Faces_triggered()
         if (progress.wasCanceled())
             break;
         QCoreApplication::processEvents();
+
+        // Collect (tag, rect) pairs that are user-labeled (not auto-detected)
+        QVector<QPair<Tag*, QRectF>> pendingTags;
         for (Tag* tag : *tf->tags()) {
             if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
                 continue;
             auto r = tf->tagRect(tag);
             if (!r.has_value())
                 continue;
-            QImageReader ir(tf->filePath + "/" + tf->fileName);
-            ir.setAutoTransform(true);
-            QImage img = ir.read();
-            if (img.isNull())
+            pendingTags.append({tag, r.value()});
+        }
+        if (pendingTags.isEmpty())
+            continue;
+
+        const QString imagePath = tf->filePath + "/" + tf->fileName;
+
+        // Load cache; std::nullopt means stale or missing
+        auto cachedEntries = FaceRecognizer::loadKnownFaceCache(imagePath);
+
+        QVector<KnownFaceCacheEntry> updatedCache;
+        bool cacheNeedsWrite = false;
+        QImage img;  // loaded lazily — at most once per file
+
+        for (const auto &[tag, rect] : pendingTags) {
+            const QString tagFamily = tag->tagFamily->getName();
+            const QString tagName   = tag->getName();
+
+            // Cache hit: valid mtime + matching family / name / rect
+            bool hitFound = false;
+            if (cachedEntries.has_value()) {
+                for (const KnownFaceCacheEntry &entry : *cachedEntries) {
+                    if (entry.tagFamily == tagFamily
+                            && entry.tagName == tagName
+                            && entry.rect   == rect) {
+                        qDebug() << "[Phase1] cache hit:" << tagName;
+                        knownFaces.append({entry.embedding, tag});
+                        updatedCache.append(entry);
+                        hitFound = true;
+                        break;
+                    }
+                }
+            }
+            if (hitFound)
                 continue;
+
+            // Cache miss — load image lazily
+            if (img.isNull()) {
+                QImageReader ir(imagePath);
+                ir.setAutoTransform(true);
+                img = ir.read();
+                if (img.isNull()) {
+                    qDebug() << "[Phase1] failed to load image:" << imagePath;
+                    break;  // skip all remaining tags for this file
+                }
+            }
+
+            qDebug() << "[Phase1] cache miss, computing embedding for:" << tagName;
             dlib::matrix<float,0,1> emb =
-                face_recognizer_->computeEmbeddingFromRegion(img, r.value());
+                face_recognizer_->computeEmbeddingFromRegion(img, rect);
             if (emb.size() == 0)
                 continue;
+
             knownFaces.append({emb, tag});
+            KnownFaceCacheEntry newEntry;
+            newEntry.tagFamily = tagFamily;
+            newEntry.tagName   = tagName;
+            newEntry.rect      = rect;
+            newEntry.embedding = emb;
+            updatedCache.append(newEntry);
+            cacheNeedsWrite = true;
         }
+
+        if (cacheNeedsWrite)
+            FaceRecognizer::saveKnownFaceCache(imagePath, updatedCache);
     }
 
     // ----- Phase 2: Clear all previous auto-detected face tags -----
@@ -874,6 +931,27 @@ void MainWindow::on_actionFind_Faces_triggered()
     // ----- Phase 4: Refresh UI -----
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
+
+    // Ensure the user can see the detection results: turn on Show Tagged Regions
+    // and refresh the overlay for whichever file is currently previewed.
+    ui->showTaggedRegionsCheckbox->setChecked(true);
+
+    QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
+    if (!sel.isEmpty()) {
+        QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
+        TaggedFile* tf  = core->getItemModel()
+                              ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf) {
+            QList<TagRectDescriptor> tagRects;
+            for (Tag* t : *tf->tags()) {
+                auto r = tf->tagRect(t);
+                if (r.has_value())
+                    tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
+            }
+            ui->previewContainer->setTagRects(tagRects);
+            ui->previewContainer->setTagRectsVisible(true);
+        }
+    }
 }
 
 /*! \brief Opens the Face Recognition Settings dialog and applies any changes. */

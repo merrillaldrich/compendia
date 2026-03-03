@@ -74,6 +74,19 @@ struct FaceDescriptor {
     Tag* tag = nullptr;                /*!< The tag representing this person. */
 };
 
+/*! \brief One entry in the known-face embedding cache for a single source image.
+ *
+ * Cached alongside the source image's mtime so that Phase 1 of the face
+ * recognition sweep can skip the expensive HOG + ResNet recomputation when
+ * neither the image nor its labeled region has changed.
+ */
+struct KnownFaceCacheEntry {
+    QString tagFamily;                 /*!< Tag family name — used as cache key. */
+    QString tagName;                   /*!< Tag name — used as cache key. */
+    QRectF  rect;                      /*!< Stored rect; mismatch triggers recompute. */
+    dlib::matrix<float,0,1> embedding; /*!< The cached 128-d embedding. */
+};
+
 /*! \brief Detects and recognises faces across images using dlib's HOG detector and ResNet embeddings.
  *
  * Converts QImages to the dlib pixel format, runs the HOG-based frontal face detector,
@@ -191,6 +204,29 @@ public:
      */
     static void saveDescriptorCache(const QString &imagePath,
                                     const QVector<QPair<QRectF, dlib::matrix<float,0,1>>> &descriptors);
+
+    /*! \brief Attempts to load the known-face embedding cache for \p imagePath.
+     *
+     * The cache is considered valid only when the stored source_file_mtime matches
+     * the image file's current last-modified timestamp.  On a mismatch the entire
+     * cache for that file is considered stale.
+     *
+     * \param imagePath Absolute path to the source image file.
+     * \return The cached entries on a cache hit; std::nullopt on a miss or stale cache.
+     */
+    static std::optional<QVector<KnownFaceCacheEntry>>
+        loadKnownFaceCache(const QString &imagePath);
+
+    /*! \brief Writes known-face embedding entries for \p imagePath to the cache.
+     *
+     * The cache file is written into the .luminism_cache sub-directory next to
+     * the image file. The directory is created if it does not exist.
+     *
+     * \param imagePath Absolute path to the source image file.
+     * \param entries   The known-face cache entries to persist.
+     */
+    static void saveKnownFaceCache(const QString &imagePath,
+                                   const QVector<KnownFaceCacheEntry> &entries);
 
 signals:
 };

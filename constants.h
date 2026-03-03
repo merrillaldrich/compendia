@@ -18,6 +18,9 @@ constexpr qreal DefaultTagRectSize = 0.15;
 /*! \brief Filename suffix for the per-image face-descriptor cache file. */
 constexpr const char* FaceDescriptorCacheSuffix = "-face-descriptors.json";
 
+/*! \brief Filename suffix for the per-image known-face embedding cache file. */
+constexpr const char* KnownFaceCacheSuffix = "-known-faces.json";
+
 /*! \brief Prefix shared by all auto-detected face tags created during a recognition sweep. */
 constexpr const char* AutoFaceTagPrefix = "Auto Detected Face ";
 
