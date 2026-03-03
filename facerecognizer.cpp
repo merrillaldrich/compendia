@@ -235,20 +235,45 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
     const double w = detectImg.width();
     const double h = detectImg.height();
 
-    QVector<QPair<QRectF, dlib::matrix<float,0,1>>> results;
-    for (int i = 0; i < static_cast<int>(dets.size()); ++i) {
-        qDebug() << "[FaceRecognizer] embedding face" << (i + 1) << "of" << dets.size();
+    // Phase A: run the shape predictor and extract a 150×150 chip for every
+    // detection.  Keep the normalised rect paired with each chip so we can
+    // reassemble the results after the batch network call.
+    std::vector<dlib::matrix<dlib::rgb_pixel>> chips;
+    std::vector<QRectF> normRects;
+    chips.reserve(dets.size());
+    normRects.reserve(dets.size());
+
+    for (const auto &det : dets) {
         try {
-            dlib::matrix<float,0,1> emb = computeEmbedding(dlibImg, dets[i]);
-            if (emb.size() == 0)
-                continue;
-            QRectF normRect(dets[i].left() / w, dets[i].top() / h,
-                            dets[i].width() / w, dets[i].height() / h);
-            results.append({normRect, emb});
+            dlib::full_object_detection shape = sp_(dlibImg, det);
+            dlib::matrix<dlib::rgb_pixel> chip;
+            dlib::extract_image_chip(dlibImg,
+                                     dlib::get_face_chip_details(shape, 150, 0.25),
+                                     chip);
+            chips.push_back(std::move(chip));
+            normRects.emplace_back(det.left() / w, det.top() / h,
+                                   det.width() / w, det.height() / h);
         } catch (const std::exception &) {
-            continue;
+            // skip malformed detection
         }
     }
+    qDebug() << "[FaceRecognizer] shape predictor + chip extraction (" << chips.size() << "chips):" << t.restart() << "ms";
+
+    if (chips.empty()) {
+        qDebug() << "[FaceRecognizer] detectFacesWithEmbeddings done, 0 faces";
+        return {};
+    }
+
+    // Phase B: single batched ResNet forward pass over all chips at once.
+    std::vector<dlib::matrix<float,0,1>> embeddings = net_(chips);
+    qDebug() << "[FaceRecognizer] ResNet batch inference (" << chips.size() << "faces):" << t.elapsed() << "ms";
+
+    // Phase C: pair each embedding with its normalised rect.
+    QVector<QPair<QRectF, dlib::matrix<float,0,1>>> results;
+    results.reserve(static_cast<int>(embeddings.size()));
+    for (size_t i = 0; i < embeddings.size(); ++i)
+        results.append({normRects[i], embeddings[i]});
+
     qDebug() << "[FaceRecognizer] detectFacesWithEmbeddings done, total faces:" << results.size();
     return results;
 }
@@ -268,21 +293,41 @@ dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegion(
     if (!models_loaded_)
         return dlib::matrix<float,0,1>();
 
-    dlib::array2d<dlib::rgb_pixel> dlibImg = qimageToDlibArray(img);
+    QElapsedTimer t;
+    t.start();
+    qDebug() << "[FaceRecognizer] computeEmbeddingFromRegion — input:" << img.width() << "x" << img.height();
 
-    const double w = img.width();
-    const double h = img.height();
+    // Downscale to at most kMaxDetectionDim on the longest edge, same as
+    // detectFacesWithEmbeddings.  The normalised rect is dimensionless so it
+    // maps directly into whatever pixel space we work in.
+    static constexpr int kMaxDetectionDim = 1200;
+    const int longEdge = qMax(img.width(), img.height());
+    const QImage detectImg = (longEdge > kMaxDetectionDim)
+        ? img.scaled(kMaxDetectionDim * img.width()  / longEdge,
+                     kMaxDetectionDim * img.height() / longEdge,
+                     Qt::IgnoreAspectRatio,
+                     Qt::SmoothTransformation)
+        : img;
+    qDebug() << "[FaceRecognizer] downscale to" << detectImg.width() << "x" << detectImg.height() << ":" << t.restart() << "ms";
+
+    dlib::array2d<dlib::rgb_pixel> dlibImg = qimageToDlibArray(detectImg);
+    qDebug() << "[FaceRecognizer] qimageToDlibArray:            " << t.restart() << "ms";
+
+    const double w = detectImg.width();
+    const double h = detectImg.height();
 
     // Convert normalised user rect to pixel space
-    long left   = static_cast<long>(normalizedRect.x()                          * w);
-    long top    = static_cast<long>(normalizedRect.y()                          * h);
-    long right  = static_cast<long>((normalizedRect.x() + normalizedRect.width())  * w);
+    long left   = static_cast<long>(normalizedRect.x()                           * w);
+    long top    = static_cast<long>(normalizedRect.y()                           * h);
+    long right  = static_cast<long>((normalizedRect.x() + normalizedRect.width()) * w);
     long bottom = static_cast<long>((normalizedRect.y() + normalizedRect.height()) * h);
     dlib::rectangle userRect(left, top, right, bottom);
 
     // Find HOG detection with best IoU against the user rect
     std::vector<dlib::frontal_face_detector::rect_detection> rawDets;
     detector_(dlibImg, rawDets, detectionThreshold_);
+    qDebug() << "[FaceRecognizer] HOG detector (" << rawDets.size() << "dets):" << t.restart() << "ms";
+
     std::vector<dlib::rectangle> dets;
     dets.reserve(rawDets.size());
     for (const auto &rd : rawDets)

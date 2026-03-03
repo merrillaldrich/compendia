@@ -100,14 +100,16 @@ target_link_libraries(luminism PRIVATE dlib)
 # 32-bit PE/COFF limit.  Enable the extended ("big") object format for that
 # single translation unit to avoid the "file too big" assembler error.
 if (MSVC)
-    set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "/bigobj;/O2")
+    set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "/bigobj;/O2;/arch:AVX2")
 else()
     # -Wa,-mbig-obj : switch the assembler to extended COFF (section count > 65535)
     # -O2           : aggressive inlining collapses per-instantiation functions,
     #                 drastically reducing the number of .xdata$ COMDAT sections
     # -g0           : disable debug-info emission for this file so the section-name
     #                 string table stays well under the GNU assembler's 268 MB limit
-    set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "-Wa,-mbig-obj;-O2;-g0")
+    # -mavx2 -mfma  : enable 256-bit AVX2 and fused multiply-add so dlib's DNN
+    #                 convolutions use SIMD rather than scalar code (~5-8x faster)
+    set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "-Wa,-mbig-obj;-O2;-g0;-mavx2;-mfma")
 endif()
 
 # ---------------------------------------------------------------------------
