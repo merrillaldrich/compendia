@@ -645,6 +645,7 @@
      <string>Autos</string>
     </property>
     <addaction name="actionFind_Faces"/>
+    <addaction name="actionFace_Recognition_Settings"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilter"/>
@@ -689,6 +690,11 @@
   <action name="actionFind_Faces">
    <property name="text">
     <string>Find Faces</string>
+   </property>
+  </action>
+  <action name="actionFace_Recognition_Settings">
+   <property name="text">
+    <string>Face Recognition Settings...</string>
    </property>
   </action>
   <action name="actionQuit">

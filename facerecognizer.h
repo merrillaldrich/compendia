@@ -23,6 +23,7 @@
 #include <dlib/dnn.h>
 
 #include "tag.h"
+#include "constants.h"
 
 /*! \brief Standard dlib ResNet-29 face recognition network type (128-d embeddings).
  *
@@ -89,6 +90,7 @@ private:
     dlib::frontal_face_detector detector_;
     dlib::shape_predictor sp_;
     FaceNet::anet_type net_;
+    double detectionThreshold_ = Luminism::FaceDetectionThreshold;
 
     /*! \brief Computes a 128-d face embedding for a single detected face rectangle.
      *
@@ -129,6 +131,19 @@ public:
 
     /*! \brief Returns true if the model files have been loaded successfully. */
     bool modelsLoaded() const;
+
+    /*! \brief Returns the current HOG detector adjust_threshold. */
+    double detectionThreshold() const;
+
+    /*! \brief Sets the HOG detector adjust_threshold used during face detection.
+     *
+     * Higher values reduce false positives; lower values increase recall.
+     * Takes effect on the next call to detectFaces(), detectFacesWithEmbeddings(),
+     * or computeEmbeddingFromRegion().
+     *
+     * \param threshold The new adjust_threshold value.
+     */
+    void setDetectionThreshold(double threshold);
 
     /*! \brief Runs face detection on the source image and returns normalised bounding rectangles.
      *

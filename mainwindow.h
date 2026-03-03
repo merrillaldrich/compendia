@@ -12,6 +12,8 @@
 #include <QProgressBar>
 #include "luminismcore.h"
 #include "facerecognizer.h"
+#include "facerecognitionsettingsdialog.h"
+#include "constants.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -33,6 +35,7 @@ private:
     QProgressBar* progress_bar_;
     QLabel* progress_label_;
     FaceRecognizer* face_recognizer_ = nullptr;
+    double faceMatchThreshold_ = Luminism::FaceMatchThreshold;
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
@@ -188,6 +191,9 @@ private slots:
 
     /*! \brief Runs face detection on every selected image and stores face regions as tagged rectangles. */
     void on_actionFind_Faces_triggered();
+
+    /*! \brief Opens the Face Recognition Settings dialog and applies any changes. */
+    void on_actionFace_Recognition_Settings_triggered();
 
     /*! \brief Shows or hides tag region overlays in the preview when the checkbox is toggled.
      *

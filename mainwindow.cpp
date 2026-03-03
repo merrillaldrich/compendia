@@ -782,7 +782,7 @@ void MainWindow::on_actionFind_Faces_triggered()
                 }
             }
 
-            const bool isUserNamedMatch = minDist < Luminism::FaceMatchThreshold
+            const bool isUserNamedMatch = minDist < faceMatchThreshold_
                                           && bestTag != nullptr
                                           && !bestTag->getName().startsWith(Luminism::AutoFaceTagPrefix);
 
@@ -795,7 +795,7 @@ void MainWindow::on_actionFind_Faces_triggered()
                 if (autoFacesTaggedThisImage >= Luminism::MaxAutoFacesPerImage)
                     continue;
 
-                if (minDist < Luminism::FaceMatchThreshold && bestTag != nullptr) {
+                if (minDist < faceMatchThreshold_ && bestTag != nullptr) {
                     // Recognised, but matched an auto-named tag
                     tf->addTag(bestTag, rect);
                 } else {
@@ -817,6 +817,23 @@ void MainWindow::on_actionFind_Faces_triggered()
     // ----- Phase 4: Refresh UI -----
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
+}
+
+/*! \brief Opens the Face Recognition Settings dialog and applies any changes. */
+void MainWindow::on_actionFace_Recognition_Settings_triggered()
+{
+    if (!ensureFaceRecognizerLoaded())
+        return;
+
+    FaceRecognitionSettingsDialog dlg(
+        face_recognizer_->detectionThreshold(),
+        faceMatchThreshold_,
+        this);
+
+    if (dlg.exec() == QDialog::Accepted) {
+        face_recognizer_->setDetectionThreshold(dlg.detectionThreshold());
+        faceMatchThreshold_ = dlg.matchThreshold();
+    }
 }
 
 /*! \brief Shows or hides tag region overlays in the preview when the checkbox is toggled.

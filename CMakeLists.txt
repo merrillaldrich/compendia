@@ -61,6 +61,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         tagcontainer.h tagcontainer.cpp
         taggingwidget.h taggingwidget.cpp
         facerecognizer.h facerecognizer.cpp
+        facerecognitionsettingsdialog.h facerecognitionsettingsdialog.cpp
         exifparser.h exifparser.cpp
         previewcontainer.h previewcontainer.cpp
         zoomablegraphicsview.h zoomablegraphicsview.cpp

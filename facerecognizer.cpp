@@ -74,6 +74,21 @@ bool FaceRecognizer::modelsLoaded() const
     return models_loaded_;
 }
 
+/*! \brief Returns the current HOG detector adjust_threshold. */
+double FaceRecognizer::detectionThreshold() const
+{
+    return detectionThreshold_;
+}
+
+/*! \brief Sets the HOG detector adjust_threshold used during face detection.
+ *
+ * \param threshold The new adjust_threshold value.
+ */
+void FaceRecognizer::setDetectionThreshold(double threshold)
+{
+    detectionThreshold_ = threshold;
+}
+
 // ---------------------------------------------------------------------------
 // Image conversion
 // ---------------------------------------------------------------------------
@@ -146,7 +161,11 @@ QList<QRectF> FaceRecognizer::detectFaces(const QImage &sourceImage)
 
     std::vector<dlib::rectangle> faces;
     if (models_loaded_) {
-        faces = detector_(dlibImg);
+        std::vector<dlib::frontal_face_detector::rect_detection> rawDets;
+        detector_(dlibImg, rawDets, detectionThreshold_);
+        faces.reserve(rawDets.size());
+        for (const auto &rd : rawDets)
+            faces.push_back(rd.rect);
     } else {
         dlib::frontal_face_detector localDetector = dlib::get_frontal_face_detector();
         faces = localDetector(dlibImg);
@@ -174,7 +193,12 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
         return {};
 
     dlib::array2d<dlib::rgb_pixel> dlibImg = qimageToDlibArray(img);
-    std::vector<dlib::rectangle> dets = detector_(dlibImg);
+    std::vector<dlib::frontal_face_detector::rect_detection> rawDets;
+    detector_(dlibImg, rawDets, detectionThreshold_);
+    std::vector<dlib::rectangle> dets;
+    dets.reserve(rawDets.size());
+    for (const auto &rd : rawDets)
+        dets.push_back(rd.rect);
 
     const double w = img.width();
     const double h = img.height();
@@ -223,7 +247,12 @@ dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegion(
     dlib::rectangle userRect(left, top, right, bottom);
 
     // Find HOG detection with best IoU against the user rect
-    std::vector<dlib::rectangle> dets = detector_(dlibImg);
+    std::vector<dlib::frontal_face_detector::rect_detection> rawDets;
+    detector_(dlibImg, rawDets, detectionThreshold_);
+    std::vector<dlib::rectangle> dets;
+    dets.reserve(rawDets.size());
+    for (const auto &rd : rawDets)
+        dets.push_back(rd.rect);
     double bestIoU = 0.0;
     dlib::rectangle bestDet;
 
