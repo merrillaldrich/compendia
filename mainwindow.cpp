@@ -11,6 +11,7 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QDebug>
+#include <QElapsedTimer>
 #include <QImageReader>
 #include <QProgressDialog>
 
@@ -702,14 +703,60 @@ void MainWindow::on_actionFind_Faces_triggered()
             allFiles.append(tf);
     }
 
-    QProgressDialog progress("Scanning for faces...", "Cancel", 0, allFiles.size(), this);
+    // ----- Scope selection -----
+    FilterProxyModel* proxy = core->getItemModelProxy();
+    const bool isFiltered   = proxy->rowCount() < model->rowCount();
+    QModelIndexList selIndexes = ui->fileListView->selectionModel()->selectedIndexes();
+    const bool hasSelection = !selIndexes.isEmpty();
+
+    QVector<TaggedFile*> targetFiles;
+
+    if (!isFiltered && !hasSelection) {
+        targetFiles = allFiles;
+    } else {
+        QMessageBox msgBox(this);
+        msgBox.setWindowTitle(tr("Face Detection"));
+        msgBox.setText(tr("Would you like to process all files, or a selection?"));
+
+        QPushButton *allBtn      = msgBox.addButton(tr("All Files"),      QMessageBox::AcceptRole);
+        QPushButton *visibleBtn  = isFiltered   ? msgBox.addButton(tr("Visible Files"),  QMessageBox::AcceptRole) : nullptr;
+        QPushButton *selectedBtn = hasSelection ? msgBox.addButton(tr("Selected Files"), QMessageBox::AcceptRole) : nullptr;
+        msgBox.addButton(QMessageBox::Cancel);
+
+        msgBox.exec();
+        QAbstractButton* clicked = msgBox.clickedButton();
+
+        if (clicked == allBtn) {
+            targetFiles = allFiles;
+        } else if (visibleBtn && clicked == visibleBtn) {
+            for (int r = 0; r < proxy->rowCount(); ++r) {
+                QModelIndex src = proxy->mapToSource(proxy->index(r, 0));
+                TaggedFile* tf = model->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+                if (tf) targetFiles.append(tf);
+            }
+        } else if (selectedBtn && clicked == selectedBtn) {
+            for (const QModelIndex &pi : selIndexes) {
+                QModelIndex src = proxy->mapToSource(pi);
+                TaggedFile* tf = model->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+                if (tf) targetFiles.append(tf);
+            }
+        } else {
+            return;  // Cancel
+        }
+    }
+
+    QProgressDialog progress("Scanning for faces...", "Cancel", 0, targetFiles.size(), this);
     progress.setWindowModality(Qt::WindowModal);
     progress.setMinimumDuration(0);
     progress.setValue(0);
+    QCoreApplication::processEvents();  // paint dialog before any blocking work
 
     // ----- Phase 1: Seed known-person embeddings from user-labeled regions -----
     QVector<FaceDescriptor> knownFaces;
     for (TaggedFile* tf : allFiles) {
+        if (progress.wasCanceled())
+            break;
+        QCoreApplication::processEvents();
         for (Tag* tag : *tf->tags()) {
             if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
                 continue;
@@ -730,7 +777,7 @@ void MainWindow::on_actionFind_Faces_triggered()
     }
 
     // ----- Phase 2: Clear all previous auto-detected face tags -----
-    for (TaggedFile* tf : allFiles) {
+    for (TaggedFile* tf : targetFiles) {
         QSet<Tag*> toRemove;
         for (Tag* t : *tf->tags()) {
             if (t->getName().startsWith(Luminism::AutoFaceTagPrefix))
@@ -740,22 +787,28 @@ void MainWindow::on_actionFind_Faces_triggered()
             tf->removeTag(t);
     }
 
-    // ----- Phase 3: Recognition sweep across all image files -----
+    // ----- Phase 3: Recognition sweep across target image files -----
     int autoFaceCounter = 1;
-    for (int i = 0; i < allFiles.size(); ++i) {
+    for (int i = 0; i < targetFiles.size(); ++i) {
         if (progress.wasCanceled())
             break;
         progress.setValue(i);
         QCoreApplication::processEvents();
 
-        TaggedFile* tf = allFiles[i];
+        TaggedFile* tf = targetFiles[i];
         if (videoExts.contains(QFileInfo(tf->fileName).suffix().toLower()))
             continue;
 
         QString imagePath = tf->filePath + "/" + tf->fileName;
+        qDebug() << "[FindFaces] processing:" << tf->fileName;
+        QElapsedTimer fileTimer;
+        fileTimer.start();
 
         // Try the descriptor cache first
         auto cached = FaceRecognizer::loadDescriptorCache(imagePath);
+        qDebug() << "[FindFaces]   cache lookup:  " << fileTimer.restart() << "ms"
+                 << (cached.has_value() ? "(hit)" : "(miss)");
+
         QVector<QPair<QRectF, dlib::matrix<float,0,1>>> faces;
         if (cached.has_value()) {
             faces = cached.value();
@@ -763,10 +816,14 @@ void MainWindow::on_actionFind_Faces_triggered()
             QImageReader ir(imagePath);
             ir.setAutoTransform(true);
             QImage img = ir.read();
+            qDebug() << "[FindFaces]   image load:   " << fileTimer.restart() << "ms"
+                     << img.width() << "x" << img.height();
             if (img.isNull())
                 continue;
             faces = face_recognizer_->detectFacesWithEmbeddings(img);
+            qDebug() << "[FindFaces]   detection:    " << fileTimer.restart() << "ms";
             FaceRecognizer::saveDescriptorCache(imagePath, faces);
+            qDebug() << "[FindFaces]   cache save:   " << fileTimer.elapsed() << "ms";
         }
 
         int autoFacesTaggedThisImage = 0;
@@ -812,7 +869,7 @@ void MainWindow::on_actionFind_Faces_triggered()
         }
     }
 
-    progress.setValue(allFiles.size());
+    progress.setValue(targetFiles.size());
 
     // ----- Phase 4: Refresh UI -----
     refreshNavTagLibrary();
@@ -834,6 +891,50 @@ void MainWindow::on_actionFace_Recognition_Settings_triggered()
         face_recognizer_->setDetectionThreshold(dlg.detectionThreshold());
         faceMatchThreshold_ = dlg.matchThreshold();
     }
+}
+
+/*! \brief Removes all auto-detected face tags from every file and from the tag library after user confirmation. */
+void MainWindow::on_actionRemove_Auto_Detected_Faces_triggered()
+{
+    int ret = QMessageBox::question(
+        this,
+        tr("Remove Auto Detected Faces"),
+        tr("Remove all auto-detected face tags from every file?\n\nThis cannot be undone."),
+        QMessageBox::Ok | QMessageBox::Cancel,
+        QMessageBox::Cancel);
+    if (ret != QMessageBox::Ok)
+        return;
+
+    QStandardItemModel* model = core->getItemModel();
+    QSet<Tag*>* libraryTags = core->getLibraryTags();
+
+    // Collect auto tags from the library into a snapshot
+    QList<Tag*> autoTags;
+    for (Tag* t : *libraryTags) {
+        if (t->getName().startsWith(Luminism::AutoFaceTagPrefix))
+            autoTags.append(t);
+    }
+
+    if (autoTags.isEmpty())
+        return;
+
+    // Remove auto tags from every file
+    for (int r = 0; r < model->rowCount(); ++r) {
+        TaggedFile* tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+        for (Tag* t : autoTags)
+            tf->removeTag(t);
+    }
+
+    // Remove from active filter and from the library, then schedule deletion
+    for (Tag* t : autoTags) {
+        core->removeTagFilter(t);
+        libraryTags->remove(t);
+        t->deleteLater();
+    }
+
+    refreshNavTagLibrary();
+    refreshTagAssignmentArea();
 }
 
 /*! \brief Shows or hides tag region overlays in the preview when the checkbox is toggled.

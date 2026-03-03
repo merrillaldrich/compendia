@@ -10,6 +10,8 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDateTime>
+#include <QElapsedTimer>
+#include <QDebug>
 
 // ---------------------------------------------------------------------------
 // Internal helper: build the cache file path for a given image
@@ -130,17 +132,24 @@ dlib::matrix<float,0,1> FaceRecognizer::computeEmbedding(
     const dlib::array2d<dlib::rgb_pixel> &dlibImg,
     const dlib::rectangle &rect)
 {
+    QElapsedTimer t;
+    t.start();
+
     dlib::full_object_detection shape = sp_(dlibImg, rect);
+    qDebug() << "[FaceRecognizer]   shape predictor:  " << t.restart() << "ms";
 
     dlib::matrix<dlib::rgb_pixel> faceChip;
     dlib::extract_image_chip(dlibImg,
                              dlib::get_face_chip_details(shape, 150, 0.25),
                              faceChip);
+    qDebug() << "[FaceRecognizer]   extract chip:     " << t.restart() << "ms";
 
     std::vector<dlib::matrix<dlib::rgb_pixel>> batch;
     batch.push_back(faceChip);
 
     std::vector<dlib::matrix<float,0,1>> embeddings = net_(batch);
+    qDebug() << "[FaceRecognizer]   ResNet inference: " << t.elapsed() << "ms";
+
     if (embeddings.empty())
         return dlib::matrix<float,0,1>();
     return embeddings[0];
@@ -183,6 +192,11 @@ QList<QRectF> FaceRecognizer::detectFaces(const QImage &sourceImage)
 
 /*! \brief Detects faces in \p img and returns each face's normalised rect and embedding.
  *
+ * The image is downscaled to at most kMaxDetectionDim on its longest edge before detection
+ * so the HOG sliding-window scan is fast even on large camera images.  Because the scale
+ * is uniform, normalised coordinates derived from the downscaled dimensions are identical
+ * to those that would be obtained from the original, so no remapping is required.
+ *
  * \param img The source image.
  * \return A vector of (normalised QRectF, 128-d embedding) pairs, one per detected face.
  */
@@ -192,30 +206,50 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
     if (!models_loaded_)
         return {};
 
-    dlib::array2d<dlib::rgb_pixel> dlibImg = qimageToDlibArray(img);
+    QElapsedTimer t;
+    t.start();
+    qDebug() << "[FaceRecognizer] detectFacesWithEmbeddings — input:" << img.width() << "x" << img.height();
+
+    static constexpr int kMaxDetectionDim = 1200;
+    const int longEdge = qMax(img.width(), img.height());
+    const QImage detectImg = (longEdge > kMaxDetectionDim)
+        ? img.scaled(kMaxDetectionDim * img.width()  / longEdge,
+                     kMaxDetectionDim * img.height() / longEdge,
+                     Qt::IgnoreAspectRatio,
+                     Qt::SmoothTransformation)
+        : img;
+    qDebug() << "[FaceRecognizer] downscale to" << detectImg.width() << "x" << detectImg.height() << ":" << t.restart() << "ms";
+
+    dlib::array2d<dlib::rgb_pixel> dlibImg = qimageToDlibArray(detectImg);
+    qDebug() << "[FaceRecognizer] qimageToDlibArray:            " << t.restart() << "ms";
+
     std::vector<dlib::frontal_face_detector::rect_detection> rawDets;
     detector_(dlibImg, rawDets, detectionThreshold_);
+    qDebug() << "[FaceRecognizer] HOG detector (" << rawDets.size() << "faces found):" << t.restart() << "ms";
+
     std::vector<dlib::rectangle> dets;
     dets.reserve(rawDets.size());
     for (const auto &rd : rawDets)
         dets.push_back(rd.rect);
 
-    const double w = img.width();
-    const double h = img.height();
+    const double w = detectImg.width();
+    const double h = detectImg.height();
 
     QVector<QPair<QRectF, dlib::matrix<float,0,1>>> results;
-    for (const auto &det : dets) {
+    for (int i = 0; i < static_cast<int>(dets.size()); ++i) {
+        qDebug() << "[FaceRecognizer] embedding face" << (i + 1) << "of" << dets.size();
         try {
-            dlib::matrix<float,0,1> emb = computeEmbedding(dlibImg, det);
+            dlib::matrix<float,0,1> emb = computeEmbedding(dlibImg, dets[i]);
             if (emb.size() == 0)
                 continue;
-            QRectF normRect(det.left() / w, det.top() / h,
-                            det.width() / w, det.height() / h);
+            QRectF normRect(dets[i].left() / w, dets[i].top() / h,
+                            dets[i].width() / w, dets[i].height() / h);
             results.append({normRect, emb});
         } catch (const std::exception &) {
             continue;
         }
     }
+    qDebug() << "[FaceRecognizer] detectFacesWithEmbeddings done, total faces:" << results.size();
     return results;
 }
 

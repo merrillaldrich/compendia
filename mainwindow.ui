@@ -644,8 +644,16 @@
     <property name="title">
      <string>Autos</string>
     </property>
-    <addaction name="actionFind_Faces"/>
-    <addaction name="actionFace_Recognition_Settings"/>
+    <widget class="QMenu" name="menuFace_Detection">
+     <property name="title">
+      <string>Face Detection</string>
+     </property>
+     <addaction name="actionFind_Faces"/>
+     <addaction name="actionFace_Recognition_Settings"/>
+     <addaction name="separator"/>
+     <addaction name="actionRemove_Auto_Detected_Faces"/>
+    </widget>
+    <addaction name="menuFace_Detection"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilter"/>
@@ -695,6 +703,11 @@
   <action name="actionFace_Recognition_Settings">
    <property name="text">
     <string>Face Recognition Settings...</string>
+   </property>
+  </action>
+  <action name="actionRemove_Auto_Detected_Faces">
+   <property name="text">
+    <string>Remove Auto Detected Faces</string>
    </property>
   </action>
   <action name="actionQuit">

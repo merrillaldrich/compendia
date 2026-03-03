@@ -195,6 +195,9 @@ private slots:
     /*! \brief Opens the Face Recognition Settings dialog and applies any changes. */
     void on_actionFace_Recognition_Settings_triggered();
 
+    /*! \brief Removes all auto-detected face tags from every file and from the tag library after user confirmation. */
+    void on_actionRemove_Auto_Detected_Faces_triggered();
+
     /*! \brief Shows or hides tag region overlays in the preview when the checkbox is toggled.
      *
      * \param state The new checkbox state (Qt::Checked or Qt::Unchecked).
