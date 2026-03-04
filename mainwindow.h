@@ -107,6 +107,13 @@ private:
      */
     bool validateFolder(const QString &folder);
 
+    /*! \brief Rebuilds the previewFileTagsValue label from the currently selected file's tags.
+     *
+     * Call whenever tag assignments on the previewed file change (drop, replace, delete,
+     * face detection). Does nothing if no file is selected.
+     */
+    void refreshPreviewTagsLabel();
+
     /*! \brief Validates \p folder, confirms cache creation if needed, then performs
      *         a full load: clears existing state, loads files into core, and refreshes
      *         all UI areas. Both the Browse and Return-key paths delegate here.

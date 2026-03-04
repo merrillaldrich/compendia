@@ -283,6 +283,7 @@ void MainWindow::refreshTagAssignmentArea(){
 
     QSet<Tag*>* assignedTags = core->getAssignedTags_FilteredFiles();
     ui->fileListTagAssignmentContainer->refresh(assignedTags);
+    refreshPreviewTagsLabel();
 
 }
 
@@ -339,6 +340,39 @@ void MainWindow::refreshTagFilterArea(){
 
 }
 
+/*! \brief Rebuilds the previewFileTagsValue label from the currently selected file's tags. */
+void MainWindow::refreshPreviewTagsLabel()
+{
+    QItemSelectionModel* selModel = ui->fileListView->selectionModel();
+    if (!selModel || selModel->selectedIndexes().isEmpty()) {
+        ui->previewFileTagsValue->setText("-");
+        return;
+    }
+
+    QModelIndex src = core->getItemModelProxy()->mapToSource(
+        selModel->selectedIndexes().first());
+    TaggedFile* tf = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!tf) {
+        ui->previewFileTagsValue->setText("-");
+        return;
+    }
+
+    QMap<QString, QList<QString>> dict;
+    for (Tag* t : *tf->tags()) {
+        QString famName = t->tagFamily->getName();
+        if (!dict.contains(famName))
+            dict.insert(famName, QList<QString>({t->getName()}));
+        else
+            dict[famName].append(t->getName());
+    }
+
+    QString tagText;
+    for (auto [key, value] : dict.asKeyValueRange()) {
+        tagText += key + ": " + value.join(", ") + " ";
+    }
+    ui->previewFileTagsValue->setText(tagText.isEmpty() ? "-" : tagText.trimmed());
+}
+
 /*! \brief Updates the preview and property panel when the file-list selection changes.
  *
  * \param selected   The newly selected model indexes.
@@ -393,28 +427,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
                 ? locale.toString(itemAsTaggedFile->fileNameInferredDate, QLocale::ShortFormat)
                 : "-");
 
-        QString tagText("");
-        QMap<QString, QList<QString>> dict;
-
-        QSetIterator<Tag*> it(*itemAsTaggedFile->tags());
-        while (it.hasNext()) {
-            Tag* t = it.next(); // Advances iterator and returns the element
-            QString famName = t->tagFamily->getName();
-            if (!dict.contains(famName)){
-                dict.insert(famName,QList<QString>(t->getName()));
-            } else {
-                dict[famName].append(t->getName());
-            }
-        }
-
-        for (auto [key, value] : dict.asKeyValueRange()) {
-            tagText += key;
-            tagText += ": ";
-            tagText += value.join(", ");
-            tagText += " ";
-        }
-
-        ui->previewFileTagsValue->setText(tagText);
+        refreshPreviewTagsLabel();
 
         QString exifText;
         const QMap<QString, QString> exifMap = itemAsTaggedFile->exifMap();
