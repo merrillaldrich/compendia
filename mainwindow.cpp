@@ -82,6 +82,8 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::onTagDroppedOnExistingRegion);
     connect(ui->previewContainer, &PreviewContainer::tagRectResized,
             this, &MainWindow::onTagRectResized);
+    connect(ui->previewContainer, &PreviewContainer::tagRectDeleteRequested,
+            this, &MainWindow::onTagRectDeleteRequested);
     connect(ui->previewContainer, &PreviewContainer::tagPreviewDragEntered,
             this, [this](const QString &family, const QString &tagName) {
         Tag* tag = core->getTag(family, tagName);
@@ -546,6 +548,44 @@ void MainWindow::onTagRectResized(const QRectF &oldNorm, const QRectF &newNorm)
             break;
         }
     }
+}
+
+/*! \brief Removes the tag region at \p normalizedRect from the selected file.
+ *
+ * Finds the tag whose stored rect matches \p normalizedRect, removes it from
+ * the TaggedFile, rebuilds the preview overlays, and refreshes the assignment area.
+ *
+ * \param normalizedRect Normalized (0–1) rect identifying the tag region to delete.
+ */
+void MainWindow::onTagRectDeleteRequested(const QRectF &normalizedRect)
+{
+    QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
+    if (sel.isEmpty()) return;
+
+    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
+    TaggedFile* tf  = core->getItemModel()
+                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!tf) return;
+
+    for (Tag* tag : *tf->tags()) {
+        auto r = tf->tagRect(tag);
+        if (r.has_value() && r.value() == normalizedRect) {
+            tf->removeTag(tag);
+            break;
+        }
+    }
+
+    // Rebuild overlay
+    QList<TagRectDescriptor> tagRects;
+    for (Tag* t : *tf->tags()) {
+        auto r = tf->tagRect(t);
+        if (r.has_value())
+            tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
+    }
+    ui->previewContainer->setTagRects(tagRects);
+    ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
+
+    refreshTagAssignmentArea();
 }
 
 /*! \brief Refreshes the preview pane to reflect the current viewport size. */

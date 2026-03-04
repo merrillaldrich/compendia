@@ -6,8 +6,10 @@
 #include <QFontMetrics>
 #include <QFileInfo>
 #include <QUrl>
+#include <QGraphicsSceneContextMenuEvent>
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
+#include <QMenu>
 #include <memory>
 
 static bool isVideoFile(const QString &path)
@@ -310,11 +312,27 @@ public:
         event->ignore();
     }
 
+    /*! \brief Shows the right-click context menu for the tag region. */
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override
+    {
+        if (!interactive_) { event->ignore(); return; }
+        QMenu menu;
+        QAction *deleteAct = menu.addAction(QObject::tr("Delete Tag"));
+        if (menu.exec(event->screenPos()) == deleteAct)
+            emit deleteRequested(rect_);
+        event->accept();
+    }
+
 signals:
     /*! \brief Emitted when the user finishes resizing the rect.
      *  \param newSceneRect The final scene-coordinate rect after resizing.
      */
     void rectChanged(const QRectF &newSceneRect);
+
+    /*! \brief Emitted when the user selects "Delete Tag" from the context menu.
+     *  \param sceneRect The scene-coordinate rect of this item.
+     */
+    void deleteRequested(const QRectF &sceneRect);
 };
 
 /*! \brief Constructs the preview container and sets up the internal scene and view.
@@ -593,6 +611,10 @@ void PreviewContainer::setTagRects(const QList<TagRectDescriptor> &rects)
                 newSceneRect.height() / image_size_.height());
             emit tagRectResized(*normRectPtr, newNorm);
             *normRectPtr = newNorm;
+        });
+        connect(item, &TagRectItem::deleteRequested, this,
+                [this, normRectPtr](const QRectF &) {
+            emit tagRectDeleteRequested(*normRectPtr);
         });
     }
 }

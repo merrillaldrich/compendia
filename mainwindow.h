@@ -237,6 +237,15 @@ private slots:
      */
     void onTagRectResized(const QRectF &oldNorm, const QRectF &newNorm);
 
+    /*! \brief Removes the tag region at \p normalizedRect from the selected file.
+     *
+     * Finds the tag whose stored rect matches \p normalizedRect, removes it from
+     * the TaggedFile, rebuilds the preview overlays, and refreshes the assignment area.
+     *
+     * \param normalizedRect Normalized (0–1) rect identifying the tag region to delete.
+     */
+    void onTagRectDeleteRequested(const QRectF &normalizedRect);
+
     /*! \brief Slot — forwards creation-date filter changes to the core.
      *
      * A date equal to the widget's minimum is treated as "no filter" (null QDate).

@@ -134,6 +134,11 @@ signals:
      */
     void tagRectResized(const QRectF &oldNormalizedRect, const QRectF &newNormalizedRect);
 
+    /*! \brief Emitted when the user selects "Delete Tag" from a tag region's context menu.
+     *  \param normalizedRect The normalized rect of the region to delete.
+     */
+    void tagRectDeleteRequested(const QRectF &normalizedRect);
+
 private:
     /*! \brief Formats \a position and \a duration as "m:ss / m:ss" and updates the time label.
      *
