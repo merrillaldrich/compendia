@@ -721,6 +721,36 @@ void LuminismCore::removeTagFilter(Tag* tag){
     tagged_files_proxy_->removeTagFilter(tag);
 }
 
+/*! \brief Restricts the visible set to the given files; other filters still apply within the set.
+ *
+ * \param files The set of TaggedFile pointers to isolate.
+ */
+void LuminismCore::setIsolationSet(const QSet<TaggedFile*> &files) {
+    tagged_files_proxy_->setIsolationSet(files);
+}
+
+/*! \brief Clears the isolation set so all files are eligible again.
+ */
+void LuminismCore::clearIsolationSet() {
+    tagged_files_proxy_->clearIsolationSet();
+}
+
+/*! \brief Returns true when an isolation set is active.
+ *
+ * \return True if the proxy model has a non-empty isolation set.
+ */
+bool LuminismCore::isIsolated() const {
+    return tagged_files_proxy_->isIsolated();
+}
+
+/*! \brief Returns the number of files in the current isolation set.
+ *
+ * \return Size of the isolation set, or 0 when not isolated.
+ */
+int LuminismCore::isolationSetSize() const {
+    return tagged_files_proxy_->isolationSetSize();
+}
+
 /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
  *  Emits tagLibraryChanged() when done.
  *

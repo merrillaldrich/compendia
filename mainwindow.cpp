@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QElapsedTimer>
 #include <QImageReader>
+#include <QMenu>
 #include <QProgressDialog>
 
 #include "./ui_mainwindow.h"
@@ -92,6 +93,18 @@ MainWindow::MainWindow(QWidget *parent)
         ui->showTaggedRegionsCheckbox->setChecked(true);
     });
 
+
+    // File list right-click context menu for isolation actions (only on actual items)
+    ui->fileListView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->fileListView, &QListView::customContextMenuRequested,
+            this, [this](const QPoint &pos) {
+        if (!ui->fileListView->indexAt(pos).isValid())
+            return;
+        QMenu menu(this);
+        menu.addAction(ui->actionIsolateSelection);
+        menu.addAction(ui->actionClearIsolation);
+        menu.exec(ui->fileListView->viewport()->mapToGlobal(pos));
+    });
 
     // Default pane sizes
     resize(1400, 900);
@@ -255,6 +268,7 @@ void MainWindow::loadFolder(const QString &folder)
     QSettings(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism")
         .setValue("folder/lastPath", folder);
 
+    ui->actionClearIsolation->setEnabled(false);
     lv->setModel(core->getItemModelProxy());
     connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
@@ -327,6 +341,38 @@ void MainWindow::onTagLibraryChanged()
     refreshTagAssignmentArea();
     refreshTagFilterArea();
     onTagNameChanged(nullptr);  // refresh preview tag-region overlays
+}
+
+/*! \brief Isolates the currently selected files so only they pass the filter.
+ *
+ * Collects every selected file's TaggedFile pointer and passes them to the core
+ * as the new isolation set.  Does nothing when the selection is empty.
+ */
+void MainWindow::on_actionIsolateSelection_triggered()
+{
+    QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
+    if (sel.isEmpty())
+        return;
+
+    QSet<TaggedFile*> files;
+    for (const QModelIndex &pi : sel) {
+        QModelIndex src = core->getItemModelProxy()->mapToSource(pi);
+        TaggedFile* tf = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf)
+            files.insert(tf);
+    }
+    core->setIsolationSet(files);
+    ui->actionClearIsolation->setEnabled(true);
+    updateFileCountLabel();
+    refreshTagAssignmentArea();
+}
+
+/*! \brief Clears the isolation set and restores the full unfiltered view. */
+void MainWindow::on_actionClearIsolation_triggered()
+{
+    core->clearIsolationSet();
+    ui->actionClearIsolation->setEnabled(false);
+    updateFileCountLabel();
 }
 
 /*! \brief Rebuilds the tag-filter area from the currently active filter tags. */
@@ -712,12 +758,20 @@ void MainWindow::on_iconZoomSlider_valueChanged(int value)
  */
 void MainWindow::updateFileCountLabel()
 {
-    int total = core->getItemModel()->rowCount();
     int shown = core->getItemModelProxy()->rowCount();
-    if (shown == total)
-        ui->fileCountLabel->setText(QString("%1 Files").arg(total));
-    else
-        ui->fileCountLabel->setText(QString("%1 of %2 Files").arg(shown).arg(total));
+    if (core->isIsolated()) {
+        int isolated = core->isolationSetSize();
+        QString text = (shown == isolated)
+            ? QString("%1 Files (explicit selection set)").arg(shown)
+            : QString("%1 of %2 Files (explicit selection set)").arg(shown).arg(isolated);
+        ui->fileCountLabel->setText(text);
+    } else {
+        int total = core->getItemModel()->rowCount();
+        if (shown == total)
+            ui->fileCountLabel->setText(QString("%1 Files").arg(total));
+        else
+            ui->fileCountLabel->setText(QString("%1 of %2 Files").arg(shown).arg(total));
+    }
 }
 
 /*! \brief Connects the file-count label to the current proxy model's signals.

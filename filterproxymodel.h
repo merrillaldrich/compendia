@@ -25,6 +25,7 @@ private:
     QDate creation_date_;
     QSet<Tag*> tags_ = QSet<Tag*>();
     TagFilterMode tagFilterMode_ = AnyTag;
+    QSet<TaggedFile*> isolation_set_; ///< When non-empty, only listed files can pass.
 
 protected:
     /*! \brief Overrides the Qt base-class row-acceptance test to apply all active filters.
@@ -94,6 +95,28 @@ public:
      * \param creationDate The date to filter by.
      */
     void setFilterCreationDate(QDate creationDate);
+
+    /*! \brief Restricts the visible set to the given files; other filters still apply within the set.
+     *
+     * \param files The set of TaggedFile pointers to isolate.
+     */
+    void setIsolationSet(const QSet<TaggedFile*> &files);
+
+    /*! \brief Clears the isolation set so all files are eligible again.
+     */
+    void clearIsolationSet();
+
+    /*! \brief Returns true when an isolation set is active.
+     *
+     * \return True if isolation_set_ is non-empty.
+     */
+    bool isIsolated() const;
+
+    /*! \brief Returns the number of files in the current isolation set.
+     *
+     * \return Size of isolation_set_, or 0 when not isolated.
+     */
+    int isolationSetSize() const;
 
 };
 

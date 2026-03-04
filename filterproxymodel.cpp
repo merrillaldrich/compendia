@@ -20,6 +20,10 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
     QVariant val = i.data(Qt::UserRole + 1);
     TaggedFile* itemAsTaggedFile = val.value<TaggedFile*>();
 
+    // Isolation filter — evaluated first so non-isolated files are rejected cheaply.
+    if (!isolation_set_.isEmpty() && !isolation_set_.contains(itemAsTaggedFile))
+        return false;
+
     QString fileName = itemAsTaggedFile->fileName;
     bool nameResult = false;
 
@@ -140,4 +144,36 @@ void FilterProxyModel::setFilterCreationDate(QDate creationDate) {
 void FilterProxyModel::setTagFilterMode(TagFilterMode mode) {
     tagFilterMode_ = mode;
     invalidateFilter();
+}
+
+/*! \brief Restricts the visible set to the given files; other filters still apply within the set.
+ *
+ * \param files The set of TaggedFile pointers to isolate.
+ */
+void FilterProxyModel::setIsolationSet(const QSet<TaggedFile*> &files) {
+    isolation_set_ = files;
+    invalidateFilter();
+}
+
+/*! \brief Clears the isolation set so all files are eligible again.
+ */
+void FilterProxyModel::clearIsolationSet() {
+    isolation_set_.clear();
+    invalidateFilter();
+}
+
+/*! \brief Returns true when an isolation set is active.
+ *
+ * \return True if isolation_set_ is non-empty.
+ */
+bool FilterProxyModel::isIsolated() const {
+    return !isolation_set_.isEmpty();
+}
+
+/*! \brief Returns the number of files in the current isolation set.
+ *
+ * \return Size of isolation_set_, or 0 when not isolated.
+ */
+int FilterProxyModel::isolationSetSize() const {
+    return isolation_set_.size();
 }

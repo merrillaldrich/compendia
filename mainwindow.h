@@ -273,6 +273,12 @@ private slots:
     /*! \brief Refreshes all tag-related containers after a merge changes the library. */
     void onTagLibraryChanged();
 
+    /*! \brief Isolates the currently selected files so only they pass the filter. */
+    void on_actionIsolateSelection_triggered();
+
+    /*! \brief Clears the isolation set and restores the full unfiltered view. */
+    void on_actionClearIsolation_triggered();
+
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
      *

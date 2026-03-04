@@ -252,6 +252,28 @@ public:
      */
     void removeTagFilter(Tag* tag);
 
+    /*! \brief Restricts the visible set to the given files; other filters still apply within the set.
+     *
+     * \param files The set of TaggedFile pointers to isolate.
+     */
+    void setIsolationSet(const QSet<TaggedFile*> &files);
+
+    /*! \brief Clears the isolation set so all files are eligible again.
+     */
+    void clearIsolationSet();
+
+    /*! \brief Returns true when an isolation set is active.
+     *
+     * \return True if the proxy model has a non-empty isolation set.
+     */
+    bool isIsolated() const;
+
+    /*! \brief Returns the number of files in the current isolation set.
+     *
+     * \return Size of the isolation set, or 0 when not isolated.
+     */
+    int isolationSetSize() const;
+
     /*! \brief Returns the underlying QStandardItemModel containing all file items.
      *
      * \return Pointer to the source item model.
