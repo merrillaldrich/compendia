@@ -18,6 +18,7 @@ WelcomeHintContainer::WelcomeHintContainer(QWidget *parent)
 void WelcomeHintContainer::initLabel(const QString &hint)
 {
     welcome_label_ = new QLabel(hint);
+    welcome_label_->setTextFormat(Qt::RichText);
     welcome_label_->setAlignment(Qt::AlignCenter);
     welcome_label_->setWordWrap(true);
     welcome_label_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
