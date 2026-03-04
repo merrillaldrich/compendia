@@ -34,6 +34,10 @@ private:
     Ui::MainWindow *ui;
     QProgressBar* progress_bar_;
     QLabel* progress_label_;
+    QWidget* welcome_widget_; ///< Shown in the file-list area before any folder is loaded.
+    QLabel* nav_library_welcome_ = nullptr; ///< Welcome hint shown in place of navLibraryScrollArea.
+    QLabel* nav_filter_welcome_ = nullptr;  ///< Welcome hint shown in place of navFilterScrollArea.
+    QLabel* tag_assign_welcome_ = nullptr;  ///< Welcome hint shown in place of fileListTagAssignmentScrollArea.
     FaceRecognizer* face_recognizer_ = nullptr;
     double faceMatchThreshold_ = Luminism::FaceMatchThreshold;
 

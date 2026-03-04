@@ -42,21 +42,40 @@ MainWindow::MainWindow(QWidget *parent)
         le->setText(s.value("folder/lastPath").toString());
     }
 
+    // Helper: create a centred, expanding welcome hint label to sit alongside a scroll area
+    // in its parent layout/splitter.  The containers stay inside their scroll areas throughout;
+    // we simply hide the scroll area and show this label instead.
+    auto makeContainerWelcome = [](const QString& hint) -> QLabel* {
+        auto* lbl = new QLabel(hint);
+        lbl->setAlignment(Qt::AlignCenter);
+        lbl->setWordWrap(true);
+        lbl->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        return lbl;
+    };
+
     // Set up the tag library area
     FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
-    //ui->navLibraryScrollArea->setStyleSheet("background-color: rgb(96, 174, 233)");
-    //ui->navLibraryScrollArea->viewport()->setStyleSheet("background-color: rgb(96, 174, 233)");
     ui->navLibraryContainer->setLayout(navTagLibraryLayout);
+    // navLibraryScrollArea is at index 2 in navSplitter; insert welcome label there so it
+    // inherits the splitter's background instead of the scroll area's viewport background.
+    nav_library_welcome_ = makeContainerWelcome("Click in this area to create a new tag family.");
+    ui->navSplitter->insertWidget(2, nav_library_welcome_);
+    ui->navLibraryScrollArea->hide();
 
     // Set up the tag filter area
     FlowLayout* navFilterLayout = new FlowLayout(ui->navFilterContainer);
     ui->navFilterContainer->setLayout(navFilterLayout);
-    //ui->navFilterScrollArea->setStyleSheet("background-color: rgb(96, 174, 233)");
-    //ui->navFilterScrollArea->viewport()->setStyleSheet("background-color: rgb(96, 174, 233)");
+    nav_filter_welcome_ = makeContainerWelcome("Drag tags from the library here to filter the file list.");
+    qobject_cast<QVBoxLayout*>(ui->navFilterSection->layout())->insertWidget(1, nav_filter_welcome_);
+    ui->navFilterScrollArea->hide();
 
     // Set up the tag assignment area
     FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
     ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
+    // fileListTagAssignmentScrollArea is at index 1 in fileListSplitter.
+    tag_assign_welcome_ = makeContainerWelcome("Drag tags from the library here to apply them to all visible files.");
+    ui->fileListSplitter->insertWidget(1, tag_assign_welcome_);
+    ui->fileListTagAssignmentScrollArea->hide();
 
     // Set up the status bar
     progress_label_ = new QLabel("Progress:", this);
@@ -93,6 +112,82 @@ MainWindow::MainWindow(QWidget *parent)
         ui->showTaggedRegionsCheckbox->setChecked(true);
     });
 
+
+    // Welcome widget — shown in the file-list area before any folder is loaded
+    {
+        welcome_widget_ = new QWidget(ui->verticalLayoutWidget);
+        auto* outerLayout = new QVBoxLayout(welcome_widget_);
+        outerLayout->setAlignment(Qt::AlignTop);
+        outerLayout->setContentsMargins(40, 40, 40, 40);
+
+        auto* inner = new QWidget;
+        auto* il = new QVBoxLayout(inner);
+        il->setSpacing(6);
+
+        auto makeSectionLabel = [&](const QString &text) {
+            auto* lbl = new QLabel(text);
+            QFont f = lbl->font();
+            f.setBold(true);
+            lbl->setFont(f);
+            return lbl;
+        };
+
+        // Title
+        auto* title = new QLabel("Welcome to Luminism");
+        QFont tf = title->font();
+        tf.setPointSize(tf.pointSize() + 8);
+        tf.setBold(true);
+        title->setFont(tf);
+        il->addWidget(title);
+
+        auto* subtitle = new QLabel("A media tagging application for images and video.");
+        il->addWidget(subtitle);
+        il->addSpacing(12);
+
+        // Get started
+        il->addWidget(makeSectionLabel("Get started"));
+
+        auto* openLink = new QLabel("<a href='open'>Open a media folder...</a>");
+        openLink->setTextFormat(Qt::RichText);
+        connect(openLink, &QLabel::linkActivated, this, [this](const QString &){ setRootFolder(); });
+        il->addWidget(openLink);
+
+        {
+            QSettings qs(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism");
+            QString lastPath = qs.value("folder/lastPath").toString();
+            if (!lastPath.isEmpty()) {
+                auto* recentLink = new QLabel(
+                    QString("Reopen: <a href='reopen'>%1</a>").arg(lastPath.toHtmlEscaped()));
+                recentLink->setTextFormat(Qt::RichText);
+                recentLink->setWordWrap(true);
+                connect(recentLink, &QLabel::linkActivated, this,
+                        [this, lastPath](const QString &){ loadFolder(lastPath); });
+                il->addWidget(recentLink);
+            }
+        }
+
+        il->addSpacing(12);
+
+        // How it works
+        il->addWidget(makeSectionLabel("How it works"));
+
+        const QStringList tips = {
+            "Drag tags from the library panel (left) onto files to apply them.",
+            "Filter files by tag, name, folder, or date using the filter panel.",
+            "Right-click files and choose Isolate Selection to focus on a subset.",
+            "Use Autos > Face Detection to detect and tag faces automatically.",
+            "Save tag data with File > Save All. Tags are stored as JSON sidecars alongside each file.",
+        };
+        for (const QString &tip : tips) {
+            auto* lbl = new QLabel(QString("%1  %2").arg(QChar(0x2022)).arg(tip));
+            lbl->setWordWrap(true);
+            il->addWidget(lbl);
+        }
+
+        outerLayout->addWidget(inner);
+        ui->fileListContainer->insertWidget(0, welcome_widget_);
+        ui->fileListView->hide();
+    }
 
     // File list right-click context menu for isolation actions (only on actual items)
     ui->fileListView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -268,12 +363,31 @@ void MainWindow::loadFolder(const QString &folder)
     QSettings(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism")
         .setValue("folder/lastPath", folder);
 
+    welcome_widget_->hide();
+    ui->fileListView->show();
     ui->actionClearIsolation->setEnabled(false);
     lv->setModel(core->getItemModelProxy());
     connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     on_tagFilterAllRadio_toggled(ui->tagFilterAllRadio->isChecked());
     lv->show();
+    // Reveal the scroll areas: delete the welcome hints and show the hidden scroll areas.
+    if (nav_library_welcome_) {
+        delete nav_library_welcome_;
+        nav_library_welcome_ = nullptr;
+        ui->navLibraryScrollArea->show();
+    }
+    if (nav_filter_welcome_) {
+        delete nav_filter_welcome_;
+        nav_filter_welcome_ = nullptr;
+        ui->navFilterScrollArea->show();
+    }
+    if (tag_assign_welcome_) {
+        delete tag_assign_welcome_;
+        tag_assign_welcome_ = nullptr;
+        ui->fileListTagAssignmentScrollArea->show();
+    }
+
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
     clearPreview();
