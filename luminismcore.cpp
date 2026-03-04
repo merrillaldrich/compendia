@@ -153,6 +153,11 @@ void LuminismCore::loadRootDirectory(){
         QFile f(it.next());
         QFileInfo fileInfo(f.fileName());
 
+        // Skip files whose names start with ".trashed" — some phones use this
+        // prefix to soft-delete files (acting as a recycle bin).
+        if (fileInfo.fileName().startsWith(".trashed", Qt::CaseInsensitive))
+            continue;
+
         // Check to see if there's a sidecar file next to each image file
         QString metaFileName = fileInfo.baseName() + ".json";
         QFileInfo metaFileInfo(fileInfo.absolutePath() + "/" + metaFileName);
