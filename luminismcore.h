@@ -111,6 +111,9 @@ public:
     /*! \brief Writes JSON sidecar files for every file with unsaved changes. */
     void writeFileMetadata();
 
+    /*! \brief Writes JSON sidecar files for every visible (proxy-filtered) file with unsaved changes. */
+    void writeVisibleFileMetadata();
+
     /*! \brief Returns true if any file in the model has unsaved changes.
      *
      * \return True when at least one TaggedFile has a dirty flag set.

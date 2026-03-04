@@ -166,6 +166,12 @@ private slots:
     /*! \brief Slot for the Save button; writes metadata for all dirty files. */
     void on_saveButton_clicked();
 
+    /*! \brief Slot for File → Save All; writes metadata for all dirty files. */
+    void on_actionSave_All_triggered();
+
+    /*! \brief Slot for File → Save Visible; writes metadata only for files passing the current filter. */
+    void on_actionSave_Visible_triggered();
+
     /*! \brief Removes a tag from all filtered files when an unassign is requested.
      *
      * \param tag The Tag to unassign from the filtered files.

@@ -692,6 +692,16 @@ void MainWindow::on_saveButton_clicked(){
     core->writeFileMetadata();
 }
 
+/*! \brief Slot for File → Save All; writes metadata for all dirty files. */
+void MainWindow::on_actionSave_All_triggered(){
+    core->writeFileMetadata();
+}
+
+/*! \brief Slot for File → Save Visible; writes metadata only for files passing the current filter. */
+void MainWindow::on_actionSave_Visible_triggered(){
+    core->writeVisibleFileMetadata();
+}
+
 /*! \brief Updates the filename filter as the user types in the filter line edit.
  *
  * \param arg1 The current text of the filename filter line edit.

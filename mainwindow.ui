@@ -635,11 +635,6 @@
     <property name="title">
      <string>Filter</string>
     </property>
-    <addaction name="actionFile_Name"/>
-    <addaction name="actionFile_Path"/>
-    <addaction name="actionCreation_Date"/>
-    <addaction name="actionModification_Date"/>
-    <addaction name="separator"/>
     <addaction name="actionIsolateSelection"/>
     <addaction name="actionClearIsolation"/>
    </widget>
@@ -678,26 +673,6 @@
     <string>Save Visible</string>
    </property>
   </action>
-  <action name="actionFile_Name">
-   <property name="text">
-    <string>File Name</string>
-   </property>
-  </action>
-  <action name="actionFile_Path">
-   <property name="text">
-    <string>File Path</string>
-   </property>
-  </action>
-  <action name="actionCreation_Date">
-   <property name="text">
-    <string>Creation Date</string>
-   </property>
-  </action>
-  <action name="actionModification_Date">
-   <property name="text">
-    <string>Modification Date</string>
-   </property>
-  </action>
   <action name="actionFind_Faces">
    <property name="text">
     <string>Find Faces</string>
@@ -729,16 +704,6 @@
    </property>
    <property name="enabled">
     <bool>false</bool>
-   </property>
-  </action>
-  <action name="actionShow_EXIF_data">
-   <property name="text">
-    <string>Show EXIF data</string>
-   </property>
-  </action>
-  <action name="actionShow_EXIF_data_HEIF">
-   <property name="text">
-    <string>Show EXIF data (HEIF)</string>
    </property>
   </action>
  </widget>

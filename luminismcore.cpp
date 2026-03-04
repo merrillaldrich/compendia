@@ -376,6 +376,35 @@ void LuminismCore::writeFileMetadata(){
     clearAllDirtyFlags();
 }
 
+/*! \brief Writes JSON sidecar files for every visible (proxy-filtered) file with unsaved changes. */
+void LuminismCore::writeVisibleFileMetadata()
+{
+    for (int row = 0; row < tagged_files_proxy_->rowCount(); ++row) {
+        QModelIndex proxyIndex = tagged_files_proxy_->index(row, 0);
+        QModelIndex srcIndex   = tagged_files_proxy_->mapToSource(proxyIndex);
+        TaggedFile* itemAsTaggedFile = tagged_files_->itemFromIndex(srcIndex)->data(Qt::UserRole + 1).value<TaggedFile*>();
+
+        if (itemAsTaggedFile->dirtyFlag()) {
+            QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
+            QFileInfo fileInfo(origFile);
+            QString metaFilePath = itemAsTaggedFile->filePath + "/" + fileInfo.baseName() + ".json";
+
+            QFile metaFile(metaFilePath);
+
+            if (!metaFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                qDebug() << "Could not open file for writing:" << metaFile.errorString();
+            }
+
+            QTextStream out(&metaFile);
+            out << itemAsTaggedFile->TaggedFileJSON();
+            metaFile.close();
+            itemAsTaggedFile->clearDirtyFlag();
+        }
+
+        emit metadataSaved();
+    }
+}
+
 /*! \brief Clears the dirty flag on every file, tag, and tag family. */
 void LuminismCore::clearAllDirtyFlags()
 {
