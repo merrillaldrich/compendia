@@ -6,14 +6,16 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include "mainwindow.h"
-#include "tagcontainer.h"
+#include "welcomehintcontainer.h"
 
 /*! \brief Tag container that displays the active filter tags and accepts tag drops to add filters.
  *
- * Extends TagContainer with drag-and-drop support so the user can drag a tag
+ * Extends WelcomeHintContainer with drag-and-drop support so the user can drag a tag
  * from the library area and drop it here to activate it as a file-list filter.
+ * Before any folder is loaded, a dismissible welcome hint is shown; dropping a tag
+ * onto it reveals the container and applies the tag as a filter.
  */
-class NavFilterContainer : public TagContainer
+class NavFilterContainer : public WelcomeHintContainer
 {
     Q_OBJECT
 public:

@@ -35,9 +35,6 @@ private:
     QProgressBar* progress_bar_;
     QLabel* progress_label_;
     QWidget* welcome_widget_; ///< Shown in the file-list area before any folder is loaded.
-    QLabel* nav_library_welcome_ = nullptr; ///< Welcome hint shown in place of navLibraryScrollArea.
-    QLabel* nav_filter_welcome_ = nullptr;  ///< Welcome hint shown in place of navFilterScrollArea.
-    QLabel* tag_assign_welcome_ = nullptr;  ///< Welcome hint shown in place of fileListTagAssignmentScrollArea.
     FaceRecognizer* face_recognizer_ = nullptr;
     double faceMatchThreshold_ = Luminism::FaceMatchThreshold;
 
@@ -290,17 +287,6 @@ private slots:
     void on_actionClearIsolation_triggered();
 
 protected:
-    /*! \brief Handles events for the container welcome hint labels.
-     *
-     * A mouse press on the library hint dismisses it and reveals the tag library.
-     * A tag drop on the filter or assignment hint dismisses it and applies the tag.
-     *
-     * \param obj   The object that received the event.
-     * \param event The event to inspect.
-     * \return \c true if the event was consumed; \c false to pass it on.
-     */
-    bool eventFilter(QObject *obj, QEvent *event) override;
-
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
      *
      * \param event The resize event containing the new window size.

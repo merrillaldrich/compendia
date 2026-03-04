@@ -59,6 +59,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         icongenerator.h icongenerator.cpp
         navfiltercontainer.h navfiltercontainer.cpp
         tagcontainer.h tagcontainer.cpp
+        welcomehintcontainer.h welcomehintcontainer.cpp
         taggingwidget.h taggingwidget.cpp
         facerecognizer.h facerecognizer.cpp
         facerecognitionsettingsdialog.h facerecognitionsettingsdialog.cpp

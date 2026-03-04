@@ -5,8 +5,9 @@
  * \param parent Optional Qt parent widget.
  */
 NavLibraryContainer::NavLibraryContainer(QWidget *parent)
-    : TagContainer{parent}{
-
+    : WelcomeHintContainer{parent}
+{
+    setAcceptsClickToDismiss(true);
 }
 
 /*! \brief Overrides the Qt base-class mouse-release handler to create a new tag family on click.

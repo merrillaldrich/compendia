@@ -13,7 +13,6 @@
 #include <QDebug>
 #include <QElapsedTimer>
 #include <QImageReader>
-#include <QDragMoveEvent>
 #include <QMenu>
 #include <QProgressDialog>
 
@@ -21,7 +20,6 @@
 #include "luminismcore.h"
 #include "tagwidget.h"
 #include "tagfamilywidget.h"
-#include "flowlayout.h"
 #include "filenamedelegate.h"
 
 /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
@@ -43,41 +41,17 @@ MainWindow::MainWindow(QWidget *parent)
         le->setText(s.value("folder/lastPath").toString());
     }
 
-    // Helper: create a centred, expanding welcome hint label to sit alongside a scroll area
-    // in its parent layout/splitter.  The containers stay inside their scroll areas throughout;
-    // we simply hide the scroll area and show this label instead.
-    auto makeContainerWelcome = [](const QString& hint) -> QLabel* {
-        auto* lbl = new QLabel(hint);
-        lbl->setAlignment(Qt::AlignCenter);
-        lbl->setWordWrap(true);
-        lbl->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        lbl->setEnabled(false); // grayed out until a folder without tags is loaded
-        return lbl;
-    };
-
-    // Set up the tag library area
-    FlowLayout* navTagLibraryLayout = new FlowLayout(ui->navLibraryContainer);
-    ui->navLibraryContainer->setLayout(navTagLibraryLayout);
-    // navLibraryScrollArea is at index 2 in navSplitter; insert welcome label there so it
-    // inherits the splitter's background instead of the scroll area's viewport background.
-    nav_library_welcome_ = makeContainerWelcome("Click in this area to create a new tag family.");
-    ui->navSplitter->insertWidget(2, nav_library_welcome_);
-    ui->navLibraryScrollArea->hide();
-
-    // Set up the tag filter area
-    FlowLayout* navFilterLayout = new FlowLayout(ui->navFilterContainer);
-    ui->navFilterContainer->setLayout(navFilterLayout);
-    nav_filter_welcome_ = makeContainerWelcome("Drag tags from the library here to filter the file list.");
-    qobject_cast<QVBoxLayout*>(ui->navFilterSection->layout())->insertWidget(1, nav_filter_welcome_);
-    ui->navFilterScrollArea->hide();
-
-    // Set up the tag assignment area
-    FlowLayout* fileListTagAssignmentLayout = new FlowLayout(ui->fileListTagAssignmentContainer);
-    ui->fileListTagAssignmentContainer->setLayout(fileListTagAssignmentLayout);
-    // fileListTagAssignmentScrollArea is at index 1 in fileListSplitter.
-    tag_assign_welcome_ = makeContainerWelcome("Drag tags from the library here to apply them to all visible files.");
-    ui->fileListSplitter->insertWidget(1, tag_assign_welcome_);
-    ui->fileListTagAssignmentScrollArea->hide();
+    // Set up container welcome hints (FlowLayout is installed by WelcomeHintContainer constructor)
+    ui->navLibraryContainer->setupWelcome(
+        ui->navLibraryScrollArea, ui->navSplitter, 2,
+        "Click in this area to create a new tag family.");
+    ui->navFilterContainer->setupWelcome(
+        ui->navFilterScrollArea,
+        qobject_cast<QVBoxLayout *>(ui->navFilterSection->layout()), 1,
+        "Drag tags from the library here to filter the file list.");
+    ui->fileListTagAssignmentContainer->setupWelcome(
+        ui->fileListTagAssignmentScrollArea, ui->fileListSplitter, 1,
+        "Drag tags from the library here to apply them to all visible files.");
 
     // Set up the status bar
     progress_label_ = new QLabel("Progress:", this);
@@ -211,10 +185,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->fileListSplitter->setSizes({700,300});
     ui->previewSplitter->setSizes({800,200});
 
-    // Drag and drop setup
-    ui->navFilterContainer->setAcceptDrops(true);
-    ui->fileListTagAssignmentContainer->setAcceptDrops(true);
-
     // Settings so multithreading does not take over all cores
     int idealThreads = QThread::idealThreadCount();
     if (idealThreads <= 4){
@@ -335,91 +305,6 @@ void MainWindow::setRootFolder()
     loadFolder(folder);
 }
 
-/*! \brief Handles events for the container welcome hint labels.
- *
- * A mouse press on the library hint dismisses it and reveals the tag library.
- * A tag drop on the filter or assignment hint dismisses it, reveals the container,
- * and applies the dropped tag (adds it to the filter, or applies it to all visible files).
- */
-bool MainWindow::eventFilter(QObject *obj, QEvent *event)
-{
-    // Decode helper: extract family/tag name from "application/x-dnditemdata" payload.
-    auto decodeTagDrop = [](QDropEvent* de, QString& family, QString& tagName) -> bool {
-        if (!de->mimeData()->hasFormat("application/x-dnditemdata")) return false;
-        QByteArray data = de->mimeData()->data("application/x-dnditemdata");
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        QPoint offset;
-        stream >> family >> tagName >> offset;
-        return true;
-    };
-
-    // Library welcome: a click anywhere dismisses the hint and reveals the library container.
-    if (obj == nav_library_welcome_ && event->type() == QEvent::MouseButtonPress) {
-        QList<int> sz = ui->navSplitter->sizes(); // capture before delete redistributes space
-        delete nav_library_welcome_;
-        nav_library_welcome_ = nullptr;
-        ui->navLibraryScrollArea->show();
-        ui->navSplitter->setSizes(sz.mid(0, sz.size() - 1)); // drop trailing 0 (was hidden SA)
-        return true;
-    }
-
-    // Filter welcome: accept tag drops; on drop, reveal the container and apply the filter tag.
-    if (obj == nav_filter_welcome_) {
-        if (event->type() == QEvent::DragEnter || event->type() == QEvent::DragMove) {
-            auto* de = static_cast<QDragMoveEvent*>(event);
-            if (de->mimeData()->hasFormat("application/x-dnditemdata"))
-                de->acceptProposedAction();
-            return true;
-        }
-        if (event->type() == QEvent::Drop) {
-            auto* de = static_cast<QDropEvent*>(event);
-            QString family, tagName;
-            if (decodeTagDrop(de, family, tagName)) {
-                de->acceptProposedAction();
-                delete nav_filter_welcome_;
-                nav_filter_welcome_ = nullptr;
-                ui->navFilterScrollArea->show();
-                if (Tag* tag = core->getTag(family, tagName)) {
-                    core->addTagFilter(tag);
-                    refreshTagFilterArea();
-                    refreshTagAssignmentArea();
-                    updateFileCountLabel();
-                }
-            }
-            return true;
-        }
-    }
-
-    // Assignment welcome: accept tag drops; on drop, reveal the container and apply the tag.
-    if (obj == tag_assign_welcome_) {
-        if (event->type() == QEvent::DragEnter || event->type() == QEvent::DragMove) {
-            auto* de = static_cast<QDragMoveEvent*>(event);
-            if (de->mimeData()->hasFormat("application/x-dnditemdata"))
-                de->acceptProposedAction();
-            return true;
-        }
-        if (event->type() == QEvent::Drop) {
-            auto* de = static_cast<QDropEvent*>(event);
-            QString family, tagName;
-            if (decodeTagDrop(de, family, tagName)) {
-                de->acceptProposedAction();
-                QList<int> sz = ui->fileListSplitter->sizes();
-                delete tag_assign_welcome_;
-                tag_assign_welcome_ = nullptr;
-                ui->fileListTagAssignmentScrollArea->show();
-                ui->fileListSplitter->setSizes(sz.mid(0, sz.size() - 1));
-                if (Tag* tag = core->getTag(family, tagName)) {
-                    core->applyTag(tag);
-                    refreshTagAssignmentArea();
-                }
-            }
-            return true;
-        }
-    }
-
-    return QMainWindow::eventFilter(obj, event);
-}
-
 /*! \brief Validates \p folder, confirms cache creation if needed, then performs a full
  *         load: clears existing state, loads files into core, and refreshes all UI areas.
  *
@@ -462,42 +347,13 @@ void MainWindow::loadFolder(const QString &folder)
     // Otherwise activate the welcome hints so they respond to user interaction.
     bool hasTags = !core->getLibraryTags()->isEmpty();
     if (hasTags) {
-        if (nav_library_welcome_) {
-            QList<int> sz = ui->navSplitter->sizes();
-            delete nav_library_welcome_;
-            nav_library_welcome_ = nullptr;
-            ui->navLibraryScrollArea->show();
-            ui->navSplitter->setSizes(sz.mid(0, sz.size() - 1));
-        }
-        if (nav_filter_welcome_) {
-            delete nav_filter_welcome_;
-            nav_filter_welcome_ = nullptr;
-            ui->navFilterScrollArea->show();
-        }
-        if (tag_assign_welcome_) {
-            QList<int> sz = ui->fileListSplitter->sizes();
-            delete tag_assign_welcome_;
-            tag_assign_welcome_ = nullptr;
-            ui->fileListTagAssignmentScrollArea->show();
-            ui->fileListSplitter->setSizes(sz.mid(0, sz.size() - 1));
-        }
+        ui->navLibraryContainer->dismissWelcome();
+        ui->navFilterContainer->dismissWelcome();
+        ui->fileListTagAssignmentContainer->dismissWelcome();
     } else {
-        // Activate each hint that is still showing (guard against re-install on repeat loads).
-        if (nav_library_welcome_ && !nav_library_welcome_->isEnabled()) {
-            nav_library_welcome_->setEnabled(true);
-            nav_library_welcome_->setCursor(Qt::PointingHandCursor);
-            nav_library_welcome_->installEventFilter(this);
-        }
-        if (nav_filter_welcome_ && !nav_filter_welcome_->isEnabled()) {
-            nav_filter_welcome_->setEnabled(true);
-            nav_filter_welcome_->setAcceptDrops(true);
-            nav_filter_welcome_->installEventFilter(this);
-        }
-        if (tag_assign_welcome_ && !tag_assign_welcome_->isEnabled()) {
-            tag_assign_welcome_->setEnabled(true);
-            tag_assign_welcome_->setAcceptDrops(true);
-            tag_assign_welcome_->installEventFilter(this);
-        }
+        ui->navLibraryContainer->activateWelcome();
+        ui->navFilterContainer->activateWelcome();
+        ui->fileListTagAssignmentContainer->activateWelcome();
     }
 
     refreshNavTagLibrary();

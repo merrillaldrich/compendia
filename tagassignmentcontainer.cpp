@@ -5,8 +5,20 @@
  * \param parent Optional Qt parent widget.
  */
 TagAssignmentContainer::TagAssignmentContainer(QWidget *parent)
-    : TagContainer{parent}
-{}
+    : WelcomeHintContainer{parent}
+{
+    setAcceptDrops(true);
+    setAcceptsDropToDismiss(true);
+    connect(this, &WelcomeHintContainer::tagDroppedOnWelcome,
+            this, [this](const QString &family, const QString &tagName) {
+        auto *mw = qobject_cast<MainWindow *>(window());
+        if (!mw) return;
+        if (Tag *tag = mw->core->getTag(family, tagName)) {
+            mw->core->applyTag(tag);
+            mw->refreshTagAssignmentArea();
+        }
+    });
+}
 
 /*! \brief Overrides the Qt base-class handler to accept tag drag-enter events.
  *

@@ -9,15 +9,16 @@
 #include "tagwidget.h"
 #include "tagfamilywidget.h"
 #include "mainwindow.h"
-#include "tagcontainer.h"
+#include "welcomehintcontainer.h"
 
 /*! \brief Tag container showing tags assigned to the current file selection, accepting tag drops.
  *
- * Extends TagContainer with drag-and-drop support so the user can drag a tag
+ * Extends WelcomeHintContainer with drag-and-drop support so the user can drag a tag
  * from the library area and drop it here to apply it to all currently visible
- * (filtered) files.
+ * (filtered) files.  Before any folder is loaded, a dismissible welcome hint is shown;
+ * dropping a tag onto it reveals the container and applies the tag to all visible files.
  */
-class TagAssignmentContainer : public TagContainer
+class TagAssignmentContainer : public WelcomeHintContainer
 {
     Q_OBJECT
 public:
