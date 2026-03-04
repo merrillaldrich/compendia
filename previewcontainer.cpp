@@ -661,9 +661,13 @@ void PreviewContainer::handleTagDrop(const QString &family,
         }
     }
 
-    qreal side_px = Luminism::DefaultTagRectSize * qMin(image_size_.width(), image_size_.height());
-    qreal norm_w  = side_px / image_size_.width();
-    qreal norm_h  = side_px / image_size_.height();
+    // Match the fixed screen-pixel size used by the drop-preview rectangle.
+    static constexpr qreal kDropSideScreenPx = 60.0;
+    qreal scale = view->transform().m11();
+    if (scale <= 0.0) scale = 1.0;
+    qreal side  = kDropSideScreenPx / scale;  // scene units
+    qreal norm_w = side / image_size_.width();
+    qreal norm_h = side / image_size_.height();
     QRectF rect(
         qBound(0.0, scenePos.x() / image_size_.width()  - norm_w / 2.0, 1.0 - norm_w),
         qBound(0.0, scenePos.y() / image_size_.height() - norm_h / 2.0, 1.0 - norm_h),
