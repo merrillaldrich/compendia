@@ -5,6 +5,7 @@
 
 #include <QCheckBox>
 #include <QCoreApplication>
+#include <QtConcurrent>
 #include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
@@ -368,6 +369,14 @@ void MainWindow::refreshNavTagLibrary(){
 
     QSet<Tag*>* libTags = core->getLibraryTags();
     ui->navLibraryContainer->refresh(libTags);
+
+    // Dismiss all welcome hints the moment the first tag exists, regardless of
+    // which code path created it (tag dialog, face detection, drag-drop, etc.).
+    if (!libTags->isEmpty()) {
+        ui->navLibraryContainer->dismissWelcome();
+        ui->navFilterContainer->dismissWelcome();
+        ui->fileListTagAssignmentContainer->dismissWelcome();
+    }
 }
 
 /*! \brief Rebuilds the tag-assignment area from tags on the currently filtered files. */
@@ -506,6 +515,14 @@ void MainWindow::refreshPreviewTagsLabel()
  * \param deselected The previously selected model indexes that are now deselected.
  */
 void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
+
+    // Warm up known-face embeddings for the file being left.
+    if (!deselected.isEmpty()) {
+        QModelIndex di = deselected.indexes().first();
+        QModelIndex si = core->getItemModelProxy()->mapToSource(di);
+        TaggedFile* prev = core->getItemModel()->data(si, Qt::UserRole + 1).value<TaggedFile*>();
+        scheduleEmbeddingWarmup(prev);
+    }
 
     if( selected.isEmpty()){
         ui->previewContainer->clear();
@@ -895,6 +912,60 @@ void MainWindow::onMetadataSaved(){
     progress_->increment(MultiProgressBar::Process::Save);
 }
 
+/*! \brief Triggers background known-face embedding warmup for \p tf if models are loaded.
+ *
+ * \param tf The file being deselected. May be nullptr.
+ */
+void MainWindow::scheduleEmbeddingWarmup(TaggedFile* tf)
+{
+    if (!tf || !face_recognizer_ || !face_recognizer_->modelsLoaded())
+        return;
+
+    // Don't start a new warmup while one is still running — the previous task is
+    // still emitting signals, and resetting the progress bar max mid-flight would
+    // corrupt the counter and potentially trigger an early finishProcess.
+    if (warmupFuture_.isRunning())
+        return;
+
+    QVector<std::tuple<QString, QString, QRectF>> regions;
+    for (Tag* tag : *tf->tags()) {
+        if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
+            continue;
+        auto r = tf->tagRect(tag);
+        if (!r.has_value())
+            continue;
+        regions.append({ tag->tagFamily->getName(), tag->getName(), r.value() });
+    }
+    if (regions.isEmpty())
+        return;
+
+    const QString imagePath = tf->filePath + "/" + tf->fileName;
+
+    // Pre-check: skip if everything is already cached.
+    auto cached = FaceRecognizer::loadKnownFaceCache(imagePath);
+    int misses = regions.size();
+    if (cached.has_value()) {
+        int hits = 0;
+        for (const auto &[family, name, rect] : regions) {
+            for (const KnownFaceCacheEntry &e : *cached) {
+                if (e.tagFamily == family && e.tagName == name && e.rect == rect) {
+                    ++hits; break;
+                }
+            }
+        }
+        if (hits == regions.size())
+            return;
+        misses = regions.size() - hits;
+    }
+
+    progress_->startProcess(MultiProgressBar::Process::EmbeddingWarmup,
+                            0, misses, "Warming face cache");
+
+    warmupFuture_ = QtConcurrent::run([fr = face_recognizer_, imagePath, regions]() {
+        fr->warmupKnownFaceEmbeddings(imagePath, regions);
+    });
+}
+
 /*! \brief Lazily constructs face_recognizer_ and loads the DNN model files.
  *
  * Resolves the models/ directory from the application's executable directory,
@@ -904,8 +975,12 @@ void MainWindow::onMetadataSaved(){
  */
 bool MainWindow::ensureFaceRecognizerLoaded()
 {
-    if (!face_recognizer_)
+    if (!face_recognizer_) {
         face_recognizer_ = new FaceRecognizer(this);
+        connect(face_recognizer_, &FaceRecognizer::embeddingWarmedUp, this, [this]() {
+            progress_->increment(MultiProgressBar::Process::EmbeddingWarmup);
+        }, Qt::QueuedConnection);
+    }
 
     if (face_recognizer_->modelsLoaded())
         return true;

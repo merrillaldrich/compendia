@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QImage>
 #include <QList>
+#include <QMutex>
 #include <QRect>
 #include <QString>
 #include <QDebug>
@@ -104,6 +105,7 @@ private:
     dlib::shape_predictor sp_;
     FaceNet::anet_type net_;
     double detectionThreshold_ = Luminism::FaceDetectionThreshold;
+    QMutex embeddingMutex_; ///< Serialises all dlib inference calls; prevents concurrent access to non-thread-safe dlib models.
 
     /*! \brief Computes a 128-d face embedding for a single detected face rectangle.
      *
@@ -116,6 +118,18 @@ private:
      */
     dlib::matrix<float,0,1> computeEmbedding(const dlib::array2d<dlib::rgb_pixel> &dlibImg,
                                               const dlib::rectangle &rect);
+
+    /*! \brief Non-locking core of computeEmbeddingFromRegion, called under embeddingMutex_.
+     *
+     * Runs the HOG detector and picks the best-IoU detection against \p normalizedRect,
+     * then delegates to computeEmbedding.  Must only be called while holding embeddingMutex_.
+     *
+     * \param img            The source image.
+     * \param normalizedRect The user-drawn region in normalised image coordinates (0.0–1.0).
+     * \return A 128-d embedding, or an empty matrix on failure.
+     */
+    dlib::matrix<float,0,1> computeEmbeddingFromRegionUnlocked(const QImage &img,
+                                                                const QRectF &normalizedRect);
 
 public:
     /*! \brief Converts a QImage to a dlib RGB pixel array for use with the detector.
@@ -183,6 +197,21 @@ public:
      */
     dlib::matrix<float,0,1> computeEmbeddingFromRegion(const QImage &img, const QRectF &normalizedRect);
 
+    /*! \brief Checks the known-face cache for each region in \p tagRegions and computes
+     *         any missing embeddings, saving the updated cache to disk when done.
+     *
+     * Intended to be called from a background thread (e.g. via QtConcurrent::run).
+     * Uses an internal mutex to prevent concurrent dlib inference from multiple threads.
+     * Emits embeddingWarmedUp() after each successfully computed (not cached) embedding.
+     *
+     * \param imagePath  Absolute path to the source image.
+     * \param tagRegions List of (tagFamilyName, tagName, normalizedRect) tuples for
+     *                   each user-labeled face region on this file.
+     */
+    void warmupKnownFaceEmbeddings(
+        const QString &imagePath,
+        const QVector<std::tuple<QString, QString, QRectF>> &tagRegions);
+
     /*! \brief Attempts to load cached face descriptors for \p imagePath.
      *
      * The cache is considered valid only when the stored source_file_mtime matches
@@ -229,6 +258,8 @@ public:
                                    const QVector<KnownFaceCacheEntry> &entries);
 
 signals:
+    /*! \brief Emitted once per embedding that was computed (cache miss) during warmup. */
+    void embeddingWarmedUp();
 };
 
 #endif // FACERECOGNIZER_H

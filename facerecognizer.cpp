@@ -6,11 +6,13 @@
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>
+#include <QImageReader>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDateTime>
 #include <QElapsedTimer>
+#include <QMutexLocker>
 #include <QDebug>
 
 // ---------------------------------------------------------------------------
@@ -222,6 +224,8 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
     if (!models_loaded_)
         return {};
 
+    QMutexLocker lock(&embeddingMutex_);
+
     QElapsedTimer t;
     t.start();
     qDebug() << "[FaceRecognizer] detectFacesWithEmbeddings — input:" << img.width() << "x" << img.height();
@@ -294,7 +298,7 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
     return results;
 }
 
-/*! \brief Computes a face embedding for a user-drawn region in \p img.
+/*! \brief Non-locking core of computeEmbeddingFromRegion; must be called under embeddingMutex_.
  *
  * Runs the HOG detector and picks the detection with the best IoU against \p normalizedRect.
  * Falls back to a synthetic rectangle from \p normalizedRect if no detection has IoU > 0.3.
@@ -303,12 +307,9 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
  * \param normalizedRect The user-drawn region in normalised image coordinates (0.0–1.0).
  * \return A 128-d embedding, or an empty matrix if the embedding could not be computed.
  */
-dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegion(
+dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegionUnlocked(
     const QImage &img, const QRectF &normalizedRect)
 {
-    if (!models_loaded_)
-        return dlib::matrix<float,0,1>();
-
     QElapsedTimer t;
     t.start();
     qDebug() << "[FaceRecognizer] computeEmbeddingFromRegion — input:" << img.width() << "x" << img.height();
@@ -377,6 +378,93 @@ dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegion(
     } catch (const std::exception &) {
         return dlib::matrix<float,0,1>();
     }
+}
+
+/*! \brief Computes a face embedding for a user-drawn region in \p img.
+ *
+ * Runs the HOG detector and picks the detection with the best IoU against \p normalizedRect.
+ * Falls back to a synthetic rectangle from \p normalizedRect if no detection has IoU > 0.3.
+ * Thread-safe: acquires embeddingMutex_ before calling dlib inference.
+ *
+ * \param img            The source image.
+ * \param normalizedRect The user-drawn region in normalised image coordinates (0.0–1.0).
+ * \return A 128-d embedding, or an empty matrix if the embedding could not be computed.
+ */
+dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegion(
+    const QImage &img, const QRectF &normalizedRect)
+{
+    if (!models_loaded_)
+        return dlib::matrix<float,0,1>();
+
+    QMutexLocker lock(&embeddingMutex_);
+    return computeEmbeddingFromRegionUnlocked(img, normalizedRect);
+}
+
+// ---------------------------------------------------------------------------
+// Known-face embedding warmup
+// ---------------------------------------------------------------------------
+
+/*! \brief Checks the known-face cache for each region in \p tagRegions and computes
+ *         any missing embeddings, saving the updated cache to disk when done.
+ *
+ * \param imagePath  Absolute path to the source image.
+ * \param tagRegions List of (tagFamilyName, tagName, normalizedRect) tuples for
+ *                   each user-labeled face region on this file.
+ */
+void FaceRecognizer::warmupKnownFaceEmbeddings(
+    const QString &imagePath,
+    const QVector<std::tuple<QString, QString, QRectF>> &tagRegions)
+{
+    if (!models_loaded_ || tagRegions.isEmpty())
+        return;
+
+    auto cachedEntries = FaceRecognizer::loadKnownFaceCache(imagePath);
+    QVector<KnownFaceCacheEntry> updatedCache =
+        cachedEntries.has_value() ? *cachedEntries : QVector<KnownFaceCacheEntry>{};
+
+    QImage img;  // loaded lazily on first cache miss
+    bool cacheNeedsWrite = false;
+
+    for (const auto &[family, name, rect] : tagRegions) {
+        bool hit = false;
+        for (const KnownFaceCacheEntry &e : updatedCache) {
+            if (e.tagFamily == family && e.tagName == name && e.rect == rect) {
+                hit = true;
+                break;
+            }
+        }
+        if (hit)
+            continue;
+
+        if (img.isNull()) {
+            QImageReader ir(imagePath);
+            ir.setAutoTransform(true);
+            img = ir.read();
+            if (img.isNull())
+                return;
+        }
+
+        dlib::matrix<float,0,1> emb;
+        {
+            QMutexLocker lock(&embeddingMutex_);
+            emb = computeEmbeddingFromRegionUnlocked(img, rect);
+        }
+        if (emb.size() == 0)
+            continue;
+
+        KnownFaceCacheEntry e;
+        e.tagFamily = family;
+        e.tagName   = name;
+        e.rect      = rect;
+        e.embedding = emb;
+        updatedCache.append(e);
+        cacheNeedsWrite = true;
+
+        emit embeddingWarmedUp();
+    }
+
+    if (cacheNeedsWrite)
+        FaceRecognizer::saveKnownFaceCache(imagePath, updatedCache);
 }
 
 // ---------------------------------------------------------------------------

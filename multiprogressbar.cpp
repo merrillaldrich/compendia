@@ -50,6 +50,10 @@ void MultiProgressBar::startProcess(Process p, int min, int max, const QString &
 
 /*! \brief Increments the process value by 1 and auto-finishes when it reaches max.
  *
+ * When the value reaches max, the display is first updated to show the full/green
+ * state, then finishProcess() is scheduled after a short delay so the user can
+ * see the completion before the bar resets.
+ *
  * \param p The process to advance.
  */
 void MultiProgressBar::increment(Process p)
@@ -58,15 +62,15 @@ void MultiProgressBar::increment(Process p)
         return;
 
     states_[p].value++;
+    updateDisplay();
 
     if (states_[p].value >= states_[p].max) {
-        finishProcess(p);
-        return;
+        // Briefly show the green (full) state before clearing.
+        QTimer::singleShot(600, this, [this, p]() {
+            if (states_[p].active && states_[p].value >= states_[p].max)
+                finishProcess(p);
+        });
     }
-
-    // Refresh display if this is the currently shown process or the only one.
-    if (active_.isEmpty() || active_[cycle_index_ % active_.size()] == p || active_.size() == 1)
-        updateDisplay();
 }
 
 /*! \brief Explicitly marks a process as done and emits processFinished().
