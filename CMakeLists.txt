@@ -69,6 +69,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         filenamedelegate.h filenamedelegate.cpp
         datefilterbutton.h datefilterbutton.cpp
         folderfilterlineedit.h folderfilterlineedit.cpp
+        multiprogressbar.h multiprogressbar.cpp
 
     )
 

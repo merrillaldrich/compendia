@@ -44,29 +44,25 @@ MainWindow::MainWindow(QWidget *parent)
     // Set up container welcome hints (FlowLayout is installed by WelcomeHintContainer constructor)
     ui->navLibraryContainer->setupWelcome(
         ui->navLibraryScrollArea, ui->navSplitter, 2,
-        "Click in this area to create a new tag family.");
+        "<b>Click here</b> to create groups of tags to organize your images.");
     ui->navFilterContainer->setupWelcome(
         ui->navFilterScrollArea,
         qobject_cast<QVBoxLayout *>(ui->navFilterSection->layout()), 1,
-        "Drag tags from the library here to filter the file list.");
+        "Drag and drop tags here to <b>filter your view.</b>");
     ui->fileListTagAssignmentContainer->setupWelcome(
         ui->fileListTagAssignmentScrollArea, ui->fileListSplitter, 1,
-        "Drag tags from the library here to apply them to all visible files.");
+        "Drag and drop tags here to <b>apply them</b> to all visible files.");
 
     // Set up the status bar
-    progress_label_ = new QLabel("Progress:", this);
-    ui->statusBar->addPermanentWidget(progress_label_);
-
-    progress_bar_ = new QProgressBar(this);
-    progress_bar_->setTextVisible(false);
-    progress_bar_->setMinimum(0);
-    progress_bar_->setMaximum(1000);
-    progress_bar_->setFixedSize(300, 12);
-    progress_bar_->setValue(0);
-
-    ui->statusBar->addPermanentWidget(progress_bar_);
+    progress_ = new MultiProgressBar(this);
+    ui->statusBar->addPermanentWidget(progress_);
     connect(core, &LuminismCore::iconUpdated, this, &MainWindow::onIconUpdated);
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
+    connect(progress_, &MultiProgressBar::processFinished,
+            this, [this](MultiProgressBar::Process p) {
+        if (p == MultiProgressBar::Process::IconGeneration)
+            ui->dateEdit->setAvailableDates(core->getFileDates());
+    });
     connect(core, &LuminismCore::tagLibraryChanged, this, &MainWindow::onTagLibraryChanged);
     connect(ui->navLibraryContainer,          &TagContainer::tagNameChanged,
             this, &MainWindow::onTagNameChanged);
@@ -109,14 +105,14 @@ MainWindow::MainWindow(QWidget *parent)
         };
 
         // Title
-        auto* title = new QLabel("Welcome to Luminism");
+        auto* title = new QLabel("Luminism");
         QFont tf = title->font();
         tf.setPointSize(tf.pointSize() + 8);
         tf.setBold(true);
         title->setFont(tf);
         il->addWidget(title);
 
-        auto* subtitle = new QLabel("A media tagging application for images and video.");
+        auto* subtitle = new QLabel("Get a handle on your photos and videos!");
         il->addWidget(subtitle);
         il->addSpacing(12);
 
@@ -148,11 +144,12 @@ MainWindow::MainWindow(QWidget *parent)
         il->addWidget(makeSectionLabel("How it works"));
 
         const QStringList tips = {
-            "Drag tags from the library panel (left) onto files to apply them.",
-            "Filter files by tag, name, folder, or date using the filter panel.",
+            "Make groups of tags in the library (left)."
+            "Drag and drop tags onto files to apply them.",
+            "Filter your view by tag, name, folder, or date using the filter panel (top).",
             "Right-click files and choose Isolate Selection to focus on a subset.",
-            "Use Autos > Face Detection to detect and tag faces automatically.",
-            "Save tag data with File > Save All. Tags are stored as JSON sidecars alongside each file.",
+            "Use Autos > Face Detection to find and tag faces automatically.",
+            "Tags you apply are saved alongside your images and video files.",
         };
         for (const QString &tip : tips) {
             auto* lbl = new QLabel(QString("%1  %2").arg(QChar(0x2022)).arg(tip));
@@ -359,7 +356,9 @@ void MainWindow::loadFolder(const QString &folder)
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
     clearPreview();
-    progress_bar_->setMaximum(core->getItemModel()->rowCount());
+    progress_->startProcess(MultiProgressBar::Process::IconGeneration,
+                            0, core->getItemModel()->rowCount(),
+                            "Generating icons");
 }
 
 /*! \brief Rebuilds the tag-library navigation area from the current library tags. */
@@ -771,16 +770,22 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 
 /*! \brief Slot for the Save button; writes metadata for all dirty files. */
 void MainWindow::on_saveButton_clicked(){
+    progress_->startProcess(MultiProgressBar::Process::Save,
+                            0, core->getItemModel()->rowCount(), "Saving");
     core->writeFileMetadata();
 }
 
 /*! \brief Slot for File → Save All; writes metadata for all dirty files. */
 void MainWindow::on_actionSave_All_triggered(){
+    progress_->startProcess(MultiProgressBar::Process::Save,
+                            0, core->getItemModel()->rowCount(), "Saving");
     core->writeFileMetadata();
 }
 
 /*! \brief Slot for File → Save Visible; writes metadata only for files passing the current filter. */
 void MainWindow::on_actionSave_Visible_triggered(){
+    progress_->startProcess(MultiProgressBar::Process::Save,
+                            0, core->getItemModelProxy()->rowCount(), "Saving");
     core->writeVisibleFileMetadata();
 }
 
@@ -882,26 +887,12 @@ void MainWindow::connectFileCountLabel()
 }
 
 void MainWindow::onIconUpdated(){
-    if(progress_label_->text() != "Generating Icons")
-        progress_label_->setText("Generating Icons");
-    progress_bar_->setValue(progress_bar_->value() + 1);
-    if(progress_bar_->value() >= progress_bar_->maximum()){
-        progress_label_->setText("Icons Complete");
-        progress_bar_->setValue(0);
-        // EXIF capture dates are now fully loaded — refresh the autocomplete date list
-        ui->dateEdit->setAvailableDates(core->getFileDates());
-    }
+    progress_->increment(MultiProgressBar::Process::IconGeneration);
 }
 
 /*! \brief Advances the save progress bar when a metadata file is written. */
 void MainWindow::onMetadataSaved(){
-    if(progress_label_->text() != "Saving")
-        progress_label_->setText("Saving");
-    progress_bar_->setValue(progress_bar_->value() + 1);
-    if(progress_bar_->value() >= progress_bar_->maximum()){
-        progress_label_->setText("Save Complete");
-        progress_bar_->setValue(0);
-    }
+    progress_->increment(MultiProgressBar::Process::Save);
 }
 
 /*! \brief Lazily constructs face_recognizer_ and loads the DNN model files.

@@ -9,8 +9,8 @@
 #include <QGraphicsView>
 #include <QImageReader>
 #include <QMessageBox>
-#include <QProgressBar>
 #include "luminismcore.h"
+#include "multiprogressbar.h"
 #include "facerecognizer.h"
 #include "facerecognitionsettingsdialog.h"
 #include "constants.h"
@@ -32,8 +32,7 @@ class MainWindow : public QMainWindow
 
 private:
     Ui::MainWindow *ui;
-    QProgressBar* progress_bar_;
-    QLabel* progress_label_;
+    MultiProgressBar* progress_;
     QWidget* welcome_widget_; ///< Shown in the file-list area before any folder is loaded.
     FaceRecognizer* face_recognizer_ = nullptr;
     double faceMatchThreshold_ = Luminism::FaceMatchThreshold;
