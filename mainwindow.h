@@ -290,6 +290,17 @@ private slots:
     void on_actionClearIsolation_triggered();
 
 protected:
+    /*! \brief Handles events for the container welcome hint labels.
+     *
+     * A mouse press on the library hint dismisses it and reveals the tag library.
+     * A tag drop on the filter or assignment hint dismisses it and applies the tag.
+     *
+     * \param obj   The object that received the event.
+     * \param event The event to inspect.
+     * \return \c true if the event was consumed; \c false to pass it on.
+     */
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
      *
      * \param event The resize event containing the new window size.
