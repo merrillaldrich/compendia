@@ -517,9 +517,14 @@ Tag* LuminismCore::addLibraryTag(QString tagFamilyName, QString tagName){
 
 /*! \brief Add a tag to the library if it doesn't exist.
  *
+ * Transfers Qt ownership of \p tag to this LuminismCore instance so that the
+ * tag is not accidentally destroyed when the UI widget that originally created
+ * it (typically a TagFamilyWidget) is rebuilt and its children are deleted.
+ *
  * \param tag The Tag pointer to insert.
  */
 void LuminismCore::addLibraryTag(Tag* tag){
+    tag->setParent(this);  // Take ownership: prevent widget destruction from deleting the tag
     tags_->insert(tag);
 }
 

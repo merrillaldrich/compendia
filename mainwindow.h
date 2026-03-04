@@ -219,6 +219,18 @@ private slots:
                                const QString &tagName,
                                const QRectF  &normalizedRect);
 
+    /*! \brief Handles a tag drop onto an existing tag region; replaces the old tag with the dropped one.
+     *
+     * The region rect is preserved; only the tag assignment changes.
+     *
+     *  \param family       Tag family name of the dropped tag.
+     *  \param tagName      Tag name of the dropped tag.
+     *  \param existingRect Normalized rect of the region being replaced.
+     */
+    void onTagDroppedOnExistingRegion(const QString &family,
+                                      const QString &tagName,
+                                      const QRectF  &existingRect);
+
     /*! \brief Persists a resized tag region back to the TaggedFile.
      *  \param oldNorm Normalized rect before the resize (used to identify the tag).
      *  \param newNorm Normalized rect after the resize.

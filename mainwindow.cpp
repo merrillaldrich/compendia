@@ -78,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::onTagNameChanged);
     connect(ui->previewContainer, &PreviewContainer::tagDroppedOnPreview,
             this, &MainWindow::onTagDroppedOnPreview);
+    connect(ui->previewContainer, &PreviewContainer::tagDroppedOnExistingRegion,
+            this, &MainWindow::onTagDroppedOnExistingRegion);
     connect(ui->previewContainer, &PreviewContainer::tagRectResized,
             this, &MainWindow::onTagRectResized);
     connect(ui->previewContainer, &PreviewContainer::tagPreviewDragEntered,
@@ -461,6 +463,62 @@ void MainWindow::onTagDroppedOnPreview(const QString &family,
     refreshTagAssignmentArea();
 }
 
+/*! \brief Handles a tag drop onto an existing tag region; replaces the old tag with the dropped one.
+ *
+ * The region rect is preserved; only the tag assignment changes.
+ *
+ *  \param family       Tag family name of the dropped tag.
+ *  \param tagName      Tag name of the dropped tag.
+ *  \param existingRect Normalized rect of the region being replaced.
+ */
+void MainWindow::onTagDroppedOnExistingRegion(const QString &family,
+                                               const QString &tagName,
+                                               const QRectF  &existingRect)
+{
+    QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
+    if (sel.isEmpty()) return;
+
+    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
+    TaggedFile* tf  = core->getItemModel()
+                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!tf) return;
+
+    Tag* newTag = core->getTag(family, tagName);
+    if (!newTag) return;
+
+    // Find the tag currently assigned to the hit region
+    Tag* oldTag = nullptr;
+    for (Tag* t : *tf->tags()) {
+        auto r = tf->tagRect(t);
+        if (r.has_value() && r.value() == existingRect) {
+            oldTag = t;
+            break;
+        }
+    }
+
+    if (oldTag == newTag) return;  // dropped tag onto its own region — no-op
+
+    if (oldTag)
+        tf->removeTag(oldTag);
+
+    if (tf->tags()->contains(newTag))
+        tf->setTagRect(newTag, existingRect);
+    else
+        tf->addTag(newTag, existingRect);
+
+    // Rebuild overlay list and push to preview
+    QList<TagRectDescriptor> tagRects;
+    for (Tag* t : *tf->tags()) {
+        auto r = tf->tagRect(t);
+        if (r.has_value())
+            tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
+    }
+    ui->previewContainer->setTagRects(tagRects);
+    ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
+
+    refreshTagAssignmentArea();
+}
+
 /*! \brief Persists a resized tag region back to the TaggedFile.
  *
  * Identifies the affected tag by matching \p oldNorm against stored tag rects, then
@@ -484,6 +542,7 @@ void MainWindow::onTagRectResized(const QRectF &oldNorm, const QRectF &newNorm)
         auto r = tf->tagRect(tag);
         if (r.has_value() && r.value() == oldNorm) {
             tf->setTagRect(tag, newNorm);
+            ui->previewContainer->updateTagRectDescriptor(oldNorm, newNorm);
             break;
         }
     }

@@ -83,6 +83,16 @@ public:
      */
     void setTagRectsVisible(bool visible);
 
+    /*! \brief Updates the stored normalized rect for one descriptor in-place.
+     *
+     * Called after a live resize so that the drop hit-test uses the current rect
+     * without rebuilding the scene items.
+     *
+     * \param oldNorm The normalized rect to replace.
+     * \param newNorm The new normalized rect.
+     */
+    void updateTagRectDescriptor(const QRectF &oldNorm, const QRectF &newNorm);
+
     /*! \brief Sets the colour used to draw the drop-preview rectangle during a tag drag.
      *
      * \param color The tag family colour for the tag currently being dragged.
@@ -104,6 +114,19 @@ signals:
      *  \param tagName Tag name decoded from the drag payload.
      */
     void tagPreviewDragEntered(const QString &family, const QString &tagName);
+
+    /*! \brief Emitted when a tag is dropped directly onto an existing tag region.
+     *
+     * The drop target's normalized rect is passed so the receiver can identify
+     * which tag currently owns that region and swap it for the dropped tag.
+     *
+     *  \param familyName    Tag family name of the dropped tag.
+     *  \param tagName       Tag name of the dropped tag.
+     *  \param existingRect  Normalized rect of the existing region that was hit.
+     */
+    void tagDroppedOnExistingRegion(const QString &familyName,
+                                    const QString &tagName,
+                                    const QRectF  &existingRect);
 
     /*! \brief Emitted when the user finishes resizing a tag region overlay.
      *  \param oldNormalizedRect The region's normalized rect before the resize.
@@ -142,7 +165,8 @@ private:
     QMediaPlayer*      mediaPlayer = nullptr;
     QAudioOutput*      audioOutput_ = nullptr;
     QGraphicsVideoItem* videoItem = nullptr;
-    QList<QGraphicsItem*> tag_rect_items_;
+    QList<QGraphicsItem*>    tag_rect_items_;
+    QList<TagRectDescriptor> tag_rect_descriptors_;
     QGraphicsItem*     drop_preview_rect_ = nullptr;
     QColor             drop_preview_color_ = Qt::white;
     QSizeF             image_size_;

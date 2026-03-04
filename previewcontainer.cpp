@@ -35,7 +35,7 @@ class TagRectItem : public QGraphicsObject
     // Approximate folder-tab height reserved above the rect, in screen pixels.
     static constexpr qreal kTabPx   = 24.0;
     // Minimum rect width and height enforced during resize, in screen pixels.
-    static constexpr qreal kMinPx   = 50.0;
+    static constexpr qreal kMinPx   = 30.0;
 
     enum Handle { None, Left, Right, Top, Bottom, TopLeft, TopRight, BottomLeft, BottomRight, Tab };
 
@@ -430,6 +430,7 @@ void PreviewContainer::preview(QImage image){
     scene->clear();
     videoItem = nullptr; // scene->clear() deleted it if it was present
     tag_rect_items_.clear();
+    tag_rect_descriptors_.clear();
     image_size_ = image.size();
 
     QGraphicsPixmapItem *item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
@@ -458,6 +459,7 @@ void PreviewContainer::preview(QString absoluteFilePath){
         scene->clear();
         videoItem = nullptr;
         tag_rect_items_.clear();
+        tag_rect_descriptors_.clear();
         image_size_ = QSizeF();
 
         videoItem = new QGraphicsVideoItem;
@@ -538,6 +540,7 @@ void PreviewContainer::clear(){
         view->scene()->clear();
         videoItem = nullptr; // scene->clear() deleted it
         tag_rect_items_.clear();
+        tag_rect_descriptors_.clear();
         image_size_ = QSizeF();
     }
 }
@@ -556,8 +559,11 @@ void PreviewContainer::setTagRects(const QList<TagRectDescriptor> &rects)
     for (QGraphicsItem* item : tag_rect_items_)
         delete item;
     tag_rect_items_.clear();
+    tag_rect_descriptors_.clear();
 
     if (image_size_.isEmpty()) return;
+
+    tag_rect_descriptors_ = rects;
 
     for (const auto &desc : rects) {
         QRectF sceneRect(
@@ -601,6 +607,24 @@ void PreviewContainer::setTagRectsVisible(bool visible)
         item->setVisible(visible);
 }
 
+/*! \brief Updates the stored normalized rect for one descriptor in-place.
+ *
+ * Called after a live resize so that the drop hit-test uses the current rect
+ * without rebuilding the scene items.
+ *
+ * \param oldNorm The normalized rect to replace.
+ * \param newNorm The new normalized rect.
+ */
+void PreviewContainer::updateTagRectDescriptor(const QRectF &oldNorm, const QRectF &newNorm)
+{
+    for (TagRectDescriptor &desc : tag_rect_descriptors_) {
+        if (desc.rect == oldNorm) {
+            desc.rect = newNorm;
+            break;
+        }
+    }
+}
+
 /*! \brief Sets the colour used to draw the drop-preview rectangle during a tag drag.
  *
  * \param color The tag family colour for the tag currently being dragged.
@@ -625,6 +649,18 @@ void PreviewContainer::handleTagDrop(const QString &family,
 {
     if (image_size_.isEmpty() || is_video_) return;
     clearDropPreviewRect();
+
+    // If the drop lands inside an existing tag region, replace that tag rather
+    // than creating a new region at the cursor position.
+    QPointF normPos(scenePos.x() / image_size_.width(),
+                    scenePos.y() / image_size_.height());
+    for (const TagRectDescriptor &desc : tag_rect_descriptors_) {
+        if (desc.rect.contains(normPos)) {
+            emit tagDroppedOnExistingRegion(family, tagName, desc.rect);
+            return;
+        }
+    }
+
     qreal side_px = Luminism::DefaultTagRectSize * qMin(image_size_.width(), image_size_.height());
     qreal norm_w  = side_px / image_size_.width();
     qreal norm_h  = side_px / image_size_.height();
@@ -638,21 +674,37 @@ void PreviewContainer::handleTagDrop(const QString &family,
 /*! \brief Creates or repositions the drop-preview rectangle during a drag.
  *
  * Uses the same TagRectItem (rounded, cosmetic pen) as committed tag overlays, drawn in
- * the current drop_preview_color_.  The rect is square in pixel space.
+ * the current drop_preview_color_.  The rect is a fixed size in screen pixels so it
+ * remains the same visual size regardless of zoom level or image resolution.
+ * The preview is hidden while the cursor is over an existing tag region.
  *
  * \param scenePos Current cursor position in scene coordinates.
  */
 void PreviewContainer::updateDropPreviewRect(const QPointF &scenePos)
 {
     if (image_size_.isEmpty()) return;
-    qreal side_px = Luminism::DefaultTagRectSize * qMin(image_size_.width(), image_size_.height());
-    qreal norm_w  = side_px / image_size_.width();
-    qreal norm_h  = side_px / image_size_.height();
+
+    // Hide the preview rect when hovering over an existing tag region.
+    QPointF normPos(scenePos.x() / image_size_.width(),
+                    scenePos.y() / image_size_.height());
+    for (const TagRectDescriptor &desc : tag_rect_descriptors_) {
+        if (desc.rect.contains(normPos)) {
+            clearDropPreviewRect();
+            return;
+        }
+    }
+
+    // Fixed screen-pixel side length — independent of zoom and image resolution.
+    static constexpr qreal kPreviewSideScreenPx = 60.0;
+    qreal scale = view->transform().m11();
+    if (scale <= 0.0) scale = 1.0;
+    qreal side = kPreviewSideScreenPx / scale;  // convert to scene units
+
     QRectF sr(
-        qBound(0.0, scenePos.x() / image_size_.width()  - norm_w / 2.0, 1.0 - norm_w) * image_size_.width(),
-        qBound(0.0, scenePos.y() / image_size_.height() - norm_h / 2.0, 1.0 - norm_h) * image_size_.height(),
-        side_px, side_px);
-    // Delete and recreate so the new position is always in sync with the color
+        qBound(0.0, scenePos.x() - side / 2.0, image_size_.width()  - side),
+        qBound(0.0, scenePos.y() - side / 2.0, image_size_.height() - side),
+        side, side);
+
     if (drop_preview_rect_) {
         scene->removeItem(drop_preview_rect_);
         delete drop_preview_rect_;
