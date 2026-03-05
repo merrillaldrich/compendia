@@ -297,6 +297,18 @@ public:
      */
     QList<TagSet> parseTagJson(QJsonObject tagsJson, QJsonObject tagRectsJson = QJsonObject());
 
+    /*! \brief Updates the in-memory icon for the file at \p absoluteFilePath using the provided images.
+     *
+     * Iterates the source model, finds the item whose TaggedFile path matches
+     * \p absoluteFilePath, replaces its decoration with a multi-size QIcon built
+     * from \p images, and emits iconUpdated().  The on-disk cache is not written;
+     * a folder reload will re-trigger normal icon generation.
+     *
+     * \param absoluteFilePath Absolute path to the video file whose icon to replace.
+     * \param images           Scaled thumbnail images (one per IconGenerator::kIconSizes entry).
+     */
+    void updateFileIcons(const QString &absoluteFilePath, const QVector<QImage> &images);
+
     /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
      *  Emits tagLibraryChanged() when done. */
     void mergeTag(Tag* from, Tag* into);

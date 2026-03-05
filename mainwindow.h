@@ -14,6 +14,7 @@
 #include "multiprogressbar.h"
 #include "facerecognizer.h"
 #include "facerecognitionsettingsdialog.h"
+#include "framegrabber.h"
 #include "constants.h"
 
 QT_BEGIN_NAMESPACE
@@ -38,6 +39,7 @@ private:
     FaceRecognizer* face_recognizer_ = nullptr;
     double faceMatchThreshold_ = Luminism::FaceMatchThreshold;
     QFuture<void> warmupFuture_; ///< Handle to the current background embedding warmup task.
+    FrameGrabber* frameGrabber_ = nullptr; ///< Active frame-grab batch, or nullptr when idle.
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
@@ -290,6 +292,37 @@ private slots:
 
     /*! \brief Refreshes all tag-related containers after a merge changes the library. */
     void onTagLibraryChanged();
+
+    /*! \brief Slot for Autos → Grab Video Frames; begins a frame-grab batch for all video files. */
+    void on_actionGrab_Video_Frame_triggered();
+
+    /*! \brief Receives a successfully captured frame and updates the in-memory icon for the file.
+     *
+     * \param path  Absolute path to the video file.
+     * \param frame Captured frame (scaled to at most 400×400 px).
+     */
+    void onVideoFrameGrabbed(const QString &path, const QImage &frame);
+
+    /*! \brief Logs a failed frame-capture attempt.
+     *
+     * \param path   Absolute path to the video file.
+     * \param reason Human-readable description of the failure.
+     */
+    void onVideoFrameFailed(const QString &path, const QString &reason);
+
+    /*! \brief Advances the video-grab progress bar as each file completes.
+     *
+     * \param done  Number of files processed so far.
+     * \param total Total number of files in the batch.
+     */
+    void onVideoGrabProgress(int done, int total);
+
+    /*! \brief Shows the grab summary in the status bar and cleans up after the batch finishes.
+     *
+     * \param success Number of files from which a frame was captured.
+     * \param fail    Number of files for which capture failed.
+     */
+    void onVideoGrabFinished(int success, int fail);
 
     /*! \brief Isolates the currently selected files so only they pass the filter. */
     void on_actionIsolateSelection_triggered();

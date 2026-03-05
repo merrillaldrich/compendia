@@ -109,6 +109,49 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
     }
 }
 
+/*! \brief Updates the in-memory icon for the file at \p absoluteFilePath using the provided images.
+ *
+ * \param absoluteFilePath Absolute path to the video file whose icon to replace.
+ * \param images           Scaled thumbnail images (one per IconGenerator::kIconSizes entry).
+ */
+void LuminismCore::updateFileIcons(const QString &absoluteFilePath, const QVector<QImage> &images)
+{
+    QFileInfo fi(absoluteFilePath);
+    const QString fileName = fi.fileName();
+
+    auto matches = tagged_files_->findItems(fileName);
+    if (matches.isEmpty()) {
+        qDebug() << "updateFileIcons: could not locate" << absoluteFilePath;
+        return;
+    }
+
+    for (QStandardItem *candidate : matches) {
+        TaggedFile *tf = candidate->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf)
+            continue;
+        if ((tf->filePath + "/" + tf->fileName) != absoluteFilePath)
+            continue;
+
+        QIcon icon;
+        for (const QImage &image : images) {
+            int sz = qMax(image.width(), image.height());
+            QPixmap square(sz, sz);
+            square.fill(Qt::transparent);
+            QPainter painter(&square);
+            int x = (sz - image.width()) / 2;
+            int y = (sz - image.height()) / 2;
+            painter.drawImage(x, y, image);
+            painter.end();
+            icon.addPixmap(square);
+        }
+        candidate->setIcon(icon);
+        emit iconUpdated();
+        return;
+    }
+
+    qDebug() << "updateFileIcons: could not match path for" << absoluteFilePath;
+}
+
 /*! \brief Sets the root directory path and immediately loads it.
  *
  * \param path Absolute path to the media folder to load.

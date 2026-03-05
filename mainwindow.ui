@@ -642,6 +642,8 @@
     <property name="title">
      <string>Autos</string>
     </property>
+    <addaction name="actionGrab_Video_Frame"/>
+    <addaction name="separator"/>
     <widget class="QMenu" name="menuFace_Detection">
      <property name="title">
       <string>Face Detection</string>
@@ -671,6 +673,11 @@
   <action name="actionSave_Visible">
    <property name="text">
     <string>Save Visible</string>
+   </property>
+  </action>
+  <action name="actionGrab_Video_Frame">
+   <property name="text">
+    <string>Grab Video Frames</string>
    </property>
   </action>
   <action name="actionFind_Faces">

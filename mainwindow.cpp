@@ -1370,6 +1370,100 @@ void MainWindow::on_dateEdit_dateChanged(const QDate &date)
     core->setCreationDateFilter(date);  // invalid QDate = no filter
 }
 
+/*! \brief Slot for Autos → Grab Video Frames; begins a frame-grab batch for all video files. */
+void MainWindow::on_actionGrab_Video_Frame_triggered()
+{
+    if (frameGrabber_) {
+        QMessageBox::information(this, tr("Frame Grab In Progress"),
+            tr("A frame-grab operation is already running. Please wait for it to finish."));
+        return;
+    }
+
+    if (!core->containsFiles()) {
+        QMessageBox::information(this, tr("No Files Loaded"),
+            tr("Open a folder first."));
+        return;
+    }
+
+    static const QStringList videoExts = {"mp4", "mov", "avi", "mkv", "wmv", "webm", "m4v"};
+
+    QStringList paths;
+    QStandardItemModel *model = core->getItemModel();
+    for (int r = 0; r < model->rowCount(); ++r) {
+        TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+        QString full = tf->filePath + "/" + tf->fileName;
+        if (videoExts.contains(QFileInfo(full).suffix().toLower()))
+            paths.append(full);
+    }
+
+    if (paths.isEmpty()) {
+        QMessageBox::information(this, tr("No Video Files"),
+            tr("No video files were found in the loaded folder."));
+        return;
+    }
+
+    frameGrabber_ = new FrameGrabber(this);
+    connect(frameGrabber_, &FrameGrabber::frameGrabbed,  this, &MainWindow::onVideoFrameGrabbed);
+    connect(frameGrabber_, &FrameGrabber::frameFailed,   this, &MainWindow::onVideoFrameFailed);
+    connect(frameGrabber_, &FrameGrabber::progress,      this, &MainWindow::onVideoGrabProgress);
+    connect(frameGrabber_, &FrameGrabber::finished,      this, &MainWindow::onVideoGrabFinished);
+
+    progress_->startProcess(MultiProgressBar::Process::VideoGrab,
+                            0, paths.size(), "Grabbing video frames");
+
+    frameGrabber_->grab(paths);
+}
+
+/*! \brief Receives a successfully captured frame and updates the in-memory icon for the file.
+ *
+ * \param path  Absolute path to the video file.
+ * \param frame Captured frame (scaled to at most 400×400 px).
+ */
+void MainWindow::onVideoFrameGrabbed(const QString &path, const QImage &frame)
+{
+    QVector<QImage> images;
+    for (int size : IconGenerator::kIconSizes)
+        images.append(frame.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    core->updateFileIcons(path, images);
+}
+
+/*! \brief Logs a failed frame-capture attempt.
+ *
+ * \param path   Absolute path to the video file.
+ * \param reason Human-readable description of the failure.
+ */
+void MainWindow::onVideoFrameFailed(const QString &path, const QString &reason)
+{
+    qWarning() << "[FrameGrabber] failed:" << path << "-" << reason;
+}
+
+/*! \brief Advances the video-grab progress bar as each file completes.
+ *
+ * \param done  Number of files processed so far.
+ * \param total Total number of files in the batch.
+ */
+void MainWindow::onVideoGrabProgress(int done, int total)
+{
+    Q_UNUSED(done)
+    Q_UNUSED(total)
+    progress_->increment(MultiProgressBar::Process::VideoGrab);
+}
+
+/*! \brief Shows the grab summary in the status bar and cleans up after the batch finishes.
+ *
+ * \param success Number of files from which a frame was captured.
+ * \param fail    Number of files for which capture failed.
+ */
+void MainWindow::onVideoGrabFinished(int success, int fail)
+{
+    ui->statusBar->showMessage(
+        tr("Video frame grab: %1 succeeded, %2 failed.").arg(success).arg(fail), 8000);
+    progress_->finishProcess(MultiProgressBar::Process::VideoGrab);
+    frameGrabber_->deleteLater();
+    frameGrabber_ = nullptr;
+}
+
 /*! \brief Slot for the Quit menu action; closes the main window. */
 void MainWindow::on_actionQuit_triggered()
 {
