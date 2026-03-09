@@ -50,6 +50,7 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     label_->show();
 
     connect(line_edit_, &QLineEdit::editingFinished, this, &TagFamilyWidget::onLineEditEditingFinished);
+    connect(line_edit_, &VariableWidthLineEdit::escapePressed, this, &TagFamilyWidget::endEdit);
     connect(label_, &ClickableLabel::clicked, this, &TagFamilyWidget::onLabelClicked);
 
     collapseButton_ = new TagFamilyWidgetCollapseButton(this);
@@ -70,6 +71,18 @@ void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
         TagWidget* tw = new TagWidget(t, this);
         layout()->addWidget(tw);
         tw->show();
+
+        connect(tw, &TagWidget::abandonRequested, this, [this](TagWidget *tw) {
+            Tag *t = tw->getTag();
+            layout()->removeWidget(tw);
+            tw->setParent(nullptr);
+            tw->deleteLater();
+            delete t;
+            layout()->invalidate();
+            layout()->activate();
+            setMinimumHeight(qMax(64, childrenRect().height() + 4));
+            updateGeometry();
+        });
 
         // Put the new tag in edit mode immediately so the user doesn't have to
         // click on it to enter the name
@@ -93,7 +106,8 @@ void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
 
 /*! \brief Slot called when the line edit finishes editing; commits via endEdit(). */
 void TagFamilyWidget::onLineEditEditingFinished(){
-    endEdit();
+    if (edit_status_ == "Edit")
+        endEdit();
 }
 
 /*! \brief Slot called when the family name label is clicked; enters edit mode via startEdit().
@@ -163,6 +177,15 @@ void TagFamilyWidget::endEdit(){
 
     MainWindow* mainWin = qobject_cast<MainWindow*>(this->window());
     const QString newName = line_edit_->text();
+
+    // Abandon a newly created family if no non-whitespace name was entered
+    if (!in_library_ && newName.trimmed().isEmpty()) {
+        disconnect(tag_family_, &TagFamily::nameChanged, this, &TagFamilyWidget::onTagFamilyNameChanged);
+        setParent(nullptr);
+        tag_family_->deleteLater();
+        deleteLater();
+        return;
+    }
 
     // --- Collision / merge check ---
     TagFamily* collision = mainWin

@@ -57,12 +57,14 @@ TagWidget::TagWidget(Tag *tag, QWidget *parent)
     label_->show();
 
     connect(line_edit_, &QLineEdit::editingFinished, this, &TagWidget::onLineEditEditingFinished);
+    connect(line_edit_, &VariableWidthLineEdit::escapePressed, this, &TagWidget::endEdit);
     connect(label_, &ClickableLabel::clicked, this, &TagWidget::onLabelClicked);
 }
 
 /*! \brief Slot called when the line edit finishes editing; commits the change via endEdit(). */
 void TagWidget::onLineEditEditingFinished(){
-    endEdit();
+    if (edit_status_ == "Edit")
+        endEdit();
 }
 
 /*! \brief Slot called when the label is clicked; enters inline-edit mode via startEdit().
@@ -137,6 +139,12 @@ void TagWidget::endEdit(){
 
     MainWindow* mainWin = qobject_cast<MainWindow*>(this->window());
     const QString newName = line_edit_->text();
+
+    // Abandon a newly created tag if no non-whitespace name was entered
+    if (!in_library_ && newName.trimmed().isEmpty()) {
+        emit abandonRequested(this);
+        return;
+    }
 
     // --- Collision / merge check ---
     Tag* collision = mainWin

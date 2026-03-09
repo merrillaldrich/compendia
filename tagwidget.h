@@ -125,6 +125,12 @@ signals:
      * \param t The Tag whose name changed.
      */
     void tagNameChanged(Tag *t);
+
+    /*! \brief Emitted when a newly created tag is abandoned without entering a name.
+     *
+     * \param tw This TagWidget, so the parent can clean it up.
+     */
+    void abandonRequested(TagWidget *tw);
 };
 
 #endif // TAGWIDGET_H

@@ -25,6 +25,11 @@ void VariableWidthLineEdit::updateWidth() {
  * \param e The key press event.
  */
 void VariableWidthLineEdit::keyPressEvent(QKeyEvent *e) {
+    if (e->key() == Qt::Key_Escape) {
+        emit escapePressed();
+        e->accept();
+        return;
+    }
     // Set the width of the text edit to fit at least 3 W characters, or the physical length of the
     // value, plus the room for padding/decoration of the box itself
     QLineEdit::keyPressEvent(e);

@@ -2,6 +2,7 @@
 #define VARIABLEWIDTHLINEEDIT_H
 
 #include <QLineEdit>
+#include <QKeyEvent>
 
 /*! \brief A QLineEdit that automatically resizes its width to fit its text content.
  *
@@ -38,6 +39,10 @@ protected:
      * \return The minimum size.
      */
     QSize sizeHint() const;
+
+signals:
+    /*! \brief Emitted when the user presses the Escape key. */
+    void escapePressed();
 
 };
 
