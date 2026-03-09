@@ -46,7 +46,7 @@ void FrameGrabber::grab(const QStringList &absolutePaths)
 
     player_->setVideoSink(sink_);
     timeout_->setSingleShot(true);
-    timeout_->setInterval(5000);
+    timeout_->setInterval(15000);
 
     connect(sink_,    &QVideoSink::videoFrameChanged,    this, &FrameGrabber::onVideoFrameChanged);
     connect(player_,  &QMediaPlayer::mediaStatusChanged, this, &FrameGrabber::onMediaStatusChanged);
@@ -148,6 +148,10 @@ void FrameGrabber::finishCurrentFile(bool success, const QString &reason)
 
     timeout_->stop();
     player_->stop();
+    // Clear the source so Qt's FFmpeg backend resets its interrupt callback.
+    // Without this, the "abort" flag armed by stop() is still set when the
+    // next setSource() call begins, causing an immediate AVERROR_EXIT failure.
+    player_->setSource(QUrl());
 
     const QString &path = paths_[currentIndex_];
 
