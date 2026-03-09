@@ -164,6 +164,15 @@ void LuminismCore::setRootDirectory(QString path){
 /*! \brief Clears all existing data and reloads files from the current root directory. */
 void LuminismCore::loadRootDirectory(){
 
+    // Tear down any in-flight icon generation before destroying the model
+    if (iconGenerator_) {
+        iconGenerator_->disconnect();
+        iconGenerator_->deleteLater();
+        iconGenerator_ = nullptr;
+    }
+    uiFlushTimer_.stop();
+    { QMutexLocker lock(&resultsMutex_); results_.clear(); }
+
     // Pointing to a new folder means we have to clear any data already loaded:
     delete tagged_files_proxy_;
     delete tagged_files_;
@@ -342,39 +351,58 @@ void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString,
 /*! \brief Launches background thumbnail and EXIF generation for all files in the model. */
 void LuminismCore::backfillMetadata(){
 
-    QStringList files;
+    // Fix pre-existing duplicate-connection bug by disconnecting first
+    uiFlushTimer_.disconnect();
+    connect(&uiFlushTimer_, &QTimer::timeout, this, &LuminismCore::flushIconGeneratorQueue);
+    uiFlushTimer_.setInterval(50);
+
+    QStringList allPaths;
     for (int i = 0; i < tagged_files_->rowCount(); ++i) {
         QStandardItem *item = tagged_files_->item(i);
         if (!item) continue;
         auto tf = item->data().value<TaggedFile*>();
-        files << (tf->filePath + "/" + tf->fileName);
+        allPaths << (tf->filePath + "/" + tf->fileName);
     }
 
-    // run one async task per file explicitly, via lamba to avoid map overload ambiguity
-    for (const QString &path : files) {
-        // queue icon generation to thread pool
-        // but place the results in a threadsafe vector instead of trying
-        // to apply directly, so we can throttle this appropriately
-        QtConcurrent::run([this, path]() {
+    iconGenerator_ = new IconGenerator(this);
+    connect(iconGenerator_, &IconGenerator::fileReady,
+            this, &LuminismCore::onIconReady);
+    connect(iconGenerator_, &IconGenerator::batchFinished,
+            this, &LuminismCore::onIconBatchFinished);
+    iconGenerator_->processFiles(allPaths);
+}
 
-            QVector<QImage> images = IconGenerator::generateIcon(path);
-            QMap<QString, QString> exifMap = ExifParser::getExifMap(path);
-
-            QString fileName = QFileInfo(path).fileName();
-
-            // store result (thread-safe)
-            {
-                QMutexLocker lock(&resultsMutex_);
-                results_.emplace_back(fileName, path, exifMap, std::move(images));
-            }
-            // ensure timer is running on GUI thread to flush results
-            QMetaObject::invokeMethod(this, "ensureUiFlushTimerRunning", Qt::QueuedConnection);
-        });
+/*! \brief Receives a completed file result from IconGenerator and pushes it to the flush queue.
+ *
+ * \param absolutePath Absolute path to the source file.
+ * \param exifMap      EXIF data (empty for videos).
+ * \param images       Scaled thumbnail images.
+ */
+void LuminismCore::onIconReady(const QString &absolutePath,
+                               const QMap<QString, QString> &exifMap,
+                               const QVector<QImage> &images)
+{
+    QString fileName = QFileInfo(absolutePath).fileName();
+    {
+        QMutexLocker lock(&resultsMutex_);
+        results_.emplace_back(fileName, absolutePath, exifMap, images);
     }
+    ensureUiFlushTimerRunning();
+}
 
-    // start a timer that will apply a few icons per tick
-    connect(&uiFlushTimer_, &QTimer::timeout, this, &LuminismCore::flushIconGeneratorQueue);
-    uiFlushTimer_.setInterval(50);
+/*! \brief Called when IconGenerator finishes all files in the batch. */
+void LuminismCore::onIconBatchFinished()
+{
+    // All fileReady signals have been emitted, so results_ is fully populated.
+    // Flush any items that the 50 ms timer hasn't processed yet before announcing
+    // completion — otherwise the last few icons would never reach the model.
+    while (!results_.isEmpty())
+        flushIconGeneratorQueue();
+    uiFlushTimer_.stop();
+
+    emit batchFinished();
+    iconGenerator_->deleteLater();
+    iconGenerator_ = nullptr;
 }
 
 /*! \brief Starts the UI flush timer if it is not already running. */

@@ -15,7 +15,6 @@
 #include "tagset.h"
 #include "filterproxymodel.h"
 #include "icongenerator.h"
-#include "exifparser.h"
 
 /*! \brief Central controller that owns all application data and business logic.
  *
@@ -41,6 +40,8 @@ private:
     QTimer uiFlushTimer_;
 
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
+
+    IconGenerator *iconGenerator_ = nullptr;  ///< Active IconGenerator, or nullptr.
 
     /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model.
      */
@@ -326,6 +327,20 @@ public slots:
      */
     void ensureUiFlushTimerRunning();
 
+private slots:
+    /*! \brief Receives a completed file result from IconGenerator and pushes it to the flush queue.
+     *
+     * \param absolutePath Absolute path to the source file.
+     * \param exifMap      EXIF data (empty for videos).
+     * \param images       Scaled thumbnail images.
+     */
+    void onIconReady(const QString &absolutePath,
+                     const QMap<QString, QString> &exifMap,
+                     const QVector<QImage> &images);
+
+    /*! \brief Called when IconGenerator finishes all files in the batch. */
+    void onIconBatchFinished();
+
 signals:
     /*! \brief Emitted each time a thumbnail icon is applied to the model. */
     void iconUpdated();
@@ -333,6 +348,8 @@ signals:
     void metadataSaved();
     /*! \brief Emitted after a tag or tag-family merge alters the library. */
     void tagLibraryChanged();
+    /*! \brief Emitted once when the current icon generation batch is fully complete. */
+    void batchFinished();
 };
 
 #endif // LUMINISMCORE_H

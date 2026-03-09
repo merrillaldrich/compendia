@@ -58,6 +58,9 @@ MainWindow::MainWindow(QWidget *parent)
     progress_ = new MultiProgressBar(this);
     ui->statusBar->addPermanentWidget(progress_);
     connect(core, &LuminismCore::iconUpdated, this, &MainWindow::onIconUpdated);
+    connect(core, &LuminismCore::batchFinished, this, [this]() {
+        progress_->finishProcess(MultiProgressBar::Process::IconGeneration);
+    });
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
     connect(progress_, &MultiProgressBar::processFinished,
             this, [this](MultiProgressBar::Process p) {

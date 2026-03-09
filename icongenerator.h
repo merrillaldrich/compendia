@@ -11,14 +11,20 @@
 #include <QDebug>
 #include <QVector>
 #include <QImage>
+#include <QAtomicInt>
+#include <QMap>
 
-/*! \brief Utility class that generates and caches scaled thumbnail images for media files.
+#include "framegrabber.h"
+
+/*! \brief Generates and caches scaled thumbnail images for media files (images and videos).
  *
- * Thumbnails are stored as serialised QImage files in a hidden
- * \c .luminism_cache subdirectory alongside each media file so that subsequent
- * loads skip the expensive image-decode step.  Four discrete sizes are generated
- * and cached (50, 100, 200, 400 px) so that Qt can always downscale to any zoom
- * level without upscaling artefacts.
+ * Image files are processed in parallel via QtConcurrent. Video files are delegated to
+ * FrameGrabber, which runs an async state machine on the main thread to avoid COM/WMF
+ * apartment conflicts on Windows.
+ *
+ * Call processFiles() to begin a batch. Per-file results arrive via fileReady() on the main
+ * thread. batchFinished() is emitted exactly once when all work is complete. Create a new
+ * instance for each batch.
  */
 class IconGenerator : public QObject
 {
@@ -32,21 +38,93 @@ public:
      *
      * \param parent Qt parent object.
      */
-    IconGenerator(QObject *parent);
+    explicit IconGenerator(QObject *parent = nullptr);
 
-    /*! \brief Returns thumbnails at all cached sizes for the given media file.
+    /*! \brief Begins thumbnail generation for all given file paths.
      *
-     * Checks the on-disk cache for every size first; if all caches are current
-     * they are loaded and returned immediately.  On any miss the source is
-     * decoded once, scaled to each size, saved, and returned.
+     * Internally partitions paths into images and videos. Images are processed in parallel
+     * via QtConcurrent; videos are handed to FrameGrabber on the main thread. Results arrive
+     * via fileReady(); batchFinished() fires exactly once when everything is done.
      *
-     * \param absoluteFileName Absolute path to the source media file.
-     * \return A QVector of QImages (one per entry in kIconSizes), or an empty
-     *         vector on error.
+     * \param absolutePaths Absolute paths to image and/or video files to process.
      */
-    static QVector<QImage> generateIcon(const QString absoluteFileName);
+    void processFiles(const QStringList &absolutePaths);
+
+signals:
+    /*! \brief Emitted once per completed file (success). Always delivered on the main thread.
+     *
+     * \param absolutePath Absolute path to the source file.
+     * \param exifMap      EXIF key-value data extracted from the file (empty for videos).
+     * \param images       Scaled thumbnail images, one per kIconSizes entry.
+     */
+    void fileReady(const QString &absolutePath,
+                   const QMap<QString, QString> &exifMap,
+                   const QVector<QImage> &images);
+
+    /*! \brief Emitted exactly once when all image tasks and video grabs are complete. */
+    void batchFinished();
+
+private slots:
+    /*! \brief Called (via QueuedConnection) when a background image task completes.
+     *
+     * \param path    Absolute path to the source image.
+     * \param exifMap EXIF data read from the image.
+     * \param images  Scaled thumbnail images.
+     */
+    void onImageTaskComplete(const QString &path,
+                             const QMap<QString, QString> &exifMap,
+                             const QVector<QImage> &images);
+
+    /*! \brief Called when FrameGrabber successfully captures a video frame.
+     *
+     * \param path     Absolute path to the video file.
+     * \param rawFrame The captured frame (at most 400×400 px).
+     */
+    void onFrameGrabbed(const QString &path, const QImage &rawFrame);
+
+    /*! \brief Called when FrameGrabber fails to capture a video frame.
+     *
+     * \param path   Absolute path to the video file.
+     * \param reason Human-readable failure description.
+     */
+    void onFrameFailed(const QString &path, const QString &reason);
+
+    /*! \brief Called once FrameGrabber has finished all files in its batch.
+     *
+     * \param successCount Number of videos captured successfully.
+     * \param failCount    Number of videos for which capture failed.
+     */
+    void onVideoGrabFinished(int successCount, int failCount);
 
 private:
+    /*! \brief Emits batchFinished() when both image tasks and video grabs are complete. */
+    void checkBatchComplete();
+
+    /*! \brief Processes an image file on a background thread (stateless).
+     *
+     * Checks cache first; on miss decodes via QImageReader, scales to all kIconSizes,
+     * saves each to cache, and returns. Also extracts EXIF via ExifParser.
+     *
+     * \param absolutePath Absolute path to the source image.
+     * \return Pair of (exifMap, images vector).
+     */
+    static std::pair<QMap<QString, QString>, QVector<QImage>>
+        processImageFile(const QString &absolutePath);
+
+    /*! \brief Returns true when all kIconSizes cache files exist and are newer than the source.
+     *
+     * \param absolutePath Absolute path to the source video file.
+     * \return True if the full cache is valid.
+     */
+    static bool videoCacheValid(const QString &absolutePath);
+
+    /*! \brief Loads all kIconSizes cached images for a video file.
+     *
+     * \param absolutePath Absolute path to the source video file.
+     * \return Loaded images ordered by kIconSizes, or an empty vector on any failure.
+     */
+    static QVector<QImage> loadVideoFromCache(const QString &absolutePath);
+
     /*! \brief Saves a thumbnail image to the per-folder cache directory.
      *
      * \param absoluteFileName Absolute path to the original image (used to derive the cache path).
@@ -58,7 +136,7 @@ private:
 
     /*! \brief Attempts to load a cached thumbnail for the given source file.
      *
-     * \param absoluteFileName Absolute path to the original image (used to derive the cache path).
+     * \param absoluteFileName Absolute path to the original image.
      * \param size             The pixel bound of the cached thumbnail to load.
      * \return The cached QImage, or a null QImage if no valid cache entry exists.
      */
@@ -72,6 +150,9 @@ private:
      */
     static QString cacheFilePath(const QString &absoluteFileName, int size);
 
+    QAtomicInt    pendingImageCount_;        ///< Decremented as each image task completes.
+    bool          videoGrabDone_ = true;     ///< True when no FrameGrabber work is pending.
+    FrameGrabber *frameGrabber_  = nullptr;  ///< Active FrameGrabber, or nullptr.
 };
 
 #endif // ICONGENERATOR_H

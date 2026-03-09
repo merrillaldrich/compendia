@@ -1,120 +1,14 @@
 #include "icongenerator.h"
 #include "constants.h"
+#include "exifparser.h"
 #include <QImageReader>
 #include <QFileInfo>
-#include <QMediaPlayer>
-#include <QVideoSink>
-#include <QVideoFrame>
-#include <QEventLoop>
 #include <QTimer>
-#include <QUrl>
+#include <QtConcurrent>
+#include <utility>
 
 /*! \brief The discrete pixel sizes generated and cached for each media file. */
 const QVector<int> IconGenerator::kIconSizes = {50, 100, 200, 400};
-
-/*! \brief Returns true if \a path has a recognised video file extension.
- *
- * \param path Absolute or relative file path to test.
- * \return True when the file extension matches a known video format.
- */
-static bool isVideoFile(const QString &path)
-{
-    static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
-    return videoExts.contains(QFileInfo(path).suffix().toLower());
-}
-
-/*! \brief Generates a fallback dark thumbnail with a white play triangle at the given size.
- *
- * Used when frame capture from a video file fails or times out.
- *
- * \param size Side length in pixels of the square placeholder image.
- * \return A QImage containing the placeholder icon.
- */
-static QImage videoPlaceholderIcon(int size)
-{
-    QImage img(size, size, QImage::Format_RGB32);
-    img.fill(QColor(30, 30, 30));
-    QPainter p(&img);
-    p.setRenderHint(QPainter::Antialiasing);
-    p.setBrush(Qt::white);
-    p.setPen(Qt::NoPen);
-    // Scale triangle points proportionally: original was designed for 100px
-    const double s = size / 100.0;
-    QPointF pts[3] = { {35.0*s, 25.0*s}, {35.0*s, 75.0*s}, {75.0*s, 50.0*s} };
-    p.drawPolygon(pts, 3);
-    p.end();
-    return img;
-}
-
-/*! \brief Seeks to ~2 seconds into a video file and returns the first decoded frame.
- *
- * Creates a QMediaPlayer and QVideoSink on the calling thread and runs a local
- * QEventLoop so that the asynchronous multimedia pipeline can deliver callbacks
- * without blocking the main event loop.  A 5-second timeout guards against
- * unresponsive or unsupported files.
- *
- * \param absoluteFileName Absolute path to the video file.
- * \return The captured frame scaled to at most 400×400 px, or a null QImage on failure.
- */
-static QImage captureVideoFrame(const QString &absoluteFileName)
-{
-    QImage result;
-    QEventLoop loop;
-
-    QMediaPlayer player;
-    QVideoSink sink;
-    player.setVideoSink(&sink);
-
-    bool frameReceived = false;
-
-    // Capture the first valid frame from the sink.
-    // Qt::AutoConnection: queued when emitted from an internal multimedia thread,
-    // so the lambda runs safely on this thread inside loop.exec().
-    QObject::connect(&sink, &QVideoSink::videoFrameChanged, &sink,
-                     [&](const QVideoFrame &frame) {
-        if (!frameReceived && frame.isValid()) {
-            frameReceived = true;
-            QVideoFrame f = frame;
-            result = f.toImage();
-            player.stop();
-            loop.quit();
-        }
-    });
-
-    // Once the media is loaded, seek to ~2 s and start playing so frames arrive.
-    QObject::connect(&player, &QMediaPlayer::mediaStatusChanged, &player,
-                     [&](QMediaPlayer::MediaStatus status) {
-        if (status == QMediaPlayer::LoadedMedia) {
-            qint64 dur = player.duration();
-            qint64 seekPos = (dur <= 0 || dur > 2000) ? 2000 : dur / 4;
-            player.setPosition(seekPos);
-            player.play();
-        } else if (status == QMediaPlayer::EndOfMedia
-                   || status == QMediaPlayer::InvalidMedia) {
-            loop.quit();
-        }
-    });
-
-    QObject::connect(&player, &QMediaPlayer::errorOccurred, &player,
-                     [&](QMediaPlayer::Error, const QString &) {
-        loop.quit();
-    });
-
-    // Safety net: give up after 5 s regardless.
-    QTimer timeout;
-    timeout.setSingleShot(true);
-    timeout.setInterval(5000);
-    QObject::connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
-
-    player.setSource(QUrl::fromLocalFile(absoluteFileName));
-    timeout.start();
-    loop.exec();  // process multimedia events on this thread until a frame arrives
-
-    if (!result.isNull())
-        result = result.scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    return result;
-}
 
 /*! \brief Composites filmstrip and play-button decorations onto a video thumbnail.
  *
@@ -124,7 +18,7 @@ static QImage captureVideoFrame(const QString &absoluteFileName)
  * are proportional to the image width so the decoration looks correct at any
  * of the four cached sizes.
  *
- * \param source The thumbnail frame to decorate (any square size).
+ * \param source The thumbnail frame to decorate.
  * \return A new QImage with the decorations composited over \a source.
  */
 static QImage overlayVideoDecorations(const QImage &source)
@@ -186,13 +80,246 @@ static QImage overlayVideoDecorations(const QImage &source)
     return img;
 }
 
+/*! \brief Generates a placeholder thumbnail for a video whose frame capture failed.
+ *
+ * Creates a dark 16:9 base image at the given width and applies the same filmstrip
+ * and play-button decorations as a successful video thumbnail, so the placeholder
+ * is visually consistent with real video icons.
+ *
+ * \param size Width in pixels of the placeholder (height is derived as 9/16 of width).
+ * \return A decorated QImage in landscape proportions.
+ */
+static QImage videoPlaceholderIcon(int size)
+{
+    const int w = size;
+    const int h = qMax(1, size * 9 / 16);
+    QImage base(w, h, QImage::Format_RGB32);
+    base.fill(QColor(30, 30, 30));
+    return overlayVideoDecorations(base);
+}
+
 /*! \brief Constructs an IconGenerator.
  *
  * \param parent Qt parent object.
  */
 IconGenerator::IconGenerator(QObject *parent)
-    : QObject(parent){
+    : QObject(parent)
+{
+}
 
+/*! \brief Begins thumbnail generation for all given file paths. */
+void IconGenerator::processFiles(const QStringList &absolutePaths)
+{
+    static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
+
+    if (absolutePaths.isEmpty()) {
+        pendingImageCount_.storeRelaxed(0);
+        videoGrabDone_ = true;
+        QTimer::singleShot(0, this, &IconGenerator::checkBatchComplete);
+        return;
+    }
+
+    QStringList imagePaths, videoPaths;
+    for (const QString &path : absolutePaths) {
+        if (videoExts.contains(QFileInfo(path).suffix().toLower()))
+            videoPaths << path;
+        else
+            imagePaths << path;
+    }
+
+    pendingImageCount_.storeRelaxed(imagePaths.size());
+    videoGrabDone_ = videoPaths.isEmpty();
+
+    // --- Video handling ---
+    QStringList videoGrabNeeded;
+    for (const QString &path : videoPaths) {
+        if (videoCacheValid(path)) {
+            QVector<QImage> cached = loadVideoFromCache(path);
+            if (!cached.isEmpty())
+                emit fileReady(path, {}, cached);
+            else
+                videoGrabNeeded << path;
+        } else {
+            videoGrabNeeded << path;
+        }
+    }
+
+    if (!videoPaths.isEmpty() && videoGrabNeeded.isEmpty())
+        videoGrabDone_ = true;
+
+    if (!videoGrabNeeded.isEmpty()) {
+        frameGrabber_ = new FrameGrabber(this);
+        connect(frameGrabber_, &FrameGrabber::frameGrabbed, this, &IconGenerator::onFrameGrabbed);
+        connect(frameGrabber_, &FrameGrabber::frameFailed,  this, &IconGenerator::onFrameFailed);
+        connect(frameGrabber_, &FrameGrabber::finished,     this, &IconGenerator::onVideoGrabFinished);
+        frameGrabber_->grab(videoGrabNeeded);
+    }
+
+    // --- Image handling ---
+    for (const QString &path : imagePaths) {
+        QtConcurrent::run([this, path]() {
+            auto [exifMap, images] = processImageFile(path);
+            QMetaObject::invokeMethod(this, [this, path, exifMap, images]() {
+                onImageTaskComplete(path, exifMap, images);
+            }, Qt::QueuedConnection);
+        });
+    }
+
+    checkBatchComplete();
+}
+
+/*! \brief Called when a background image task completes.
+ *
+ * \param path    Absolute path to the source image.
+ * \param exifMap EXIF data read from the image.
+ * \param images  Scaled thumbnail images.
+ */
+void IconGenerator::onImageTaskComplete(const QString &path,
+                                        const QMap<QString, QString> &exifMap,
+                                        const QVector<QImage> &images)
+{
+    emit fileReady(path, exifMap, images);
+    if (pendingImageCount_.fetchAndAddOrdered(-1) - 1 == 0)
+        checkBatchComplete();
+}
+
+/*! \brief Called when FrameGrabber successfully captures a video frame.
+ *
+ * \param path     Absolute path to the video file.
+ * \param rawFrame The captured frame (at most 400×400 px).
+ */
+void IconGenerator::onFrameGrabbed(const QString &path, const QImage &rawFrame)
+{
+    QImage decorated = overlayVideoDecorations(rawFrame);
+    QVector<QImage> images;
+    for (int size : kIconSizes) {
+        QImage scaled = decorated.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        saveIconToCache(path, scaled, size);
+        images << scaled;
+    }
+    emit fileReady(path, {}, images);
+}
+
+/*! \brief Called when FrameGrabber fails to capture a video frame.
+ *
+ * \param path   Absolute path to the video file.
+ * \param reason Human-readable failure description.
+ */
+void IconGenerator::onFrameFailed(const QString &path, const QString &reason)
+{
+    qWarning() << "IconGenerator: frame capture failed for" << path << ":" << reason;
+    QVector<QImage> placeholders;
+    for (int size : kIconSizes)
+        placeholders << videoPlaceholderIcon(size);
+    emit fileReady(path, {}, placeholders);
+}
+
+/*! \brief Called when FrameGrabber finishes all files in its batch.
+ *
+ * \param successCount Number of videos captured successfully.
+ * \param failCount    Number of videos for which capture failed.
+ */
+void IconGenerator::onVideoGrabFinished(int successCount, int failCount)
+{
+    Q_UNUSED(successCount)
+    Q_UNUSED(failCount)
+    videoGrabDone_ = true;
+    frameGrabber_->deleteLater();
+    frameGrabber_ = nullptr;
+    checkBatchComplete();
+}
+
+/*! \brief Emits batchFinished() when both image tasks and video grabs are complete. */
+void IconGenerator::checkBatchComplete()
+{
+    if (pendingImageCount_.loadAcquire() != 0) return;
+    if (!videoGrabDone_) return;
+    emit batchFinished();
+}
+
+/*! \brief Processes an image file on a background thread (stateless).
+ *
+ * \param absolutePath Absolute path to the source image.
+ * \return Pair of (exifMap, images vector).
+ */
+std::pair<QMap<QString, QString>, QVector<QImage>>
+IconGenerator::processImageFile(const QString &absolutePath)
+{
+    QFileInfo sourceInfo(absolutePath);
+
+    // Check whether all four size caches are current
+    bool allCached = true;
+    for (int size : kIconSizes) {
+        QFileInfo cacheInfo(cacheFilePath(absolutePath, size));
+        if (!cacheInfo.exists() || cacheInfo.lastModified() < sourceInfo.lastModified()) {
+            allCached = false;
+            break;
+        }
+    }
+
+    if (allCached) {
+        QVector<QImage> images;
+        bool allLoaded = true;
+        for (int size : kIconSizes) {
+            QImage img = loadIconFromCache(absolutePath, size);
+            if (img.isNull()) { allLoaded = false; break; }
+            images.append(img);
+        }
+        if (allLoaded)
+            return {ExifParser::getExifMap(absolutePath), images};
+    }
+
+    qDebug() << "Icon cache miss:" << absolutePath;
+
+    QImageReader ir(absolutePath);
+    ir.setAutoTransform(true);
+    QImage base = ir.read();
+    if (base.isNull())
+        return {{}, {}};
+
+    base = base.scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    QVector<QImage> images;
+    for (int size : kIconSizes) {
+        QImage scaled = base.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        saveIconToCache(absolutePath, scaled, size);
+        images.append(scaled);
+    }
+
+    return {ExifParser::getExifMap(absolutePath), images};
+}
+
+/*! \brief Returns true when all kIconSizes cache files exist and are newer than the source.
+ *
+ * \param absolutePath Absolute path to the source video file.
+ * \return True if the full cache is valid.
+ */
+bool IconGenerator::videoCacheValid(const QString &absolutePath)
+{
+    QFileInfo sourceInfo(absolutePath);
+    for (int size : kIconSizes) {
+        QFileInfo cacheInfo(cacheFilePath(absolutePath, size));
+        if (!cacheInfo.exists() || cacheInfo.lastModified() < sourceInfo.lastModified())
+            return false;
+    }
+    return true;
+}
+
+/*! \brief Loads all kIconSizes cached images for a video file.
+ *
+ * \param absolutePath Absolute path to the source video file.
+ * \return Loaded images ordered by kIconSizes, or an empty vector on any failure.
+ */
+QVector<QImage> IconGenerator::loadVideoFromCache(const QString &absolutePath)
+{
+    QVector<QImage> images;
+    for (int size : kIconSizes) {
+        QImage img = loadIconFromCache(absolutePath, size);
+        if (img.isNull())
+            return {};
+        images.append(img);
+    }
+    return images;
 }
 
 /*! \brief Returns the absolute path to the .qimg cache file for a given source image and size.
@@ -208,73 +335,6 @@ QString IconGenerator::cacheFilePath(const QString &absoluteFileName, int size)
            + "_" + QString::number(size) + ".qimg";
 }
 
-/*! \brief Returns thumbnails at all cached sizes for the given media file.
- *
- * Checks the on-disk cache for every size first.  If all four caches are
- * current (newer than the source file) they are loaded and returned without
- * re-decoding the source.  On any miss the source is decoded once (or a video
- * frame captured at 400 px), scaled to each of the four sizes, cached, and
- * returned as a QVector ordered smallest-to-largest.
- *
- * \param absoluteFileName Absolute path to the source media file.
- * \return A QVector of QImages (one per kIconSizes entry), or an empty vector
- *         on error.
- */
-QVector<QImage> IconGenerator::generateIcon(const QString absoluteFileName)
-{
-    QFileInfo sourceInfo(absoluteFileName);
-
-    // Check whether all four size caches are current
-    bool allCached = true;
-    for (int size : kIconSizes) {
-        QFileInfo cacheInfo(cacheFilePath(absoluteFileName, size));
-        if (!cacheInfo.exists() || cacheInfo.lastModified() < sourceInfo.lastModified()) {
-            allCached = false;
-            break;
-        }
-    }
-
-    if (allCached) {
-        QVector<QImage> images;
-        bool allLoaded = true;
-        for (int size : kIconSizes) {
-            QImage img = loadIconFromCache(absoluteFileName, size);
-            if (img.isNull()) { allLoaded = false; break; }
-            images.append(img);
-        }
-        if (allLoaded) return images;
-    }
-
-    qDebug() << "Icon cache miss";
-
-    // Decode/capture once at the largest size, then scale down
-    QImage base;
-    if (isVideoFile(absoluteFileName)) {
-        base = captureVideoFrame(absoluteFileName);  // already scaled to ≤400px
-        if (!base.isNull())
-            base = overlayVideoDecorations(base);
-        else
-            base = videoPlaceholderIcon(400);
-    } else {
-        QImageReader ir(absoluteFileName);
-        ir.setAutoTransform(true);
-        base = ir.read();
-        base = base.scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    }
-
-    if (base.isNull())
-        return {};
-
-    QVector<QImage> images;
-    for (int size : kIconSizes) {
-        QImage scaled = base.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        saveIconToCache(absoluteFileName, scaled, size);
-        images.append(scaled);
-    }
-
-    return images;
-}
-
 /*! \brief Saves a thumbnail image to the per-folder cache directory.
  *
  * \param absoluteFileName Absolute path to the original image (used to derive the cache path).
@@ -282,8 +342,8 @@ QVector<QImage> IconGenerator::generateIcon(const QString absoluteFileName)
  * \param size             The pixel bound this thumbnail was scaled to.
  * \return True if the image was written successfully.
  */
-bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImage &pict, int size) {
-
+bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImage &pict, int size)
+{
     QFileInfo fi(absoluteFileName);
     QString cachePath = fi.absolutePath() + "/" + Luminism::CacheFolderName;
     QDir dir(cachePath);
@@ -304,7 +364,7 @@ bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImag
     }
 
     QDataStream out(&file);
-    out.setVersion(QDataStream::Qt_6_0); // Ensure compatibility
+    out.setVersion(QDataStream::Qt_6_0);
     out << pict;
 
     return true;
@@ -312,12 +372,12 @@ bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImag
 
 /*! \brief Attempts to load a cached thumbnail for the given source file.
  *
- * \param absoluteFileName Absolute path to the original image (used to derive the cache path).
+ * \param absoluteFileName Absolute path to the original image.
  * \param size             The pixel bound of the cached thumbnail to load.
  * \return The cached QImage, or a null QImage if no valid cache entry exists.
  */
-QImage IconGenerator::loadIconFromCache(const QString &absoluteFileName, int size){
-
+QImage IconGenerator::loadIconFromCache(const QString &absoluteFileName, int size)
+{
     QString filePath = cacheFilePath(absoluteFileName, size);
 
     if (!QFile::exists(filePath)) {
