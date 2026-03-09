@@ -42,6 +42,11 @@ constexpr double FaceDetectionThreshold = 0.0;
  */
 constexpr int MaxAutoFacesPerImage = 5;
 
+/*! \brief Minimum number of affected files that triggers a confirmation dialog before
+ *  removing a tag via the assignment-area close button.
+ */
+constexpr int BulkUntagWarningThreshold = 5;
+
 } // namespace Luminism
 
 #endif // CONSTANTS_H

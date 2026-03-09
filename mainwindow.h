@@ -198,6 +198,13 @@ private slots:
      */
     void on_navFilterContainer_tagDeleteRequested(Tag* tag);
 
+    /*! \brief Deletes a tag from the library when a delete is requested from the library panel.
+     *
+     * If no files carry the tag it is removed silently; otherwise the user is asked to confirm.
+     * \param tag The Tag whose deletion was requested.
+     */
+    void onNavLibraryContainerTagDeleteRequested(Tag* tag);
+
     /*! \brief Updates the filename filter as the user types in the filter line edit.
      *
      * \param arg1 The current text of the filename filter line edit.

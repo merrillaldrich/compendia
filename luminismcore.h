@@ -213,6 +213,27 @@ public:
      */
     void unapplyTag(Tag* tag);
 
+    /*! \brief Returns the number of currently visible files that have the given tag assigned.
+     *
+     * \param tag The Tag to count.
+     * \return Count of visible files carrying the tag.
+     */
+    int countVisibleFilesWithTag(Tag* tag);
+
+    /*! \brief Returns the number of all files (ignoring the proxy filter) that have the given tag.
+     *
+     * \param tag The Tag to count.
+     * \return Count of all files carrying the tag.
+     */
+    int countAllFilesWithTag(Tag* tag);
+
+    /*! \brief Removes a tag from all files, the filter, and the library, then deletes it.
+     *
+     * Emits tagLibraryChanged() when done.
+     * \param tag The Tag to delete.
+     */
+    void deleteTagFromLibrary(Tag* tag);
+
     /*! \brief Sets the filename substring filter on the proxy model.
      *
      * \param filterText The substring to match against file names.

@@ -84,9 +84,6 @@ void TagWidget::onTextEdited(){
 
 /*! \brief Slot called when the close button is clicked; emits deleteRequested(). */
 void TagWidget::onCloseButtonClicked(){
-    qDebug() << "Tag close button clicked";
-    qDebug() << "Request deletion of tag" << this->tag_->getName();
-
     emit(deleteRequested(this->tag_));
 }
 

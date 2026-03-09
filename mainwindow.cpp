@@ -69,8 +69,10 @@ MainWindow::MainWindow(QWidget *parent)
             ui->dateEdit->setAvailableDates(core->getFileDates());
     });
     connect(core, &LuminismCore::tagLibraryChanged, this, &MainWindow::onTagLibraryChanged);
-    connect(ui->navLibraryContainer,          &TagContainer::tagNameChanged,
+    connect(ui->navLibraryContainer, &TagContainer::tagNameChanged,
             this, &MainWindow::onTagNameChanged);
+    connect(ui->navLibraryContainer, &TagContainer::tagDeleteRequested,
+            this, &MainWindow::onNavLibraryContainerTagDeleteRequested);
     connect(ui->fileListTagAssignmentContainer, &TagContainer::tagNameChanged,
             this, &MainWindow::onTagNameChanged);
     connect(ui->previewContainer, &PreviewContainer::tagDroppedOnPreview,
@@ -828,6 +830,17 @@ void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
  * \param tag The Tag to unassign from the filtered files.
  */
 void MainWindow::on_fileListTagAssignmentContainer_tagDeleteRequested(Tag* tag){
+    const int affected = core->countVisibleFilesWithTag(tag);
+    if (affected >= Luminism::BulkUntagWarningThreshold) {
+        const QString label = tag->tagFamily->getName() + ":" + tag->getName();
+        const auto result = QMessageBox::warning(
+            this, "Remove tag",
+            QString("This will remove the tag %1 from %2 files.").arg(label).arg(affected),
+            QMessageBox::Ok | QMessageBox::Cancel,
+            QMessageBox::Cancel);
+        if (result != QMessageBox::Ok)
+            return;
+    }
     core->unapplyTag(tag);
     refreshTagAssignmentArea();
     onTagNameChanged(nullptr);  // refresh preview tag-region overlays if the current image was affected
@@ -840,6 +853,30 @@ void MainWindow::on_fileListTagAssignmentContainer_tagDeleteRequested(Tag* tag){
 void MainWindow::on_navFilterContainer_tagDeleteRequested(Tag* tag){
     core->removeTagFilter(tag);
     refreshTagFilterArea();
+    refreshTagAssignmentArea();
+}
+
+/*! \brief Deletes a tag from the library when a delete is requested from the library panel.
+ *
+ * If no files carry the tag it is removed silently; otherwise the user is asked to confirm.
+ * \param tag The Tag whose deletion was requested.
+ */
+void MainWindow::onNavLibraryContainerTagDeleteRequested(Tag* tag){
+    const int affected = core->countAllFilesWithTag(tag);
+    if (affected > 0) {
+        const QString label = tag->tagFamily->getName() + ":" + tag->getName();
+        QMessageBox mb(this);
+        mb.setIcon(QMessageBox::Warning);
+        mb.setWindowTitle("Delete tag");
+        mb.setTextFormat(Qt::RichText);
+        mb.setText(QString("This will remove the tag %1 from <b>all %2</b> files in the folder. Proceed?")
+                       .arg(label).arg(affected));
+        mb.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        mb.setDefaultButton(QMessageBox::Cancel);
+        if (mb.exec() != QMessageBox::Ok)
+            return;
+    }
+    core->deleteTagFromLibrary(tag);
 }
 
 /*! \brief Updates the folder filter as the user types in the folder filter line edit.

@@ -749,6 +749,66 @@ void LuminismCore::unapplyTag(Tag* tag){
     }
 }
 
+/*! \brief Returns the number of currently visible files that have the given tag assigned.
+ *
+ * \param tag The Tag to count.
+ * \return Count of visible files carrying the tag.
+ */
+int LuminismCore::countVisibleFilesWithTag(Tag* tag){
+    int count = 0;
+    for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i) {
+        QModelIndex proxyIndex = tagged_files_proxy_->index(i, 0);
+        QModelIndex sourceIndex = tagged_files_proxy_->mapToSource(proxyIndex);
+        TaggedFile* tf = sourceIndex.data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && tf->tags()->contains(tag))
+            ++count;
+    }
+    return count;
+}
+
+/*! \brief Returns the number of all files (ignoring the proxy filter) that have the given tag.
+ *
+ * \param tag The Tag to count.
+ * \return Count of all files carrying the tag.
+ */
+int LuminismCore::countAllFilesWithTag(Tag* tag){
+    int count = 0;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        TaggedFile* tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && tf->tags()->contains(tag))
+            ++count;
+    }
+    return count;
+}
+
+/*! \brief Removes a tag from all files, the filter, and the library, then deletes it.
+ *
+ * Emits tagLibraryChanged() when done.
+ * \param tag The Tag to delete.
+ */
+void LuminismCore::deleteTagFromLibrary(Tag* tag){
+    TagFamily* family = tag->tagFamily;
+
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        TaggedFile* tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf)
+            tf->removeTag(tag);
+    }
+    removeTagFilter(tag);
+    tags_->remove(tag);
+    tag->deleteLater();
+
+    // If no other library tags belong to this family, remove the family too
+    const bool familyEmpty = std::none_of(tags_->cbegin(), tags_->cend(),
+                                          [family](Tag* t){ return t->tagFamily == family; });
+    if (familyEmpty) {
+        tag_families_->remove(family);
+        family->deleteLater();
+    }
+
+    emit tagLibraryChanged();
+}
+
 /*! \brief Removes a tag from a specific file.
  *
  * \param file The TaggedFile to remove the tag from.

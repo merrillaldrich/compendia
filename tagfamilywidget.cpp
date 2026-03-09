@@ -1,4 +1,5 @@
 #include "tagfamilywidget.h"
+#include "tagcontainer.h"
 
 /*! \brief Constructs a default, empty TagFamilyWidget.
  *
@@ -71,6 +72,9 @@ void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
         TagWidget* tw = new TagWidget(t, this);
         layout()->addWidget(tw);
         tw->show();
+
+        if (auto *tc = qobject_cast<TagContainer*>(parentWidget()))
+            connect(tw, &TagWidget::deleteRequested, tc, &TagContainer::onTagDeleteRequested);
 
         connect(tw, &TagWidget::abandonRequested, this, [this](TagWidget *tw) {
             Tag *t = tw->getTag();
