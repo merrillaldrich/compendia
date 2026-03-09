@@ -79,15 +79,19 @@ private slots:
      *
      * \param path     Absolute path to the video file.
      * \param rawFrame The captured frame (at most 400×400 px).
+     * \param meta     Container metadata read from the video.
      */
-    void onFrameGrabbed(const QString &path, const QImage &rawFrame);
+    void onFrameGrabbed(const QString &path, const QImage &rawFrame,
+                        const QMap<QString, QString> &meta);
 
     /*! \brief Called when FrameGrabber fails to capture a video frame.
      *
      * \param path   Absolute path to the video file.
      * \param reason Human-readable failure description.
+     * \param meta   Container metadata (may be partially populated).
      */
-    void onFrameFailed(const QString &path, const QString &reason);
+    void onFrameFailed(const QString &path, const QString &reason,
+                       const QMap<QString, QString> &meta);
 
     /*! \brief Called once FrameGrabber has finished all files in its batch.
      *

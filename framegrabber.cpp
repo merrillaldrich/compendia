@@ -1,9 +1,37 @@
 #include "framegrabber.h"
 
+#include <QDateTime>
 #include <QDebug>
+#include <QMediaMetaData>
 #include <QTimer>
 #include <QUrl>
 #include <QVideoFrame>
+
+/*! \brief Converts a QMediaMetaData object to a QMap<QString,QString>.
+ *
+ * QDateTime values are formatted as ISO 8601; QSize values as "WxH"; all other
+ * types are converted via QVariant::toString().
+ *
+ * \param meta The metadata object returned by QMediaPlayer::metaData().
+ * \return A flat string map with human-readable key names.
+ */
+static QMap<QString, QString> mediaMetaToMap(const QMediaMetaData &meta)
+{
+    QMap<QString, QString> map;
+    for (QMediaMetaData::Key key : meta.keys()) {
+        QString keyStr = QMediaMetaData::metaDataKeyToString(key);
+        QVariant val   = meta.value(key);
+
+        if (val.typeId() == QMetaType::QDateTime)
+            map.insert(keyStr, val.toDateTime().toString(Qt::ISODate));
+        else if (val.typeId() == QMetaType::QSize)
+            map.insert(keyStr, QString("%1x%2").arg(val.toSize().width())
+                                               .arg(val.toSize().height()));
+        else
+            map.insert(keyStr, val.toString());
+    }
+    return map;
+}
 
 /*! \brief Constructs a FrameGrabber.
  *
@@ -66,6 +94,7 @@ void FrameGrabber::processNext()
 
     processing_   = true;
     currentFrame_ = QImage();
+    currentMeta_.clear();
 
     const QString &path = paths_[currentIndex_];
     qDebug() << "[FrameGrabber] processNext:" << path;
@@ -80,6 +109,8 @@ void FrameGrabber::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
     if (!processing_) return;
 
     if (status == QMediaPlayer::LoadedMedia) {
+        currentMeta_ = mediaMetaToMap(player_->metaData());
+
         qint64 dur = player_->duration();
         qint64 seekPos;
         if (dur > 0 && dur <= seekMs_)
@@ -157,10 +188,11 @@ void FrameGrabber::finishCurrentFile(bool success, const QString &reason)
 
     if (success) {
         ++successCount_;
-        emit frameGrabbed(path, currentFrame_);
+        emit frameGrabbed(path, currentFrame_, currentMeta_);
     } else {
         ++failCount_;
-        emit frameFailed(path, reason.isEmpty() ? QStringLiteral("No frame captured") : reason);
+        emit frameFailed(path, reason.isEmpty() ? QStringLiteral("No frame captured") : reason,
+                         currentMeta_);
     }
 
     emit progress(currentIndex_ + 1, paths_.size());

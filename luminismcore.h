@@ -310,6 +310,17 @@ public:
      */
     void updateFileIcons(const QString &absoluteFilePath, const QVector<QImage> &images);
 
+    /*! \brief Applies video container metadata to the TaggedFile for \p absoluteFilePath.
+     *
+     * Sets the file's exifMap and, when a \c Date key is present, its imageCaptureDateTime.
+     * Called after a manual "Grab Video Frames" so the preview panel shows metadata.
+     *
+     * \param absoluteFilePath Absolute path to the video file.
+     * \param meta             Container metadata map produced by FrameGrabber.
+     */
+    void applyVideoMetadata(const QString &absoluteFilePath,
+                            const QMap<QString, QString> &meta);
+
     /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
      *  Emits tagLibraryChanged() when done. */
     void mergeTag(Tag* from, Tag* into);

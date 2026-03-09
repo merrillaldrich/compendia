@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QImage>
+#include <QMap>
+#include <QMediaMetaData>
 #include <QStringList>
 #include <QMediaPlayer>
 #include <QVideoSink>
@@ -56,15 +58,19 @@ signals:
      *
      * \param absolutePath The video file that was processed.
      * \param frame        The captured frame scaled to at most 400×400 px.
+     * \param meta         Container metadata read from the video (may be empty).
      */
-    void frameGrabbed(const QString &absolutePath, const QImage &frame);
+    void frameGrabbed(const QString &absolutePath, const QImage &frame,
+                      const QMap<QString, QString> &meta);
 
     /*! \brief Emitted when frame capture fails for \p absolutePath.
      *
      * \param absolutePath The video file that could not be processed.
      * \param reason       A human-readable description of the failure.
+     * \param meta         Container metadata read from the video (may be partially populated).
      */
-    void frameFailed(const QString &absolutePath, const QString &reason);
+    void frameFailed(const QString &absolutePath, const QString &reason,
+                     const QMap<QString, QString> &meta);
 
     /*! \brief Emitted after each file is processed (success or failure).
      *
@@ -117,6 +123,7 @@ private:
     int           failCount_    = 0;
     bool          processing_   = false;  ///< True while a file is being processed.
     QImage        currentFrame_;          ///< Frame captured for the current file.
+    QMap<QString, QString> currentMeta_;  ///< Container metadata for the current file.
 };
 
 #endif // FRAMEGRABBER_H

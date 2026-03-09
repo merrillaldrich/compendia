@@ -187,8 +187,10 @@ void IconGenerator::onImageTaskComplete(const QString &path,
  *
  * \param path     Absolute path to the video file.
  * \param rawFrame The captured frame (at most 400×400 px).
+ * \param meta     Container metadata read from the video.
  */
-void IconGenerator::onFrameGrabbed(const QString &path, const QImage &rawFrame)
+void IconGenerator::onFrameGrabbed(const QString &path, const QImage &rawFrame,
+                                   const QMap<QString, QString> &meta)
 {
     QImage decorated = overlayVideoDecorations(rawFrame);
     QVector<QImage> images;
@@ -197,21 +199,23 @@ void IconGenerator::onFrameGrabbed(const QString &path, const QImage &rawFrame)
         saveIconToCache(path, scaled, size);
         images << scaled;
     }
-    emit fileReady(path, {}, images);
+    emit fileReady(path, meta, images);
 }
 
 /*! \brief Called when FrameGrabber fails to capture a video frame.
  *
  * \param path   Absolute path to the video file.
  * \param reason Human-readable failure description.
+ * \param meta   Container metadata (may be partially populated).
  */
-void IconGenerator::onFrameFailed(const QString &path, const QString &reason)
+void IconGenerator::onFrameFailed(const QString &path, const QString &reason,
+                                  const QMap<QString, QString> &meta)
 {
     qWarning() << "IconGenerator: frame capture failed for" << path << ":" << reason;
     QVector<QImage> placeholders;
     for (int size : kIconSizes)
         placeholders << videoPlaceholderIcon(size);
-    emit fileReady(path, {}, placeholders);
+    emit fileReady(path, meta, placeholders);
 }
 
 /*! \brief Called when FrameGrabber finishes all files in its batch.

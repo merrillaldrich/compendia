@@ -1481,25 +1481,35 @@ void MainWindow::on_actionGrab_Video_Frame_triggered()
 
 /*! \brief Receives a successfully captured frame and updates the in-memory icon for the file.
  *
+ * Also applies any container metadata to the TaggedFile so the preview panel can display it.
+ *
  * \param path  Absolute path to the video file.
  * \param frame Captured frame (scaled to at most 400×400 px).
+ * \param meta  Container metadata read from the video.
  */
-void MainWindow::onVideoFrameGrabbed(const QString &path, const QImage &frame)
+void MainWindow::onVideoFrameGrabbed(const QString &path, const QImage &frame,
+                                     const QMap<QString, QString> &meta)
 {
     QVector<QImage> images;
     for (int size : IconGenerator::kIconSizes)
         images.append(frame.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     core->updateFileIcons(path, images);
+    if (!meta.isEmpty())
+        core->applyVideoMetadata(path, meta);
 }
 
 /*! \brief Logs a failed frame-capture attempt.
  *
  * \param path   Absolute path to the video file.
  * \param reason Human-readable description of the failure.
+ * \param meta   Container metadata (may be partially populated).
  */
-void MainWindow::onVideoFrameFailed(const QString &path, const QString &reason)
+void MainWindow::onVideoFrameFailed(const QString &path, const QString &reason,
+                                    const QMap<QString, QString> &meta)
 {
     qWarning() << "[FrameGrabber] failed:" << path << "-" << reason;
+    if (!meta.isEmpty())
+        core->applyVideoMetadata(path, meta);
 }
 
 /*! \brief Advances the video-grab progress bar as each file completes.

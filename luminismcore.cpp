@@ -101,6 +101,11 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
         // NOTE: EXIF uses colons in BOTH the date and the time, not dashes
         QString captureDateString = exifMap["DateTime"];
         QDateTime captureDateTime = QDateTime::fromString(captureDateString, "yyyy:MM:dd HH:mm:ss");
+
+        // Fallback for video container metadata (QMediaMetaData::Date → ISO 8601)
+        if (!captureDateTime.isValid() && exifMap.contains("Date"))
+            captureDateTime = QDateTime::fromString(exifMap["Date"], Qt::ISODate);
+
         tf->imageCaptureDateTime = captureDateTime;
         tf->setExifMap(exifMap);
 
@@ -150,6 +155,38 @@ void LuminismCore::updateFileIcons(const QString &absoluteFilePath, const QVecto
     }
 
     qDebug() << "updateFileIcons: could not match path for" << absoluteFilePath;
+}
+
+/*! \brief Applies video container metadata to the TaggedFile for \p absoluteFilePath.
+ *
+ * \param absoluteFilePath Absolute path to the video file.
+ * \param meta             Container metadata map produced by FrameGrabber.
+ */
+void LuminismCore::applyVideoMetadata(const QString &absoluteFilePath,
+                                      const QMap<QString, QString> &meta)
+{
+    QFileInfo fi(absoluteFilePath);
+    const QString fileName = fi.fileName();
+
+    auto matches = tagged_files_->findItems(fileName);
+    for (QStandardItem *candidate : matches) {
+        TaggedFile *tf = candidate->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf)
+            continue;
+        if ((tf->filePath + "/" + tf->fileName) != absoluteFilePath)
+            continue;
+
+        tf->setExifMap(meta);
+
+        if (meta.contains("Date")) {
+            QDateTime dt = QDateTime::fromString(meta["Date"], Qt::ISODate);
+            if (dt.isValid())
+                tf->imageCaptureDateTime = dt;
+        }
+        return;
+    }
+
+    qDebug() << "applyVideoMetadata: could not locate" << absoluteFilePath;
 }
 
 /*! \brief Sets the root directory path and immediately loads it.
