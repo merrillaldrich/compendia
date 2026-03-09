@@ -25,9 +25,8 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
     setMinimumSize(304,64);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    FlowLayout* fl = new FlowLayout(this);
+    FlowLayout* fl = new FlowLayout(this, -1, 0, 0);
     fl->setContentsMargins(4, 28, 4, 4); //left, top, right, bottom
-    fl->setSpacing(2);
     this->setLayout(fl);
 
     line_edit_ = new VariableWidthLineEdit(this);
