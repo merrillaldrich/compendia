@@ -52,6 +52,12 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
 
     connect(line_edit_, &QLineEdit::editingFinished, this, &TagFamilyWidget::onLineEditEditingFinished);
     connect(label_, &ClickableLabel::clicked, this, &TagFamilyWidget::onLabelClicked);
+
+    collapseButton_ = new TagFamilyWidgetCollapseButton(this);
+    collapseButton_->setFixedSize(20, 20);
+    collapseButton_->move(width() - 24, 4);
+    connect(collapseButton_, &TagFamilyWidgetCollapseButton::clicked,
+            this, &TagFamilyWidget::toggleCollapsed);
 }
 
 /*! \brief Overrides the Qt base-class mouse-release handler to add a new tag on click.
@@ -60,26 +66,28 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
  */
 void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
 
-    Tag* t = new Tag(tag_family_, "", this);
-    TagWidget* tw = new TagWidget(t, this);
-    layout()->addWidget(tw);
-    tw->show();
+    if (!collapsed_) {
+        Tag* t = new Tag(tag_family_, "", this);
+        TagWidget* tw = new TagWidget(t, this);
+        layout()->addWidget(tw);
+        tw->show();
 
-    // Put the new tag in edit mode immediately so the user doesn't have to
-    // click on it to enter the name
-    tw->startEdit();
+        // Put the new tag in edit mode immediately so the user doesn't have to
+        // click on it to enter the name
+        tw->startEdit();
 
-    // Here we need to force one extra layout computation to get this widget
-    // to resized to accomodate the new child widget. Without this
-    // the vertical expansion of this tagfamilywidget lags one tag
-    // behind:
-    layout()->invalidate();
-    layout()->activate();
-    updateGeometry();
+        // Here we need to force one extra layout computation to get this widget
+        // to resized to accomodate the new child widget. Without this
+        // the vertical expansion of this tagfamilywidget lags one tag
+        // behind:
+        layout()->invalidate();
+        layout()->activate();
+        updateGeometry();
 
-    // Explicitly set the height of this widget to fit all the current
-    // children
-    this->setMinimumHeight(childrenRect().height() + 4);
+        // Explicitly set the height of this widget to fit all the current
+        // children
+        this->setMinimumHeight(childrenRect().height() + 4);
+    }
 
     event->accept();
 }
@@ -207,6 +215,40 @@ void TagFamilyWidget::onTagNameChanged(){
  */
 TagFamily *TagFamilyWidget::getTagFamily() const{
     return tag_family_;
+}
+
+/*! \brief Slot called when the collapse button is clicked; toggles the collapsed state. */
+void TagFamilyWidget::toggleCollapsed()
+{
+    collapsed_ = !collapsed_;
+    collapseButton_->setCollapsed(collapsed_);
+
+    for (int i = 0; i < layout()->count(); ++i) {
+        if (QWidget *w = layout()->itemAt(i)->widget())
+            w->setVisible(!collapsed_);
+    }
+
+    layout()->invalidate();
+    layout()->activate();
+    updateGeometry();
+
+    if (collapsed_)
+        setMinimumHeight(38);
+    else
+        setMinimumHeight(qMax(64, childrenRect().height() + 4));
+
+    update();
+}
+
+/*! \brief Overrides the Qt base-class resize handler to keep the collapse button anchored.
+ *
+ * \param event The resize event.
+ */
+void TagFamilyWidget::resizeEvent(QResizeEvent *event)
+{
+    TaggingWidget::resizeEvent(event);
+    if (collapseButton_)
+        collapseButton_->move(width() - 24, 4);
 }
 
 /*! \brief Returns the minimum size as the size hint.

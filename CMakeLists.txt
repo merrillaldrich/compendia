@@ -56,6 +56,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         variablewidthlineedit.h variablewidthlineedit.cpp
         filterproxymodel.h filterproxymodel.cpp
         tagwidgetclosebutton.h tagwidgetclosebutton.cpp
+        tagfamilywidgetcollapsebutton.h tagfamilywidgetcollapsebutton.cpp
         icongenerator.h icongenerator.cpp
         navfiltercontainer.h navfiltercontainer.cpp
         tagcontainer.h tagcontainer.cpp

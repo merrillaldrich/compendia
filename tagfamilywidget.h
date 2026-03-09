@@ -13,6 +13,7 @@
 #include "variablewidthlineedit.h"
 #include "mainwindow.h"
 #include "taggingwidget.h"
+#include "tagfamilywidgetcollapsebutton.h"
 
 /*! \brief Visual widget representing a tag family, containing its child TagWidget items.
  *
@@ -31,6 +32,8 @@ private:
     ClickableLabel* label_;
     bool in_library_ = false;
     TagFamily* tag_family_;
+    bool collapsed_ = false;
+    TagFamilyWidgetCollapseButton *collapseButton_ = nullptr;
 
 protected:
     /*! \brief Overrides the Qt base-class mouse-release handler to add a new tag on click.
@@ -38,6 +41,12 @@ protected:
      * \param event The mouse release event.
      */
     void mouseReleaseEvent(QMouseEvent *event);
+
+    /*! \brief Overrides the Qt base-class resize handler to keep the collapse button anchored.
+     *
+     * \param event The resize event.
+     */
+    void resizeEvent(QResizeEvent *event) override;
 
     /*! \brief Returns the minimum size as the size hint.
      *
@@ -83,6 +92,9 @@ public:
 private slots:
     /*! \brief Slot called when the line edit finishes editing; commits via endEdit(). */
     void onLineEditEditingFinished();
+
+    /*! \brief Slot called when the collapse button is clicked; toggles the collapsed state. */
+    void toggleCollapsed();
 
     /*! \brief Slot called when the family name label is clicked; enters edit mode via startEdit().
      *
