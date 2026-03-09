@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "constants.h"
 
+#include <algorithm>
 #include <limits>
 
 #include <QCheckBox>
@@ -1371,6 +1372,66 @@ void MainWindow::on_tagFilterAllRadio_toggled(bool checked)
 void MainWindow::on_dateEdit_dateChanged(const QDate &date)
 {
     core->setCreationDateFilter(date);  // invalid QDate = no filter
+}
+
+/*! \brief Tags every file with its capture/creation year in the "Year" tag family.
+ *
+ * For each file the effective date is the EXIF capture datetime when present,
+ * falling back to the filesystem creation datetime.  Files with no resolvable
+ * date are skipped.  The tag name is the four-digit year as a string.
+ */
+void MainWindow::on_actionAuto_Tag_Year_triggered()
+{
+    if (!core->containsFiles()) return;
+
+    QStandardItemModel *model = core->getItemModel();
+    for (int r = 0; r < model->rowCount(); ++r) {
+        TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+
+        const auto hasYearTag = [](Tag *t){ return t->tagFamily->getName() == u"Year"; };
+        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasYearTag)) continue;
+
+        QDate date = tf->effectiveDate();
+        if (!date.isValid()) continue;
+
+        Tag *tag = core->addLibraryTag(QStringLiteral("Year"), QString::number(date.year()));
+        tf->addTag(tag);
+    }
+
+    refreshNavTagLibrary();
+    refreshTagAssignmentArea();
+}
+
+/*! \brief Tags every file with its capture/creation month name in the "Month" tag family.
+ *
+ * For each file the effective date is the EXIF capture datetime when present,
+ * falling back to the filesystem creation datetime.  Files with no resolvable
+ * date are skipped.  The tag name is the full English month name.
+ */
+void MainWindow::on_actionAuto_Tag_Month_triggered()
+{
+    if (!core->containsFiles()) return;
+
+    QStandardItemModel *model = core->getItemModel();
+    const QLocale english(QLocale::English);
+    for (int r = 0; r < model->rowCount(); ++r) {
+        TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+
+        const auto hasMonthTag = [](Tag *t){ return t->tagFamily->getName() == u"Month"; };
+        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasMonthTag)) continue;
+
+        QDate date = tf->effectiveDate();
+        if (!date.isValid()) continue;
+
+        QString monthName = english.monthName(date.month(), QLocale::LongFormat);
+        Tag *tag = core->addLibraryTag(QStringLiteral("Month"), monthName);
+        tf->addTag(tag);
+    }
+
+    refreshNavTagLibrary();
+    refreshTagAssignmentArea();
 }
 
 /*! \brief Slot for Autos → Grab Video Frames; begins a frame-grab batch for all video files. */

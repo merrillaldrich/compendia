@@ -780,11 +780,7 @@ QList<QDate> LuminismCore::getFileDates() const
     for (int i = 0; i < tagged_files_->rowCount(); ++i) {
         TaggedFile *tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
         if (!tf) continue;
-        QDate d = tf->imageCaptureDateTime.isValid()
-            ? tf->imageCaptureDateTime.date()
-            : tf->fileNameInferredDate.isValid()
-                ? tf->fileNameInferredDate.date()
-                : tf->fileCreationDateTime.date();
+        QDate d = tf->effectiveDate();
         if (d.isValid())
             seen.insert(d);
     }

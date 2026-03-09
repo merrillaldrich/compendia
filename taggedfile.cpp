@@ -37,6 +37,20 @@ static QDateTime inferDateTimeFromFileName(const QString &baseName)
     return QDateTime();
 }
 
+/*! \brief Returns the best available date for this file.
+ *
+ * Priority: EXIF capture date → filename-inferred date → filesystem creation date.
+ * Returns an invalid QDate when none of the three sources yields a valid date.
+ */
+QDate TaggedFile::effectiveDate() const
+{
+    if (imageCaptureDateTime.isValid())
+        return imageCaptureDateTime.date();
+    if (fileNameInferredDate.isValid())
+        return fileNameInferredDate.date();
+    return fileCreationDateTime.date();
+}
+
 /*! \brief Constructs a default, empty TaggedFile.
  *
  * \param parent Optional Qt parent object.

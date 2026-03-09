@@ -46,6 +46,13 @@ public:
      */
     QDateTime fileNameInferredDate;
 
+    /*! \brief Returns the best available date for this file.
+     *
+     * Priority: EXIF capture date → filename-inferred date → filesystem creation date.
+     * Returns an invalid QDate when none of the three sources yields a valid date.
+     */
+    QDate effectiveDate() const;
+
     /*! \brief Constructs a default, empty TaggedFile.
      *
      * \param parent Optional Qt parent object.

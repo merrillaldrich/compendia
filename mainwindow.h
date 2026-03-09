@@ -324,6 +324,12 @@ private slots:
      */
     void onVideoGrabFinished(int success, int fail);
 
+    /*! \brief Tags every file with its capture/creation year in the "Year" tag family. */
+    void on_actionAuto_Tag_Year_triggered();
+
+    /*! \brief Tags every file with its capture/creation month name in the "Month" tag family. */
+    void on_actionAuto_Tag_Month_triggered();
+
     /*! \brief Isolates the currently selected files so only they pass the filter. */
     void on_actionIsolateSelection_triggered();
 

@@ -72,13 +72,7 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
     if (!creation_date_.isValid()) {
         dateResult = true;
     } else {
-        // Prefer EXIF capture date; fall back to filename-inferred date, then filesystem creation date
-        QDate effectiveDate = itemAsTaggedFile->imageCaptureDateTime.isValid()
-            ? itemAsTaggedFile->imageCaptureDateTime.date()
-            : itemAsTaggedFile->fileNameInferredDate.isValid()
-                ? itemAsTaggedFile->fileNameInferredDate.date()
-                : itemAsTaggedFile->fileCreationDateTime.date();
-        dateResult = effectiveDate == creation_date_;
+        dateResult = itemAsTaggedFile->effectiveDate() == creation_date_;
     }
 
     return nameResult && folderResult && tagResult && dateResult;

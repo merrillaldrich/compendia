@@ -654,6 +654,15 @@
      <addaction name="actionRemove_Auto_Detected_Faces"/>
     </widget>
     <addaction name="menuFace_Detection"/>
+    <addaction name="separator"/>
+    <widget class="QMenu" name="menuDates">
+     <property name="title">
+      <string>Dates</string>
+     </property>
+     <addaction name="actionAuto_Tag_Year"/>
+     <addaction name="actionAuto_Tag_Month"/>
+    </widget>
+    <addaction name="menuDates"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilter"/>
@@ -698,6 +707,16 @@
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionAuto_Tag_Year">
+   <property name="text">
+    <string>Auto Tag Year</string>
+   </property>
+  </action>
+  <action name="actionAuto_Tag_Month">
+   <property name="text">
+    <string>Auto Tag Month</string>
    </property>
   </action>
   <action name="actionIsolateSelection">
