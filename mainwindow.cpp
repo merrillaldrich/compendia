@@ -57,6 +57,9 @@ MainWindow::MainWindow(QWidget *parent)
         "Drag and drop tags here to <b>apply them</b> to all visible files.");
 
     // Set up the status bar
+    folderStatsLabel_ = new QLabel(this);
+    folderStatsLabel_->setContentsMargins(6, 0, 6, 0);
+    ui->statusBar->addWidget(folderStatsLabel_);
     progress_ = new MultiProgressBar(this);
     ui->statusBar->addPermanentWidget(progress_);
     connect(core, &LuminismCore::iconUpdated, this, &MainWindow::onIconUpdated);
@@ -433,6 +436,7 @@ void MainWindow::loadFolder(const QString &folder)
     progress_->startProcess(MultiProgressBar::Process::IconGeneration,
                             0, core->getItemModel()->rowCount(),
                             "Generating icons");
+    updateFolderStatsLabel();
 }
 
 /*! \brief Rebuilds the tag-library navigation area from the current library tags. */
@@ -1031,6 +1035,28 @@ void MainWindow::updateFileCountLabel()
         else
             ui->fileCountLabel->setText(QString("%1 of %2 Files").arg(shown).arg(total));
     }
+}
+
+/*! \brief Updates the persistent folder-stats label in the status bar.
+ *
+ * Shows the number of images, videos, folders, and total file size for the
+ * currently loaded folder. Files inside .luminism_cache directories are excluded.
+ * Clears the label when no files are loaded.
+ */
+void MainWindow::updateFolderStatsLabel()
+{
+    if (!core->containsFiles()) {
+        folderStatsLabel_->clear();
+        return;
+    }
+    const auto stats = core->getFolderStats();
+    const QString sizeStr = QLocale().formattedDataSize(stats.totalBytes);
+    folderStatsLabel_->setText(
+        QString("%1 image(s), %2 video(s) in %3 folder(s)  |  %4")
+            .arg(stats.imageCount)
+            .arg(stats.videoCount)
+            .arg(stats.folderCount)
+            .arg(sizeStr));
 }
 
 /*! \brief Connects the file-count label to the current proxy model's signals.

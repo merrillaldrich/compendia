@@ -75,6 +75,11 @@ TaggedFile::TaggedFile(QFileInfo fileInfo, QSet<Tag*>* tags, QMap<QString, QStri
     this->fileModificationDateTime = fileInfo.lastModified();
     this->fileNameInferredDate = inferDateTimeFromFileName(fileInfo.completeBaseName());
     this->tags_ = tags;
+    this->fileSize_ = fileInfo.size();
+    static const QSet<QString> kVideoSuffixes = {
+        "mp4", "mov", "avi", "mkv", "wmv", "webm", "m4v"
+    };
+    this->mediaType_ = kVideoSuffixes.contains(fileInfo.suffix().toLower()) ? Video : Image;
 }
 
 /*! \brief Serialises the file's tags and EXIF data to a JSON string.

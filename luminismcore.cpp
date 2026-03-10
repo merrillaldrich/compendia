@@ -1,4 +1,5 @@
 #include "luminismcore.h"
+#include "constants.h"
 #include "perceptualhasher.h"
 #include <algorithm>
 #include <functional>
@@ -288,6 +289,30 @@ void LuminismCore::loadRootDirectory(){
  */
 bool LuminismCore::containsFiles(){
     return ( tagged_files_->rowCount() > 0 );
+}
+
+/*! \brief Returns summary statistics for all files in the source model.
+ *
+ * Files inside any .luminism_cache sub-directory are excluded.
+ * \return A FolderStats value with image/video counts, folder count, and total size.
+ */
+LuminismCore::FolderStats LuminismCore::getFolderStats() const
+{
+    FolderStats stats;
+    QSet<QString> folders;
+    const int n = tagged_files_->rowCount();
+    for (int i = 0; i < n; ++i) {
+        const QVariant val = tagged_files_->item(i)->data(Qt::UserRole + 1);
+        const TaggedFile *tf = val.value<TaggedFile*>();
+        if (!tf) continue;
+        if (tf->filePath.contains(QLatin1String(Luminism::CacheFolderName))) continue;
+        if (tf->mediaType() == TaggedFile::Image) ++stats.imageCount;
+        else ++stats.videoCount;
+        stats.totalBytes += tf->fileSize();
+        folders.insert(tf->filePath);
+    }
+    stats.folderCount = folders.size();
+    return stats;
 }
 
 /*! \brief Adds a file to the model with no tags.

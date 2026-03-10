@@ -23,6 +23,10 @@ class TaggedFile : public QObject {
 
     Q_OBJECT
 
+public:
+    /*! \brief Distinguishes image files from video files. */
+    enum MediaType { Image, Video };
+
 private:
     QMap<QString, QString> exif_map_;
     QSet<Tag*>* tags_ = new QSet<Tag*>;
@@ -30,6 +34,8 @@ private:
     bool dirty_flag_ = false;
     quint64 pHash_ = 0;
     std::optional<int> rating_ = std::nullopt;
+    MediaType mediaType_ = Image;
+    qint64 fileSize_ = 0;
 
 
 public:
@@ -153,6 +159,12 @@ public:
 
     /*! \brief Clears the file-level dirty flag (does not clear tag or family flags). */
     void clearDirtyFlag();
+
+    /*! \brief Returns whether this file is an image or a video. */
+    MediaType mediaType() const { return mediaType_; }
+
+    /*! \brief Returns the file size in bytes as recorded at load time. */
+    qint64 fileSize() const { return fileSize_; }
 
     /*! \brief Returns the perceptual hash computed for this file (0 if not yet computed). */
     quint64 pHash() const;

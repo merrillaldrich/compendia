@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
 #include <QSettings>
 #include <QCloseEvent>
 #include <QFuture>
@@ -35,6 +36,7 @@ class MainWindow : public QMainWindow
 private:
     Ui::MainWindow *ui;
     MultiProgressBar* progress_;
+    QLabel* folderStatsLabel_; ///< Persistent left-side status bar label showing folder summary stats.
     QWidget* welcome_widget_; ///< Shown in the file-list area before any folder is loaded.
     FaceRecognizer* face_recognizer_ = nullptr;
     double faceMatchThreshold_ = Luminism::FaceMatchThreshold;
@@ -59,6 +61,9 @@ public:
 
     /*! \brief Updates the file-count label to show visible vs. total file counts. */
     void updateFileCountLabel();
+
+    /*! \brief Updates the persistent folder-stats label in the status bar. */
+    void updateFolderStatsLabel();
 
     /*! \brief Connects the file-count label to the current proxy model's signals.
      *

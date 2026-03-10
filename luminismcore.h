@@ -83,6 +83,21 @@ public:
     /*! \brief Clears all existing data and reloads files from the current root directory. */
     void loadRootDirectory();
 
+    /*! \brief Aggregate statistics about the currently loaded folder. */
+    struct FolderStats {
+        int imageCount  = 0; ///< Number of image files (excluding cache).
+        int videoCount  = 0; ///< Number of video files (excluding cache).
+        int folderCount = 0; ///< Number of distinct directories (excluding cache).
+        qint64 totalBytes = 0; ///< Sum of file sizes in bytes (excluding cache).
+    };
+
+    /*! \brief Returns summary statistics for all files in the source model.
+     *
+     * Files inside any \c .luminism_cache sub-directory are excluded.
+     * \return A FolderStats value with counts and total size.
+     */
+    FolderStats getFolderStats() const;
+
     /*! \brief Returns true if the model currently contains at least one file.
      *
      * \return True when the model row count is greater than zero.
