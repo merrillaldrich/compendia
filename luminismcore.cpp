@@ -898,6 +898,14 @@ void LuminismCore::setRatingFilter(std::optional<int> rating) {
     tagged_files_proxy_->setRatingFilter(rating);
 }
 
+/*! \brief Sets the comparison mode used when evaluating the rating filter.
+ *
+ * \param mode LessOrEqual, Exactly, or GreaterOrEqual.
+ */
+void LuminismCore::setRatingFilterMode(FilterProxyModel::RatingFilterMode mode) {
+    tagged_files_proxy_->setRatingFilterMode(mode);
+}
+
 /*! \brief Returns a chronologically sorted list of unique effective dates across all loaded files.
  *
  * Each file's effective date is its EXIF capture date when present, falling back to the

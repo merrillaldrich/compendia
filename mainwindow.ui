@@ -106,7 +106,17 @@
            <item>
             <widget class="QLabel" name="ratingFilterLabel">
              <property name="text">
-              <string>Filter rating to:</string>
+              <string>Filter to</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="ratingFilterModeButton">
+             <property name="text">
+              <string>Exactly</string>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

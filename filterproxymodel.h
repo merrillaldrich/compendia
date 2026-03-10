@@ -22,12 +22,20 @@ public:
         AllTags  /*!< Show files that have every active filter tag (AND). */
     };
 
+    /*! \brief Controls how the rating filter value is compared against each file's rating. */
+    enum RatingFilterMode {
+        LessOrEqual,    /*!< Show files whose rating is ≤ the filter value. */
+        Exactly,        /*!< Show files whose rating exactly matches the filter value. */
+        GreaterOrEqual  /*!< Show files whose rating is ≥ the filter value. */
+    };
+
 private:
     QDate creation_date_;
     QSet<Tag*> tags_ = QSet<Tag*>();
     TagFilterMode tagFilterMode_ = AnyTag;
     QSet<TaggedFile*> isolation_set_; ///< When non-empty, only listed files can pass.
-    std::optional<int> rating_filter_; ///< When set, only files with this exact rating pass.
+    std::optional<int> rating_filter_; ///< When set, only files matching the mode+value pass.
+    RatingFilterMode rating_filter_mode_ = Exactly; ///< Comparison mode for the rating filter.
 
 protected:
     /*! \brief Overrides the Qt base-class row-acceptance test to apply all active filters.
@@ -106,6 +114,12 @@ public:
      * \param rating The rating to filter for [1,5], or std::nullopt to disable.
      */
     void setRatingFilter(std::optional<int> rating);
+
+    /*! \brief Sets the comparison mode used when evaluating the rating filter and re-applies the filter.
+     *
+     * \param mode LessOrEqual, Exactly, or GreaterOrEqual.
+     */
+    void setRatingFilterMode(RatingFilterMode mode);
 
     /*! \brief Restricts the visible set to the given files; other filters still apply within the set.
      *

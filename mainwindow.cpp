@@ -96,6 +96,28 @@ MainWindow::MainWindow(QWidget *parent)
     ui->filterStarRating->setEnabled(false);
     ui->previewStarRating->setEnabled(false);
 
+    // Rating filter mode button — popup menu to choose Less Than / Exactly / More Than
+    {
+        auto *menu = new QMenu(ui->ratingFilterModeButton);
+        auto *actLess    = menu->addAction(tr("Less Than"));
+        auto *actExactly = menu->addAction(tr("Exactly"));
+        auto *actMore    = menu->addAction(tr("More Than"));
+
+        auto applyMode = [this, actLess, actExactly, actMore](QAction *chosen,
+                                                               FilterProxyModel::RatingFilterMode mode) {
+            ui->ratingFilterModeButton->setText(chosen->text());
+            core->setRatingFilterMode(mode);
+            updateFileCountLabel();
+        };
+
+        connect(actLess,    &QAction::triggered, this, [=]{ applyMode(actLess,    FilterProxyModel::LessOrEqual);    });
+        connect(actExactly, &QAction::triggered, this, [=]{ applyMode(actExactly, FilterProxyModel::Exactly);        });
+        connect(actMore,    &QAction::triggered, this, [=]{ applyMode(actMore,    FilterProxyModel::GreaterOrEqual); });
+
+        ui->ratingFilterModeButton->setMenu(menu);
+        ui->ratingFilterModeButton->setStyleSheet("text-align: left;");
+    }
+
     // Filter star rating — apply a rating filter to the proxy model
     connect(ui->filterStarRating, &StarRatingWidget::ratingChanged,
             this, [this](std::optional<int> rating) {

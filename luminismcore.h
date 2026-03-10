@@ -260,12 +260,18 @@ public:
 
     /*! \brief Sets the rating filter on the proxy model.
      *
-     * Only files whose rating exactly matches \p rating will pass.
+     * Only files whose rating satisfies the current mode vs. \p rating will pass.
      * Pass std::nullopt to clear the rating filter.
      *
      * \param rating The rating to filter for [1,5], or std::nullopt to disable.
      */
     void setRatingFilter(std::optional<int> rating);
+
+    /*! \brief Sets the comparison mode used when evaluating the rating filter.
+     *
+     * \param mode LessOrEqual, Exactly, or GreaterOrEqual.
+     */
+    void setRatingFilterMode(FilterProxyModel::RatingFilterMode mode);
 
     /*! \brief Returns a chronologically sorted list of unique effective dates across all loaded files.
      *

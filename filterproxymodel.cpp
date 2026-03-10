@@ -76,8 +76,20 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
     }
 
     bool ratingResult = true;
-    if (rating_filter_.has_value())
-        ratingResult = itemAsTaggedFile->rating() == rating_filter_;
+    if (rating_filter_.has_value()) {
+        const std::optional<int> fileRating = itemAsTaggedFile->rating();
+        if (!fileRating.has_value()) {
+            ratingResult = false;
+        } else {
+            const int fv = fileRating.value();
+            const int rv = rating_filter_.value();
+            switch (rating_filter_mode_) {
+            case LessOrEqual:    ratingResult = (fv <= rv); break;
+            case Exactly:        ratingResult = (fv == rv); break;
+            case GreaterOrEqual: ratingResult = (fv >= rv); break;
+            }
+        }
+    }
 
     return nameResult && folderResult && tagResult && dateResult && ratingResult;
 }
@@ -161,6 +173,16 @@ void FilterProxyModel::setTagFilterMode(TagFilterMode mode) {
 void FilterProxyModel::setRatingFilter(std::optional<int> rating) {
     beginFilterChange();
     rating_filter_ = rating;
+    endFilterChange();
+}
+
+/*! \brief Sets the comparison mode used when evaluating the rating filter and re-applies the filter.
+ *
+ * \param mode LessOrEqual, Exactly, or GreaterOrEqual.
+ */
+void FilterProxyModel::setRatingFilterMode(RatingFilterMode mode) {
+    beginFilterChange();
+    rating_filter_mode_ = mode;
     endFilterChange();
 }
 
