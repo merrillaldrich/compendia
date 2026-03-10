@@ -95,9 +95,46 @@ MainWindow::MainWindow(QWidget *parent)
         ui->showTaggedRegionsCheckbox->setChecked(true);
     });
 
-    // Both star widgets start disabled until a folder is loaded
+    // All star widgets start disabled until a folder is loaded
     ui->filterStarRating->setEnabled(false);
     ui->previewStarRating->setEnabled(false);
+    ui->fileListStarRating->setEnabled(false);
+
+    // File-list star rating — apply a rating to selected files, or all visible files with confirmation
+    connect(ui->fileListStarRating, &StarRatingWidget::ratingChanged,
+            this, [this](std::optional<int> rating) {
+        auto *proxy    = core->getItemModelProxy();
+        auto *model    = core->getItemModel();
+        auto *selModel = ui->fileListView->selectionModel();
+        QModelIndexList sel = selModel ? selModel->selectedIndexes() : QModelIndexList();
+
+        if (sel.isEmpty()) {
+            const int n = proxy->rowCount();
+            const QString msg = QString(
+                "<p>This will apply the rating to <b>all %1</b> visible file(s). Are you sure?</p>"
+                "<p>Hint: You can choose one or a few files to rate if you don't want to rate them all at once.</p>").arg(n);
+            QMessageBox mb(QMessageBox::Question, tr("Apply Rating"), msg,
+                           QMessageBox::Ok | QMessageBox::Cancel, this);
+            if (mb.exec() != QMessageBox::Ok) {
+                // Reset the widget back to no-rating display without emitting again
+                ui->fileListStarRating->setRating(std::nullopt);
+                return;
+            }
+            for (int i = 0; i < n; ++i) {
+                TaggedFile *tf = model->data(
+                    proxy->mapToSource(proxy->index(i, 0)), Qt::UserRole + 1).value<TaggedFile*>();
+                if (tf) tf->setRating(rating);
+            }
+        } else {
+            for (const QModelIndex &idx : sel) {
+                TaggedFile *tf = model->data(
+                    proxy->mapToSource(idx), Qt::UserRole + 1).value<TaggedFile*>();
+                if (tf) tf->setRating(rating);
+            }
+        }
+        // Reset the widget — it's a bulk action tool, not a persistent indicator
+        ui->fileListStarRating->setRating(std::nullopt);
+    });
 
     // Rating filter mode button — popup menu to choose Less Than / Exactly / More Than
     {
@@ -433,6 +470,7 @@ void MainWindow::loadFolder(const QString &folder)
     clearPreview();
     ui->filterStarRating->setEnabled(true);
     ui->previewStarRating->setEnabled(false);
+    ui->fileListStarRating->setEnabled(true);
     progress_->startProcess(MultiProgressBar::Process::IconGeneration,
                             0, core->getItemModel()->rowCount(),
                             "Generating icons");
