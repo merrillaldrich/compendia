@@ -156,8 +156,15 @@ public:
     /*! \brief Returns the perceptual hash computed for this file (0 if not yet computed). */
     quint64 pHash() const;
 
-    /*! \brief Sets the perceptual hash without marking the file dirty (used during load and backfill). */
+    /*! \brief Sets the perceptual hash without marking the file dirty (used during JSON load). */
     void initPHash(quint64 hash);
+
+    /*! \brief Sets the perceptual hash and marks the file dirty if the value changed.
+     *
+     * Used during backfill so newly computed hashes are persisted on next save.
+     * \param hash The newly computed pHash value.
+     */
+    void setPHash(quint64 hash);
 };
 
 Q_DECLARE_METATYPE(TaggedFile)

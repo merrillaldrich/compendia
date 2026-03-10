@@ -113,7 +113,7 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
         tf->imageCaptureDateTime = captureDateTime;
         tf->setExifMap(exifMap);
         if (pHash != 0)
-            tf->initPHash(pHash);
+            tf->setPHash(pHash);
 
     } else {
         qDebug() << "Could not locate " + absoluteFilePathName + " to set icon";

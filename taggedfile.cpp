@@ -273,8 +273,21 @@ quint64 TaggedFile::pHash() const
     return pHash_;
 }
 
-/*! \brief Sets the perceptual hash without marking the file dirty (used during load and backfill). */
+/*! \brief Sets the perceptual hash without marking the file dirty (used during JSON load). */
 void TaggedFile::initPHash(quint64 hash)
 {
     pHash_ = hash;
+}
+
+/*! \brief Sets the perceptual hash and marks the file dirty if the value changed.
+ *
+ * Used during backfill so newly computed hashes are persisted on next save.
+ * \param hash The newly computed pHash value.
+ */
+void TaggedFile::setPHash(quint64 hash)
+{
+    if (hash != pHash_) {
+        pHash_ = hash;
+        dirty_flag_ = true;
+    }
 }
