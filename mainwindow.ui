@@ -99,6 +99,49 @@
           </layout>
          </item>
          <item>
+          <layout class="QHBoxLayout" name="ratingFilterLayout">
+           <property name="spacing">
+            <number>3</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="ratingFilterLabel">
+             <property name="text">
+              <string>Filter rating to:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="StarRatingWidget" name="filterStarRating">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="ratingFilterSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
           <widget class="QScrollArea" name="navFilterScrollArea">
            <property name="widgetResizable">
             <bool>true</bool>
@@ -385,11 +428,44 @@
           <widget class="PreviewContainer" name="previewContainer" native="true"/>
          </item>
          <item>
-          <widget class="QCheckBox" name="showTaggedRegionsCheckbox">
-           <property name="text">
-            <string>Show Tagged Regions</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout">
+           <item>
+            <widget class="QCheckBox" name="showTaggedRegionsCheckbox">
+             <property name="text">
+              <string>Show Tagged Regions</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="StarRatingWidget" name="previewStarRating">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -779,6 +855,11 @@
    <class>FolderFilterLineEdit</class>
    <extends>QLineEdit</extends>
    <header>folderfilterlineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>StarRatingWidget</class>
+   <extends>QWidget</extends>
+   <header>starratingwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

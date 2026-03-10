@@ -1,6 +1,7 @@
 #ifndef FILTERPROXYMODEL_H
 #define FILTERPROXYMODEL_H
 
+#include <optional>
 #include <QSortFilterProxyModel>
 #include <QDate>
 #include <QSet>
@@ -26,6 +27,7 @@ private:
     QSet<Tag*> tags_ = QSet<Tag*>();
     TagFilterMode tagFilterMode_ = AnyTag;
     QSet<TaggedFile*> isolation_set_; ///< When non-empty, only listed files can pass.
+    std::optional<int> rating_filter_; ///< When set, only files with this exact rating pass.
 
 protected:
     /*! \brief Overrides the Qt base-class row-acceptance test to apply all active filters.
@@ -95,6 +97,15 @@ public:
      * \param creationDate The date to filter by.
      */
     void setFilterCreationDate(QDate creationDate);
+
+    /*! \brief Sets the rating filter and re-applies the filter.
+     *
+     * Only files whose rating exactly matches \p rating will pass.
+     * Pass std::nullopt to clear the rating filter.
+     *
+     * \param rating The rating to filter for [1,5], or std::nullopt to disable.
+     */
+    void setRatingFilter(std::optional<int> rating);
 
     /*! \brief Restricts the visible set to the given files; other filters still apply within the set.
      *

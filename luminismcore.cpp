@@ -327,7 +327,14 @@ void LuminismCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
         tagSets = parseTagJson(tagsJson);
     }
 
-    addFile(fileInfo, tagSets, exifMap, pHash);
+    std::optional<int> rating = std::nullopt;
+    if (tagsJson.contains("rating")) {
+        int r = tagsJson["rating"].toInt();
+        if (r >= 1 && r <= 5)
+            rating = r;
+    }
+
+    addFile(fileInfo, tagSets, exifMap, pHash, rating);
 }
 
 /*! \brief Adds a file to the model with an explicit tag list and optional initial EXIF map.
@@ -336,7 +343,7 @@ void LuminismCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
  * \param tags        List of TagSet values describing tags to apply.
  * \param initialExif Optional pre-loaded EXIF key-value map.
  */
-void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif, quint64 pHash){
+void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif, quint64 pHash, std::optional<int> rating){
     // Add to to the Tagged Object collection and collect links to its tags and tag families
 
     // For each item in the tag set add the family, if it doesn't already exist,
@@ -381,6 +388,8 @@ void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString,
     tf->initExifMap(initialExif);
     if (pHash != 0)
         tf->initPHash(pHash);
+    if (rating.has_value())
+        tf->initRating(rating);
 
     // Apply any bounding rectangles carried in the TagSets (without dirtying)
     for (const TagSet &ts : tags) {
@@ -879,6 +888,14 @@ void LuminismCore::setFolderFilter(QString filterText){
  */
 void LuminismCore::setCreationDateFilter(QDate date) {
     tagged_files_proxy_->setFilterCreationDate(date);
+}
+
+/*! \brief Sets the rating filter on the proxy model.
+ *
+ * \param rating The rating to filter for [1,5], or std::nullopt to disable.
+ */
+void LuminismCore::setRatingFilter(std::optional<int> rating) {
+    tagged_files_proxy_->setRatingFilter(rating);
 }
 
 /*! \brief Returns a chronologically sorted list of unique effective dates across all loaded files.

@@ -128,6 +128,8 @@ QString TaggedFile::TaggedFileJSON(){
     root.insert("exif", exifObj);
     if (pHash_ != 0)
         root.insert("pHash", QString::number(pHash_, 16).rightJustified(16, '0'));
+    if (rating_.has_value())
+        root.insert("rating", rating_.value());
 
     QJsonDocument doc(root);
     return QString(doc.toJson());
@@ -288,6 +290,27 @@ void TaggedFile::setPHash(quint64 hash)
 {
     if (hash != pHash_) {
         pHash_ = hash;
+        dirty_flag_ = true;
+    }
+}
+
+/*! \brief Returns the user rating (1–5), or std::nullopt if no rating has been assigned. */
+std::optional<int> TaggedFile::rating() const
+{
+    return rating_;
+}
+
+/*! \brief Sets the rating without marking the file dirty (used during JSON load). */
+void TaggedFile::initRating(std::optional<int> rating)
+{
+    rating_ = rating;
+}
+
+/*! \brief Sets the rating and marks the file dirty if the value changed. */
+void TaggedFile::setRating(std::optional<int> rating)
+{
+    if (rating != rating_) {
+        rating_ = rating;
         dirty_flag_ = true;
     }
 }

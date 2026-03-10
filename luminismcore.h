@@ -108,8 +108,9 @@ public:
      * \param tags        List of TagSet values describing tags to apply.
      * \param initialExif Optional pre-loaded EXIF key-value map.
      * \param pHash       Optional pre-loaded perceptual hash (0 if not available).
+     * \param rating      Optional pre-loaded rating (1–5), or std::nullopt if not set.
      */
-    void addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif = {}, quint64 pHash = 0);
+    void addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif = {}, quint64 pHash = 0, std::optional<int> rating = std::nullopt);
 
     /*! \brief Launches background thumbnail and EXIF generation for all files in the model. */
     void backfillMetadata();
@@ -256,6 +257,15 @@ public:
      * \param date The date to filter by; an invalid QDate clears the filter.
      */
     void setCreationDateFilter(QDate date);
+
+    /*! \brief Sets the rating filter on the proxy model.
+     *
+     * Only files whose rating exactly matches \p rating will pass.
+     * Pass std::nullopt to clear the rating filter.
+     *
+     * \param rating The rating to filter for [1,5], or std::nullopt to disable.
+     */
+    void setRatingFilter(std::optional<int> rating);
 
     /*! \brief Returns a chronologically sorted list of unique effective dates across all loaded files.
      *

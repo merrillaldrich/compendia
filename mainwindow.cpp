@@ -23,6 +23,7 @@
 #include "tagwidget.h"
 #include "tagfamilywidget.h"
 #include "filenamedelegate.h"
+#include "starratingwidget.h"
 
 /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
  *
@@ -49,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
         "<b>Click here</b> to create groups of tags to organize your images.");
     ui->navFilterContainer->setupWelcome(
         ui->navFilterScrollArea,
-        qobject_cast<QVBoxLayout *>(ui->navFilterSection->layout()), 1,
+        qobject_cast<QVBoxLayout *>(ui->navFilterSection->layout()), 2,
         "Drag and drop tags here to <b>filter your view.</b>");
     ui->fileListTagAssignmentContainer->setupWelcome(
         ui->fileListTagAssignmentScrollArea, ui->fileListSplitter, 1,
@@ -89,6 +90,29 @@ MainWindow::MainWindow(QWidget *parent)
         if (tag)
             ui->previewContainer->setDropPreviewColor(tag->tagFamily->getColor());
         ui->showTaggedRegionsCheckbox->setChecked(true);
+    });
+
+    // Both star widgets start disabled until a folder is loaded
+    ui->filterStarRating->setEnabled(false);
+    ui->previewStarRating->setEnabled(false);
+
+    // Filter star rating — apply a rating filter to the proxy model
+    connect(ui->filterStarRating, &StarRatingWidget::ratingChanged,
+            this, [this](std::optional<int> rating) {
+        core->setRatingFilter(rating);
+        updateFileCountLabel();
+    });
+
+    // Star rating widget — update the selected file's rating when the user clicks a star
+    connect(ui->previewStarRating, &StarRatingWidget::ratingChanged,
+            this, [this](std::optional<int> rating) {
+        auto *selModel = ui->fileListView->selectionModel();
+        if (!selModel || selModel->selectedIndexes().isEmpty()) return;
+        QModelIndex src = core->getItemModelProxy()->mapToSource(
+            selModel->selectedIndexes().first());
+        TaggedFile *tf = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf)
+            tf->setRating(rating);
     });
 
 
@@ -363,6 +387,8 @@ void MainWindow::loadFolder(const QString &folder)
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
     clearPreview();
+    ui->filterStarRating->setEnabled(true);
+    ui->previewStarRating->setEnabled(false);
     progress_->startProcess(MultiProgressBar::Process::IconGeneration,
                             0, core->getItemModel()->rowCount(),
                             "Generating icons");
@@ -573,6 +599,8 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         ui->previewFileNameTimestampValue->setText("-");
         ui->previewFileTagsValue->setText("-");
         ui->previewExifValue->setText("-");
+        ui->previewStarRating->setRating(std::nullopt);
+        ui->previewStarRating->setEnabled(false);
     }
     else {
         QModelIndex proxyIndex = selected.indexes().first();
@@ -611,6 +639,8 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
                 : "-");
 
         refreshPreviewTagsLabel();
+        ui->previewStarRating->setEnabled(true);
+        ui->previewStarRating->setRating(itemAsTaggedFile->rating());
 
         QString exifText;
         const QMap<QString, QString> exifMap = itemAsTaggedFile->exifMap();

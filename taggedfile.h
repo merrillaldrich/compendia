@@ -29,6 +29,7 @@ private:
     QMap<Tag*, QRectF> tag_rects_;
     bool dirty_flag_ = false;
     quint64 pHash_ = 0;
+    std::optional<int> rating_ = std::nullopt;
 
 
 public:
@@ -165,6 +166,21 @@ public:
      * \param hash The newly computed pHash value.
      */
     void setPHash(quint64 hash);
+
+    /*! \brief Returns the user rating (1–5), or std::nullopt if no rating has been assigned. */
+    std::optional<int> rating() const;
+
+    /*! \brief Sets the rating without marking the file dirty (used during JSON load).
+     *
+     * \param rating A value in [1,5], or std::nullopt to clear.
+     */
+    void initRating(std::optional<int> rating);
+
+    /*! \brief Sets the rating and marks the file dirty if the value changed.
+     *
+     * \param rating A value in [1,5], or std::nullopt to clear.
+     */
+    void setRating(std::optional<int> rating);
 };
 
 Q_DECLARE_METATYPE(TaggedFile)

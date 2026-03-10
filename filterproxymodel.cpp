@@ -75,7 +75,11 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
         dateResult = itemAsTaggedFile->effectiveDate() == creation_date_;
     }
 
-    return nameResult && folderResult && tagResult && dateResult;
+    bool ratingResult = true;
+    if (rating_filter_.has_value())
+        ratingResult = itemAsTaggedFile->rating() == rating_filter_;
+
+    return nameResult && folderResult && tagResult && dateResult && ratingResult;
 }
 
 /*! \brief Sets the filename substring filter and re-applies the filter.
@@ -150,6 +154,16 @@ void FilterProxyModel::setTagFilterMode(TagFilterMode mode) {
  *
  * \param files The set of TaggedFile pointers to isolate.
  */
+/*! \brief Sets the rating filter and re-applies the filter.
+ *
+ * \param rating The rating to filter for [1,5], or std::nullopt to disable.
+ */
+void FilterProxyModel::setRatingFilter(std::optional<int> rating) {
+    beginFilterChange();
+    rating_filter_ = rating;
+    endFilterChange();
+}
+
 void FilterProxyModel::setIsolationSet(const QSet<TaggedFile*> &files) {
     beginFilterChange();
     isolation_set_ = files;
