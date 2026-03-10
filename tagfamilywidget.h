@@ -96,6 +96,10 @@ private slots:
     /*! \brief Slot called when the collapse button is clicked; toggles the collapsed state. */
     void toggleCollapsed();
 
+    /*! \brief Creates a new empty TagWidget, wires its signals, adds it to the layout, and
+     *  puts it into edit mode.  Used by both mouseReleaseEvent and endEdit(). */
+    void createAndEditNewTag();
+
     /*! \brief Slot called when the family name label is clicked; enters edit mode via startEdit().
      *
      * \param event The mouse event from the click.

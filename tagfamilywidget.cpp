@@ -67,43 +67,8 @@ TagFamilyWidget::TagFamilyWidget(TagFamily *tagFamily, QWidget *parent)
  */
 void TagFamilyWidget::mouseReleaseEvent(QMouseEvent *event){
 
-    if (!collapsed_) {
-        Tag* t = new Tag(tag_family_, "", this);
-        TagWidget* tw = new TagWidget(t, this);
-        layout()->addWidget(tw);
-        tw->show();
-
-        if (auto *tc = qobject_cast<TagContainer*>(parentWidget()))
-            connect(tw, &TagWidget::deleteRequested, tc, &TagContainer::onTagDeleteRequested);
-
-        connect(tw, &TagWidget::abandonRequested, this, [this](TagWidget *tw) {
-            Tag *t = tw->getTag();
-            layout()->removeWidget(tw);
-            tw->setParent(nullptr);
-            tw->deleteLater();
-            delete t;
-            layout()->invalidate();
-            layout()->activate();
-            setMinimumHeight(qMax(64, childrenRect().height() + 4));
-            updateGeometry();
-        });
-
-        // Put the new tag in edit mode immediately so the user doesn't have to
-        // click on it to enter the name
-        tw->startEdit();
-
-        // Here we need to force one extra layout computation to get this widget
-        // to resized to accomodate the new child widget. Without this
-        // the vertical expansion of this tagfamilywidget lags one tag
-        // behind:
-        layout()->invalidate();
-        layout()->activate();
-        updateGeometry();
-
-        // Explicitly set the height of this widget to fit all the current
-        // children
-        this->setMinimumHeight(childrenRect().height() + 4);
-    }
+    if (!collapsed_)
+        createAndEditNewTag();
 
     event->accept();
 }
@@ -161,6 +126,37 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
     painter.drawPath(path);
 }
 
+/*! \brief Creates a new empty TagWidget, wires its signals, adds it to the layout, and
+ *  puts it into edit mode.  Used by both mouseReleaseEvent and endEdit(). */
+void TagFamilyWidget::createAndEditNewTag(){
+    Tag* t = new Tag(tag_family_, "", this);
+    TagWidget* tw = new TagWidget(t, this);
+    layout()->addWidget(tw);
+    tw->show();
+
+    if (auto *tc = qobject_cast<TagContainer*>(parentWidget()))
+        connect(tw, &TagWidget::deleteRequested, tc, &TagContainer::onTagDeleteRequested);
+
+    connect(tw, &TagWidget::abandonRequested, this, [this](TagWidget *tw) {
+        Tag *t = tw->getTag();
+        layout()->removeWidget(tw);
+        tw->setParent(nullptr);
+        tw->deleteLater();
+        delete t;
+        layout()->invalidate();
+        layout()->activate();
+        setMinimumHeight(qMax(64, childrenRect().height() + 4));
+        updateGeometry();
+    });
+
+    tw->startEdit();
+
+    layout()->invalidate();
+    layout()->activate();
+    updateGeometry();
+    setMinimumHeight(childrenRect().height() + 4);
+}
+
 /*! \brief Switches the widget into inline-edit mode for the family name. */
 void TagFamilyWidget::startEdit(){
     edit_status_ = "Edit";
@@ -213,7 +209,8 @@ void TagFamilyWidget::endEdit(){
     // Should happen once on creation; After that edits already apply
     // in the library because this is holding a pointer
 
-    if(! in_library_) {
+    const bool justCreated = !in_library_;
+    if (justCreated) {
         mainWin->core->addLibraryTagFamily(tag_family_);
         in_library_ = true;
     }
@@ -221,6 +218,9 @@ void TagFamilyWidget::endEdit(){
     line_edit_->clearFocus();
     line_edit_->hide();
     label_->show();
+
+    if (justCreated)
+        createAndEditNewTag();
 }
 
 /*! \brief Slot called when the underlying TagFamily name changes; refreshes the label. */
