@@ -115,6 +115,7 @@ MainWindow::MainWindow(QWidget *parent)
         connect(actMore,    &QAction::triggered, this, [=]{ applyMode(actMore,    FilterProxyModel::GreaterOrEqual); });
 
         ui->ratingFilterModeButton->setMenu(menu);
+        ui->ratingFilterModeButton->setMaximumWidth(90);
         ui->ratingFilterModeButton->setStyleSheet(
             "text-align: left; background-color: rgb(96, 174, 233);");
     }
@@ -252,10 +253,28 @@ MainWindow::MainWindow(QWidget *parent)
     // Apply it explicitly here to match the slider's starting position.
     on_iconZoomSlider_valueChanged(ui->iconZoomSlider->value());
 
-    // Same timing issue applies to the tag filter mode radio buttons: the toggled
-    // signal fires before the auto-connection exists, so the proxy never receives
-    // the initial state.  Sync it explicitly here and after every folder load.
-    on_tagFilterAllRadio_toggled(ui->tagFilterAllRadio->isChecked());
+    // Tag filter mode button — popup menu to choose ANY (OR) or ALL (AND)
+    {
+        auto *menu = new QMenu(ui->tagFilterModeButton);
+        auto *actAny = menu->addAction(tr("ANY"));
+        auto *actAll = menu->addAction(tr("ALL"));
+
+        auto applyMode = [this](QAction *chosen, FilterProxyModel::TagFilterMode mode) {
+            ui->tagFilterModeButton->setText(chosen->text());
+            core->getItemModelProxy()->setTagFilterMode(mode);
+        };
+
+        connect(actAny, &QAction::triggered, this, [=]{ applyMode(actAny, FilterProxyModel::AnyTag);  });
+        connect(actAll, &QAction::triggered, this, [=]{ applyMode(actAll, FilterProxyModel::AllTags); });
+
+        ui->tagFilterModeButton->setMenu(menu);
+        ui->tagFilterModeButton->setMaximumWidth(60);
+        ui->tagFilterModeButton->setStyleSheet(
+            "text-align: left; background-color: rgb(96, 174, 233);");
+
+        // Ensure the proxy starts in AnyTag mode (matching the button's default label).
+        core->getItemModelProxy()->setTagFilterMode(FilterProxyModel::AnyTag);
+    }
 }
 
 /*! \brief Destroys the main window and releases owned UI and core resources. */
@@ -392,7 +411,6 @@ void MainWindow::loadFolder(const QString &folder)
     lv->setModel(core->getItemModelProxy());
     connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
-    on_tagFilterAllRadio_toggled(ui->tagFilterAllRadio->isChecked());
     lv->show();
     // If the loaded folder already has tags, skip the guided flow and reveal everything.
     // Otherwise activate the welcome hints so they respond to user interaction.
@@ -1473,18 +1491,6 @@ void MainWindow::on_actionRemove_Auto_Detected_Faces_triggered()
 void MainWindow::on_showTaggedRegionsCheckbox_stateChanged(int state)
 {
     ui->previewContainer->setTagRectsVisible(state == Qt::Checked);
-}
-
-/*! \brief Switches the tag filter between ALL-tags (AND) and ANY-tag (OR) mode.
- *
- * \param checked True when the "ALL tags" radio button is selected.
- */
-void MainWindow::on_tagFilterAllRadio_toggled(bool checked)
-{
-    FilterProxyModel::TagFilterMode mode = checked
-        ? FilterProxyModel::AllTags
-        : FilterProxyModel::AnyTag;
-    core->getItemModelProxy()->setTagFilterMode(mode);
 }
 
 /*! \brief Slot — forwards creation-date filter changes to the core.

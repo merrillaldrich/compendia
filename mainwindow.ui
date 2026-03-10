@@ -67,19 +67,19 @@
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="tagFilterAnyRadio">
+            <widget class="QPushButton" name="tagFilterModeButton">
              <property name="text">
               <string>ANY</string>
              </property>
-             <property name="checked">
+             <property name="flat">
               <bool>true</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="tagFilterAllRadio">
+            <widget class="QLabel" name="tagFilterModeSuffix">
              <property name="text">
-              <string>ALL of these tags</string>
+              <string>of these tags</string>
              </property>
             </widget>
            </item>

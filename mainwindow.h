@@ -238,12 +238,6 @@ private slots:
      */
     void on_showTaggedRegionsCheckbox_stateChanged(int state);
 
-    /*! \brief Switches the tag filter between ALL-tags (AND) and ANY-tag (OR) mode.
-     *
-     * \param checked True when the "ALL tags" radio button is selected.
-     */
-    void on_tagFilterAllRadio_toggled(bool checked);
-
     /*! \brief Handles a tag drop on the preview; stores the region and refreshes overlays.
      *  \param family         Tag family name.
      *  \param tagName        Tag name.
