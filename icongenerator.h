@@ -15,6 +15,7 @@
 #include <QMap>
 
 #include "framegrabber.h"
+#include "perceptualhasher.h"
 
 /*! \brief Generates and caches scaled thumbnail images for media files (images and videos).
  *
@@ -56,10 +57,12 @@ signals:
      * \param absolutePath Absolute path to the source file.
      * \param exifMap      EXIF key-value data extracted from the file (empty for videos).
      * \param images       Scaled thumbnail images, one per kIconSizes entry.
+     * \param pHash        Perceptual hash of the image (0 for videos).
      */
     void fileReady(const QString &absolutePath,
                    const QMap<QString, QString> &exifMap,
-                   const QVector<QImage> &images);
+                   const QVector<QImage> &images,
+                   quint64 pHash);
 
     /*! \brief Emitted exactly once when all image tasks and video grabs are complete. */
     void batchFinished();
@@ -70,10 +73,12 @@ private slots:
      * \param path    Absolute path to the source image.
      * \param exifMap EXIF data read from the image.
      * \param images  Scaled thumbnail images.
+     * \param pHash   Perceptual hash of the image.
      */
     void onImageTaskComplete(const QString &path,
                              const QMap<QString, QString> &exifMap,
-                             const QVector<QImage> &images);
+                             const QVector<QImage> &images,
+                             quint64 pHash);
 
     /*! \brief Called when FrameGrabber successfully captures a video frame.
      *
@@ -107,12 +112,13 @@ private:
     /*! \brief Processes an image file on a background thread (stateless).
      *
      * Checks cache first; on miss decodes via QImageReader, scales to all kIconSizes,
-     * saves each to cache, and returns. Also extracts EXIF via ExifParser.
+     * saves each to cache, and returns. Also extracts EXIF via ExifParser and
+     * computes a perceptual hash from the largest available thumbnail.
      *
      * \param absolutePath Absolute path to the source image.
-     * \return Pair of (exifMap, images vector).
+     * \return Tuple of (exifMap, images vector, pHash).
      */
-    static std::pair<QMap<QString, QString>, QVector<QImage>>
+    static std::tuple<QMap<QString, QString>, QVector<QImage>, quint64>
         processImageFile(const QString &absolutePath);
 
     /*! \brief Returns true when all kIconSizes cache files exist and are newer than the source.

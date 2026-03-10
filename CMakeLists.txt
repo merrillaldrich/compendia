@@ -72,6 +72,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         folderfilterlineedit.h folderfilterlineedit.cpp
         multiprogressbar.h multiprogressbar.cpp
         framegrabber.h framegrabber.cpp
+        perceptualhasher.h perceptualhasher.cpp
 
     )
 

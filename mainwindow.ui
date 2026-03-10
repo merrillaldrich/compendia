@@ -663,6 +663,8 @@
      <addaction name="actionAuto_Tag_Month"/>
     </widget>
     <addaction name="menuDates"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind_Similar_Images"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilter"/>
@@ -717,6 +719,11 @@
   <action name="actionAuto_Tag_Month">
    <property name="text">
     <string>Auto Tag Month</string>
+   </property>
+  </action>
+  <action name="actionFind_Similar_Images">
+   <property name="text">
+    <string>Find Similar Images</string>
    </property>
   </action>
   <action name="actionIsolateSelection">

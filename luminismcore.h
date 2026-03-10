@@ -9,12 +9,14 @@
 #include <QTimer>
 #include <QtConcurrent>
 #include <QMap>
+#include <QList>
 #include <QVector>
 #include <QImage>
 
 #include "tagset.h"
 #include "filterproxymodel.h"
 #include "icongenerator.h"
+#include "taggedfile.h"
 
 /*! \brief Central controller that owns all application data and business logic.
  *
@@ -36,7 +38,7 @@ private:
     FilterProxyModel *tagged_files_proxy_;
 
     QMutex resultsMutex_;
-    QVector<std::tuple<QString, QString, QMap<QString, QString>, QVector<QImage>>> results_; // fileName, path, EXIF dict, images
+    QVector<std::tuple<QString, QString, QMap<QString, QString>, QVector<QImage>, quint64>> results_; // fileName, path, EXIF dict, images, pHash
     QTimer uiFlushTimer_;
 
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
@@ -50,17 +52,19 @@ private:
     /*! \brief Clears the dirty flag on every file, tag, and tag family. */
     void clearAllDirtyFlags();
 
-    /*! \brief Applies a generated thumbnail and EXIF data to the matching model item.
+    /*! \brief Applies a generated thumbnail, EXIF data, and pHash to the matching model item.
      *
      * \param fileName             The file name used to locate the model item.
      * \param absoluteFilePathName Full path used to disambiguate duplicate file names.
      * \param exifMap              EXIF key-value data to store on the TaggedFile.
-     * \param image                Scaled thumbnail image to use as the item icon.
+     * \param images               Scaled thumbnail images to use as the item icon.
+     * \param pHash                Perceptual hash (0 for videos / not computed).
      */
     void applyBackfillMetadataToModel(const QString &fileName,
                                       const QString &absoluteFilePathName,
                                       const QMap<QString, QString> exifMap,
-                                      const QVector<QImage> &images);
+                                      const QVector<QImage> &images,
+                                      quint64 pHash);
 
 public:
 
@@ -103,8 +107,9 @@ public:
      * \param fileInfo    File-system info for the file to add.
      * \param tags        List of TagSet values describing tags to apply.
      * \param initialExif Optional pre-loaded EXIF key-value map.
+     * \param pHash       Optional pre-loaded perceptual hash (0 if not available).
      */
-    void addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif = {});
+    void addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif = {}, quint64 pHash = 0);
 
     /*! \brief Launches background thumbnail and EXIF generation for all files in the model. */
     void backfillMetadata();
@@ -342,6 +347,16 @@ public:
     void applyVideoMetadata(const QString &absoluteFilePath,
                             const QMap<QString, QString> &meta);
 
+    /*! \brief Groups all files whose pHash values are within \a threshold Hamming distance of each other.
+     *
+     * Uses a Union-Find algorithm over all files with a valid pHash.  Only groups of
+     * two or more files are returned.
+     *
+     * \param threshold Maximum Hamming distance to consider two images near-duplicates.
+     * \return List of groups; each group contains two or more TaggedFile pointers.
+     */
+    QList<QList<TaggedFile*>> findSimilarImages(int threshold);
+
     /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
      *  Emits tagLibraryChanged() when done. */
     void mergeTag(Tag* from, Tag* into);
@@ -365,10 +380,12 @@ private slots:
      * \param absolutePath Absolute path to the source file.
      * \param exifMap      EXIF data (empty for videos).
      * \param images       Scaled thumbnail images.
+     * \param pHash        Perceptual hash (0 for videos).
      */
     void onIconReady(const QString &absolutePath,
                      const QMap<QString, QString> &exifMap,
-                     const QVector<QImage> &images);
+                     const QVector<QImage> &images,
+                     quint64 pHash);
 
     /*! \brief Called when IconGenerator finishes all files in the batch. */
     void onIconBatchFinished();

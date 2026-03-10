@@ -47,6 +47,11 @@ constexpr int MaxAutoFacesPerImage = 5;
  */
 constexpr int BulkUntagWarningThreshold = 5;
 
+/*! \brief Maximum Hamming distance between two pHash values for the images to be
+ *  considered near-duplicates by the "Find Similar Images" feature.
+ */
+constexpr int SimilarImageThreshold = 10;
+
 } // namespace Luminism
 
 #endif // CONSTANTS_H

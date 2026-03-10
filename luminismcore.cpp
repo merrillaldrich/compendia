@@ -1,5 +1,8 @@
 #include "luminismcore.h"
+#include "perceptualhasher.h"
 #include <algorithm>
+#include <functional>
+#include <numeric>
 #include <QDirIterator>
 #include <QDebug>
 #include <QIcon>
@@ -25,7 +28,7 @@ LuminismCore::LuminismCore(QObject *parent)
 /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model. */
 void LuminismCore::flushIconGeneratorQueue(){
     const int maxPerTick = 8;
-    QVector<std::tuple<QString, QString, QMap<QString, QString>, QVector<QImage>>> batch;
+    QVector<std::tuple<QString, QString, QMap<QString, QString>, QVector<QImage>, quint64>> batch;
     {
         QMutexLocker lock(&resultsMutex_);
         int take = qMin(maxPerTick, results_.size());
@@ -38,9 +41,9 @@ void LuminismCore::flushIconGeneratorQueue(){
         const QString &path = std::get<1>(t);
         QMap<QString, QString> exifMap = std::get<2>(t);
         QVector<QImage> images = std::get<3>(t);
+        quint64 pHash = std::get<4>(t);
 
-        // Update the model using a multi-size icon built from the image vector
-        applyBackfillMetadataToModel(fileName, path, exifMap, images);
+        applyBackfillMetadataToModel(fileName, path, exifMap, images, pHash);
         emit iconUpdated();
     }
 }
@@ -56,7 +59,8 @@ void LuminismCore::flushIconGeneratorQueue(){
 void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
                                                 const QString &absoluteFilePathName,
                                                 const QMap<QString, QString> exifMap,
-                                                const QVector<QImage> &images)
+                                                const QVector<QImage> &images,
+                                                quint64 pHash)
 {
     // There could be files in different folders having the same name, but to make things quick
     // we find all files with a matching name in the model, and then zero in on the specific one
@@ -108,6 +112,8 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
 
         tf->imageCaptureDateTime = captureDateTime;
         tf->setExifMap(exifMap);
+        if (pHash != 0)
+            tf->initPHash(pHash);
 
     } else {
         qDebug() << "Could not locate " + absoluteFilePathName + " to set icon";
@@ -300,6 +306,7 @@ void LuminismCore::addFile(QFileInfo fileInfo){
 void LuminismCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
     QList<TagSet> tagSets;
     QMap<QString, QString> exifMap;
+    quint64 pHash = 0;
 
     if (tagsJson.contains("tags")) {
         // New format: tags and exif are under separate keys
@@ -309,12 +316,17 @@ void LuminismCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
         for (auto it = exifObj.begin(); it != exifObj.end(); ++it) {
             exifMap.insert(it.key(), it.value().toString());
         }
+        if (tagsJson.contains("pHash")) {
+            bool ok = false;
+            quint64 h = tagsJson["pHash"].toString().toULongLong(&ok, 16);
+            if (ok) pHash = h;
+        }
     } else {
         // Old format: top-level object is the tags map
         tagSets = parseTagJson(tagsJson);
     }
 
-    addFile(fileInfo, tagSets, exifMap);
+    addFile(fileInfo, tagSets, exifMap, pHash);
 }
 
 /*! \brief Adds a file to the model with an explicit tag list and optional initial EXIF map.
@@ -323,7 +335,7 @@ void LuminismCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
  * \param tags        List of TagSet values describing tags to apply.
  * \param initialExif Optional pre-loaded EXIF key-value map.
  */
-void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif){
+void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString, QString> initialExif, quint64 pHash){
     // Add to to the Tagged Object collection and collect links to its tags and tag families
 
     // For each item in the tag set add the family, if it doesn't already exist,
@@ -366,6 +378,8 @@ void LuminismCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString,
     // Then add it
     TaggedFile *tf = new TaggedFile(fileInfo, newOrExistingTags, new QMap<QString, QString>, this);
     tf->initExifMap(initialExif);
+    if (pHash != 0)
+        tf->initPHash(pHash);
 
     // Apply any bounding rectangles carried in the TagSets (without dirtying)
     for (const TagSet &ts : tags) {
@@ -417,12 +431,13 @@ void LuminismCore::backfillMetadata(){
  */
 void LuminismCore::onIconReady(const QString &absolutePath,
                                const QMap<QString, QString> &exifMap,
-                               const QVector<QImage> &images)
+                               const QVector<QImage> &images,
+                               quint64 pHash)
 {
     QString fileName = QFileInfo(absolutePath).fileName();
     {
         QMutexLocker lock(&resultsMutex_);
-        results_.emplace_back(fileName, absolutePath, exifMap, images);
+        results_.emplace_back(fileName, absolutePath, exifMap, images, pHash);
     }
     ensureUiFlushTimerRunning();
 }
@@ -947,6 +962,53 @@ bool LuminismCore::isIsolated() const {
  */
 int LuminismCore::isolationSetSize() const {
     return tagged_files_proxy_->isolationSetSize();
+}
+
+/*! \brief Groups all files whose pHash values are within \a threshold Hamming distance of each other.
+ *
+ * Uses a path-compressed Union-Find algorithm over all files with a valid pHash.
+ * Only groups of two or more files are returned.
+ *
+ * \param threshold Maximum Hamming distance to consider two images near-duplicates.
+ * \return List of groups; each group contains two or more TaggedFile pointers.
+ */
+QList<QList<TaggedFile*>> LuminismCore::findSimilarImages(int threshold)
+{
+    QList<TaggedFile*> files;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        TaggedFile *tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && tf->pHash() != 0)
+            files.append(tf);
+    }
+
+    const int n = files.size();
+    QVector<int> parent(n);
+    std::iota(parent.begin(), parent.end(), 0);
+
+    std::function<int(int)> find = [&](int x) -> int {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    };
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            if (PerceptualHasher::hammingDistance(files[i]->pHash(), files[j]->pHash()) <= threshold) {
+                int pi = find(i), pj = find(j);
+                if (pi != pj) parent[pi] = pj;
+            }
+        }
+    }
+
+    QMap<int, QList<TaggedFile*>> groups;
+    for (int i = 0; i < n; ++i)
+        groups[find(i)].append(files[i]);
+
+    QList<QList<TaggedFile*>> result;
+    for (const auto &g : groups)
+        if (g.size() >= 2)
+            result.append(g);
+
+    return result;
 }
 
 /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.

@@ -126,6 +126,8 @@ QString TaggedFile::TaggedFileJSON(){
     if (!tagRectsObj.isEmpty())
         root.insert("tag_rects", tagRectsObj);
     root.insert("exif", exifObj);
+    if (pHash_ != 0)
+        root.insert("pHash", QString::number(pHash_, 16).rightJustified(16, '0'));
 
     QJsonDocument doc(root);
     return QString(doc.toJson());
@@ -263,4 +265,16 @@ void TaggedFile::markDirty()
 void TaggedFile::clearDirtyFlag()
 {
     dirty_flag_ = false;
+}
+
+/*! \brief Returns the perceptual hash computed for this file (0 if not yet computed). */
+quint64 TaggedFile::pHash() const
+{
+    return pHash_;
+}
+
+/*! \brief Sets the perceptual hash without marking the file dirty (used during load and backfill). */
+void TaggedFile::initPHash(quint64 hash)
+{
+    pHash_ = hash;
 }

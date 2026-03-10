@@ -471,6 +471,39 @@ void MainWindow::on_actionClearIsolation_triggered()
     updateFileCountLabel();
 }
 
+/*! \brief Finds all near-duplicate image groups by perceptual hash and isolates them.
+ *
+ * Collects every file that belongs to a group of two or more near-duplicates and
+ * passes them to the core as the isolation set.  Shows a status-bar summary on
+ * completion, or an information dialog when no near-duplicates are found.
+ */
+void MainWindow::on_actionFind_Similar_Images_triggered()
+{
+    if (!core->containsFiles()) return;
+
+    auto groups = core->findSimilarImages(Luminism::SimilarImageThreshold);
+
+    if (groups.isEmpty()) {
+        QMessageBox::information(this, "Find Similar Images",
+                                 "No near-duplicate images were found.");
+        return;
+    }
+
+    QSet<TaggedFile*> similar;
+    for (const auto &g : groups)
+        for (TaggedFile *tf : g)
+            similar.insert(tf);
+
+    core->setIsolationSet(similar);
+    ui->actionClearIsolation->setEnabled(true);
+    updateFileCountLabel();
+
+    QString msg = QString("%1 similar image(s) found across %2 group(s).")
+                      .arg(similar.size())
+                      .arg(groups.size());
+    statusBar()->showMessage(msg, 5000);
+}
+
 /*! \brief Rebuilds the tag-filter area from the currently active filter tags. */
 void MainWindow::refreshTagFilterArea(){
 

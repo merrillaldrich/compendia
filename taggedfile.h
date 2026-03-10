@@ -28,6 +28,7 @@ private:
     QSet<Tag*>* tags_ = new QSet<Tag*>;
     QMap<Tag*, QRectF> tag_rects_;
     bool dirty_flag_ = false;
+    quint64 pHash_ = 0;
 
 
 public:
@@ -151,6 +152,12 @@ public:
 
     /*! \brief Clears the file-level dirty flag (does not clear tag or family flags). */
     void clearDirtyFlag();
+
+    /*! \brief Returns the perceptual hash computed for this file (0 if not yet computed). */
+    quint64 pHash() const;
+
+    /*! \brief Sets the perceptual hash without marking the file dirty (used during load and backfill). */
+    void initPHash(quint64 hash);
 };
 
 Q_DECLARE_METATYPE(TaggedFile)

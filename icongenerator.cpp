@@ -136,7 +136,7 @@ void IconGenerator::processFiles(const QStringList &absolutePaths)
         if (videoCacheValid(path)) {
             QVector<QImage> cached = loadVideoFromCache(path);
             if (!cached.isEmpty())
-                emit fileReady(path, {}, cached);
+                emit fileReady(path, {}, cached, 0);
             else
                 videoGrabNeeded << path;
         } else {
@@ -158,9 +158,9 @@ void IconGenerator::processFiles(const QStringList &absolutePaths)
     // --- Image handling ---
     for (const QString &path : imagePaths) {
         QtConcurrent::run([this, path]() {
-            auto [exifMap, images] = processImageFile(path);
-            QMetaObject::invokeMethod(this, [this, path, exifMap, images]() {
-                onImageTaskComplete(path, exifMap, images);
+            auto [exifMap, images, pHash] = processImageFile(path);
+            QMetaObject::invokeMethod(this, [this, path, exifMap, images, pHash]() {
+                onImageTaskComplete(path, exifMap, images, pHash);
             }, Qt::QueuedConnection);
         });
     }
@@ -176,9 +176,10 @@ void IconGenerator::processFiles(const QStringList &absolutePaths)
  */
 void IconGenerator::onImageTaskComplete(const QString &path,
                                         const QMap<QString, QString> &exifMap,
-                                        const QVector<QImage> &images)
+                                        const QVector<QImage> &images,
+                                        quint64 pHash)
 {
-    emit fileReady(path, exifMap, images);
+    emit fileReady(path, exifMap, images, pHash);
     if (pendingImageCount_.fetchAndAddOrdered(-1) - 1 == 0)
         checkBatchComplete();
 }
@@ -199,7 +200,7 @@ void IconGenerator::onFrameGrabbed(const QString &path, const QImage &rawFrame,
         saveIconToCache(path, scaled, size);
         images << scaled;
     }
-    emit fileReady(path, meta, images);
+    emit fileReady(path, meta, images, 0);
 }
 
 /*! \brief Called when FrameGrabber fails to capture a video frame.
@@ -215,7 +216,7 @@ void IconGenerator::onFrameFailed(const QString &path, const QString &reason,
     QVector<QImage> placeholders;
     for (int size : kIconSizes)
         placeholders << videoPlaceholderIcon(size);
-    emit fileReady(path, meta, placeholders);
+    emit fileReady(path, meta, placeholders, 0);
 }
 
 /*! \brief Called when FrameGrabber finishes all files in its batch.
@@ -244,9 +245,9 @@ void IconGenerator::checkBatchComplete()
 /*! \brief Processes an image file on a background thread (stateless).
  *
  * \param absolutePath Absolute path to the source image.
- * \return Pair of (exifMap, images vector).
+ * \return Tuple of (exifMap, images vector, pHash).
  */
-std::pair<QMap<QString, QString>, QVector<QImage>>
+std::tuple<QMap<QString, QString>, QVector<QImage>, quint64>
 IconGenerator::processImageFile(const QString &absolutePath)
 {
     QFileInfo sourceInfo(absolutePath);
@@ -269,8 +270,10 @@ IconGenerator::processImageFile(const QString &absolutePath)
             if (img.isNull()) { allLoaded = false; break; }
             images.append(img);
         }
-        if (allLoaded)
-            return {ExifParser::getExifMap(absolutePath), images};
+        if (allLoaded) {
+            quint64 pHash = PerceptualHasher::computeHash(images.last());
+            return {ExifParser::getExifMap(absolutePath), images, pHash};
+        }
     }
 
     qDebug() << "Icon cache miss:" << absolutePath;
@@ -279,7 +282,7 @@ IconGenerator::processImageFile(const QString &absolutePath)
     ir.setAutoTransform(true);
     QImage base = ir.read();
     if (base.isNull())
-        return {{}, {}};
+        return {{}, {}, 0};
 
     base = base.scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
@@ -290,7 +293,8 @@ IconGenerator::processImageFile(const QString &absolutePath)
         images.append(scaled);
     }
 
-    return {ExifParser::getExifMap(absolutePath), images};
+    quint64 pHash = PerceptualHasher::computeHash(images.last());
+    return {ExifParser::getExifMap(absolutePath), images, pHash};
 }
 
 /*! \brief Returns true when all kIconSizes cache files exist and are newer than the source.
