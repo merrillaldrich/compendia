@@ -111,7 +111,8 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
             captureDateTime = QDateTime::fromString(exifMap["Date"], Qt::ISODate);
 
         tf->imageCaptureDateTime = captureDateTime;
-        tf->setExifMap(exifMap);
+        if (!exifMap.isEmpty())
+            tf->setExifMap(exifMap);
         if (pHash != 0)
             tf->setPHash(pHash);
 
