@@ -83,8 +83,9 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
  * \param filterText The substring to match against file names.
  */
 void FilterProxyModel::setNameFilter(QString filterText){
+    beginFilterChange();
     name_filter_ = filterText;
-    invalidateFilter();
+    endFilterChange();
 }
 
 /*! \brief Sets the folder path substring filter and re-applies the filter.
@@ -92,8 +93,9 @@ void FilterProxyModel::setNameFilter(QString filterText){
  * \param filterText The substring to match against folder paths.
  */
 void FilterProxyModel::setFolderFilter(QString filterText){
+    beginFilterChange();
     folder_filter_ = filterText;
-    invalidateFilter();
+    endFilterChange();
 }
 
 /*! \brief Adds a tag to the active tag filter set and re-applies the filter.
@@ -101,8 +103,9 @@ void FilterProxyModel::setFolderFilter(QString filterText){
  * \param tag The Tag pointer to add to the filter.
  */
 void FilterProxyModel::addTagFilter(Tag* tag){
+    beginFilterChange();
     tags_.insert(tag);
-    invalidateFilter();
+    endFilterChange();
 }
 
 /*! \brief Removes a tag from the active tag filter set and re-applies the filter.
@@ -110,8 +113,9 @@ void FilterProxyModel::addTagFilter(Tag* tag){
  * \param tag The Tag pointer to remove from the filter.
  */
 void FilterProxyModel::removeTagFilter(Tag* tag){
+    beginFilterChange();
     tags_.remove(tag);
-    invalidateFilter();
+    endFilterChange();
 }
 
 /*! \brief Returns a pointer to the set of tags currently used for filtering.
@@ -127,8 +131,9 @@ QSet<Tag*>* FilterProxyModel::getFilterTags(){
  * \param creationDate The date to filter by; an invalid QDate clears the filter.
  */
 void FilterProxyModel::setFilterCreationDate(QDate creationDate) {
+    beginFilterChange();
     creation_date_ = creationDate;
-    invalidateFilter();
+    endFilterChange();
 }
 
 /*! \brief Sets the tag-filter mode and re-applies the filter.
@@ -136,8 +141,9 @@ void FilterProxyModel::setFilterCreationDate(QDate creationDate) {
  * \param mode AnyTag (OR) or AllTags (AND).
  */
 void FilterProxyModel::setTagFilterMode(TagFilterMode mode) {
+    beginFilterChange();
     tagFilterMode_ = mode;
-    invalidateFilter();
+    endFilterChange();
 }
 
 /*! \brief Restricts the visible set to the given files; other filters still apply within the set.
@@ -145,15 +151,17 @@ void FilterProxyModel::setTagFilterMode(TagFilterMode mode) {
  * \param files The set of TaggedFile pointers to isolate.
  */
 void FilterProxyModel::setIsolationSet(const QSet<TaggedFile*> &files) {
+    beginFilterChange();
     isolation_set_ = files;
-    invalidateFilter();
+    endFilterChange();
 }
 
 /*! \brief Clears the isolation set so all files are eligible again.
  */
 void FilterProxyModel::clearIsolationSet() {
+    beginFilterChange();
     isolation_set_.clear();
-    invalidateFilter();
+    endFilterChange();
 }
 
 /*! \brief Returns true when an isolation set is active.
