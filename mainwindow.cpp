@@ -115,7 +115,8 @@ MainWindow::MainWindow(QWidget *parent)
         connect(actMore,    &QAction::triggered, this, [=]{ applyMode(actMore,    FilterProxyModel::GreaterOrEqual); });
 
         ui->ratingFilterModeButton->setMenu(menu);
-        ui->ratingFilterModeButton->setStyleSheet("text-align: left;");
+        ui->ratingFilterModeButton->setStyleSheet(
+            "text-align: left; background-color: rgb(96, 174, 233);");
     }
 
     // Filter star rating — apply a rating filter to the proxy model
