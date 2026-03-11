@@ -128,6 +128,16 @@ private:
      */
     void loadFolder(const QString &folder);
 
+    /*! \brief Moves the file list selection forward or backward by \p delta rows.
+     *
+     * Clamps at the first and last visible row. If multiple files are selected,
+     * uses the current (focused) item as the starting point and clears the
+     * multi-selection before moving. Does nothing when the list is empty.
+     *
+     * \param delta +1 to advance to the next file, -1 to go to the previous.
+     */
+    void navigatePreview(int delta);
+
 private slots:
 
     /*! \brief Adjusts the file-list icon and grid size when the zoom slider moves.

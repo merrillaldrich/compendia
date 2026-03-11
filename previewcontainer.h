@@ -1,11 +1,16 @@
 #ifndef PREVIEWCONTAINER_H
 #define PREVIEWCONTAINER_H
 
+#include <QAbstractButton>
 #include <QColor>
+#include <QEasingCurve>
+#include <QGraphicsOpacityEffect>
 #include <QList>
 #include <QPair>
 #include <QRectF>
+#include <QResizeEvent>
 #include <QSizeF>
+#include <QVariantAnimation>
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -100,6 +105,14 @@ public:
     void setDropPreviewColor(QColor color);
 
 signals:
+    /*! \brief Emitted when the user requests navigation to the previous (delta = -1)
+     *         or next (delta = +1) file in the list.
+     *
+     * Emitted by the on-screen arrow buttons and by left/right arrow key presses.
+     * \param delta Direction: -1 for backward, +1 for forward.
+     */
+    void navigateRequested(int delta);
+
     /*! \brief Emitted when a tag is dropped on the preview image.
      *  \param familyName     Tag family name decoded from the drag payload.
      *  \param tagName        Tag name decoded from the drag payload.
@@ -138,6 +151,24 @@ signals:
      *  \param normalizedRect The normalized rect of the region to delete.
      */
     void tagRectDeleteRequested(const QRectF &normalizedRect);
+
+protected:
+    /*! \brief Repositions the nav overlay buttons when the widget is resized.
+     *
+     * \param event The resize event.
+     */
+    void resizeEvent(QResizeEvent *event) override;
+
+    /*! \brief Event filter installed on the internal view and nav buttons.
+     *
+     * Tracks mouse proximity to the left/right edges of the view and fades the
+     * nav overlay buttons in or out accordingly.
+     *
+     * \param obj The object that received the event.
+     * \param e   The event.
+     * \return False so the event continues to its normal target.
+     */
+    bool eventFilter(QObject *obj, QEvent *e) override;
 
 private:
     /*! \brief Formats \a position and \a duration as "m:ss / m:ss" and updates the time label.
@@ -182,6 +213,23 @@ private:
     QSlider*           positionSlider_ = nullptr;
     QLabel*            timeLabel_ = nullptr;
     bool               slider_being_dragged_ = false;
+
+    QAbstractButton*        navLeftButton_   = nullptr; ///< Left-arrow overlay button.
+    QAbstractButton*        navRightButton_  = nullptr; ///< Right-arrow overlay button.
+    QGraphicsOpacityEffect* navLeftOpacity_  = nullptr; ///< Opacity effect for left button.
+    QGraphicsOpacityEffect* navRightOpacity_ = nullptr; ///< Opacity effect for right button.
+    QVariantAnimation*      navFadeAnim_     = nullptr; ///< Animates both button opacities together.
+    bool                    navButtonsVisible_ = false;  ///< Current logical visibility state.
+
+    /*! \brief Repositions the left and right overlay buttons over the view. */
+    void repositionNavButtons();
+
+    /*! \brief Fades the nav overlay buttons to fully visible (\p visible = true) or
+     *         fully hidden (\p visible = false), animating the transition.
+     *
+     * \param visible True to fade in, false to fade out.
+     */
+    void setNavButtonsVisible(bool visible);
 
 };
 

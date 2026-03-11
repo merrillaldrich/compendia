@@ -3,8 +3,12 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QPen>
+#include <QAbstractAnimation>
+#include <QCursor>
+#include <QEvent>
 #include <QFontMetrics>
 #include <QFileInfo>
+#include <QMouseEvent>
 #include <QUrl>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QGraphicsSceneHoverEvent>
@@ -17,6 +21,65 @@ static bool isVideoFile(const QString &path)
     static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
     return videoExts.contains(QFileInfo(path).suffix().toLower());
 }
+
+// Horizontal distance from the view edge that triggers the nav button fade-in.
+static constexpr int kNavHotZoneWidth = 100;
+
+/*! \brief Circular overlay button that draws a left or right chevron arrow.
+ *
+ * Draws a semi-transparent dark circle with a white chevron.  Does not steal
+ * keyboard focus when clicked.  The circle and arrow are rendered entirely in
+ * paintEvent so no stylesheet or platform style painting occurs.
+ */
+class NavArrowButton : public QAbstractButton
+{
+    bool leftArrow_;
+public:
+    /*! \brief Constructs a NavArrowButton.
+     *
+     * \param leftArrow True for a left-pointing chevron, false for right.
+     * \param parent    Optional Qt parent widget.
+     */
+    explicit NavArrowButton(bool leftArrow, QWidget *parent = nullptr)
+        : QAbstractButton(parent), leftArrow_(leftArrow)
+    {
+        setFixedSize(48, 48);
+        setCursor(Qt::PointingHandCursor);
+        setFocusPolicy(Qt::NoFocus);
+        setAttribute(Qt::WA_NoSystemBackground);
+    }
+
+protected:
+    /*! \brief Paints a semi-transparent circle with a white chevron arrow. */
+    void paintEvent(QPaintEvent *) override
+    {
+        QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
+
+        // Semi-transparent dark circle
+        p.setPen(Qt::NoPen);
+        p.setBrush(QColor(0, 0, 0, 150));
+        p.drawEllipse(rect().adjusted(2, 2, -2, -2));
+
+        // White chevron
+        const QRectF r = rect();
+        const qreal cx = r.center().x(), cy = r.center().y();
+        const qreal aw = 9.0, ah = 9.0;
+        QPainterPath path;
+        if (leftArrow_) {
+            path.moveTo(cx + aw * 0.5, cy - ah);
+            path.lineTo(cx - aw * 0.5, cy);
+            path.lineTo(cx + aw * 0.5, cy + ah);
+        } else {
+            path.moveTo(cx - aw * 0.5, cy - ah);
+            path.lineTo(cx + aw * 0.5, cy);
+            path.lineTo(cx - aw * 0.5, cy + ah);
+        }
+        p.setPen(QPen(Qt::white, 2.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        p.setBrush(Qt::NoBrush);
+        p.drawPath(path);
+    }
+};
 
 /*! \brief Graphics item that draws a rounded rectangle overlay and supports edge/corner dragging.
  *
@@ -384,6 +447,34 @@ PreviewContainer::PreviewContainer(QWidget *parent)
     layout->addWidget(controlBar_);
     controlBar_->hide();
 
+    // Navigation overlay buttons (positioned manually over the view, not in the layout)
+    navLeftButton_  = new NavArrowButton(true,  this);
+    navRightButton_ = new NavArrowButton(false, this);
+
+    navLeftOpacity_  = new QGraphicsOpacityEffect(navLeftButton_);
+    navRightOpacity_ = new QGraphicsOpacityEffect(navRightButton_);
+    navLeftOpacity_->setOpacity(0.0);
+    navRightOpacity_->setOpacity(0.0);
+    navLeftButton_->setGraphicsEffect(navLeftOpacity_);
+    navRightButton_->setGraphicsEffect(navRightOpacity_);
+
+    navFadeAnim_ = new QVariantAnimation(this);
+    navFadeAnim_->setDuration(180);
+    navFadeAnim_->setEasingCurve(QEasingCurve::InOutQuad);
+    connect(navFadeAnim_, &QVariantAnimation::valueChanged, this, [this](const QVariant &v) {
+        const qreal opacity = v.toReal();
+        navLeftOpacity_->setOpacity(opacity);
+        navRightOpacity_->setOpacity(opacity);
+    });
+
+    connect(navLeftButton_,  &QAbstractButton::clicked, this, [this]{ emit navigateRequested(-1); });
+    connect(navRightButton_, &QAbstractButton::clicked, this, [this]{ emit navigateRequested(+1); });
+
+    view->setMouseTracking(true);
+    view->installEventFilter(this);
+    navLeftButton_->installEventFilter(this);
+    navRightButton_->installEventFilter(this);
+
     // Play/pause button toggles playback state
     connect(playPauseButton_, &QPushButton::clicked, this, [this]() {
         if (mediaPlayer->playbackState() == QMediaPlayer::PlayingState)
@@ -749,6 +840,114 @@ void PreviewContainer::clearDropPreviewRect()
         delete drop_preview_rect_;
         drop_preview_rect_ = nullptr;
     }
+}
+
+// ---------------------------------------------------------------------------
+// Nav button overlay
+// ---------------------------------------------------------------------------
+
+/*! \brief Repositions the left and right overlay buttons over the view. */
+void PreviewContainer::repositionNavButtons()
+{
+    if (!navLeftButton_ || !navRightButton_) return;
+    const QRect vr = view->geometry();
+    if (vr.isEmpty()) return;
+    const int bw = navLeftButton_->width();
+    const int bh = navLeftButton_->height();
+    static constexpr int kMargin = 16;
+    const int y = vr.top() + (vr.height() - bh) / 2;
+    navLeftButton_->move(vr.left() + kMargin, y);
+    navRightButton_->move(vr.right() - kMargin - bw, y);
+    navLeftButton_->raise();
+    navRightButton_->raise();
+}
+
+/*! \brief Fades the nav overlay buttons to fully visible or hidden.
+ *
+ * \param visible True to fade in, false to fade out.
+ */
+void PreviewContainer::setNavButtonsVisible(bool visible)
+{
+    if (navButtonsVisible_ == visible) return;
+    navButtonsVisible_ = visible;
+
+    const qreal target  = visible ? 1.0 : 0.0;
+    const qreal current = navLeftOpacity_ ? navLeftOpacity_->opacity() : 0.0;
+    if (navFadeAnim_->state() == QAbstractAnimation::Running)
+        navFadeAnim_->stop();
+    navFadeAnim_->setStartValue(current);
+    navFadeAnim_->setEndValue(target);
+    navFadeAnim_->start();
+}
+
+/*! \brief Repositions nav buttons when the widget is resized.
+ *
+ * \param event The resize event.
+ */
+void PreviewContainer::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+    repositionNavButtons();
+}
+
+/*! \brief Tracks mouse position on the view to drive nav button fade in/out.
+ *
+ * On MouseMove over the view: fades buttons in when cursor is within
+ * kNavHotZoneWidth pixels of either horizontal edge, out otherwise.
+ * On Leave from the view or a button: fades out unless cursor moved
+ * directly onto the other interactive element.
+ *
+ * \param obj The watched object.
+ * \param e   The event.
+ * \return False — events are never consumed.
+ */
+bool PreviewContainer::eventFilter(QObject *obj, QEvent *e)
+{
+    if (obj == view) {
+        if (e->type() == QEvent::KeyPress) {
+            // QGraphicsView consumes Left/Right for scrolling; intercept them here
+            // so they reach the navigation logic instead.
+            auto *ke = static_cast<QKeyEvent*>(e);
+            if (ke->key() == Qt::Key_Left) {
+                emit navigateRequested(-1);
+                return true;
+            }
+            if (ke->key() == Qt::Key_Right) {
+                emit navigateRequested(+1);
+                return true;
+            }
+        } else if (e->type() == QEvent::MouseMove) {
+            const int x = static_cast<QMouseEvent*>(e)->pos().x();
+            const bool inZone = x < kNavHotZoneWidth ||
+                                x > view->width() - kNavHotZoneWidth;
+            setNavButtonsVisible(inZone);
+        } else if (e->type() == QEvent::Leave) {
+            const QPoint gc = QCursor::pos();
+            const bool onLeft  = navLeftButton_  &&
+                                 navLeftButton_->rect().contains(
+                                     navLeftButton_->mapFromGlobal(gc));
+            const bool onRight = navRightButton_ &&
+                                 navRightButton_->rect().contains(
+                                     navRightButton_->mapFromGlobal(gc));
+            if (!onLeft && !onRight)
+                setNavButtonsVisible(false);
+        }
+    } else if (obj == navLeftButton_ || obj == navRightButton_) {
+        if (e->type() == QEvent::Enter) {
+            // Mouse entered a button directly (bypassing the view's hot-zone check
+            // because the button sits on top of the view and captures the mouse).
+            setNavButtonsVisible(true);
+        } else if (e->type() == QEvent::Leave) {
+            const QPoint posInView = view->mapFromGlobal(QCursor::pos());
+            const int x = posInView.x();
+            const bool inZone = x >= 0 && x < view->width() &&
+                                (x < kNavHotZoneWidth ||
+                                 x > view->width() - kNavHotZoneWidth);
+            if (!inZone)
+                setNavButtonsVisible(false);
+        }
+    }
+    return QWidget::eventFilter(obj, e);
 }
 
 // Required so that moc processes TagRectItem (Q_OBJECT in a .cpp file).

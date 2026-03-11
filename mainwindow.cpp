@@ -91,6 +91,8 @@ MainWindow::MainWindow(QWidget *parent)
             ui->previewContainer->setDropPreviewColor(tag->tagFamily->getColor());
         ui->showTaggedRegionsCheckbox->setChecked(true);
     });
+    connect(ui->previewContainer, &PreviewContainer::navigateRequested,
+            this, [this](int delta){ navigatePreview(delta); });
 
     // All star widgets start disabled until a folder is loaded
     ui->filterStarRating->setEnabled(false);
@@ -903,6 +905,36 @@ void MainWindow::freshenPreview(){
 /*! \brief Clears the preview pane of any displayed image. */
 void MainWindow::clearPreview(){
     ui->previewContainer->clear();
+}
+
+/*! \brief Moves the file list selection forward or backward by \p delta rows.
+ *
+ * Clamps at the first and last visible row. Clears any multi-selection before
+ * moving, using the current (focused) item as the starting point.
+ *
+ * \param delta +1 for next file, -1 for previous.
+ */
+void MainWindow::navigatePreview(int delta)
+{
+    FilterProxyModel* proxy = core->getItemModelProxy();
+    const int rowCount = proxy->rowCount();
+    if (rowCount == 0) return;
+
+    QItemSelectionModel* selModel = ui->fileListView->selectionModel();
+    if (!selModel) return;
+
+    const QModelIndex current = selModel->currentIndex();
+    int newRow;
+    if (!current.isValid()) {
+        newRow = delta > 0 ? 0 : rowCount - 1;
+    } else {
+        newRow = qBound(0, current.row() + delta, rowCount - 1);
+        if (newRow == current.row()) return;  // already at boundary
+    }
+
+    const QModelIndex newIndex = proxy->index(newRow, 0);
+    selModel->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
+    ui->fileListView->scrollTo(newIndex);
 }
 
 /*! \brief Refreshes the preview when the preview splitter is moved.
