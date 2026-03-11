@@ -81,6 +81,70 @@ protected:
     }
 };
 
+/*! \brief Control-bar button that draws a speaker icon; re-draws when mute state changes.
+ *
+ * Paints a filled trapezoid (speaker body + cone) and two arc sound waves.
+ * In muted state the waves are replaced by a red cross.
+ */
+class SpeakerButton : public QAbstractButton
+{
+    bool muted_ = true;
+public:
+    /*! \brief Constructs a SpeakerButton.
+     *
+     * \param parent Optional Qt parent widget.
+     */
+    explicit SpeakerButton(QWidget *parent = nullptr)
+        : QAbstractButton(parent)
+    {
+        setFixedSize(28, 24);
+        setCursor(Qt::PointingHandCursor);
+        setFocusPolicy(Qt::NoFocus);
+    }
+
+    /*! \brief Updates the muted state and schedules a repaint.
+     *
+     * \param muted True to show the muted (crossed-out) icon.
+     */
+    void setMuted(bool muted) { muted_ = muted; update(); }
+
+protected:
+    /*! \brief Paints the speaker icon in the current mute state. */
+    void paintEvent(QPaintEvent *) override
+    {
+        QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
+
+        // Speaker shape: rectangle body (left) + flaring cone (right), Windows 11 style
+        // Body: x=3..8, y=9..15 (6px tall). Cone: x=8..13, flares to y=5..19 (14px tall).
+        QPainterPath speaker;
+        speaker.moveTo(3,  9);   // top-left of body
+        speaker.lineTo(8,  9);   // top-right of body / junction
+        speaker.lineTo(13, 5);   // top-right of cone (flared)
+        speaker.lineTo(13, 19);  // bottom-right of cone (flared)
+        speaker.lineTo(8,  15);  // bottom-right of body / junction
+        speaker.lineTo(3,  15);  // bottom-left of body
+        speaker.closeSubpath();
+        static const QColor kIconGray(200, 200, 200);
+
+        p.fillPath(speaker, kIconGray);
+
+        if (!muted_) {
+            p.setPen(QPen(kIconGray, 1.5, Qt::SolidLine, Qt::RoundCap));
+            p.setBrush(Qt::NoBrush);
+            // Inner wave arc
+            p.drawArc(QRectF(12, 7, 6, 10), -60 * 16, 120 * 16);
+            // Outer wave arc
+            p.drawArc(QRectF(12, 4, 11, 16), -60 * 16, 120 * 16);
+        } else {
+            // Muted: cross in the waves area (30% smaller, same center at 19.5, 12)
+            p.setPen(QPen(kIconGray, 2.0, Qt::SolidLine, Qt::RoundCap));
+            p.drawLine(QPointF(16.35, 8.5),  QPointF(22.65, 15.5));
+            p.drawLine(QPointF(22.65, 8.5),  QPointF(16.35, 15.5));
+        }
+    }
+};
+
 /*! \brief Graphics item that draws a rounded rectangle overlay and supports edge/corner dragging.
  *
  * When constructed with \p interactive = true the item accepts hover events and
@@ -439,6 +503,10 @@ PreviewContainer::PreviewContainer(QWidget *parent)
     positionSlider_->setRange(0, 0);
     controlLayout->addWidget(positionSlider_);
 
+    auto *speakerBtn = new SpeakerButton(controlBar_);
+    volumeButton_ = speakerBtn;
+    controlLayout->addWidget(volumeButton_);
+
     timeLabel_ = new QLabel("0:00 / 0:00", controlBar_);
     timeLabel_->setFixedWidth(90);
     timeLabel_->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -446,6 +514,59 @@ PreviewContainer::PreviewContainer(QWidget *parent)
 
     layout->addWidget(controlBar_);
     controlBar_->hide();
+
+    // Default audio state: muted, volume pre-set to 80% for when the user unmutes
+    audioOutput_->setMuted(true);
+    audioOutput_->setVolume(0.8f);
+
+    // Volume popup — a frameless popup that auto-dismisses on outside click
+    volumePopup_ = new QFrame(this, Qt::Popup | Qt::FramelessWindowHint);
+    volumePopup_->setFrameShape(QFrame::StyledPanel);
+    volumePopup_->setFrameShadow(QFrame::Raised);
+    auto *popupLayout = new QVBoxLayout(volumePopup_);
+    popupLayout->setContentsMargins(8, 8, 8, 8);
+    popupLayout->setSpacing(6);
+
+    volumeSlider_ = new QSlider(Qt::Vertical, volumePopup_);
+    volumeSlider_->setRange(0, 100);
+    volumeSlider_->setValue(80);
+    volumeSlider_->setFixedHeight(100);
+    popupLayout->addWidget(volumeSlider_, 0, Qt::AlignHCenter);
+
+    auto *muteBtn = new SpeakerButton(volumePopup_);
+    muteBtn->setCheckable(true);
+    muteBtn->setChecked(true);
+    muteBtn->setMuted(true);   // default: muted
+    muteButton_ = muteBtn;
+    popupLayout->addWidget(muteButton_, 0, Qt::AlignHCenter);
+
+    volumePopup_->hide();
+
+    // Show/hide the popup when the speaker button is clicked
+    connect(volumeButton_, &QAbstractButton::clicked, this, [this]() {
+        if (volumePopup_->isVisible()) {
+            volumePopup_->hide();
+            return;
+        }
+        volumePopup_->adjustSize();
+        const QSize ps = volumePopup_->sizeHint();
+        const QPoint globalPos = volumeButton_->mapToGlobal(
+            QPoint(volumeButton_->width() / 2 - ps.width() / 2, -ps.height() - 4));
+        volumePopup_->move(globalPos);
+        volumePopup_->show();
+    });
+
+    // Mute toggle updates audio output and both speaker icons
+    connect(muteButton_, &QAbstractButton::toggled, this, [this, speakerBtn, muteBtn](bool checked) {
+        audioOutput_->setMuted(checked);
+        speakerBtn->setMuted(checked);
+        muteBtn->setMuted(checked);
+    });
+
+    // Volume slider updates audio output level
+    connect(volumeSlider_, &QSlider::valueChanged, this, [this](int value) {
+        audioOutput_->setVolume(value / 100.0f);
+    });
 
     // Navigation overlay buttons (positioned manually over the view, not in the layout)
     navLeftButton_  = new NavArrowButton(true,  this);
@@ -534,6 +655,7 @@ void PreviewContainer::preview(QImage image){
     is_video_ = false;
     view->setAcceptDrops(true);
     controlBar_->hide();
+    if (volumePopup_) volumePopup_->hide();
     // Replace the image in the scene; scene->clear() deletes all items including overlays
     drop_preview_rect_ = nullptr; // scene->clear() below will delete it
     scene->clear();
@@ -641,6 +763,7 @@ void PreviewContainer::clear(){
     is_video_ = false;
     view->setAcceptDrops(true);
     controlBar_->hide();
+    if (volumePopup_) volumePopup_->hide();
     positionSlider_->setValue(0);
     positionSlider_->setMaximum(0);
     timeLabel_->setText("0:00 / 0:00");

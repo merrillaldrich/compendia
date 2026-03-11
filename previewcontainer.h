@@ -25,6 +25,7 @@
 #include <QPushButton>
 #include <QSlider>
 #include <QLabel>
+#include <QFrame>
 #include "zoomablegraphicsview.h"
 
 /*! \brief Describes a single tag region overlay for display in the preview pane.
@@ -213,6 +214,11 @@ private:
     QSlider*           positionSlider_ = nullptr;
     QLabel*            timeLabel_ = nullptr;
     bool               slider_being_dragged_ = false;
+
+    QAbstractButton*   volumeButton_  = nullptr; ///< Speaker button at right of control bar.
+    QFrame*            volumePopup_   = nullptr; ///< Floating popup with volume controls.
+    QSlider*           volumeSlider_  = nullptr; ///< Vertical volume slider inside popup.
+    QAbstractButton*   muteButton_    = nullptr; ///< Checkable mute toggle inside popup.
 
     QAbstractButton*        navLeftButton_   = nullptr; ///< Left-arrow overlay button.
     QAbstractButton*        navRightButton_  = nullptr; ///< Right-arrow overlay button.
