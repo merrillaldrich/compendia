@@ -344,7 +344,11 @@ QVector<QImage> IconGenerator::loadVideoFromCache(const QString &absolutePath)
     return images;
 }
 
-/*! \brief Returns the absolute path to the .qimg cache file for a given source image and size.
+/*! \brief Returns the absolute path to the PNG cache file for a given source image and size.
+ *
+ * The full file name (including extension) is used in the cache key so that
+ * files with the same stem but different extensions (e.g. photo.jpg and
+ * photo.heic) do not collide.
  *
  * \param absoluteFileName Absolute path to the source image file.
  * \param size             The pixel bound embedded in the cache file name.
@@ -353,8 +357,8 @@ QVector<QImage> IconGenerator::loadVideoFromCache(const QString &absolutePath)
 QString IconGenerator::cacheFilePath(const QString &absoluteFileName, int size)
 {
     QFileInfo fi(absoluteFileName);
-    return fi.absolutePath() + "/" + Luminism::CacheFolderName + "/" + fi.baseName()
-           + "_" + QString::number(size) + ".qimg";
+    return fi.absolutePath() + "/" + Luminism::CacheFolderName + "/" + fi.fileName()
+           + "_" + QString::number(size) + ".png";
 }
 
 /*! \brief Saves a thumbnail image to the per-folder cache directory.
@@ -379,15 +383,10 @@ bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImag
 
     QString filePath = cacheFilePath(absoluteFileName, size);
 
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly)) {
-        qWarning() << "Cannot open file for writing:" << file.errorString();
+    if (!pict.save(filePath, "PNG")) {
+        qWarning() << "Cannot save icon cache file:" << filePath;
         return false;
     }
-
-    QDataStream out(&file);
-    out.setVersion(QDataStream::Qt_6_0);
-    out << pict;
 
     return true;
 }
@@ -407,17 +406,11 @@ QImage IconGenerator::loadIconFromCache(const QString &absoluteFileName, int siz
         return QImage();
     }
 
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Cannot open cache file for reading:" << file.errorString();
+    QImage iconPic;
+    if (!iconPic.load(filePath)) {
+        qWarning() << "Cannot load icon cache file:" << filePath;
         return QImage();
     }
-
-    QDataStream in(&file);
-    in.setVersion(QDataStream::Qt_6_0);
-
-    QImage iconPic;
-    in >> iconPic;
 
     return iconPic;
 }

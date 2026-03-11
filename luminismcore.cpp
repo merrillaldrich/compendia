@@ -5,6 +5,7 @@
 #include <functional>
 #include <numeric>
 #include <QDirIterator>
+#include <QFileInfo>
 #include <QDebug>
 #include <QIcon>
 #include <QSet>
@@ -449,6 +450,9 @@ void LuminismCore::backfillMetadata(){
         auto tf = item->data().value<TaggedFile*>();
         allPaths << (tf->filePath + "/" + tf->fileName);
     }
+    std::sort(allPaths.begin(), allPaths.end(), [](const QString &a, const QString &b) {
+        return QFileInfo(a).fileName().compare(QFileInfo(b).fileName(), Qt::CaseInsensitive) < 0;
+    });
 
     iconGenerator_ = new IconGenerator(this);
     connect(iconGenerator_, &IconGenerator::fileReady,
