@@ -388,6 +388,14 @@ public:
      */
     QList<QList<TaggedFile*>> findSimilarImages(int threshold);
 
+    /*! \brief Removes all auto-detected face tags from every file, the active
+     *  filter, and the tag library. Cleans up now-empty tag families and emits
+     *  tagLibraryChanged() once when done.
+     *
+     * \return Number of tags removed, or 0 if there were none.
+     */
+    int removeAutoDetectedFaceTags();
+
     /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
      *  Emits tagLibraryChanged() when done. */
     void mergeTag(Tag* from, Tag* into);

@@ -13,7 +13,11 @@
 #include <QDateTime>
 #include <QElapsedTimer>
 #include <QMutexLocker>
+#include <QSet>
 #include <QDebug>
+#include <QtConcurrent>
+
+static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
 
 // ---------------------------------------------------------------------------
 // Internal helper: build the cache file path for a given image
@@ -107,6 +111,22 @@ double FaceRecognizer::detectionThreshold() const
 void FaceRecognizer::setDetectionThreshold(double threshold)
 {
     detectionThreshold_ = threshold;
+}
+
+/*! \brief Returns the current Euclidean-distance threshold for face matching. */
+double FaceRecognizer::matchThreshold() const
+{
+    return matchThreshold_;
+}
+
+/*! \brief Sets the Euclidean-distance threshold used when matching detected faces
+ *         against known-person embeddings during a recognition sweep.
+ *
+ * \param threshold The new match threshold value.
+ */
+void FaceRecognizer::setMatchThreshold(double threshold)
+{
+    matchThreshold_ = threshold;
 }
 
 // ---------------------------------------------------------------------------
@@ -398,6 +418,265 @@ dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegion(
 
     QMutexLocker lock(&embeddingMutex_);
     return computeEmbeddingFromRegionUnlocked(img, normalizedRect);
+}
+
+// ---------------------------------------------------------------------------
+// Embedding warmup scheduling
+// ---------------------------------------------------------------------------
+
+/*! \brief Triggers background known-face embedding warmup for \p tf if models are loaded.
+ *
+ * Collects all user-labeled tag regions from \p tf, checks the known-face
+ * cache for missing embeddings, and launches a QtConcurrent task to compute
+ * them.  Emits warmupScheduled(misses) just before the task starts so the
+ * caller can display a progress bar.  Does nothing when a warmup is already
+ * running.
+ *
+ * \param tf The file being deselected. May be nullptr.
+ */
+void FaceRecognizer::scheduleEmbeddingWarmup(TaggedFile* tf)
+{
+    if (!tf || !models_loaded_)
+        return;
+
+    // Don't start a new warmup while one is still running — the previous task is
+    // still emitting signals, and resetting the progress bar max mid-flight would
+    // corrupt the counter and potentially trigger an early finishProcess.
+    if (warmupFuture_.isRunning())
+        return;
+
+    QVector<std::tuple<QString, QString, QRectF>> regions;
+    for (Tag* tag : *tf->tags()) {
+        if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
+            continue;
+        auto r = tf->tagRect(tag);
+        if (!r.has_value())
+            continue;
+        regions.append({ tag->tagFamily->getName(), tag->getName(), r.value() });
+    }
+    if (regions.isEmpty())
+        return;
+
+    const QString imagePath = tf->filePath + "/" + tf->fileName;
+
+    // Pre-check: skip if everything is already cached.
+    auto cached = FaceRecognizer::loadKnownFaceCache(imagePath);
+    int misses = regions.size();
+    if (cached.has_value()) {
+        int hits = 0;
+        for (const auto &[family, name, rect] : regions) {
+            for (const KnownFaceCacheEntry &e : *cached) {
+                if (e.tagFamily == family && e.tagName == name && e.rect == rect) {
+                    ++hits; break;
+                }
+            }
+        }
+        if (hits == regions.size())
+            return;
+        misses = regions.size() - hits;
+    }
+
+    emit warmupScheduled(misses);
+
+    warmupFuture_ = QtConcurrent::run([this, imagePath, regions]() {
+        warmupKnownFaceEmbeddings(imagePath, regions);
+    });
+}
+
+// ---------------------------------------------------------------------------
+// Face recognition sweep
+// ---------------------------------------------------------------------------
+
+/*! \brief Runs Phases 1–3 of the face recognition sweep synchronously on the calling thread.
+ *
+ * Phase 1 seeds known-person embeddings from user-labeled regions across \p allFiles.
+ * Phase 2 clears all existing auto-detected face tags from \p targetFiles.
+ * Phase 3 scans every image in \p targetFiles, matches detected faces against
+ *         known embeddings using matchThreshold_, and calls \p tagFactory to
+ *         create new tags for unrecognised faces.
+ *
+ * \param allFiles      All files in the model (used to seed known embeddings).
+ * \param targetFiles   The files to actually scan and tag.
+ * \param tagFactory    Factory called as tagFactory(familyName, tagName) to create tags.
+ * \param shouldCancel  Returns true when the operation should abort.
+ * \param processEvents Called periodically to keep the UI responsive.
+ */
+void FaceRecognizer::runSweep(
+    const QVector<TaggedFile*> &allFiles,
+    const QVector<TaggedFile*> &targetFiles,
+    std::function<Tag*(const QString&, const QString&)> tagFactory,
+    std::function<bool()> shouldCancel,
+    std::function<void()> processEvents)
+{
+    // ----- Phase 1: Seed known-person embeddings from user-labeled regions -----
+    QVector<FaceDescriptor> knownFaces;
+    for (TaggedFile* tf : allFiles) {
+        if (shouldCancel())
+            break;
+        processEvents();
+
+        QVector<QPair<Tag*, QRectF>> pendingTags;
+        for (Tag* tag : *tf->tags()) {
+            if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
+                continue;
+            auto r = tf->tagRect(tag);
+            if (!r.has_value())
+                continue;
+            pendingTags.append({tag, r.value()});
+        }
+        if (pendingTags.isEmpty())
+            continue;
+
+        const QString imagePath = tf->filePath + "/" + tf->fileName;
+
+        auto cachedEntries = FaceRecognizer::loadKnownFaceCache(imagePath);
+
+        QVector<KnownFaceCacheEntry> updatedCache;
+        bool cacheNeedsWrite = false;
+        QImage img;  // loaded lazily — at most once per file
+
+        for (const auto &[tag, rect] : pendingTags) {
+            const QString tagFamily = tag->tagFamily->getName();
+            const QString tagName   = tag->getName();
+
+            bool hitFound = false;
+            if (cachedEntries.has_value()) {
+                for (const KnownFaceCacheEntry &entry : *cachedEntries) {
+                    if (entry.tagFamily == tagFamily
+                            && entry.tagName == tagName
+                            && entry.rect   == rect) {
+                        qDebug() << "[Phase1] cache hit:" << tagName;
+                        knownFaces.append({entry.embedding, tag});
+                        updatedCache.append(entry);
+                        hitFound = true;
+                        break;
+                    }
+                }
+            }
+            if (hitFound)
+                continue;
+
+            // Cache miss — load image lazily
+            if (img.isNull()) {
+                QImageReader ir(imagePath);
+                ir.setAutoTransform(true);
+                img = ir.read();
+                if (img.isNull()) {
+                    qDebug() << "[Phase1] failed to load image:" << imagePath;
+                    break;  // skip all remaining tags for this file
+                }
+            }
+
+            qDebug() << "[Phase1] cache miss, computing embedding for:" << tagName;
+            dlib::matrix<float,0,1> emb = computeEmbeddingFromRegion(img, rect);
+            if (emb.size() == 0)
+                continue;
+
+            knownFaces.append({emb, tag});
+            KnownFaceCacheEntry newEntry;
+            newEntry.tagFamily = tagFamily;
+            newEntry.tagName   = tagName;
+            newEntry.rect      = rect;
+            newEntry.embedding = emb;
+            updatedCache.append(newEntry);
+            cacheNeedsWrite = true;
+        }
+
+        if (cacheNeedsWrite)
+            FaceRecognizer::saveKnownFaceCache(imagePath, updatedCache);
+    }
+
+    // ----- Phase 2: Clear all previous auto-detected face tags -----
+    for (TaggedFile* tf : targetFiles) {
+        QSet<Tag*> toRemove;
+        for (Tag* t : *tf->tags()) {
+            if (t->getName().startsWith(Luminism::AutoFaceTagPrefix))
+                toRemove.insert(t);
+        }
+        for (Tag* t : toRemove)
+            tf->removeTag(t);
+    }
+
+    // ----- Phase 3: Recognition sweep across target image files -----
+    int autoFaceCounter = 1;
+    for (int i = 0; i < targetFiles.size(); ++i) {
+        if (shouldCancel())
+            break;
+        emit sweepProgress(i, targetFiles.size());
+        processEvents();
+
+        TaggedFile* tf = targetFiles[i];
+        if (videoExts.contains(QFileInfo(tf->fileName).suffix().toLower()))
+            continue;
+
+        QString imagePath = tf->filePath + "/" + tf->fileName;
+        qDebug() << "[FindFaces] processing:" << tf->fileName;
+        QElapsedTimer fileTimer;
+        fileTimer.start();
+
+        // Try the descriptor cache first
+        auto cached = FaceRecognizer::loadDescriptorCache(imagePath);
+        qDebug() << "[FindFaces]   cache lookup:  " << fileTimer.restart() << "ms"
+                 << (cached.has_value() ? "(hit)" : "(miss)");
+
+        QVector<QPair<QRectF, dlib::matrix<float,0,1>>> faces;
+        if (cached.has_value()) {
+            faces = cached.value();
+        } else {
+            QImageReader ir(imagePath);
+            ir.setAutoTransform(true);
+            QImage img = ir.read();
+            qDebug() << "[FindFaces]   image load:   " << fileTimer.restart() << "ms"
+                     << img.width() << "x" << img.height();
+            if (img.isNull())
+                continue;
+            faces = detectFacesWithEmbeddings(img);
+            qDebug() << "[FindFaces]   detection:    " << fileTimer.restart() << "ms";
+            FaceRecognizer::saveDescriptorCache(imagePath, faces);
+            qDebug() << "[FindFaces]   cache save:   " << fileTimer.elapsed() << "ms";
+        }
+
+        int autoFacesTaggedThisImage = 0;
+        for (const auto &[rect, embedding] : faces) {
+            // Find the closest known face by Euclidean distance
+            double minDist = std::numeric_limits<double>::max();
+            Tag*   bestTag = nullptr;
+            for (const FaceDescriptor &fd : knownFaces) {
+                double dist = dlib::length(fd.embedding - embedding);
+                if (dist < minDist) {
+                    minDist = dist;
+                    bestTag = fd.tag;
+                }
+            }
+
+            const bool isUserNamedMatch = minDist < matchThreshold_
+                                          && bestTag != nullptr
+                                          && !bestTag->getName().startsWith(Luminism::AutoFaceTagPrefix);
+
+            if (isUserNamedMatch) {
+                // Always tag faces that match a user-named person, regardless of limit
+                tf->addTag(bestTag, rect);
+            } else {
+                // Auto-named match or unrecognised — apply the per-image limit.
+                if (autoFacesTaggedThisImage >= Luminism::MaxAutoFacesPerImage)
+                    continue;
+
+                if (minDist < matchThreshold_ && bestTag != nullptr) {
+                    // Recognised, but matched an auto-named tag
+                    tf->addTag(bestTag, rect);
+                } else {
+                    // New person — create a sequential auto tag and seed future matching
+                    QString tagName = QString("%1%2")
+                        .arg(Luminism::AutoFaceTagPrefix)
+                        .arg(autoFaceCounter++, 2, 10, QChar('0'));
+                    Tag* newTag = tagFactory("People", tagName);
+                    tf->addTag(newTag, rect);
+                    knownFaces.append({embedding, newTag});
+                }
+                ++autoFacesTaggedThisImage;
+            }
+        }
+    }
 }
 
 // ---------------------------------------------------------------------------

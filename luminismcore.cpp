@@ -1062,6 +1062,53 @@ QList<QList<TaggedFile*>> LuminismCore::findSimilarImages(int threshold)
     return result;
 }
 
+/*! \brief Removes all auto-detected face tags from every file, the active
+ *  filter, and the tag library. Cleans up now-empty tag families and emits
+ *  tagLibraryChanged() once when done.
+ *
+ * \return Number of tags removed, or 0 if there were none.
+ */
+int LuminismCore::removeAutoDetectedFaceTags()
+{
+    // Collect auto tags from the library into a snapshot
+    QList<Tag*> autoTags;
+    for (Tag* t : *tags_) {
+        if (t->getName().startsWith(Luminism::AutoFaceTagPrefix))
+            autoTags.append(t);
+    }
+
+    if (autoTags.isEmpty())
+        return 0;
+
+    // Remove auto tags from every file
+    for (int r = 0; r < tagged_files_->rowCount(); ++r) {
+        TaggedFile* tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+        for (Tag* t : autoTags)
+            tf->removeTag(t);
+    }
+
+    // Remove from filter, library, and clean up now-empty families
+    for (Tag* t : autoTags) {
+        TagFamily* family = t->tagFamily;
+        removeTagFilter(t);
+        tags_->remove(t);
+
+        // Remove family if no remaining library tags belong to it
+        const bool familyEmpty = std::none_of(tags_->cbegin(), tags_->cend(),
+                                              [family](Tag* u){ return u->tagFamily == family; });
+        if (familyEmpty) {
+            tag_families_->remove(family);
+            family->deleteLater();
+        }
+
+        t->deleteLater();
+    }
+
+    emit tagLibraryChanged();
+    return autoTags.size();
+}
+
 /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
  *  Emits tagLibraryChanged() when done.
  *

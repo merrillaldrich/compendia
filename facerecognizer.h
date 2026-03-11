@@ -1,8 +1,10 @@
 #ifndef FACERECOGNIZER_H
 #define FACERECOGNIZER_H
 
+#include <functional>
 #include <optional>
 
+#include <QFuture>
 #include <QObject>
 #include <QImage>
 #include <QList>
@@ -24,6 +26,7 @@
 #include <dlib/dnn.h>
 
 #include "tag.h"
+#include "taggedfile.h"
 #include "constants.h"
 
 /*! \brief Standard dlib ResNet-29 face recognition network type (128-d embeddings).
@@ -105,6 +108,8 @@ private:
     dlib::shape_predictor sp_;
     FaceNet::anet_type net_;
     double detectionThreshold_ = Luminism::FaceDetectionThreshold;
+    double matchThreshold_ = Luminism::FaceMatchThreshold; ///< Euclidean-distance threshold for recognising a known face.
+    QFuture<void> warmupFuture_; ///< Handle to the current background embedding warmup task.
     QMutex embeddingMutex_; ///< Serialises all dlib inference calls; prevents concurrent access to non-thread-safe dlib models.
 
     /*! \brief Computes a 128-d face embedding for a single detected face rectangle.
@@ -171,6 +176,52 @@ public:
      * \param threshold The new adjust_threshold value.
      */
     void setDetectionThreshold(double threshold);
+
+    /*! \brief Returns the current Euclidean-distance threshold for face matching. */
+    double matchThreshold() const;
+
+    /*! \brief Sets the Euclidean-distance threshold used when matching detected faces
+     *         against known-person embeddings during a recognition sweep.
+     *
+     * Lower values require a closer match; higher values are more permissive.
+     * Takes effect on the next call to runSweep().
+     *
+     * \param threshold The new match threshold value.
+     */
+    void setMatchThreshold(double threshold);
+
+    /*! \brief Triggers background known-face embedding warmup for \p tf if models are loaded.
+     *
+     * Collects all user-labeled tag regions from \p tf, checks the known-face
+     * cache for missing embeddings, and launches a QtConcurrent task to compute
+     * them.  Emits warmupScheduled(misses) just before the task starts so the
+     * caller can display a progress bar.  Does nothing when a warmup is already
+     * running.
+     *
+     * \param tf The file being deselected. May be nullptr.
+     */
+    void scheduleEmbeddingWarmup(TaggedFile* tf);
+
+    /*! \brief Runs Phases 1–3 of the face recognition sweep synchronously on the calling thread.
+     *
+     * Phase 1 seeds known-person embeddings from user-labeled regions across \p allFiles.
+     * Phase 2 clears all existing auto-detected face tags from \p targetFiles.
+     * Phase 3 scans every image in \p targetFiles, matches detected faces against
+     *         known embeddings using matchThreshold_, and calls \p tagFactory to
+     *         create new tags for unrecognised faces.
+     *
+     * \param allFiles      All files in the model (used to seed known embeddings).
+     * \param targetFiles   The files to actually scan and tag.
+     * \param tagFactory    Factory called as tagFactory(familyName, tagName) to create tags.
+     * \param shouldCancel  Returns true when the operation should abort.
+     * \param processEvents Called periodically to keep the UI responsive.
+     */
+    void runSweep(
+        const QVector<TaggedFile*> &allFiles,
+        const QVector<TaggedFile*> &targetFiles,
+        std::function<Tag*(const QString&, const QString&)> tagFactory,
+        std::function<bool()> shouldCancel,
+        std::function<void()> processEvents);
 
     /*! \brief Runs face detection on the source image and returns normalised bounding rectangles.
      *
@@ -260,6 +311,19 @@ public:
 signals:
     /*! \brief Emitted once per embedding that was computed (cache miss) during warmup. */
     void embeddingWarmedUp();
+
+    /*! \brief Emitted by scheduleEmbeddingWarmup() just before the background task launches.
+     *
+     * \param misses Number of embeddings that need to be (re)computed.
+     */
+    void warmupScheduled(int misses);
+
+    /*! \brief Emitted once per file processed during runSweep() Phase 3.
+     *
+     * \param filesProcessed Number of files processed so far.
+     * \param totalFiles     Total number of target files in the sweep.
+     */
+    void sweepProgress(int filesProcessed, int totalFiles);
 };
 
 #endif // FACERECOGNIZER_H

@@ -5,7 +5,6 @@
 #include <QLabel>
 #include <QSettings>
 #include <QCloseEvent>
-#include <QFuture>
 #include <QItemSelection>
 #include <QResizeEvent>
 #include <QGraphicsView>
@@ -39,8 +38,6 @@ private:
     QLabel* folderStatsLabel_; ///< Persistent left-side status bar label showing folder summary stats.
     QWidget* welcome_widget_; ///< Shown in the file-list area before any folder is loaded.
     FaceRecognizer* face_recognizer_ = nullptr;
-    double faceMatchThreshold_ = Luminism::FaceMatchThreshold;
-    QFuture<void> warmupFuture_; ///< Handle to the current background embedding warmup task.
     FrameGrabber* frameGrabber_ = nullptr; ///< Active frame-grab batch, or nullptr when idle.
 
 public:
@@ -122,16 +119,6 @@ private:
      * face detection). Does nothing if no file is selected.
      */
     void refreshPreviewTagsLabel();
-
-    /*! \brief Triggers background known-face embedding warmup for \p tf if models are loaded.
-     *
-     * Collects all user-labeled tag regions from \p tf and passes them to
-     * FaceRecognizer::warmupKnownFaceEmbeddings() via QtConcurrent::run.
-     * Does nothing if face_recognizer_ is null or models are not yet loaded.
-     *
-     * \param tf The file being deselected. May be nullptr.
-     */
-    void scheduleEmbeddingWarmup(TaggedFile* tf);
 
     /*! \brief Validates \p folder, confirms cache creation if needed, then performs
      *         a full load: clears existing state, loads files into core, and refreshes
