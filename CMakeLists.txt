@@ -21,13 +21,24 @@ find_package(dlib)
 #find_package(libexif REQUIRED) # this doesn't work
 #find_package(libheif)
 
-# libexif does not provide CMAKE config, so link straight to files
-set(LIBEXIF_INCLUDE_DIR "3rdParty/src/libexif")
-set(LIBEXIF_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/lib/exif.lib") # or libexif.so / libexif.lib
+if(WIN32)
+    # libexif does not provide CMAKE config, so link straight to files
+    set(LIBEXIF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/src")
+    set(LIBEXIF_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/lib/exif.lib")
 
-# libheif does not provide CMAKE config, so link straight to files
-set(LIBHEIF_INCLUDE_DIR "3rdParty/src/libheif")
-set(LIBHEIF_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/lib/heif.lib") # or .so / .lib
+    # libheif does not provide CMAKE config, so link straight to files
+    set(LIBHEIF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/src")
+    set(LIBHEIF_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/lib/heif.lib")
+else()
+    # Linux: use system-installed libraries.
+    # Run: sudo apt install libexif-dev
+    # libheif is expected at /usr/local (built from source).
+    set(LIBEXIF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/src")
+    find_library(LIBEXIF_LIBRARY NAMES exif REQUIRED)
+
+    set(LIBHEIF_INCLUDE_DIR "/usr/local/include")
+    find_library(LIBHEIF_LIBRARY NAMES heif PATHS /usr/local/lib REQUIRED)
+endif()
 
 set(PROJECT_SOURCES
         main.cpp
@@ -108,14 +119,13 @@ target_link_libraries(luminism PRIVATE dlib)
 if (MSVC)
     set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "/bigobj;/O2;/arch:AVX2")
 else()
-    # -Wa,-mbig-obj : switch the assembler to extended COFF (section count > 65535)
-    # -O2           : aggressive inlining collapses per-instantiation functions,
-    #                 drastically reducing the number of .xdata$ COMDAT sections
-    # -g0           : disable debug-info emission for this file so the section-name
-    #                 string table stays well under the GNU assembler's 268 MB limit
-    # -mavx2 -mfma  : enable 256-bit AVX2 and fused multiply-add so dlib's DNN
-    #                 convolutions use SIMD rather than scalar code (~5-8x faster)
-    set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "-Wa,-mbig-obj;-O2;-g0;-mavx2;-mfma")
+    # -O2      : aggressive inlining collapses per-instantiation functions,
+    #            reducing the number of generated symbols
+    # -g0      : disable debug-info emission for this file to speed up compilation
+    # -mavx2   : enable 256-bit AVX2 so dlib's DNN convolutions use SIMD (~5-8x faster)
+    # -mfma    : enable fused multiply-add instructions
+    # Note: -Wa,-mbig-obj is MinGW/Windows-only; Linux ELF has no section count limit
+    set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "-O2;-g0;-mavx2;-mfma")
 endif()
 
 # ---------------------------------------------------------------------------

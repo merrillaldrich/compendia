@@ -20,14 +20,19 @@ quint64 PerceptualHasher::computeHash(const QImage &image)
     const int N = 32;
     const int K = 8;
 
-    QImage small = image.scaled(N, N, Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
-                       .convertToFormat(QImage::Format_Grayscale8);
+    // Qt 6's SIMD-accelerated convertToFormat_helper crashes on Linux for certain
+    // source pixel formats (e.g. ARGB32_Premultiplied → Grayscale8) when called
+    // from multiple concurrent worker threads.  Bypass it entirely: use fast
+    // (nearest-neighbour) scaling to 32×32 — quality is irrelevant at this size
+    // for hashing purposes — then compute luminance directly from each QRgb pixel.
+    QImage small = image.scaled(N, N, Qt::IgnoreAspectRatio, Qt::FastTransformation);
 
     double pixels[N][N];
     for (int y = 0; y < N; ++y) {
-        const uchar *row = small.constScanLine(y);
-        for (int x = 0; x < N; ++x)
-            pixels[y][x] = static_cast<double>(row[x]);
+        for (int x = 0; x < N; ++x) {
+            QRgb px = small.pixel(x, y);
+            pixels[y][x] = 0.299 * qRed(px) + 0.587 * qGreen(px) + 0.114 * qBlue(px);
+        }
     }
 
     // 2-D DCT: compute only the top-left K×K block

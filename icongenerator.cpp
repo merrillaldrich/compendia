@@ -130,6 +130,15 @@ void IconGenerator::processFiles(const QStringList &absolutePaths)
     pendingImageCount_.storeRelaxed(imagePaths.size());
     videoGrabDone_ = videoPaths.isEmpty();
 
+    // Force Qt to load and register all image format plugins NOW, on the main
+    // thread, before any background tasks start.  On Linux, plugin discovery
+    // touches global plugin-loader state that is not re-entrant, so if multiple
+    // QtConcurrent threads hit QImageReader::read() simultaneously before the
+    // registry is populated the first call can race and corrupt it, leading to
+    // a crash inside QImage.  Calling supportedImageFormats() here is a no-op
+    // on subsequent calls once the registry is warm.
+    QImageReader::supportedImageFormats();
+
     // --- Video handling ---
     QStringList videoGrabNeeded;
     for (const QString &path : videoPaths) {
@@ -278,9 +287,14 @@ IconGenerator::processImageFile(const QString &absolutePath)
 
     qDebug() << "Icon cache miss:" << absolutePath;
 
-    QImageReader ir(absolutePath);
-    ir.setAutoTransform(true);
-    QImage base = ir.read();
+    QImage base;
+    if (QFileInfo(absolutePath).suffix().toLower() == "heic") {
+        base = ExifParser::loadHeifImage(absolutePath);
+    } else {
+        QImageReader ir(absolutePath);
+        ir.setAutoTransform(true);
+        base = ir.read();
+    }
     if (base.isNull())
         return {{}, {}, 0};
 

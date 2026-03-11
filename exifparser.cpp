@@ -4,6 +4,7 @@
 #include <QFileInfo>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <vector>
 
 /*! \brief Constructs an ExifParser (rarely needed; prefer the static interface).
  *
@@ -110,8 +111,8 @@ QMap<QString, QString> ExifParser::getExifMap(QString filePath){
 
     if (ed != nullptr){
         exifMap = exifTagsToMap(ed);
+        exif_data_unref(ed);
     }
-    exif_data_unref(ed);
 
     if (!exifMap.isEmpty())
         saveExifToCache(filePath, exifMap);
@@ -239,6 +240,65 @@ ExifData* ExifParser::getExifHeif(QString filePath){
     heif_context_free(ctx);
 
     return ed;
+}
+
+/*! \brief Decodes a HEIF/HEIC file to a QImage using libheif.
+ *
+ * \param filePath Absolute path to the HEIC file.
+ * \return The decoded image, or a null QImage on failure.
+ */
+QImage ExifParser::loadHeifImage(const QString &filePath)
+{
+    QByteArray byteArray = filePath.toUtf8();
+    const char* filename = byteArray.constData();
+
+    heif_context* ctx = heif_context_alloc();
+    if (!ctx) {
+        qWarning() << "loadHeifImage: failed to allocate HEIF context";
+        return {};
+    }
+
+    heif_error err = heif_context_read_from_file(ctx, filename, nullptr);
+    if (err.code != heif_error_Ok) {
+        qWarning() << "loadHeifImage: error reading file:" << err.message;
+        heif_context_free(ctx);
+        return {};
+    }
+
+    heif_image_handle* handle = nullptr;
+    err = heif_context_get_primary_image_handle(ctx, &handle);
+    if (err.code != heif_error_Ok) {
+        qWarning() << "loadHeifImage: error getting image handle:" << err.message;
+        heif_context_free(ctx);
+        return {};
+    }
+
+    heif_image* himg = nullptr;
+    err = heif_decode_image(handle, &himg,
+                            heif_colorspace_RGB,
+                            heif_chroma_interleaved_RGBA,
+                            nullptr);
+    if (err.code != heif_error_Ok) {
+        qWarning() << "loadHeifImage: error decoding image:" << err.message;
+        heif_image_handle_release(handle);
+        heif_context_free(ctx);
+        return {};
+    }
+
+    int stride = 0;
+    const uint8_t* data = heif_image_get_plane_readonly(himg, heif_channel_interleaved, &stride);
+    int width  = heif_image_get_width(himg,  heif_channel_interleaved);
+    int height = heif_image_get_height(himg, heif_channel_interleaved);
+
+    // Copy pixel data out before releasing libheif resources
+    QImage result(data, width, height, stride, QImage::Format_RGBA8888);
+    result = result.copy();
+
+    heif_image_release(himg);
+    heif_image_handle_release(handle);
+    heif_context_free(ctx);
+
+    return result;
 }
 
 /*! \brief Converts a libexif ExifData structure into a Qt key-value string map.

@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QString>
 #include <QByteArray>
+#include <QImage>
 #include <QMap>
 
 #include <libheif/heif.h>
@@ -84,6 +85,17 @@ public:
      * \return A map of EXIF tag name strings to value strings.
      */
     static QMap<QString, QString> getExifMap(QString filePath);
+
+    /*! \brief Decodes a HEIF/HEIC file to a QImage using libheif.
+     *
+     * Qt's QImageReader has no built-in HEIC support on Linux (it requires a
+     * libqheif.so plugin that is typically absent). This function decodes the
+     * primary image directly via libheif and returns the result as a QImage.
+     *
+     * \param filePath Absolute path to the HEIC file.
+     * \return The decoded image, or a null QImage on failure.
+     */
+    static QImage loadHeifImage(const QString &filePath);
 
 signals:
 };

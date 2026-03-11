@@ -1,5 +1,6 @@
 #include "previewcontainer.h"
 #include "constants.h"
+#include "exifparser.h"
 #include <QPainter>
 #include <QPainterPath>
 #include <QPen>
@@ -715,13 +716,15 @@ void PreviewContainer::preview(QString absoluteFilePath){
         return;
     }
 
-    QImageReader ir(absoluteFilePath);
-    ir.setAutoTransform(true);
-
-    // Load the image
-    QImage image = ir.read();
-    if (image.isNull()) {
-        QMessageBox::critical(nullptr, "Error", "Failed to load image: " + ir.errorString());
+    QImage image;
+    if (QFileInfo(absoluteFilePath).suffix().toLower() == "heic") {
+        image = ExifParser::loadHeifImage(absoluteFilePath);
+    } else {
+        QImageReader ir(absoluteFilePath);
+        ir.setAutoTransform(true);
+        image = ir.read();
+        if (image.isNull())
+            QMessageBox::critical(nullptr, "Error", "Failed to load image: " + ir.errorString());
     }
 
     preview(image);
