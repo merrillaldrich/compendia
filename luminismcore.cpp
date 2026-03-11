@@ -256,6 +256,10 @@ void LuminismCore::loadRootDirectory(){
         if (fileInfo.fileName().startsWith(".trashed", Qt::CaseInsensitive))
             continue;
 
+        // Skip files inside any cache folder to avoid caching the cache.
+        if (fileInfo.absolutePath().contains(QLatin1String(Luminism::CacheFolderName)))
+            continue;
+
         // Check to see if there's a sidecar file next to each image file
         QString metaFileName = fileInfo.baseName() + ".json";
         QFileInfo metaFileInfo(fileInfo.absolutePath() + "/" + metaFileName);
