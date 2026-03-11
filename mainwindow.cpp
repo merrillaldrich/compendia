@@ -672,7 +672,15 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
             face_recognizer_->scheduleEmbeddingWarmup(prev);
     }
 
-    if( selected.isEmpty()){
+    // Use currentIndex() rather than selected.indexes().first().
+    // `selected` is only the delta (newly added items), which is wrong for
+    // shift-click (gives the first of the added range, not the clicked item)
+    // and is empty when the navigation target was already in the selection
+    // (causing ClearAndSelect to net-zero for that item and blank the preview).
+    QItemSelectionModel* sm = ui->fileListView->selectionModel();
+    const QModelIndex proxyIndex = sm ? sm->currentIndex() : QModelIndex();
+
+    if (!proxyIndex.isValid()) {
         ui->previewContainer->clear();
         ui->previewFileNameValue->setText("-");
         ui->previewFileLocationValue->setText("-");
@@ -686,7 +694,6 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         ui->previewStarRating->setEnabled(false);
     }
     else {
-        QModelIndex proxyIndex = selected.indexes().first();
 
         // Map proxy index used by the view to source index in the model
         QModelIndex sourceIndex = core->getItemModelProxy()->mapToSource(proxyIndex);
