@@ -260,10 +260,35 @@ MainWindow::MainWindow(QWidget *parent)
     ui->fileListView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->fileListView, &QListView::customContextMenuRequested,
             this, [this](const QPoint &pos) {
-        if (!ui->fileListView->indexAt(pos).isValid())
+        QModelIndex clickedProxy = ui->fileListView->indexAt(pos);
+        if (!clickedProxy.isValid())
             return;
         QMenu menu(this);
         menu.addAction(ui->actionIsolateSelection);
+
+        // Resolve the clicked item's folder so we can offer folder isolation.
+        QModelIndex clickedSrc = core->getItemModelProxy()->mapToSource(clickedProxy);
+        TaggedFile* clickedTf = core->getItemModel()->data(clickedSrc, Qt::UserRole + 1).value<TaggedFile*>();
+        if (clickedTf) {
+            QAction* isolateFolderAction = menu.addAction(tr("Isolate this Folder"));
+            const QString targetFolder = clickedTf->filePath;
+            connect(isolateFolderAction, &QAction::triggered, this, [this, targetFolder]() {
+                QStandardItemModel* model = core->getItemModel();
+                QSet<TaggedFile*> files;
+                for (int i = 0; i < model->rowCount(); ++i) {
+                    TaggedFile* tf = model->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+                    if (tf && tf->filePath == targetFolder)
+                        files.insert(tf);
+                }
+                if (files.isEmpty())
+                    return;
+                core->setIsolationSet(files);
+                ui->actionClearIsolation->setEnabled(true);
+                updateFileCountLabel();
+                refreshTagAssignmentArea();
+            });
+        }
+
         menu.addAction(ui->actionClearIsolation);
         menu.exec(ui->fileListView->viewport()->mapToGlobal(pos));
     });
