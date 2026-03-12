@@ -131,6 +131,14 @@ signals:
      * \param tw This TagWidget, so the parent can clean it up.
      */
     void abandonRequested(TagWidget *tw);
+
+    /*! \brief Emitted only while in edit mode when this widget's fixed width changes.
+     *
+     * The parent TagFamilyWidget connects to this to resize itself without posting
+     * a LayoutRequest event to the queue (which would be re-entrantly processed by
+     * the GTK file dialog's event loop, causing infinite paintSiblingsRecursive recursion).
+     */
+    void widthChangedDuringEdit();
 };
 
 #endif // TAGWIDGET_H

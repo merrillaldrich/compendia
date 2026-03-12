@@ -137,6 +137,8 @@ void TagFamilyWidget::createAndEditNewTag(){
     if (auto *tc = qobject_cast<TagContainer*>(parentWidget()))
         connect(tw, &TagWidget::deleteRequested, tc, &TagContainer::onTagDeleteRequested);
 
+    connect(tw, &TagWidget::widthChangedDuringEdit, this, &TagFamilyWidget::onChildTagWidthChanged);
+
     connect(tw, &TagWidget::abandonRequested, this, [this](TagWidget *tw) {
         Tag *t = tw->getTag();
         layout()->removeWidget(tw);
@@ -275,6 +277,27 @@ void TagFamilyWidget::resizeEvent(QResizeEvent *event)
     TaggingWidget::resizeEvent(event);
     if (collapseButton_)
         collapseButton_->move(width() - 24, 4);
+}
+
+/*! \brief Responds to a child TagWidget changing width during editing.
+ *
+ * Measures the height the FlowLayout needs at the current width and adjusts
+ * this widget's minimum height if a row was added or removed.  Called via a
+ * direct signal connection, so it runs synchronously in the keystroke call
+ * stack rather than being queued — safe to call updateGeometry() here because
+ * we are not inside setGeometry or a paint event.
+ */
+void TagFamilyWidget::onChildTagWidthChanged()
+{
+    if (collapsed_)
+        return;
+
+    const int needed = qMax(64, layout()->heightForWidth(contentsRect().width()) + 4);
+    if (minimumHeight() == needed)
+        return;
+
+    setMinimumHeight(needed);
+    updateGeometry();
 }
 
 /*! \brief Returns the minimum size as the size hint.

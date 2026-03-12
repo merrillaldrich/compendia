@@ -89,6 +89,15 @@ public:
     /*! \brief Sorts the child TagWidget items alphabetically by tag name. */
     void sort();
 
+public slots:
+    /*! \brief Called when a child TagWidget's width changes while it is being edited.
+     *
+     * Re-measures the layout height at the current width and adjusts this widget's
+     * minimum height if a row was added or removed, without posting a LayoutRequest
+     * to the event queue from inside setGeometry.
+     */
+    void onChildTagWidthChanged();
+
 private slots:
     /*! \brief Slot called when the line edit finishes editing; commits via endEdit(). */
     void onLineEditEditingFinished();

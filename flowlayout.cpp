@@ -139,14 +139,8 @@ int FlowLayout::heightForWidth(int width) const
  */
 void FlowLayout::setGeometry(const QRect &rect)
 {
-
     QLayout::setGeometry(rect);
     doLayout(rect, false);
-
-    // Added this call to update, to handle interactive
-    // resizing during a tag edit that expands past the
-    // end of the last line in a family
-    update();
 }
 
 /*! \brief Returns the preferred size, equal to the minimum size.
@@ -170,13 +164,6 @@ QSize FlowLayout::minimumSize() const
 
     const QMargins margins = contentsMargins();
     size += QSize(margins.left() + margins.right(), margins.top() + margins.bottom());
-
-    // Added this call to set size to handle interactive
-    // resizing during a tag edit that expands past the
-    // end of the last line in a family
-    auto layoutSize = this->contentsRect();
-    size.setHeight(heightForWidth(layoutSize.width()));
-
     return size;
 }
 

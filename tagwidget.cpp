@@ -275,6 +275,10 @@ void TagWidget::adjustCustomWidth(){
 
     if(edit_status_ == "Edit"){
         setFixedWidth(line_edit_->width() + 36);
+        // Notify the parent TagFamilyWidget directly so it can resize without
+        // posting a LayoutRequest event (which causes re-entrant processing in
+        // the GTK file dialog's event loop).
+        emit widthChangedDuringEdit();
     } else {
         if(label_->text().length() > 0) {
             setFixedWidth(label_->width() + 36);
@@ -282,7 +286,7 @@ void TagWidget::adjustCustomWidth(){
             label_->setFixedWidth(24);
             setFixedWidth(36);
         }
+        updateGeometry();
     }
-    updateGeometry();
     update();
 }
