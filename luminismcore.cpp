@@ -1,6 +1,7 @@
 #include "luminismcore.h"
 #include "constants.h"
 #include "perceptualhasher.h"
+#include "folderscanner.h"
 #include <algorithm>
 #include <functional>
 #include <numeric>
@@ -208,6 +209,18 @@ void LuminismCore::setRootDirectory(QString path){
 }
 
 void LuminismCore::cancelIconGeneration(){
+    // Cancel any in-flight folder scan first.
+    ++scanGeneration_;  // invalidates any pending onScanBatch / onScanFinished callbacks
+    if (folderScanner_) {
+        folderScanner_->cancel();
+        folderScanner_ = nullptr;
+    }
+    if (scanThread_) {
+        scanThread_->quit();
+        scanThread_->wait();
+        scanThread_ = nullptr;
+    }
+
     if (iconGenerator_) {
         iconGenerator_->disconnect();
         iconGenerator_->deleteLater();
@@ -218,19 +231,11 @@ void LuminismCore::cancelIconGeneration(){
     results_.clear();
 }
 
-/*! \brief Clears all existing data and reloads files from the current root directory. */
+/*! \brief Clears all existing data and starts an async scan of the current root directory. */
 void LuminismCore::loadRootDirectory(){
 
-    // Tear down any in-flight icon generation before destroying the model
-    if (iconGenerator_) {
-        iconGenerator_->disconnect();
-        iconGenerator_->deleteLater();
-        iconGenerator_ = nullptr;
-    }
-    uiFlushTimer_.stop();
-    { QMutexLocker lock(&resultsMutex_); results_.clear(); }
-
-    // Pointing to a new folder means we have to clear any data already loaded:
+    // Pointing to a new folder means we have to clear any data already loaded.
+    // (cancelIconGeneration() has already been called by the time we get here.)
     delete tagged_files_proxy_;
     delete tagged_files_;
     delete tags_;
@@ -240,63 +245,39 @@ void LuminismCore::loadRootDirectory(){
     tags_ = new QSet<Tag*>();
     tagged_files_ = new QStandardItemModel(this);
     tagged_files_proxy_ = new FilterProxyModel(this);
-
     tagged_files_proxy_->setSourceModel(tagged_files_);
     tagged_files_proxy_->sort(0);
 
+    // Start a background scan.  The generation counter is already up-to-date
+    // because cancelIconGeneration() incremented it; capture the current value
+    // in the lambdas so stale callbacks from a previously cancelled scan are ignored.
+    int generation = scanGeneration_;
 
-    // Iterate over the entire root directory recursively and populate the model
-    QDirIterator it(root_directory_, QStringList()
-                        << "*.jpg" << "*.JPG"
-                        << "*.heic" << "*.HEIC"
-                        << "*.png" << "*.PNG"
-                        << "*.mp4" << "*.MP4"
-                        << "*.mov" << "*.MOV"
-                        << "*.avi" << "*.AVI"
-                        << "*.mkv" << "*.MKV"
-                        << "*.wmv" << "*.WMV"
-                        << "*.webm" << "*.WEBM"
-                        << "*.m4v" << "*.M4V",
-                    QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-    while (it.hasNext()) {
-        QFile f(it.next());
-        QFileInfo fileInfo(f.fileName());
+    scanThread_    = new QThread(this);
+    folderScanner_ = new FolderScanner;
+    folderScanner_->moveToThread(scanThread_);
 
-        // Skip files whose names start with ".trashed" — some phones use this
-        // prefix to soft-delete files (acting as a recycle bin).
-        if (fileInfo.fileName().startsWith(".trashed", Qt::CaseInsensitive))
-            continue;
+    connect(scanThread_, &QThread::started,
+            folderScanner_, [this]{ folderScanner_->scan(root_directory_); });
 
-        // Skip files inside any cache folder to avoid caching the cache.
-        if (fileInfo.absolutePath().contains(QLatin1String(Luminism::CacheFolderName)))
-            continue;
+    connect(folderScanner_, &FolderScanner::batchReady,
+            this, [this, generation](QList<ScanItem> batch) {
+        if (scanGeneration_ == generation)
+            onScanBatch(std::move(batch));
+    });
 
-        // Check to see if there's a sidecar file next to each image file
-        QString metaFileName = fileInfo.baseName() + ".json";
-        QFileInfo metaFileInfo(fileInfo.absolutePath() + "/" + metaFileName);
+    connect(folderScanner_, &FolderScanner::finished,
+            this, [this, generation]() {
+        if (scanGeneration_ == generation)
+            onScanFinished();
+    });
 
-        if(metaFileInfo.exists() && metaFileInfo.isFile()){
-            // If so then add the file using the tags in that sidecar file
-            QString val;
+    connect(folderScanner_, &FolderScanner::finished, scanThread_, &QThread::quit);
+    connect(scanThread_,    &QThread::finished, folderScanner_, &QObject::deleteLater);
+    connect(scanThread_,    &QThread::finished, scanThread_,    &QObject::deleteLater);
 
-            QFile metaFile;
-            metaFile.setFileName(fileInfo.absolutePath() + "/" + metaFileName);
-            metaFile.open(QIODevice::ReadOnly | QIODevice::Text);
-            val = metaFile.readAll();
-            metaFile.close();
-
-            QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
-            QJsonObject tagsJson = d.object();
-
-            addFile(fileInfo, tagsJson);
-
-        } else {
-            // Otherwise just add the file with no tags
-            addFile(fileInfo);
-        }
-    }
-    // Queue populating icons & EXIF data on another thread
-    backfillMetadata();
+    emit scanStarted();
+    scanThread_->start();
 }
 
 /*! \brief Returns true if the model currently contains at least one file.
@@ -509,6 +490,30 @@ void LuminismCore::onIconBatchFinished()
     emit batchFinished();
     iconGenerator_->deleteLater();
     iconGenerator_ = nullptr;
+}
+
+/*! \brief Receives a batch of scanned files from the background FolderScanner. */
+void LuminismCore::onScanBatch(QList<ScanItem> batch)
+{
+    for (const ScanItem &item : batch) {
+        if (item.hasJson)
+            addFile(item.fileInfo, item.tagsJson);
+        else
+            addFile(item.fileInfo);
+    }
+    emit scanProgress(tagged_files_->rowCount());
+}
+
+/*! \brief Called when the background FolderScanner finishes; kicks off icon generation. */
+void LuminismCore::onScanFinished()
+{
+    // The thread and scanner objects will self-destruct via deleteLater connections;
+    // null the pointers so cancelIconGeneration() doesn't try to use them again.
+    folderScanner_ = nullptr;
+    scanThread_    = nullptr;
+
+    backfillMetadata();
+    emit scanFinished(tagged_files_->rowCount());
 }
 
 /*! \brief Starts the UI flush timer if it is not already running. */

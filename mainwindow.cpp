@@ -64,6 +64,31 @@ MainWindow::MainWindow(QWidget *parent)
         progress_->finishProcess(MultiProgressBar::Process::IconGeneration);
     });
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
+
+    connect(core, &LuminismCore::scanStarted, this, [this]() {
+        progress_->startProcess(MultiProgressBar::Process::FolderScan, 0, 0, "Scanning…");
+    });
+    connect(core, &LuminismCore::scanProgress, this, [this](int n) {
+        progress_->startProcess(MultiProgressBar::Process::FolderScan, 0, 0,
+                                QString("Scanning… %L1 files").arg(n));
+    });
+    connect(core, &LuminismCore::scanFinished, this, [this](int total) {
+        progress_->finishProcess(MultiProgressBar::Process::FolderScan);
+        ui->dateEdit->setAvailableDates(core->getFileDates());
+        ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
+        if (!core->getLibraryTags()->isEmpty()) {
+            ui->navLibraryContainer->dismissWelcome();
+            ui->navFilterContainer->dismissWelcome();
+            ui->fileListTagAssignmentContainer->dismissWelcome();
+        }
+        refreshNavTagLibrary();
+        refreshTagAssignmentArea();
+        updateFolderStatsLabel();
+        progress_->startProcess(MultiProgressBar::Process::IconGeneration,
+                                0, core->getItemModel()->rowCount(),
+                                "Generating icons");
+        Q_UNUSED(total);
+    });
     connect(progress_, &MultiProgressBar::processFinished,
             this, [this](MultiProgressBar::Process p) {
         if (p == MultiProgressBar::Process::IconGeneration)
@@ -463,8 +488,6 @@ void MainWindow::loadFolder(const QString &folder)
     TagFamily::restartColorSequence();
 
     core->setRootDirectory(folder);
-    ui->dateEdit->setAvailableDates(core->getFileDates());
-    ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
 
     le->setText(folder);
     le->clearFocus();
@@ -478,18 +501,11 @@ void MainWindow::loadFolder(const QString &folder)
     connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
-    // If the loaded folder already has tags, skip the guided flow and reveal everything.
-    // Otherwise activate the welcome hints so they respond to user interaction.
-    bool hasTags = !core->getLibraryTags()->isEmpty();
-    if (hasTags) {
-        ui->navLibraryContainer->dismissWelcome();
-        ui->navFilterContainer->dismissWelcome();
-        ui->fileListTagAssignmentContainer->dismissWelcome();
-    } else {
-        ui->navLibraryContainer->activateWelcome();
-        ui->navFilterContainer->activateWelcome();
-        ui->fileListTagAssignmentContainer->activateWelcome();
-    }
+
+    // Activate welcome hints now; scanFinished will dismiss them if tags are found.
+    ui->navLibraryContainer->activateWelcome();
+    ui->navFilterContainer->activateWelcome();
+    ui->fileListTagAssignmentContainer->activateWelcome();
 
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
@@ -497,10 +513,8 @@ void MainWindow::loadFolder(const QString &folder)
     ui->filterStarRating->setEnabled(true);
     ui->previewStarRating->setEnabled(false);
     ui->fileListStarRating->setEnabled(true);
-    progress_->startProcess(MultiProgressBar::Process::IconGeneration,
-                            0, core->getItemModel()->rowCount(),
-                            "Generating icons");
-    updateFolderStatsLabel();
+    // Icon generation progress bar and folder stats are started from the
+    // scanFinished signal handler once the file count is known.
 }
 
 /*! \brief Rebuilds the tag-library navigation area from the current library tags. */

@@ -87,6 +87,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         framegrabber.h framegrabber.cpp
         perceptualhasher.h perceptualhasher.cpp
         starratingwidget.h starratingwidget.cpp
+        folderscanner.h folderscanner.cpp
 
     )
 

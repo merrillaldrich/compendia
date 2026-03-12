@@ -7,6 +7,7 @@
 #include <QStandardItemModel>
 #include <QMutex>
 #include <QTimer>
+#include <QThread>
 #include <QtConcurrent>
 #include <QMap>
 #include <QList>
@@ -17,6 +18,7 @@
 #include "filterproxymodel.h"
 #include "icongenerator.h"
 #include "taggedfile.h"
+#include "folderscanner.h"
 
 /*! \brief Central controller that owns all application data and business logic.
  *
@@ -44,6 +46,9 @@ private:
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
 
     IconGenerator *iconGenerator_ = nullptr;  ///< Active IconGenerator, or nullptr.
+    FolderScanner *folderScanner_ = nullptr;  ///< Active FolderScanner, or nullptr.
+    QThread       *scanThread_    = nullptr;  ///< Thread running folderScanner_, or nullptr.
+    int            scanGeneration_ = 0;       ///< Incremented on each new scan; guards stale callbacks.
 
     /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model.
      */
@@ -435,6 +440,15 @@ private slots:
     /*! \brief Called when IconGenerator finishes all files in the batch. */
     void onIconBatchFinished();
 
+    /*! \brief Receives a batch of scanned files and inserts them into the model on the main thread.
+     *
+     * \param batch List of ScanItems produced by the background FolderScanner.
+     */
+    void onScanBatch(QList<ScanItem> batch);
+
+    /*! \brief Called when FolderScanner finishes; starts icon generation and emits scanFinished(). */
+    void onScanFinished();
+
 signals:
     /*! \brief Emitted each time a thumbnail icon is applied to the model. */
     void iconUpdated();
@@ -444,6 +458,18 @@ signals:
     void tagLibraryChanged();
     /*! \brief Emitted once when the current icon generation batch is fully complete. */
     void batchFinished();
+    /*! \brief Emitted when a background folder scan begins. */
+    void scanStarted();
+    /*! \brief Emitted after each batch of files is added to the model during a scan.
+     *
+     * \param runningTotal Number of files added so far in this scan.
+     */
+    void scanProgress(int runningTotal);
+    /*! \brief Emitted when the background folder scan completes.
+     *
+     * \param total Total number of files added.
+     */
+    void scanFinished(int total);
 };
 
 #endif // LUMINISMCORE_H
