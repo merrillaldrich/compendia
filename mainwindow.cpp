@@ -77,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
 
     connect(core, &LuminismCore::scanStarted, this, [this]() {
+        folderStatsLabel_->clear();
         progress_->startProcess(MultiProgressBar::Process::FolderScan, 0, 0, "Scanning…");
     });
     connect(core, &LuminismCore::scanProgress, this, [this](int n) {
