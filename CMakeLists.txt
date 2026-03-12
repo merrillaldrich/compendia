@@ -36,8 +36,10 @@ else()
     set(LIBEXIF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/src")
     find_library(LIBEXIF_LIBRARY NAMES exif REQUIRED)
 
+    # Use system libheif (1.17.6) which has libde265/aom decoder plugins configured.
+    # The custom-built /usr/local/lib/libheif.so.1 lacks decoder plugins.
     set(LIBHEIF_INCLUDE_DIR "/usr/local/include")
-    find_library(LIBHEIF_LIBRARY NAMES heif PATHS /usr/local/lib REQUIRED)
+    set(LIBHEIF_LIBRARY "/usr/lib/x86_64-linux-gnu/libheif.so.1")
 endif()
 
 set(PROJECT_SOURCES
@@ -154,6 +156,14 @@ target_link_libraries(luminism PRIVATE ${LIBEXIF_LIBRARY})
 # Add libheif library from 3rdParty subdirectory
 target_include_directories(luminism PRIVATE ${LIBHEIF_INCLUDE_DIR})
 target_link_libraries(luminism PRIVATE ${LIBHEIF_LIBRARY})
+
+# On Linux, force the binary to prefer the system libheif (which has decoder plugins)
+# over /usr/local/lib/libheif.so.1 (built from source, no plugins).
+if(UNIX AND NOT APPLE)
+    set_target_properties(luminism PROPERTIES
+        BUILD_RPATH "/usr/lib/x86_64-linux-gnu"
+    )
+endif()
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
