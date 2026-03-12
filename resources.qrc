@@ -5,5 +5,7 @@
         <file>resources/splitter-grip.svg</file>
         <file>resources/splitter-grip-dark.svg</file>
         <file>resources/splitter-grip-dark-v.svg</file>
+        <file>resources/isolate-selection.svg</file>
+        <file>resources/clear-isolation.svg</file>
     </qresource>
 </RCC>

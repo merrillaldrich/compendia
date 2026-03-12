@@ -12,7 +12,9 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QDebug>
+#include <QDesktopServices>
 #include <QMenu>
+#include <QProcess>
 #include <QProgressDialog>
 
 #include "./ui_mainwindow.h"
@@ -312,11 +314,33 @@ MainWindow::MainWindow(QWidget *parent)
                 updateFileCountLabel();
                 refreshTagAssignmentArea();
             });
+
+            menu.addSeparator();
+
+            const QString fullPath = clickedTf->filePath + "/" + clickedTf->fileName;
+            QAction* showInFileMgrAction = menu.addAction(tr("Open Folder in Filesystem"));
+            connect(showInFileMgrAction, &QAction::triggered, this, [fullPath]() {
+#ifdef Q_OS_WIN
+                QProcess::startDetached("explorer.exe",
+                    {"/select,", QDir::toNativeSeparators(fullPath)});
+#elif defined(Q_OS_MACOS)
+                QProcess::startDetached("open", {"-R", fullPath});
+#else
+                QDesktopServices::openUrl(
+                    QUrl::fromLocalFile(QFileInfo(fullPath).absolutePath()));
+#endif
+            });
         }
 
         menu.addAction(ui->actionClearIsolation);
         menu.exec(ui->fileListView->viewport()->mapToGlobal(pos));
     });
+
+    // Isolation toolbar buttons — bind to the existing actions so enabled state is automatic.
+    ui->actionIsolateSelection->setIcon(QIcon(":/resources/isolate-selection.svg"));
+    ui->actionClearIsolation->setIcon(QIcon(":/resources/clear-isolation.svg"));
+    ui->isolateSelectionButton->setDefaultAction(ui->actionIsolateSelection);
+    ui->clearIsolationButton->setDefaultAction(ui->actionClearIsolation);
 
     // Default pane sizes
     resize(1400, 900);
