@@ -142,8 +142,8 @@ void IconGenerator::processFiles(const QStringList &absolutePaths)
     // --- Video handling ---
     QStringList videoGrabNeeded;
     for (const QString &path : videoPaths) {
-        if (videoCacheValid(path)) {
-            QVector<QImage> cached = loadVideoFromCache(path);
+        if (iconCacheValid(path)) {
+            QVector<QImage> cached = loadIconsFromCache(path);
             if (!cached.isEmpty())
                 emit fileReady(path, {}, cached, 0);
             else
@@ -316,7 +316,7 @@ IconGenerator::processImageFile(const QString &absolutePath)
  * \param absolutePath Absolute path to the source video file.
  * \return True if the full cache is valid.
  */
-bool IconGenerator::videoCacheValid(const QString &absolutePath)
+bool IconGenerator::iconCacheValid(const QString &absolutePath)
 {
     QFileInfo sourceInfo(absolutePath);
     for (int size : kIconSizes) {
@@ -332,7 +332,7 @@ bool IconGenerator::videoCacheValid(const QString &absolutePath)
  * \param absolutePath Absolute path to the source video file.
  * \return Loaded images ordered by kIconSizes, or an empty vector on any failure.
  */
-QVector<QImage> IconGenerator::loadVideoFromCache(const QString &absolutePath)
+QVector<QImage> IconGenerator::loadIconsFromCache(const QString &absolutePath)
 {
     QVector<QImage> images;
     for (int size : kIconSizes) {

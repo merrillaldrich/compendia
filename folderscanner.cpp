@@ -1,5 +1,8 @@
 #include "folderscanner.h"
 #include "constants.h"
+#include "icongenerator.h"
+#include "exifparser.h"
+#include "perceptualhasher.h"
 
 #include <QDirIterator>
 #include <QFile>
@@ -60,6 +63,19 @@ void FolderScanner::scan(const QString &rootPath)
                 metaFile.close();
                 item.tagsJson = d.object();
                 item.hasJson = true;
+            }
+        }
+
+        // Cache pre-screen: load icons now if all cache files are current.
+        // Files with a miss will be processed later by IconGenerator.
+        QString absPath = item.fileInfo.absoluteFilePath();
+        if (IconGenerator::iconCacheValid(absPath)) {
+            QVector<QImage> imgs = IconGenerator::loadIconsFromCache(absPath);
+            if (imgs.size() == IconGenerator::kIconSizes.size()) {
+                item.cachedImages  = std::move(imgs);
+                item.cachedExif    = ExifParser::getExifMap(absPath);
+                item.cachedPHash   = PerceptualHasher::computeHash(item.cachedImages.last());
+                item.hasCachedIcon = true;
             }
         }
 
