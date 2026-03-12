@@ -24,6 +24,7 @@ LuminismCore::LuminismCore(QObject *parent)
     tagged_files_ = new QStandardItemModel(this);
     tagged_files_proxy_ = new FilterProxyModel(this);
     tagged_files_proxy_->setSourceModel(tagged_files_);
+    tagged_files_proxy_->setSortCaseSensitivity(Qt::CaseInsensitive);
     tagged_files_proxy_->sort(0);
 
 }
@@ -246,6 +247,7 @@ void LuminismCore::loadRootDirectory(){
     tagged_files_ = new QStandardItemModel(this);
     tagged_files_proxy_ = new FilterProxyModel(this);
     tagged_files_proxy_->setSourceModel(tagged_files_);
+    tagged_files_proxy_->setSortCaseSensitivity(Qt::CaseInsensitive);
     tagged_files_proxy_->sort(0);
 
     // Start a background scan.  The generation counter is already up-to-date
