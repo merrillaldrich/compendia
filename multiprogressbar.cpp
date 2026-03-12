@@ -87,6 +87,24 @@ void MultiProgressBar::finishProcess(Process p)
     updateDisplay();
 }
 
+void MultiProgressBar::setLabel(Process p, const QString &label)
+{
+    if (!states_[p].active)
+        return;
+    states_[p].label = label;
+    updateDisplay();
+}
+
+int MultiProgressBar::value(Process p) const
+{
+    return states_.contains(p) ? states_[p].value : 0;
+}
+
+int MultiProgressBar::max(Process p) const
+{
+    return states_.contains(p) ? states_[p].max : 0;
+}
+
 /*! \brief Changes the label-cycling interval.
  *
  * \param ms Interval in milliseconds.

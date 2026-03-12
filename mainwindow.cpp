@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent)
         updateFolderStatsLabel();
         progress_->startProcess(MultiProgressBar::Process::IconGeneration,
                                 0, core->getItemModel()->rowCount(),
-                                "Generating icons");
+                                "Loading icons…");
         Q_UNUSED(total);
     });
     connect(progress_, &MultiProgressBar::processFinished,
@@ -1192,6 +1192,10 @@ void MainWindow::connectFileCountLabel()
 
 void MainWindow::onIconUpdated(){
     progress_->increment(MultiProgressBar::Process::IconGeneration);
+    int v = progress_->value(MultiProgressBar::Process::IconGeneration);
+    int m = progress_->max(MultiProgressBar::Process::IconGeneration);
+    progress_->setLabel(MultiProgressBar::Process::IconGeneration,
+                        QString("Loading icons… %L1 / %L2").arg(v).arg(m));
 }
 
 /*! \brief Advances the save progress bar when a metadata file is written. */

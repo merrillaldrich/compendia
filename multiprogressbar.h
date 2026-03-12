@@ -57,6 +57,20 @@ public:
      */
     void finishProcess(Process p);
 
+    /*! \brief Updates the label text for an active process without resetting its counters.
+     *
+     * Does nothing if the process is not currently active.
+     * \param p     The process whose label to update.
+     * \param label The new label text.
+     */
+    void setLabel(Process p, const QString &label);
+
+    /*! \brief Returns the current progress value for \p p, or 0 if not active. */
+    int value(Process p) const;
+
+    /*! \brief Returns the maximum progress value for \p p, or 0 if not active. */
+    int max(Process p) const;
+
     /*! \brief Changes the label-cycling interval.
      *
      * \param ms Interval in milliseconds; default is 2000.
