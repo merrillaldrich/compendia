@@ -55,6 +55,17 @@ public:
      *  and sorts tags within each family alphabetically by tag name. */
     void sort();
 
+    /*! \brief Shows only tag families and tags whose name starts with \p text.
+     *
+     * When \p text is empty all tags and families are shown.  Otherwise each
+     * TagWidget is shown only if its tag name contains \p text
+     * (case-insensitive), and a TagFamilyWidget is shown only when at least
+     * one of its child TagWidgets is visible.
+     *
+     * \param text The prefix to filter on.
+     */
+    void filter(const QString &text);
+
 protected:
 
 signals:

@@ -1,4 +1,5 @@
 #include "tagcontainer.h"
+#include <QLayout>
 
 /*! \brief Constructs an empty TagContainer.
  *
@@ -92,6 +93,41 @@ void TagContainer::clear(){
  */
 void TagContainer::onTagDeleteRequested(Tag* tag){
     emit tagDeleteRequested(tag);
+}
+
+/*! \brief Shows only families and tags whose tag name starts with \p text. */
+void TagContainer::filter(const QString &text) {
+    const QList<TagFamilyWidget*> families =
+        findChildren<TagFamilyWidget*>(Qt::FindDirectChildrenOnly);
+
+    for (TagFamilyWidget *fw : families) {
+        const QList<TagWidget*> tags =
+            fw->findChildren<TagWidget*>(Qt::FindDirectChildrenOnly);
+
+        bool anyVisible = false;
+        for (TagWidget *tw : tags) {
+            const bool matches = text.isEmpty() ||
+                tw->getTag()->getName().contains(text, Qt::CaseInsensitive);
+            tw->setVisible(matches);
+            if (matches)
+                anyVisible = true;
+        }
+
+        const bool showFamily = text.isEmpty() || anyVisible;
+        fw->setVisible(showFamily);
+
+        if (showFamily) {
+            fw->layout()->invalidate();
+            fw->layout()->activate();
+            const int needed = qMax(64, fw->layout()->heightForWidth(fw->contentsRect().width()) + 4);
+            fw->setMinimumHeight(needed);
+            fw->updateGeometry();
+        }
+    }
+
+    layout()->invalidate();
+    layout()->activate();
+    updateGeometry();
 }
 
 /*! \brief Sorts all TagFamilyWidget children alphabetically by family name,

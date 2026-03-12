@@ -45,8 +45,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set up container welcome hints (FlowLayout is installed by WelcomeHintContainer constructor)
     ui->navLibraryContainer->setupWelcome(
-        ui->navLibraryScrollArea, ui->navSplitter, 2,
+        ui->navLibraryScrollArea,
+        qobject_cast<QVBoxLayout*>(ui->navLibrarySection->layout()), 1,
         "<b>Click here</b> to create groups of tags to organize your images.");
+
+    // Tag library search box
+    ui->tagSearchLineEdit->addAction(
+        QIcon(":/resources/tag-search.svg"), QLineEdit::LeadingPosition);
+    connect(ui->tagSearchLineEdit, &QLineEdit::textChanged,
+            this, [this](const QString &text) {
+        ui->navLibraryContainer->filter(text);
+    });
     ui->navFilterContainer->setupWelcome(
         ui->navFilterScrollArea,
         qobject_cast<QVBoxLayout *>(ui->navFilterSection->layout()), 2,
