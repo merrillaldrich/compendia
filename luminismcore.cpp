@@ -207,6 +207,17 @@ void LuminismCore::setRootDirectory(QString path){
     loadRootDirectory();
 }
 
+void LuminismCore::cancelIconGeneration(){
+    if (iconGenerator_) {
+        iconGenerator_->disconnect();
+        iconGenerator_->deleteLater();
+        iconGenerator_ = nullptr;
+    }
+    uiFlushTimer_.stop();
+    QMutexLocker lock(&resultsMutex_);
+    results_.clear();
+}
+
 /*! \brief Clears all existing data and reloads files from the current root directory. */
 void LuminismCore::loadRootDirectory(){
 

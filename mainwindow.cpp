@@ -451,6 +451,8 @@ void MainWindow::loadFolder(const QString &folder)
     if (!confirmCacheFolder(folder))
         return;
 
+    core->cancelIconGeneration();
+
     QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
     QListView* lv = ui->fileListView;
 
@@ -1568,6 +1570,8 @@ void MainWindow::on_actionQuit_triggered()
  */
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    core->cancelIconGeneration();
+
     if (!core->hasUnsavedChanges()) {
         event->accept();
         return;

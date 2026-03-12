@@ -80,6 +80,12 @@ public:
      */
     void setRootDirectory(QString path);
 
+    /*! \brief Stops in-flight icon generation and discards any queued results.
+     *
+     * Does not affect in-progress metadata saves.
+     */
+    void cancelIconGeneration();
+
     /*! \brief Clears all existing data and reloads files from the current root directory. */
     void loadRootDirectory();
 
