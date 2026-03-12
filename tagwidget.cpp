@@ -287,6 +287,7 @@ void TagWidget::adjustCustomWidth(){
             setFixedWidth(36);
         }
         updateGeometry();
+        emit widthChangedDuringEdit();
     }
     update();
 }
