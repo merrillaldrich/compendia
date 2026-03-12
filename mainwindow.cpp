@@ -12,7 +12,9 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QDebug>
+#include <QDesktopServices>
 #include <QMenu>
+#include <QProcess>
 #include <QProgressDialog>
 
 #include "./ui_mainwindow.h"
@@ -311,6 +313,22 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->actionClearIsolation->setEnabled(true);
                 updateFileCountLabel();
                 refreshTagAssignmentArea();
+            });
+
+            menu.addSeparator();
+
+            const QString fullPath = clickedTf->filePath + "/" + clickedTf->fileName;
+            QAction* showInFileMgrAction = menu.addAction(tr("Open Folder in Filesystem"));
+            connect(showInFileMgrAction, &QAction::triggered, this, [fullPath]() {
+#ifdef Q_OS_WIN
+                QProcess::startDetached("explorer.exe",
+                    {"/select,", QDir::toNativeSeparators(fullPath)});
+#elif defined(Q_OS_MACOS)
+                QProcess::startDetached("open", {"-R", fullPath});
+#else
+                QDesktopServices::openUrl(
+                    QUrl::fromLocalFile(QFileInfo(fullPath).absolutePath()));
+#endif
             });
         }
 
