@@ -561,7 +561,22 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="previewWidget" native="true">
+       <widget class="QScrollArea" name="previewScrollArea">
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="previewWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>300</width>
+          <height>200</height>
+         </rect>
+        </property>
         <layout class="QFormLayout" name="formLayout">
          <item row="0" column="0">
           <widget class="QLabel" name="previewFileNameLabel">
@@ -579,7 +594,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLabel" name="previewFileNameValue">
+          <widget class="WrapLabel" name="previewFileNameValue">
            <property name="text">
             <string>File</string>
            </property>
@@ -604,15 +619,12 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLabel" name="previewFileLocationValue">
+          <widget class="WrapLabel" name="previewFileLocationValue">
            <property name="text">
             <string>Location</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -632,7 +644,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLabel" name="previewImageCapturedValue">
+          <widget class="WrapLabel" name="previewImageCapturedValue">
            <property name="text">
             <string>Captured</string>
            </property>
@@ -657,7 +669,7 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QLabel" name="previewFileCreatedValue">
+          <widget class="WrapLabel" name="previewFileCreatedValue">
            <property name="text">
             <string>Created</string>
            </property>
@@ -682,7 +694,7 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QLabel" name="previewFileModifiedValue">
+          <widget class="WrapLabel" name="previewFileModifiedValue">
            <property name="text">
             <string>Modified</string>
            </property>
@@ -707,7 +719,7 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QLabel" name="previewFileNameTimestampValue">
+          <widget class="WrapLabel" name="previewFileNameTimestampValue">
            <property name="text">
             <string>Timestamp</string>
            </property>
@@ -732,15 +744,12 @@
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QLabel" name="previewFileTagsValue">
+          <widget class="WrapLabel" name="previewFileTagsValue">
            <property name="text">
             <string>Tags</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -760,15 +769,12 @@
           </widget>
          </item>
          <item row="7" column="1">
-          <widget class="QLabel" name="previewExifValue">
+          <widget class="WrapLabel" name="previewExifValue">
            <property name="text">
             <string>EXIF Properties</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -776,10 +782,11 @@
        </widget>
       </widget>
      </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -909,6 +916,11 @@
   </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>WrapLabel</class>
+   <extends>QLabel</extends>
+   <header>wraplabel.h</header>
+  </customwidget>
   <customwidget>
    <class>TagAssignmentContainer</class>
    <extends>QWidget</extends>
