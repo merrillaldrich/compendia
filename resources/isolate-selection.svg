@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 24" width="40" height="24">
+  <!-- Left bracket [ -->
+  <path d="M 8,5 L 5,5 L 5,19 L 8,19" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+  <!-- Document 1 at x=11 -->
+  <path d="M 11,5 L 16,5 L 19,8 L 19,19 L 11,19 Z" fill="#c0c0c0"/>
+  <path d="M 16,5 L 19,8 L 16,8 Z" fill="#a0a0a0"/>
+  <!-- Document 2 at x=21 -->
+  <path d="M 21,5 L 26,5 L 29,8 L 29,19 L 21,19 Z" fill="#c0c0c0"/>
+  <path d="M 26,5 L 29,8 L 26,8 Z" fill="#a0a0a0"/>
+  <!-- Right bracket ] -->
+  <path d="M 32,5 L 35,5 L 35,19 L 32,19" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

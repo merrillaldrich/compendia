@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 24" width="40" height="24">
+  <!-- Left asterisk half: 3 lines radiating leftward, inner ends spread apart -->
+  <line x1="8" y1="12" x2="2" y2="12" stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="7" y1="9"  x2="3" y2="7"  stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="7" y1="15" x2="3" y2="17" stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Document 1 at x=11 -->
+  <path d="M 11,5 L 16,5 L 19,8 L 19,19 L 11,19 Z" fill="#c0c0c0"/>
+  <path d="M 16,5 L 19,8 L 16,8 Z" fill="#a0a0a0"/>
+  <!-- Document 2 at x=21 -->
+  <path d="M 21,5 L 26,5 L 29,8 L 29,19 L 21,19 Z" fill="#c0c0c0"/>
+  <path d="M 26,5 L 29,8 L 26,8 Z" fill="#a0a0a0"/>
+  <!-- Right asterisk half: 3 lines radiating rightward, inner ends spread apart -->
+  <line x1="32" y1="12" x2="38" y2="12" stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="33" y1="9"  x2="37" y2="7"  stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="33" y1="15" x2="37" y2="17" stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

@@ -336,6 +336,12 @@ MainWindow::MainWindow(QWidget *parent)
         menu.exec(ui->fileListView->viewport()->mapToGlobal(pos));
     });
 
+    // Isolation toolbar buttons — bind to the existing actions so enabled state is automatic.
+    ui->actionIsolateSelection->setIcon(QIcon(":/resources/isolate-selection.svg"));
+    ui->actionClearIsolation->setIcon(QIcon(":/resources/clear-isolation.svg"));
+    ui->isolateSelectionButton->setDefaultAction(ui->actionIsolateSelection);
+    ui->clearIsolationButton->setDefaultAction(ui->actionClearIsolation);
+
     // Default pane sizes
     resize(1400, 900);
 
