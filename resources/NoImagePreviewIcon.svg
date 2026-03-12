@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 200" width="300" height="400">
+  <!-- Document body: portrait rect with rounded corners, top-right corner folded -->
+  <path d="M 12 18
+           Q 12 12 18 12
+           L 108 12
+           L 138 42
+           L 138 182
+           Q 138 188 132 188
+           L 18 188
+           Q 12 188 12 182
+           Z"
+        fill="#C8C8C8"/>
+  <!-- Fold flap triangle: slightly darker to suggest the turned-over corner -->
+  <path d="M 108 12 L 138 42 L 108 42 Z"
+        fill="#B0B0B0"/>
+</svg>

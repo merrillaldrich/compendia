@@ -43,7 +43,7 @@ private:
     QVector<std::tuple<QString, QString, QMap<QString, QString>, QVector<QImage>, quint64>> results_; // fileName, path, EXIF dict, images, pHash
     QTimer uiFlushTimer_;
 
-    QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.png");
+    QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.svg");
 
     IconGenerator *iconGenerator_ = nullptr;  ///< Active IconGenerator, or nullptr.
     FolderScanner *folderScanner_ = nullptr;  ///< Active FolderScanner, or nullptr.

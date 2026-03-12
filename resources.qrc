@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/NoImagePreviewIcon.png</file>
+        <file>resources/NoImagePreviewIcon.svg</file>
         <file>resources/luminism.qss</file>
         <file>resources/splitter-grip.svg</file>
         <file>resources/splitter-grip-dark.svg</file>
