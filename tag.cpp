@@ -43,6 +43,12 @@ bool Tag::dirtyFlag() const
     return dirty_flag_;
 }
 
+/*! \brief Sets the dirty flag to force the tag to be treated as modified. */
+void Tag::markDirty()
+{
+    dirty_flag_ = true;
+}
+
 /*! \brief Clears the dirty flag after changes have been persisted. */
 void Tag::clearDirtyFlag()
 {

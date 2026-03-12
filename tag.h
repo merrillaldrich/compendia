@@ -54,6 +54,9 @@ public:
      */
     bool dirtyFlag() const;
 
+    /*! \brief Sets the dirty flag to force the tag to be treated as modified. */
+    void markDirty();
+
     /*! \brief Clears the dirty flag after changes have been persisted. */
     void clearDirtyFlag();
 

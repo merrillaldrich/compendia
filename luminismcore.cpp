@@ -1203,6 +1203,7 @@ void LuminismCore::mergeTagFamily(TagFamily* from, TagFamily* into)
             mergeTag(t, collision);   // handles file re-routing and deletion
         } else {
             t->tagFamily = into;
+            t->markDirty();
         }
     }
 
