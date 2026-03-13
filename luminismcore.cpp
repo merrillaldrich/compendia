@@ -10,6 +10,8 @@
 #include <QDebug>
 #include <QIcon>
 #include <QSet>
+#include <QRunnable>
+#include <QThreadPool>
 
 /*! \brief Constructs LuminismCore and initialises empty model and tag-library containers.
  *
@@ -52,7 +54,11 @@ void LuminismCore::flushIconGeneratorQueue(){
     }
 }
 
-/*! \brief Applies icon images, EXIF data, and pHash directly to a model item. */
+/*! \brief Applies icon images, EXIF data, and pHash directly to a model item.
+ *
+ * The icon is stored in the LRU pool (iconPool_) rather than on the item, so
+ * that total icon memory remains bounded regardless of folder size.
+ */
 void LuminismCore::applyIconDataToItem(QStandardItem *item,
                                        const QVector<QImage> &images,
                                        const QMap<QString, QString> &exifMap,
@@ -73,7 +79,11 @@ void LuminismCore::applyIconDataToItem(QStandardItem *item,
         painter.end();
         icon.addPixmap(square);
     }
-    item->setIcon(icon);
+
+    // Store in the LRU pool instead of on the item, keeping memory bounded.
+    const QString path = tf->filePath + "/" + tf->fileName;
+    pendingIconLoads_.remove(path);
+    iconPool_.insert(path, new QIcon(icon), 1);
 
     QString captureDateString = exifMap["DateTime"];
     QDateTime captureDateTime = QDateTime::fromString(captureDateString, "yyyy:MM:dd HH:mm:ss");
@@ -85,6 +95,11 @@ void LuminismCore::applyIconDataToItem(QStandardItem *item,
         tf->setExifMap(exifMap);
     if (pHash != 0)
         tf->setPHash(pHash);
+
+    // Notify the view to repaint this item so the delegate picks up the new icon.
+    QModelIndex idx = tagged_files_->indexFromItem(item);
+    if (idx.isValid())
+        emit tagged_files_->dataChanged(idx, idx, {Qt::DecorationRole});
 }
 
 /*! \brief Applies generated thumbnails and EXIF data to the matching model item.
@@ -164,12 +179,76 @@ void LuminismCore::updateFileIcons(const QString &absoluteFilePath, const QVecto
             painter.end();
             icon.addPixmap(square);
         }
-        candidate->setIcon(icon);
+        iconPool_.insert(absoluteFilePath, new QIcon(icon), 1);
+        QModelIndex idx = tagged_files_->indexFromItem(candidate);
+        if (idx.isValid())
+            emit tagged_files_->dataChanged(idx, idx, {Qt::DecorationRole});
         emit iconUpdated();
         return;
     }
 
     qDebug() << "updateFileIcons: could not match path for" << absoluteFilePath;
+}
+
+/*! \brief Returns the cached QIcon for \p absoluteFilePath from the LRU pool.
+ *
+ * If not in the pool, schedules an async disk read and returns a null QIcon.
+ */
+QIcon LuminismCore::iconForPath(const QString &absoluteFilePath)
+{
+    if (QIcon *cached = iconPool_.object(absoluteFilePath))
+        return *cached;
+
+    scheduleIconLoad(absoluteFilePath);
+    return QIcon();
+}
+
+/*! \brief Schedules a background disk read for the cached thumbnails of \p path. */
+void LuminismCore::scheduleIconLoad(const QString &path)
+{
+    if (pendingIconLoads_.contains(path))
+        return;
+    pendingIconLoads_.insert(path);
+
+    auto *runnable = QRunnable::create([this, path]() {
+        if (!IconGenerator::iconCacheValid(path))
+            return;
+
+        QVector<QImage> imgs = IconGenerator::loadIconsFromCache(path);
+        if (imgs.size() != IconGenerator::kIconSizes.size())
+            return;
+
+        // Build the QIcon and update the pool on the main thread (QPixmap is GUI-only).
+        QMetaObject::invokeMethod(this, [this, path, imgs]() {
+            pendingIconLoads_.remove(path);
+
+            QIcon icon;
+            for (const QImage &image : imgs) {
+                int sz = qMax(image.width(), image.height());
+                QPixmap square(sz, sz);
+                square.fill(Qt::transparent);
+                QPainter painter(&square);
+                painter.drawImage((sz - image.width()) / 2, (sz - image.height()) / 2, image);
+                painter.end();
+                icon.addPixmap(square);
+            }
+            iconPool_.insert(path, new QIcon(icon), 1);
+
+            const QString fileName = QFileInfo(path).fileName();
+            const auto matches = tagged_files_->findItems(fileName);
+            for (QStandardItem *item : matches) {
+                TaggedFile *tf = item->data(Qt::UserRole + 1).value<TaggedFile*>();
+                if (tf && (tf->filePath + "/" + tf->fileName) == path) {
+                    QModelIndex idx = tagged_files_->indexFromItem(item);
+                    if (idx.isValid())
+                        emit tagged_files_->dataChanged(idx, idx, {Qt::DecorationRole});
+                    break;
+                }
+            }
+        });
+    });
+    runnable->setAutoDelete(true);
+    QThreadPool::globalInstance()->start(runnable);
 }
 
 /*! \brief Applies video container metadata to the TaggedFile for \p absoluteFilePath.
@@ -253,6 +332,8 @@ void LuminismCore::loadRootDirectory(){
     tagged_files_proxy_->setSourceModel(tagged_files_);
     tagged_files_proxy_->setSortCaseSensitivity(Qt::CaseInsensitive);
     uncachedPaths_.clear();
+    iconPool_.clear();
+    pendingIconLoads_.clear();
 
     // Start a background scan.  The generation counter is already up-to-date
     // because cancelIconGeneration() incremented it; capture the current value
@@ -504,11 +585,18 @@ void LuminismCore::onScanBatch(QList<ScanItem> batch)
             addFile(item.fileInfo);
 
         if (item.hasCachedIcon) {
-            // Item was just appended — it is always the last row.
+            // Valid cache on disk: the delegate will load the icon on demand.
+            // Apply EXIF now so date-based sorting/filtering is correct immediately.
             QStandardItem *si = tagged_files_->item(tagged_files_->rowCount() - 1);
-            if (si) {
-                applyIconDataToItem(si, item.cachedImages, item.cachedExif, item.cachedPHash);
-                emit iconUpdated();
+            if (si && !item.cachedExif.isEmpty()) {
+                TaggedFile *tf = si->data(Qt::UserRole + 1).value<TaggedFile*>();
+                if (tf) {
+                    tf->initExifMap(item.cachedExif);
+                    QDateTime dt = QDateTime::fromString(item.cachedExif["DateTime"],
+                                                         "yyyy:MM:dd HH:mm:ss");
+                    if (dt.isValid())
+                        tf->imageCaptureDateTime = dt;
+                }
             }
         } else {
             uncachedPaths_ << item.fileInfo.absoluteFilePath();

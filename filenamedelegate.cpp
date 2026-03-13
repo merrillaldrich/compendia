@@ -1,4 +1,6 @@
 #include "filenamedelegate.h"
+#include "luminismcore.h"
+#include "taggedfile.h"
 #include <QPainter>
 #include <QApplication>
 
@@ -6,8 +8,9 @@
  *
  * \param parent Optional Qt parent object.
  */
-FileNameDelegate::FileNameDelegate(QObject *parent)
+FileNameDelegate::FileNameDelegate(LuminismCore *core, QObject *parent)
     : QStyledItemDelegate(parent)
+    , core_(core)
 {
 }
 
@@ -107,6 +110,18 @@ void FileNameDelegate::initStyleOption(QStyleOptionViewItem *option,
 {
     QStyledItemDelegate::initStyleOption(option, index);
     option->text.clear();
+
+    // Inject the LRU-pool icon here so it survives QStyledItemDelegate::paint()'s
+    // internal initStyleOption() call, which would otherwise overwrite any icon
+    // we set on opt between initStyleOption and paint in paint().
+    if (core_) {
+        TaggedFile *tf = index.data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf) {
+            QIcon poolIcon = core_->iconForPath(tf->filePath + "/" + tf->fileName);
+            if (!poolIcon.isNull())
+                option->icon = poolIcon;
+        }
+    }
 }
 
 /*! \brief Paints an item: icon via the base class, then wrapped filename text below it.

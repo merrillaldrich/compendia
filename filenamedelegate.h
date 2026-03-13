@@ -5,6 +5,8 @@
 #include <QFontMetrics>
 #include <QStringList>
 
+class LuminismCore;
+
 /*! \brief Item delegate that renders filenames as wrapped multi-line text beneath each icon.
  *
  * The model data (Qt::DisplayRole) is never modified; wrapping is computed at
@@ -12,6 +14,10 @@
  * are preferred; character-level hard breaks are used only when a single token
  * exceeds the cell width on its own.  Output is capped at three lines, with an
  * ellipsis appended if the full name does not fit.
+ *
+ * The delegate looks up icons from LuminismCore::iconForPath() rather than from
+ * Qt::DecorationRole, so that the LRU icon pool in LuminismCore remains the sole
+ * source of truth for loaded thumbnails.
  */
 class FileNameDelegate : public QStyledItemDelegate
 {
@@ -20,9 +26,10 @@ class FileNameDelegate : public QStyledItemDelegate
 public:
     /*! \brief Constructs a FileNameDelegate.
      *
+     * \param core   LuminismCore instance used for on-demand icon lookup.
      * \param parent Optional Qt parent object.
      */
-    explicit FileNameDelegate(QObject *parent = nullptr);
+    explicit FileNameDelegate(LuminismCore *core, QObject *parent = nullptr);
 
     /*! \brief Paints an item: icon via the base class, then wrapped filename text below it.
      *
@@ -57,6 +64,9 @@ public:
     static QStringList wrapFileName(const QString &name,
                                     const QFontMetrics &fm,
                                     int maxWidth);
+
+private:
+    LuminismCore *core_ = nullptr;
 
 protected:
     /*! \brief Populates \a option from the model and then clears the text field.

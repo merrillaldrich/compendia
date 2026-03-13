@@ -2,7 +2,6 @@
 #include "constants.h"
 #include "icongenerator.h"
 #include "exifparser.h"
-#include "perceptualhasher.h"
 
 #include <QDirIterator>
 #include <QFile>
@@ -66,17 +65,13 @@ void FolderScanner::scan(const QString &rootPath)
             }
         }
 
-        // Cache pre-screen: load icons now if all cache files are current.
-        // Files with a miss will be processed later by IconGenerator.
+        // Cache pre-screen: if valid cache files exist the icon will be loaded
+        // on demand by the LRU pool; only EXIF is extracted here so the file
+        // can skip IconGenerator entirely.
         QString absPath = item.fileInfo.absoluteFilePath();
         if (IconGenerator::iconCacheValid(absPath)) {
-            QVector<QImage> imgs = IconGenerator::loadIconsFromCache(absPath);
-            if (imgs.size() == IconGenerator::kIconSizes.size()) {
-                item.cachedImages  = std::move(imgs);
-                item.cachedExif    = ExifParser::getExifMap(absPath);
-                item.cachedPHash   = PerceptualHasher::computeHash(item.cachedImages.last());
-                item.hasCachedIcon = true;
-            }
+            item.cachedExif    = ExifParser::getExifMap(absPath);
+            item.hasCachedIcon = true;
         }
 
         batch.append(item);

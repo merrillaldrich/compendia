@@ -369,7 +369,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // Install multi-line filename delegate on the file list view
-    ui->fileListView->setItemDelegate(new FileNameDelegate(ui->fileListView));
+    ui->fileListView->setItemDelegate(new FileNameDelegate(core, ui->fileListView));
 
     // on_iconZoomSlider_valueChanged is auto-connected after setupUi sets the slider
     // value, so the initial grid height is never updated from the .ui default.

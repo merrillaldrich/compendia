@@ -13,6 +13,10 @@
 #include <QList>
 #include <QVector>
 #include <QImage>
+#include <QCache>
+#include <QIcon>
+#include <QSet>
+#include <QString>
 
 #include "tagset.h"
 #include "filterproxymodel.h"
@@ -45,6 +49,11 @@ private:
 
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.svg");
 
+    /// LRU pool: holds at most kIconPoolCapacity QIcon objects keyed by absolute file path.
+    QCache<QString, QIcon> iconPool_{500};
+    /// Paths for which an async disk read is already in flight; guards against double-scheduling.
+    QSet<QString> pendingIconLoads_;
+
     IconGenerator *iconGenerator_ = nullptr;  ///< Active IconGenerator, or nullptr.
     QStringList uncachedPaths_;  ///< Paths with no icon cache; populated by onScanBatch, consumed by backfillMetadata.
     FolderScanner *folderScanner_ = nullptr;  ///< Active FolderScanner, or nullptr.
@@ -76,6 +85,14 @@ private:
                              const QVector<QImage> &images,
                              const QMap<QString, QString> &exifMap,
                              quint64 pHash);
+
+    /*! \brief Schedules a background disk read for the cached thumbnails of \p path.
+     *
+     * No-op if a read is already in flight.  When the read completes the icon is
+     * inserted into \c iconPool_ and \c dataChanged is emitted for the item so the
+     * view repaints.
+     */
+    void scheduleIconLoad(const QString &path);
 
 public:
 
@@ -371,6 +388,17 @@ public:
      * \return A list of TagSet values parsed from the JSON.
      */
     QList<TagSet> parseTagJson(QJsonObject tagsJson, QJsonObject tagRectsJson = QJsonObject());
+
+    /*! \brief Returns the cached \c QIcon for \p absoluteFilePath from the LRU pool.
+     *
+     * If the icon is not currently in the pool a background disk read is scheduled
+     * and a null \c QIcon is returned; the delegate will fall back to the placeholder.
+     * Once the disk read completes \c dataChanged is emitted so the view repaints.
+     *
+     * \param absoluteFilePath Absolute path to the source file.
+     * \return The cached \c QIcon, or a null \c QIcon when not yet loaded.
+     */
+    QIcon iconForPath(const QString &absoluteFilePath);
 
     /*! \brief Updates the in-memory icon for the file at \p absoluteFilePath using the provided images.
      *

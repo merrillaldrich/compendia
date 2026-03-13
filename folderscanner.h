@@ -6,9 +6,8 @@
 #include <QJsonObject>
 #include <QAtomicInt>
 #include <QList>
-#include <QVector>
-#include <QImage>
 #include <QMap>
+#include <QString>
 
 /*! \brief Holds the per-file data produced during a background directory scan. */
 struct ScanItem {
@@ -17,11 +16,10 @@ struct ScanItem {
     bool        hasJson = false;
 
     // Populated during scan when all icon cache files are valid.
-    // Empty/zero on a cache miss — those paths go to IconGenerator.
-    QVector<QImage>        cachedImages;   ///< All kIconSizes thumbnails, or empty.
-    QMap<QString, QString> cachedExif;     ///< EXIF from cache, or empty.
-    quint64                cachedPHash = 0;
+    // hasCachedIcon = true means the file can skip IconGenerator entirely;
+    // its icon will be loaded on demand by the LRU pool / delegate.
     bool                   hasCachedIcon = false;
+    QMap<QString, QString> cachedExif;   ///< EXIF extracted from the source file; empty on cache miss.
 };
 
 Q_DECLARE_METATYPE(QList<ScanItem>)
