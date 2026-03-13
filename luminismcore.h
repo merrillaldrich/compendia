@@ -473,9 +473,10 @@ signals:
     void scanProgress(int runningTotal);
     /*! \brief Emitted when the background folder scan completes.
      *
-     * \param total Total number of files added.
+     * \param total   Total number of files added.
+     * \param toCache Number of files queued for icon generation (cache misses).
      */
-    void scanFinished(int total);
+    void scanFinished(int total, int toCache);
 };
 
 #endif // LUMINISMCORE_H

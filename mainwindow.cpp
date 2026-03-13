@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
         progress_->startProcess(MultiProgressBar::Process::FolderScan, 0, 0,
                                 QString("Scanning… %L1 files").arg(n));
     });
-    connect(core, &LuminismCore::scanFinished, this, [this](int total) {
+    connect(core, &LuminismCore::scanFinished, this, [this](int total, int toCache) {
         progress_->finishProcess(MultiProgressBar::Process::FolderScan);
         ui->dateEdit->setAvailableDates(core->getFileDates());
         ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
@@ -97,8 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
         refreshTagAssignmentArea();
         updateFolderStatsLabel();
         progress_->startProcess(MultiProgressBar::Process::IconGeneration,
-                                0, core->getItemModel()->rowCount(),
-                                "Loading icons…");
+                                0, toCache,
+                                "Caching icons…");
         Q_UNUSED(total);
     });
     connect(progress_, &MultiProgressBar::processFinished,
@@ -1127,7 +1127,7 @@ void MainWindow::onNavLibraryContainerTagDeleteRequested(Tag* tag){
         mb.setIcon(QMessageBox::Warning);
         mb.setWindowTitle("Delete tag");
         mb.setTextFormat(Qt::RichText);
-        mb.setText(QString("This will remove the tag %1 from <b>all %2</b> files in the folder. Proceed?")
+        mb.setText(QString("This will remove the tag %1 from <b>%2</b> files in the folder. Proceed?")
                        .arg(label).arg(affected));
         mb.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
         mb.setDefaultButton(QMessageBox::Cancel);
@@ -1229,7 +1229,7 @@ void MainWindow::onIconUpdated(){
     int v = progress_->value(MultiProgressBar::Process::IconGeneration);
     int m = progress_->max(MultiProgressBar::Process::IconGeneration);
     progress_->setLabel(MultiProgressBar::Process::IconGeneration,
-                        QString("Loading icons… %L1 / %L2").arg(v).arg(m));
+                        QString("Caching icons… %L1 / %L2").arg(v).arg(m));
 }
 
 /*! \brief Advances the save progress bar when a metadata file is written. */

@@ -525,9 +525,10 @@ void LuminismCore::onScanFinished()
     folderScanner_ = nullptr;
     scanThread_    = nullptr;
 
+    int toCache = uncachedPaths_.size();
     backfillMetadata();
     tagged_files_proxy_->sort(0);
-    emit scanFinished(tagged_files_->rowCount());
+    emit scanFinished(tagged_files_->rowCount(), toCache);
 }
 
 /*! \brief Starts the UI flush timer if it is not already running. */
