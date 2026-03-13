@@ -128,6 +128,10 @@ Signals</h2></td></tr>
 <tr class="memdesc:a1d3fa53f2f5ad9b93b553431bce2c67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user clicks the close button to remove the tag.  <br /></td></tr>
 <tr class="memitem:ac5b6dedfc17ed661099ebad0978cdac8" id="r_ac5b6dedfc17ed661099ebad0978cdac8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5b6dedfc17ed661099ebad0978cdac8">tagNameChanged</a> (<a class="el" href="class_tag.html">Tag</a> *t)</td></tr>
 <tr class="memdesc:ac5b6dedfc17ed661099ebad0978cdac8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted after the tag name has been successfully changed.  <br /></td></tr>
+<tr class="memitem:a87de96e46053a38ef0003af95872b9c0" id="r_a87de96e46053a38ef0003af95872b9c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a87de96e46053a38ef0003af95872b9c0">abandonRequested</a> (<a class="el" href="class_tag_widget.html">TagWidget</a> *tw)</td></tr>
+<tr class="memdesc:a87de96e46053a38ef0003af95872b9c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a newly created tag is abandoned without entering a name.  <br /></td></tr>
+<tr class="memitem:a2f09a27f47713458af3fc05b4f7d926f" id="r_a2f09a27f47713458af3fc05b4f7d926f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f09a27f47713458af3fc05b4f7d926f">widthChangedDuringEdit</a> ()</td></tr>
+<tr class="memdesc:a2f09a27f47713458af3fc05b4f7d926f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever this widget's fixed width changes (both during and after editing).  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -236,6 +240,39 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a87de96e46053a38ef0003af95872b9c0" name="a87de96e46053a38ef0003af95872b9c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87de96e46053a38ef0003af95872b9c0">&#9670;&#160;</a></span>abandonRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagWidget::abandonRequested </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag_widget.html">TagWidget</a> *</td>          <td class="paramname"><span class="paramname"><em>tw</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when a newly created tag is abandoned without entering a name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tw</td><td>This <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a>, so the parent can clean it up. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af9fde8396dc704d7b7233970e3fda9fe" name="af9fde8396dc704d7b7233970e3fda9fe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af9fde8396dc704d7b7233970e3fda9fe">&#9670;&#160;</a></span>adjustCustomWidth()</h2>
 
@@ -540,6 +577,34 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a2f09a27f47713458af3fc05b4f7d926f" name="a2f09a27f47713458af3fc05b4f7d926f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f09a27f47713458af3fc05b4f7d926f">&#9670;&#160;</a></span>widthChangedDuringEdit</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagWidget::widthChangedDuringEdit </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted whenever this widget's fixed width changes (both during and after editing). </p>
+<p>The parent <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> connects to this to resize itself synchronously rather than via a posted LayoutRequest event (which would be re-entrantly processed by the GTK file dialog's event loop during editing). </p>
 
 </div>
 </div>

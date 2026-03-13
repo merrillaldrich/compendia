@@ -103,14 +103,16 @@ Inheritance diagram for TagContainer:</div>
 <div class="center"><img src="class_tag_container__inherit__graph.png" border="0" usemap="#a_tag_container_inherit__map" loading="lazy" alt="Inheritance graph"/></div>
 <map name="a_tag_container_inherit__map" id="a_tag_container_inherit__map">
 <area shape="rect" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items." alt="" coords="181,80,280,107"/>
-<area shape="rect" href="class_nav_filter_container.html" title="Tag container that displays the active filter tags and accepts tag drops to add filters." alt="" coords="5,155,136,181"/>
-<area shape="poly" title=" " alt="" coords="191,115,100,156,98,152,186,112"/>
-<area shape="rect" href="class_nav_library_container.html" title="Tag container that displays the full tag library and allows new families to be created." alt="" coords="160,155,301,181"/>
-<area shape="poly" title=" " alt="" coords="232,121,233,156,228,153,229,124"/>
-<area shape="rect" href="class_tag_assignment_container.html" title="Tag container showing tags assigned to the current file selection, accepting tag drops." alt="" coords="324,155,492,181"/>
-<area shape="poly" title=" " alt="" coords="276,110,379,154,374,154,275,116"/>
+<area shape="rect" href="class_welcome_hint_container.html" title="Intermediate base class that adds a dismissible welcome hint label to TagContainer." alt="" coords="153,155,308,181"/>
+<area shape="poly" title=" " alt="" coords="232,120,233,155,228,153,229,125"/>
 <area shape="rect" title=" " alt="" coords="194,5,267,32"/>
-<area shape="poly" title=" " alt="" coords="232,46,233,81,228,78,229,50"/>
+<area shape="poly" title=" " alt="" coords="232,45,233,81,228,79,229,50"/>
+<area shape="rect" href="class_nav_filter_container.html" title="Tag container that displays the active filter tags and accepts tag drops to add filters." alt="" coords="5,229,136,256"/>
+<area shape="poly" title=" " alt="" coords="191,189,100,231,98,226,186,187"/>
+<area shape="rect" href="class_nav_library_container.html" title="Tag container that displays the full tag library and allows new families to be created." alt="" coords="160,229,301,256"/>
+<area shape="poly" title=" " alt="" coords="232,195,233,230,228,227,229,199"/>
+<area shape="rect" href="class_tag_assignment_container.html" title="Tag container showing tags assigned to the current file selection, accepting tag drops." alt="" coords="324,229,492,256"/>
+<area shape="poly" title=" " alt="" coords="276,185,379,228,374,229,275,190"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -143,6 +145,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6e7ec330ab93a0c21ec4e1f0864ad56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards a tag-delete request up to the tagDeleteRequested signal.  <br /></td></tr>
 <tr class="memitem:a702b14de4154b65fabee32cd7fbc1c7a" id="r_a702b14de4154b65fabee32cd7fbc1c7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a702b14de4154b65fabee32cd7fbc1c7a">sort</a> ()</td></tr>
 <tr class="memdesc:a702b14de4154b65fabee32cd7fbc1c7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts all <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> children alphabetically by family name, and sorts tags within each family alphabetically by tag name.  <br /></td></tr>
+<tr class="memitem:a9ab18bddd7907259dfdd7558ebfb7c49" id="r_a9ab18bddd7907259dfdd7558ebfb7c49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ab18bddd7907259dfdd7558ebfb7c49">filter</a> (const QString &amp;text)</td></tr>
+<tr class="memdesc:a9ab18bddd7907259dfdd7558ebfb7c49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows only tag families and tags whose name starts with <code class="param">text</code>.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base container widget that displays a set of tags grouped into <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> items. </p>
@@ -198,6 +202,33 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Removes all child <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> and <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a> items from the layout. </p>
+
+</div>
+</div>
+<a id="a9ab18bddd7907259dfdd7558ebfb7c49" name="a9ab18bddd7907259dfdd7558ebfb7c49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ab18bddd7907259dfdd7558ebfb7c49">&#9670;&#160;</a></span>filter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagContainer::filter </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>text</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shows only tag families and tags whose name starts with <code class="param">text</code>. </p>
+<p>Shows only families and tags whose tag name starts with <code class="param">text</code>.</p>
+<p>When <code class="param">text</code> is empty all tags and families are shown. Otherwise each <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a> is shown only if its tag name contains <code class="param">text</code> (case-insensitive), and a <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> is shown only when at least one of its child TagWidgets is visible.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>The prefix to filter on. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

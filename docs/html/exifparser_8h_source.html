@@ -100,44 +100,48 @@ $(function(){initNavTree('exifparser_8h_source.html','',''); });
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;QDebug&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;QString&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;QByteArray&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QMap&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;libheif/heif.h&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;libexif/exif-data.h&quot;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>}</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span></div>
-<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="class_exif_parser.html">   23</a></span><span class="keyword">class </span><a class="code hl_function" href="class_exif_parser.html#ab4ed6060041939483e69b658c524feef">ExifParser</a> : <span class="keyword">public</span> QObject</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    Q_OBJECT</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">static</span> ExifData* getExifStandard(QString filePath);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">static</span> ExifData* getExifHeif(QString filePath);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">static</span> QMap&lt;QString, QString&gt; exifTagsToMap(ExifData* ed);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">static</span> QString cacheFilePath(<span class="keyword">const</span> QString &amp;filePath);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> saveExifToCache(<span class="keyword">const</span> QString &amp;filePath, <span class="keyword">const</span> QMap&lt;QString, QString&gt; &amp;exifMap);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keyword">static</span> QMap&lt;QString, QString&gt; loadExifFromCache(<span class="keyword">const</span> QString &amp;filePath);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_exif_parser.html#ab4ed6060041939483e69b658c524feef">ExifParser</a>(QObject *parent = <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keyword">static</span> QMap&lt;QString, QString&gt; <a class="code hl_function" href="class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7">getExifMap</a>(QString filePath);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>signals:</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>};</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QImage&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;QMap&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;libheif/heif.h&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;libexif/exif-data.h&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_exif_parser.html">   24</a></span><span class="keyword">class </span><a class="code hl_function" href="class_exif_parser.html#ab4ed6060041939483e69b658c524feef">ExifParser</a> : <span class="keyword">public</span> QObject</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    Q_OBJECT</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">static</span> ExifData* getExifStandard(QString filePath);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">static</span> ExifData* getExifHeif(QString filePath);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">static</span> QMap&lt;QString, QString&gt; exifTagsToMap(ExifData* ed);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">static</span> QString cacheFilePath(<span class="keyword">const</span> QString &amp;filePath);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> saveExifToCache(<span class="keyword">const</span> QString &amp;filePath, <span class="keyword">const</span> QMap&lt;QString, QString&gt; &amp;exifMap);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keyword">static</span> QMap&lt;QString, QString&gt; loadExifFromCache(<span class="keyword">const</span> QString &amp;filePath);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_exif_parser.html#ab4ed6060041939483e69b658c524feef">ExifParser</a>(QObject *parent = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keyword">static</span> QMap&lt;QString, QString&gt; <a class="code hl_function" href="class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7">getExifMap</a>(QString filePath);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keyword">static</span> QImage <a class="code hl_function" href="class_exif_parser.html#adfffcd699ddaba06801187abdb478181">loadHeifImage</a>(<span class="keyword">const</span> QString &amp;filePath);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>signals:</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>};</div>
 </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">#endif </span><span class="comment">// EXIFPARSER_H</span></div>
-<div class="ttc" id="aclass_exif_parser_html_a14e14eb1a9d0407854e3e118571ed6d7"><div class="ttname"><a href="class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7">ExifParser::getExifMap</a></div><div class="ttdeci">static QMap&lt; QString, QString &gt; getExifMap(QString filePath)</div><div class="ttdoc">Returns a map of EXIF key-value pairs for the given image file.</div><div class="ttdef"><b>Definition</b> exifparser.cpp:90</div></div>
-<div class="ttc" id="aclass_exif_parser_html_ab4ed6060041939483e69b658c524feef"><div class="ttname"><a href="class_exif_parser.html#ab4ed6060041939483e69b658c524feef">ExifParser::ExifParser</a></div><div class="ttdeci">ExifParser(QObject *parent=nullptr)</div><div class="ttdoc">Constructs an ExifParser (rarely needed; prefer the static interface).</div><div class="ttdef"><b>Definition</b> exifparser.cpp:12</div></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="preprocessor">#endif </span><span class="comment">// EXIFPARSER_H</span></div>
+<div class="ttc" id="aclass_exif_parser_html_a14e14eb1a9d0407854e3e118571ed6d7"><div class="ttname"><a href="class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7">ExifParser::getExifMap</a></div><div class="ttdeci">static QMap&lt; QString, QString &gt; getExifMap(QString filePath)</div><div class="ttdoc">Returns a map of EXIF key-value pairs for the given image file.</div><div class="ttdef"><b>Definition</b> exifparser.cpp:91</div></div>
+<div class="ttc" id="aclass_exif_parser_html_ab4ed6060041939483e69b658c524feef"><div class="ttname"><a href="class_exif_parser.html#ab4ed6060041939483e69b658c524feef">ExifParser::ExifParser</a></div><div class="ttdeci">ExifParser(QObject *parent=nullptr)</div><div class="ttdoc">Constructs an ExifParser (rarely needed; prefer the static interface).</div><div class="ttdef"><b>Definition</b> exifparser.cpp:13</div></div>
+<div class="ttc" id="aclass_exif_parser_html_adfffcd699ddaba06801187abdb478181"><div class="ttname"><a href="class_exif_parser.html#adfffcd699ddaba06801187abdb478181">ExifParser::loadHeifImage</a></div><div class="ttdeci">static QImage loadHeifImage(const QString &amp;filePath)</div><div class="ttdoc">Decodes a HEIF/HEIC file to a QImage using libheif.</div><div class="ttdef"><b>Definition</b> exifparser.cpp:250</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

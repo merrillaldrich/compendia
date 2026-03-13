@@ -12,5 +12,6 @@ var class_main_window =
     [ "resizeEvent", "class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f", null ],
     [ "setRootFolder", "class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706", null ],
     [ "updateFileCountLabel", "class_main_window.html#a61753721c377d394196e2240f42fd130", null ],
+    [ "updateFolderStatsLabel", "class_main_window.html#a2d43721963df0ad1356a4c6162882a37", null ],
     [ "core", "class_main_window.html#aacbe910633e17d081e6b36467feb8e53", null ]
 ];

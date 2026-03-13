@@ -1,0 +1,5 @@
+<map id="MultiProgressBar" name="MultiProgressBar">
+<area shape="rect" id="Node000001" title="A status&#45;bar widget that tracks multiple concurrent background processes and cycles the display betwe..." alt="" coords="5,80,127,107"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="30,5,102,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,46,69,80,63,79,64,50"/>
+</map>

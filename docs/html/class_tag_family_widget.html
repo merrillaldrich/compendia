@@ -122,6 +122,11 @@ Collaboration diagram for TagFamilyWidget:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-slots" class="groupheader"><a id="pub-slots" name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:af5a70bebde894f084fa9c2b9582490a3" id="r_af5a70bebde894f084fa9c2b9582490a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5a70bebde894f084fa9c2b9582490a3">onChildTagWidthChanged</a> ()</td></tr>
+<tr class="memdesc:af5a70bebde894f084fa9c2b9582490a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a child <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a>'s width changes while it is being edited.  <br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab960b4a03d8584af678e3d21c17b4158" id="r_ab960b4a03d8584af678e3d21c17b4158"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab960b4a03d8584af678e3d21c17b4158">TagFamilyWidget</a> (QWidget *parent=nullptr)</td></tr>
@@ -148,6 +153,8 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:af7aab0ad85ea39f3836363aa365d1f2b" id="r_af7aab0ad85ea39f3836363aa365d1f2b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7aab0ad85ea39f3836363aa365d1f2b">mouseReleaseEvent</a> (QMouseEvent *event)</td></tr>
 <tr class="memdesc:af7aab0ad85ea39f3836363aa365d1f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class mouse-release handler to add a new tag on click.  <br /></td></tr>
+<tr class="memitem:af6f2c31679523dcc99153b34ae5c9bed" id="r_af6f2c31679523dcc99153b34ae5c9bed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af6f2c31679523dcc99153b34ae5c9bed">resizeEvent</a> (QResizeEvent *event) override</td></tr>
+<tr class="memdesc:af6f2c31679523dcc99153b34ae5c9bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overrides the Qt base-class resize handler to keep the collapse button anchored.  <br /></td></tr>
 <tr class="memitem:a65fd9d6a1890df1c17dd6f3189502ef0" id="r_a65fd9d6a1890df1c17dd6f3189502ef0"><td class="memItemLeft" align="right" valign="top">QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a65fd9d6a1890df1c17dd6f3189502ef0">sizeHint</a> () const</td></tr>
 <tr class="memdesc:a65fd9d6a1890df1c17dd6f3189502ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the minimum size as the size hint.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -298,6 +305,36 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="af5a70bebde894f084fa9c2b9582490a3" name="af5a70bebde894f084fa9c2b9582490a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5a70bebde894f084fa9c2b9582490a3">&#9670;&#160;</a></span>onChildTagWidthChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagFamilyWidget::onChildTagWidthChanged </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel slot">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when a child <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a>'s width changes while it is being edited. </p>
+<p>Responds to a child <a class="el" href="class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag-and-drop.">TagWidget</a> changing width during editing.</p>
+<p>Re-measures the layout height at the current width and adjusts this widget's minimum height if a row was added or removed, without posting a LayoutRequest to the event queue from inside setGeometry.</p>
+<p>Measures the height the <a class="el" href="class_flow_layout.html" title="A custom QLayout that arranges child widgets in a wrapping flow, like inline text.">FlowLayout</a> needs at the current width and adjusts this widget's minimum height if a row was added or removed. Called via a direct signal connection, so it runs synchronously in the keystroke call stack rather than being queued — safe to call updateGeometry() here because we are not inside setGeometry or a paint event. </p>
+
+</div>
+</div>
 <a id="a7e83db845e69074ba2207de3c78a6ef3" name="a7e83db845e69074ba2207de3c78a6ef3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e83db845e69074ba2207de3c78a6ef3">&#9670;&#160;</a></span>paintEvent()</h2>
 
@@ -317,6 +354,39 @@ Additional Inherited Members</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">event</td><td>The paint event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af6f2c31679523dcc99153b34ae5c9bed" name="af6f2c31679523dcc99153b34ae5c9bed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6f2c31679523dcc99153b34ae5c9bed">&#9670;&#160;</a></span>resizeEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagFamilyWidget::resizeEvent </td>
+          <td>(</td>
+          <td class="paramtype">QResizeEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overrides the Qt base-class resize handler to keep the collapse button anchored. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The resize event. </td></tr>
   </table>
   </dd>
 </dl>

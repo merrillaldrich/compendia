@@ -124,6 +124,11 @@ Public Types</h2></td></tr>
 , <a class="el" href="#aa60d4c14f6431fb80cd25bf579c07886ada903735a3e0764a39ffba0987342574">AllTags</a>
  }</td></tr>
 <tr class="memdesc:aa60d4c14f6431fb80cd25bf579c07886"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls whether the tag filter requires any or all active tags.  <a href="#aa60d4c14f6431fb80cd25bf579c07886">More...</a><br /></td></tr>
+<tr class="memitem:a197d3dfd40f0e8f5a532a24b79c49957" id="r_a197d3dfd40f0e8f5a532a24b79c49957"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a197d3dfd40f0e8f5a532a24b79c49957">RatingFilterMode</a> { <a class="el" href="#a197d3dfd40f0e8f5a532a24b79c49957a6b28b4e7966b4898593756d407786388">LessOrEqual</a>
+, <a class="el" href="#a197d3dfd40f0e8f5a532a24b79c49957a719361131e38e65dcacd4a6944a54f93">Exactly</a>
+, <a class="el" href="#a197d3dfd40f0e8f5a532a24b79c49957a7319637deeb2320d0f9a23c5123a9275">GreaterOrEqual</a>
+ }</td></tr>
+<tr class="memdesc:a197d3dfd40f0e8f5a532a24b79c49957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls how the rating filter value is compared against each file's rating.  <a href="#a197d3dfd40f0e8f5a532a24b79c49957">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -145,6 +150,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a938e8b371f366de31c071e03e1c904ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the creation-date filter value.  <br /></td></tr>
 <tr class="memitem:afc9f487c037cdf1619d195639724113b" id="r_afc9f487c037cdf1619d195639724113b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc9f487c037cdf1619d195639724113b">setFilterCreationDate</a> (QDate creationDate)</td></tr>
 <tr class="memdesc:afc9f487c037cdf1619d195639724113b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the creation-date filter and re-applies the filter.  <br /></td></tr>
+<tr class="memitem:a86826f6bb685ae324c276ae1486e61a2" id="r_a86826f6bb685ae324c276ae1486e61a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86826f6bb685ae324c276ae1486e61a2">setRatingFilter</a> (std::optional&lt; int &gt; rating)</td></tr>
+<tr class="memdesc:a86826f6bb685ae324c276ae1486e61a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rating filter and re-applies the filter.  <br /></td></tr>
+<tr class="memitem:a31760747ab26d34fc445874433b410b2" id="r_a31760747ab26d34fc445874433b410b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31760747ab26d34fc445874433b410b2">setRatingFilterMode</a> (<a class="el" href="#a197d3dfd40f0e8f5a532a24b79c49957">RatingFilterMode</a> mode)</td></tr>
+<tr class="memdesc:a31760747ab26d34fc445874433b410b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the comparison mode used when evaluating the rating filter and re-applies the filter.  <br /></td></tr>
+<tr class="memitem:a39fd20983b714a78a31d43cfe3816821" id="r_a39fd20983b714a78a31d43cfe3816821"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39fd20983b714a78a31d43cfe3816821">setIsolationSet</a> (const QSet&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &amp;files)</td></tr>
+<tr class="memdesc:a39fd20983b714a78a31d43cfe3816821"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restricts the visible set to the given files; other filters still apply within the set.  <br /></td></tr>
+<tr class="memitem:a84f6419385b1db66df2455bed0f5c99e" id="r_a84f6419385b1db66df2455bed0f5c99e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84f6419385b1db66df2455bed0f5c99e">clearIsolationSet</a> ()</td></tr>
+<tr class="memdesc:a84f6419385b1db66df2455bed0f5c99e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the isolation set so all files are eligible again.  <br /></td></tr>
+<tr class="memitem:afc9c90b1eb0745f8b88b9f232d664a96" id="r_afc9c90b1eb0745f8b88b9f232d664a96"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc9c90b1eb0745f8b88b9f232d664a96">isIsolated</a> () const</td></tr>
+<tr class="memdesc:afc9c90b1eb0745f8b88b9f232d664a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true when an isolation set is active.  <br /></td></tr>
+<tr class="memitem:ab95eb4eec0a0b26d26aba0a3648fa483" id="r_ab95eb4eec0a0b26d26aba0a3648fa483"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab95eb4eec0a0b26d26aba0a3648fa483">isolationSetSize</a> () const</td></tr>
+<tr class="memdesc:ab95eb4eec0a0b26d26aba0a3648fa483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of files in the current isolation set.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -162,6 +179,30 @@ Protected Member Functions</h2></td></tr>
 <div class="textblock"><p>Proxy model that filters the tagged-file list by name, folder, and tags. </p>
 <p>Wraps a QStandardItemModel containing <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> items and exposes only the rows that satisfy the currently active name-substring, folder-substring, and tag filters. The tag filter can operate in AnyTag (OR) or AllTags (AND) mode. </p>
 </div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
+<a id="a197d3dfd40f0e8f5a532a24b79c49957" name="a197d3dfd40f0e8f5a532a24b79c49957"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a197d3dfd40f0e8f5a532a24b79c49957">&#9670;&#160;</a></span>RatingFilterMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a197d3dfd40f0e8f5a532a24b79c49957">FilterProxyModel::RatingFilterMode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Controls how the rating filter value is compared against each file's rating. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a197d3dfd40f0e8f5a532a24b79c49957a6b28b4e7966b4898593756d407786388" name="a197d3dfd40f0e8f5a532a24b79c49957a6b28b4e7966b4898593756d407786388"></a>LessOrEqual&#160;</td><td class="fielddoc"><p>Show files whose rating is ≤ the filter value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a197d3dfd40f0e8f5a532a24b79c49957a719361131e38e65dcacd4a6944a54f93" name="a197d3dfd40f0e8f5a532a24b79c49957a719361131e38e65dcacd4a6944a54f93"></a>Exactly&#160;</td><td class="fielddoc"><p>Show files whose rating exactly matches the filter value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a197d3dfd40f0e8f5a532a24b79c49957a7319637deeb2320d0f9a23c5123a9275" name="a197d3dfd40f0e8f5a532a24b79c49957a7319637deeb2320d0f9a23c5123a9275"></a>GreaterOrEqual&#160;</td><td class="fielddoc"><p>Show files whose rating is ≥ the filter value. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="aa60d4c14f6431fb80cd25bf579c07886" name="aa60d4c14f6431fb80cd25bf579c07886"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa60d4c14f6431fb80cd25bf579c07886">&#9670;&#160;</a></span>TagFilterMode</h2>
 
@@ -241,6 +282,25 @@ Protected Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a84f6419385b1db66df2455bed0f5c99e" name="a84f6419385b1db66df2455bed0f5c99e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84f6419385b1db66df2455bed0f5c99e">&#9670;&#160;</a></span>clearIsolationSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilterProxyModel::clearIsolationSet </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clears the isolation set so all files are eligible again. </p>
 
 </div>
 </div>
@@ -331,6 +391,46 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="afc9c90b1eb0745f8b88b9f232d664a96" name="afc9c90b1eb0745f8b88b9f232d664a96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc9c90b1eb0745f8b88b9f232d664a96">&#9670;&#160;</a></span>isIsolated()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FilterProxyModel::isIsolated </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns true when an isolation set is active. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if isolation_set_ is non-empty. </dd></dl>
+
+</div>
+</div>
+<a id="ab95eb4eec0a0b26d26aba0a3648fa483" name="ab95eb4eec0a0b26d26aba0a3648fa483"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab95eb4eec0a0b26d26aba0a3648fa483">&#9670;&#160;</a></span>isolationSetSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FilterProxyModel::isolationSetSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the number of files in the current isolation set. </p>
+<dl class="section return"><dt>Returns</dt><dd>Size of isolation_set_, or 0 when not isolated. </dd></dl>
+
+</div>
+</div>
 <a id="a2dee4b7929c110ee0f1f0d218eb794e6" name="a2dee4b7929c110ee0f1f0d218eb794e6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2dee4b7929c110ee0f1f0d218eb794e6">&#9670;&#160;</a></span>removeTagFilter()</h2>
 
@@ -407,6 +507,31 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a39fd20983b714a78a31d43cfe3816821" name="a39fd20983b714a78a31d43cfe3816821"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39fd20983b714a78a31d43cfe3816821">&#9670;&#160;</a></span>setIsolationSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilterProxyModel::setIsolationSet </td>
+          <td>(</td>
+          <td class="paramtype">const QSet&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>files</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Restricts the visible set to the given files; other filters still apply within the set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">files</td><td>The set of <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> pointers to isolate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a4d7c210bd3074ee125fbb2770a5db80b" name="a4d7c210bd3074ee125fbb2770a5db80b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4d7c210bd3074ee125fbb2770a5db80b">&#9670;&#160;</a></span>setNameFilter()</h2>
 
@@ -426,6 +551,66 @@ Protected Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filterText</td><td>The substring to match against file names. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a86826f6bb685ae324c276ae1486e61a2" name="a86826f6bb685ae324c276ae1486e61a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86826f6bb685ae324c276ae1486e61a2">&#9670;&#160;</a></span>setRatingFilter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilterProxyModel::setRatingFilter </td>
+          <td>(</td>
+          <td class="paramtype">std::optional&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>rating</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the rating filter and re-applies the filter. </p>
+<p>Restricts the visible set to the given files; other filters still apply within the set.</p>
+<p>Only files whose rating exactly matches <code class="param">rating</code> will pass. Pass std::nullopt to clear the rating filter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rating</td><td>The rating to filter for [1,5], or std::nullopt to disable.</td></tr>
+    <tr><td class="paramname">files</td><td>The set of <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> pointers to isolate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Sets the rating filter and re-applies the filter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rating</td><td>The rating to filter for [1,5], or std::nullopt to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a31760747ab26d34fc445874433b410b2" name="a31760747ab26d34fc445874433b410b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31760747ab26d34fc445874433b410b2">&#9670;&#160;</a></span>setRatingFilterMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilterProxyModel::setRatingFilterMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a197d3dfd40f0e8f5a532a24b79c49957">RatingFilterMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the comparison mode used when evaluating the rating filter and re-applies the filter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>LessOrEqual, Exactly, or GreaterOrEqual. </td></tr>
   </table>
   </dd>
 </dl>

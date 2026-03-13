@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['variablewidthlineedit_0',['VariableWidthLineEdit',['../class_variable_width_line_edit.html',1,'']]]
+  ['scanitem_0',['ScanItem',['../struct_scan_item.html',1,'']]],
+  ['speakerbutton_1',['SpeakerButton',['../class_speaker_button.html',1,'']]],
+  ['starratingwidget_2',['StarRatingWidget',['../class_star_rating_widget.html',1,'']]]
 ];

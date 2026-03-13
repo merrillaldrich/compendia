@@ -107,70 +107,86 @@ $(function(){initNavTree('tagfamilywidget_8h_source.html','',''); });
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="variablewidthlineedit_8h.html">variablewidthlineedit.h</a>&quot;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="mainwindow_8h.html">mainwindow.h</a>&quot;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="taggingwidget_8h.html">taggingwidget.h</a>&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span></div>
-<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_tag_family_widget.html">   24</a></span><span class="keyword">class </span><a class="code hl_function" href="class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158">TagFamilyWidget</a> : <span class="keyword">public</span> <a class="code hl_function" href="class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74">TaggingWidget</a></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    Q_OBJECT</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    QString edit_status_ = <span class="stringliteral">&quot;Read&quot;</span>;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_class" href="class_variable_width_line_edit.html">VariableWidthLineEdit</a>* line_edit_;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_class" href="class_clickable_label.html">ClickableLabel</a>* label_;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">bool</span> in_library_ = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_class" href="class_tag_family.html">TagFamily</a>* tag_family_;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#af7aab0ad85ea39f3836363aa365d1f2b">mouseReleaseEvent</a>(QMouseEvent *event);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    QSize <a class="code hl_function" href="class_tag_family_widget.html#a65fd9d6a1890df1c17dd6f3189502ef0">sizeHint</a>() <span class="keyword">const</span> ;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158">TagFamilyWidget</a>(QWidget *parent = <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <a class="code hl_function" href="class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158">TagFamilyWidget</a>(<a class="code hl_class" href="class_tag_family.html">TagFamily</a> *tagFamily, QWidget *parent);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#a7e83db845e69074ba2207de3c78a6ef3">paintEvent</a>(QPaintEvent *event);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#a0362dccefca972b3bb87a8cb41a37104">startEdit</a>();</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="tagfamilywidgetcollapsebutton_8h.html">tagfamilywidgetcollapsebutton.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_tag_family_widget.html">   25</a></span><span class="keyword">class </span><a class="code hl_function" href="class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158">TagFamilyWidget</a> : <span class="keyword">public</span> <a class="code hl_function" href="class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74">TaggingWidget</a></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>{</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    Q_OBJECT</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    QString edit_status_ = <span class="stringliteral">&quot;Read&quot;</span>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_class" href="class_variable_width_line_edit.html">VariableWidthLineEdit</a>* line_edit_;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_class" href="class_clickable_label.html">ClickableLabel</a>* label_;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordtype">bool</span> in_library_ = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_class" href="class_tag_family.html">TagFamily</a>* tag_family_;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">bool</span> collapsed_ = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_class" href="class_tag_family_widget_collapse_button.html">TagFamilyWidgetCollapseButton</a> *collapseButton_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#af7aab0ad85ea39f3836363aa365d1f2b">mouseReleaseEvent</a>(QMouseEvent *event);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#af6f2c31679523dcc99153b34ae5c9bed">resizeEvent</a>(QResizeEvent *event) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    QSize <a class="code hl_function" href="class_tag_family_widget.html#a65fd9d6a1890df1c17dd6f3189502ef0">sizeHint</a>() <span class="keyword">const</span> ;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158">TagFamilyWidget</a>(QWidget *parent = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_function" href="class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158">TagFamilyWidget</a>(<a class="code hl_class" href="class_tag_family.html">TagFamily</a> *tagFamily, QWidget *parent);</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#a1b322fec8851b3248f2abe24e426c6c4">endEdit</a>();</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <a class="code hl_class" href="class_tag_family.html">TagFamily</a>* <a class="code hl_function" href="class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3">getTagFamily</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#a7e83db845e69074ba2207de3c78a6ef3">paintEvent</a>(QPaintEvent *event);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#a0362dccefca972b3bb87a8cb41a37104">startEdit</a>();</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#a836ad04e06566ec7876ebe1c4c53dff0">sort</a>();</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keyword">private</span> slots:</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keywordtype">void</span> onLineEditEditingFinished();</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span></div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="keywordtype">void</span> onLabelClicked(QMouseEvent *event);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keywordtype">void</span> onTagFamilyNameChanged();</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">void</span> onTagNameChanged();</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>signals:</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#a1b322fec8851b3248f2abe24e426c6c4">endEdit</a>();</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <a class="code hl_class" href="class_tag_family.html">TagFamily</a>* <a class="code hl_function" href="class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3">getTagFamily</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_tag_family_widget.html#a836ad04e06566ec7876ebe1c4c53dff0">sort</a>();</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keyword">public</span> slots:</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keywordtype">void</span> <a class="code hl_slot" href="class_tag_family_widget.html#af5a70bebde894f084fa9c2b9582490a3">onChildTagWidthChanged</a>();</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>};</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keyword">private</span> slots:</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordtype">void</span> onLineEditEditingFinished();</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">void</span> toggleCollapsed();</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordtype">void</span> createAndEditNewTag();</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">void</span> onLabelClicked(QMouseEvent *event);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordtype">void</span> onTagFamilyNameChanged();</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordtype">void</span> onTagNameChanged();</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>signals:</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>};</div>
 </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="preprocessor">#endif </span><span class="comment">// TAGFAMILYWIDGET_H</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="preprocessor">#endif </span><span class="comment">// TAGFAMILYWIDGET_H</span></div>
 <div class="ttc" id="aclass_clickable_label_html"><div class="ttname"><a href="class_clickable_label.html">ClickableLabel</a></div><div class="ttdoc">A QLabel that emits a clicked() signal on mouse release.</div><div class="ttdef"><b>Definition</b> clickablelabel.h:13</div></div>
 <div class="ttc" id="aclass_tag_family_html"><div class="ttname"><a href="class_tag_family.html">TagFamily</a></div><div class="ttdoc">Represents a named group of related tags, each with an auto-assigned colour.</div><div class="ttdef"><b>Definition</b> tagfamily.h:15</div></div>
-<div class="ttc" id="aclass_tag_family_widget_html_a0362dccefca972b3bb87a8cb41a37104"><div class="ttname"><a href="class_tag_family_widget.html#a0362dccefca972b3bb87a8cb41a37104">TagFamilyWidget::startEdit</a></div><div class="ttdeci">void startEdit()</div><div class="ttdoc">Switches the widget into inline-edit mode for the family name.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:140</div></div>
-<div class="ttc" id="aclass_tag_family_widget_html_a1b322fec8851b3248f2abe24e426c6c4"><div class="ttname"><a href="class_tag_family_widget.html#a1b322fec8851b3248f2abe24e426c6c4">TagFamilyWidget::endEdit</a></div><div class="ttdeci">void endEdit()</div><div class="ttdoc">Commits the edited family name and switches back to read mode.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:154</div></div>
-<div class="ttc" id="aclass_tag_family_widget_html_a65fd9d6a1890df1c17dd6f3189502ef0"><div class="ttname"><a href="class_tag_family_widget.html#a65fd9d6a1890df1c17dd6f3189502ef0">TagFamilyWidget::sizeHint</a></div><div class="ttdeci">QSize sizeHint() const</div><div class="ttdoc">Returns the minimum size as the size hint.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:216</div></div>
-<div class="ttc" id="aclass_tag_family_widget_html_a7e83db845e69074ba2207de3c78a6ef3"><div class="ttname"><a href="class_tag_family_widget.html#a7e83db845e69074ba2207de3c78a6ef3">TagFamilyWidget::paintEvent</a></div><div class="ttdeci">void paintEvent(QPaintEvent *event)</div><div class="ttdoc">Overrides the Qt base-class paint handler to draw the family border and label area.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:105</div></div>
-<div class="ttc" id="aclass_tag_family_widget_html_a836ad04e06566ec7876ebe1c4c53dff0"><div class="ttname"><a href="class_tag_family_widget.html#a836ad04e06566ec7876ebe1c4c53dff0">TagFamilyWidget::sort</a></div><div class="ttdeci">void sort()</div><div class="ttdoc">Sorts the child TagWidget items alphabetically by tag name.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:221</div></div>
-<div class="ttc" id="aclass_tag_family_widget_html_aa7453ba168e0ea4da69db6580fa982b3"><div class="ttname"><a href="class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3">TagFamilyWidget::getTagFamily</a></div><div class="ttdeci">TagFamily * getTagFamily() const</div><div class="ttdoc">Returns the TagFamily pointer this widget represents.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:208</div></div>
-<div class="ttc" id="aclass_tag_family_widget_html_ab960b4a03d8584af678e3d21c17b4158"><div class="ttname"><a href="class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158">TagFamilyWidget::TagFamilyWidget</a></div><div class="ttdeci">TagFamilyWidget(QWidget *parent=nullptr)</div><div class="ttdoc">Constructs a default, empty TagFamilyWidget.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:7</div></div>
-<div class="ttc" id="aclass_tag_family_widget_html_af7aab0ad85ea39f3836363aa365d1f2b"><div class="ttname"><a href="class_tag_family_widget.html#af7aab0ad85ea39f3836363aa365d1f2b">TagFamilyWidget::mouseReleaseEvent</a></div><div class="ttdeci">void mouseReleaseEvent(QMouseEvent *event)</div><div class="ttdoc">Overrides the Qt base-class mouse-release handler to add a new tag on click.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:61</div></div>
+<div class="ttc" id="aclass_tag_family_widget_collapse_button_html"><div class="ttname"><a href="class_tag_family_widget_collapse_button.html">TagFamilyWidgetCollapseButton</a></div><div class="ttdoc">A custom collapse/expand button used inside TagFamilyWidget.</div><div class="ttdef"><b>Definition</b> tagfamilywidgetcollapsebutton.h:17</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_a0362dccefca972b3bb87a8cb41a37104"><div class="ttname"><a href="class_tag_family_widget.html#a0362dccefca972b3bb87a8cb41a37104">TagFamilyWidget::startEdit</a></div><div class="ttdeci">void startEdit()</div><div class="ttdoc">Switches the widget into inline-edit mode for the family name.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:163</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_a1b322fec8851b3248f2abe24e426c6c4"><div class="ttname"><a href="class_tag_family_widget.html#a1b322fec8851b3248f2abe24e426c6c4">TagFamilyWidget::endEdit</a></div><div class="ttdeci">void endEdit()</div><div class="ttdoc">Commits the edited family name and switches back to read mode.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:177</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_a65fd9d6a1890df1c17dd6f3189502ef0"><div class="ttname"><a href="class_tag_family_widget.html#a65fd9d6a1890df1c17dd6f3189502ef0">TagFamilyWidget::sizeHint</a></div><div class="ttdeci">QSize sizeHint() const</div><div class="ttdoc">Returns the minimum size as the size hint.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:307</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_a7e83db845e69074ba2207de3c78a6ef3"><div class="ttname"><a href="class_tag_family_widget.html#a7e83db845e69074ba2207de3c78a6ef3">TagFamilyWidget::paintEvent</a></div><div class="ttdeci">void paintEvent(QPaintEvent *event)</div><div class="ttdoc">Overrides the Qt base-class paint handler to draw the family border and label area.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:95</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_a836ad04e06566ec7876ebe1c4c53dff0"><div class="ttname"><a href="class_tag_family_widget.html#a836ad04e06566ec7876ebe1c4c53dff0">TagFamilyWidget::sort</a></div><div class="ttdeci">void sort()</div><div class="ttdoc">Sorts the child TagWidget items alphabetically by tag name.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:312</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_aa7453ba168e0ea4da69db6580fa982b3"><div class="ttname"><a href="class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3">TagFamilyWidget::getTagFamily</a></div><div class="ttdeci">TagFamily * getTagFamily() const</div><div class="ttdoc">Returns the TagFamily pointer this widget represents.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:244</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_ab960b4a03d8584af678e3d21c17b4158"><div class="ttname"><a href="class_tag_family_widget.html#ab960b4a03d8584af678e3d21c17b4158">TagFamilyWidget::TagFamilyWidget</a></div><div class="ttdeci">TagFamilyWidget(QWidget *parent=nullptr)</div><div class="ttdoc">Constructs a default, empty TagFamilyWidget.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:8</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_af5a70bebde894f084fa9c2b9582490a3"><div class="ttname"><a href="class_tag_family_widget.html#af5a70bebde894f084fa9c2b9582490a3">TagFamilyWidget::onChildTagWidthChanged</a></div><div class="ttdeci">void onChildTagWidthChanged()</div><div class="ttdoc">Called when a child TagWidget&#39;s width changes while it is being edited.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:290</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_af6f2c31679523dcc99153b34ae5c9bed"><div class="ttname"><a href="class_tag_family_widget.html#af6f2c31679523dcc99153b34ae5c9bed">TagFamilyWidget::resizeEvent</a></div><div class="ttdeci">void resizeEvent(QResizeEvent *event) override</div><div class="ttdoc">Overrides the Qt base-class resize handler to keep the collapse button anchored.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:275</div></div>
+<div class="ttc" id="aclass_tag_family_widget_html_af7aab0ad85ea39f3836363aa365d1f2b"><div class="ttname"><a href="class_tag_family_widget.html#af7aab0ad85ea39f3836363aa365d1f2b">TagFamilyWidget::mouseReleaseEvent</a></div><div class="ttdeci">void mouseReleaseEvent(QMouseEvent *event)</div><div class="ttdoc">Overrides the Qt base-class mouse-release handler to add a new tag on click.</div><div class="ttdef"><b>Definition</b> tagfamilywidget.cpp:68</div></div>
 <div class="ttc" id="aclass_tagging_widget_html_a527b1e071b7771cc0389895101d89d74"><div class="ttname"><a href="class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74">TaggingWidget::TaggingWidget</a></div><div class="ttdeci">TaggingWidget(QWidget *parent=nullptr)</div><div class="ttdoc">Constructs a TaggingWidget with no explicit colour set.</div><div class="ttdef"><b>Definition</b> taggingwidget.cpp:7</div></div>
-<div class="ttc" id="aclass_variable_width_line_edit_html"><div class="ttname"><a href="class_variable_width_line_edit.html">VariableWidthLineEdit</a></div><div class="ttdoc">A QLineEdit that automatically resizes its width to fit its text content.</div><div class="ttdef"><b>Definition</b> variablewidthlineedit.h:11</div></div>
+<div class="ttc" id="aclass_variable_width_line_edit_html"><div class="ttname"><a href="class_variable_width_line_edit.html">VariableWidthLineEdit</a></div><div class="ttdoc">A QLineEdit that automatically resizes its width to fit its text content.</div><div class="ttdef"><b>Definition</b> variablewidthlineedit.h:12</div></div>
 <div class="ttc" id="aclickablelabel_8h_html"><div class="ttname"><a href="clickablelabel_8h.html">clickablelabel.h</a></div></div>
 <div class="ttc" id="aflowlayout_8h_html"><div class="ttname"><a href="flowlayout_8h.html">flowlayout.h</a></div></div>
 <div class="ttc" id="amainwindow_8h_html"><div class="ttname"><a href="mainwindow_8h.html">mainwindow.h</a></div></div>
 <div class="ttc" id="atagfamily_8h_html"><div class="ttname"><a href="tagfamily_8h.html">tagfamily.h</a></div></div>
+<div class="ttc" id="atagfamilywidgetcollapsebutton_8h_html"><div class="ttname"><a href="tagfamilywidgetcollapsebutton_8h.html">tagfamilywidgetcollapsebutton.h</a></div></div>
 <div class="ttc" id="ataggingwidget_8h_html"><div class="ttname"><a href="taggingwidget_8h.html">taggingwidget.h</a></div></div>
 <div class="ttc" id="atagwidget_8h_html"><div class="ttname"><a href="tagwidget_8h.html">tagwidget.h</a></div></div>
 <div class="ttc" id="avariablewidthlineedit_8h_html"><div class="ttname"><a href="variablewidthlineedit_8h.html">variablewidthlineedit.h</a></div></div>

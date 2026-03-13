@@ -118,6 +118,11 @@ Collaboration diagram for LuminismCore:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:FolderStats" id="r_FolderStats"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_luminism_core_1_1_folder_stats.html">FolderStats</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aggregate statistics about the currently loaded folder.  <a href="struct_luminism_core_1_1_folder_stats.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-slots" class="groupheader"><a id="pub-slots" name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr class="memitem:a574cd1e6d24ad77fc8f5c92a4430ef24" id="r_a574cd1e6d24ad77fc8f5c92a4430ef24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a574cd1e6d24ad77fc8f5c92a4430ef24">ensureUiFlushTimerRunning</a> ()</td></tr>
@@ -131,6 +136,14 @@ Signals</h2></td></tr>
 <tr class="memdesc:a76277bedc09c6d3fa112620cad940151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted each time a sidecar metadata file is written successfully.  <br /></td></tr>
 <tr class="memitem:a86445b2245b56e0441d691dfd4381415" id="r_a86445b2245b56e0441d691dfd4381415"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86445b2245b56e0441d691dfd4381415">tagLibraryChanged</a> ()</td></tr>
 <tr class="memdesc:a86445b2245b56e0441d691dfd4381415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted after a tag or tag-family merge alters the library.  <br /></td></tr>
+<tr class="memitem:af8701a07a3e06347a43fdcd92af00982" id="r_af8701a07a3e06347a43fdcd92af00982"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8701a07a3e06347a43fdcd92af00982">batchFinished</a> ()</td></tr>
+<tr class="memdesc:af8701a07a3e06347a43fdcd92af00982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted once when the current icon generation batch is fully complete.  <br /></td></tr>
+<tr class="memitem:a19f451cbf39a2ca3723abeac74481f91" id="r_a19f451cbf39a2ca3723abeac74481f91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19f451cbf39a2ca3723abeac74481f91">scanStarted</a> ()</td></tr>
+<tr class="memdesc:a19f451cbf39a2ca3723abeac74481f91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a background folder scan begins.  <br /></td></tr>
+<tr class="memitem:a1661b64ee3e9db255a1a013a7f0d11ef" id="r_a1661b64ee3e9db255a1a013a7f0d11ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1661b64ee3e9db255a1a013a7f0d11ef">scanProgress</a> (int runningTotal)</td></tr>
+<tr class="memdesc:a1661b64ee3e9db255a1a013a7f0d11ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted after each batch of files is added to the model during a scan.  <br /></td></tr>
+<tr class="memitem:a1aafaef4165a062eba5cb6863b6bcfaf" id="r_a1aafaef4165a062eba5cb6863b6bcfaf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1aafaef4165a062eba5cb6863b6bcfaf">scanFinished</a> (int total, int toCache)</td></tr>
+<tr class="memdesc:a1aafaef4165a062eba5cb6863b6bcfaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the background folder scan completes.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -138,20 +151,26 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3934fffde12ddceb6394a338b76a9021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs <a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a> and initialises empty model and tag-library containers.  <br /></td></tr>
 <tr class="memitem:a5ee748e28577573181f5a442a71e2f29" id="r_a5ee748e28577573181f5a442a71e2f29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ee748e28577573181f5a442a71e2f29">setRootDirectory</a> (QString path)</td></tr>
 <tr class="memdesc:a5ee748e28577573181f5a442a71e2f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the root directory path and immediately loads it.  <br /></td></tr>
+<tr class="memitem:a984e7ade7ae7db19fac161d593be6b64" id="r_a984e7ade7ae7db19fac161d593be6b64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a984e7ade7ae7db19fac161d593be6b64">cancelIconGeneration</a> ()</td></tr>
+<tr class="memdesc:a984e7ade7ae7db19fac161d593be6b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops in-flight icon generation and discards any queued results.  <br /></td></tr>
 <tr class="memitem:a797e7ab9f7b0c18348eb182c08abb980" id="r_a797e7ab9f7b0c18348eb182c08abb980"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a797e7ab9f7b0c18348eb182c08abb980">loadRootDirectory</a> ()</td></tr>
 <tr class="memdesc:a797e7ab9f7b0c18348eb182c08abb980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all existing data and reloads files from the current root directory.  <br /></td></tr>
+<tr class="memitem:a5d6e79dbb688047f6e5da16c259b99e2" id="r_a5d6e79dbb688047f6e5da16c259b99e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_luminism_core_1_1_folder_stats.html">FolderStats</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d6e79dbb688047f6e5da16c259b99e2">getFolderStats</a> () const</td></tr>
+<tr class="memdesc:a5d6e79dbb688047f6e5da16c259b99e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns summary statistics for all files in the source model.  <br /></td></tr>
 <tr class="memitem:a7d3911b03d851bc2111456b424d8e8c9" id="r_a7d3911b03d851bc2111456b424d8e8c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d3911b03d851bc2111456b424d8e8c9">containsFiles</a> ()</td></tr>
 <tr class="memdesc:a7d3911b03d851bc2111456b424d8e8c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the model currently contains at least one file.  <br /></td></tr>
 <tr class="memitem:ab45cd00fe04fbc92f6bd6c67b3fd6e66" id="r_ab45cd00fe04fbc92f6bd6c67b3fd6e66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab45cd00fe04fbc92f6bd6c67b3fd6e66">addFile</a> (QFileInfo fileInfo)</td></tr>
 <tr class="memdesc:ab45cd00fe04fbc92f6bd6c67b3fd6e66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a file to the model with no tags.  <br /></td></tr>
 <tr class="memitem:ace04e0d11d898ab69a5821c3e2be5fbf" id="r_ace04e0d11d898ab69a5821c3e2be5fbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace04e0d11d898ab69a5821c3e2be5fbf">addFile</a> (QFileInfo fileInfo, QJsonObject tagsJson)</td></tr>
 <tr class="memdesc:ace04e0d11d898ab69a5821c3e2be5fbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a file to the model, parsing tags and EXIF from a JSON object.  <br /></td></tr>
-<tr class="memitem:a59ad1f5d267dd567fdbcaf7cb71510e4" id="r_a59ad1f5d267dd567fdbcaf7cb71510e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59ad1f5d267dd567fdbcaf7cb71510e4">addFile</a> (QFileInfo fileInfo, QList&lt; <a class="el" href="class_tag_set.html">TagSet</a> &gt; tags, QMap&lt; QString, QString &gt; initialExif={})</td></tr>
-<tr class="memdesc:a59ad1f5d267dd567fdbcaf7cb71510e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a file to the model with an explicit tag list and optional initial EXIF map.  <br /></td></tr>
+<tr class="memitem:a757a644543899417d0e9fdef6cf3e1fa" id="r_a757a644543899417d0e9fdef6cf3e1fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a757a644543899417d0e9fdef6cf3e1fa">addFile</a> (QFileInfo fileInfo, QList&lt; <a class="el" href="class_tag_set.html">TagSet</a> &gt; tags, QMap&lt; QString, QString &gt; initialExif={}, quint64 pHash=0, std::optional&lt; int &gt; rating=std::nullopt)</td></tr>
+<tr class="memdesc:a757a644543899417d0e9fdef6cf3e1fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a file to the model with an explicit tag list and optional initial EXIF map.  <br /></td></tr>
 <tr class="memitem:a4145e9c6809094544c45f8a3a2fcf180" id="r_a4145e9c6809094544c45f8a3a2fcf180"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4145e9c6809094544c45f8a3a2fcf180">backfillMetadata</a> ()</td></tr>
 <tr class="memdesc:a4145e9c6809094544c45f8a3a2fcf180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Launches background thumbnail and EXIF generation for all files in the model.  <br /></td></tr>
 <tr class="memitem:a7c0abeb7e6ddf61af205da0e435cb5cc" id="r_a7c0abeb7e6ddf61af205da0e435cb5cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c0abeb7e6ddf61af205da0e435cb5cc">writeFileMetadata</a> ()</td></tr>
 <tr class="memdesc:a7c0abeb7e6ddf61af205da0e435cb5cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes JSON sidecar files for every file with unsaved changes.  <br /></td></tr>
+<tr class="memitem:a9de41cca6143d5699f3e51a7ee58894b" id="r_a9de41cca6143d5699f3e51a7ee58894b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9de41cca6143d5699f3e51a7ee58894b">writeVisibleFileMetadata</a> ()</td></tr>
+<tr class="memdesc:a9de41cca6143d5699f3e51a7ee58894b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes JSON sidecar files for every visible (proxy-filtered) file with unsaved changes.  <br /></td></tr>
 <tr class="memitem:a77393c199a2b8f4134225272a66f2b11" id="r_a77393c199a2b8f4134225272a66f2b11"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77393c199a2b8f4134225272a66f2b11">hasUnsavedChanges</a> ()</td></tr>
 <tr class="memdesc:a77393c199a2b8f4134225272a66f2b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if any file in the model has unsaved changes.  <br /></td></tr>
 <tr class="memitem:a92ca175522004a3fa53f458f773fb97c" id="r_a92ca175522004a3fa53f458f773fb97c"><td class="memItemLeft" align="right" valign="top">QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92ca175522004a3fa53f458f773fb97c">getLibraryTags</a> ()</td></tr>
@@ -182,12 +201,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:afcaca78856376adf435f53370ad21c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from a specific file.  <br /></td></tr>
 <tr class="memitem:a9ea5b72a3da4d89678635d1ea8972a03" id="r_a9ea5b72a3da4d89678635d1ea8972a03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ea5b72a3da4d89678635d1ea8972a03">unapplyTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 <tr class="memdesc:a9ea5b72a3da4d89678635d1ea8972a03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from all files currently visible in the filtered file list.  <br /></td></tr>
+<tr class="memitem:ac1ae1ed8d57eb11a2852ac1e3e27f832" id="r_ac1ae1ed8d57eb11a2852ac1e3e27f832"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac1ae1ed8d57eb11a2852ac1e3e27f832">countVisibleFilesWithTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:ac1ae1ed8d57eb11a2852ac1e3e27f832"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of currently visible files that have the given tag assigned.  <br /></td></tr>
+<tr class="memitem:af677310c6e34245b39461540a93e7732" id="r_af677310c6e34245b39461540a93e7732"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af677310c6e34245b39461540a93e7732">countAllFilesWithTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:af677310c6e34245b39461540a93e7732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of all files (ignoring the proxy filter) that have the given tag.  <br /></td></tr>
+<tr class="memitem:a52cbb512b580008060bf329f98ecc79d" id="r_a52cbb512b580008060bf329f98ecc79d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52cbb512b580008060bf329f98ecc79d">deleteTagFromLibrary</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
+<tr class="memdesc:a52cbb512b580008060bf329f98ecc79d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from all files, the filter, and the library, then deletes it.  <br /></td></tr>
 <tr class="memitem:aed94dc1d19284de5297c7af2aa3e998a" id="r_aed94dc1d19284de5297c7af2aa3e998a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed94dc1d19284de5297c7af2aa3e998a">setFileNameFilter</a> (QString filterText)</td></tr>
 <tr class="memdesc:aed94dc1d19284de5297c7af2aa3e998a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the filename substring filter on the proxy model.  <br /></td></tr>
 <tr class="memitem:a311e4b07abafcd8e245026cff4470a10" id="r_a311e4b07abafcd8e245026cff4470a10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a311e4b07abafcd8e245026cff4470a10">setFolderFilter</a> (QString filterText)</td></tr>
 <tr class="memdesc:a311e4b07abafcd8e245026cff4470a10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the folder path substring filter on the proxy model.  <br /></td></tr>
 <tr class="memitem:a169832b2d5b262502ac4bcac2567c97a" id="r_a169832b2d5b262502ac4bcac2567c97a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a169832b2d5b262502ac4bcac2567c97a">setCreationDateFilter</a> (QDate date)</td></tr>
 <tr class="memdesc:a169832b2d5b262502ac4bcac2567c97a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the creation-date filter on the proxy model.  <br /></td></tr>
+<tr class="memitem:a0c93ad6a1aa93239157c07ae3cc0a146" id="r_a0c93ad6a1aa93239157c07ae3cc0a146"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c93ad6a1aa93239157c07ae3cc0a146">setRatingFilter</a> (std::optional&lt; int &gt; rating)</td></tr>
+<tr class="memdesc:a0c93ad6a1aa93239157c07ae3cc0a146"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rating filter on the proxy model.  <br /></td></tr>
+<tr class="memitem:a14835cb51894598e7e904f877cfec881" id="r_a14835cb51894598e7e904f877cfec881"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14835cb51894598e7e904f877cfec881">setRatingFilterMode</a> (<a class="el" href="class_filter_proxy_model.html#a197d3dfd40f0e8f5a532a24b79c49957">FilterProxyModel::RatingFilterMode</a> mode)</td></tr>
+<tr class="memdesc:a14835cb51894598e7e904f877cfec881"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the comparison mode used when evaluating the rating filter.  <br /></td></tr>
 <tr class="memitem:ad1e3298571b9003686e63b9b59151592" id="r_ad1e3298571b9003686e63b9b59151592"><td class="memItemLeft" align="right" valign="top">QList&lt; QDate &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1e3298571b9003686e63b9b59151592">getFileDates</a> () const</td></tr>
 <tr class="memdesc:ad1e3298571b9003686e63b9b59151592"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a chronologically sorted list of unique effective dates across all loaded files.  <br /></td></tr>
 <tr class="memitem:a772901ad55bbcf3869811cea42655024" id="r_a772901ad55bbcf3869811cea42655024"><td class="memItemLeft" align="right" valign="top">QList&lt; QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a772901ad55bbcf3869811cea42655024">getFileFolders</a> () const</td></tr>
@@ -196,12 +225,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a568072953f671155a65d020732277e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a tag to the active tag filter set.  <br /></td></tr>
 <tr class="memitem:a4372312da59031b44ef885ffaed656d1" id="r_a4372312da59031b44ef885ffaed656d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4372312da59031b44ef885ffaed656d1">removeTagFilter</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 <tr class="memdesc:a4372312da59031b44ef885ffaed656d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from the active tag filter set.  <br /></td></tr>
+<tr class="memitem:ad816f9d8fc51fd9123e339052ddf63e8" id="r_ad816f9d8fc51fd9123e339052ddf63e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad816f9d8fc51fd9123e339052ddf63e8">setIsolationSet</a> (const QSet&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &amp;files)</td></tr>
+<tr class="memdesc:ad816f9d8fc51fd9123e339052ddf63e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restricts the visible set to the given files; other filters still apply within the set.  <br /></td></tr>
+<tr class="memitem:abe4a216aa5807f607aa73d520f900605" id="r_abe4a216aa5807f607aa73d520f900605"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe4a216aa5807f607aa73d520f900605">clearIsolationSet</a> ()</td></tr>
+<tr class="memdesc:abe4a216aa5807f607aa73d520f900605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the isolation set so all files are eligible again.  <br /></td></tr>
+<tr class="memitem:ade881a7a01f98a39b23ddafc8c0fc019" id="r_ade881a7a01f98a39b23ddafc8c0fc019"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade881a7a01f98a39b23ddafc8c0fc019">isIsolated</a> () const</td></tr>
+<tr class="memdesc:ade881a7a01f98a39b23ddafc8c0fc019"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true when an isolation set is active.  <br /></td></tr>
+<tr class="memitem:a5490029a780adb8cc266d4d251b8092f" id="r_a5490029a780adb8cc266d4d251b8092f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5490029a780adb8cc266d4d251b8092f">isolationSetSize</a> () const</td></tr>
+<tr class="memdesc:a5490029a780adb8cc266d4d251b8092f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of files in the current isolation set.  <br /></td></tr>
 <tr class="memitem:abde1217c9f067c103db0d1f903880a9c" id="r_abde1217c9f067c103db0d1f903880a9c"><td class="memItemLeft" align="right" valign="top">QStandardItemModel *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abde1217c9f067c103db0d1f903880a9c">getItemModel</a> ()</td></tr>
 <tr class="memdesc:abde1217c9f067c103db0d1f903880a9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the underlying QStandardItemModel containing all file items.  <br /></td></tr>
 <tr class="memitem:affb257e3d695377774c5fbb6531cbc32" id="r_affb257e3d695377774c5fbb6531cbc32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_filter_proxy_model.html">FilterProxyModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#affb257e3d695377774c5fbb6531cbc32">getItemModelProxy</a> ()</td></tr>
 <tr class="memdesc:affb257e3d695377774c5fbb6531cbc32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_filter_proxy_model.html" title="Proxy model that filters the tagged-file list by name, folder, and tags.">FilterProxyModel</a> used by the file list view.  <br /></td></tr>
 <tr class="memitem:ad3a3a85ccc4f351a753e49af45686218" id="r_ad3a3a85ccc4f351a753e49af45686218"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="class_tag_set.html">TagSet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3a3a85ccc4f351a753e49af45686218">parseTagJson</a> (QJsonObject tagsJson, QJsonObject tagRectsJson=QJsonObject())</td></tr>
 <tr class="memdesc:ad3a3a85ccc4f351a753e49af45686218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a JSON object of tag-family to tag-name arrays into a <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name, with an optional bounding rectangle...">TagSet</a> list.  <br /></td></tr>
+<tr class="memitem:a3cbd5a6099d4592acf26f64f7854258d" id="r_a3cbd5a6099d4592acf26f64f7854258d"><td class="memItemLeft" align="right" valign="top">QIcon&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3cbd5a6099d4592acf26f64f7854258d">iconForPath</a> (const QString &amp;absoluteFilePath)</td></tr>
+<tr class="memdesc:a3cbd5a6099d4592acf26f64f7854258d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the cached <code>QIcon</code> for <code class="param">absoluteFilePath</code> from the LRU pool.  <br /></td></tr>
+<tr class="memitem:a8b15ab9f23cb5b58ee2f45b1d514d7de" id="r_a8b15ab9f23cb5b58ee2f45b1d514d7de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b15ab9f23cb5b58ee2f45b1d514d7de">updateFileIcons</a> (const QString &amp;absoluteFilePath, const QVector&lt; QImage &gt; &amp;images)</td></tr>
+<tr class="memdesc:a8b15ab9f23cb5b58ee2f45b1d514d7de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the in-memory icon for the file at <code class="param">absoluteFilePath</code> using the provided images.  <br /></td></tr>
+<tr class="memitem:acf347084d0c24766be9cc65de69ba4af" id="r_acf347084d0c24766be9cc65de69ba4af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf347084d0c24766be9cc65de69ba4af">applyVideoMetadata</a> (const QString &amp;absoluteFilePath, const QMap&lt; QString, QString &gt; &amp;meta)</td></tr>
+<tr class="memdesc:acf347084d0c24766be9cc65de69ba4af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies video container metadata to the <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> for <code class="param">absoluteFilePath</code>.  <br /></td></tr>
+<tr class="memitem:af61bc953027747adeb001b5e44b3ce11" id="r_af61bc953027747adeb001b5e44b3ce11"><td class="memItemLeft" align="right" valign="top">QList&lt; QList&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af61bc953027747adeb001b5e44b3ce11">findSimilarImages</a> (int threshold)</td></tr>
+<tr class="memdesc:af61bc953027747adeb001b5e44b3ce11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Groups all files whose pHash values are within <em class="arg">threshold</em> Hamming distance of each other.  <br /></td></tr>
+<tr class="memitem:a262dce81510419436236e8a500917d15" id="r_a262dce81510419436236e8a500917d15"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a262dce81510419436236e8a500917d15">removeAutoDetectedFaceTags</a> ()</td></tr>
+<tr class="memdesc:a262dce81510419436236e8a500917d15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all auto-detected face tags from every file, the active filter, and the tag library. Cleans up now-empty tag families and emits <a class="el" href="#a86445b2245b56e0441d691dfd4381415" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> once when done.  <br /></td></tr>
 <tr class="memitem:ad45fa14a20458c52ac754b4c4f836901" id="r_ad45fa14a20458c52ac754b4c4f836901"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad45fa14a20458c52ac754b4c4f836901">mergeTag</a> (<a class="el" href="class_tag.html">Tag</a> *from, <a class="el" href="class_tag.html">Tag</a> *into)</td></tr>
 <tr class="memdesc:ad45fa14a20458c52ac754b4c4f836901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges <em class="arg">from</em> into <em class="arg">into</em> across all files, then removes and schedules <em class="arg">from</em> for deletion. Emits <a class="el" href="#a86445b2245b56e0441d691dfd4381415" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> when done.  <br /></td></tr>
 <tr class="memitem:aa81cd544a2b00e02a90caa083df8bb11" id="r_aa81cd544a2b00e02a90caa083df8bb11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa81cd544a2b00e02a90caa083df8bb11">mergeTagFamily</a> (<a class="el" href="class_tag_family.html">TagFamily</a> *from, <a class="el" href="class_tag_family.html">TagFamily</a> *into)</td></tr>
@@ -300,8 +347,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a59ad1f5d267dd567fdbcaf7cb71510e4" name="a59ad1f5d267dd567fdbcaf7cb71510e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59ad1f5d267dd567fdbcaf7cb71510e4">&#9670;&#160;</a></span>addFile() <span class="overload">[3/3]</span></h2>
+<a id="a757a644543899417d0e9fdef6cf3e1fa" name="a757a644543899417d0e9fdef6cf3e1fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a757a644543899417d0e9fdef6cf3e1fa">&#9670;&#160;</a></span>addFile() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -319,7 +366,17 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QMap&lt; QString, QString &gt;</td>          <td class="paramname"><span class="paramname"><em>initialExif</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
+          <td class="paramtype">QMap&lt; QString, QString &gt;</td>          <td class="paramname"><span class="paramname"><em>initialExif</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">quint64</td>          <td class="paramname"><span class="paramname"><em>pHash</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>rating</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::nullopt</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -327,6 +384,11 @@ Public Member Functions</h2></td></tr>
 <p>Adds a file to the model with an explicit tag list and optional initial EXIF map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">fileInfo</td><td>File-system info for the file to add. </td></tr>
+    <tr><td class="paramname">tags</td><td>List of <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name, with an optional bounding rectangle...">TagSet</a> values describing tags to apply. </td></tr>
+    <tr><td class="paramname">initialExif</td><td>Optional pre-loaded EXIF key-value map. </td></tr>
+    <tr><td class="paramname">pHash</td><td>Optional pre-loaded perceptual hash (0 if not available). </td></tr>
+    <tr><td class="paramname">rating</td><td>Optional pre-loaded rating (1–5), or std::nullopt if not set.</td></tr>
     <tr><td class="paramname">fileInfo</td><td>File-system info for the file to add. </td></tr>
     <tr><td class="paramname">tags</td><td>List of <a class="el" href="class_tag_set.html" title="Lightweight value type pairing a tag-family name with a tag name, with an optional bounding rectangle...">TagSet</a> values describing tags to apply. </td></tr>
     <tr><td class="paramname">initialExif</td><td>Optional pre-loaded EXIF key-value map. </td></tr>
@@ -393,6 +455,13 @@ Public Member Functions</h2></td></tr>
 
 <p>Adds an existing <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to the library if it is not already present. </p>
 <p>Add a tag to the library if it doesn't exist.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to insert.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Transfers Qt ownership of <code class="param">tag</code> to this <a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a> instance so that the tag is not accidentally destroyed when the UI widget that originally created it (typically a <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a>) is rebuilt and its children are deleted.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> pointer to insert. </td></tr>
@@ -535,6 +604,39 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="acf347084d0c24766be9cc65de69ba4af" name="acf347084d0c24766be9cc65de69ba4af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf347084d0c24766be9cc65de69ba4af">&#9670;&#160;</a></span>applyVideoMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::applyVideoMetadata </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>absoluteFilePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QMap&lt; QString, QString &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>meta</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Applies video container metadata to the <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> for <code class="param">absoluteFilePath</code>. </p>
+<p>Sets the file's exifMap and, when a <code>Date</code> key is present, its imageCaptureDateTime. Called after a manual "Grab Video Frames" so the preview panel shows metadata.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">absoluteFilePath</td><td>Absolute path to the video file. </td></tr>
+    <tr><td class="paramname">meta</td><td>Container metadata map produced by <a class="el" href="class_frame_grabber.html" title="Captures a representative frame from each video file in a batch.">FrameGrabber</a>.</td></tr>
+    <tr><td class="paramname">absoluteFilePath</td><td>Absolute path to the video file. </td></tr>
+    <tr><td class="paramname">meta</td><td>Container metadata map produced by <a class="el" href="class_frame_grabber.html" title="Captures a representative frame from each video file in a batch.">FrameGrabber</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a4145e9c6809094544c45f8a3a2fcf180" name="a4145e9c6809094544c45f8a3a2fcf180"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4145e9c6809094544c45f8a3a2fcf180">&#9670;&#160;</a></span>backfillMetadata()</h2>
 
@@ -551,6 +653,72 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Launches background thumbnail and EXIF generation for all files in the model. </p>
+
+</div>
+</div>
+<a id="af8701a07a3e06347a43fdcd92af00982" name="af8701a07a3e06347a43fdcd92af00982"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8701a07a3e06347a43fdcd92af00982">&#9670;&#160;</a></span>batchFinished</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::batchFinished </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted once when the current icon generation batch is fully complete. </p>
+
+</div>
+</div>
+<a id="a984e7ade7ae7db19fac161d593be6b64" name="a984e7ade7ae7db19fac161d593be6b64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a984e7ade7ae7db19fac161d593be6b64">&#9670;&#160;</a></span>cancelIconGeneration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::cancelIconGeneration </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stops in-flight icon generation and discards any queued results. </p>
+<p>Does not affect in-progress metadata saves. </p>
+
+</div>
+</div>
+<a id="abe4a216aa5807f607aa73d520f900605" name="abe4a216aa5807f607aa73d520f900605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe4a216aa5807f607aa73d520f900605">&#9670;&#160;</a></span>clearIsolationSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::clearIsolationSet </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clears the isolation set so all files are eligible again. </p>
 
 </div>
 </div>
@@ -571,6 +739,83 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns true if the model currently contains at least one file. </p>
 <dl class="section return"><dt>Returns</dt><dd>True when the model row count is greater than zero. </dd></dl>
+
+</div>
+</div>
+<a id="af677310c6e34245b39461540a93e7732" name="af677310c6e34245b39461540a93e7732"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af677310c6e34245b39461540a93e7732">&#9670;&#160;</a></span>countAllFilesWithTag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int LuminismCore::countAllFilesWithTag </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the number of all files (ignoring the proxy filter) that have the given tag. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to count. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Count of all files carrying the tag. </dd></dl>
+
+</div>
+</div>
+<a id="ac1ae1ed8d57eb11a2852ac1e3e27f832" name="ac1ae1ed8d57eb11a2852ac1e3e27f832"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1ae1ed8d57eb11a2852ac1e3e27f832">&#9670;&#160;</a></span>countVisibleFilesWithTag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int LuminismCore::countVisibleFilesWithTag </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the number of currently visible files that have the given tag assigned. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to count. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Count of visible files carrying the tag. </dd></dl>
+
+</div>
+</div>
+<a id="a52cbb512b580008060bf329f98ecc79d" name="a52cbb512b580008060bf329f98ecc79d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52cbb512b580008060bf329f98ecc79d">&#9670;&#160;</a></span>deleteTagFromLibrary()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::deleteTagFromLibrary </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes a tag from all files, the filter, and the library, then deletes it. </p>
+<p>Emits <a class="el" href="#a86445b2245b56e0441d691dfd4381415" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> when done. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to delete. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -599,6 +844,41 @@ Public Member Functions</h2></td></tr>
 
 <p>Starts the UI flush timer if it is not already running. </p>
 <p>Invoked from background threads via a queued connection so the timer runs on the GUI thread. </p>
+
+</div>
+</div>
+<a id="af61bc953027747adeb001b5e44b3ce11" name="af61bc953027747adeb001b5e44b3ce11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af61bc953027747adeb001b5e44b3ce11">&#9670;&#160;</a></span>findSimilarImages()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; QList&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &gt; LuminismCore::findSimilarImages </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>threshold</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Groups all files whose pHash values are within <em class="arg">threshold</em> Hamming distance of each other. </p>
+<p>Uses a Union-Find algorithm over all files with a valid pHash. Only groups of two or more files are returned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">threshold</td><td>Maximum Hamming distance to consider two images near-duplicates. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>List of groups; each group contains two or more <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> pointers.</dd></dl>
+<p>Uses a path-compressed Union-Find algorithm over all files with a valid pHash. Only groups of two or more files are returned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">threshold</td><td>Maximum Hamming distance to consider two images near-duplicates. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>List of groups; each group contains two or more <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> pointers. </dd></dl>
 
 </div>
 </div>
@@ -658,7 +938,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns a chronologically sorted list of unique effective dates across all loaded files. </p>
-<p>Each file's effective date is its EXIF capture date when present, falling back to the filesystem creation date. Used to populate the date-filter autocomplete. </p>
+<p>Each file's effective date is its EXIF capture date when present, falling back to the filesystem creation date. Used to populate the date-filter autocomplete.</p>
+<p>Each file's effective date is its EXIF capture date when present, falling back to the filename-inferred date, then the filesystem creation date. Used to populate the date-filter autocomplete. </p>
 
 </div>
 </div>
@@ -699,6 +980,27 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns a pointer to the set of tags currently active as filters. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the proxy model's internal filter tag set. </dd></dl>
+
+</div>
+</div>
+<a id="a5d6e79dbb688047f6e5da16c259b99e2" name="a5d6e79dbb688047f6e5da16c259b99e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d6e79dbb688047f6e5da16c259b99e2">&#9670;&#160;</a></span>getFolderStats()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_luminism_core_1_1_folder_stats.html">LuminismCore::FolderStats</a> LuminismCore::getFolderStats </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns summary statistics for all files in the source model. </p>
+<p>Files inside any <code></code>.luminism_cache sub-directory are excluded. </p><dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="struct_luminism_core_1_1_folder_stats.html" title="Aggregate statistics about the currently loaded folder.">FolderStats</a> value with counts and total size.</dd></dl>
+<p>Files inside any .luminism_cache sub-directory are excluded. </p><dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="struct_luminism_core_1_1_folder_stats.html" title="Aggregate statistics about the currently loaded folder.">FolderStats</a> value with image/video counts, folder count, and total size. </dd></dl>
 
 </div>
 </div>
@@ -839,6 +1141,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a3cbd5a6099d4592acf26f64f7854258d" name="a3cbd5a6099d4592acf26f64f7854258d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cbd5a6099d4592acf26f64f7854258d">&#9670;&#160;</a></span>iconForPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QIcon LuminismCore::iconForPath </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>absoluteFilePath</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the cached <code>QIcon</code> for <code class="param">absoluteFilePath</code> from the LRU pool. </p>
+<p>Returns the cached QIcon for <code class="param">absoluteFilePath</code> from the LRU pool.</p>
+<p>If the icon is not currently in the pool a background disk read is scheduled and a null <code>QIcon</code> is returned; the delegate will fall back to the placeholder. Once the disk read completes <code>dataChanged</code> is emitted so the view repaints.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">absoluteFilePath</td><td>Absolute path to the source file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The cached <code>QIcon</code>, or a null <code>QIcon</code> when not yet loaded.</dd></dl>
+<p>If not in the pool, schedules an async disk read and returns a null QIcon. </p>
+
+</div>
+</div>
 <a id="ad935634d9d59823babd5df1ccea851ab" name="ad935634d9d59823babd5df1ccea851ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad935634d9d59823babd5df1ccea851ab">&#9670;&#160;</a></span>iconUpdated</h2>
 
@@ -866,6 +1197,46 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ade881a7a01f98a39b23ddafc8c0fc019" name="ade881a7a01f98a39b23ddafc8c0fc019"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade881a7a01f98a39b23ddafc8c0fc019">&#9670;&#160;</a></span>isIsolated()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LuminismCore::isIsolated </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns true when an isolation set is active. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the proxy model has a non-empty isolation set. </dd></dl>
+
+</div>
+</div>
+<a id="a5490029a780adb8cc266d4d251b8092f" name="a5490029a780adb8cc266d4d251b8092f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5490029a780adb8cc266d4d251b8092f">&#9670;&#160;</a></span>isolationSetSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int LuminismCore::isolationSetSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the number of files in the current isolation set. </p>
+<dl class="section return"><dt>Returns</dt><dd>Size of the isolation set, or 0 when not isolated. </dd></dl>
+
+</div>
+</div>
 <a id="a797e7ab9f7b0c18348eb182c08abb980" name="a797e7ab9f7b0c18348eb182c08abb980"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a797e7ab9f7b0c18348eb182c08abb980">&#9670;&#160;</a></span>loadRootDirectory()</h2>
 
@@ -882,6 +1253,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clears all existing data and reloads files from the current root directory. </p>
+<p>Clears all existing data and starts an async scan of the current root directory. </p>
 
 </div>
 </div>
@@ -1003,6 +1375,26 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a262dce81510419436236e8a500917d15" name="a262dce81510419436236e8a500917d15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a262dce81510419436236e8a500917d15">&#9670;&#160;</a></span>removeAutoDetectedFaceTags()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int LuminismCore::removeAutoDetectedFaceTags </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes all auto-detected face tags from every file, the active filter, and the tag library. Cleans up now-empty tag families and emits <a class="el" href="#a86445b2245b56e0441d691dfd4381415" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> once when done. </p>
+<dl class="section return"><dt>Returns</dt><dd>Number of tags removed, or 0 if there were none. </dd></dl>
+
+</div>
+</div>
 <a id="a4372312da59031b44ef885ffaed656d1" name="a4372312da59031b44ef885ffaed656d1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4372312da59031b44ef885ffaed656d1">&#9670;&#160;</a></span>removeTagFilter()</h2>
 
@@ -1025,6 +1417,104 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a1aafaef4165a062eba5cb6863b6bcfaf" name="a1aafaef4165a062eba5cb6863b6bcfaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aafaef4165a062eba5cb6863b6bcfaf">&#9670;&#160;</a></span>scanFinished</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::scanFinished </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>total</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>toCache</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when the background folder scan completes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">total</td><td>Total number of files added. </td></tr>
+    <tr><td class="paramname">toCache</td><td>Number of files queued for icon generation (cache misses). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1661b64ee3e9db255a1a013a7f0d11ef" name="a1661b64ee3e9db255a1a013a7f0d11ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1661b64ee3e9db255a1a013a7f0d11ef">&#9670;&#160;</a></span>scanProgress</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::scanProgress </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>runningTotal</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted after each batch of files is added to the model during a scan. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">runningTotal</td><td>Number of files added so far in this scan. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a19f451cbf39a2ca3723abeac74481f91" name="a19f451cbf39a2ca3723abeac74481f91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19f451cbf39a2ca3723abeac74481f91">&#9670;&#160;</a></span>scanStarted</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::scanStarted </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when a background folder scan begins. </p>
 
 </div>
 </div>
@@ -1097,6 +1587,83 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filterText</td><td>The substring to match against folder paths. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad816f9d8fc51fd9123e339052ddf63e8" name="ad816f9d8fc51fd9123e339052ddf63e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad816f9d8fc51fd9123e339052ddf63e8">&#9670;&#160;</a></span>setIsolationSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::setIsolationSet </td>
+          <td>(</td>
+          <td class="paramtype">const QSet&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>files</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Restricts the visible set to the given files; other filters still apply within the set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">files</td><td>The set of <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> pointers to isolate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0c93ad6a1aa93239157c07ae3cc0a146" name="a0c93ad6a1aa93239157c07ae3cc0a146"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c93ad6a1aa93239157c07ae3cc0a146">&#9670;&#160;</a></span>setRatingFilter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::setRatingFilter </td>
+          <td>(</td>
+          <td class="paramtype">std::optional&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>rating</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the rating filter on the proxy model. </p>
+<p>Only files whose rating satisfies the current mode vs. <code class="param">rating</code> will pass. Pass std::nullopt to clear the rating filter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rating</td><td>The rating to filter for [1,5], or std::nullopt to disable.</td></tr>
+    <tr><td class="paramname">rating</td><td>The rating to filter for [1,5], or std::nullopt to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a14835cb51894598e7e904f877cfec881" name="a14835cb51894598e7e904f877cfec881"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14835cb51894598e7e904f877cfec881">&#9670;&#160;</a></span>setRatingFilterMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::setRatingFilterMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_filter_proxy_model.html#a197d3dfd40f0e8f5a532a24b79c49957">FilterProxyModel::RatingFilterMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the comparison mode used when evaluating the rating filter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>LessOrEqual, Exactly, or GreaterOrEqual. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1210,6 +1777,39 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a8b15ab9f23cb5b58ee2f45b1d514d7de" name="a8b15ab9f23cb5b58ee2f45b1d514d7de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b15ab9f23cb5b58ee2f45b1d514d7de">&#9670;&#160;</a></span>updateFileIcons()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::updateFileIcons </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>absoluteFilePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVector&lt; QImage &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>images</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates the in-memory icon for the file at <code class="param">absoluteFilePath</code> using the provided images. </p>
+<p>Iterates the source model, finds the item whose <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> path matches <code class="param">absoluteFilePath</code>, replaces its decoration with a multi-size QIcon built from <code class="param">images</code>, and emits <a class="el" href="#ad935634d9d59823babd5df1ccea851ab" title="Emitted each time a thumbnail icon is applied to the model.">iconUpdated()</a>. The on-disk cache is not written; a folder reload will re-trigger normal icon generation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">absoluteFilePath</td><td>Absolute path to the video file whose icon to replace. </td></tr>
+    <tr><td class="paramname">images</td><td>Scaled thumbnail images (one per <a class="el" href="class_icon_generator.html#ae7a21d99f35d0a67cebd6574e75497e3" title="The discrete pixel sizes generated and cached for each media file.">IconGenerator::kIconSizes</a> entry).</td></tr>
+    <tr><td class="paramname">absoluteFilePath</td><td>Absolute path to the video file whose icon to replace. </td></tr>
+    <tr><td class="paramname">images</td><td>Scaled thumbnail images (one per <a class="el" href="class_icon_generator.html#ae7a21d99f35d0a67cebd6574e75497e3" title="The discrete pixel sizes generated and cached for each media file.">IconGenerator::kIconSizes</a> entry). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a7c0abeb7e6ddf61af205da0e435cb5cc" name="a7c0abeb7e6ddf61af205da0e435cb5cc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7c0abeb7e6ddf61af205da0e435cb5cc">&#9670;&#160;</a></span>writeFileMetadata()</h2>
 
@@ -1226,6 +1826,25 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Writes JSON sidecar files for every file with unsaved changes. </p>
+
+</div>
+</div>
+<a id="a9de41cca6143d5699f3e51a7ee58894b" name="a9de41cca6143d5699f3e51a7ee58894b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9de41cca6143d5699f3e51a7ee58894b">&#9670;&#160;</a></span>writeVisibleFileMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::writeVisibleFileMetadata </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes JSON sidecar files for every visible (proxy-filtered) file with unsaved changes. </p>
 
 </div>
 </div>

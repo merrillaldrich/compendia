@@ -120,6 +120,8 @@ Collaboration diagram for TagRectItem:</div>
 Signals</h2></td></tr>
 <tr class="memitem:a9916fea46ff19a0ab4528837cff2ef7b" id="r_a9916fea46ff19a0ab4528837cff2ef7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9916fea46ff19a0ab4528837cff2ef7b">rectChanged</a> (const QRectF &amp;newSceneRect)</td></tr>
 <tr class="memdesc:a9916fea46ff19a0ab4528837cff2ef7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user finishes resizing the rect.  <br /></td></tr>
+<tr class="memitem:a4859a5327ae569bfc06f20cb88b39649" id="r_a4859a5327ae569bfc06f20cb88b39649"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4859a5327ae569bfc06f20cb88b39649">deleteRequested</a> (const QRectF &amp;sceneRect)</td></tr>
+<tr class="memdesc:a4859a5327ae569bfc06f20cb88b39649"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user selects "Delete Tag" from the context menu.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -139,6 +141,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a17a06b3b11bc3577d67a060c275b7cb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the rect live while dragging a handle.  <br /></td></tr>
 <tr class="memitem:a01d36818fb486e766d9633982323175e" id="r_a01d36818fb486e766d9633982323175e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a01d36818fb486e766d9633982323175e">mouseReleaseEvent</a> (QGraphicsSceneMouseEvent *event) override</td></tr>
 <tr class="memdesc:a01d36818fb486e766d9633982323175e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commits the resize and emits rectChanged with the final scene rect.  <br /></td></tr>
+<tr class="memitem:aad778e52799f977da62dd3e348c0dca5" id="r_aad778e52799f977da62dd3e348c0dca5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad778e52799f977da62dd3e348c0dca5">contextMenuEvent</a> (QGraphicsSceneContextMenuEvent *event) override</td></tr>
+<tr class="memdesc:aad778e52799f977da62dd3e348c0dca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows the right-click context menu for the tag region.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Graphics item that draws a rounded rectangle overlay and supports edge/corner dragging. </p>
@@ -220,6 +224,66 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the bounding rect, expanded by the hit margin and the actual folder-tab geometry above and (when the label is wide) to the right. </p>
+
+</div>
+</div>
+<a id="aad778e52799f977da62dd3e348c0dca5" name="aad778e52799f977da62dd3e348c0dca5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad778e52799f977da62dd3e348c0dca5">&#9670;&#160;</a></span>contextMenuEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagRectItem::contextMenuEvent </td>
+          <td>(</td>
+          <td class="paramtype">QGraphicsSceneContextMenuEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shows the right-click context menu for the tag region. </p>
+
+</div>
+</div>
+<a id="a4859a5327ae569bfc06f20cb88b39649" name="a4859a5327ae569bfc06f20cb88b39649"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4859a5327ae569bfc06f20cb88b39649">&#9670;&#160;</a></span>deleteRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagRectItem::deleteRequested </td>
+          <td>(</td>
+          <td class="paramtype">const QRectF &amp;</td>          <td class="paramname"><span class="paramname"><em>sceneRect</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when the user selects "Delete Tag" from the context menu. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sceneRect</td><td>The scene-coordinate rect of this item. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

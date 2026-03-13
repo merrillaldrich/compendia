@@ -132,6 +132,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a385141ecb8e37eceb78cb64f68a4c706"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a folder-picker dialog and loads the selected folder into core.  <br /></td></tr>
 <tr class="memitem:a61753721c377d394196e2240f42fd130" id="r_a61753721c377d394196e2240f42fd130"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61753721c377d394196e2240f42fd130">updateFileCountLabel</a> ()</td></tr>
 <tr class="memdesc:a61753721c377d394196e2240f42fd130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the file-count label to show visible vs. total file counts.  <br /></td></tr>
+<tr class="memitem:a2d43721963df0ad1356a4c6162882a37" id="r_a2d43721963df0ad1356a4c6162882a37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d43721963df0ad1356a4c6162882a37">updateFolderStatsLabel</a> ()</td></tr>
+<tr class="memdesc:a2d43721963df0ad1356a4c6162882a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the persistent folder-stats label in the status bar.  <br /></td></tr>
 <tr class="memitem:a5922ea5b8d1a4ddb7ac1667feedb97e9" id="r_a5922ea5b8d1a4ddb7ac1667feedb97e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5922ea5b8d1a4ddb7ac1667feedb97e9">connectFileCountLabel</a> ()</td></tr>
 <tr class="memdesc:a5922ea5b8d1a4ddb7ac1667feedb97e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the file-count label to the current proxy model's signals.  <br /></td></tr>
 <tr class="memitem:a2b165548de96b2ce566501f01078e6cb" id="r_a2b165548de96b2ce566501f01078e6cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b165548de96b2ce566501f01078e6cb">freshenPreview</a> ()</td></tr>
@@ -423,6 +425,26 @@ Protected Member Functions</h2></td></tr>
 
 <p>Updates the file-count label to show visible vs. total file counts. </p>
 <p>Displays "&lt;total&gt; Files" when all files pass the filter, or "&lt;shown&gt; of &lt;total&gt; Files" when a filter is active. </p>
+
+</div>
+</div>
+<a id="a2d43721963df0ad1356a4c6162882a37" name="a2d43721963df0ad1356a4c6162882a37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d43721963df0ad1356a4c6162882a37">&#9670;&#160;</a></span>updateFolderStatsLabel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::updateFolderStatsLabel </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates the persistent folder-stats label in the status bar. </p>
+<p>Shows the number of images, videos, folders, and total file size for the currently loaded folder. Files inside .luminism_cache directories are excluded. Clears the label when no files are loaded. </p>
 
 </div>
 </div>

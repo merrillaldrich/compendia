@@ -118,6 +118,15 @@ Collaboration diagram for FaceRecognizer:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:a66656706bc6311355787353701042a16" id="r_a66656706bc6311355787353701042a16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66656706bc6311355787353701042a16">embeddingWarmedUp</a> ()</td></tr>
+<tr class="memdesc:a66656706bc6311355787353701042a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted once per embedding that was computed (cache miss) during warmup.  <br /></td></tr>
+<tr class="memitem:aca2c03d3778bfb1aefa344f662716fa9" id="r_aca2c03d3778bfb1aefa344f662716fa9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca2c03d3778bfb1aefa344f662716fa9">warmupScheduled</a> (int misses)</td></tr>
+<tr class="memdesc:aca2c03d3778bfb1aefa344f662716fa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted by <a class="el" href="#ac0738fc4c42135feb10e272dd4f89569" title="Triggers background known-face embedding warmup for tf if models are loaded.">scheduleEmbeddingWarmup()</a> just before the background task launches.  <br /></td></tr>
+<tr class="memitem:a975df2b1838fd7e6e3e6631b9ae70bec" id="r_a975df2b1838fd7e6e3e6631b9ae70bec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a975df2b1838fd7e6e3e6631b9ae70bec">sweepProgress</a> (int filesProcessed, int totalFiles)</td></tr>
+<tr class="memdesc:a975df2b1838fd7e6e3e6631b9ae70bec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted once per file processed during <a class="el" href="#a04fda2339298d79ff64e19859a8293db" title="Runs Phases 1–3 of the face recognition sweep synchronously on the calling thread.">runSweep()</a> Phase 3.  <br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a45e0f83f81d46878069ce5cfbe47d27c" id="r_a45e0f83f81d46878069ce5cfbe47d27c"><td class="memItemLeft" align="right" valign="top">dlib::array2d&lt; dlib::rgb_pixel &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45e0f83f81d46878069ce5cfbe47d27c">qimageToDlibArray</a> (const QImage &amp;qimg)</td></tr>
@@ -128,12 +137,26 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a116c5898ca709e6b7937584702b9791d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the shape predictor and face recognition model from <code class="param">modelsDir</code>.  <br /></td></tr>
 <tr class="memitem:a91d83d0dd1b81751fa38d2ca3e5e6b0c" id="r_a91d83d0dd1b81751fa38d2ca3e5e6b0c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91d83d0dd1b81751fa38d2ca3e5e6b0c">modelsLoaded</a> () const</td></tr>
 <tr class="memdesc:a91d83d0dd1b81751fa38d2ca3e5e6b0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the model files have been loaded successfully.  <br /></td></tr>
+<tr class="memitem:a8673657acdccd3d07e078444d8ba2863" id="r_a8673657acdccd3d07e078444d8ba2863"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8673657acdccd3d07e078444d8ba2863">detectionThreshold</a> () const</td></tr>
+<tr class="memdesc:a8673657acdccd3d07e078444d8ba2863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current HOG detector adjust_threshold.  <br /></td></tr>
+<tr class="memitem:aa32e54c077a1e0bc2435514e6dc8b06f" id="r_aa32e54c077a1e0bc2435514e6dc8b06f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa32e54c077a1e0bc2435514e6dc8b06f">setDetectionThreshold</a> (double threshold)</td></tr>
+<tr class="memdesc:aa32e54c077a1e0bc2435514e6dc8b06f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the HOG detector adjust_threshold used during face detection.  <br /></td></tr>
+<tr class="memitem:a62a06a461c5efb2496d73bf90de69e5c" id="r_a62a06a461c5efb2496d73bf90de69e5c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62a06a461c5efb2496d73bf90de69e5c">matchThreshold</a> () const</td></tr>
+<tr class="memdesc:a62a06a461c5efb2496d73bf90de69e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current Euclidean-distance threshold for face matching.  <br /></td></tr>
+<tr class="memitem:a3d554eeb9650c24614f5faa1880d1485" id="r_a3d554eeb9650c24614f5faa1880d1485"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d554eeb9650c24614f5faa1880d1485">setMatchThreshold</a> (double threshold)</td></tr>
+<tr class="memdesc:a3d554eeb9650c24614f5faa1880d1485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Euclidean-distance threshold used when matching detected faces against known-person embeddings during a recognition sweep.  <br /></td></tr>
+<tr class="memitem:ac0738fc4c42135feb10e272dd4f89569" id="r_ac0738fc4c42135feb10e272dd4f89569"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0738fc4c42135feb10e272dd4f89569">scheduleEmbeddingWarmup</a> (<a class="el" href="class_tagged_file.html">TaggedFile</a> *tf)</td></tr>
+<tr class="memdesc:ac0738fc4c42135feb10e272dd4f89569"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers background known-face embedding warmup for <code class="param">tf</code> if models are loaded.  <br /></td></tr>
+<tr class="memitem:a04fda2339298d79ff64e19859a8293db" id="r_a04fda2339298d79ff64e19859a8293db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04fda2339298d79ff64e19859a8293db">runSweep</a> (const QVector&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &amp;allFiles, const QVector&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &amp;targetFiles, std::function&lt; <a class="el" href="class_tag.html">Tag</a> *(const QString &amp;, const QString &amp;)&gt; tagFactory, std::function&lt; bool()&gt; shouldCancel, std::function&lt; void()&gt; processEvents)</td></tr>
+<tr class="memdesc:a04fda2339298d79ff64e19859a8293db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs Phases 1–3 of the face recognition sweep synchronously on the calling thread.  <br /></td></tr>
 <tr class="memitem:a2101aef223e12cf1eb899617c40ec01d" id="r_a2101aef223e12cf1eb899617c40ec01d"><td class="memItemLeft" align="right" valign="top">QList&lt; QRectF &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2101aef223e12cf1eb899617c40ec01d">detectFaces</a> (const QImage &amp;sourceImage)</td></tr>
 <tr class="memdesc:a2101aef223e12cf1eb899617c40ec01d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs face detection on the source image and returns normalised bounding rectangles.  <br /></td></tr>
 <tr class="memitem:a2ea1f1c2df07cbfa97977ef9f8e4b6bf" id="r_a2ea1f1c2df07cbfa97977ef9f8e4b6bf"><td class="memItemLeft" align="right" valign="top">QVector&lt; QPair&lt; QRectF, dlib::matrix&lt; float, 0, 1 &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ea1f1c2df07cbfa97977ef9f8e4b6bf">detectFacesWithEmbeddings</a> (const QImage &amp;img)</td></tr>
 <tr class="memdesc:a2ea1f1c2df07cbfa97977ef9f8e4b6bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detects faces in <code class="param">img</code> and returns each face's normalised rect and embedding.  <br /></td></tr>
 <tr class="memitem:a54c8d6730fc07a45b820b98e9732cc9d" id="r_a54c8d6730fc07a45b820b98e9732cc9d"><td class="memItemLeft" align="right" valign="top">dlib::matrix&lt; float, 0, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54c8d6730fc07a45b820b98e9732cc9d">computeEmbeddingFromRegion</a> (const QImage &amp;img, const QRectF &amp;normalizedRect)</td></tr>
 <tr class="memdesc:a54c8d6730fc07a45b820b98e9732cc9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a face embedding for a user-drawn region in <code class="param">img</code>.  <br /></td></tr>
+<tr class="memitem:a60cbbed87a791eaf159e39a4a1251dbc" id="r_a60cbbed87a791eaf159e39a4a1251dbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a60cbbed87a791eaf159e39a4a1251dbc">warmupKnownFaceEmbeddings</a> (const QString &amp;imagePath, const QVector&lt; std::tuple&lt; QString, QString, QRectF &gt; &gt; &amp;tagRegions)</td></tr>
+<tr class="memdesc:a60cbbed87a791eaf159e39a4a1251dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the known-face cache for each region in <code class="param">tagRegions</code> and computes any missing embeddings, saving the updated cache to disk when done.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -141,6 +164,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:af2c86b611c231f4e3b3b6b1d99410bba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to load cached face descriptors for <code class="param">imagePath</code>.  <br /></td></tr>
 <tr class="memitem:afc739a15d79b3c598129ecfd2ec8c690" id="r_afc739a15d79b3c598129ecfd2ec8c690"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc739a15d79b3c598129ecfd2ec8c690">saveDescriptorCache</a> (const QString &amp;imagePath, const QVector&lt; QPair&lt; QRectF, dlib::matrix&lt; float, 0, 1 &gt; &gt; &gt; &amp;descriptors)</td></tr>
 <tr class="memdesc:afc739a15d79b3c598129ecfd2ec8c690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes face descriptors for <code class="param">imagePath</code> to the descriptor cache.  <br /></td></tr>
+<tr class="memitem:a73eb77b36b38abf6266b3cf144f55698" id="r_a73eb77b36b38abf6266b3cf144f55698"><td class="memItemLeft" align="right" valign="top">static std::optional&lt; QVector&lt; <a class="el" href="struct_known_face_cache_entry.html">KnownFaceCacheEntry</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73eb77b36b38abf6266b3cf144f55698">loadKnownFaceCache</a> (const QString &amp;imagePath)</td></tr>
+<tr class="memdesc:a73eb77b36b38abf6266b3cf144f55698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to load the known-face embedding cache for <code class="param">imagePath</code>.  <br /></td></tr>
+<tr class="memitem:ae1bf60bb6bd5b3df22fffadc42b79955" id="r_ae1bf60bb6bd5b3df22fffadc42b79955"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1bf60bb6bd5b3df22fffadc42b79955">saveKnownFaceCache</a> (const QString &amp;imagePath, const QVector&lt; <a class="el" href="struct_known_face_cache_entry.html">KnownFaceCacheEntry</a> &gt; &amp;entries)</td></tr>
+<tr class="memdesc:ae1bf60bb6bd5b3df22fffadc42b79955"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes known-face embedding entries for <code class="param">imagePath</code> to the cache.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Detects and recognises faces across images using dlib's HOG detector and ResNet embeddings. </p>
@@ -208,6 +235,15 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>A 128-d embedding, or an empty matrix if the embedding could not be computed.</dd></dl>
+<p>Runs the HOG detector and picks the detection with the best IoU against <code class="param">normalizedRect</code>. Falls back to a synthetic rectangle from <code class="param">normalizedRect</code> if no detection has IoU &gt; 0.3. Thread-safe: acquires embeddingMutex_ before calling dlib inference.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">img</td><td>The source image. </td></tr>
+    <tr><td class="paramname">normalizedRect</td><td>The user-drawn region in normalised image coordinates (0.0–1.0). </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>A 128-d embedding, or an empty matrix if the embedding could not be computed. </dd></dl>
 
 </div>
@@ -260,7 +296,61 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of (normalised QRectF, 128-d embedding) pairs, one per detected face.</dd></dl>
+<p>The image is downscaled to at most kMaxDetectionDim on its longest edge before detection so the HOG sliding-window scan is fast even on large camera images. Because the scale is uniform, normalised coordinates derived from the downscaled dimensions are identical to those that would be obtained from the original, so no remapping is required.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">img</td><td>The source image. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>A vector of (normalised QRectF, 128-d embedding) pairs, one per detected face. </dd></dl>
+
+</div>
+</div>
+<a id="a8673657acdccd3d07e078444d8ba2863" name="a8673657acdccd3d07e078444d8ba2863"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8673657acdccd3d07e078444d8ba2863">&#9670;&#160;</a></span>detectionThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double FaceRecognizer::detectionThreshold </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current HOG detector adjust_threshold. </p>
+
+</div>
+</div>
+<a id="a66656706bc6311355787353701042a16" name="a66656706bc6311355787353701042a16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66656706bc6311355787353701042a16">&#9670;&#160;</a></span>embeddingWarmedUp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::embeddingWarmedUp </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted once per embedding that was computed (cache miss) during warmup. </p>
 
 </div>
 </div>
@@ -299,6 +389,41 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a73eb77b36b38abf6266b3cf144f55698" name="a73eb77b36b38abf6266b3cf144f55698"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73eb77b36b38abf6266b3cf144f55698">&#9670;&#160;</a></span>loadKnownFaceCache()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; QVector&lt; <a class="el" href="struct_known_face_cache_entry.html">KnownFaceCacheEntry</a> &gt; &gt; FaceRecognizer::loadKnownFaceCache </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>imagePath</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Attempts to load the known-face embedding cache for <code class="param">imagePath</code>. </p>
+<p>The cache is considered valid only when the stored source_file_mtime matches the image file's current last-modified timestamp. On a mismatch the entire cache for that file is considered stale.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imagePath</td><td>Absolute path to the source image file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The cached entries on a cache hit; std::nullopt on a miss or stale cache. </dd></dl>
+
+</div>
+</div>
 <a id="a116c5898ca709e6b7937584702b9791d" name="a116c5898ca709e6b7937584702b9791d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a116c5898ca709e6b7937584702b9791d">&#9670;&#160;</a></span>loadModels()</h2>
 
@@ -333,6 +458,25 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True on success; false if any file is missing or fails to deserialize. </dd></dl>
+
+</div>
+</div>
+<a id="a62a06a461c5efb2496d73bf90de69e5c" name="a62a06a461c5efb2496d73bf90de69e5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62a06a461c5efb2496d73bf90de69e5c">&#9670;&#160;</a></span>matchThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double FaceRecognizer::matchThreshold </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current Euclidean-distance threshold for face matching. </p>
 
 </div>
 </div>
@@ -381,6 +525,55 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a04fda2339298d79ff64e19859a8293db" name="a04fda2339298d79ff64e19859a8293db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04fda2339298d79ff64e19859a8293db">&#9670;&#160;</a></span>runSweep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::runSweep </td>
+          <td>(</td>
+          <td class="paramtype">const QVector&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>allFiles</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVector&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>targetFiles</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; <a class="el" href="class_tag.html">Tag</a> *(const QString &amp;, const QString &amp;)&gt;</td>          <td class="paramname"><span class="paramname"><em>tagFactory</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; bool()&gt;</td>          <td class="paramname"><span class="paramname"><em>shouldCancel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void()&gt;</td>          <td class="paramname"><span class="paramname"><em>processEvents</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Runs Phases 1–3 of the face recognition sweep synchronously on the calling thread. </p>
+<p>Phase 1 seeds known-person embeddings from user-labeled regions across <code class="param">allFiles</code>. Phase 2 clears all existing auto-detected face tags from <code class="param">targetFiles</code>. Phase 3 scans every image in <code class="param">targetFiles</code>, matches detected faces against known embeddings using matchThreshold_, and calls <code class="param">tagFactory</code> to create new tags for unrecognised faces.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">allFiles</td><td>All files in the model (used to seed known embeddings). </td></tr>
+    <tr><td class="paramname">targetFiles</td><td>The files to actually scan and tag. </td></tr>
+    <tr><td class="paramname">tagFactory</td><td>Factory called as tagFactory(familyName, tagName) to create tags. </td></tr>
+    <tr><td class="paramname">shouldCancel</td><td>Returns true when the operation should abort. </td></tr>
+    <tr><td class="paramname">processEvents</td><td>Called periodically to keep the UI responsive. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="afc739a15d79b3c598129ecfd2ec8c690" name="afc739a15d79b3c598129ecfd2ec8c690"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afc739a15d79b3c598129ecfd2ec8c690">&#9670;&#160;</a></span>saveDescriptorCache()</h2>
 
@@ -414,6 +607,229 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">imagePath</td><td>Absolute path to the source image file. </td></tr>
     <tr><td class="paramname">descriptors</td><td>The (normalised rect, embedding) pairs to cache. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae1bf60bb6bd5b3df22fffadc42b79955" name="ae1bf60bb6bd5b3df22fffadc42b79955"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1bf60bb6bd5b3df22fffadc42b79955">&#9670;&#160;</a></span>saveKnownFaceCache()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::saveKnownFaceCache </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>imagePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVector&lt; <a class="el" href="struct_known_face_cache_entry.html">KnownFaceCacheEntry</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>entries</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Writes known-face embedding entries for <code class="param">imagePath</code> to the cache. </p>
+<p>The cache file is written into the .luminism_cache sub-directory next to the image file. The directory is created if it does not exist.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imagePath</td><td>Absolute path to the source image file. </td></tr>
+    <tr><td class="paramname">entries</td><td>The known-face cache entries to persist. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac0738fc4c42135feb10e272dd4f89569" name="ac0738fc4c42135feb10e272dd4f89569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0738fc4c42135feb10e272dd4f89569">&#9670;&#160;</a></span>scheduleEmbeddingWarmup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::scheduleEmbeddingWarmup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tagged_file.html">TaggedFile</a> *</td>          <td class="paramname"><span class="paramname"><em>tf</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Triggers background known-face embedding warmup for <code class="param">tf</code> if models are loaded. </p>
+<p>Collects all user-labeled tag regions from <code class="param">tf</code>, checks the known-face cache for missing embeddings, and launches a QtConcurrent task to compute them. Emits warmupScheduled(misses) just before the task starts so the caller can display a progress bar. Does nothing when a warmup is already running.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tf</td><td>The file being deselected. May be nullptr. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa32e54c077a1e0bc2435514e6dc8b06f" name="aa32e54c077a1e0bc2435514e6dc8b06f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa32e54c077a1e0bc2435514e6dc8b06f">&#9670;&#160;</a></span>setDetectionThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::setDetectionThreshold </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>threshold</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the HOG detector adjust_threshold used during face detection. </p>
+<p>Higher values reduce false positives; lower values increase recall. Takes effect on the next call to <a class="el" href="#a2101aef223e12cf1eb899617c40ec01d" title="Runs face detection on the source image and returns normalised bounding rectangles.">detectFaces()</a>, <a class="el" href="#a2ea1f1c2df07cbfa97977ef9f8e4b6bf" title="Detects faces in img and returns each face&#39;s normalised rect and embedding.">detectFacesWithEmbeddings()</a>, or <a class="el" href="#a54c8d6730fc07a45b820b98e9732cc9d" title="Computes a face embedding for a user-drawn region in img.">computeEmbeddingFromRegion()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">threshold</td><td>The new adjust_threshold value.</td></tr>
+    <tr><td class="paramname">threshold</td><td>The new adjust_threshold value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3d554eeb9650c24614f5faa1880d1485" name="a3d554eeb9650c24614f5faa1880d1485"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d554eeb9650c24614f5faa1880d1485">&#9670;&#160;</a></span>setMatchThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::setMatchThreshold </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>threshold</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the Euclidean-distance threshold used when matching detected faces against known-person embeddings during a recognition sweep. </p>
+<p>Lower values require a closer match; higher values are more permissive. Takes effect on the next call to <a class="el" href="#a04fda2339298d79ff64e19859a8293db" title="Runs Phases 1–3 of the face recognition sweep synchronously on the calling thread.">runSweep()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">threshold</td><td>The new match threshold value.</td></tr>
+    <tr><td class="paramname">threshold</td><td>The new match threshold value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a975df2b1838fd7e6e3e6631b9ae70bec" name="a975df2b1838fd7e6e3e6631b9ae70bec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a975df2b1838fd7e6e3e6631b9ae70bec">&#9670;&#160;</a></span>sweepProgress</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::sweepProgress </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>filesProcessed</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>totalFiles</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted once per file processed during <a class="el" href="#a04fda2339298d79ff64e19859a8293db" title="Runs Phases 1–3 of the face recognition sweep synchronously on the calling thread.">runSweep()</a> Phase 3. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filesProcessed</td><td>Number of files processed so far. </td></tr>
+    <tr><td class="paramname">totalFiles</td><td>Total number of target files in the sweep. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a60cbbed87a791eaf159e39a4a1251dbc" name="a60cbbed87a791eaf159e39a4a1251dbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60cbbed87a791eaf159e39a4a1251dbc">&#9670;&#160;</a></span>warmupKnownFaceEmbeddings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::warmupKnownFaceEmbeddings </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>imagePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVector&lt; std::tuple&lt; QString, QString, QRectF &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>tagRegions</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks the known-face cache for each region in <code class="param">tagRegions</code> and computes any missing embeddings, saving the updated cache to disk when done. </p>
+<p>Intended to be called from a background thread (e.g. via QtConcurrent::run). Uses an internal mutex to prevent concurrent dlib inference from multiple threads. Emits <a class="el" href="#a66656706bc6311355787353701042a16" title="Emitted once per embedding that was computed (cache miss) during warmup.">embeddingWarmedUp()</a> after each successfully computed (not cached) embedding.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imagePath</td><td>Absolute path to the source image. </td></tr>
+    <tr><td class="paramname">tagRegions</td><td>List of (tagFamilyName, tagName, normalizedRect) tuples for each user-labeled face region on this file.</td></tr>
+    <tr><td class="paramname">imagePath</td><td>Absolute path to the source image. </td></tr>
+    <tr><td class="paramname">tagRegions</td><td>List of (tagFamilyName, tagName, normalizedRect) tuples for each user-labeled face region on this file. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aca2c03d3778bfb1aefa344f662716fa9" name="aca2c03d3778bfb1aefa344f662716fa9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca2c03d3778bfb1aefa344f662716fa9">&#9670;&#160;</a></span>warmupScheduled</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaceRecognizer::warmupScheduled </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>misses</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted by <a class="el" href="#ac0738fc4c42135feb10e272dd4f89569" title="Triggers background known-face embedding warmup for tf if models are loaded.">scheduleEmbeddingWarmup()</a> just before the background task launches. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">misses</td><td>Number of embeddings that need to be (re)computed. </td></tr>
   </table>
   </dd>
 </dl>

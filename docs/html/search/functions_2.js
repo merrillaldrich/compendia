@@ -1,13 +1,22 @@
 var searchData=
 [
-  ['clear_0',['clear',['../class_preview_container.html#af820d1ea99343d488aa4b47203bb8521',1,'PreviewContainer::clear()'],['../class_tag_container.html#ad384fe1eaa145f6d34fa4777792412b7',1,'TagContainer::clear()']]],
-  ['cleardirtyflag_1',['clearDirtyFlag',['../class_tag.html#ae09ed0e850e3a92547b0701f190edd97',1,'Tag::clearDirtyFlag()'],['../class_tag_family.html#a7ff45e76026cd5ad9fe7a800009dd5fc',1,'TagFamily::clearDirtyFlag()'],['../class_tagged_file.html#a5ca873b8ca2baff54f8e8fbf19a98c1f',1,'TaggedFile::clearDirtyFlag()']]],
-  ['clearpreview_2',['clearPreview',['../class_main_window.html#a70f1571a374bc94df84f935f8af0fffe',1,'MainWindow']]],
-  ['clickablelabel_3',['ClickableLabel',['../class_clickable_label.html#ad9ae3203cbf6f6746312a1391c218951',1,'ClickableLabel']]],
-  ['clicked_4',['clicked',['../class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e',1,'ClickableLabel']]],
-  ['closeevent_5',['closeEvent',['../class_main_window.html#a05fb9d72c044aa3bb7d187b994704e2f',1,'MainWindow']]],
-  ['computeembeddingfromregion_6',['computeEmbeddingFromRegion',['../class_face_recognizer.html#a54c8d6730fc07a45b820b98e9732cc9d',1,'FaceRecognizer']]],
-  ['connectfilecountlabel_7',['connectFileCountLabel',['../class_main_window.html#a5922ea5b8d1a4ddb7ac1667feedb97e9',1,'MainWindow']]],
-  ['containsfiles_8',['containsFiles',['../class_luminism_core.html#a7d3911b03d851bc2111456b424d8e8c9',1,'LuminismCore']]],
-  ['count_9',['count',['../class_flow_layout.html#a35bdf8dac35631d59767d0c0fedc7248',1,'FlowLayout']]]
+  ['cachefilepath_0',['cacheFilePath',['../class_icon_generator.html#a74525b688c43aaf7a34e3e32c2e282ee',1,'IconGenerator']]],
+  ['cancel_1',['cancel',['../class_folder_scanner.html#ab6394b15cdf4882cdd92ee403060f0dc',1,'FolderScanner']]],
+  ['cancelicongeneration_2',['cancelIconGeneration',['../class_luminism_core.html#a984e7ade7ae7db19fac161d593be6b64',1,'LuminismCore']]],
+  ['changeevent_3',['changeEvent',['../class_star_rating_widget.html#a721c763fdb83065b3d74fadd737dd616',1,'StarRatingWidget']]],
+  ['clear_4',['clear',['../class_preview_container.html#af820d1ea99343d488aa4b47203bb8521',1,'PreviewContainer::clear()'],['../class_tag_container.html#ad384fe1eaa145f6d34fa4777792412b7',1,'TagContainer::clear()']]],
+  ['cleardirtyflag_5',['clearDirtyFlag',['../class_tag.html#ae09ed0e850e3a92547b0701f190edd97',1,'Tag::clearDirtyFlag()'],['../class_tag_family.html#a7ff45e76026cd5ad9fe7a800009dd5fc',1,'TagFamily::clearDirtyFlag()'],['../class_tagged_file.html#a5ca873b8ca2baff54f8e8fbf19a98c1f',1,'TaggedFile::clearDirtyFlag()']]],
+  ['clearisolationset_6',['clearIsolationSet',['../class_filter_proxy_model.html#a84f6419385b1db66df2455bed0f5c99e',1,'FilterProxyModel::clearIsolationSet()'],['../class_luminism_core.html#abe4a216aa5807f607aa73d520f900605',1,'LuminismCore::clearIsolationSet()']]],
+  ['clearpreview_7',['clearPreview',['../class_main_window.html#a70f1571a374bc94df84f935f8af0fffe',1,'MainWindow']]],
+  ['clickablelabel_8',['ClickableLabel',['../class_clickable_label.html#ad9ae3203cbf6f6746312a1391c218951',1,'ClickableLabel']]],
+  ['clicked_9',['clicked',['../class_clickable_label.html#a49e69616b4bd73cb64ae0d1946bf6b2e',1,'ClickableLabel']]],
+  ['closeevent_10',['closeEvent',['../class_main_window.html#a05fb9d72c044aa3bb7d187b994704e2f',1,'MainWindow']]],
+  ['computeembeddingfromregion_11',['computeEmbeddingFromRegion',['../class_face_recognizer.html#a54c8d6730fc07a45b820b98e9732cc9d',1,'FaceRecognizer']]],
+  ['computehash_12',['computeHash',['../class_perceptual_hasher.html#a8cd0f79689bd75b97392b47a4bc30cb1',1,'PerceptualHasher']]],
+  ['connectfilecountlabel_13',['connectFileCountLabel',['../class_main_window.html#a5922ea5b8d1a4ddb7ac1667feedb97e9',1,'MainWindow']]],
+  ['containsfiles_14',['containsFiles',['../class_luminism_core.html#a7d3911b03d851bc2111456b424d8e8c9',1,'LuminismCore']]],
+  ['contextmenuevent_15',['contextMenuEvent',['../class_tag_rect_item.html#aad778e52799f977da62dd3e348c0dca5',1,'TagRectItem']]],
+  ['count_16',['count',['../class_flow_layout.html#a35bdf8dac35631d59767d0c0fedc7248',1,'FlowLayout']]],
+  ['countallfileswithtag_17',['countAllFilesWithTag',['../class_luminism_core.html#af677310c6e34245b39461540a93e7732',1,'LuminismCore']]],
+  ['countvisiblefileswithtag_18',['countVisibleFilesWithTag',['../class_luminism_core.html#ac1ae1ed8d57eb11a2852ac1e3e27f832',1,'LuminismCore']]]
 ];

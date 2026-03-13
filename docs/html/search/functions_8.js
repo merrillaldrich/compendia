@@ -1,9 +1,19 @@
 var searchData=
 [
-  ['icongenerator_0',['IconGenerator',['../class_icon_generator.html#a652a80ddba7d314d790062d65a58d30c',1,'IconGenerator']]],
-  ['iconupdated_1',['iconUpdated',['../class_luminism_core.html#ad935634d9d59823babd5df1ccea851ab',1,'LuminismCore']]],
-  ['initexifmap_2',['initExifMap',['../class_tagged_file.html#a0293e71d352a09803da0f5462f2e48ac',1,'TaggedFile']]],
-  ['initstyleoption_3',['initStyleOption',['../class_file_name_delegate.html#a4e0d5fb6caea61300b7a395f67a32e8b',1,'FileNameDelegate']]],
-  ['inittagrect_4',['initTagRect',['../class_tagged_file.html#a545faeb645f4e753b20f86951410a650',1,'TaggedFile']]],
-  ['itemat_5',['itemAt',['../class_flow_layout.html#a14c3661044dd9b97ef0c0a34d0692ce4',1,'FlowLayout']]]
+  ['iconcachevalid_0',['iconCacheValid',['../class_icon_generator.html#a94222b1d614e0f10db9b428177a17dbd',1,'IconGenerator']]],
+  ['iconforpath_1',['iconForPath',['../class_luminism_core.html#a3cbd5a6099d4592acf26f64f7854258d',1,'LuminismCore']]],
+  ['icongenerator_2',['IconGenerator',['../class_icon_generator.html#a771bb1953a926df5cbf85bebe3985b8a',1,'IconGenerator']]],
+  ['iconupdated_3',['iconUpdated',['../class_luminism_core.html#ad935634d9d59823babd5df1ccea851ab',1,'LuminismCore']]],
+  ['increment_4',['increment',['../class_multi_progress_bar.html#a7c8a2924b82c5cb85474d476436b6bce',1,'MultiProgressBar']]],
+  ['initexifmap_5',['initExifMap',['../class_tagged_file.html#a0293e71d352a09803da0f5462f2e48ac',1,'TaggedFile']]],
+  ['initphash_6',['initPHash',['../class_tagged_file.html#a8fd19f21922dea1b0da2e9b53985b33c',1,'TaggedFile']]],
+  ['initrating_7',['initRating',['../class_tagged_file.html#a22e2e65bab887ed45553f8b6cd014bb4',1,'TaggedFile']]],
+  ['initstyleoption_8',['initStyleOption',['../class_file_name_delegate.html#a4e0d5fb6caea61300b7a395f67a32e8b',1,'FileNameDelegate']]],
+  ['inittagrect_9',['initTagRect',['../class_tagged_file.html#a545faeb645f4e753b20f86951410a650',1,'TaggedFile']]],
+  ['iscollapsed_10',['isCollapsed',['../class_tag_family_widget_collapse_button.html#ac7cb2ed804180d50404e8e65b602c92e',1,'TagFamilyWidgetCollapseButton']]],
+  ['isisolated_11',['isIsolated',['../class_filter_proxy_model.html#afc9c90b1eb0745f8b88b9f232d664a96',1,'FilterProxyModel::isIsolated()'],['../class_luminism_core.html#ade881a7a01f98a39b23ddafc8c0fc019',1,'LuminismCore::isIsolated()']]],
+  ['isolationsetsize_12',['isolationSetSize',['../class_filter_proxy_model.html#ab95eb4eec0a0b26d26aba0a3648fa483',1,'FilterProxyModel::isolationSetSize()'],['../class_luminism_core.html#a5490029a780adb8cc266d4d251b8092f',1,'LuminismCore::isolationSetSize()']]],
+  ['isreadonly_13',['isReadOnly',['../class_star_rating_widget.html#a33cbc869002c7f2bc233825a5cb56c71',1,'StarRatingWidget']]],
+  ['iswelcomeshowing_14',['isWelcomeShowing',['../class_welcome_hint_container.html#ad29d37ebb7227b899df6a977c9917b10',1,'WelcomeHintContainer']]],
+  ['itemat_15',['itemAt',['../class_flow_layout.html#a14c3661044dd9b97ef0c0a34d0692ce4',1,'FlowLayout']]]
 ];

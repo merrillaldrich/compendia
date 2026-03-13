@@ -120,12 +120,18 @@ Collaboration diagram for PreviewContainer:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
+<tr class="memitem:ae36319a35474bd8c48308117aa0b9e4a" id="r_ae36319a35474bd8c48308117aa0b9e4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae36319a35474bd8c48308117aa0b9e4a">navigateRequested</a> (int delta)</td></tr>
+<tr class="memdesc:ae36319a35474bd8c48308117aa0b9e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user requests navigation to the previous (delta = -1) or next (delta = +1) file in the list.  <br /></td></tr>
 <tr class="memitem:a517e6ac101dbb20c39b07c5962190715" id="r_a517e6ac101dbb20c39b07c5962190715"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a517e6ac101dbb20c39b07c5962190715">tagDroppedOnPreview</a> (const QString &amp;familyName, const QString &amp;tagName, const QRectF &amp;normalizedRect)</td></tr>
 <tr class="memdesc:a517e6ac101dbb20c39b07c5962190715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a tag is dropped on the preview image.  <br /></td></tr>
 <tr class="memitem:ad2addd748403849a74ae9af5492fe1ce" id="r_ad2addd748403849a74ae9af5492fe1ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2addd748403849a74ae9af5492fe1ce">tagPreviewDragEntered</a> (const QString &amp;family, const QString &amp;tagName)</td></tr>
 <tr class="memdesc:ad2addd748403849a74ae9af5492fe1ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted once when a tag drag first enters the preview view.  <br /></td></tr>
+<tr class="memitem:a2244fbd233ac1cb7589b518904c892e3" id="r_a2244fbd233ac1cb7589b518904c892e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2244fbd233ac1cb7589b518904c892e3">tagDroppedOnExistingRegion</a> (const QString &amp;familyName, const QString &amp;tagName, const QRectF &amp;existingRect)</td></tr>
+<tr class="memdesc:a2244fbd233ac1cb7589b518904c892e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a tag is dropped directly onto an existing tag region.  <br /></td></tr>
 <tr class="memitem:ae205391efc82ff2116c158fe96668005" id="r_ae205391efc82ff2116c158fe96668005"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae205391efc82ff2116c158fe96668005">tagRectResized</a> (const QRectF &amp;oldNormalizedRect, const QRectF &amp;newNormalizedRect)</td></tr>
 <tr class="memdesc:ae205391efc82ff2116c158fe96668005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user finishes resizing a tag region overlay.  <br /></td></tr>
+<tr class="memitem:ac96d378fa00c9adcc27a71c6a517fd15" id="r_ac96d378fa00c9adcc27a71c6a517fd15"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac96d378fa00c9adcc27a71c6a517fd15">tagRectDeleteRequested</a> (const QRectF &amp;normalizedRect)</td></tr>
+<tr class="memdesc:ac96d378fa00c9adcc27a71c6a517fd15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user selects "Delete Tag" from a tag region's context menu.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -143,8 +149,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:abaa45697498056c6aeadc2d4175a83a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds normalised bounding-rectangle overlays on top of the current image.  <br /></td></tr>
 <tr class="memitem:ac7582dd88edced493e0c145884058663" id="r_ac7582dd88edced493e0c145884058663"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7582dd88edced493e0c145884058663">setTagRectsVisible</a> (bool visible)</td></tr>
 <tr class="memdesc:ac7582dd88edced493e0c145884058663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows or hides the tag rectangle overlays without removing them from the scene.  <br /></td></tr>
+<tr class="memitem:a8a7b3451c70ce2cf26c4564b3eb6c5cd" id="r_a8a7b3451c70ce2cf26c4564b3eb6c5cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a7b3451c70ce2cf26c4564b3eb6c5cd">updateTagRectDescriptor</a> (const QRectF &amp;oldNorm, const QRectF &amp;newNorm)</td></tr>
+<tr class="memdesc:a8a7b3451c70ce2cf26c4564b3eb6c5cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the stored normalized rect for one descriptor in-place.  <br /></td></tr>
 <tr class="memitem:a0ac9040b023e6a6b1678233c76f69119" id="r_a0ac9040b023e6a6b1678233c76f69119"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ac9040b023e6a6b1678233c76f69119">setDropPreviewColor</a> (QColor color)</td></tr>
 <tr class="memdesc:a0ac9040b023e6a6b1678233c76f69119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the colour used to draw the drop-preview rectangle during a tag drag.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a8bda6e97bbb781fa52b4c6bbfe2667b2" id="r_a8bda6e97bbb781fa52b4c6bbfe2667b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bda6e97bbb781fa52b4c6bbfe2667b2">resizeEvent</a> (QResizeEvent *event) override</td></tr>
+<tr class="memdesc:a8bda6e97bbb781fa52b4c6bbfe2667b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repositions the nav overlay buttons when the widget is resized.  <br /></td></tr>
+<tr class="memitem:a3e0dd9f6a7caed4684429cf209ced80a" id="r_a3e0dd9f6a7caed4684429cf209ced80a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e0dd9f6a7caed4684429cf209ced80a">eventFilter</a> (QObject *obj, QEvent *e) override</td></tr>
+<tr class="memdesc:a3e0dd9f6a7caed4684429cf209ced80a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event filter installed on the internal view and nav buttons.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Widget that displays a full-size image preview inside a zoomable graphics view. </p>
@@ -203,6 +218,56 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a3e0dd9f6a7caed4684429cf209ced80a" name="a3e0dd9f6a7caed4684429cf209ced80a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e0dd9f6a7caed4684429cf209ced80a">&#9670;&#160;</a></span>eventFilter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool PreviewContainer::eventFilter </td>
+          <td>(</td>
+          <td class="paramtype">QObject *</td>          <td class="paramname"><span class="paramname"><em>obj</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QEvent *</td>          <td class="paramname"><span class="paramname"><em>e</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Event filter installed on the internal view and nav buttons. </p>
+<p>Tracks mouse position on the view to drive nav button fade in/out.</p>
+<p>Tracks mouse proximity to the left/right edges of the view and fades the nav overlay buttons in or out accordingly.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">obj</td><td>The object that received the event. </td></tr>
+    <tr><td class="paramname">e</td><td>The event. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>False so the event continues to its normal target.</dd></dl>
+<p>On MouseMove over the view: fades buttons in when cursor is within kNavHotZoneWidth pixels of either horizontal edge, out otherwise. On Leave from the view or a button: fades out unless cursor moved directly onto the other interactive element.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">obj</td><td>The watched object. </td></tr>
+    <tr><td class="paramname">e</td><td>The event. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>False — events are never consumed. </dd></dl>
+
+</div>
+</div>
 <a id="a39a08a4a1b9d935018c37b5b1788a11c" name="a39a08a4a1b9d935018c37b5b1788a11c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a39a08a4a1b9d935018c37b5b1788a11c">&#9670;&#160;</a></span>freshen()</h2>
 
@@ -221,6 +286,39 @@ Public Member Functions</h2></td></tr>
 <p>Re-fits the displayed image to the viewport if it has not been zoomed in. </p>
 <p>Re-fits the displayed content to the viewport.</p>
 <p>For video, always re-fits so the playback fills the pane at any size. For images, only re-fits when the image has not been zoomed in by the user. </p>
+
+</div>
+</div>
+<a id="ae36319a35474bd8c48308117aa0b9e4a" name="ae36319a35474bd8c48308117aa0b9e4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae36319a35474bd8c48308117aa0b9e4a">&#9670;&#160;</a></span>navigateRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PreviewContainer::navigateRequested </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>delta</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when the user requests navigation to the previous (delta = -1) or next (delta = +1) file in the list. </p>
+<p>Emitted by the on-screen arrow buttons and by left/right arrow key presses. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delta</td><td>Direction: -1 for backward, +1 for forward. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -268,6 +366,40 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">absoluteFilePath</td><td>Absolute path to the image file to display. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8bda6e97bbb781fa52b4c6bbfe2667b2" name="a8bda6e97bbb781fa52b4c6bbfe2667b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bda6e97bbb781fa52b4c6bbfe2667b2">&#9670;&#160;</a></span>resizeEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PreviewContainer::resizeEvent </td>
+          <td>(</td>
+          <td class="paramtype">QResizeEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Repositions the nav overlay buttons when the widget is resized. </p>
+<p>Repositions nav buttons when the widget is resized.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The resize event. </td></tr>
   </table>
   </dd>
 </dl>
@@ -344,6 +476,51 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">visible</td><td>True to show overlays, false to hide them. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2244fbd233ac1cb7589b518904c892e3" name="a2244fbd233ac1cb7589b518904c892e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2244fbd233ac1cb7589b518904c892e3">&#9670;&#160;</a></span>tagDroppedOnExistingRegion</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PreviewContainer::tagDroppedOnExistingRegion </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>familyName</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>tagName</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QRectF &amp;</td>          <td class="paramname"><span class="paramname"><em>existingRect</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when a tag is dropped directly onto an existing tag region. </p>
+<p>The drop target's normalized rect is passed so the receiver can identify which tag currently owns that region and swap it for the dropped tag.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">familyName</td><td><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> family name of the dropped tag. </td></tr>
+    <tr><td class="paramname">tagName</td><td><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> name of the dropped tag. </td></tr>
+    <tr><td class="paramname">existingRect</td><td>Normalized rect of the existing region that was hit. </td></tr>
   </table>
   </dd>
 </dl>
@@ -432,6 +609,39 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac96d378fa00c9adcc27a71c6a517fd15" name="ac96d378fa00c9adcc27a71c6a517fd15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac96d378fa00c9adcc27a71c6a517fd15">&#9670;&#160;</a></span>tagRectDeleteRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PreviewContainer::tagRectDeleteRequested </td>
+          <td>(</td>
+          <td class="paramtype">const QRectF &amp;</td>          <td class="paramname"><span class="paramname"><em>normalizedRect</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when the user selects "Delete Tag" from a tag region's context menu. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">normalizedRect</td><td>The normalized rect of the region to delete. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ae205391efc82ff2116c158fe96668005" name="ae205391efc82ff2116c158fe96668005"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae205391efc82ff2116c158fe96668005">&#9670;&#160;</a></span>tagRectResized</h2>
 
@@ -464,6 +674,37 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">oldNormalizedRect</td><td>The region's normalized rect before the resize. </td></tr>
     <tr><td class="paramname">newNormalizedRect</td><td>The region's normalized rect after the resize. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8a7b3451c70ce2cf26c4564b3eb6c5cd" name="a8a7b3451c70ce2cf26c4564b3eb6c5cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a7b3451c70ce2cf26c4564b3eb6c5cd">&#9670;&#160;</a></span>updateTagRectDescriptor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PreviewContainer::updateTagRectDescriptor </td>
+          <td>(</td>
+          <td class="paramtype">const QRectF &amp;</td>          <td class="paramname"><span class="paramname"><em>oldNorm</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QRectF &amp;</td>          <td class="paramname"><span class="paramname"><em>newNorm</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates the stored normalized rect for one descriptor in-place. </p>
+<p>Called after a live resize so that the drop hit-test uses the current rect without rebuilding the scene items.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">oldNorm</td><td>The normalized rect to replace. </td></tr>
+    <tr><td class="paramname">newNorm</td><td>The new normalized rect. </td></tr>
   </table>
   </dd>
 </dl>

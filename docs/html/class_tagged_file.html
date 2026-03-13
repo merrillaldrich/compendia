@@ -118,8 +118,17 @@ Collaboration diagram for TaggedFile:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ada10fdd48177f7eec2ead6dcb1b0dc88" id="r_ada10fdd48177f7eec2ead6dcb1b0dc88"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada10fdd48177f7eec2ead6dcb1b0dc88">MediaType</a> { <a class="el" href="#ada10fdd48177f7eec2ead6dcb1b0dc88a3ca6d2c6e0adf02682b3b2a1d36c6417">Image</a>
+, <a class="el" href="#ada10fdd48177f7eec2ead6dcb1b0dc88a8479ce6499fb6c3212d1224164b8cff5">Video</a>
+ }</td></tr>
+<tr class="memdesc:ada10fdd48177f7eec2ead6dcb1b0dc88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Distinguishes image files from video files.  <a href="#ada10fdd48177f7eec2ead6dcb1b0dc88">More...</a><br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a6fe2a8b9b757c8434c039edeeb4c227d" id="r_a6fe2a8b9b757c8434c039edeeb4c227d"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fe2a8b9b757c8434c039edeeb4c227d">effectiveDate</a> () const</td></tr>
+<tr class="memdesc:a6fe2a8b9b757c8434c039edeeb4c227d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the best available date for this file.  <br /></td></tr>
 <tr class="memitem:a43c3f4264871eb417ea34e0cfbdf354f" id="r_a43c3f4264871eb417ea34e0cfbdf354f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43c3f4264871eb417ea34e0cfbdf354f">TaggedFile</a> (QObject *parent=nullptr)</td></tr>
 <tr class="memdesc:a43c3f4264871eb417ea34e0cfbdf354f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a default, empty <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a>.  <br /></td></tr>
 <tr class="memitem:accc28242518fddd41f54d454f3adb5ca" id="r_accc28242518fddd41f54d454f3adb5ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#accc28242518fddd41f54d454f3adb5ca">TaggedFile</a> (QFileInfo fileInfo, QSet&lt; <a class="el" href="class_tag.html">Tag</a> * &gt; *<a class="el" href="#a8edb5df0c37cdb939972049814b20e7a">tags</a>, QMap&lt; QString, QString &gt; *<a class="el" href="#a6bc53d43fb454cb93148835a39da63d8">exifMap</a>, QObject *parent=nullptr)</td></tr>
@@ -152,6 +161,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a04f161afaff4dc99a2437788a5247999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directly sets the dirty flag to true.  <br /></td></tr>
 <tr class="memitem:a5ca873b8ca2baff54f8e8fbf19a98c1f" id="r_a5ca873b8ca2baff54f8e8fbf19a98c1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ca873b8ca2baff54f8e8fbf19a98c1f">clearDirtyFlag</a> ()</td></tr>
 <tr class="memdesc:a5ca873b8ca2baff54f8e8fbf19a98c1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the file-level dirty flag (does not clear tag or family flags).  <br /></td></tr>
+<tr class="memitem:a794a37b3f0fc475b9602d41dc45ef240" id="r_a794a37b3f0fc475b9602d41dc45ef240"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ada10fdd48177f7eec2ead6dcb1b0dc88">MediaType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a794a37b3f0fc475b9602d41dc45ef240">mediaType</a> () const</td></tr>
+<tr class="memdesc:a794a37b3f0fc475b9602d41dc45ef240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether this file is an image or a video.  <br /></td></tr>
+<tr class="memitem:a0e19a34627b539ca06500d9cf5b42f25" id="r_a0e19a34627b539ca06500d9cf5b42f25"><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e19a34627b539ca06500d9cf5b42f25">fileSize</a> () const</td></tr>
+<tr class="memdesc:a0e19a34627b539ca06500d9cf5b42f25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the file size in bytes as recorded at load time.  <br /></td></tr>
+<tr class="memitem:a42db7f5f3392a6914f0d8612bad8b0c5" id="r_a42db7f5f3392a6914f0d8612bad8b0c5"><td class="memItemLeft" align="right" valign="top">quint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42db7f5f3392a6914f0d8612bad8b0c5">pHash</a> () const</td></tr>
+<tr class="memdesc:a42db7f5f3392a6914f0d8612bad8b0c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the perceptual hash computed for this file (0 if not yet computed).  <br /></td></tr>
+<tr class="memitem:a8fd19f21922dea1b0da2e9b53985b33c" id="r_a8fd19f21922dea1b0da2e9b53985b33c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fd19f21922dea1b0da2e9b53985b33c">initPHash</a> (quint64 hash)</td></tr>
+<tr class="memdesc:a8fd19f21922dea1b0da2e9b53985b33c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the perceptual hash without marking the file dirty (used during JSON load).  <br /></td></tr>
+<tr class="memitem:aa580c9baff6f6222b917591c0e870122" id="r_aa580c9baff6f6222b917591c0e870122"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa580c9baff6f6222b917591c0e870122">setPHash</a> (quint64 hash)</td></tr>
+<tr class="memdesc:aa580c9baff6f6222b917591c0e870122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the perceptual hash and marks the file dirty if the value changed.  <br /></td></tr>
+<tr class="memitem:a87e02bdcb8bb2f3a2da1aa9751294421" id="r_a87e02bdcb8bb2f3a2da1aa9751294421"><td class="memItemLeft" align="right" valign="top">std::optional&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a87e02bdcb8bb2f3a2da1aa9751294421">rating</a> () const</td></tr>
+<tr class="memdesc:a87e02bdcb8bb2f3a2da1aa9751294421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the user rating (1–5), or std::nullopt if no rating has been assigned.  <br /></td></tr>
+<tr class="memitem:a22e2e65bab887ed45553f8b6cd014bb4" id="r_a22e2e65bab887ed45553f8b6cd014bb4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22e2e65bab887ed45553f8b6cd014bb4">initRating</a> (std::optional&lt; int &gt; <a class="el" href="#a87e02bdcb8bb2f3a2da1aa9751294421">rating</a>)</td></tr>
+<tr class="memdesc:a22e2e65bab887ed45553f8b6cd014bb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rating without marking the file dirty (used during JSON load).  <br /></td></tr>
+<tr class="memitem:a7fb36112c28ae736ad8e37eb6b851257" id="r_a7fb36112c28ae736ad8e37eb6b851257"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fb36112c28ae736ad8e37eb6b851257">setRating</a> (std::optional&lt; int &gt; <a class="el" href="#a87e02bdcb8bb2f3a2da1aa9751294421">rating</a>)</td></tr>
+<tr class="memdesc:a7fb36112c28ae736ad8e37eb6b851257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rating and marks the file dirty if the value changed.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -160,11 +185,34 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a2edcb100a1af260ae0914661fb977677" id="r_a2edcb100a1af260ae0914661fb977677"><td class="memItemLeft" align="right" valign="top">QDateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2edcb100a1af260ae0914661fb977677">imageCaptureDateTime</a></td></tr>
 <tr class="memitem:a7e54143de1a32c5f3de94bb599425978" id="r_a7e54143de1a32c5f3de94bb599425978"><td class="memItemLeft" align="right" valign="top">QDateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e54143de1a32c5f3de94bb599425978">fileCreationDateTime</a></td></tr>
 <tr class="memitem:a67d08ef165cbfa1788e401a0c336fa1e" id="r_a67d08ef165cbfa1788e401a0c336fa1e"><td class="memItemLeft" align="right" valign="top">QDateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67d08ef165cbfa1788e401a0c336fa1e">fileModificationDateTime</a></td></tr>
+<tr class="memitem:aac9d9e49596888167be2649f5b92061b" id="r_aac9d9e49596888167be2649f5b92061b"><td class="memItemLeft" align="right" valign="top">QDateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aac9d9e49596888167be2649f5b92061b">fileNameInferredDate</a></td></tr>
+<tr class="memdesc:aac9d9e49596888167be2649f5b92061b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Date/time inferred from a timestamp embedded in the file name, if present.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Holds all data associated with a single media file managed by <a class="el" href="namespace_luminism.html" title="Project-wide compile-time constants for Luminism.">Luminism</a>. </p>
 <p>Stores the file path, timestamps, applied tags, and EXIF metadata for one image file. A dirty flag tracks whether unsaved changes exist, either on the <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> itself or on any of its applied Tags or their families. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
+<a id="ada10fdd48177f7eec2ead6dcb1b0dc88" name="ada10fdd48177f7eec2ead6dcb1b0dc88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada10fdd48177f7eec2ead6dcb1b0dc88">&#9670;&#160;</a></span>MediaType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#ada10fdd48177f7eec2ead6dcb1b0dc88">TaggedFile::MediaType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Distinguishes image files from video files. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ada10fdd48177f7eec2ead6dcb1b0dc88a3ca6d2c6e0adf02682b3b2a1d36c6417" name="ada10fdd48177f7eec2ead6dcb1b0dc88a3ca6d2c6e0adf02682b3b2a1d36c6417"></a>Image&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ada10fdd48177f7eec2ead6dcb1b0dc88a8479ce6499fb6c3212d1224164b8cff5" name="ada10fdd48177f7eec2ead6dcb1b0dc88a8479ce6499fb6c3212d1224164b8cff5"></a>Video&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a43c3f4264871eb417ea34e0cfbdf354f" name="a43c3f4264871eb417ea34e0cfbdf354f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a43c3f4264871eb417ea34e0cfbdf354f">&#9670;&#160;</a></span>TaggedFile() <span class="overload">[1/2]</span></h2>
 
@@ -331,6 +379,26 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a6fe2a8b9b757c8434c039edeeb4c227d" name="a6fe2a8b9b757c8434c039edeeb4c227d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fe2a8b9b757c8434c039edeeb4c227d">&#9670;&#160;</a></span>effectiveDate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QDate TaggedFile::effectiveDate </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the best available date for this file. </p>
+<p>Priority: EXIF capture date → filename-inferred date → filesystem creation date. Returns an invalid QDate when none of the three sources yields a valid date. </p>
+
+</div>
+</div>
 <a id="a6bc53d43fb454cb93148835a39da63d8" name="a6bc53d43fb454cb93148835a39da63d8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6bc53d43fb454cb93148835a39da63d8">&#9670;&#160;</a></span>exifMap()</h2>
 
@@ -348,6 +416,33 @@ Public Attributes</h2></td></tr>
 
 <p>Returns a copy of the EXIF map. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current EXIF key-value map. </dd></dl>
+
+</div>
+</div>
+<a id="a0e19a34627b539ca06500d9cf5b42f25" name="a0e19a34627b539ca06500d9cf5b42f25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e19a34627b539ca06500d9cf5b42f25">&#9670;&#160;</a></span>fileSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 TaggedFile::fileSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the file size in bytes as recorded at load time. </p>
 
 </div>
 </div>
@@ -370,6 +465,50 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">exifMap</td><td>The EXIF key-value map to initialise from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8fd19f21922dea1b0da2e9b53985b33c" name="a8fd19f21922dea1b0da2e9b53985b33c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fd19f21922dea1b0da2e9b53985b33c">&#9670;&#160;</a></span>initPHash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TaggedFile::initPHash </td>
+          <td>(</td>
+          <td class="paramtype">quint64</td>          <td class="paramname"><span class="paramname"><em>hash</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the perceptual hash without marking the file dirty (used during JSON load). </p>
+
+</div>
+</div>
+<a id="a22e2e65bab887ed45553f8b6cd014bb4" name="a22e2e65bab887ed45553f8b6cd014bb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22e2e65bab887ed45553f8b6cd014bb4">&#9670;&#160;</a></span>initRating()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TaggedFile::initRating </td>
+          <td>(</td>
+          <td class="paramtype">std::optional&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>rating</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the rating without marking the file dirty (used during JSON load). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rating</td><td>A value in [1,5], or std::nullopt to clear. </td></tr>
   </table>
   </dd>
 </dl>
@@ -425,6 +564,71 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a794a37b3f0fc475b9602d41dc45ef240" name="a794a37b3f0fc475b9602d41dc45ef240"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a794a37b3f0fc475b9602d41dc45ef240">&#9670;&#160;</a></span>mediaType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ada10fdd48177f7eec2ead6dcb1b0dc88">MediaType</a> TaggedFile::mediaType </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns whether this file is an image or a video. </p>
+
+</div>
+</div>
+<a id="a42db7f5f3392a6914f0d8612bad8b0c5" name="a42db7f5f3392a6914f0d8612bad8b0c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42db7f5f3392a6914f0d8612bad8b0c5">&#9670;&#160;</a></span>pHash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">quint64 TaggedFile::pHash </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the perceptual hash computed for this file (0 if not yet computed). </p>
+
+</div>
+</div>
+<a id="a87e02bdcb8bb2f3a2da1aa9751294421" name="a87e02bdcb8bb2f3a2da1aa9751294421"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87e02bdcb8bb2f3a2da1aa9751294421">&#9670;&#160;</a></span>rating()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; int &gt; TaggedFile::rating </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the user rating (1–5), or std::nullopt if no rating has been assigned. </p>
+
+</div>
+</div>
 <a id="a1f4a54d6c439d062fbc0144494f44960" name="a1f4a54d6c439d062fbc0144494f44960"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f4a54d6c439d062fbc0144494f44960">&#9670;&#160;</a></span>removeTag()</h2>
 
@@ -469,6 +673,56 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newExifMap</td><td>The new EXIF key-value map. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa580c9baff6f6222b917591c0e870122" name="aa580c9baff6f6222b917591c0e870122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa580c9baff6f6222b917591c0e870122">&#9670;&#160;</a></span>setPHash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TaggedFile::setPHash </td>
+          <td>(</td>
+          <td class="paramtype">quint64</td>          <td class="paramname"><span class="paramname"><em>hash</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the perceptual hash and marks the file dirty if the value changed. </p>
+<p>Used during backfill so newly computed hashes are persisted on next save. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hash</td><td>The newly computed pHash value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7fb36112c28ae736ad8e37eb6b851257" name="a7fb36112c28ae736ad8e37eb6b851257"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fb36112c28ae736ad8e37eb6b851257">&#9670;&#160;</a></span>setRating()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TaggedFile::setRating </td>
+          <td>(</td>
+          <td class="paramtype">std::optional&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>rating</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the rating and marks the file dirty if the value changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rating</td><td>A value in [1,5], or std::nullopt to clear. </td></tr>
   </table>
   </dd>
 </dl>
@@ -611,6 +865,23 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="aac9d9e49596888167be2649f5b92061b" name="aac9d9e49596888167be2649f5b92061b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac9d9e49596888167be2649f5b92061b">&#9670;&#160;</a></span>fileNameInferredDate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QDateTime TaggedFile::fileNameInferredDate</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Date/time inferred from a timestamp embedded in the file name, if present. </p>
+<p>Populated at construction time by scanning the file's base name for an 8-digit (YYYYMMDD) or 14-digit (YYYYMMDDHHmmss) numeric sequence whose first four digits form a year in the range 2000–2999. 8-digit matches are given a noon (12:00:00) time component. Remains invalid when no qualifying sequence is found. </p>
 
 </div>
 </div>

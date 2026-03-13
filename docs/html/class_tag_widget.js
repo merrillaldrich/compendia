@@ -2,6 +2,7 @@ var class_tag_widget =
 [
     [ "TagWidget", "class_tag_widget.html#a50de81724fb26ba24274b5fac5279867", null ],
     [ "TagWidget", "class_tag_widget.html#af0dfbb7badba109187359087285c99e8", null ],
+    [ "abandonRequested", "class_tag_widget.html#a87de96e46053a38ef0003af95872b9c0", null ],
     [ "adjustCustomWidth", "class_tag_widget.html#af9fde8396dc704d7b7233970e3fda9fe", null ],
     [ "deleteRequested", "class_tag_widget.html#a1d3fa53f2f5ad9b93b553431bce2c67b", null ],
     [ "endEdit", "class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c", null ],
@@ -12,5 +13,6 @@ var class_tag_widget =
     [ "paintEvent", "class_tag_widget.html#af348897e1f4ae96a8552c0d397119018", null ],
     [ "sizeHint", "class_tag_widget.html#a443ad3965b1d89f97363596f9b69b0ca", null ],
     [ "startEdit", "class_tag_widget.html#a7599b830727af6e05d0e40be447f1342", null ],
-    [ "tagNameChanged", "class_tag_widget.html#ac5b6dedfc17ed661099ebad0978cdac8", null ]
+    [ "tagNameChanged", "class_tag_widget.html#ac5b6dedfc17ed661099ebad0978cdac8", null ],
+    [ "widthChangedDuringEdit", "class_tag_widget.html#a2f09a27f47713458af3fc05b4f7d926f", null ]
 ];

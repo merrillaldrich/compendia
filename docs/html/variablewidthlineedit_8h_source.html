@@ -96,26 +96,34 @@ $(function(){initNavTree('variablewidthlineedit_8h_source.html','',''); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define VARIABLEWIDTHLINEEDIT_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;QLineEdit&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span></div>
-<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="class_variable_width_line_edit.html">   11</a></span><span class="keyword">class </span><a class="code hl_function" href="class_variable_width_line_edit.html#a71c9e0944213a1eda23cc43c8be2370d">VariableWidthLineEdit</a> : <span class="keyword">public</span> QLineEdit{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    Q_OBJECT</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordtype">void</span> keyPressEvent(QKeyEvent *e);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_variable_width_line_edit.html#a71c9e0944213a1eda23cc43c8be2370d">VariableWidthLineEdit</a>(QWidget* parent = <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    QSize <a class="code hl_function" href="class_variable_width_line_edit.html#a2194dc214a9e46dad84755dca46bd726">sizeHint</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>};</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;QKeyEvent&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span></div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_variable_width_line_edit.html">   12</a></span><span class="keyword">class </span><a class="code hl_function" href="class_variable_width_line_edit.html#a71c9e0944213a1eda23cc43c8be2370d">VariableWidthLineEdit</a> : <span class="keyword">public</span> QLineEdit{</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    Q_OBJECT</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">void</span> keyPressEvent(QKeyEvent *e);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_variable_width_line_edit.html#a71c9e0944213a1eda23cc43c8be2370d">VariableWidthLineEdit</a>(QWidget* parent = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_variable_width_line_edit.html#ad4aeaa14ce69da174134074da405a934">updateWidth</a>();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    QSize <a class="code hl_function" href="class_variable_width_line_edit.html#a2194dc214a9e46dad84755dca46bd726">sizeHint</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>signals:</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="class_variable_width_line_edit.html#a0508d1ded70be5a88170878956629bf9">   45</a></span>    <span class="keywordtype">void</span> <a class="code hl_signal" href="class_variable_width_line_edit.html#a0508d1ded70be5a88170878956629bf9">escapePressed</a>();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>};</div>
 </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#endif </span><span class="comment">// VARIABLEWIDTHLINEEDIT_H</span></div>
-<div class="ttc" id="aclass_variable_width_line_edit_html_a2194dc214a9e46dad84755dca46bd726"><div class="ttname"><a href="class_variable_width_line_edit.html#a2194dc214a9e46dad84755dca46bd726">VariableWidthLineEdit::sizeHint</a></div><div class="ttdeci">QSize sizeHint() const</div><div class="ttdoc">Returns the minimum size as the size hint so the widget never grows unnecessarily.</div><div class="ttdef"><b>Definition</b> variablewidthlineedit.cpp:35</div></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#endif </span><span class="comment">// VARIABLEWIDTHLINEEDIT_H</span></div>
+<div class="ttc" id="aclass_variable_width_line_edit_html_a0508d1ded70be5a88170878956629bf9"><div class="ttname"><a href="class_variable_width_line_edit.html#a0508d1ded70be5a88170878956629bf9">VariableWidthLineEdit::escapePressed</a></div><div class="ttdeci">void escapePressed()</div><div class="ttdoc">Emitted when the user presses the Escape key.</div></div>
+<div class="ttc" id="aclass_variable_width_line_edit_html_a2194dc214a9e46dad84755dca46bd726"><div class="ttname"><a href="class_variable_width_line_edit.html#a2194dc214a9e46dad84755dca46bd726">VariableWidthLineEdit::sizeHint</a></div><div class="ttdeci">QSize sizeHint() const</div><div class="ttdoc">Returns the minimum size as the size hint so the widget never grows unnecessarily.</div><div class="ttdef"><b>Definition</b> variablewidthlineedit.cpp:43</div></div>
 <div class="ttc" id="aclass_variable_width_line_edit_html_a71c9e0944213a1eda23cc43c8be2370d"><div class="ttname"><a href="class_variable_width_line_edit.html#a71c9e0944213a1eda23cc43c8be2370d">VariableWidthLineEdit::VariableWidthLineEdit</a></div><div class="ttdeci">VariableWidthLineEdit(QWidget *parent=nullptr)</div><div class="ttdoc">Constructs the line edit and sets an initial minimum width based on font metrics.</div><div class="ttdef"><b>Definition</b> variablewidthlineedit.cpp:7</div></div>
+<div class="ttc" id="aclass_variable_width_line_edit_html_ad4aeaa14ce69da174134074da405a934"><div class="ttname"><a href="class_variable_width_line_edit.html#ad4aeaa14ce69da174134074da405a934">VariableWidthLineEdit::updateWidth</a></div><div class="ttdeci">void updateWidth()</div><div class="ttdoc">Resizes the widget to fit the current text content.</div><div class="ttdef"><b>Definition</b> variablewidthlineedit.cpp:18</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

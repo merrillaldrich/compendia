@@ -1,0 +1,9 @@
+<map id="starratingwidget.h" name="starratingwidget.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="70,5,194,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,72,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,32,68,73,65,68,113,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,80,168,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="134,31,134,65,129,63,130,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="192,80,291,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="152,30,212,71,207,72,150,35"/>
+</map>

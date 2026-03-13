@@ -1,0 +1,15 @@
+<map id="multiprogressbar.h" name="multiprogressbar.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="229,5,358,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,78,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="250,35,93,80,91,75,249,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="102,80,165,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="268,32,176,76,174,71,263,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="188,80,292,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="287,31,260,70,257,65,282,34"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="316,80,380,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="304,30,332,68,327,67,302,35"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="404,80,460,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="318,30,397,72,392,72,317,35"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="485,80,537,107"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="332,30,473,78,468,79,331,35"/>
+</map>

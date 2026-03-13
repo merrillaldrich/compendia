@@ -1,7 +1,9 @@
 <map id="TagAssignmentContainer" name="TagAssignmentContainer">
-<area shape="rect" id="Node000001" title="Tag container showing tags assigned to the current file selection, accepting tag drops." alt="" coords="5,155,173,181"/>
-<area shape="rect" id="Node000002" href="$class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items." alt="" coords="40,80,138,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,121,91,155,87,153,87,124"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="53,5,125,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="90,45,92,80,86,79,88,50"/>
+<area shape="rect" id="Node000001" title="Tag container showing tags assigned to the current file selection, accepting tag drops." alt="" coords="5,229,173,256"/>
+<area shape="rect" id="Node000002" href="$class_welcome_hint_container.html" title="Intermediate base class that adds a dismissible welcome hint label to TagContainer." alt="" coords="11,155,167,181"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,195,91,230,87,228,87,199"/>
+<area shape="rect" id="Node000003" href="$class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items." alt="" coords="40,80,138,107"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="90,120,92,155,86,154,88,125"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="53,5,125,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="90,45,92,80,86,79,88,50"/>
 </map>

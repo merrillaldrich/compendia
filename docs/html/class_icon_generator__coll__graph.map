@@ -1,5 +1,5 @@
 <map id="IconGenerator" name="IconGenerator">
-<area shape="rect" id="Node000001" title="Utility class that generates and caches scaled thumbnail images for media files." alt="" coords="5,80,109,107"/>
+<area shape="rect" id="Node000001" title="Generates and caches scaled thumbnail images for media files (images and videos)." alt="" coords="5,80,109,107"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="22,5,92,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,46,60,80,54,79,55,50"/>
 </map>

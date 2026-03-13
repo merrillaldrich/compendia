@@ -138,6 +138,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a43ca27cdad4847fa79c48741d4bb567a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current tag name.  <br /></td></tr>
 <tr class="memitem:a0f4a341db369da475a9bffae4e59f896" id="r_a0f4a341db369da475a9bffae4e59f896"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f4a341db369da475a9bffae4e59f896">dirtyFlag</a> () const</td></tr>
 <tr class="memdesc:a0f4a341db369da475a9bffae4e59f896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the tag name has been modified since the last save.  <br /></td></tr>
+<tr class="memitem:ab2d86fa37c8ac50944da981561a0d372" id="r_ab2d86fa37c8ac50944da981561a0d372"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2d86fa37c8ac50944da981561a0d372">markDirty</a> ()</td></tr>
+<tr class="memdesc:ab2d86fa37c8ac50944da981561a0d372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the dirty flag to force the tag to be treated as modified.  <br /></td></tr>
 <tr class="memitem:ae09ed0e850e3a92547b0701f190edd97" id="r_ae09ed0e850e3a92547b0701f190edd97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae09ed0e850e3a92547b0701f190edd97">clearDirtyFlag</a> ()</td></tr>
 <tr class="memdesc:ae09ed0e850e3a92547b0701f190edd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the dirty flag after changes have been persisted.  <br /></td></tr>
 <tr class="memitem:ac573654c99464b6f22d53af4cd12be8c" id="r_ac573654c99464b6f22d53af4cd12be8c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac573654c99464b6f22d53af4cd12be8c">operator==</a> (const <a class="el" href="class_tag.html">Tag</a> &amp;other) const</td></tr>
@@ -278,6 +280,25 @@ Public Attributes</h2></td></tr>
 
 <p>Returns the current tag name. </p>
 <dl class="section return"><dt>Returns</dt><dd>The tag name string. </dd></dl>
+
+</div>
+</div>
+<a id="ab2d86fa37c8ac50944da981561a0d372" name="ab2d86fa37c8ac50944da981561a0d372"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2d86fa37c8ac50944da981561a0d372">&#9670;&#160;</a></span>markDirty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Tag::markDirty </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the dirty flag to force the tag to be treated as modified. </p>
 
 </div>
 </div>

@@ -1,5 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,127,32"/>
-<area shape="rect" id="Node000001" href="$class_tag_rect_item.html" title="Graphics item that draws a rounded rectangle overlay and supports edge/corner dragging." alt="" coords="175,5,271,32"/>
-<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="142,16,177,18,172,19,142,21"/>
+<area shape="rect" id="Node000000" href="$struct_known_face_cache_entry.html" title="One entry in the known&#45;face embedding cache for a single source image." alt="" coords="5,5,165,32"/>
 </map>

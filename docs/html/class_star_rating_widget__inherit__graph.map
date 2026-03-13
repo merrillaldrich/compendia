@@ -1,0 +1,5 @@
+<map id="StarRatingWidget" name="StarRatingWidget">
+<area shape="rect" id="Node000001" title="A five&#45;star rating widget that can display, set, or clear a 1–5 rating." alt="" coords="5,80,130,107"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="31,5,104,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,46,70,80,65,79,66,50"/>
+</map>

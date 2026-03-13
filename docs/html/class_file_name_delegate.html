@@ -120,8 +120,8 @@ Collaboration diagram for FileNameDelegate:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aebb7bee9d7b5777293a25b2f56d222c4" id="r_aebb7bee9d7b5777293a25b2f56d222c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebb7bee9d7b5777293a25b2f56d222c4">FileNameDelegate</a> (QObject *parent=nullptr)</td></tr>
-<tr class="memdesc:aebb7bee9d7b5777293a25b2f56d222c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_file_name_delegate.html" title="Item delegate that renders filenames as wrapped multi-line text beneath each icon.">FileNameDelegate</a>.  <br /></td></tr>
+<tr class="memitem:ab0e4d3e417832ee94637bfc861df0fb0" id="r_ab0e4d3e417832ee94637bfc861df0fb0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0e4d3e417832ee94637bfc861df0fb0">FileNameDelegate</a> (<a class="el" href="class_luminism_core.html">LuminismCore</a> *core, QObject *parent=nullptr)</td></tr>
+<tr class="memdesc:ab0e4d3e417832ee94637bfc861df0fb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_file_name_delegate.html" title="Item delegate that renders filenames as wrapped multi-line text beneath each icon.">FileNameDelegate</a>.  <br /></td></tr>
 <tr class="memitem:a9f042f0c2a123d56088d5f224927507b" id="r_a9f042f0c2a123d56088d5f224927507b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f042f0c2a123d56088d5f224927507b">paint</a> (QPainter *painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const override</td></tr>
 <tr class="memdesc:a9f042f0c2a123d56088d5f224927507b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Paints an item: icon via the base class, then wrapped filename text below it.  <br /></td></tr>
 <tr class="memitem:a1dffd1732008982323c658f972316bea" id="r_a1dffd1732008982323c658f972316bea"><td class="memItemLeft" align="right" valign="top">QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1dffd1732008982323c658f972316bea">sizeHint</a> (const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const override</td></tr>
@@ -139,10 +139,11 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Item delegate that renders filenames as wrapped multi-line text beneath each icon. </p>
-<p>The model data (Qt::DisplayRole) is never modified; wrapping is computed at paint time from the available cell width. Natural break points (_ - . space) are preferred; character-level hard breaks are used only when a single token exceeds the cell width on its own. Output is capped at three lines, with an ellipsis appended if the full name does not fit. </p>
+<p>The model data (Qt::DisplayRole) is never modified; wrapping is computed at paint time from the available cell width. Natural break points (_ - . space) are preferred; character-level hard breaks are used only when a single token exceeds the cell width on its own. Output is capped at three lines, with an ellipsis appended if the full name does not fit.</p>
+<p>The delegate looks up icons from <a class="el" href="class_luminism_core.html#a3cbd5a6099d4592acf26f64f7854258d" title="Returns the cached QIcon for absoluteFilePath from the LRU pool.">LuminismCore::iconForPath()</a> rather than from Qt::DecorationRole, so that the LRU icon pool in <a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a> remains the sole source of truth for loaded thumbnails. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aebb7bee9d7b5777293a25b2f56d222c4" name="aebb7bee9d7b5777293a25b2f56d222c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebb7bee9d7b5777293a25b2f56d222c4">&#9670;&#160;</a></span>FileNameDelegate()</h2>
+<a id="ab0e4d3e417832ee94637bfc861df0fb0" name="ab0e4d3e417832ee94637bfc861df0fb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0e4d3e417832ee94637bfc861df0fb0">&#9670;&#160;</a></span>FileNameDelegate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,8 +154,12 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="memname">FileNameDelegate::FileNameDelegate </td>
           <td>(</td>
-          <td class="paramtype">QObject *</td>          <td class="paramname"><span class="paramname"><em>parent</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_luminism_core.html">LuminismCore</a> *</td>          <td class="paramname"><span class="paramname"><em>core</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">QObject *</td>          <td class="paramname"><span class="paramname"><em>parent</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -167,6 +172,8 @@ Protected Member Functions</h2></td></tr>
 <p>Constructs a <a class="el" href="class_file_name_delegate.html" title="Item delegate that renders filenames as wrapped multi-line text beneath each icon.">FileNameDelegate</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">core</td><td><a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a> instance used for on-demand icon lookup. </td></tr>
+    <tr><td class="paramname">parent</td><td>Optional Qt parent object.</td></tr>
     <tr><td class="paramname">parent</td><td>Optional Qt parent object. </td></tr>
   </table>
   </dd>

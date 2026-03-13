@@ -127,6 +127,8 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a14e14eb1a9d0407854e3e118571ed6d7" id="r_a14e14eb1a9d0407854e3e118571ed6d7"><td class="memItemLeft" align="right" valign="top">static QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14e14eb1a9d0407854e3e118571ed6d7">getExifMap</a> (QString filePath)</td></tr>
 <tr class="memdesc:a14e14eb1a9d0407854e3e118571ed6d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a map of EXIF key-value pairs for the given image file.  <br /></td></tr>
+<tr class="memitem:adfffcd699ddaba06801187abdb478181" id="r_adfffcd699ddaba06801187abdb478181"><td class="memItemLeft" align="right" valign="top">static QImage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adfffcd699ddaba06801187abdb478181">loadHeifImage</a> (const QString &amp;filePath)</td></tr>
+<tr class="memdesc:adfffcd699ddaba06801187abdb478181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes a HEIF/HEIC file to a QImage using libheif.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility class for extracting EXIF metadata from JPEG and HEIF/HEIC image files. </p>
@@ -206,6 +208,48 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A map of EXIF tag name strings to value strings. </dd></dl>
+
+</div>
+</div>
+<a id="adfffcd699ddaba06801187abdb478181" name="adfffcd699ddaba06801187abdb478181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfffcd699ddaba06801187abdb478181">&#9670;&#160;</a></span>loadHeifImage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QImage ExifParser::loadHeifImage </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>filePath</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decodes a HEIF/HEIC file to a QImage using libheif. </p>
+<p>Qt's QImageReader has no built-in HEIC support on Linux (it requires a libqheif.so plugin that is typically absent). This function decodes the primary image directly via libheif and returns the result as a QImage.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filePath</td><td>Absolute path to the HEIC file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The decoded image, or a null QImage on failure.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filePath</td><td>Absolute path to the HEIC file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The decoded image, or a null QImage on failure. </dd></dl>
 
 </div>
 </div>

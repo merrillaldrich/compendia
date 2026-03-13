@@ -118,10 +118,17 @@ Collaboration diagram for VariableWidthLineEdit:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:a0508d1ded70be5a88170878956629bf9" id="r_a0508d1ded70be5a88170878956629bf9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0508d1ded70be5a88170878956629bf9">escapePressed</a> ()</td></tr>
+<tr class="memdesc:a0508d1ded70be5a88170878956629bf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the user presses the Escape key.  <br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a71c9e0944213a1eda23cc43c8be2370d" id="r_a71c9e0944213a1eda23cc43c8be2370d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71c9e0944213a1eda23cc43c8be2370d">VariableWidthLineEdit</a> (QWidget *parent=nullptr)</td></tr>
 <tr class="memdesc:a71c9e0944213a1eda23cc43c8be2370d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the line edit and sets an initial minimum width based on font metrics.  <br /></td></tr>
+<tr class="memitem:ad4aeaa14ce69da174134074da405a934" id="r_ad4aeaa14ce69da174134074da405a934"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4aeaa14ce69da174134074da405a934">updateWidth</a> ()</td></tr>
+<tr class="memdesc:ad4aeaa14ce69da174134074da405a934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the widget to fit the current text content.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -166,6 +173,33 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a0508d1ded70be5a88170878956629bf9" name="a0508d1ded70be5a88170878956629bf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0508d1ded70be5a88170878956629bf9">&#9670;&#160;</a></span>escapePressed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VariableWidthLineEdit::escapePressed </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when the user presses the Escape key. </p>
+
+</div>
+</div>
 <a id="a2194dc214a9e46dad84755dca46bd726" name="a2194dc214a9e46dad84755dca46bd726"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2194dc214a9e46dad84755dca46bd726">&#9670;&#160;</a></span>sizeHint()</h2>
 
@@ -191,6 +225,26 @@ Protected Member Functions</h2></td></tr>
 
 <p>Returns the minimum size as the size hint so the widget never grows unnecessarily. </p>
 <dl class="section return"><dt>Returns</dt><dd>The minimum size. </dd></dl>
+
+</div>
+</div>
+<a id="ad4aeaa14ce69da174134074da405a934" name="ad4aeaa14ce69da174134074da405a934"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4aeaa14ce69da174134074da405a934">&#9670;&#160;</a></span>updateWidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VariableWidthLineEdit::updateWidth </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resizes the widget to fit the current text content. </p>
+<p>Call this after programmatically setting text (e.g. via setText()) to ensure the widget width reflects the new value before it is shown. </p>
 
 </div>
 </div>
