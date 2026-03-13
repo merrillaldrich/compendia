@@ -77,6 +77,7 @@ void TagContainer::clear(){
     QLayoutItem* item;
     while ((item = layout()->takeAt(0)) != nullptr) {
         if (QWidget *widget = item->widget()) {
+            widget->hide();             // Prevent flash: setParent(nullptr) makes a top-level window
             widget->setParent(nullptr); // Detach from parent
             widget->deleteLater();      // Schedule deletion
         }

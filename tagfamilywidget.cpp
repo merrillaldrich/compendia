@@ -142,6 +142,7 @@ void TagFamilyWidget::createAndEditNewTag(){
     connect(tw, &TagWidget::abandonRequested, this, [this](TagWidget *tw) {
         Tag *t = tw->getTag();
         layout()->removeWidget(tw);
+        tw->hide();             // Prevent flash: setParent(nullptr) makes a top-level window
         tw->setParent(nullptr);
         tw->deleteLater();
         delete t;
@@ -183,6 +184,7 @@ void TagFamilyWidget::endEdit(){
     // Abandon a newly created family if no non-whitespace name was entered
     if (!in_library_ && newName.trimmed().isEmpty()) {
         disconnect(tag_family_, &TagFamily::nameChanged, this, &TagFamilyWidget::onTagFamilyNameChanged);
+        hide();             // Prevent flash: setParent(nullptr) makes a top-level window
         setParent(nullptr);
         tag_family_->deleteLater();
         deleteLater();
