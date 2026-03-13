@@ -252,7 +252,6 @@ void LuminismCore::loadRootDirectory(){
     tagged_files_proxy_ = new FilterProxyModel(this);
     tagged_files_proxy_->setSourceModel(tagged_files_);
     tagged_files_proxy_->setSortCaseSensitivity(Qt::CaseInsensitive);
-    tagged_files_proxy_->sort(0);
     uncachedPaths_.clear();
 
     // Start a background scan.  The generation counter is already up-to-date
@@ -527,6 +526,7 @@ void LuminismCore::onScanFinished()
     scanThread_    = nullptr;
 
     backfillMetadata();
+    tagged_files_proxy_->sort(0);
     emit scanFinished(tagged_files_->rowCount());
 }
 
