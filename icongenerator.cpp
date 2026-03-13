@@ -8,7 +8,7 @@
 #include <utility>
 
 /*! \brief The discrete pixel sizes generated and cached for each media file. */
-const QVector<int> IconGenerator::kIconSizes = {50, 100, 200, 400};
+const QVector<int> IconGenerator::kIconSizes = {100, 200};
 
 /*! \brief Composites filmstrip and play-button decorations onto a video thumbnail.
  *

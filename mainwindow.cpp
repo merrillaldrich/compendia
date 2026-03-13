@@ -1157,7 +1157,7 @@ void MainWindow::on_folderFilterLineEdit_textChanged(const QString &arg1)
  */
 void MainWindow::on_iconZoomSlider_valueChanged(int value)
 {
-    int iconSize = static_cast<int>(25 + value * 3.75);
+    int iconSize = static_cast<int>(50 + value * 1.5);
     ui->fileListView->setIconSize(QSize(iconSize, iconSize));
     // Reserve height for up to 3 wrapped text lines below the icon.
     const int textH = 4 + 3 * ui->fileListView->fontMetrics().lineSpacing() + 4;
