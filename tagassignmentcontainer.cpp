@@ -121,6 +121,7 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
 
             tfw->layout()->addWidget(tw);
             tw->show();
+            tfw->refreshMinimumHeight();
         }
 
         // Apply the dropped tag to all visible files

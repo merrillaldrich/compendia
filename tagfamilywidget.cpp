@@ -289,6 +289,17 @@ void TagFamilyWidget::resizeEvent(QResizeEvent *event)
  */
 void TagFamilyWidget::onChildTagWidthChanged()
 {
+    refreshMinimumHeight();
+}
+
+/*! \brief Recalculates and applies the correct minimum height for the current set
+ *  of child tag widgets.
+ *
+ * Call this after adding or removing child TagWidget items programmatically so
+ * the family widget expands or contracts to fit.
+ */
+void TagFamilyWidget::refreshMinimumHeight()
+{
     if (collapsed_)
         return;
 

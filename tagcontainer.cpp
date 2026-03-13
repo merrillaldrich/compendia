@@ -65,10 +65,7 @@ void TagContainer::refresh(QSet<Tag*>* tags){
             tw->show();
 
             // Cause the family to grow if there are more tags than space in the family widget
-            w->layout()->invalidate();
-            w->layout()->activate();
-            w->setMinimumHeight(w->childrenRect().height() + 4);
-            w->updateGeometry();
+            w->refreshMinimumHeight();
         }
     }
     this->sort();
@@ -155,8 +152,7 @@ void TagContainer::sort() {
     // Put the widgets back in the layout, in order
     for (TagFamilyWidget* w : fwlist) {
         w->sort();
-        w->layout()->invalidate();
-        w->layout()->activate();
         layout()->addWidget(w);
+        w->refreshMinimumHeight();
     }
 }

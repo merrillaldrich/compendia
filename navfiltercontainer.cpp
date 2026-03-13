@@ -126,6 +126,7 @@ void NavFilterContainer::dropEvent(QDropEvent *event)
 
             tfw->layout()->addWidget(tw);
             tw->show();
+            tfw->refreshMinimumHeight();
         }
 
         // Apply the dropped tag to the filter and refresh dependent UI

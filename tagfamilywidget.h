@@ -98,6 +98,14 @@ public slots:
      */
     void onChildTagWidthChanged();
 
+    /*! \brief Recalculates and applies the correct minimum height for the current set
+     *  of child tag widgets.
+     *
+     * Call this after adding or removing child TagWidget items programmatically so
+     * the family widget expands or contracts to fit.
+     */
+    void refreshMinimumHeight();
+
 private slots:
     /*! \brief Slot called when the line edit finishes editing; commits via endEdit(). */
     void onLineEditEditingFinished();
