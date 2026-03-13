@@ -46,6 +46,7 @@ private:
     QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.svg");
 
     IconGenerator *iconGenerator_ = nullptr;  ///< Active IconGenerator, or nullptr.
+    QStringList uncachedPaths_;  ///< Paths with no icon cache; populated by onScanBatch, consumed by backfillMetadata.
     FolderScanner *folderScanner_ = nullptr;  ///< Active FolderScanner, or nullptr.
     QThread       *scanThread_    = nullptr;  ///< Thread running folderScanner_, or nullptr.
     int            scanGeneration_ = 0;       ///< Incremented on each new scan; guards stale callbacks.
@@ -70,6 +71,11 @@ private:
                                       const QMap<QString, QString> exifMap,
                                       const QVector<QImage> &images,
                                       quint64 pHash);
+
+    void applyIconDataToItem(QStandardItem *item,
+                             const QVector<QImage> &images,
+                             const QMap<QString, QString> &exifMap,
+                             quint64 pHash);
 
 public:
 
@@ -467,9 +473,10 @@ signals:
     void scanProgress(int runningTotal);
     /*! \brief Emitted when the background folder scan completes.
      *
-     * \param total Total number of files added.
+     * \param total   Total number of files added.
+     * \param toCache Number of files queued for icon generation (cache misses).
      */
-    void scanFinished(int total);
+    void scanFinished(int total, int toCache);
 };
 
 #endif // LUMINISMCORE_H

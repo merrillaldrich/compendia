@@ -170,20 +170,54 @@
          </item>
         </layout>
        </widget>
-       <widget class="QScrollArea" name="navLibraryScrollArea">
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="NavLibraryContainer" name="navLibraryContainer">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>403</width>
-           <height>64</height>
-          </rect>
+       <widget class="QWidget" name="navLibrarySection">
+        <layout class="QVBoxLayout" name="navLibrarySectionLayout">
+         <property name="spacing">
+          <number>4</number>
          </property>
-        </widget>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>4</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="tagSearchLineEdit">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="placeholderText">
+            <string>Search tags</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QScrollArea" name="navLibraryScrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="NavLibraryContainer" name="navLibraryContainer">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>403</width>
+              <height>64</height>
+             </rect>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="fileFilterArea" native="true">
@@ -363,6 +397,9 @@
               <property name="viewMode">
                <enum>QListView::ViewMode::IconMode</enum>
               </property>
+              <property name="uniformItemSizes">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item>
@@ -415,7 +452,7 @@
                  <number>100</number>
                 </property>
                 <property name="value">
-                 <number>20</number>
+                 <number>33</number>
                 </property>
                 <property name="orientation">
                  <enum>Qt::Orientation::Horizontal</enum>
@@ -527,7 +564,22 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="previewWidget" native="true">
+       <widget class="QScrollArea" name="previewScrollArea">
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="previewWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>300</width>
+          <height>200</height>
+         </rect>
+        </property>
         <layout class="QFormLayout" name="formLayout">
          <item row="0" column="0">
           <widget class="QLabel" name="previewFileNameLabel">
@@ -545,7 +597,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLabel" name="previewFileNameValue">
+          <widget class="WrapLabel" name="previewFileNameValue">
            <property name="text">
             <string>File</string>
            </property>
@@ -570,15 +622,12 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLabel" name="previewFileLocationValue">
+          <widget class="WrapLabel" name="previewFileLocationValue">
            <property name="text">
             <string>Location</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -598,7 +647,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLabel" name="previewImageCapturedValue">
+          <widget class="WrapLabel" name="previewImageCapturedValue">
            <property name="text">
             <string>Captured</string>
            </property>
@@ -623,7 +672,7 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QLabel" name="previewFileCreatedValue">
+          <widget class="WrapLabel" name="previewFileCreatedValue">
            <property name="text">
             <string>Created</string>
            </property>
@@ -648,7 +697,7 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QLabel" name="previewFileModifiedValue">
+          <widget class="WrapLabel" name="previewFileModifiedValue">
            <property name="text">
             <string>Modified</string>
            </property>
@@ -673,7 +722,7 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QLabel" name="previewFileNameTimestampValue">
+          <widget class="WrapLabel" name="previewFileNameTimestampValue">
            <property name="text">
             <string>Timestamp</string>
            </property>
@@ -698,15 +747,12 @@
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QLabel" name="previewFileTagsValue">
+          <widget class="WrapLabel" name="previewFileTagsValue">
            <property name="text">
             <string>Tags</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -726,15 +772,12 @@
           </widget>
          </item>
          <item row="7" column="1">
-          <widget class="QLabel" name="previewExifValue">
+          <widget class="WrapLabel" name="previewExifValue">
            <property name="text">
             <string>EXIF Properties</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -742,10 +785,11 @@
        </widget>
       </widget>
      </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -875,6 +919,11 @@
   </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>WrapLabel</class>
+   <extends>QLabel</extends>
+   <header>wraplabel.h</header>
+  </customwidget>
   <customwidget>
    <class>TagAssignmentContainer</class>
    <extends>QWidget</extends>

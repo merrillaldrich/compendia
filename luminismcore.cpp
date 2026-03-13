@@ -52,6 +52,41 @@ void LuminismCore::flushIconGeneratorQueue(){
     }
 }
 
+/*! \brief Applies icon images, EXIF data, and pHash directly to a model item. */
+void LuminismCore::applyIconDataToItem(QStandardItem *item,
+                                       const QVector<QImage> &images,
+                                       const QMap<QString, QString> &exifMap,
+                                       quint64 pHash)
+{
+    TaggedFile *tf = item->data(Qt::UserRole + 1).value<TaggedFile*>();
+    if (!tf) return;
+
+    QIcon icon;
+    for (const QImage &image : images) {
+        int sz = qMax(image.width(), image.height());
+        QPixmap square(sz, sz);
+        square.fill(Qt::transparent);
+        QPainter painter(&square);
+        int x = (sz - image.width()) / 2;
+        int y = (sz - image.height()) / 2;
+        painter.drawImage(x, y, image);
+        painter.end();
+        icon.addPixmap(square);
+    }
+    item->setIcon(icon);
+
+    QString captureDateString = exifMap["DateTime"];
+    QDateTime captureDateTime = QDateTime::fromString(captureDateString, "yyyy:MM:dd HH:mm:ss");
+    if (!captureDateTime.isValid() && exifMap.contains("Date"))
+        captureDateTime = QDateTime::fromString(exifMap["Date"], Qt::ISODate);
+
+    tf->imageCaptureDateTime = captureDateTime;
+    if (!exifMap.isEmpty())
+        tf->setExifMap(exifMap);
+    if (pHash != 0)
+        tf->setPHash(pHash);
+}
+
 /*! \brief Applies generated thumbnails and EXIF data to the matching model item.
  *
  * \param fileName             The file name used to locate the model item.
@@ -88,41 +123,10 @@ void LuminismCore::applyBackfillMetadataToModel(const QString &fileName,
             item = currentItem;
     }
 
-    if( item != nullptr){
-
-        // Build a multi-size QIcon so Qt picks the best-fit size at every zoom level.
-        // Each image is letterboxed into a square pixmap to keep consistent icon geometry.
-        QIcon icon;
-        for (const QImage &image : images) {
-            int sz = qMax(image.width(), image.height());
-            QPixmap square(sz, sz);
-            square.fill(Qt::transparent);
-            QPainter painter(&square);
-            int x = (sz - image.width()) / 2;
-            int y = (sz - image.height()) / 2;
-            painter.drawImage(x, y, image);
-            painter.end();
-            icon.addPixmap(square);
-        }
-        item->setIcon(icon);
-
-        // NOTE: EXIF uses colons in BOTH the date and the time, not dashes
-        QString captureDateString = exifMap["DateTime"];
-        QDateTime captureDateTime = QDateTime::fromString(captureDateString, "yyyy:MM:dd HH:mm:ss");
-
-        // Fallback for video container metadata (QMediaMetaData::Date → ISO 8601)
-        if (!captureDateTime.isValid() && exifMap.contains("Date"))
-            captureDateTime = QDateTime::fromString(exifMap["Date"], Qt::ISODate);
-
-        tf->imageCaptureDateTime = captureDateTime;
-        if (!exifMap.isEmpty())
-            tf->setExifMap(exifMap);
-        if (pHash != 0)
-            tf->setPHash(pHash);
-
-    } else {
+    if (item != nullptr)
+        applyIconDataToItem(item, images, exifMap, pHash);
+    else
         qDebug() << "Could not locate " + absoluteFilePathName + " to set icon";
-    }
 }
 
 /*! \brief Updates the in-memory icon for the file at \p absoluteFilePath using the provided images.
@@ -248,7 +252,7 @@ void LuminismCore::loadRootDirectory(){
     tagged_files_proxy_ = new FilterProxyModel(this);
     tagged_files_proxy_->setSourceModel(tagged_files_);
     tagged_files_proxy_->setSortCaseSensitivity(Qt::CaseInsensitive);
-    tagged_files_proxy_->sort(0);
+    uncachedPaths_.clear();
 
     // Start a background scan.  The generation counter is already up-to-date
     // because cancelIconGeneration() incremented it; capture the current value
@@ -441,14 +445,10 @@ void LuminismCore::backfillMetadata(){
     connect(&uiFlushTimer_, &QTimer::timeout, this, &LuminismCore::flushIconGeneratorQueue);
     uiFlushTimer_.setInterval(50);
 
-    QStringList allPaths;
-    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
-        QStandardItem *item = tagged_files_->item(i);
-        if (!item) continue;
-        auto tf = item->data().value<TaggedFile*>();
-        allPaths << (tf->filePath + "/" + tf->fileName);
-    }
-    std::sort(allPaths.begin(), allPaths.end(), [](const QString &a, const QString &b) {
+    QStringList pathsToProcess;
+    pathsToProcess.swap(uncachedPaths_);   // consume and clear in one step
+
+    std::sort(pathsToProcess.begin(), pathsToProcess.end(), [](const QString &a, const QString &b) {
         return QFileInfo(a).fileName().compare(QFileInfo(b).fileName(), Qt::CaseInsensitive) < 0;
     });
 
@@ -457,7 +457,7 @@ void LuminismCore::backfillMetadata(){
             this, &LuminismCore::onIconReady);
     connect(iconGenerator_, &IconGenerator::batchFinished,
             this, &LuminismCore::onIconBatchFinished);
-    iconGenerator_->processFiles(allPaths);
+    iconGenerator_->processFiles(pathsToProcess);
 }
 
 /*! \brief Receives a completed file result from IconGenerator and pushes it to the flush queue.
@@ -502,6 +502,17 @@ void LuminismCore::onScanBatch(QList<ScanItem> batch)
             addFile(item.fileInfo, item.tagsJson);
         else
             addFile(item.fileInfo);
+
+        if (item.hasCachedIcon) {
+            // Item was just appended — it is always the last row.
+            QStandardItem *si = tagged_files_->item(tagged_files_->rowCount() - 1);
+            if (si) {
+                applyIconDataToItem(si, item.cachedImages, item.cachedExif, item.cachedPHash);
+                emit iconUpdated();
+            }
+        } else {
+            uncachedPaths_ << item.fileInfo.absoluteFilePath();
+        }
     }
     emit scanProgress(tagged_files_->rowCount());
 }
@@ -514,8 +525,10 @@ void LuminismCore::onScanFinished()
     folderScanner_ = nullptr;
     scanThread_    = nullptr;
 
+    int toCache = uncachedPaths_.size();
     backfillMetadata();
-    emit scanFinished(tagged_files_->rowCount());
+    tagged_files_proxy_->sort(0);
+    emit scanFinished(tagged_files_->rowCount(), toCache);
 }
 
 /*! \brief Starts the UI flush timer if it is not already running. */
@@ -1191,6 +1204,7 @@ void LuminismCore::mergeTagFamily(TagFamily* from, TagFamily* into)
             mergeTag(t, collision);   // handles file re-routing and deletion
         } else {
             t->tagFamily = into;
+            t->markDirty();
         }
     }
 

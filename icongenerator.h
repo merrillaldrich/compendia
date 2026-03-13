@@ -51,6 +51,21 @@ public:
      */
     void processFiles(const QStringList &absolutePaths);
 
+    /*! \brief Returns true when all kIconSizes cache files exist and are newer than the source. */
+    static bool             iconCacheValid(const QString &absolutePath);
+
+    /*! \brief Loads all kIconSizes cached images for a file.
+     *
+     * \return Loaded images ordered by kIconSizes, or an empty vector on any failure.
+     */
+    static QVector<QImage>  loadIconsFromCache(const QString &absolutePath);
+
+    /*! \brief Attempts to load a cached thumbnail for the given source file and size. */
+    static QImage           loadIconFromCache(const QString &absoluteFileName, int size);
+
+    /*! \brief Returns the absolute path to the .png cache file for a given source file and size. */
+    static QString          cacheFilePath(const QString &absoluteFileName, int size);
+
 signals:
     /*! \brief Emitted once per completed file (success). Always delivered on the main thread.
      *
@@ -121,20 +136,6 @@ private:
     static std::tuple<QMap<QString, QString>, QVector<QImage>, quint64>
         processImageFile(const QString &absolutePath);
 
-    /*! \brief Returns true when all kIconSizes cache files exist and are newer than the source.
-     *
-     * \param absolutePath Absolute path to the source video file.
-     * \return True if the full cache is valid.
-     */
-    static bool videoCacheValid(const QString &absolutePath);
-
-    /*! \brief Loads all kIconSizes cached images for a video file.
-     *
-     * \param absolutePath Absolute path to the source video file.
-     * \return Loaded images ordered by kIconSizes, or an empty vector on any failure.
-     */
-    static QVector<QImage> loadVideoFromCache(const QString &absolutePath);
-
     /*! \brief Saves a thumbnail image to the per-folder cache directory.
      *
      * \param absoluteFileName Absolute path to the original image (used to derive the cache path).
@@ -143,22 +144,6 @@ private:
      * \return True if the image was written successfully.
      */
     static bool saveIconToCache(const QString &absoluteFileName, const QImage &pict, int size);
-
-    /*! \brief Attempts to load a cached thumbnail for the given source file.
-     *
-     * \param absoluteFileName Absolute path to the original image.
-     * \param size             The pixel bound of the cached thumbnail to load.
-     * \return The cached QImage, or a null QImage if no valid cache entry exists.
-     */
-    static QImage loadIconFromCache(const QString &absoluteFileName, int size);
-
-    /*! \brief Returns the absolute path to the .qimg cache file for a given source image and size.
-     *
-     * \param absoluteFileName Absolute path to the source image file.
-     * \param size             The pixel bound embedded in the cache file name.
-     * \return Absolute path to the corresponding cache file.
-     */
-    static QString cacheFilePath(const QString &absoluteFileName, int size);
 
     QAtomicInt    pendingImageCount_;        ///< Decremented as each image task completes.
     bool          videoGrabDone_ = true;     ///< True when no FrameGrabber work is pending.

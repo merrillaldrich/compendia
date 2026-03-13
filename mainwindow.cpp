@@ -45,8 +45,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set up container welcome hints (FlowLayout is installed by WelcomeHintContainer constructor)
     ui->navLibraryContainer->setupWelcome(
-        ui->navLibraryScrollArea, ui->navSplitter, 2,
+        ui->navLibraryScrollArea,
+        qobject_cast<QVBoxLayout*>(ui->navLibrarySection->layout()), 1,
         "<b>Click here</b> to create groups of tags to organize your images.");
+
+    // Tag library search box
+    ui->tagSearchLineEdit->addAction(
+        QIcon(":/resources/tag-search.svg"), QLineEdit::LeadingPosition);
+    connect(ui->tagSearchLineEdit, &QLineEdit::textChanged,
+            this, [this](const QString &text) {
+        ui->navLibraryContainer->filter(text);
+    });
     ui->navFilterContainer->setupWelcome(
         ui->navFilterScrollArea,
         qobject_cast<QVBoxLayout *>(ui->navFilterSection->layout()), 2,
@@ -68,13 +77,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
 
     connect(core, &LuminismCore::scanStarted, this, [this]() {
+        folderStatsLabel_->clear();
         progress_->startProcess(MultiProgressBar::Process::FolderScan, 0, 0, "Scanning…");
     });
     connect(core, &LuminismCore::scanProgress, this, [this](int n) {
         progress_->startProcess(MultiProgressBar::Process::FolderScan, 0, 0,
                                 QString("Scanning… %L1 files").arg(n));
     });
-    connect(core, &LuminismCore::scanFinished, this, [this](int total) {
+    connect(core, &LuminismCore::scanFinished, this, [this](int total, int toCache) {
         progress_->finishProcess(MultiProgressBar::Process::FolderScan);
         ui->dateEdit->setAvailableDates(core->getFileDates());
         ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
@@ -87,8 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
         refreshTagAssignmentArea();
         updateFolderStatsLabel();
         progress_->startProcess(MultiProgressBar::Process::IconGeneration,
-                                0, core->getItemModel()->rowCount(),
-                                "Loading icons…");
+                                0, toCache,
+                                "Caching icons…");
         Q_UNUSED(total);
     });
     connect(progress_, &MultiProgressBar::processFinished,
@@ -1117,7 +1127,7 @@ void MainWindow::onNavLibraryContainerTagDeleteRequested(Tag* tag){
         mb.setIcon(QMessageBox::Warning);
         mb.setWindowTitle("Delete tag");
         mb.setTextFormat(Qt::RichText);
-        mb.setText(QString("This will remove the tag %1 from <b>all %2</b> files in the folder. Proceed?")
+        mb.setText(QString("This will remove the tag %1 from <b>%2</b> files in the folder. Proceed?")
                        .arg(label).arg(affected));
         mb.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
         mb.setDefaultButton(QMessageBox::Cancel);
@@ -1147,7 +1157,7 @@ void MainWindow::on_folderFilterLineEdit_textChanged(const QString &arg1)
  */
 void MainWindow::on_iconZoomSlider_valueChanged(int value)
 {
-    int iconSize = static_cast<int>(25 + value * 3.75);
+    int iconSize = static_cast<int>(50 + value * 1.5);
     ui->fileListView->setIconSize(QSize(iconSize, iconSize));
     // Reserve height for up to 3 wrapped text lines below the icon.
     const int textH = 4 + 3 * ui->fileListView->fontMetrics().lineSpacing() + 4;
@@ -1219,7 +1229,7 @@ void MainWindow::onIconUpdated(){
     int v = progress_->value(MultiProgressBar::Process::IconGeneration);
     int m = progress_->max(MultiProgressBar::Process::IconGeneration);
     progress_->setLabel(MultiProgressBar::Process::IconGeneration,
-                        QString("Loading icons… %L1 / %L2").arg(v).arg(m));
+                        QString("Caching icons… %L1 / %L2").arg(v).arg(m));
 }
 
 /*! \brief Advances the save progress bar when a metadata file is written. */
