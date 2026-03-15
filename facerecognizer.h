@@ -4,6 +4,7 @@
 #include <functional>
 #include <optional>
 
+#include <QAtomicInt>
 #include <QFuture>
 #include <QObject>
 #include <QImage>
@@ -11,6 +12,8 @@
 #include <QMutex>
 #include <QRect>
 #include <QString>
+#include <QStringList>
+#include <QThread>
 #include <QDebug>
 #include <QVector>
 #include <QPair>
@@ -91,6 +94,21 @@ struct KnownFaceCacheEntry {
     dlib::matrix<float,0,1> embedding; /*!< The cached 128-d embedding. */
 };
 
+/*! \brief A pending tag assignment from the background sweep — plain data, no Qt object pointers. */
+struct FaceTagAssignment {
+    QString family; /*!< Tag family name. */
+    QString name;   /*!< Tag name. */
+    QRectF  rect;   /*!< Normalized face bounding rect in image coordinates (0.0–1.0). */
+};
+
+/*! \brief Per-file input extracted from TaggedFile* on the main thread before a background sweep.
+ *
+ * Avoids cross-thread access to TaggedFile during Phase 1. */
+struct Phase1FileInput {
+    QString imagePath;
+    QVector<std::tuple<QString, QString, QRectF>> tagRegions; /*!< (family, name, rect) tuples. */
+};
+
 /*! \brief Detects and recognises faces across images using dlib's HOG detector and ResNet embeddings.
  *
  * Converts QImages to the dlib pixel format, runs the HOG-based frontal face detector,
@@ -111,6 +129,9 @@ private:
     double matchThreshold_ = Luminism::FaceMatchThreshold; ///< Euclidean-distance threshold for recognising a known face.
     QFuture<void> warmupFuture_; ///< Handle to the current background embedding warmup task.
     QMutex embeddingMutex_; ///< Serialises all dlib inference calls; prevents concurrent access to non-thread-safe dlib models.
+    QAtomicInt sweepCancelFlag_ {0}; ///< Set to 1 to request cancellation of the background sweep.
+    QThread* sweepThread_ = nullptr; ///< The coordinator thread running the background sweep, or nullptr when idle.
+    int maxWorkers_ = 4; ///< Maximum number of parallel Phase 3 workers.
 
     /*! \brief Computes a 128-d face embedding for a single detected face rectangle.
      *
@@ -202,26 +223,35 @@ public:
      */
     void scheduleEmbeddingWarmup(TaggedFile* tf);
 
-    /*! \brief Runs Phases 1–3 of the face recognition sweep synchronously on the calling thread.
+    /*! \brief Launches a background face recognition sweep.
      *
-     * Phase 1 seeds known-person embeddings from user-labeled regions across \p allFiles.
-     * Phase 2 clears all existing auto-detected face tags from \p targetFiles.
-     * Phase 3 scans every image in \p targetFiles, matches detected faces against
-     *         known embeddings using matchThreshold_, and calls \p tagFactory to
-     *         create new tags for unrecognised faces.
+     * Phase 1 seeds known-person embeddings (serial, coordinator thread).
+     * Phase 3 detects + matches faces in parallel via a per-worker FaceRecognizer pool.
+     * Phase 2 (clear auto tags) must be done on the main thread *before* calling this.
      *
-     * \param allFiles      All files in the model (used to seed known embeddings).
-     * \param targetFiles   The files to actually scan and tag.
-     * \param tagFactory    Factory called as tagFactory(familyName, tagName) to create tags.
-     * \param shouldCancel  Returns true when the operation should abort.
-     * \param processEvents Called periodically to keep the UI responsive.
+     * Results arrive via sweepFileResult() on the main thread (Qt::QueuedConnection).
+     * Completion is signalled by sweepFinished() or sweepCancelled().
+     *
+     * \param phase1Input   Per-file known-face data extracted from TaggedFile*s on the main thread.
+     * \param phase3Paths   Image file paths to scan (video files excluded by the caller).
+     * \param numWorkers    Number of parallel workers (0 = auto: idealThreadCount(), capped at maxWorkers_).
      */
-    void runSweep(
-        const QVector<TaggedFile*> &allFiles,
-        const QVector<TaggedFile*> &targetFiles,
-        std::function<Tag*(const QString&, const QString&)> tagFactory,
-        std::function<bool()> shouldCancel,
-        std::function<void()> processEvents);
+    void startBackgroundSweep(
+        const QVector<Phase1FileInput> &phase1Input,
+        const QStringList &phase3Paths,
+        int numWorkers = 0);
+
+    /*! \brief Requests cancellation of the active background sweep.  No-op if none is running. */
+    void cancelSweep();
+
+    /*! \brief Returns true if a background sweep is currently running. */
+    bool isSweepRunning() const;
+
+    /*! \brief Sets the maximum number of parallel Phase 3 workers.
+     *
+     * \param n Maximum worker count (clamped to [1, 8]).
+     */
+    void setMaxWorkers(int n);
 
     /*! \brief Runs face detection on the source image and returns normalised bounding rectangles.
      *
@@ -318,12 +348,45 @@ signals:
      */
     void warmupScheduled(int misses);
 
-    /*! \brief Emitted once per file processed during runSweep() Phase 3.
+    /*! \brief Emitted once per file processed during Phase 3.
      *
      * \param filesProcessed Number of files processed so far.
      * \param totalFiles     Total number of target files in the sweep.
      */
     void sweepProgress(int filesProcessed, int totalFiles);
+
+    /*! \brief Emitted before Phase 1 begins, only when there are files to process.
+     *
+     * \param totalFiles Number of files whose known-face embeddings need seeding.
+     */
+    void phase1Started(int totalFiles);
+
+    /*! \brief Emitted after each file is processed during Phase 1.
+     *
+     * \param done  Files processed so far.
+     * \param total Total files in Phase 1.
+     */
+    void phase1Progress(int done, int total);
+
+    /*! \brief Emitted when the background sweep has started (Phase 3).
+     *
+     * \param totalFiles Total number of files to process in Phase 3.
+     */
+    void sweepStarted(int totalFiles);
+
+    /*! \brief Emitted from the coordinator thread when a file has been processed.
+     *
+     * Delivered via Qt::QueuedConnection so the slot runs on the main thread.
+     * \param filePath    Absolute path to the processed file.
+     * \param assignments Tag assignments detected for this file.
+     */
+    void sweepFileResult(QString filePath, QVector<FaceTagAssignment> assignments);
+
+    /*! \brief Emitted when all files have been processed successfully. */
+    void sweepFinished();
+
+    /*! \brief Emitted when the sweep was cancelled before all files were processed. */
+    void sweepCancelled();
 };
 
 #endif // FACERECOGNIZER_H

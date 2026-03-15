@@ -22,7 +22,7 @@ class MultiProgressBar : public QWidget
 
 public:
     /*! \brief Identifies a background process tracked by this widget. */
-    enum class Process { FolderScan, IconGeneration, Save, EmbeddingWarmup, VideoGrab };
+    enum class Process { FolderScan, IconGeneration, Save, EmbeddingWarmup, VideoGrab, FaceDetection };
     Q_ENUM(Process)
 
     /*! \brief Constructs the widget, creating the internal label, bar, and cycle timer.

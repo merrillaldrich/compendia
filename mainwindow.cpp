@@ -842,6 +842,11 @@ void MainWindow::onTagDroppedOnPreview(const QString &family,
     else
         tf->addTag(tag, normalizedRect);
 
+    // Eagerly cache the embedding for this region so Phase 1 of a subsequent
+    // sweep finds a cache hit instead of recomputing it from scratch.
+    if (face_recognizer_)
+        face_recognizer_->scheduleEmbeddingWarmup(tf);
+
     // Rebuild overlay list and push to preview
     QList<TagRectDescriptor> tagRects;
     for (Tag* t : *tf->tags()) {
@@ -1259,6 +1264,75 @@ bool MainWindow::ensureFaceRecognizerLoaded()
             progress_->startProcess(MultiProgressBar::Process::EmbeddingWarmup,
                                     0, misses, "Warming face cache");
         }, Qt::QueuedConnection);
+        connect(face_recognizer_, &FaceRecognizer::phase1Started, this, [this](int total) {
+            progress_->startProcess(MultiProgressBar::Process::EmbeddingWarmup,
+                                    0, total, "Processing Known Faces");
+        }, Qt::QueuedConnection);
+        connect(face_recognizer_, &FaceRecognizer::phase1Progress, this, [this](int done, int total) {
+            progress_->setLabel(MultiProgressBar::Process::EmbeddingWarmup,
+                                QString("Processing Known Faces %1/%2").arg(done).arg(total));
+            progress_->increment(MultiProgressBar::Process::EmbeddingWarmup);
+        }, Qt::QueuedConnection);
+        connect(face_recognizer_, &FaceRecognizer::sweepStarted, this, [this](int total) {
+            progress_->startProcess(MultiProgressBar::Process::FaceDetection,
+                                    0, total, "Detecting New Faces");
+            ui->actionFind_Faces->setEnabled(false);
+            ui->actionFind_Faces->setText(tr("Cancel Face Sweep"));
+        }, Qt::QueuedConnection);
+        connect(face_recognizer_, &FaceRecognizer::sweepProgress, this, [this](int done, int total) {
+            progress_->setLabel(MultiProgressBar::Process::FaceDetection,
+                                QString("Detecting New Faces %1/%2").arg(done).arg(total));
+        }, Qt::QueuedConnection);
+        connect(face_recognizer_, &FaceRecognizer::sweepFileResult, this,
+            [this](const QString &path, const QVector<FaceTagAssignment> &assignments) {
+                // Find the TaggedFile* by path and apply assignments on the main thread.
+                QStandardItemModel* m = core->getItemModel();
+                for (int r = 0; r < m->rowCount(); ++r) {
+                    TaggedFile* tf = m->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+                    if (!tf)
+                        continue;
+                    const QString fp = tf->filePath + "/" + tf->fileName;
+                    if (fp != path)
+                        continue;
+                    for (const FaceTagAssignment &a : assignments) {
+                        Tag* tag = core->addLibraryTag(a.family, a.name);
+                        if (tag)
+                            tf->addTag(tag, a.rect);
+                    }
+                    break;
+                }
+                progress_->increment(MultiProgressBar::Process::FaceDetection);
+            });
+        auto onSweepDone = [this]() {
+            progress_->finishProcess(MultiProgressBar::Process::FaceDetection);
+            ui->actionFind_Faces->setEnabled(true);
+            ui->actionFind_Faces->setText(tr("Find Faces"));
+            refreshNavTagLibrary();
+            refreshTagAssignmentArea();
+            ui->showTaggedRegionsCheckbox->setChecked(true);
+            QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
+            if (!sel.isEmpty()) {
+                QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
+                TaggedFile* tf  = core->getItemModel()
+                                      ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+                if (tf) {
+                    QList<TagRectDescriptor> tagRects;
+                    for (Tag* t : *tf->tags()) {
+                        auto rv = tf->tagRect(t);
+                        if (rv.has_value())
+                            tagRects.append({rv.value(), t->tagFamily->getColor(), t->getName()});
+                    }
+                    ui->previewContainer->setTagRects(tagRects);
+                    ui->previewContainer->setTagRectsVisible(true);
+                }
+            }
+        };
+        connect(face_recognizer_, &FaceRecognizer::sweepFinished, this, onSweepDone);
+        connect(face_recognizer_, &FaceRecognizer::sweepCancelled, this, [this]() {
+            progress_->finishProcess(MultiProgressBar::Process::FaceDetection);
+            ui->actionFind_Faces->setEnabled(true);
+            ui->actionFind_Faces->setText(tr("Find Faces"));
+        });
     }
 
     if (face_recognizer_->modelsLoaded())
@@ -1289,13 +1363,19 @@ bool MainWindow::ensureFaceRecognizerLoaded()
  */
 void MainWindow::on_actionFind_Faces_triggered()
 {
+    // If a sweep is running, this action acts as Cancel.
+    if (face_recognizer_ && face_recognizer_->isSweepRunning()) {
+        face_recognizer_->cancelSweep();
+        return;
+    }
+
     if (!ensureFaceRecognizerLoaded())
         return;
 
     QStandardItemModel* model = core->getItemModel();
     const int rowCount = model->rowCount();
 
-    // Collect all TaggedFiles up front
+    // Collect all TaggedFiles up front (main thread — safe).
     QVector<TaggedFile*> allFiles;
     allFiles.reserve(rowCount);
     for (int r = 0; r < rowCount; ++r) {
@@ -1346,49 +1426,45 @@ void MainWindow::on_actionFind_Faces_triggered()
         }
     }
 
-    QProgressDialog progress("Scanning for faces...", "Cancel", 0, targetFiles.size(), this);
-    progress.setWindowModality(Qt::WindowModal);
-    progress.setMinimumDuration(0);
-    progress.setValue(0);
-    QCoreApplication::processEvents();  // paint dialog before any blocking work
-
-    auto conn = connect(face_recognizer_, &FaceRecognizer::sweepProgress,
-        this, [&progress](int done, int) { progress.setValue(done); });
-
-    face_recognizer_->runSweep(
-        allFiles, targetFiles,
-        [this](const QString &f, const QString &n){ return core->addLibraryTag(f, n); },
-        [&progress]{ return progress.wasCanceled(); },
-        []{ QCoreApplication::processEvents(); });
-
-    disconnect(conn);
-
-    progress.setValue(targetFiles.size());
-
-    // ----- Phase 4: Refresh UI -----
-    refreshNavTagLibrary();
-    refreshTagAssignmentArea();
-
-    // Ensure the user can see the detection results: turn on Show Tagged Regions
-    // and refresh the overlay for whichever file is currently previewed.
-    ui->showTaggedRegionsCheckbox->setChecked(true);
-
-    QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
-    if (!sel.isEmpty()) {
-        QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
-        TaggedFile* tf  = core->getItemModel()
-                              ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
-        if (tf) {
-            QList<TagRectDescriptor> tagRects;
-            for (Tag* t : *tf->tags()) {
-                auto r = tf->tagRect(t);
-                if (r.has_value())
-                    tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
-            }
-            ui->previewContainer->setTagRects(tagRects);
-            ui->previewContainer->setTagRectsVisible(true);
+    // ----- Phase 2: clear auto tags on the main thread (fast, safe) -----
+    for (TaggedFile* tf : targetFiles) {
+        QSet<Tag*> toRemove;
+        for (Tag* t : *tf->tags()) {
+            if (t->getName().startsWith(Luminism::AutoFaceTagPrefix))
+                toRemove.insert(t);
         }
+        for (Tag* t : toRemove)
+            tf->removeTag(t);
     }
+
+    // ----- Extract Phase1FileInput from allFiles (main thread access to TaggedFile*) -----
+    QVector<Phase1FileInput> phase1Input;
+    phase1Input.reserve(allFiles.size());
+    for (TaggedFile* tf : allFiles) {
+        Phase1FileInput fi;
+        fi.imagePath = tf->filePath + "/" + tf->fileName;
+        for (Tag* tag : *tf->tags()) {
+            if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
+                continue;
+            auto r = tf->tagRect(tag);
+            if (!r.has_value())
+                continue;
+            fi.tagRegions.append({ tag->tagFamily->getName(), tag->getName(), r.value() });
+        }
+        if (!fi.tagRegions.isEmpty())
+            phase1Input.append(fi);
+    }
+
+    // ----- Extract phase3 paths (image files only) -----
+    static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
+    QStringList phase3Paths;
+    phase3Paths.reserve(targetFiles.size());
+    for (TaggedFile* tf : targetFiles) {
+        if (!videoExts.contains(QFileInfo(tf->fileName).suffix().toLower()))
+            phase3Paths.append(tf->filePath + "/" + tf->fileName);
+    }
+
+    face_recognizer_->startBackgroundSweep(phase1Input, phase3Paths);
 }
 
 /*! \brief Opens the Face Recognition Settings dialog and applies any changes. */

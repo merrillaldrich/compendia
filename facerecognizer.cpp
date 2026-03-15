@@ -3,6 +3,10 @@
 
 #include <limits>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>
@@ -14,6 +18,7 @@
 #include <QElapsedTimer>
 #include <QMutexLocker>
 #include <QSet>
+#include <QThread>
 #include <QDebug>
 #include <QtConcurrent>
 
@@ -484,199 +489,320 @@ void FaceRecognizer::scheduleEmbeddingWarmup(TaggedFile* tf)
 }
 
 // ---------------------------------------------------------------------------
-// Face recognition sweep
+// Face recognition sweep — background parallel implementation
 // ---------------------------------------------------------------------------
 
-/*! \brief Runs Phases 1–3 of the face recognition sweep synchronously on the calling thread.
- *
- * Phase 1 seeds known-person embeddings from user-labeled regions across \p allFiles.
- * Phase 2 clears all existing auto-detected face tags from \p targetFiles.
- * Phase 3 scans every image in \p targetFiles, matches detected faces against
- *         known embeddings using matchThreshold_, and calls \p tagFactory to
- *         create new tags for unrecognised faces.
- *
- * \param allFiles      All files in the model (used to seed known embeddings).
- * \param targetFiles   The files to actually scan and tag.
- * \param tagFactory    Factory called as tagFactory(familyName, tagName) to create tags.
- * \param shouldCancel  Returns true when the operation should abort.
- * \param processEvents Called periodically to keep the UI responsive.
- */
-void FaceRecognizer::runSweep(
-    const QVector<TaggedFile*> &allFiles,
-    const QVector<TaggedFile*> &targetFiles,
-    std::function<Tag*(const QString&, const QString&)> tagFactory,
-    std::function<bool()> shouldCancel,
-    std::function<void()> processEvents)
-{
-    // ----- Phase 1: Seed known-person embeddings from user-labeled regions -----
-    QVector<FaceDescriptor> knownFaces;
-    for (TaggedFile* tf : allFiles) {
-        if (shouldCancel())
-            break;
-        processEvents();
+// Internal per-embedding descriptor used in the coordinator thread only.
+struct PendingDescriptor {
+    dlib::matrix<float,0,1> embedding;
+    QString tagFamily;
+    QString tagName;
+};
 
-        QVector<QPair<Tag*, QRectF>> pendingTags;
-        for (Tag* tag : *tf->tags()) {
-            if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
-                continue;
-            auto r = tf->tagRect(tag);
-            if (!r.has_value())
-                continue;
-            pendingTags.append({tag, r.value()});
+// Pool of FaceRecognizer instances, each owning its own dlib objects.
+// Lives on the stack inside the coordinator lambda; destroyed when the sweep ends.
+struct FaceWorkerPool {
+    QMutex              mutex;
+    QWaitCondition      cond;
+    QList<FaceRecognizer*> available;
+    QVector<FaceRecognizer*> all;
+
+    FaceWorkerPool(const QString &modelsDir, int n) {
+        all.reserve(n);
+        for (int i = 0; i < n; ++i) {
+            FaceRecognizer* w = new FaceRecognizer(nullptr);
+            w->loadModels(modelsDir);
+            all.append(w);
+            available.append(w);
         }
-        if (pendingTags.isEmpty())
-            continue;
+    }
 
-        const QString imagePath = tf->filePath + "/" + tf->fileName;
+    ~FaceWorkerPool() {
+        qDeleteAll(all);
+    }
 
-        auto cachedEntries = FaceRecognizer::loadKnownFaceCache(imagePath);
+    FaceRecognizer* acquire() {
+        QMutexLocker lk(&mutex);
+        while (available.isEmpty())
+            cond.wait(&mutex);
+        return available.takeFirst();
+    }
 
-        QVector<KnownFaceCacheEntry> updatedCache;
-        bool cacheNeedsWrite = false;
-        QImage img;  // loaded lazily — at most once per file
+    void release(FaceRecognizer* w) {
+        QMutexLocker lk(&mutex);
+        available.append(w);
+        cond.wakeOne();
+    }
+};
 
-        for (const auto &[tag, rect] : pendingTags) {
-            const QString tagFamily = tag->tagFamily->getName();
-            const QString tagName   = tag->getName();
+/*! \brief Sets the maximum number of parallel Phase 3 workers. */
+void FaceRecognizer::setMaxWorkers(int n)
+{
+    maxWorkers_ = qBound(1, n, 8);
+}
 
-            bool hitFound = false;
-            if (cachedEntries.has_value()) {
-                for (const KnownFaceCacheEntry &entry : *cachedEntries) {
-                    if (entry.tagFamily == tagFamily
-                            && entry.tagName == tagName
-                            && entry.rect   == rect) {
-                        qDebug() << "[Phase1] cache hit:" << tagName;
-                        knownFaces.append({entry.embedding, tag});
-                        updatedCache.append(entry);
-                        hitFound = true;
+/*! \brief Returns true if a background sweep is currently running. */
+bool FaceRecognizer::isSweepRunning() const
+{
+    return sweepThread_ != nullptr && sweepThread_->isRunning();
+}
+
+/*! \brief Requests cancellation of the active background sweep. */
+void FaceRecognizer::cancelSweep()
+{
+    sweepCancelFlag_.storeRelaxed(1);
+}
+
+/*! \brief Launches a background face recognition sweep.
+ *
+ * Phase 1 (serial) seeds known-person embeddings on the coordinator thread.
+ * Phase 3 (parallel) detects and matches faces using a per-worker FaceRecognizer pool.
+ * Phase 2 (clear auto tags) must be done on the main thread before calling this.
+ *
+ * Results arrive via sweepFileResult() on the main thread (Qt::QueuedConnection).
+ */
+void FaceRecognizer::startBackgroundSweep(
+    const QVector<Phase1FileInput> &phase1Input,
+    const QStringList &phase3Paths,
+    int numWorkers)
+{
+    if (isSweepRunning())
+        return;
+
+    sweepCancelFlag_.storeRelaxed(0);
+
+    const int workerCount = (numWorkers > 0)
+        ? qBound(1, numWorkers, maxWorkers_)
+        : qBound(1, QThread::idealThreadCount(), maxWorkers_);
+
+    const QString modelsDir = QCoreApplication::applicationDirPath() + "/models";
+    const double  matchThr  = matchThreshold_;
+
+    // Tell OpenBLAS/OpenMP to use 1 thread per dlib inference call so that
+    // application-level worker parallelism (not BLAS-internal threads) owns
+    // the cores.  Without this, each net_(chips) call grabs all nproc threads
+    // and workers effectively serialize at the BLAS level.
+#ifdef _OPENMP
+    omp_set_num_threads(1);
+#endif
+
+    // Capture by value: phase1Input, phase3Paths are plain Qt value types (safe to copy).
+    sweepThread_ = QThread::create([this, phase1Input, phase3Paths,
+                                    workerCount, modelsDir, matchThr]()
+    {
+        // ---- Phase 1: seed known-face embeddings (serial, on coordinator thread) ----
+        // We use THIS instance's dlib objects here, so we need the mutex.
+        QVector<PendingDescriptor> knownFaces;
+
+        const int phase1Total = phase1Input.size();
+        if (phase1Total > 0)
+            emit phase1Started(phase1Total);
+
+        int phase1Done = 0;
+        for (const Phase1FileInput &fileInput : phase1Input) {
+            if (sweepCancelFlag_.loadRelaxed())
+                break;
+
+            if (fileInput.tagRegions.isEmpty()) {
+                emit phase1Progress(++phase1Done, phase1Total);
+                continue;
+            }
+
+            auto cachedEntries = FaceRecognizer::loadKnownFaceCache(fileInput.imagePath);
+
+            QVector<KnownFaceCacheEntry> updatedCache;
+            bool cacheNeedsWrite = false;
+            QImage img;
+
+            for (const auto &[family, name, rect] : fileInput.tagRegions) {
+                bool hitFound = false;
+                if (cachedEntries.has_value()) {
+                    for (const KnownFaceCacheEntry &entry : *cachedEntries) {
+                        if (entry.tagFamily == family
+                                && entry.tagName == name
+                                && entry.rect   == rect) {
+                            qDebug() << "[Phase1-bg] cache hit:" << name;
+                            knownFaces.append({entry.embedding, family, name});
+                            updatedCache.append(entry);
+                            hitFound = true;
+                            break;
+                        }
+                    }
+                }
+                if (hitFound)
+                    continue;
+
+                if (img.isNull()) {
+                    QImageReader ir(fileInput.imagePath);
+                    ir.setAutoTransform(true);
+                    img = ir.read();
+                    if (img.isNull()) {
+                        qDebug() << "[Phase1-bg] failed to load image:" << fileInput.imagePath;
                         break;
                     }
                 }
-            }
-            if (hitFound)
-                continue;
 
-            // Cache miss — load image lazily
-            if (img.isNull()) {
-                QImageReader ir(imagePath);
-                ir.setAutoTransform(true);
-                img = ir.read();
-                if (img.isNull()) {
-                    qDebug() << "[Phase1] failed to load image:" << imagePath;
-                    break;  // skip all remaining tags for this file
+                qDebug() << "[Phase1-bg] cache miss, computing embedding for:" << name;
+                // Use this instance's dlib objects under the mutex.
+                dlib::matrix<float,0,1> emb;
+                {
+                    QMutexLocker lock(&embeddingMutex_);
+                    emb = computeEmbeddingFromRegionUnlocked(img, rect);
                 }
-            }
-
-            qDebug() << "[Phase1] cache miss, computing embedding for:" << tagName;
-            dlib::matrix<float,0,1> emb = computeEmbeddingFromRegion(img, rect);
-            if (emb.size() == 0)
-                continue;
-
-            knownFaces.append({emb, tag});
-            KnownFaceCacheEntry newEntry;
-            newEntry.tagFamily = tagFamily;
-            newEntry.tagName   = tagName;
-            newEntry.rect      = rect;
-            newEntry.embedding = emb;
-            updatedCache.append(newEntry);
-            cacheNeedsWrite = true;
-        }
-
-        if (cacheNeedsWrite)
-            FaceRecognizer::saveKnownFaceCache(imagePath, updatedCache);
-    }
-
-    // ----- Phase 2: Clear all previous auto-detected face tags -----
-    for (TaggedFile* tf : targetFiles) {
-        QSet<Tag*> toRemove;
-        for (Tag* t : *tf->tags()) {
-            if (t->getName().startsWith(Luminism::AutoFaceTagPrefix))
-                toRemove.insert(t);
-        }
-        for (Tag* t : toRemove)
-            tf->removeTag(t);
-    }
-
-    // ----- Phase 3: Recognition sweep across target image files -----
-    int autoFaceCounter = 1;
-    for (int i = 0; i < targetFiles.size(); ++i) {
-        if (shouldCancel())
-            break;
-        emit sweepProgress(i, targetFiles.size());
-        processEvents();
-
-        TaggedFile* tf = targetFiles[i];
-        if (videoExts.contains(QFileInfo(tf->fileName).suffix().toLower()))
-            continue;
-
-        QString imagePath = tf->filePath + "/" + tf->fileName;
-        qDebug() << "[FindFaces] processing:" << tf->fileName;
-        QElapsedTimer fileTimer;
-        fileTimer.start();
-
-        // Try the descriptor cache first
-        auto cached = FaceRecognizer::loadDescriptorCache(imagePath);
-        qDebug() << "[FindFaces]   cache lookup:  " << fileTimer.restart() << "ms"
-                 << (cached.has_value() ? "(hit)" : "(miss)");
-
-        QVector<QPair<QRectF, dlib::matrix<float,0,1>>> faces;
-        if (cached.has_value()) {
-            faces = cached.value();
-        } else {
-            QImageReader ir(imagePath);
-            ir.setAutoTransform(true);
-            QImage img = ir.read();
-            qDebug() << "[FindFaces]   image load:   " << fileTimer.restart() << "ms"
-                     << img.width() << "x" << img.height();
-            if (img.isNull())
-                continue;
-            faces = detectFacesWithEmbeddings(img);
-            qDebug() << "[FindFaces]   detection:    " << fileTimer.restart() << "ms";
-            FaceRecognizer::saveDescriptorCache(imagePath, faces);
-            qDebug() << "[FindFaces]   cache save:   " << fileTimer.elapsed() << "ms";
-        }
-
-        int autoFacesTaggedThisImage = 0;
-        for (const auto &[rect, embedding] : faces) {
-            // Find the closest known face by Euclidean distance
-            double minDist = std::numeric_limits<double>::max();
-            Tag*   bestTag = nullptr;
-            for (const FaceDescriptor &fd : knownFaces) {
-                double dist = dlib::length(fd.embedding - embedding);
-                if (dist < minDist) {
-                    minDist = dist;
-                    bestTag = fd.tag;
-                }
-            }
-
-            const bool isUserNamedMatch = minDist < matchThreshold_
-                                          && bestTag != nullptr
-                                          && !bestTag->getName().startsWith(Luminism::AutoFaceTagPrefix);
-
-            if (isUserNamedMatch) {
-                // Always tag faces that match a user-named person, regardless of limit
-                tf->addTag(bestTag, rect);
-            } else {
-                // Auto-named match or unrecognised — apply the per-image limit.
-                if (autoFacesTaggedThisImage >= Luminism::MaxAutoFacesPerImage)
+                if (emb.size() == 0)
                     continue;
 
-                if (minDist < matchThreshold_ && bestTag != nullptr) {
-                    // Recognised, but matched an auto-named tag
-                    tf->addTag(bestTag, rect);
-                } else {
-                    // New person — create a sequential auto tag and seed future matching
-                    QString tagName = QString("%1%2")
-                        .arg(Luminism::AutoFaceTagPrefix)
-                        .arg(autoFaceCounter++, 2, 10, QChar('0'));
-                    Tag* newTag = tagFactory("People", tagName);
-                    tf->addTag(newTag, rect);
-                    knownFaces.append({embedding, newTag});
-                }
-                ++autoFacesTaggedThisImage;
+                knownFaces.append({emb, family, name});
+                KnownFaceCacheEntry newEntry;
+                newEntry.tagFamily = family;
+                newEntry.tagName   = name;
+                newEntry.rect      = rect;
+                newEntry.embedding = emb;
+                updatedCache.append(newEntry);
+                cacheNeedsWrite = true;
             }
+
+            if (cacheNeedsWrite)
+                FaceRecognizer::saveKnownFaceCache(fileInput.imagePath, updatedCache);
+
+            emit phase1Progress(++phase1Done, phase1Total);
         }
-    }
+
+        emit sweepStarted(phase3Paths.size());
+
+        if (sweepCancelFlag_.loadRelaxed()) {
+            emit sweepCancelled();
+            return;
+        }
+
+        // ---- Phase 3: parallel detection + matching ----
+        FaceWorkerPool pool(modelsDir, workerCount);
+
+        // Dedicated thread pool so face tasks don't compete with icon generation
+        // (which also uses QThreadPool::globalInstance() via QtConcurrent).
+        QThreadPool taskPool;
+        taskPool.setMaxThreadCount(workerCount);
+
+        // Shared state for auto-face counters and newly discovered auto-face embeddings.
+        QMutex sharedMutex;
+        QVector<PendingDescriptor> sharedKnownFaces = knownFaces;
+        QAtomicInt autoFaceCounter {1};
+
+        const int total = phase3Paths.size();
+        QAtomicInt doneCount {0};
+
+        for (const QString &imagePath : phase3Paths) {
+            if (sweepCancelFlag_.loadRelaxed())
+                break;
+
+            (void)QtConcurrent::run(&taskPool, [this, imagePath, total, &pool, &sharedMutex,
+                               &sharedKnownFaces, &autoFaceCounter, &doneCount,
+                               matchThr]()
+            {
+                if (sweepCancelFlag_.loadRelaxed()) {
+                    int d = ++doneCount;
+                    emit sweepProgress(d, total);
+                    return;
+                }
+
+                auto cached = FaceRecognizer::loadDescriptorCache(imagePath);
+                QVector<QPair<QRectF, dlib::matrix<float,0,1>>> faces;
+
+                if (cached.has_value()) {
+                    faces = cached.value();
+                } else {
+                    QImageReader ir(imagePath);
+                    ir.setAutoTransform(true);
+                    QImage img = ir.read();
+                    if (!img.isNull()) {
+                        FaceRecognizer* worker = pool.acquire();
+                        faces = worker->detectFacesWithEmbeddings(img);
+                        pool.release(worker);
+                        FaceRecognizer::saveDescriptorCache(imagePath, faces);
+                    }
+                }
+
+                // Match faces against known embeddings.
+                QVector<FaceTagAssignment> assignments;
+                int autoFacesThisImage = 0;
+
+                for (const auto &[rect, embedding] : faces) {
+                    double minDist = std::numeric_limits<double>::max();
+                    QString bestFamily;
+                    QString bestName;
+
+                    {
+                        QMutexLocker lk(&sharedMutex);
+                        for (const PendingDescriptor &pd : sharedKnownFaces) {
+                            double dist = dlib::length(pd.embedding - embedding);
+                            if (dist < minDist) {
+                                minDist   = dist;
+                                bestFamily = pd.tagFamily;
+                                bestName   = pd.tagName;
+                            }
+                        }
+                    }
+
+                    const bool isUserNamedMatch = minDist < matchThr
+                                                  && !bestName.isEmpty()
+                                                  && !bestName.startsWith(Luminism::AutoFaceTagPrefix);
+
+                    if (isUserNamedMatch) {
+                        assignments.append({bestFamily, bestName, rect});
+                    } else {
+                        if (autoFacesThisImage >= Luminism::MaxAutoFacesPerImage)
+                            continue;
+
+                        if (minDist < matchThr && !bestName.isEmpty()) {
+                            // Matched an existing auto-face tag
+                            assignments.append({bestFamily, bestName, rect});
+                        } else {
+                            // New unknown face — claim a unique ID
+                            int id = autoFaceCounter.fetchAndAddOrdered(1);
+                            QString tagName = QString("%1%2")
+                                .arg(Luminism::AutoFaceTagPrefix)
+                                .arg(id, 2, 10, QChar('0'));
+                            assignments.append({"People", tagName, rect});
+
+                            // Register in shared known faces for future workers
+                            PendingDescriptor newDesc;
+                            newDesc.embedding = embedding;
+                            newDesc.tagFamily = "People";
+                            newDesc.tagName   = tagName;
+                            QMutexLocker lk(&sharedMutex);
+                            sharedKnownFaces.append(newDesc);
+                        }
+                        ++autoFacesThisImage;
+                    }
+                }
+
+                // Deliver result to main thread
+                QMetaObject::invokeMethod(this,
+                    [this, imagePath, assignments]() {
+                        emit sweepFileResult(imagePath, assignments);
+                    },
+                    Qt::QueuedConnection);
+
+                int d = ++doneCount;
+                emit sweepProgress(d, total);
+            });
+        }
+
+        // Wait for all tasks in the dedicated pool to complete.
+        taskPool.waitForDone();
+
+        if (sweepCancelFlag_.loadRelaxed())
+            emit sweepCancelled();
+        else
+            emit sweepFinished();
+    });
+
+    connect(sweepThread_, &QThread::finished, this, [this]() {
+        sweepThread_->deleteLater();
+        sweepThread_ = nullptr;
+    });
+
+    sweepThread_->start();
 }
 
 // ---------------------------------------------------------------------------
