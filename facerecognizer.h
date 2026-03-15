@@ -94,6 +94,19 @@ struct KnownFaceCacheEntry {
     dlib::matrix<float,0,1> embedding; /*!< The cached 128-d embedding. */
 };
 
+/*! \brief One entry for the descriptor→known-face promotion pass.
+ *
+ * Carries enough information to locate the embedding in the descriptor cache
+ * and write it into the known-face cache under the tag's current name.
+ * All fields are plain data — safe to copy across threads.
+ */
+struct PromotionEntry {
+    QString imagePath; /*!< Absolute path to the source image. */
+    QString tagFamily; /*!< Tag family name. */
+    QString tagName;   /*!< Current (new) tag name. */
+    QRectF  tagRect;   /*!< Normalized face bounding rect stored on the TaggedFile. */
+};
+
 /*! \brief A pending tag assignment from the background sweep — plain data, no Qt object pointers. */
 struct FaceTagAssignment {
     QString family; /*!< Tag family name. */
@@ -252,6 +265,20 @@ public:
      * \param n Maximum worker count (clamped to [1, 8]).
      */
     void setMaxWorkers(int n);
+
+    /*! \brief Promotes face embeddings from the descriptor cache into the known-face cache.
+     *
+     * For each entry, looks up the descriptor cache for the image, finds the detection
+     * whose rect best matches \c entry.tagRect, and writes that embedding into the
+     * known-face cache under \c entry.tagFamily / \c entry.tagName.  No dlib inference
+     * is performed — this is pure JSON read/write and is safe to call from any thread.
+     *
+     * Intended to be called after a tag is renamed so that Phase 1 of the next sweep
+     * finds cache hits instead of falling back to expensive embedding recomputation.
+     *
+     * \param entries Per-file promotion entries, typically all files carrying the renamed tag.
+     */
+    static void promoteDescriptorEmbeddings(const QVector<PromotionEntry> &entries);
 
     /*! \brief Runs face detection on the source image and returns normalised bounding rectangles.
      *

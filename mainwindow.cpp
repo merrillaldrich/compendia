@@ -589,7 +589,28 @@ void MainWindow::refreshTagAssignmentArea(){
  */
 void MainWindow::onTagNameChanged(Tag* tag)
 {
-    Q_UNUSED(tag)
+    // Promote face embeddings for the renamed tag: copy from descriptor cache →
+    // known-face cache so Phase 1 of the next sweep finds hits immediately.
+    if (tag && face_recognizer_) {
+        QVector<PromotionEntry> entries;
+        QStandardItemModel* m = core->getItemModel();
+        for (int r = 0; r < m->rowCount(); ++r) {
+            TaggedFile* tf = m->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+            if (!tf || !tf->tags()->contains(tag))
+                continue;
+            auto rect = tf->tagRect(tag);
+            if (!rect.has_value())
+                continue;
+            entries.append({tf->filePath + "/" + tf->fileName,
+                            tag->tagFamily->getName(),
+                            tag->getName(),
+                            rect.value()});
+        }
+        if (!entries.isEmpty())
+            QtConcurrent::run([entries]() {
+                FaceRecognizer::promoteDescriptorEmbeddings(entries);
+            });
+    }
 
     QItemSelectionModel* selModel = ui->fileListView->selectionModel();
     if (!selModel)
@@ -1276,7 +1297,7 @@ bool MainWindow::ensureFaceRecognizerLoaded()
         connect(face_recognizer_, &FaceRecognizer::sweepStarted, this, [this](int total) {
             progress_->startProcess(MultiProgressBar::Process::FaceDetection,
                                     0, total, "Detecting New Faces");
-            ui->actionFind_Faces->setEnabled(false);
+            ui->actionFind_Faces->setEnabled(true);
             ui->actionFind_Faces->setText(tr("Cancel Face Sweep"));
         }, Qt::QueuedConnection);
         connect(face_recognizer_, &FaceRecognizer::sweepProgress, this, [this](int done, int total) {

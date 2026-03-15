@@ -873,6 +873,92 @@ void FaceRecognizer::warmupKnownFaceEmbeddings(
 }
 
 // ---------------------------------------------------------------------------
+// Descriptor → known-face promotion
+// ---------------------------------------------------------------------------
+
+/*! \brief Promotes face embeddings from the descriptor cache into the known-face cache.
+ *
+ * Groups entries by image path, then for each image loads the descriptor cache
+ * and the existing known-face cache.  For each entry whose rect matches a
+ * descriptor (within a small epsilon), the embedding is copied into the
+ * known-face cache under the entry's current tag name.  Skips silently if the
+ * descriptor cache is missing or stale for an image.
+ */
+void FaceRecognizer::promoteDescriptorEmbeddings(const QVector<PromotionEntry> &entries)
+{
+    // Group entries by image path so we load each cache file at most once.
+    QMap<QString, QVector<PromotionEntry>> byPath;
+    for (const PromotionEntry &e : entries)
+        byPath[e.imagePath].append(e);
+
+    for (auto it = byPath.cbegin(); it != byPath.cend(); ++it) {
+        const QString &imagePath = it.key();
+
+        auto descCache = FaceRecognizer::loadDescriptorCache(imagePath);
+        if (!descCache.has_value())
+            continue;  // no descriptor cache for this image — skip silently
+
+        auto knownCache = FaceRecognizer::loadKnownFaceCache(imagePath);
+        QVector<KnownFaceCacheEntry> updatedKnown =
+            knownCache.has_value() ? *knownCache : QVector<KnownFaceCacheEntry>{};
+
+        bool changed = false;
+
+        for (const PromotionEntry &entry : it.value()) {
+            // Skip if this (family, name, rect) is already in the known-face cache.
+            bool alreadyPresent = false;
+            for (const KnownFaceCacheEntry &kf : updatedKnown) {
+                if (kf.tagFamily == entry.tagFamily
+                        && kf.tagName == entry.tagName
+                        && kf.rect   == entry.tagRect) {
+                    alreadyPresent = true;
+                    break;
+                }
+            }
+            if (alreadyPresent)
+                continue;
+
+            // Find the descriptor entry whose rect best matches the tag rect.
+            // Both rects went through the same QJsonArray double serialization so
+            // values should be identical; a small epsilon guards against any edge cases.
+            const dlib::matrix<float,0,1>* bestEmb = nullptr;
+            double bestDist = 1e-6;  // only accept a near-exact match
+
+            for (const auto &[descRect, descEmb] : *descCache) {
+                double dx = descRect.x()      - entry.tagRect.x();
+                double dy = descRect.y()      - entry.tagRect.y();
+                double dw = descRect.width()  - entry.tagRect.width();
+                double dh = descRect.height() - entry.tagRect.height();
+                double dist = dx*dx + dy*dy + dw*dw + dh*dh;
+                if (dist < bestDist) {
+                    bestDist = dist;
+                    bestEmb  = &descEmb;
+                }
+            }
+
+            if (!bestEmb) {
+                qDebug() << "[Promote] no descriptor match for" << entry.tagName
+                         << "in" << QFileInfo(imagePath).fileName();
+                continue;
+            }
+
+            KnownFaceCacheEntry newEntry;
+            newEntry.tagFamily = entry.tagFamily;
+            newEntry.tagName   = entry.tagName;
+            newEntry.rect      = entry.tagRect;
+            newEntry.embedding = *bestEmb;
+            updatedKnown.append(newEntry);
+            changed = true;
+            qDebug() << "[Promote] promoted" << entry.tagName
+                     << "in" << QFileInfo(imagePath).fileName();
+        }
+
+        if (changed)
+            FaceRecognizer::saveKnownFaceCache(imagePath, updatedKnown);
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Descriptor cache
 // ---------------------------------------------------------------------------
 
