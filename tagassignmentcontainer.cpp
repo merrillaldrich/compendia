@@ -124,6 +124,9 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
             tfw->refreshMinimumHeight();
         }
 
+        tfw->sort();
+        sort();
+
         // Apply the dropped tag to all visible files
         mainWin->core->applyTag(t);
 

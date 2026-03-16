@@ -135,6 +135,10 @@ private:
     /*! \brief Updates the enabled state of actionDrillUp based on current drill position. */
     void updateDrillUpEnabled();
 
+    /*! \brief Prompts the user to save unsaved changes before a destructive navigation.
+     *  \return true if it is safe to proceed (saved or discarded), false if cancelled. */
+    bool confirmProceedWithUnsavedChanges();
+
     /*! \brief Moves the file list selection forward or backward by \p delta rows.
      *
      * Clamps at the first and last visible row. If multiple files are selected,

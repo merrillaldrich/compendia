@@ -736,6 +736,34 @@ void MainWindow::updateDrillUpEnabled()
     ui->actionDrillUp->setEnabled(!isAtDrillCeiling());
 }
 
+/*! \brief Shows a save/discard/cancel dialog when there are unsaved changes.
+ *
+ * \return true if navigation should proceed (changes saved or discarded),
+ *         false if the user chose Cancel.
+ */
+bool MainWindow::confirmProceedWithUnsavedChanges()
+{
+    if (!core->hasUnsavedChanges())
+        return true;
+
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Unsaved Changes");
+    msgBox.setText("There are unsaved changes.");
+    msgBox.setInformativeText("Would you like to save before navigating?");
+
+    QPushButton *saveBtn    = msgBox.addButton("Save and Continue", QMessageBox::AcceptRole);
+    QPushButton *discardBtn = msgBox.addButton("Discard Changes",   QMessageBox::DestructiveRole);
+    /*QPushButton *cancelBtn =*/ msgBox.addButton("Cancel",         QMessageBox::RejectRole);
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == saveBtn) {
+        core->writeFileMetadata();
+        return true;
+    }
+    return msgBox.clickedButton() == discardBtn;
+}
+
 /*! \brief Drills into the folder of the selected file, reloading with it as the new root. */
 void MainWindow::on_actionDrillToFolder_triggered()
 {
@@ -752,6 +780,9 @@ void MainWindow::on_actionDrillToFolder_triggered()
     if (target == QDir::cleanPath(core->rootDirectory()))
         return;
 
+    if (!confirmProceedWithUnsavedChanges())
+        return;
+
     if (drillCeilingPath_.isEmpty())
         drillCeilingPath_ = QDir::cleanPath(core->rootDirectory());
 
@@ -763,6 +794,9 @@ void MainWindow::on_actionDrillToFolder_triggered()
 void MainWindow::on_actionDrillUp_triggered()
 {
     if (isAtDrillCeiling())
+        return;
+
+    if (!confirmProceedWithUnsavedChanges())
         return;
 
     QDir dir(core->rootDirectory());
