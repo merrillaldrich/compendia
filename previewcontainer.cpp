@@ -727,6 +727,18 @@ void PreviewContainer::preview(QString absoluteFilePath){
             QMessageBox::critical(nullptr, "Error", "Failed to load image: " + ir.errorString());
     }
 
+    // Pre-scale to 2× the view size using Qt's software area-averaging scaler.
+    // QGraphicsView's bilinear transform alone produces aliasing/moiré when
+    // downscaling large images (e.g. 4000px → 600px) on Linux.  Doing the
+    // heavy reduction here in software — where SmoothTransformation uses a
+    // proper low-pass filter — leaves only a small residual scale for the
+    // view transform to handle cleanly.
+    const QSize viewSize = view->size();
+    const int targetW = viewSize.width()  * 2;
+    const int targetH = viewSize.height() * 2;
+    if (!image.isNull() && (image.width() > targetW || image.height() > targetH))
+        image = image.scaled(targetW, targetH, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
     preview(image);
 }
 
