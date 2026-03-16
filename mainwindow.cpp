@@ -310,9 +310,7 @@ MainWindow::MainWindow(QWidget *parent)
             QAction* isolateFolderAction = menu.addAction(QIcon(":/resources/isolate-folder.svg"), tr("Isolate this Folder"));
             const QString targetFolder = clickedTf->filePath;
             connect(isolateFolderAction, &QAction::triggered, this, [this, targetFolder]() {
-                ui->folderFilterLineEdit->setText(targetFolder);
-                ui->actionClearFolderIsolation->setEnabled(true);
-                ui->actionClearIsolation->setEnabled(true);
+                applyFolderIsolation(targetFolder);
             });
 
             QAction* clearAllIsolationAction = menu.addAction(
@@ -320,11 +318,8 @@ MainWindow::MainWindow(QWidget *parent)
             clearAllIsolationAction->setEnabled(
                 ui->actionClearIsolation->isEnabled() || ui->actionClearFolderIsolation->isEnabled());
             connect(clearAllIsolationAction, &QAction::triggered, this, [this]() {
-                core->clearIsolationSet();
-                ui->actionClearIsolation->setEnabled(false);
-                ui->folderFilterLineEdit->setText("");
-                ui->actionClearFolderIsolation->setEnabled(false);
-                updateFileCountLabel();
+                clearSelectionIsolation();
+                clearFolderIsolation();
             });
 
             menu.addSeparator();
@@ -332,12 +327,7 @@ MainWindow::MainWindow(QWidget *parent)
             QAction* drillAction = menu.addAction(QIcon(":/resources/drill-into-folder.svg"), tr("Drill to this Folder"));
             const QString drillTarget = QDir::cleanPath(clickedTf->filePath);
             connect(drillAction, &QAction::triggered, this, [this, drillTarget]() {
-                if (!confirmProceedWithUnsavedChanges())
-                    return;
-                if (drillCeilingPath_.isEmpty())
-                    drillCeilingPath_ = QDir::cleanPath(core->rootDirectory());
-                loadFolder(drillTarget, /*skipCacheConfirm=*/true);
-                updateDrillUpEnabled();
+                drillToFolder(drillTarget);
             });
 
             menu.addAction(ui->actionDrillUp);
@@ -652,14 +642,7 @@ void MainWindow::onTagNameChanged(Tag* tag)
     if (!tf)
         return;
 
-    QList<TagRectDescriptor> tagRects;
-    for (Tag* t : *tf->tags()) {
-        auto r = tf->tagRect(t);
-        if (r.has_value())
-            tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
-    }
-    ui->previewContainer->setTagRects(tagRects);
-    ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
+    refreshPreviewTagRects(tf);
 }
 
 /*! \brief Refreshes all tag-related containers after a merge changes the library. */
@@ -698,9 +681,7 @@ void MainWindow::on_actionIsolateSelection_triggered()
 /*! \brief Clears the selection isolation set. */
 void MainWindow::on_actionClearIsolation_triggered()
 {
-    core->clearIsolationSet();
-    ui->actionClearIsolation->setEnabled(false);
-    updateFileCountLabel();
+    clearSelectionIsolation();
 }
 
 /*! \brief Sets the folder filter to the path of the selected file, narrowing the view to that subtree. */
@@ -715,16 +696,13 @@ void MainWindow::on_actionIsolateFolderSelection_triggered()
     if (!current)
         return;
 
-    ui->folderFilterLineEdit->setText(current->filePath);
-    ui->actionClearFolderIsolation->setEnabled(true);
-    ui->actionClearIsolation->setEnabled(true);
+    applyFolderIsolation(current->filePath);
 }
 
 /*! \brief Clears the folder filter set by folder isolation. */
 void MainWindow::on_actionClearFolderIsolation_triggered()
 {
-    ui->folderFilterLineEdit->setText("");
-    ui->actionClearFolderIsolation->setEnabled(false);
+    clearFolderIsolation();
 }
 
 bool MainWindow::isAtDrillCeiling() const
@@ -766,6 +744,64 @@ bool MainWindow::confirmProceedWithUnsavedChanges()
     return msgBox.clickedButton() == discardBtn;
 }
 
+/*! \brief Rebuilds the tag-rect overlay list for \p tf and pushes it to the preview container. */
+void MainWindow::refreshPreviewTagRects(TaggedFile* tf, bool forceVisible)
+{
+    QList<TagRectDescriptor> tagRects;
+    for (Tag* t : *tf->tags()) {
+        auto r = tf->tagRect(t);
+        if (r.has_value())
+            tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
+    }
+    ui->previewContainer->setTagRects(tagRects);
+    ui->previewContainer->setTagRectsVisible(
+        forceVisible || ui->showTaggedRegionsCheckbox->isChecked());
+}
+
+/*! \brief Starts the Save progress bar and writes metadata for all dirty files. */
+void MainWindow::saveAll()
+{
+    progress_->startProcess(MultiProgressBar::Process::Save,
+                            0, core->getItemModel()->rowCount(), "Saving");
+    core->writeFileMetadata();
+}
+
+/*! \brief Sets the folder filter to \p folderPath and enables both clear-isolation actions. */
+void MainWindow::applyFolderIsolation(const QString& folderPath)
+{
+    ui->folderFilterLineEdit->setText(folderPath);
+    ui->actionClearFolderIsolation->setEnabled(true);
+    ui->actionClearIsolation->setEnabled(true);
+}
+
+/*! \brief Clears the selection isolation set and disables its clear action. */
+void MainWindow::clearSelectionIsolation()
+{
+    core->clearIsolationSet();
+    ui->actionClearIsolation->setEnabled(false);
+    updateFileCountLabel();
+}
+
+/*! \brief Clears the folder filter and disables its clear action. */
+void MainWindow::clearFolderIsolation()
+{
+    ui->folderFilterLineEdit->setText("");
+    ui->actionClearFolderIsolation->setEnabled(false);
+}
+
+/*! \brief Guards dirty state, sets drill ceiling if needed, and loads \p targetPath as the new root. */
+void MainWindow::drillToFolder(const QString& targetPath)
+{
+    if (targetPath == QDir::cleanPath(core->rootDirectory()))
+        return;
+    if (!confirmProceedWithUnsavedChanges())
+        return;
+    if (drillCeilingPath_.isEmpty())
+        drillCeilingPath_ = QDir::cleanPath(core->rootDirectory());
+    loadFolder(targetPath, /*skipCacheConfirm=*/true);
+    updateDrillUpEnabled();
+}
+
 /*! \brief Drills into the folder of the selected file, reloading with it as the new root. */
 void MainWindow::on_actionDrillToFolder_triggered()
 {
@@ -778,18 +814,7 @@ void MainWindow::on_actionDrillToFolder_triggered()
     if (!current)
         return;
 
-    const QString target = QDir::cleanPath(current->filePath);
-    if (target == QDir::cleanPath(core->rootDirectory()))
-        return;
-
-    if (!confirmProceedWithUnsavedChanges())
-        return;
-
-    if (drillCeilingPath_.isEmpty())
-        drillCeilingPath_ = QDir::cleanPath(core->rootDirectory());
-
-    loadFolder(target, /*skipCacheConfirm=*/true);
-    updateDrillUpEnabled();
+    drillToFolder(QDir::cleanPath(current->filePath));
 }
 
 /*! \brief Navigates up one folder level, stopping at the drill ceiling. */
@@ -947,14 +972,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         ui->previewContainer->preview(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
 
         // Build tag rect overlays and push to the preview container
-        QList<TagRectDescriptor> tagRects;
-        for (Tag* tag : *itemAsTaggedFile->tags()) {
-            auto r = itemAsTaggedFile->tagRect(tag);
-            if (r.has_value())
-                tagRects.append({r.value(), tag->tagFamily->getColor(), tag->getName()});
-        }
-        ui->previewContainer->setTagRects(tagRects);
-        ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
+        refreshPreviewTagRects(itemAsTaggedFile);
 
         // Properties area
         QLocale locale = QLocale::system();
@@ -1015,15 +1033,7 @@ void MainWindow::onTagDroppedOnPreview(const QString &family,
         face_recognizer_->scheduleEmbeddingWarmup(tf);
 
     // Rebuild overlay list and push to preview
-    QList<TagRectDescriptor> tagRects;
-    for (Tag* t : *tf->tags()) {
-        auto r = tf->tagRect(t);
-        if (r.has_value())
-            tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
-    }
-    ui->previewContainer->setTagRects(tagRects);
-    ui->previewContainer->setTagRectsVisible(
-        ui->showTaggedRegionsCheckbox->isChecked());
+    refreshPreviewTagRects(tf);
 
     refreshTagAssignmentArea();
 }
@@ -1072,14 +1082,7 @@ void MainWindow::onTagDroppedOnExistingRegion(const QString &family,
         tf->addTag(newTag, existingRect);
 
     // Rebuild overlay list and push to preview
-    QList<TagRectDescriptor> tagRects;
-    for (Tag* t : *tf->tags()) {
-        auto r = tf->tagRect(t);
-        if (r.has_value())
-            tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
-    }
-    ui->previewContainer->setTagRects(tagRects);
-    ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
+    refreshPreviewTagRects(tf);
 
     refreshTagAssignmentArea();
 }
@@ -1139,14 +1142,7 @@ void MainWindow::onTagRectDeleteRequested(const QRectF &normalizedRect)
     }
 
     // Rebuild overlay
-    QList<TagRectDescriptor> tagRects;
-    for (Tag* t : *tf->tags()) {
-        auto r = tf->tagRect(t);
-        if (r.has_value())
-            tagRects.append({r.value(), t->tagFamily->getColor(), t->getName()});
-    }
-    ui->previewContainer->setTagRects(tagRects);
-    ui->previewContainer->setTagRectsVisible(ui->showTaggedRegionsCheckbox->isChecked());
+    refreshPreviewTagRects(tf);
 
     refreshTagAssignmentArea();
 }
@@ -1223,16 +1219,12 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 
 /*! \brief Slot for the Save button; writes metadata for all dirty files. */
 void MainWindow::on_saveButton_clicked(){
-    progress_->startProcess(MultiProgressBar::Process::Save,
-                            0, core->getItemModel()->rowCount(), "Saving");
-    core->writeFileMetadata();
+    saveAll();
 }
 
 /*! \brief Slot for File → Save All; writes metadata for all dirty files. */
 void MainWindow::on_actionSave_All_triggered(){
-    progress_->startProcess(MultiProgressBar::Process::Save,
-                            0, core->getItemModel()->rowCount(), "Saving");
-    core->writeFileMetadata();
+    saveAll();
 }
 
 /*! \brief Slot for File → Save Visible; writes metadata only for files passing the current filter. */
@@ -1482,16 +1474,8 @@ bool MainWindow::ensureFaceRecognizerLoaded()
                 QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
                 TaggedFile* tf  = core->getItemModel()
                                       ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
-                if (tf) {
-                    QList<TagRectDescriptor> tagRects;
-                    for (Tag* t : *tf->tags()) {
-                        auto rv = tf->tagRect(t);
-                        if (rv.has_value())
-                            tagRects.append({rv.value(), t->tagFamily->getColor(), t->getName()});
-                    }
-                    ui->previewContainer->setTagRects(tagRects);
-                    ui->previewContainer->setTagRectsVisible(true);
-                }
+                if (tf)
+                    refreshPreviewTagRects(tf, /*forceVisible=*/true);
             }
         };
         connect(face_recognizer_, &FaceRecognizer::sweepFinished, this, onSweepDone);

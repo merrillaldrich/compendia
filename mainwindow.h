@@ -139,6 +139,31 @@ private:
      *  \return true if it is safe to proceed (saved or discarded), false if cancelled. */
     bool confirmProceedWithUnsavedChanges();
 
+    /*! \brief Rebuilds the tag-rect overlay list for \p tf and pushes it to the preview.
+     *
+     * Uses the "Show tagged regions" checkbox state for visibility unless
+     * \p forceVisible is true (used after a face sweep, which forces the checkbox on).
+     *
+     * \param tf           The file whose tag rects should be displayed (non-const; TaggedFile::tags() is not const).
+     * \param forceVisible If true, overlays are shown regardless of the checkbox state.
+     */
+    void refreshPreviewTagRects(TaggedFile* tf, bool forceVisible = false);
+
+    /*! \brief Starts the Save progress bar and writes metadata for all dirty files. */
+    void saveAll();
+
+    /*! \brief Sets the folder filter to \p folderPath and enables both clear-isolation actions. */
+    void applyFolderIsolation(const QString& folderPath);
+
+    /*! \brief Clears the selection isolation set and disables its clear action. */
+    void clearSelectionIsolation();
+
+    /*! \brief Clears the folder filter and disables its clear action. */
+    void clearFolderIsolation();
+
+    /*! \brief Guards dirty state, sets drill ceiling if needed, and loads \p targetPath as the new root. */
+    void drillToFolder(const QString& targetPath);
+
     /*! \brief Moves the file list selection forward or backward by \p delta rows.
      *
      * Clamps at the first and last visible row. If multiple files are selected,
