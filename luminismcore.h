@@ -108,6 +108,9 @@ public:
      */
     void setRootDirectory(QString path);
 
+    /*! \brief Returns the currently loaded root directory path. */
+    QString rootDirectory() const { return root_directory_; }
+
     /*! \brief Stops in-flight icon generation and discards any queued results.
      *
      * Does not affect in-progress metadata saves.

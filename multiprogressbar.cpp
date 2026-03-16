@@ -21,6 +21,7 @@ MultiProgressBar::MultiProgressBar(QWidget *parent)
 
     bar_->setFixedSize(300, 12);
     bar_->setTextVisible(false);
+    bar_->setStyleSheet("QProgressBar { border: none; border-radius: 0; }");
     bar_->setMinimum(0);
     bar_->setMaximum(1);
     bar_->setValue(0);

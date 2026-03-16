@@ -412,6 +412,38 @@
                </widget>
               </item>
               <item>
+               <widget class="QToolButton" name="isolateFolderButton">
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>40</width>
+                  <height>24</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="clearFolderIsolationButton">
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>40</width>
+                  <height>24</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QToolButton" name="isolateSelectionButton">
                 <property name="toolButtonStyle">
                  <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
@@ -815,6 +847,10 @@
     </property>
     <addaction name="actionIsolateSelection"/>
     <addaction name="actionClearIsolation"/>
+    <addaction name="actionIsolateFolderSelection"/>
+    <addaction name="actionClearFolderIsolation"/>
+    <addaction name="actionDrillToFolder"/>
+    <addaction name="actionDrillUp"/>
    </widget>
    <widget class="QMenu" name="menuAutos">
     <property name="title">
@@ -912,6 +948,38 @@
   <action name="actionClearIsolation">
    <property name="text">
     <string>Clear Isolation</string>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionIsolateFolderSelection">
+   <property name="text">
+    <string>Isolate Folder</string>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionClearFolderIsolation">
+   <property name="text">
+    <string>Clear Folder Isolation</string>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionDrillToFolder">
+   <property name="text">
+    <string>Drill to this Folder</string>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionDrillUp">
+   <property name="text">
+    <string>Drill Up</string>
    </property>
    <property name="enabled">
     <bool>false</bool>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 24" width="40" height="24">
+  <!-- Left bracket [ -->
+  <path d="M 8,5 L 5,5 L 5,19 L 8,19" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+  <!-- Folder tab -->
+  <path d="M 12,10 L 12,7 L 20,7 L 22,10 Z" fill="#a0a0a0"/>
+  <!-- Folder body -->
+  <path d="M 12,10 L 28,10 L 28,18 L 12,18 Z" fill="#c0c0c0"/>
+  <!-- Right bracket ] -->
+  <path d="M 32,5 L 35,5 L 35,19 L 32,19" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

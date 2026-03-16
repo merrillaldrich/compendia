@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 24" width="40" height="24">
+  <!-- Folder tab -->
+  <path d="M 8,10 L 8,7 L 16,7 L 18,10 Z" fill="#a0a0a0"/>
+  <!-- Folder body -->
+  <path d="M 8,10 L 28,10 L 28,18 L 8,18 Z" fill="#c0c0c0"/>
+  <!-- Up arrow -->
+  <line x1="34" y1="7" x2="34" y2="19" stroke="#888888" stroke-width="2" stroke-linecap="round"/>
+  <polyline points="30,11 34,6 38,11" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

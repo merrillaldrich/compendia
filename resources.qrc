@@ -7,6 +7,10 @@
         <file>resources/splitter-grip-dark-v.svg</file>
         <file>resources/isolate-selection.svg</file>
         <file>resources/clear-isolation.svg</file>
+        <file>resources/isolate-folder.svg</file>
+        <file>resources/clear-isolation-folder.svg</file>
+        <file>resources/drill-into-folder.svg</file>
+        <file>resources/drill-up-folder.svg</file>
         <file>resources/tag-search.svg</file>
     </qresource>
 </RCC>

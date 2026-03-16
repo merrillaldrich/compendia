@@ -307,23 +307,38 @@ MainWindow::MainWindow(QWidget *parent)
         QModelIndex clickedSrc = core->getItemModelProxy()->mapToSource(clickedProxy);
         TaggedFile* clickedTf = core->getItemModel()->data(clickedSrc, Qt::UserRole + 1).value<TaggedFile*>();
         if (clickedTf) {
-            QAction* isolateFolderAction = menu.addAction(tr("Isolate this Folder"));
+            QAction* isolateFolderAction = menu.addAction(QIcon(":/resources/isolate-folder.svg"), tr("Isolate this Folder"));
             const QString targetFolder = clickedTf->filePath;
             connect(isolateFolderAction, &QAction::triggered, this, [this, targetFolder]() {
-                QStandardItemModel* model = core->getItemModel();
-                QSet<TaggedFile*> files;
-                for (int i = 0; i < model->rowCount(); ++i) {
-                    TaggedFile* tf = model->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
-                    if (tf && tf->filePath == targetFolder)
-                        files.insert(tf);
-                }
-                if (files.isEmpty())
-                    return;
-                core->setIsolationSet(files);
+                ui->folderFilterLineEdit->setText(targetFolder);
+                ui->actionClearFolderIsolation->setEnabled(true);
                 ui->actionClearIsolation->setEnabled(true);
-                updateFileCountLabel();
-                refreshTagAssignmentArea();
             });
+
+            QAction* clearAllIsolationAction = menu.addAction(
+                ui->actionClearIsolation->icon(), tr("Clear Isolation"));
+            clearAllIsolationAction->setEnabled(
+                ui->actionClearIsolation->isEnabled() || ui->actionClearFolderIsolation->isEnabled());
+            connect(clearAllIsolationAction, &QAction::triggered, this, [this]() {
+                core->clearIsolationSet();
+                ui->actionClearIsolation->setEnabled(false);
+                ui->folderFilterLineEdit->setText("");
+                ui->actionClearFolderIsolation->setEnabled(false);
+                updateFileCountLabel();
+            });
+
+            menu.addSeparator();
+
+            QAction* drillAction = menu.addAction(QIcon(":/resources/drill-into-folder.svg"), tr("Drill to this Folder"));
+            const QString drillTarget = QDir::cleanPath(clickedTf->filePath);
+            connect(drillAction, &QAction::triggered, this, [this, drillTarget]() {
+                if (drillCeilingPath_.isEmpty())
+                    drillCeilingPath_ = QDir::cleanPath(core->rootDirectory());
+                loadFolder(drillTarget, /*skipCacheConfirm=*/true);
+                updateDrillUpEnabled();
+            });
+
+            menu.addAction(ui->actionDrillUp);
 
             menu.addSeparator();
 
@@ -341,8 +356,6 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
             });
         }
-
-        menu.addAction(ui->actionClearIsolation);
         menu.exec(ui->fileListView->viewport()->mapToGlobal(pos));
     });
 
@@ -351,6 +364,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionClearIsolation->setIcon(QIcon(":/resources/clear-isolation.svg"));
     ui->isolateSelectionButton->setDefaultAction(ui->actionIsolateSelection);
     ui->clearIsolationButton->setDefaultAction(ui->actionClearIsolation);
+    ui->actionIsolateFolderSelection->setIcon(QIcon(":/resources/isolate-folder.svg"));
+    ui->actionClearFolderIsolation->setIcon(QIcon(":/resources/clear-isolation-folder.svg"));
+    ui->isolateFolderButton->setDefaultAction(ui->actionIsolateFolderSelection);
+    ui->clearFolderIsolationButton->setDefaultAction(ui->actionClearFolderIsolation);
+    ui->actionDrillToFolder->setIcon(QIcon(":/resources/drill-into-folder.svg"));
+    ui->actionDrillUp->setIcon(QIcon(":/resources/drill-up-folder.svg"));
+    ui->actionDrillToFolder->setEnabled(false);
+    ui->actionDrillUp->setEnabled(false);
 
     // Default pane sizes
     resize(1400, 900);
@@ -503,12 +524,17 @@ void MainWindow::setRootFolder()
  *
  * \param folder Absolute path to the media folder to load.
  */
-void MainWindow::loadFolder(const QString &folder)
+void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
 {
     if (!validateFolder(folder))
         return;
-    if (!confirmCacheFolder(folder))
+    if (!skipCacheConfirm && !confirmCacheFolder(folder))
         return;
+
+    if (!skipCacheConfirm) {
+        drillCeilingPath_.clear();
+        updateDrillUpEnabled();
+    }
 
     core->cancelIconGeneration();
 
@@ -667,12 +693,93 @@ void MainWindow::on_actionIsolateSelection_triggered()
     refreshTagAssignmentArea();
 }
 
-/*! \brief Clears the isolation set and restores the full unfiltered view. */
+/*! \brief Clears the selection isolation set. */
 void MainWindow::on_actionClearIsolation_triggered()
 {
     core->clearIsolationSet();
     ui->actionClearIsolation->setEnabled(false);
     updateFileCountLabel();
+}
+
+/*! \brief Sets the folder filter to the path of the selected file, narrowing the view to that subtree. */
+void MainWindow::on_actionIsolateFolderSelection_triggered()
+{
+    QItemSelectionModel* sm = ui->fileListView->selectionModel();
+    if (!sm || !sm->currentIndex().isValid())
+        return;
+
+    QModelIndex src = core->getItemModelProxy()->mapToSource(sm->currentIndex());
+    TaggedFile* current = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!current)
+        return;
+
+    ui->folderFilterLineEdit->setText(current->filePath);
+    ui->actionClearFolderIsolation->setEnabled(true);
+    ui->actionClearIsolation->setEnabled(true);
+}
+
+/*! \brief Clears the folder filter set by folder isolation. */
+void MainWindow::on_actionClearFolderIsolation_triggered()
+{
+    ui->folderFilterLineEdit->setText("");
+    ui->actionClearFolderIsolation->setEnabled(false);
+}
+
+bool MainWindow::isAtDrillCeiling() const
+{
+    return drillCeilingPath_.isEmpty()
+        || QDir(core->rootDirectory()) == QDir(drillCeilingPath_);
+}
+
+void MainWindow::updateDrillUpEnabled()
+{
+    ui->actionDrillUp->setEnabled(!isAtDrillCeiling());
+}
+
+/*! \brief Drills into the folder of the selected file, reloading with it as the new root. */
+void MainWindow::on_actionDrillToFolder_triggered()
+{
+    QItemSelectionModel* sm = ui->fileListView->selectionModel();
+    if (!sm || !sm->currentIndex().isValid())
+        return;
+
+    QModelIndex src = core->getItemModelProxy()->mapToSource(sm->currentIndex());
+    TaggedFile* current = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!current)
+        return;
+
+    const QString target = QDir::cleanPath(current->filePath);
+    if (target == QDir::cleanPath(core->rootDirectory()))
+        return;
+
+    if (drillCeilingPath_.isEmpty())
+        drillCeilingPath_ = QDir::cleanPath(core->rootDirectory());
+
+    loadFolder(target, /*skipCacheConfirm=*/true);
+    updateDrillUpEnabled();
+}
+
+/*! \brief Navigates up one folder level, stopping at the drill ceiling. */
+void MainWindow::on_actionDrillUp_triggered()
+{
+    if (isAtDrillCeiling())
+        return;
+
+    QDir dir(core->rootDirectory());
+    dir.cdUp();
+    QString parent = QDir::cleanPath(dir.absolutePath());
+
+    // Clamp to ceiling in case the parent would exceed it.
+    const QString ceiling = QDir::cleanPath(drillCeilingPath_);
+    if (!parent.startsWith(ceiling))
+        parent = ceiling;
+
+    loadFolder(parent, /*skipCacheConfirm=*/true);
+
+    if (QDir::cleanPath(core->rootDirectory()) == ceiling)
+        drillCeilingPath_.clear();
+
+    updateDrillUpEnabled();
 }
 
 /*! \brief Finds all near-duplicate image groups by perceptual hash and isolates them.
@@ -775,6 +882,9 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
     // (causing ClearAndSelect to net-zero for that item and blank the preview).
     QItemSelectionModel* sm = ui->fileListView->selectionModel();
     const QModelIndex proxyIndex = sm ? sm->currentIndex() : QModelIndex();
+
+    ui->actionIsolateFolderSelection->setEnabled(proxyIndex.isValid());
+    ui->actionDrillToFolder->setEnabled(proxyIndex.isValid());
 
     if (!proxyIndex.isValid()) {
         ui->previewContainer->clear();

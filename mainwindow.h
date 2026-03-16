@@ -39,6 +39,7 @@ private:
     QWidget* welcome_widget_; ///< Shown in the file-list area before any folder is loaded.
     FaceRecognizer* face_recognizer_ = nullptr;
     FrameGrabber* frameGrabber_ = nullptr; ///< Active frame-grab batch, or nullptr when idle.
+    QString drillCeilingPath_; ///< Root path the user explicitly opened; drill-up cannot exceed this.
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
@@ -126,7 +127,13 @@ private:
      *
      * \param folder Absolute path to the media folder to load.
      */
-    void loadFolder(const QString &folder);
+    void loadFolder(const QString &folder, bool skipCacheConfirm = false);
+
+    /*! \brief Returns true when the current root equals the drill ceiling (or no drill session is active). */
+    bool isAtDrillCeiling() const;
+
+    /*! \brief Updates the enabled state of actionDrillUp based on current drill position. */
+    void updateDrillUpEnabled();
 
     /*! \brief Moves the file list selection forward or backward by \p delta rows.
      *
@@ -345,6 +352,18 @@ private slots:
 
     /*! \brief Clears the isolation set and restores the full unfiltered view. */
     void on_actionClearIsolation_triggered();
+
+    /*! \brief Isolates all files under the folder of the first selected file. */
+    void on_actionIsolateFolderSelection_triggered();
+
+    /*! \brief Clears the folder isolation and restores the full unfiltered view. */
+    void on_actionClearFolderIsolation_triggered();
+
+    /*! \brief Drills into the folder of the selected file, reloading with it as the new root. */
+    void on_actionDrillToFolder_triggered();
+
+    /*! \brief Navigates up one folder level, stopping at the drill ceiling. */
+    void on_actionDrillUp_triggered();
 
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
