@@ -3,9 +3,11 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include <QMenu>
 #include <QPainter>
 #include <QPainterPath>
 #include <QMouseEvent>
+#include <QContextMenuEvent>
 #include "flowlayout.h"
 #include "tagfamily.h"
 #include "tagwidget.h"
@@ -47,6 +49,13 @@ protected:
      * \param event The resize event.
      */
     void resizeEvent(QResizeEvent *event) override;
+
+    /*! \brief Overrides the Qt base-class context-menu handler to show Collapse/Expand All
+     *         when right-clicking on the header area.
+     *
+     * \param event The context menu event.
+     */
+    void contextMenuEvent(QContextMenuEvent *event) override;
 
     /*! \brief Returns the minimum size as the size hint.
      *
@@ -112,6 +121,13 @@ private slots:
 
     /*! \brief Slot called when the collapse button is clicked; toggles the collapsed state. */
     void toggleCollapsed();
+
+public slots:
+    /*! \brief Sets the collapsed state directly.
+     *
+     * \param collapsed true to collapse, false to expand.
+     */
+    void setCollapsed(bool collapsed);
 
     /*! \brief Creates a new empty TagWidget, wires its signals, adds it to the layout, and
      *  puts it into edit mode.  Used by both mouseReleaseEvent and endEdit(). */

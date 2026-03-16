@@ -250,7 +250,16 @@ TagFamily *TagFamilyWidget::getTagFamily() const{
 /*! \brief Slot called when the collapse button is clicked; toggles the collapsed state. */
 void TagFamilyWidget::toggleCollapsed()
 {
-    collapsed_ = !collapsed_;
+    setCollapsed(!collapsed_);
+}
+
+/*! \brief Sets the collapsed state directly.
+ *
+ * \param collapsed true to collapse, false to expand.
+ */
+void TagFamilyWidget::setCollapsed(bool collapsed)
+{
+    collapsed_ = collapsed;
     collapseButton_->setCollapsed(collapsed_);
 
     for (int i = 0; i < layout()->count(); ++i) {
@@ -268,6 +277,32 @@ void TagFamilyWidget::toggleCollapsed()
         setMinimumHeight(qMax(64, childrenRect().height() + 4));
 
     update();
+}
+
+/*! \brief Shows a Collapse All / Expand All context menu when right-clicking the header area. */
+void TagFamilyWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+    // Only respond in the header strip (top ~28 px)
+    if (event->pos().y() >= 28) {
+        event->ignore();
+        return;
+    }
+
+    QMenu menu(this);
+    menu.addAction("Collapse All", this, [this]() {
+        const auto siblings = parentWidget()->findChildren<TagFamilyWidget*>(
+            QString(), Qt::FindDirectChildrenOnly);
+        for (TagFamilyWidget *w : siblings)
+            w->setCollapsed(true);
+    });
+    menu.addAction("Expand All", this, [this]() {
+        const auto siblings = parentWidget()->findChildren<TagFamilyWidget*>(
+            QString(), Qt::FindDirectChildrenOnly);
+        for (TagFamilyWidget *w : siblings)
+            w->setCollapsed(false);
+    });
+    menu.exec(event->globalPos());
+    event->accept();
 }
 
 /*! \brief Overrides the Qt base-class resize handler to keep the collapse button anchored.
