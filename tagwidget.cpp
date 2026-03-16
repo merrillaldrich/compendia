@@ -72,7 +72,6 @@ void TagWidget::onLineEditEditingFinished(){
  * \param event The mouse event from the click.
  */
 void TagWidget::onLabelClicked(QMouseEvent *event){
-    qDebug() << "Tag label clicked";
     startEdit();
     event->accept();
 }
