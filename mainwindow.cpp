@@ -332,6 +332,8 @@ MainWindow::MainWindow(QWidget *parent)
             QAction* drillAction = menu.addAction(QIcon(":/resources/drill-into-folder.svg"), tr("Drill to this Folder"));
             const QString drillTarget = QDir::cleanPath(clickedTf->filePath);
             connect(drillAction, &QAction::triggered, this, [this, drillTarget]() {
+                if (!confirmProceedWithUnsavedChanges())
+                    return;
                 if (drillCeilingPath_.isEmpty())
                     drillCeilingPath_ = QDir::cleanPath(core->rootDirectory());
                 loadFolder(drillTarget, /*skipCacheConfirm=*/true);
