@@ -221,8 +221,18 @@ void TagWidget::mouseMoveEvent(QMouseEvent *event){
     // Bundle the image and mime data into a QDrag object
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimeData);
-    drag->setPixmap(dragimage);
-    drag->setHotSpot(event->position().toPoint());
+
+    // setPixmap() provides the ghost drag image on X11/XCB.
+    // On Wayland the compositor ignores it, so use setDragCursor() instead,
+    // which replaces the cursor icon and works on all platforms.
+    if (QGuiApplication::platformName() == "wayland") {
+        drag->setDragCursor(dragimage, Qt::MoveAction);
+        drag->setDragCursor(dragimage, Qt::CopyAction);
+    } else {
+        drag->setPixmap(dragimage);
+        drag->setHotSpot(event->position().toPoint());
+    }
+
     drag->exec();
 }
 
