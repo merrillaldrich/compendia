@@ -1,5 +1,7 @@
 #include "tagfamilywidget.h"
 #include "tagcontainer.h"
+#include <QMimeData>
+#include <QDataStream>
 
 /*! \brief Constructs a default, empty TagFamilyWidget.
  *
@@ -124,6 +126,13 @@ void TagFamilyWidget::paintEvent(QPaintEvent *event) {
     path.closeSubpath();
 
     painter.drawPath(path);
+
+    if (drop_hover_) {
+        QColor highlight(base_color_.red(), base_color_.green(), base_color_.blue(), 50);
+        painter.setBrush(highlight);
+        painter.setPen(QPen(base_color_, 2));
+        painter.drawRoundedRect(QRect(leftX, topY, rightX, bottomY), cornerRadius, cornerRadius);
+    }
 }
 
 /*! \brief Creates a new empty TagWidget, wires its signals, adds it to the layout, and
@@ -217,6 +226,11 @@ void TagFamilyWidget::endEdit(){
     if (justCreated) {
         mainWin->core->addLibraryTagFamily(tag_family_);
         in_library_ = true;
+        // This widget was created directly (not via TagContainer::refresh), so
+        // refreshNavTagLibrary's loop won't reach it.  Enable drops here.
+        setAcceptDrops(true);
+        connect(this, &TagFamilyWidget::tagRefamilyRequested,
+                mainWin, &MainWindow::onTagRefamilyRequested, Qt::UniqueConnection);
     }
 
     line_edit_->clearFocus();
@@ -354,6 +368,60 @@ void TagFamilyWidget::refreshMinimumHeight()
  */
 QSize TagFamilyWidget::sizeHint() const {
     return minimumSize();
+}
+
+void TagFamilyWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
+        drop_hover_ = true;
+        update();
+        event->acceptProposedAction();
+    } else {
+        event->ignore();
+    }
+}
+
+void TagFamilyWidget::dragMoveEvent(QDragMoveEvent *event)
+{
+    if (event->mimeData()->hasFormat("application/x-dnditemdata"))
+        event->acceptProposedAction();
+    else
+        event->ignore();
+}
+
+void TagFamilyWidget::dragLeaveEvent(QDragLeaveEvent *event)
+{
+    drop_hover_ = false;
+    update();
+    event->accept();
+}
+
+void TagFamilyWidget::dropEvent(QDropEvent *event)
+{
+    drop_hover_ = false;
+    update();
+
+    if (!event->mimeData()->hasFormat("application/x-dnditemdata")) {
+        event->ignore();
+        return;
+    }
+
+    QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
+    QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+    QString tagFamilyName, tagName;
+    QPoint offset;
+    dataStream >> tagFamilyName >> tagName >> offset;
+
+    MainWindow* mainWin = qobject_cast<MainWindow*>(window());
+    if (!mainWin)
+        return;
+
+    Tag* tag = mainWin->core->getTag(tagFamilyName, tagName);
+    if (!tag || tag->tagFamily == tag_family_)
+        return;
+
+    event->acceptProposedAction();
+    emit tagRefamilyRequested(tag, tag_family_);
 }
 
 /*! \brief Sorts the child TagWidget items alphabetically by tag name. */

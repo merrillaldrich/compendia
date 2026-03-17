@@ -67,6 +67,9 @@ private:
     /*! \brief Clears the dirty flag on every file, tag, and tag family. */
     void clearAllDirtyFlags();
 
+    /*! \brief Removes \a family from the library if no tags reference it any longer. */
+    void cleanupFamilyIfEmpty(TagFamily* family);
+
     /*! \brief Applies a generated thumbnail, EXIF data, and pHash to the matching model item.
      *
      * \param fileName             The file name used to locate the model item.
@@ -451,6 +454,10 @@ public:
     /*! \brief Merges all tags of family \a from into family \a into, handling per-tag collisions
      *  recursively, then removes and schedules \a from for deletion. Emits tagLibraryChanged(). */
     void mergeTagFamily(TagFamily* from, TagFamily* into);
+
+    /*! \brief Moves \a tag to \a newFamily, merging with a same-name tag if one already exists.
+     *  Removes the old family if it becomes empty. Emits tagLibraryChanged(). */
+    void refamilyTag(Tag* tag, TagFamily* newFamily);
 
 public slots:
 

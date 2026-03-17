@@ -8,6 +8,10 @@
 #include <QPainterPath>
 #include <QMouseEvent>
 #include <QContextMenuEvent>
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
+#include <QDragLeaveEvent>
+#include <QDropEvent>
 #include "flowlayout.h"
 #include "tagfamily.h"
 #include "tagwidget.h"
@@ -36,6 +40,7 @@ private:
     TagFamily* tag_family_;
     bool collapsed_ = false;
     TagFamilyWidgetCollapseButton *collapseButton_ = nullptr;
+    bool drop_hover_ = false; ///< True while a tag drag is hovering over this widget.
 
 protected:
     /*! \brief Overrides the Qt base-class mouse-release handler to add a new tag on click.
@@ -56,6 +61,11 @@ protected:
      * \param event The context menu event.
      */
     void contextMenuEvent(QContextMenuEvent *event) override;
+
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dragMoveEvent(QDragMoveEvent *event) override;
+    void dragLeaveEvent(QDragLeaveEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 
     /*! \brief Returns the minimum size as the size hint.
      *
@@ -146,6 +156,12 @@ public slots:
     void onTagNameChanged();
 
 signals:
+    /*! \brief Emitted when a tag is dropped onto this family widget requesting reassignment.
+     *
+     * \param tag       The Tag that was dragged.
+     * \param newFamily The TagFamily it was dropped onto.
+     */
+    void tagRefamilyRequested(Tag* tag, TagFamily* newFamily);
 
 };
 

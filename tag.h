@@ -60,6 +60,12 @@ public:
     /*! \brief Clears the dirty flag after changes have been persisted. */
     void clearDirtyFlag();
 
+    /*! \brief Sets the owning tag family and marks the dirty flag.
+     *
+     * \param family The new TagFamily this tag should belong to.
+     */
+    void setTagFamily(TagFamily* family);
+
     /*! \brief Equality operator comparing tag name and family name.
      *
      * \param other The other Tag to compare against.

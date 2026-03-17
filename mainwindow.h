@@ -60,6 +60,9 @@ public:
     /*! \brief Opens a folder-picker dialog and loads the selected folder into core. */
     void setRootFolder();
 
+    /*! \brief Prompts for confirmation then moves \a tag to \a newFamily via core->reassignTag(). */
+    void onTagRefamilyRequested(Tag* tag, TagFamily* newFamily);
+
     /*! \brief Updates the file-count label to show visible vs. total file counts. */
     void updateFileCountLabel();
 

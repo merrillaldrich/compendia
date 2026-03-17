@@ -595,6 +595,14 @@ void MainWindow::refreshNavTagLibrary(){
         ui->navFilterContainer->dismissWelcome();
         ui->fileListTagAssignmentContainer->dismissWelcome();
     }
+
+    // Enable tag-drag-drop on library family widgets and wire reassignment signal.
+    const auto tfws = ui->navLibraryContainer->findChildren<TagFamilyWidget*>();
+    for (TagFamilyWidget *tfw : tfws) {
+        tfw->setAcceptDrops(true);
+        connect(tfw, &TagFamilyWidget::tagRefamilyRequested,
+                this, &MainWindow::onTagRefamilyRequested, Qt::UniqueConnection);
+    }
 }
 
 /*! \brief Rebuilds the tag-assignment area from tags on the currently filtered files. */
@@ -654,6 +662,34 @@ void MainWindow::onTagNameChanged(Tag* tag)
         return;
 
     refreshPreviewTagRects(tf);
+}
+
+/*! \brief Prompts for confirmation then moves \a tag to \a newFamily via core->refamilyTag(). */
+void MainWindow::onTagRefamilyRequested(Tag* tag, TagFamily* newFamily)
+{
+    if (!tag || !newFamily || tag->tagFamily == newFamily)
+        return;
+
+    const QString tagName       = tag->getName();
+    const QString oldFamilyName = tag->tagFamily->getName();
+    const QString newFamilyName = newFamily->getName();
+
+    Tag* collision = core->getTag(newFamilyName, tagName);
+
+    QString msg = tr("Move tag \"%1\" from \"%2\" to \"%3\"?")
+                      .arg(tagName, oldFamilyName, newFamilyName);
+    if (collision)
+        msg += tr("\n\nA tag named \"%1\" already exists in \"%2\". The two tags will be merged.")
+                   .arg(tagName, newFamilyName);
+
+    if (QMessageBox::question(this, tr("Move Tag"), msg) != QMessageBox::Yes)
+        return;
+
+    core->refamilyTag(tag, newFamily);
+
+    // Update known-face cache with the new family name (no-op if tag was merged away).
+    if (!collision)
+        onTagNameChanged(tag);
 }
 
 /*! \brief Refreshes all tag-related containers after a merge changes the library. */

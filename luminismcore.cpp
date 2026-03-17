@@ -1307,6 +1307,36 @@ void LuminismCore::mergeTagFamily(TagFamily* from, TagFamily* into)
     emit tagLibraryChanged();
 }
 
+/*! \brief Removes \a family from the library if no tags reference it any longer. */
+void LuminismCore::cleanupFamilyIfEmpty(TagFamily* family)
+{
+    for (Tag* t : std::as_const(*tags_)) {
+        if (t->tagFamily == family)
+            return;
+    }
+    tag_families_->remove(family);
+    family->deleteLater();
+}
+
+/*! \brief Moves \a tag to \a newFamily, merging with a same-name tag if one already exists.
+ *  Removes the old family if it becomes empty. Emits tagLibraryChanged(). */
+void LuminismCore::refamilyTag(Tag* tag, TagFamily* newFamily)
+{
+    if (!tag || !newFamily || tag->tagFamily == newFamily)
+        return;
+
+    TagFamily* oldFamily = tag->tagFamily;
+    Tag* collision = getTag(newFamily->getName(), tag->getName());
+    if (collision) {
+        mergeTag(tag, collision);   // re-routes files, emits tagLibraryChanged
+    } else {
+        tag->setTagFamily(newFamily);
+    }
+
+    cleanupFamilyIfEmpty(oldFamily);
+    emit tagLibraryChanged();
+}
+
 /*! \brief Parses a JSON object of tag-family to tag-name arrays into a TagSet list.
  *
  * \param tagsJson     A JSON object mapping family name strings to arrays of tag name strings.

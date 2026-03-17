@@ -55,6 +55,16 @@ void Tag::clearDirtyFlag()
     dirty_flag_ = false;
 }
 
+/*! \brief Sets the owning tag family and marks the dirty flag.
+ *
+ * \param family The new TagFamily this tag should belong to.
+ */
+void Tag::setTagFamily(TagFamily* family)
+{
+    tagFamily = family;
+    dirty_flag_ = true;
+}
+
 /*! \brief Returns the current tag name.
  *
  * \return The tag name string.
