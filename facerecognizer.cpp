@@ -881,16 +881,23 @@ void FaceRecognizer::warmupKnownFaceEmbeddings(
         return;
 
     auto cachedEntries = FaceRecognizer::loadKnownFaceCache(imagePath);
-    QVector<KnownFaceCacheEntry> updatedCache =
+    const QVector<KnownFaceCacheEntry> existingCache =
         cachedEntries.has_value() ? *cachedEntries : QVector<KnownFaceCacheEntry>{};
 
+    // Rebuild the cache to match exactly the current tagRegions.
+    // Carrying over only entries whose (family, name, rect) still exist ensures
+    // that moved or deleted rects are dropped rather than left as stale entries.
     QImage img;  // loaded lazily on first cache miss
     bool cacheNeedsWrite = false;
+    QVector<KnownFaceCacheEntry> newCache;
+    newCache.reserve(tagRegions.size());
 
     for (const auto &[family, name, rect] : tagRegions) {
+        // Look for a matching entry in the existing cache.
         bool hit = false;
-        for (const KnownFaceCacheEntry &e : updatedCache) {
+        for (const KnownFaceCacheEntry &e : existingCache) {
             if (e.tagFamily == family && e.tagName == name && e.rect == rect) {
+                newCache.append(e);
                 hit = true;
                 break;
             }
@@ -898,6 +905,7 @@ void FaceRecognizer::warmupKnownFaceEmbeddings(
         if (hit)
             continue;
 
+        // Cache miss — compute the embedding for this region.
         if (img.isNull()) {
             QImageReader ir(imagePath);
             ir.setAutoTransform(true);
@@ -919,14 +927,15 @@ void FaceRecognizer::warmupKnownFaceEmbeddings(
         e.tagName   = name;
         e.rect      = rect;
         e.embedding = emb;
-        updatedCache.append(e);
+        newCache.append(e);
         cacheNeedsWrite = true;
 
         emit embeddingWarmedUp();
     }
 
-    if (cacheNeedsWrite)
-        FaceRecognizer::saveKnownFaceCache(imagePath, updatedCache);
+    // Write if new embeddings were computed or stale entries were removed.
+    if (cacheNeedsWrite || newCache.size() != existingCache.size())
+        FaceRecognizer::saveKnownFaceCache(imagePath, newCache);
 }
 
 // ---------------------------------------------------------------------------
