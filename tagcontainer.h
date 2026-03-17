@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QLayout>
+#include <QMap>
 #include <QSet>
 #include "tagwidget.h"
 #include "tagfamilywidget.h"
@@ -21,6 +22,9 @@ class TagContainer : public QWidget
     Q_OBJECT
 
 private:
+    /// Collapsed state keyed by family name; persisted across refresh() calls.
+    QMap<QString, bool> collapsed_state_;
+
     /*! \brief Comparison helper for sorting TagFamilyWidgets by family name.
      *
      * \param a First TagFamilyWidget to compare.

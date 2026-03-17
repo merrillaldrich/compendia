@@ -15,6 +15,12 @@ TagContainer::TagContainer(QWidget *parent)
  */
 void TagContainer::refresh(QSet<Tag*>* tags){
 
+    // Snapshot collapsed state before destroying existing widgets.
+    const QList<TagFamilyWidget*> existing =
+        findChildren<TagFamilyWidget*>(QString(), Qt::FindDirectChildrenOnly);
+    for (TagFamilyWidget *fw : existing)
+        collapsed_state_.insert(fw->getTagFamily()->getName(), fw->isCollapsed());
+
     clear();
 
     // Insert all tags in the incoming set, resolving into families
@@ -69,6 +75,15 @@ void TagContainer::refresh(QSet<Tag*>* tags){
             w->refreshMinimumHeight();
         }
     }
+    // Restore collapsed state for newly created widgets.
+    const QList<TagFamilyWidget*> created =
+        findChildren<TagFamilyWidget*>(QString(), Qt::FindDirectChildrenOnly);
+    for (TagFamilyWidget *fw : created) {
+        const QString name = fw->getTagFamily()->getName();
+        if (collapsed_state_.contains(name))
+            fw->setCollapsed(collapsed_state_.value(name));
+    }
+
     this->sort();
 }
 

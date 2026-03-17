@@ -362,6 +362,12 @@ void TagFamilyWidget::refreshMinimumHeight()
     updateGeometry();
 }
 
+/*! \brief Returns true if the widget is currently collapsed. */
+bool TagFamilyWidget::isCollapsed() const
+{
+    return collapsed_;
+}
+
 /*! \brief Returns the minimum size as the size hint.
  *
  * \return The size hint.

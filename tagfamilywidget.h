@@ -105,6 +105,9 @@ public:
      */
     TagFamily* getTagFamily() const;
 
+    /*! \brief Returns true if the widget is currently collapsed. */
+    bool isCollapsed() const;
+
     /*! \brief Sorts the child TagWidget items alphabetically by tag name. */
     void sort();
 
