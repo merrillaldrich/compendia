@@ -751,6 +751,7 @@ void FaceRecognizer::startBackgroundSweep(
 
                 // Match faces against known embeddings.
                 QVector<FaceTagAssignment> assignments;
+                QVector<KnownFaceCacheEntry> newKnownEntries; // user-named matches to persist
                 int autoFacesThisImage = 0;
 
                 for (const auto &[rect, embedding] : faces) {
@@ -776,6 +777,14 @@ void FaceRecognizer::startBackgroundSweep(
 
                     if (isUserNamedMatch) {
                         assignments.append({bestFamily, bestName, rect});
+                        // Accumulate for known-face cache so Phase 1 of the next
+                        // sweep finds a hit instead of recomputing this embedding.
+                        KnownFaceCacheEntry e;
+                        e.tagFamily = bestFamily;
+                        e.tagName   = bestName;
+                        e.rect      = rect;
+                        e.embedding = embedding;
+                        newKnownEntries.append(e);
                     } else {
                         if (autoFacesThisImage >= Luminism::MaxAutoFacesPerImage)
                             continue;
@@ -801,6 +810,27 @@ void FaceRecognizer::startBackgroundSweep(
                         }
                         ++autoFacesThisImage;
                     }
+                }
+
+                // Persist user-named sweep matches to the known-face cache so
+                // Phase 1 of the next sweep finds hits for these files.
+                if (!newKnownEntries.isEmpty()) {
+                    auto existing = FaceRecognizer::loadKnownFaceCache(imagePath);
+                    QVector<KnownFaceCacheEntry> updatedKnown =
+                        existing.has_value() ? *existing : QVector<KnownFaceCacheEntry>{};
+                    for (const KnownFaceCacheEntry &e : newKnownEntries) {
+                        const bool already = std::any_of(
+                            updatedKnown.cbegin(), updatedKnown.cend(),
+                            [&e](const KnownFaceCacheEntry &k) {
+                                return k.tagFamily == e.tagFamily
+                                    && k.tagName   == e.tagName
+                                    && k.rect      == e.rect;
+                            });
+                        if (!already)
+                            updatedKnown.append(e);
+                    }
+                    qDebug() << "[FaceRecognizer] saving known-face cache (sweep match):" << QFileInfo(imagePath).fileName();
+                    FaceRecognizer::saveKnownFaceCache(imagePath, updatedKnown);
                 }
 
                 // Deliver result to main thread
