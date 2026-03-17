@@ -9,5 +9,6 @@ var constants_8h =
     [ "Luminism::FaceMatchThreshold", "namespace_luminism.html#a54ac3f84488dccc1af8a46adc2a475de", null ],
     [ "Luminism::KnownFaceCacheSuffix", "namespace_luminism.html#ada5d2a6921fbc6915e39564cf86b8d64", null ],
     [ "Luminism::MaxAutoFacesPerImage", "namespace_luminism.html#af101d8fd33431950321b42069ff16570", null ],
+    [ "Luminism::RectWarmupDelayMs", "namespace_luminism.html#a6a4be66e54e7e469af993b18919bcaec", null ],
     [ "Luminism::SimilarImageThreshold", "namespace_luminism.html#aa1a8c4da3becacf313e6e153ba5a2f1e", null ]
 ];

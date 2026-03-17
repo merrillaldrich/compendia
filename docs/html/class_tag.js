@@ -9,5 +9,6 @@ var class_tag =
     [ "nameChanged", "class_tag.html#a1529679fece67dd8a8cd704aeb703e4d", null ],
     [ "operator==", "class_tag.html#ac573654c99464b6f22d53af4cd12be8c", null ],
     [ "setName", "class_tag.html#a1cef34da4131dc5bd8bcc0869b22a492", null ],
+    [ "setTagFamily", "class_tag.html#a6ae53bf10b6511e4373f6c38ddc38976", null ],
     [ "tagFamily", "class_tag.html#a28ce045081340c85313dde649630f0aa", null ]
 ];

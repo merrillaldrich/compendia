@@ -130,6 +130,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae98d00a93bc118200eeef9f9bba1dba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the main window and releases owned UI and core resources.  <br /></td></tr>
 <tr class="memitem:a385141ecb8e37eceb78cb64f68a4c706" id="r_a385141ecb8e37eceb78cb64f68a4c706"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a385141ecb8e37eceb78cb64f68a4c706">setRootFolder</a> ()</td></tr>
 <tr class="memdesc:a385141ecb8e37eceb78cb64f68a4c706"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a folder-picker dialog and loads the selected folder into core.  <br /></td></tr>
+<tr class="memitem:a5462e6afbcba2e363e598347a9ed9432" id="r_a5462e6afbcba2e363e598347a9ed9432"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5462e6afbcba2e363e598347a9ed9432">onTagRefamilyRequested</a> (<a class="el" href="class_tag.html">Tag</a> *tag, <a class="el" href="class_tag_family.html">TagFamily</a> *newFamily)</td></tr>
+<tr class="memdesc:a5462e6afbcba2e363e598347a9ed9432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prompts for confirmation then moves <em class="arg">tag</em> to <em class="arg">newFamily</em> via core-&gt;refamilyTag().  <br /></td></tr>
 <tr class="memitem:a61753721c377d394196e2240f42fd130" id="r_a61753721c377d394196e2240f42fd130"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61753721c377d394196e2240f42fd130">updateFileCountLabel</a> ()</td></tr>
 <tr class="memdesc:a61753721c377d394196e2240f42fd130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the file-count label to show visible vs. total file counts.  <br /></td></tr>
 <tr class="memitem:a2d43721963df0ad1356a4c6162882a37" id="r_a2d43721963df0ad1356a4c6162882a37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d43721963df0ad1356a4c6162882a37">updateFolderStatsLabel</a> ()</td></tr>
@@ -296,6 +298,29 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Refreshes the preview pane to reflect the current viewport size. </p>
+
+</div>
+</div>
+<a id="a5462e6afbcba2e363e598347a9ed9432" name="a5462e6afbcba2e363e598347a9ed9432"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5462e6afbcba2e363e598347a9ed9432">&#9670;&#160;</a></span>onTagRefamilyRequested()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::onTagRefamilyRequested </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_tag_family.html">TagFamily</a> *</td>          <td class="paramname"><span class="paramname"><em>newFamily</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prompts for confirmation then moves <em class="arg">tag</em> to <em class="arg">newFamily</em> via core-&gt;refamilyTag(). </p>
 
 </div>
 </div>

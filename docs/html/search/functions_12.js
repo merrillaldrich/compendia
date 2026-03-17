@@ -25,9 +25,10 @@ var searchData=
   ['tagrectdeleterequested_22',['tagRectDeleteRequested',['../class_preview_container.html#ac96d378fa00c9adcc27a71c6a517fd15',1,'PreviewContainer']]],
   ['tagrectitem_23',['TagRectItem',['../class_tag_rect_item.html#ad5e5ec55af3f680fa6d3f0f0d099c6e8',1,'TagRectItem']]],
   ['tagrectresized_24',['tagRectResized',['../class_preview_container.html#ae205391efc82ff2116c158fe96668005',1,'PreviewContainer']]],
-  ['tags_25',['tags',['../class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a',1,'TaggedFile']]],
-  ['tagset_26',['TagSet',['../class_tag_set.html#a2f80becb68dc589245d1035cbcdd5f2c',1,'TagSet::TagSet(QString tfn, QString tn)'],['../class_tag_set.html#ad9af47e743803e72b8b84194358732b6',1,'TagSet::TagSet(QString tfn, QString tn, QRectF rect)']]],
-  ['tagwidget_27',['TagWidget',['../class_tag_widget.html#a50de81724fb26ba24274b5fac5279867',1,'TagWidget::TagWidget(QWidget *parent=nullptr)'],['../class_tag_widget.html#af0dfbb7badba109187359087285c99e8',1,'TagWidget::TagWidget(Tag *tag, QWidget *parent)']]],
-  ['tagwidgetclosebutton_28',['TagWidgetCloseButton',['../class_tag_widget_close_button.html#a42eee9be5756ad63e9c540db235fb5ad',1,'TagWidgetCloseButton']]],
-  ['takeat_29',['takeAt',['../class_flow_layout.html#a77bbbcb308aeb94164dc365942d28f06',1,'FlowLayout']]]
+  ['tagrefamilyrequested_25',['tagRefamilyRequested',['../class_tag_family_widget.html#ae89b9c9a0c42ce9dff7d42be460198bf',1,'TagFamilyWidget']]],
+  ['tags_26',['tags',['../class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a',1,'TaggedFile']]],
+  ['tagset_27',['TagSet',['../class_tag_set.html#a2f80becb68dc589245d1035cbcdd5f2c',1,'TagSet::TagSet(QString tfn, QString tn)'],['../class_tag_set.html#ad9af47e743803e72b8b84194358732b6',1,'TagSet::TagSet(QString tfn, QString tn, QRectF rect)']]],
+  ['tagwidget_28',['TagWidget',['../class_tag_widget.html#a50de81724fb26ba24274b5fac5279867',1,'TagWidget::TagWidget(QWidget *parent=nullptr)'],['../class_tag_widget.html#af0dfbb7badba109187359087285c99e8',1,'TagWidget::TagWidget(Tag *tag, QWidget *parent)']]],
+  ['tagwidgetclosebutton_29',['TagWidgetCloseButton',['../class_tag_widget_close_button.html#a42eee9be5756ad63e9c540db235fb5ad',1,'TagWidgetCloseButton']]],
+  ['takeat_30',['takeAt',['../class_flow_layout.html#a77bbbcb308aeb94164dc365942d28f06',1,'FlowLayout']]]
 ];

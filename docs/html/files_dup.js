@@ -9,7 +9,7 @@ var files_dup =
     [ "exifparser.h", "exifparser_8h.html", "exifparser_8h" ],
     [ "facerecognitionsettingsdialog.cpp", "facerecognitionsettingsdialog_8cpp.html", null ],
     [ "facerecognitionsettingsdialog.h", "facerecognitionsettingsdialog_8h.html", "facerecognitionsettingsdialog_8h" ],
-    [ "facerecognizer.cpp", "facerecognizer_8cpp.html", null ],
+    [ "facerecognizer.cpp", "facerecognizer_8cpp.html", "facerecognizer_8cpp" ],
     [ "facerecognizer.h", "facerecognizer_8h.html", "facerecognizer_8h" ],
     [ "filenamedelegate.cpp", "filenamedelegate_8cpp.html", null ],
     [ "filenamedelegate.h", "filenamedelegate_8h.html", "filenamedelegate_8h" ],

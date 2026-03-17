@@ -2,6 +2,9 @@ var facerecognizer_8h =
 [
     [ "FaceDescriptor", "struct_face_descriptor.html", "struct_face_descriptor" ],
     [ "KnownFaceCacheEntry", "struct_known_face_cache_entry.html", "struct_known_face_cache_entry" ],
+    [ "PromotionEntry", "struct_promotion_entry.html", "struct_promotion_entry" ],
+    [ "FaceTagAssignment", "struct_face_tag_assignment.html", "struct_face_tag_assignment" ],
+    [ "Phase1FileInput", "struct_phase1_file_input.html", "struct_phase1_file_input" ],
     [ "FaceRecognizer", "class_face_recognizer.html", "class_face_recognizer" ],
     [ "FaceNet::alevel0", "namespace_face_net.html#a706d19a440086ca847bbd346cad1239c", null ],
     [ "FaceNet::alevel1", "namespace_face_net.html#a2ddb2dd980e78cdf50667c6f3b0c92d3", null ],

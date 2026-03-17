@@ -118,6 +118,8 @@ Variables</h2></td></tr>
 <tr class="memdesc:a3420cc6284d7b51f79b0d60a3c215fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum number of affected files that triggers a confirmation dialog before removing a tag via the assignment-area close button.  <br /></td></tr>
 <tr class="memitem:aa1a8c4da3becacf313e6e153ba5a2f1e" id="r_aa1a8c4da3becacf313e6e153ba5a2f1e"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1a8c4da3becacf313e6e153ba5a2f1e">SimilarImageThreshold</a> = 10</td></tr>
 <tr class="memdesc:aa1a8c4da3becacf313e6e153ba5a2f1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum Hamming distance between two pHash values for the images to be considered near-duplicates by the "Find Similar Images" feature.  <br /></td></tr>
+<tr class="memitem:a6a4be66e54e7e469af993b18919bcaec" id="r_a6a4be66e54e7e469af993b18919bcaec"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a4be66e54e7e469af993b18919bcaec">RectWarmupDelayMs</a> = 3000</td></tr>
+<tr class="memdesc:a6a4be66e54e7e469af993b18919bcaec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Milliseconds of idle time after the last rect adjustment before the background face-cache warmup is triggered.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Project-wide compile-time constants for <a class="el" href="namespace_luminism.html" title="Project-wide compile-time constants for Luminism.">Luminism</a>. </p>
@@ -338,6 +340,31 @@ Variables</h2></td></tr>
 
 <p>Maximum number of auto-detected faces tagged per image during a recognition sweep. </p>
 <p>Prevents crowd or large-group photos from flooding the library with dozens of auto-generated tags that the user is unlikely to label or care about. </p>
+
+</div>
+</div>
+<a id="a6a4be66e54e7e469af993b18919bcaec" name="a6a4be66e54e7e469af993b18919bcaec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a4be66e54e7e469af993b18919bcaec">&#9670;&#160;</a></span>RectWarmupDelayMs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Luminism::RectWarmupDelayMs = 3000</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Milliseconds of idle time after the last rect adjustment before the background face-cache warmup is triggered. </p>
+<p>Increase to give the user more time to adjust before the expensive inference starts; decrease for faster cache warming at the cost of potentially warming an intermediate rect. </p>
 
 </div>
 </div>

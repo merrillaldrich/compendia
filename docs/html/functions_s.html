@@ -99,11 +99,12 @@ $(function(){initNavTree('functions_s.html','',''); });
 <li>scanProgress()&#160;:&#160;<a class="el" href="class_luminism_core.html#a1661b64ee3e9db255a1a013a7f0d11ef">LuminismCore</a></li>
 <li>scanStarted()&#160;:&#160;<a class="el" href="class_luminism_core.html#a19f451cbf39a2ca3723abeac74481f91">LuminismCore</a></li>
 <li>scheduleEmbeddingWarmup()&#160;:&#160;<a class="el" href="class_face_recognizer.html#ac0738fc4c42135feb10e272dd4f89569">FaceRecognizer</a></li>
+<li>scheduleRectAdjustWarmup()&#160;:&#160;<a class="el" href="class_face_recognizer.html#afe18f4d0a45e509a414594b541500fff">FaceRecognizer</a></li>
 <li>setAcceptsClickToDismiss()&#160;:&#160;<a class="el" href="class_welcome_hint_container.html#a818e50744782abbf249304c9d3b1b24a">WelcomeHintContainer</a></li>
 <li>setAcceptsDropToDismiss()&#160;:&#160;<a class="el" href="class_welcome_hint_container.html#a4e83a58c95accf529e95158ab741fd3a">WelcomeHintContainer</a></li>
 <li>setAvailableDates()&#160;:&#160;<a class="el" href="class_date_filter_button.html#acdaed2a38153cd8b5e9b1e03b17f5d17">DateFilterButton</a></li>
 <li>setAvailablePaths()&#160;:&#160;<a class="el" href="class_folder_filter_line_edit.html#a1ab6d5150cba025a7ac1dcdea160ed11">FolderFilterLineEdit</a></li>
-<li>setCollapsed()&#160;:&#160;<a class="el" href="class_tag_family_widget_collapse_button.html#a6d835bdf4866c78f4f6f4207d5e77615">TagFamilyWidgetCollapseButton</a></li>
+<li>setCollapsed()&#160;:&#160;<a class="el" href="class_tag_family_widget.html#a7f8d6c17c0fba286e7217c3849664910">TagFamilyWidget</a>, <a class="el" href="class_tag_family_widget_collapse_button.html#a6d835bdf4866c78f4f6f4207d5e77615">TagFamilyWidgetCollapseButton</a></li>
 <li>setCreationDateFilter()&#160;:&#160;<a class="el" href="class_luminism_core.html#a169832b2d5b262502ac4bcac2567c97a">LuminismCore</a></li>
 <li>setCycleInterval()&#160;:&#160;<a class="el" href="class_multi_progress_bar.html#a3783d556085b8f7d589adfe8f0f82579">MultiProgressBar</a></li>
 <li>setDetectionThreshold()&#160;:&#160;<a class="el" href="class_face_recognizer.html#aa32e54c077a1e0bc2435514e6dc8b06f">FaceRecognizer</a></li>
@@ -116,6 +117,7 @@ $(function(){initNavTree('functions_s.html','',''); });
 <li>setIsolationSet()&#160;:&#160;<a class="el" href="class_filter_proxy_model.html#a39fd20983b714a78a31d43cfe3816821">FilterProxyModel</a>, <a class="el" href="class_luminism_core.html#ad816f9d8fc51fd9123e339052ddf63e8">LuminismCore</a></li>
 <li>setLabel()&#160;:&#160;<a class="el" href="class_multi_progress_bar.html#a894f01270203561f4c4bf9664fcb193f">MultiProgressBar</a></li>
 <li>setMatchThreshold()&#160;:&#160;<a class="el" href="class_face_recognizer.html#a3d554eeb9650c24614f5faa1880d1485">FaceRecognizer</a></li>
+<li>setMaxWorkers()&#160;:&#160;<a class="el" href="class_face_recognizer.html#aee68136481c70d077042850bc2574ea4">FaceRecognizer</a></li>
 <li>setMuted()&#160;:&#160;<a class="el" href="class_speaker_button.html#a891f96cffb703a3400ffbdae2d98c66b">SpeakerButton</a></li>
 <li>setName()&#160;:&#160;<a class="el" href="class_tag.html#a1cef34da4131dc5bd8bcc0869b22a492">Tag</a>, <a class="el" href="class_tag_family.html#a8cb81c8dd65532fcf6552960fd515608">TagFamily</a></li>
 <li>setNameFilter()&#160;:&#160;<a class="el" href="class_filter_proxy_model.html#a4d7c210bd3074ee125fbb2770a5db80b">FilterProxyModel</a></li>
@@ -127,6 +129,7 @@ $(function(){initNavTree('functions_s.html','',''); });
 <li>setRootDirectory()&#160;:&#160;<a class="el" href="class_luminism_core.html#a5ee748e28577573181f5a442a71e2f29">LuminismCore</a></li>
 <li>setRootFolder()&#160;:&#160;<a class="el" href="class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706">MainWindow</a></li>
 <li>setSeekMs()&#160;:&#160;<a class="el" href="class_frame_grabber.html#a2b7ca67780ab66db4cd214dcf08fd587">FrameGrabber</a></li>
+<li>setTagFamily()&#160;:&#160;<a class="el" href="class_tag.html#a6ae53bf10b6511e4373f6c38ddc38976">Tag</a></li>
 <li>setTagFilterMode()&#160;:&#160;<a class="el" href="class_filter_proxy_model.html#af353110d9d103a55032c1c7736415ab6">FilterProxyModel</a></li>
 <li>setTagRect()&#160;:&#160;<a class="el" href="class_tagged_file.html#ae9de78c171110ad722a7362aee49415f">TaggedFile</a></li>
 <li>setTagRects()&#160;:&#160;<a class="el" href="class_preview_container.html#abaa45697498056c6aeadc2d4175a83a6">PreviewContainer</a></li>
@@ -137,9 +140,14 @@ $(function(){initNavTree('functions_s.html','',''); });
 <li>sort()&#160;:&#160;<a class="el" href="class_tag_container.html#a702b14de4154b65fabee32cd7fbc1c7a">TagContainer</a>, <a class="el" href="class_tag_family_widget.html#a836ad04e06566ec7876ebe1c4c53dff0">TagFamilyWidget</a></li>
 <li>SpeakerButton()&#160;:&#160;<a class="el" href="class_speaker_button.html#aa7ec823f12e7ecc7f50e2b578452b4c5">SpeakerButton</a></li>
 <li>StarRatingWidget()&#160;:&#160;<a class="el" href="class_star_rating_widget.html#ac80fb86f6db108a11647ba97cbcc6d8a">StarRatingWidget</a></li>
+<li>startBackgroundSweep()&#160;:&#160;<a class="el" href="class_face_recognizer.html#a0eea056b689b044408f556bb760f4eae">FaceRecognizer</a></li>
 <li>startEdit()&#160;:&#160;<a class="el" href="class_tag_family_widget.html#a0362dccefca972b3bb87a8cb41a37104">TagFamilyWidget</a>, <a class="el" href="class_tag_widget.html#a7599b830727af6e05d0e40be447f1342">TagWidget</a></li>
 <li>startProcess()&#160;:&#160;<a class="el" href="class_multi_progress_bar.html#a884488b73725a0752e59c31d780cdaac">MultiProgressBar</a></li>
+<li>sweepCancelled()&#160;:&#160;<a class="el" href="class_face_recognizer.html#ac6277a58761d9e07e69c9d592e456ee4">FaceRecognizer</a></li>
+<li>sweepFileResult()&#160;:&#160;<a class="el" href="class_face_recognizer.html#ad95186dadf12b915ec8f81ba54573867">FaceRecognizer</a></li>
+<li>sweepFinished()&#160;:&#160;<a class="el" href="class_face_recognizer.html#a88080ba1121a38107da5b0983fa32237">FaceRecognizer</a></li>
 <li>sweepProgress()&#160;:&#160;<a class="el" href="class_face_recognizer.html#a975df2b1838fd7e6e3e6631b9ae70bec">FaceRecognizer</a></li>
+<li>sweepStarted()&#160;:&#160;<a class="el" href="class_face_recognizer.html#ad37cce5bd1cce7b07087f8c407178d4b">FaceRecognizer</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

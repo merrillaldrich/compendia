@@ -6,6 +6,7 @@ var class_main_window =
     [ "closeEvent", "class_main_window.html#a05fb9d72c044aa3bb7d187b994704e2f", null ],
     [ "connectFileCountLabel", "class_main_window.html#a5922ea5b8d1a4ddb7ac1667feedb97e9", null ],
     [ "freshenPreview", "class_main_window.html#a2b165548de96b2ce566501f01078e6cb", null ],
+    [ "onTagRefamilyRequested", "class_main_window.html#a5462e6afbcba2e363e598347a9ed9432", null ],
     [ "refreshNavTagLibrary", "class_main_window.html#aca5c9eb33d047612d55528a0abfd7d05", null ],
     [ "refreshTagAssignmentArea", "class_main_window.html#a3d32035c5a2e69fdb73b66bab8e62ca8", null ],
     [ "refreshTagFilterArea", "class_main_window.html#ac5901d3d7006ac0f0114162453bff817", null ],

@@ -1,3 +1,21 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$struct_scan_item.html" title="Holds the per&#45;file data produced during a background directory scan." alt="" coords="5,5,83,32"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,208,75,235"/>
+<area shape="rect" id="Node000001" href="$class_exif_parser.html" title="Utility class for extracting EXIF metadata from JPEG and HEIF/HEIC image files." alt="" coords="140,5,222,32"/>
+<area shape="poly" id="edge13_Node000000_Node000001" title=" " alt="" coords="45,192,70,119,92,78,121,42,141,30,138,34,125,46,97,81,75,121,50,194"/>
+<area shape="rect" id="Node000002" href="$class_face_recognizer.html" title="Detects and recognises faces across images using dlib&#39;s HOG detector and ResNet embeddings." alt="" coords="123,56,239,83"/>
+<area shape="poly" id="edge14_Node000000_Node000002" title=" " alt="" coords="51,193,79,143,98,116,121,93,142,81,139,85,124,97,102,120,83,145,56,195"/>
+<area shape="rect" id="Node000003" href="$class_folder_scanner.html" title="Background worker that recursively scans a directory for media files." alt="" coords="128,107,234,133"/>
+<area shape="poly" id="edge15_Node000000_Node000003" title=" " alt="" coords="61,195,89,168,121,143,145,132,142,136,124,148,92,172,66,198"/>
+<area shape="rect" id="Node000004" href="$class_frame_grabber.html" title="Captures a representative frame from each video file in a batch." alt="" coords="129,157,233,184"/>
+<area shape="poly" id="edge16_Node000000_Node000004" title=" " alt="" coords="88,202,143,182,140,187,91,206"/>
+<area shape="rect" id="Node000005" href="$class_icon_generator.html" title="Generates and caches scaled thumbnail images for media files (images and videos)." alt="" coords="129,208,232,235"/>
+<area shape="poly" id="edge17_Node000000_Node000005" title=" " alt="" coords="89,219,131,220,127,223,91,224"/>
+<area shape="rect" id="Node000006" href="$class_luminism_core.html" title="Central controller that owns all application data and business logic." alt="" coords="128,259,234,285"/>
+<area shape="poly" id="edge18_Node000000_Node000006" title=" " alt="" coords="89,236,144,257,139,259,90,242"/>
+<area shape="rect" id="Node000007" href="$class_tag.html" title="Represents a single tag that can be applied to media files." alt="" coords="160,309,202,336"/>
+<area shape="poly" id="edge19_Node000000_Node000007" title=" " alt="" coords="63,243,92,270,124,295,162,315,157,316,121,300,89,274,64,249"/>
+<area shape="rect" id="Node000008" href="$class_tag_family.html" title="Represents a named group of related tags, each with an auto&#45;assigned colour." alt="" coords="140,360,222,387"/>
+<area shape="poly" id="edge20_Node000000_Node000008" title=" " alt="" coords="54,246,83,297,102,323,124,346,143,359,138,360,121,350,98,327,79,300,53,251"/>
+<area shape="rect" id="Node000009" href="$class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism." alt="" coords="139,411,223,437"/>
+<area shape="poly" id="edge21_Node000000_Node000009" title=" " alt="" coords="49,247,75,322,97,362,125,397,141,410,136,410,121,401,92,364,70,324,47,252"/>
 </map>

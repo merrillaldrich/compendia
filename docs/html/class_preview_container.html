@@ -142,7 +142,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a10cdd4a21c08f38fab99b28bdcc5fc83" id="r_a10cdd4a21c08f38fab99b28bdcc5fc83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10cdd4a21c08f38fab99b28bdcc5fc83">preview</a> (QString absoluteFilePath)</td></tr>
 <tr class="memdesc:a10cdd4a21c08f38fab99b28bdcc5fc83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads and displays the image at the given absolute file path.  <br /></td></tr>
 <tr class="memitem:a39a08a4a1b9d935018c37b5b1788a11c" id="r_a39a08a4a1b9d935018c37b5b1788a11c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39a08a4a1b9d935018c37b5b1788a11c">freshen</a> ()</td></tr>
-<tr class="memdesc:a39a08a4a1b9d935018c37b5b1788a11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-fits the displayed image to the viewport if it has not been zoomed in.  <br /></td></tr>
+<tr class="memdesc:a39a08a4a1b9d935018c37b5b1788a11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-fits the displayed content to the viewport.  <br /></td></tr>
 <tr class="memitem:af820d1ea99343d488aa4b47203bb8521" id="r_af820d1ea99343d488aa4b47203bb8521"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af820d1ea99343d488aa4b47203bb8521">clear</a> ()</td></tr>
 <tr class="memdesc:af820d1ea99343d488aa4b47203bb8521"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the graphics scene, removing any displayed image.  <br /></td></tr>
 <tr class="memitem:abaa45697498056c6aeadc2d4175a83a6" id="r_abaa45697498056c6aeadc2d4175a83a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abaa45697498056c6aeadc2d4175a83a6">setTagRects</a> (const QList&lt; <a class="el" href="struct_tag_rect_descriptor.html">TagRectDescriptor</a> &gt; &amp;rects)</td></tr>
@@ -163,7 +163,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Widget that displays a full-size image preview inside a zoomable graphics view. </p>
-<p>Wraps a <a class="el" href="class_zoomable_graphics_view.html" title="A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.">ZoomableGraphicsView</a> and a QGraphicsScene. The preview can be loaded from a file path or directly from a QImage. The <a class="el" href="#a39a08a4a1b9d935018c37b5b1788a11c" title="Re-fits the displayed image to the viewport if it has not been zoomed in.">freshen()</a> method re-fits the image to the viewport when the containing pane is resized. </p>
+<p>Wraps a <a class="el" href="class_zoomable_graphics_view.html" title="A QGraphicsView subclass that supports mouse-wheel zoom centred on the cursor.">ZoomableGraphicsView</a> and a QGraphicsScene. The preview can be loaded from a file path or directly from a QImage. The <a class="el" href="#a39a08a4a1b9d935018c37b5b1788a11c" title="Re-fits the displayed content to the viewport.">freshen()</a> method re-fits the image to the viewport when the containing pane is resized. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af9dab801b59a13dfbecf87cde477c908" name="af9dab801b59a13dfbecf87cde477c908"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af9dab801b59a13dfbecf87cde477c908">&#9670;&#160;</a></span>PreviewContainer()</h2>
@@ -283,8 +283,8 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Re-fits the displayed image to the viewport if it has not been zoomed in. </p>
-<p>Re-fits the displayed content to the viewport.</p>
+<p>Re-fits the displayed content to the viewport. </p>
+<p>For video, always re-fits the item to fill the pane. For images, only re-fits when the image has not been zoomed in by the user.</p>
 <p>For video, always re-fits so the playback fills the pane at any size. For images, only re-fits when the image has not been zoomed in by the user. </p>
 
 </div>

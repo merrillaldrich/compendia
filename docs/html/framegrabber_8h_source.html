@@ -144,13 +144,13 @@ $(function(){initNavTree('framegrabber_8h_source.html','',''); });
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">void</span> finishCurrentFile(<span class="keywordtype">bool</span> success, <span class="keyword">const</span> QString &amp;reason = {});</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    qint64        seekMs_       = 2000;   </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    QMediaPlayer *player_       = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    QVideoSink   *sink_         = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    QTimer       *timeout_      = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    QStringList   paths_;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordtype">int</span>           currentIndex_ = 0;</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordtype">int</span>           successCount_ = 0;</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordtype">int</span>           failCount_    = 0;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    QMediaPlayer *player_       = <span class="keyword">nullptr</span>; </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    QVideoSink   *sink_         = <span class="keyword">nullptr</span>; </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    QTimer       *timeout_      = <span class="keyword">nullptr</span>; </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    QStringList   paths_;                  </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordtype">int</span>           currentIndex_ = 0;       </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordtype">int</span>           successCount_ = 0;       </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordtype">int</span>           failCount_    = 0;       </div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordtype">bool</span>          processing_   = <span class="keyword">false</span>;  </div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    QImage        currentFrame_;          </div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    QMap&lt;QString, QString&gt; currentMeta_;  </div>

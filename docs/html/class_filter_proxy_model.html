@@ -573,18 +573,10 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the rating filter and re-applies the filter. </p>
-<p>Restricts the visible set to the given files; other filters still apply within the set.</p>
 <p>Only files whose rating exactly matches <code class="param">rating</code> will pass. Pass std::nullopt to clear the rating filter.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rating</td><td>The rating to filter for [1,5], or std::nullopt to disable.</td></tr>
-    <tr><td class="paramname">files</td><td>The set of <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> pointers to isolate.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Sets the rating filter and re-applies the filter.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
     <tr><td class="paramname">rating</td><td>The rating to filter for [1,5], or std::nullopt to disable. </td></tr>
   </table>
   </dd>

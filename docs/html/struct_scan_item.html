@@ -101,10 +101,13 @@ $(function(){initNavTree('struct_scan_item.html','','struct_scan_item-members');
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a5d57cd445c05b099f5166427ad6b3712" id="r_a5d57cd445c05b099f5166427ad6b3712"><td class="memItemLeft" align="right" valign="top">QFileInfo&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d57cd445c05b099f5166427ad6b3712">fileInfo</a></td></tr>
+<tr class="memdesc:a5d57cd445c05b099f5166427ad6b3712"><td class="mdescLeft">&#160;</td><td class="mdescRight">File-system information for the scanned file.  <br /></td></tr>
 <tr class="memitem:a2376d48ecd6c984222722cc992cb444f" id="r_a2376d48ecd6c984222722cc992cb444f"><td class="memItemLeft" align="right" valign="top">QJsonObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2376d48ecd6c984222722cc992cb444f">tagsJson</a></td></tr>
 <tr class="memdesc:a2376d48ecd6c984222722cc992cb444f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsed sidecar JSON; empty when hasJson is false.  <br /></td></tr>
 <tr class="memitem:a60a4d6fbeeb5e7ea0ee68b38094a56bb" id="r_a60a4d6fbeeb5e7ea0ee68b38094a56bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a60a4d6fbeeb5e7ea0ee68b38094a56bb">hasJson</a> = false</td></tr>
+<tr class="memdesc:a60a4d6fbeeb5e7ea0ee68b38094a56bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">True when a valid sidecar JSON file was found.  <br /></td></tr>
 <tr class="memitem:a4a8b4310f8de1e1ac218cd0ef5f5b25b" id="r_a4a8b4310f8de1e1ac218cd0ef5f5b25b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a8b4310f8de1e1ac218cd0ef5f5b25b">hasCachedIcon</a> = false</td></tr>
+<tr class="memdesc:a4a8b4310f8de1e1ac218cd0ef5f5b25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">True when all icon cache files are valid; file can skip <a class="el" href="class_icon_generator.html" title="Generates and caches scaled thumbnail images for media files (images and videos).">IconGenerator</a>.  <br /></td></tr>
 <tr class="memitem:a498e0ccbc9d6f2c718e1f9ec8a409501" id="r_a498e0ccbc9d6f2c718e1f9ec8a409501"><td class="memItemLeft" align="right" valign="top">QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a498e0ccbc9d6f2c718e1f9ec8a409501">cachedExif</a></td></tr>
 <tr class="memdesc:a498e0ccbc9d6f2c718e1f9ec8a409501"><td class="mdescLeft">&#160;</td><td class="mdescRight">EXIF extracted from the source file; empty on cache miss.  <br /></td></tr>
 </table>
@@ -139,6 +142,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>File-system information for the scanned file. </p>
+
 </div>
 </div>
 <a id="a4a8b4310f8de1e1ac218cd0ef5f5b25b" name="a4a8b4310f8de1e1ac218cd0ef5f5b25b"></a>
@@ -153,6 +158,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>True when all icon cache files are valid; file can skip <a class="el" href="class_icon_generator.html" title="Generates and caches scaled thumbnail images for media files (images and videos).">IconGenerator</a>. </p>
+
 </div>
 </div>
 <a id="a60a4d6fbeeb5e7ea0ee68b38094a56bb" name="a60a4d6fbeeb5e7ea0ee68b38094a56bb"></a>
@@ -166,6 +173,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>True when a valid sidecar JSON file was found. </p>
 
 </div>
 </div>

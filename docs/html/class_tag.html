@@ -142,6 +142,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ab2d86fa37c8ac50944da981561a0d372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the dirty flag to force the tag to be treated as modified.  <br /></td></tr>
 <tr class="memitem:ae09ed0e850e3a92547b0701f190edd97" id="r_ae09ed0e850e3a92547b0701f190edd97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae09ed0e850e3a92547b0701f190edd97">clearDirtyFlag</a> ()</td></tr>
 <tr class="memdesc:ae09ed0e850e3a92547b0701f190edd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the dirty flag after changes have been persisted.  <br /></td></tr>
+<tr class="memitem:a6ae53bf10b6511e4373f6c38ddc38976" id="r_a6ae53bf10b6511e4373f6c38ddc38976"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ae53bf10b6511e4373f6c38ddc38976">setTagFamily</a> (<a class="el" href="class_tag_family.html">TagFamily</a> *family)</td></tr>
+<tr class="memdesc:a6ae53bf10b6511e4373f6c38ddc38976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the owning tag family and marks the dirty flag.  <br /></td></tr>
 <tr class="memitem:ac573654c99464b6f22d53af4cd12be8c" id="r_ac573654c99464b6f22d53af4cd12be8c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac573654c99464b6f22d53af4cd12be8c">operator==</a> (const <a class="el" href="class_tag.html">Tag</a> &amp;other) const</td></tr>
 <tr class="memdesc:ac573654c99464b6f22d53af4cd12be8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality operator comparing tag name and family name.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -374,6 +376,31 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tagName</td><td>The new name for this tag. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6ae53bf10b6511e4373f6c38ddc38976" name="a6ae53bf10b6511e4373f6c38ddc38976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ae53bf10b6511e4373f6c38ddc38976">&#9670;&#160;</a></span>setTagFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Tag::setTagFamily </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag_family.html">TagFamily</a> *</td>          <td class="paramname"><span class="paramname"><em>family</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the owning tag family and marks the dirty flag. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">family</td><td>The new <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> this tag should belong to. </td></tr>
   </table>
   </dd>
 </dl>

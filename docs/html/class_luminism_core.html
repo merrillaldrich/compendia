@@ -151,6 +151,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3934fffde12ddceb6394a338b76a9021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs <a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a> and initialises empty model and tag-library containers.  <br /></td></tr>
 <tr class="memitem:a5ee748e28577573181f5a442a71e2f29" id="r_a5ee748e28577573181f5a442a71e2f29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ee748e28577573181f5a442a71e2f29">setRootDirectory</a> (QString path)</td></tr>
 <tr class="memdesc:a5ee748e28577573181f5a442a71e2f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the root directory path and immediately loads it.  <br /></td></tr>
+<tr class="memitem:ae60263cb441c01f42b12ab5c05473ccd" id="r_ae60263cb441c01f42b12ab5c05473ccd"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae60263cb441c01f42b12ab5c05473ccd">rootDirectory</a> () const</td></tr>
+<tr class="memdesc:ae60263cb441c01f42b12ab5c05473ccd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the currently loaded root directory path.  <br /></td></tr>
 <tr class="memitem:a984e7ade7ae7db19fac161d593be6b64" id="r_a984e7ade7ae7db19fac161d593be6b64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a984e7ade7ae7db19fac161d593be6b64">cancelIconGeneration</a> ()</td></tr>
 <tr class="memdesc:a984e7ade7ae7db19fac161d593be6b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops in-flight icon generation and discards any queued results.  <br /></td></tr>
 <tr class="memitem:a797e7ab9f7b0c18348eb182c08abb980" id="r_a797e7ab9f7b0c18348eb182c08abb980"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a797e7ab9f7b0c18348eb182c08abb980">loadRootDirectory</a> ()</td></tr>
@@ -253,6 +255,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad45fa14a20458c52ac754b4c4f836901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges <em class="arg">from</em> into <em class="arg">into</em> across all files, then removes and schedules <em class="arg">from</em> for deletion. Emits <a class="el" href="#a86445b2245b56e0441d691dfd4381415" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> when done.  <br /></td></tr>
 <tr class="memitem:aa81cd544a2b00e02a90caa083df8bb11" id="r_aa81cd544a2b00e02a90caa083df8bb11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa81cd544a2b00e02a90caa083df8bb11">mergeTagFamily</a> (<a class="el" href="class_tag_family.html">TagFamily</a> *from, <a class="el" href="class_tag_family.html">TagFamily</a> *into)</td></tr>
 <tr class="memdesc:aa81cd544a2b00e02a90caa083df8bb11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges all tags of family <em class="arg">from</em> into family <em class="arg">into</em>, handling per-tag collisions recursively, then removes and schedules <em class="arg">from</em> for deletion. Emits <a class="el" href="#a86445b2245b56e0441d691dfd4381415" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a>.  <br /></td></tr>
+<tr class="memitem:a945823a0af51ae374466d5efff4fdf0a" id="r_a945823a0af51ae374466d5efff4fdf0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a945823a0af51ae374466d5efff4fdf0a">refamilyTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag, <a class="el" href="class_tag_family.html">TagFamily</a> *newFamily)</td></tr>
+<tr class="memdesc:a945823a0af51ae374466d5efff4fdf0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves <em class="arg">tag</em> to <em class="arg">newFamily</em>, merging with a same-name tag if one already exists. Removes the old family if it becomes empty. Emits <a class="el" href="#a86445b2245b56e0441d691dfd4381415" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a>.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Central controller that owns all application data and business logic. </p>
@@ -1375,6 +1379,29 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a945823a0af51ae374466d5efff4fdf0a" name="a945823a0af51ae374466d5efff4fdf0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a945823a0af51ae374466d5efff4fdf0a">&#9670;&#160;</a></span>refamilyTag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LuminismCore::refamilyTag </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tag.html">Tag</a> *</td>          <td class="paramname"><span class="paramname"><em>tag</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_tag_family.html">TagFamily</a> *</td>          <td class="paramname"><span class="paramname"><em>newFamily</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Moves <em class="arg">tag</em> to <em class="arg">newFamily</em>, merging with a same-name tag if one already exists. Removes the old family if it becomes empty. Emits <a class="el" href="#a86445b2245b56e0441d691dfd4381415" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a>. </p>
+
+</div>
+</div>
 <a id="a262dce81510419436236e8a500917d15" name="a262dce81510419436236e8a500917d15"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a262dce81510419436236e8a500917d15">&#9670;&#160;</a></span>removeAutoDetectedFaceTags()</h2>
 
@@ -1417,6 +1444,33 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ae60263cb441c01f42b12ab5c05473ccd" name="ae60263cb441c01f42b12ab5c05473ccd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae60263cb441c01f42b12ab5c05473ccd">&#9670;&#160;</a></span>rootDirectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString LuminismCore::rootDirectory </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the currently loaded root directory path. </p>
 
 </div>
 </div>

@@ -100,22 +100,47 @@ $(function(){initNavTree('hierarchy.html','',''); });
 <area shape="rect" href="struct_face_descriptor.html" title="A face embedding paired with the Tag it is associated with." alt="" coords="5,5,116,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_1.png" border="0" usemap="#a_known_face_cache_entry" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_1.png" border="0" usemap="#a_face_tag_assignment" loading="lazy" alt=""/>
+<map name="a_face_tag_assignment" id="a_face_tag_assignment">
+<area shape="rect" href="struct_face_tag_assignment.html" title="A pending tag assignment from the background sweep — plain data, no Qt object pointers." alt="" coords="5,5,146,32"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_2.png" border="0" usemap="#a_face_worker_pool" loading="lazy" alt=""/>
+<map name="a_face_worker_pool" id="a_face_worker_pool">
+<area shape="rect" href="struct_face_worker_pool.html" title=" " alt="" coords="5,5,123,32"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_3.png" border="0" usemap="#a_known_face_cache_entry" loading="lazy" alt=""/>
 <map name="a_known_face_cache_entry" id="a_known_face_cache_entry">
 <area shape="rect" href="struct_known_face_cache_entry.html" title="One entry in the known&#45;face embedding cache for a single source image." alt="" coords="5,5,165,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_2.png" border="0" usemap="#a_luminism_core_1_1_folder_stats" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_4.png" border="0" usemap="#a_luminism_core_1_1_folder_stats" loading="lazy" alt=""/>
 <map name="a_luminism_core_1_1_folder_stats" id="a_luminism_core_1_1_folder_stats">
 <area shape="rect" href="struct_luminism_core_1_1_folder_stats.html" title="Aggregate statistics about the currently loaded folder." alt="" coords="5,5,186,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_3.png" border="0" usemap="#a_perceptual_hasher" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_5.png" border="0" usemap="#a_pending_descriptor" loading="lazy" alt=""/>
+<map name="a_pending_descriptor" id="a_pending_descriptor">
+<area shape="rect" href="struct_pending_descriptor.html" title=" " alt="" coords="5,5,134,32"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_6.png" border="0" usemap="#a_perceptual_hasher" loading="lazy" alt=""/>
 <map name="a_perceptual_hasher" id="a_perceptual_hasher">
 <area shape="rect" href="class_perceptual_hasher.html" title="Provides perceptual (DCT&#45;based) image hashing." alt="" coords="5,5,131,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_4.png" border="0" usemap="#a_q_abstract_button" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_7.png" border="0" usemap="#a_phase1_file_input" loading="lazy" alt=""/>
+<map name="a_phase1_file_input" id="a_phase1_file_input">
+<area shape="rect" href="struct_phase1_file_input.html" title="Per&#45;file input extracted from TaggedFile* on the main thread before a background sweep." alt="" coords="5,5,121,32"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_8.png" border="0" usemap="#a_promotion_entry" loading="lazy" alt=""/>
+<map name="a_promotion_entry" id="a_promotion_entry">
+<area shape="rect" href="struct_promotion_entry.html" title="One entry for the descriptor→known&#45;face promotion pass." alt="" coords="5,5,117,32"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_9.png" border="0" usemap="#a_q_abstract_button" loading="lazy" alt=""/>
 <map name="a_q_abstract_button" id="a_q_abstract_button">
 <area shape="rect" title=" " alt="" coords="5,31,124,57"/>
 <area shape="rect" href="class_nav_arrow_button.html" title="Circular overlay button that draws a left or right chevron arrow." alt="" coords="172,5,289,32"/>
@@ -124,28 +149,28 @@ $(function(){initNavTree('hierarchy.html','',''); });
 <area shape="poly" title=" " alt="" coords="139,53,179,61,174,61,139,58"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_5.png" border="0" usemap="#a_q_dialog" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_10.png" border="0" usemap="#a_q_dialog" loading="lazy" alt=""/>
 <map name="a_q_dialog" id="a_q_dialog">
 <area shape="rect" title=" " alt="" coords="5,5,74,32"/>
 <area shape="rect" href="class_face_recognition_settings_dialog.html" title="Modal dialog for adjusting face recognition thresholds at runtime." alt="" coords="122,5,326,32"/>
 <area shape="poly" title=" " alt="" coords="89,16,124,18,119,19,90,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_6.png" border="0" usemap="#a_q_graphics_object" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_11.png" border="0" usemap="#a_q_graphics_object" loading="lazy" alt=""/>
 <map name="a_q_graphics_object" id="a_q_graphics_object">
 <area shape="rect" title=" " alt="" coords="5,5,127,32"/>
 <area shape="rect" href="class_tag_rect_item.html" title="Graphics item that draws a rounded rectangle overlay and supports edge/corner dragging." alt="" coords="175,5,271,32"/>
 <area shape="poly" title=" " alt="" coords="142,16,177,18,172,19,142,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_7.png" border="0" usemap="#a_q_graphics_view" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_12.png" border="0" usemap="#a_q_graphics_view" loading="lazy" alt=""/>
 <map name="a_q_graphics_view" id="a_q_graphics_view">
 <area shape="rect" title=" " alt="" coords="5,5,118,32"/>
 <area shape="rect" href="class_zoomable_graphics_view.html" title="A QGraphicsView subclass that supports mouse&#45;wheel zoom centred on the cursor." alt="" coords="166,5,325,32"/>
 <area shape="poly" title=" " alt="" coords="133,16,168,18,163,19,133,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_8.png" border="0" usemap="#a_q_label" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_13.png" border="0" usemap="#a_q_label" loading="lazy" alt=""/>
 <map name="a_q_label" id="a_q_label">
 <area shape="rect" title=" " alt="" coords="5,31,68,57"/>
 <area shape="rect" href="class_clickable_label.html" title="A QLabel that emits a clicked() signal on mouse release." alt="" coords="116,5,222,32"/>
@@ -154,14 +179,14 @@ $(function(){initNavTree('hierarchy.html','',''); });
 <area shape="poly" title=" " alt="" coords="83,50,130,61,125,62,83,55"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_9.png" border="0" usemap="#a_q_layout" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_14.png" border="0" usemap="#a_q_layout" loading="lazy" alt=""/>
 <map name="a_q_layout" id="a_q_layout">
 <area shape="rect" title=" " alt="" coords="5,5,76,32"/>
 <area shape="rect" href="class_flow_layout.html" title="A custom QLayout that arranges child widgets in a wrapping flow, like inline text." alt="" coords="124,5,212,32"/>
 <area shape="poly" title=" " alt="" coords="91,16,126,18,120,19,91,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_10.png" border="0" usemap="#a_q_line_edit" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_15.png" border="0" usemap="#a_q_line_edit" loading="lazy" alt=""/>
 <map name="a_q_line_edit" id="a_q_line_edit">
 <area shape="rect" title=" " alt="" coords="5,31,84,57"/>
 <area shape="rect" href="class_folder_filter_line_edit.html" title="A QLineEdit with shell&#45;style path autocomplete for the folder filter." alt="" coords="139,5,272,32"/>
@@ -170,21 +195,21 @@ $(function(){initNavTree('hierarchy.html','',''); });
 <area shape="poly" title=" " alt="" coords="99,50,134,57,128,58,99,55"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_11.png" border="0" usemap="#a_q_list_view" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_16.png" border="0" usemap="#a_q_list_view" loading="lazy" alt=""/>
 <map name="a_q_list_view" id="a_q_list_view">
 <area shape="rect" title=" " alt="" coords="5,5,87,32"/>
 <area shape="rect" href="class_taggable_list_view.html" title="A QListView subclass that accepts tag drops to apply tags to media files." alt="" coords="135,5,258,32"/>
 <area shape="poly" title=" " alt="" coords="102,16,137,18,132,19,103,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_12.png" border="0" usemap="#a_q_main_window" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_17.png" border="0" usemap="#a_q_main_window" loading="lazy" alt=""/>
 <map name="a_q_main_window" id="a_q_main_window">
 <area shape="rect" title=" " alt="" coords="5,5,112,32"/>
 <area shape="rect" href="class_main_window.html" title="The application&#39;s main window, wiring UI widgets to LuminismCore operations." alt="" coords="160,5,256,32"/>
 <area shape="poly" title=" " alt="" coords="127,16,162,18,157,19,127,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_13.png" border="0" usemap="#a_q_object" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_18.png" border="0" usemap="#a_q_object" loading="lazy" alt=""/>
 <map name="a_q_object" id="a_q_object">
 <area shape="rect" title=" " alt="" coords="5,208,75,235"/>
 <area shape="rect" href="class_exif_parser.html" title="Utility class for extracting EXIF metadata from JPEG and HEIF/HEIC image files." alt="" coords="140,5,222,32"/>
@@ -207,7 +232,7 @@ $(function(){initNavTree('hierarchy.html','',''); });
 <area shape="poly" title=" " alt="" coords="49,247,75,322,97,362,125,397,141,410,136,410,121,401,92,364,70,324,47,252"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_14.png" border="0" usemap="#a_q_push_button" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_19.png" border="0" usemap="#a_q_push_button" loading="lazy" alt=""/>
 <map name="a_q_push_button" id="a_q_push_button">
 <area shape="rect" title=" " alt="" coords="5,31,105,57"/>
 <area shape="rect" href="class_tag_family_widget_collapse_button.html" title="A custom collapse/expand button used inside TagFamilyWidget." alt="" coords="153,5,364,32"/>
@@ -216,21 +241,21 @@ $(function(){initNavTree('hierarchy.html','',''); });
 <area shape="poly" title=" " alt="" coords="120,49,183,59,178,60,120,55"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_15.png" border="0" usemap="#a_q_sort_filter_proxy_model" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_20.png" border="0" usemap="#a_q_sort_filter_proxy_model" loading="lazy" alt=""/>
 <map name="a_q_sort_filter_proxy_model" id="a_q_sort_filter_proxy_model">
 <area shape="rect" title=" " alt="" coords="5,5,159,32"/>
 <area shape="rect" href="class_filter_proxy_model.html" title="Proxy model that filters the tagged&#45;file list by name, folder, and tags." alt="" coords="207,5,326,32"/>
 <area shape="poly" title=" " alt="" coords="175,16,209,19,204,19,175,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_16.png" border="0" usemap="#a_q_styled_item_delegate" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_21.png" border="0" usemap="#a_q_styled_item_delegate" loading="lazy" alt=""/>
 <map name="a_q_styled_item_delegate" id="a_q_styled_item_delegate">
 <area shape="rect" title=" " alt="" coords="5,5,152,32"/>
 <area shape="rect" href="class_file_name_delegate.html" title="Item delegate that renders filenames as wrapped multi&#45;line text beneath each icon." alt="" coords="200,5,329,32"/>
 <area shape="poly" title=" " alt="" coords="167,16,202,19,197,19,167,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_17.png" border="0" usemap="#a_q_widget" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_22.png" border="0" usemap="#a_q_widget" loading="lazy" alt=""/>
 <map name="a_q_widget" id="a_q_widget">
 <area shape="rect" title=" " alt="" coords="5,132,78,159"/>
 <area shape="rect" href="class_date_filter_button.html" title="A date&#45;entry widget combining a free&#45;form line edit with a calendar popup button." alt="" coords="130,5,246,32"/>
@@ -259,17 +284,17 @@ $(function(){initNavTree('hierarchy.html','',''); });
 <area shape="poly" title=" " alt="" coords="255,287,336,311,331,312,254,293"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_18.png" border="0" usemap="#a_scan_item" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_23.png" border="0" usemap="#a_scan_item" loading="lazy" alt=""/>
 <map name="a_scan_item" id="a_scan_item">
 <area shape="rect" href="struct_scan_item.html" title="Holds the per&#45;file data produced during a background directory scan." alt="" coords="5,5,83,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_19.png" border="0" usemap="#a_tag_rect_descriptor" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_24.png" border="0" usemap="#a_tag_rect_descriptor" loading="lazy" alt=""/>
 <map name="a_tag_rect_descriptor" id="a_tag_rect_descriptor">
 <area shape="rect" href="struct_tag_rect_descriptor.html" title="Describes a single tag region overlay for display in the preview pane." alt="" coords="5,5,136,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_20.png" border="0" usemap="#a_tag_set" loading="lazy" alt=""/>
+<tr><td><img src="inherit_graph_25.png" border="0" usemap="#a_tag_set" loading="lazy" alt=""/>
 <map name="a_tag_set" id="a_tag_set">
 <area shape="rect" href="class_tag_set.html" title="Lightweight value type pairing a tag&#45;family name with a tag name, with an optional bounding rectangle..." alt="" coords="5,5,68,32"/>
 </map>

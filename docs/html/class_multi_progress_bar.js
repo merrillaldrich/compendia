@@ -5,7 +5,8 @@ var class_multi_progress_bar =
       [ "IconGeneration", "class_multi_progress_bar.html#a266201615bd29e484176359586b43a46aeeb0d4e7f052277132cecd09bd1ae9c6", null ],
       [ "Save", "class_multi_progress_bar.html#a266201615bd29e484176359586b43a46ac9cc8cce247e49bae79f15173ce97354", null ],
       [ "EmbeddingWarmup", "class_multi_progress_bar.html#a266201615bd29e484176359586b43a46a1173194b61973e53de668b4733cdbb85", null ],
-      [ "VideoGrab", "class_multi_progress_bar.html#a266201615bd29e484176359586b43a46a1c6180d32560f94219125d4f81d1e53a", null ]
+      [ "VideoGrab", "class_multi_progress_bar.html#a266201615bd29e484176359586b43a46a1c6180d32560f94219125d4f81d1e53a", null ],
+      [ "FaceDetection", "class_multi_progress_bar.html#a266201615bd29e484176359586b43a46ad52b2c30778c76c5feb01dd6660877d2", null ]
     ] ],
     [ "MultiProgressBar", "class_multi_progress_bar.html#a67cdb136202520cd0add94f5cba0b652", null ],
     [ "finishProcess", "class_multi_progress_bar.html#ab599c662d51fd63332903d418a7621e2", null ],

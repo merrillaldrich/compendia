@@ -121,22 +121,28 @@ Collaboration diagram for WrapLabel:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a31c41dae362c18bd30e18fe753ab3e99" id="r_a31c41dae362c18bd30e18fe753ab3e99"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31c41dae362c18bd30e18fe753ab3e99">WrapLabel</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:a31c41dae362c18bd30e18fe753ab3e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_wrap_label.html" title="A QLabel that grows in height to show all word-wrapped text.">WrapLabel</a> with word-wrap and Minimum vertical size policy enabled.  <br /></td></tr>
 <tr class="memitem:a8d3aa4b90da0d20eeb239711a5efc9db" id="r_a8d3aa4b90da0d20eeb239711a5efc9db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d3aa4b90da0d20eeb239711a5efc9db">setText</a> (const QString &amp;text)</td></tr>
 <tr class="memdesc:a8d3aa4b90da0d20eeb239711a5efc9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label text and immediately updates the minimum height.  <br /></td></tr>
 <tr class="memitem:a39ce271086af2cc6850bd0a3589f858d" id="r_a39ce271086af2cc6850bd0a3589f858d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39ce271086af2cc6850bd0a3589f858d">hasHeightForWidth</a> () const override</td></tr>
+<tr class="memdesc:a39ce271086af2cc6850bd0a3589f858d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true to advertise that this label implements <a class="el" href="#a231c475b749de47692e9a66bea5dc14a" title="Computes the pixel height required to display all text at width w.">heightForWidth()</a>.  <br /></td></tr>
 <tr class="memitem:a231c475b749de47692e9a66bea5dc14a" id="r_a231c475b749de47692e9a66bea5dc14a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a231c475b749de47692e9a66bea5dc14a">heightForWidth</a> (int w) const override</td></tr>
+<tr class="memdesc:a231c475b749de47692e9a66bea5dc14a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the pixel height required to display all text at width <em class="arg">w</em>.  <br /></td></tr>
 <tr class="memitem:a9fb2c6fd7640044eb10f26e8a9bee7fb" id="r_a9fb2c6fd7640044eb10f26e8a9bee7fb"><td class="memItemLeft" align="right" valign="top">QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9fb2c6fd7640044eb10f26e8a9bee7fb">minimumSizeHint</a> () const override</td></tr>
+<tr class="memdesc:a9fb2c6fd7640044eb10f26e8a9bee7fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a zero minimum size so the label never forces the layout wider than needed.  <br /></td></tr>
 <tr class="memitem:afdd8f5424d321b6743832db55a0e2d49" id="r_afdd8f5424d321b6743832db55a0e2d49"><td class="memItemLeft" align="right" valign="top">QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdd8f5424d321b6743832db55a0e2d49">sizeHint</a> () const override</td></tr>
+<tr class="memdesc:afdd8f5424d321b6743832db55a0e2d49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a size whose height is computed from the current column width.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a2edba3d76d07d0bd9a990f75b96c5f1a" id="r_a2edba3d76d07d0bd9a990f75b96c5f1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2edba3d76d07d0bd9a990f75b96c5f1a">resizeEvent</a> (QResizeEvent *e) override</td></tr>
+<tr class="memdesc:a2edba3d76d07d0bd9a990f75b96c5f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-applies the minimum height when the column width changes.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A QLabel that grows in height to show all word-wrapped text. </p>
-<p>The core problem with QLabel in a QFormLayout is that <a class="el" href="#afdd8f5424d321b6743832db55a0e2d49">sizeHint()</a> is queried before the layout assigns the widget its final width, so <a class="el" href="#a231c475b749de47692e9a66bea5dc14a">heightForWidth()</a> always uses a stale width and the result is always one pass behind.</p>
+<p>The core problem with QLabel in a QFormLayout is that <a class="el" href="#afdd8f5424d321b6743832db55a0e2d49" title="Returns a size whose height is computed from the current column width.">sizeHint()</a> is queried before the layout assigns the widget its final width, so <a class="el" href="#a231c475b749de47692e9a66bea5dc14a" title="Computes the pixel height required to display all text at width w.">heightForWidth()</a> always uses a stale width and the result is always one pass behind.</p>
 <p>The fix: override <a class="el" href="#a8d3aa4b90da0d20eeb239711a5efc9db" title="Sets the label text and immediately updates the minimum height.">setText()</a> — which is called when the actual content is known and the widget already has its stable column width — and immediately set the minimum height via setMinimumHeight(heightForWidth(width())). The form layout's minimum-size accounting picks this up, the scroll area resizes the content widget, and the label shows its full text in a single pass.</p>
-<p><a class="el" href="#a2edba3d76d07d0bd9a990f75b96c5f1a">resizeEvent()</a> repeats the update if the column width ever changes (e.g. when the panel is resized). </p>
+<p><a class="el" href="#a2edba3d76d07d0bd9a990f75b96c5f1a" title="Re-applies the minimum height when the column width changes.">resizeEvent()</a> repeats the update if the column width ever changes (e.g. when the panel is resized). </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a31c41dae362c18bd30e18fe753ab3e99" name="a31c41dae362c18bd30e18fe753ab3e99"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a31c41dae362c18bd30e18fe753ab3e99">&#9670;&#160;</a></span>WrapLabel()</h2>
@@ -160,6 +166,14 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="class_wrap_label.html" title="A QLabel that grows in height to show all word-wrapped text.">WrapLabel</a> with word-wrap and Minimum vertical size policy enabled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>Optional Qt parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -187,6 +201,8 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns true to advertise that this label implements <a class="el" href="#a231c475b749de47692e9a66bea5dc14a" title="Computes the pixel height required to display all text at width w.">heightForWidth()</a>. </p>
+
 </div>
 </div>
 <a id="a231c475b749de47692e9a66bea5dc14a" name="a231c475b749de47692e9a66bea5dc14a"></a>
@@ -211,6 +227,15 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Computes the pixel height required to display all text at width <em class="arg">w</em>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">w</td><td>Available pixel width. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Required height in pixels. </dd></dl>
 
 </div>
 </div>
@@ -237,6 +262,8 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns a zero minimum size so the label never forces the layout wider than needed. </p>
+
 </div>
 </div>
 <a id="a2edba3d76d07d0bd9a990f75b96c5f1a" name="a2edba3d76d07d0bd9a990f75b96c5f1a"></a>
@@ -261,6 +288,14 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Re-applies the minimum height when the column width changes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>The resize event. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -314,6 +349,8 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Returns a size whose height is computed from the current column width. </p>
 
 </div>
 </div>

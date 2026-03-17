@@ -1,9 +1,14 @@
 var hierarchy =
 [
     [ "FaceDescriptor", "struct_face_descriptor.html", null ],
+    [ "FaceTagAssignment", "struct_face_tag_assignment.html", null ],
+    [ "FaceWorkerPool", "struct_face_worker_pool.html", null ],
     [ "LuminismCore::FolderStats", "struct_luminism_core_1_1_folder_stats.html", null ],
     [ "KnownFaceCacheEntry", "struct_known_face_cache_entry.html", null ],
+    [ "PendingDescriptor", "struct_pending_descriptor.html", null ],
     [ "PerceptualHasher", "class_perceptual_hasher.html", null ],
+    [ "Phase1FileInput", "struct_phase1_file_input.html", null ],
+    [ "PromotionEntry", "struct_promotion_entry.html", null ],
     [ "QAbstractButton", null, [
       [ "NavArrowButton", "class_nav_arrow_button.html", null ],
       [ "SpeakerButton", "class_speaker_button.html", null ]

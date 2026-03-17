@@ -1,7 +1,7 @@
 var searchData=
 [
   ['effectivedate_0',['effectiveDate',['../class_tagged_file.html#a6fe2a8b9b757c8434c039edeeb4c227d',1,'TaggedFile']]],
-  ['embedding_1',['embedding',['../struct_face_descriptor.html#aa90fe7b98f36c58a16e5114e389b524b',1,'FaceDescriptor::embedding'],['../struct_known_face_cache_entry.html#ac445a38bfa78fee7883fe70a57a3bd23',1,'KnownFaceCacheEntry::embedding']]],
+  ['embedding_1',['embedding',['../struct_pending_descriptor.html#af4908bea1587ed558da73a8df58a78b6',1,'PendingDescriptor::embedding'],['../struct_face_descriptor.html#aa90fe7b98f36c58a16e5114e389b524b',1,'FaceDescriptor::embedding'],['../struct_known_face_cache_entry.html#ac445a38bfa78fee7883fe70a57a3bd23',1,'KnownFaceCacheEntry::embedding']]],
   ['embeddingwarmedup_2',['embeddingWarmedUp',['../class_face_recognizer.html#a66656706bc6311355787353701042a16',1,'FaceRecognizer']]],
   ['embeddingwarmup_3',['EmbeddingWarmup',['../class_multi_progress_bar.html#a266201615bd29e484176359586b43a46a1173194b61973e53de668b4733cdbb85',1,'MultiProgressBar']]],
   ['endedit_4',['endEdit',['../class_tag_family_widget.html#a1b322fec8851b3248f2abe24e426c6c4',1,'TagFamilyWidget::endEdit()'],['../class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c',1,'TagWidget::endEdit()']]],
