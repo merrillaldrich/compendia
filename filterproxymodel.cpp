@@ -162,10 +162,6 @@ void FilterProxyModel::setTagFilterMode(TagFilterMode mode) {
     endFilterChange();
 }
 
-/*! \brief Restricts the visible set to the given files; other filters still apply within the set.
- *
- * \param files The set of TaggedFile pointers to isolate.
- */
 /*! \brief Sets the rating filter and re-applies the filter.
  *
  * \param rating The rating to filter for [1,5], or std::nullopt to disable.

@@ -118,7 +118,7 @@ struct FaceTagAssignment {
  *
  * Avoids cross-thread access to TaggedFile during Phase 1. */
 struct Phase1FileInput {
-    QString imagePath;
+    QString imagePath; /*!< Absolute path to the source image. */
     QVector<std::tuple<QString, QString, QRectF>> tagRegions; /*!< (family, name, rect) tuples. */
 };
 
@@ -134,11 +134,11 @@ class FaceRecognizer : public QObject
     Q_OBJECT
 
 private:
-    bool models_loaded_ = false;
-    dlib::frontal_face_detector detector_;
-    dlib::shape_predictor sp_;
-    FaceNet::anet_type net_;
-    double detectionThreshold_ = Luminism::FaceDetectionThreshold;
+    bool models_loaded_ = false;                              ///< True after loadModels() succeeds.
+    dlib::frontal_face_detector detector_;                    ///< HOG-based frontal face detector.
+    dlib::shape_predictor sp_;                                ///< 5-point face landmark predictor for chip alignment.
+    FaceNet::anet_type net_;                                  ///< ResNet face recognition network producing 128-d embeddings.
+    double detectionThreshold_ = Luminism::FaceDetectionThreshold; ///< HOG adjust_threshold; higher reduces false positives.
     double matchThreshold_ = Luminism::FaceMatchThreshold; ///< Euclidean-distance threshold for recognising a known face.
     QFuture<void> warmupFuture_;     ///< Handle to the current background embedding warmup task.
     QFuture<void> rectWarmupFuture_; ///< Handle to the current background rect-adjust warmup task.

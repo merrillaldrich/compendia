@@ -109,7 +109,7 @@ void TagContainer::onTagDeleteRequested(Tag* tag){
     emit tagDeleteRequested(tag);
 }
 
-/*! \brief Shows only families and tags whose tag name starts with \p text. */
+/*! \brief Shows only families and tags whose tag name contains \p text (case-insensitive); shows all when empty. */
 void TagContainer::filter(const QString &text) {
     const QList<TagFamilyWidget*> families =
         findChildren<TagFamilyWidget*>(Qt::FindDirectChildrenOnly);

@@ -67,8 +67,8 @@ private:
      */
     QString findCompletion(const QString &typed) const;
 
-    QList<QString> availablePaths_;
-    bool           suppressNextCompletion_ = false;
+    QList<QString> availablePaths_;                    ///< Folder paths available for autocomplete suggestions.
+    bool           suppressNextCompletion_ = false;    ///< True to skip one completion cycle after an accept/dismiss.
 };
 
 #endif // FOLDERFILTERLINEEDIT_H

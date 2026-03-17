@@ -79,9 +79,9 @@ protected:
     void changeEvent(QEvent *event) override;
 
 private:
-    std::optional<int> rating_ = std::nullopt;
+    std::optional<int> rating_ = std::nullopt; ///< Current rating [1,5], or std::nullopt when unrated.
     int    hoverStar_ = 0;   ///< 1–5 while hovering, 0 when not hovering
-    bool   readOnly_  = false;
+    bool   readOnly_  = false; ///< When true, mouse events are ignored.
 
     /*! \brief Returns the star index (1–5) under x-coordinate \p x. */
     int starAtX(int x) const;

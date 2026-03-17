@@ -34,11 +34,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    Ui::MainWindow *ui;
-    MultiProgressBar* progress_;
+    Ui::MainWindow *ui;              ///< Pointer to the generated UI object for this window.
+    MultiProgressBar* progress_;     ///< Multi-channel progress bar shown in the status bar.
     QLabel* folderStatsLabel_; ///< Persistent left-side status bar label showing folder summary stats.
     QWidget* welcome_widget_; ///< Shown in the file-list area before any folder is loaded.
-    FaceRecognizer* face_recognizer_ = nullptr;
+    FaceRecognizer* face_recognizer_ = nullptr; ///< Lazily constructed face recognizer; nullptr until first use.
     FrameGrabber* frameGrabber_ = nullptr; ///< Active frame-grab batch, or nullptr when idle.
     QString drillCeilingPath_; ///< Root path the user explicitly opened; drill-up cannot exceed this.
     QTimer* rectWarmupTimer_ = nullptr;       ///< Debounce timer for post-rect-adjust face cache warming.
@@ -60,7 +60,7 @@ public:
     /*! \brief Opens a folder-picker dialog and loads the selected folder into core. */
     void setRootFolder();
 
-    /*! \brief Prompts for confirmation then moves \a tag to \a newFamily via core->reassignTag(). */
+    /*! \brief Prompts for confirmation then moves \a tag to \a newFamily via core->refamilyTag(). */
     void onTagRefamilyRequested(Tag* tag, TagFamily* newFamily);
 
     /*! \brief Updates the file-count label to show visible vs. total file counts. */
@@ -267,7 +267,7 @@ private slots:
     /*! \brief Advances the save progress bar when a metadata file is written. */
     void onMetadataSaved();
 
-    /*! \brief Runs face detection on every selected image and stores face regions as tagged rectangles. */
+    /*! \brief Launches (or cancels) a multi-phase face recognition sweep across all loaded image files. */
     void on_actionFind_Faces_triggered();
 
     /*! \brief Opens the Face Recognition Settings dialog and applies any changes. */

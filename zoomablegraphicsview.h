@@ -108,8 +108,8 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-    bool   panning_   = false;
-    QPoint pan_start_;
+    bool   panning_   = false; ///< True while a middle-button or left-button pan is in progress.
+    QPoint pan_start_;         ///< Viewport position where the current pan operation started.
 };
 
 #endif // ZOOMABLEGRAPHICSVIEW_H

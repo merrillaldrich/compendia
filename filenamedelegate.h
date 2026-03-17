@@ -66,7 +66,7 @@ public:
                                     int maxWidth);
 
 private:
-    LuminismCore *core_ = nullptr;
+    LuminismCore *core_ = nullptr; ///< LuminismCore used to look up cached icons by file path.
 
 protected:
     /*! \brief Populates \a option from the model and then clears the text field.

@@ -1379,7 +1379,6 @@ void MainWindow::on_folderFilterLineEdit_textChanged(const QString &arg1)
     refreshTagAssignmentArea();
 }
 
-/*! \brief Advances the icon-generation progress bar when a thumbnail is ready. */
 /*! \brief Adjusts the file-list icon and grid size when the zoom slider moves.
  *
  * \param value The new slider position (0–100).
@@ -1453,6 +1452,7 @@ void MainWindow::connectFileCountLabel()
     updateFileCountLabel();
 }
 
+/*! \brief Advances the icon-generation progress bar when a thumbnail is ready. */
 void MainWindow::onIconUpdated(){
     progress_->increment(MultiProgressBar::Process::IconGeneration);
     int v = progress_->value(MultiProgressBar::Process::IconGeneration);
@@ -1466,10 +1466,6 @@ void MainWindow::onMetadataSaved(){
     progress_->increment(MultiProgressBar::Process::Save);
 }
 
-/*! \brief Triggers background known-face embedding warmup for \p tf if models are loaded.
- *
- * \param tf The file being deselected. May be nullptr.
- */
 /*! \brief Lazily constructs face_recognizer_ and loads the DNN model files.
  *
  * Resolves the models/ directory from the application's executable directory,

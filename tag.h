@@ -15,8 +15,8 @@ class Tag : public QObject
     Q_OBJECT
 
 private:
-    QString tag_name_;
-    bool dirty_flag_ = false;
+    QString tag_name_;           ///< The display name of this tag.
+    bool dirty_flag_ = false;    ///< True when the tag name has been changed since the last save.
 
 public:
     /*! \brief Constructs a default Tag with an empty name and a new default TagFamily.

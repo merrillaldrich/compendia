@@ -79,12 +79,12 @@ private:
     /*! \brief Updates the line edit to display the current date in short locale format. */
     void updateLineEdit();
 
-    QLineEdit   *lineEdit_;
-    QToolButton *calendarButton_;
-    QDate        date_;
+    QLineEdit   *lineEdit_;                              ///< Free-form text entry for the date.
+    QToolButton *calendarButton_;                        ///< Button that opens the calendar popup.
+    QDate        date_;                                  ///< Currently selected date; invalid when none.
 
-    QList<QDate> availableDates_;
-    bool         suppressNextCompletion_ = false;
+    QList<QDate> availableDates_;                        ///< Sorted list of dates for autocomplete suggestions.
+    bool         suppressNextCompletion_ = false;        ///< True to skip one completion cycle after an accept/dismiss.
 };
 
 #endif // DATEFILTERBUTTON_H

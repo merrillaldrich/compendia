@@ -11,14 +11,11 @@
 
 /*! \brief Holds the per-file data produced during a background directory scan. */
 struct ScanItem {
-    QFileInfo   fileInfo;
+    QFileInfo   fileInfo;     ///< File-system information for the scanned file.
     QJsonObject tagsJson;     ///< Parsed sidecar JSON; empty when hasJson is false.
-    bool        hasJson = false;
+    bool        hasJson = false; ///< True when a valid sidecar JSON file was found.
 
-    // Populated during scan when all icon cache files are valid.
-    // hasCachedIcon = true means the file can skip IconGenerator entirely;
-    // its icon will be loaded on demand by the LRU pool / delegate.
-    bool                   hasCachedIcon = false;
+    bool                   hasCachedIcon = false; ///< True when all icon cache files are valid; file can skip IconGenerator.
     QMap<QString, QString> cachedExif;   ///< EXIF extracted from the source file; empty on cache miss.
 };
 
@@ -32,6 +29,10 @@ Q_DECLARE_METATYPE(QList<ScanItem>)
 class FolderScanner : public QObject {
     Q_OBJECT
 public:
+    /*! \brief Constructs a FolderScanner.
+     *
+     * \param parent Optional Qt parent object.
+     */
     explicit FolderScanner(QObject *parent = nullptr);
 
 public slots:
@@ -52,7 +53,7 @@ signals:
     void finished();
 
 private:
-    QAtomicInt cancelled_;
+    QAtomicInt cancelled_; ///< Set to non-zero to request cancellation of the scan loop.
 };
 
 #endif // FOLDERSCANNER_H

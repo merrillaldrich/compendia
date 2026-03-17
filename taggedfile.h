@@ -28,22 +28,22 @@ public:
     enum MediaType { Image, Video };
 
 private:
-    QMap<QString, QString> exif_map_;
-    QSet<Tag*>* tags_ = new QSet<Tag*>;
-    QMap<Tag*, QRectF> tag_rects_;
-    bool dirty_flag_ = false;
-    quint64 pHash_ = 0;
-    std::optional<int> rating_ = std::nullopt;
-    MediaType mediaType_ = Image;
-    qint64 fileSize_ = 0;
+    QMap<QString, QString> exif_map_;             ///< EXIF key-value pairs extracted from the file.
+    QSet<Tag*>* tags_ = new QSet<Tag*>;           ///< Tags currently applied to this file.
+    QMap<Tag*, QRectF> tag_rects_;                ///< Per-tag normalised bounding rectangles (face/region annotations).
+    bool dirty_flag_ = false;                      ///< True when there are unsaved changes on this file itself.
+    quint64 pHash_ = 0;                            ///< Perceptual hash (0 when not yet computed).
+    std::optional<int> rating_ = std::nullopt;     ///< User rating [1,5], or std::nullopt when unrated.
+    MediaType mediaType_ = Image;                  ///< Whether the file is an image or a video.
+    qint64 fileSize_ = 0;                          ///< File size in bytes, recorded at load time.
 
 
 public:
-    QString filePath = "";
-    QString fileName = "";
-    QDateTime imageCaptureDateTime;
-    QDateTime fileCreationDateTime;
-    QDateTime fileModificationDateTime;
+    QString filePath = "";                   ///< Absolute path to the media file.
+    QString fileName = "";                   ///< File name (base name with extension, no directory).
+    QDateTime imageCaptureDateTime;          ///< Date/time from EXIF capture metadata (invalid when absent).
+    QDateTime fileCreationDateTime;          ///< File-system creation date/time.
+    QDateTime fileModificationDateTime;      ///< File-system last-modification date/time.
 
     /*! \brief Date/time inferred from a timestamp embedded in the file name, if present.
      *

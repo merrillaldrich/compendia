@@ -33,13 +33,13 @@ class TagFamilyWidget : public TaggingWidget
     Q_OBJECT
 
 private:
-    QString edit_status_ = "Read";
-    VariableWidthLineEdit* line_edit_;
-    ClickableLabel* label_;
-    bool in_library_ = false;
-    TagFamily* tag_family_;
-    bool collapsed_ = false;
-    TagFamilyWidgetCollapseButton *collapseButton_ = nullptr;
+    QString edit_status_ = "Read";                          ///< "Edit" while inline editing the family name; "Read" otherwise.
+    VariableWidthLineEdit* line_edit_;                      ///< Line edit shown when the family name is being edited.
+    ClickableLabel* label_;                                 ///< Label displaying the family name in read mode.
+    bool in_library_ = false;                               ///< True once the family has been committed to the tag library.
+    TagFamily* tag_family_;                                 ///< The TagFamily this widget represents.
+    bool collapsed_ = false;                                ///< True when child tag widgets are hidden.
+    TagFamilyWidgetCollapseButton *collapseButton_ = nullptr; ///< Button that toggles the collapsed state.
     bool drop_hover_ = false; ///< True while a tag drag is hovering over this widget.
 
 protected:
@@ -62,9 +62,28 @@ protected:
      */
     void contextMenuEvent(QContextMenuEvent *event) override;
 
+    /*! \brief Accepts tag drags and sets drop_hover_ to trigger a highlight repaint.
+     *
+     * \param event The drag-enter event.
+     */
     void dragEnterEvent(QDragEnterEvent *event) override;
+
+    /*! \brief Keeps accepting tag drag-move events while the drag is over the widget.
+     *
+     * \param event The drag-move event.
+     */
     void dragMoveEvent(QDragMoveEvent *event) override;
+
+    /*! \brief Clears drop_hover_ and triggers a repaint when the drag leaves.
+     *
+     * \param event The drag-leave event.
+     */
     void dragLeaveEvent(QDragLeaveEvent *event) override;
+
+    /*! \brief Decodes the dropped tag and emits tagRefamilyRequested() if it belongs to a different family.
+     *
+     * \param event The drop event containing the dragged tag data.
+     */
     void dropEvent(QDropEvent *event) override;
 
     /*! \brief Returns the minimum size as the size hint.

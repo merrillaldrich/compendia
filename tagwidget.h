@@ -27,12 +27,12 @@ class TagWidget : public TaggingWidget
     Q_OBJECT
 
 private:
-    QString edit_status_ = "Read";
-    VariableWidthLineEdit* line_edit_;
-    ClickableLabel* label_;
-    QPoint drag_start_position_;
-    bool in_library_ = false;
-    Tag* tag_;
+    QString edit_status_ = "Read";      ///< "Edit" while inline editing the tag name; "Read" otherwise.
+    VariableWidthLineEdit* line_edit_;   ///< Line edit shown when the tag name is being edited.
+    ClickableLabel* label_;              ///< Label displaying the tag name in read mode.
+    QPoint drag_start_position_;         ///< Mouse position recorded on press to compute drag distance.
+    bool in_library_ = false;            ///< True once the tag has been committed to the tag library.
+    Tag* tag_;                           ///< The Tag this widget represents.
 
 public:
     /*! \brief Constructs a default, empty TagWidget.

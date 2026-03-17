@@ -22,6 +22,10 @@
 class WrapLabel : public QLabel
 {
 public:
+    /*! \brief Constructs a WrapLabel with word-wrap and Minimum vertical size policy enabled.
+     *
+     * \param parent Optional Qt parent widget.
+     */
     explicit WrapLabel(QWidget *parent = nullptr) : QLabel(parent)
     {
         setWordWrap(true);
@@ -39,8 +43,14 @@ public:
         applyMinimumHeight();
     }
 
+    /*! \brief Returns true to advertise that this label implements heightForWidth(). */
     bool hasHeightForWidth() const override { return true; }
 
+    /*! \brief Computes the pixel height required to display all text at width \a w.
+     *
+     * \param w Available pixel width.
+     * \return Required height in pixels.
+     */
     int heightForWidth(int w) const override
     {
         if (w <= 0) w = QLabel::sizeHint().width();
@@ -54,11 +64,13 @@ public:
         return innerH + m.top() + m.bottom();
     }
 
+    /*! \brief Returns a zero minimum size so the label never forces the layout wider than needed. */
     QSize minimumSizeHint() const override
     {
         return {0, 0};
     }
 
+    /*! \brief Returns a size whose height is computed from the current column width. */
     QSize sizeHint() const override
     {
         int w = width() > 0 ? width() : QLabel::sizeHint().width();
@@ -66,6 +78,10 @@ public:
     }
 
 protected:
+    /*! \brief Re-applies the minimum height when the column width changes.
+     *
+     * \param e The resize event.
+     */
     void resizeEvent(QResizeEvent *e) override
     {
         QLabel::resizeEvent(e);
@@ -75,6 +91,7 @@ protected:
     }
 
 private:
+    /*! \brief Sets the widget's minimum height to the value returned by heightForWidth(width()). */
     void applyMinimumHeight()
     {
         if (width() > 0)

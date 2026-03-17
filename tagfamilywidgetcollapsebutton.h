@@ -37,10 +37,10 @@ public:
     bool isCollapsed() const;
 
 private:
-    QColor background_color_;
-    QColor mouse_over_color_;
-    QColor effective_color_;
-    bool collapsed_ = false;
+    QColor background_color_;  ///< Base button colour derived from the parent TaggingWidget.
+    QColor mouse_over_color_;  ///< Brightened variant shown on hover.
+    QColor effective_color_;   ///< The colour currently being painted (background or hover).
+    bool collapsed_ = false;   ///< True when the associated TagFamilyWidget is collapsed.
 
 protected:
     /*! \brief Overrides the Qt base-class paint handler to draw the button and chevron.

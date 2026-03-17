@@ -67,7 +67,11 @@ public:
      */
     void preview(QString absoluteFilePath);
 
-    /*! \brief Re-fits the displayed image to the viewport if it has not been zoomed in. */
+    /*! \brief Re-fits the displayed content to the viewport.
+     *
+     * For video, always re-fits the item to fill the pane.  For images, only
+     * re-fits when the image has not been zoomed in by the user.
+     */
     void freshen();
 
     /*! \brief Clears the graphics scene, removing any displayed image. */
@@ -197,23 +201,23 @@ private:
     /*! \brief Removes and deletes the hover rectangle from the scene. */
     void clearDropPreviewRect();
 
-    QGraphicsScene*    scene = nullptr;
-    ZoomableGraphicsView* view = nullptr;
-    QMediaPlayer*      mediaPlayer = nullptr;
-    QAudioOutput*      audioOutput_ = nullptr;
-    QGraphicsVideoItem* videoItem = nullptr;
-    QList<QGraphicsItem*>    tag_rect_items_;
-    QList<TagRectDescriptor> tag_rect_descriptors_;
-    QGraphicsItem*     drop_preview_rect_ = nullptr;
-    QColor             drop_preview_color_ = Qt::white;
-    QSizeF             image_size_;
-    bool               is_video_ = false;
+    QGraphicsScene*    scene = nullptr;           ///< Graphics scene containing the image and overlays.
+    ZoomableGraphicsView* view = nullptr;         ///< Zoomable/pannable view displaying the scene.
+    QMediaPlayer*      mediaPlayer = nullptr;     ///< Media player used for video files; nullptr for images.
+    QAudioOutput*      audioOutput_ = nullptr;    ///< Audio output routed from mediaPlayer.
+    QGraphicsVideoItem* videoItem = nullptr;      ///< Scene item that displays the video frame.
+    QList<QGraphicsItem*>    tag_rect_items_;     ///< Graphics items for the current tag region overlays.
+    QList<TagRectDescriptor> tag_rect_descriptors_; ///< Descriptors matching tag_rect_items_ one-to-one.
+    QGraphicsItem*     drop_preview_rect_ = nullptr; ///< Temporary hover rectangle shown during a tag drag.
+    QColor             drop_preview_color_ = Qt::white; ///< Fill colour of the drop-preview rectangle.
+    QSizeF             image_size_;               ///< Pixel dimensions of the currently displayed image.
+    bool               is_video_ = false;         ///< True when the current preview is a video file.
 
-    QWidget*           controlBar_ = nullptr;
-    QPushButton*       playPauseButton_ = nullptr;
-    QSlider*           positionSlider_ = nullptr;
-    QLabel*            timeLabel_ = nullptr;
-    bool               slider_being_dragged_ = false;
+    QWidget*           controlBar_ = nullptr;     ///< Transport control bar shown below video previews.
+    QPushButton*       playPauseButton_ = nullptr; ///< Toggles video playback.
+    QSlider*           positionSlider_ = nullptr;  ///< Scrub bar for seeking within the video.
+    QLabel*            timeLabel_ = nullptr;       ///< "position / duration" text label.
+    bool               slider_being_dragged_ = false; ///< True while the user is actively scrubbing.
 
     QAbstractButton*   volumeButton_  = nullptr; ///< Speaker button at right of control bar.
     QFrame*            volumePopup_   = nullptr; ///< Floating popup with volume controls.

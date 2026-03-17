@@ -114,13 +114,13 @@ private:
     void finishCurrentFile(bool success, const QString &reason = {});
 
     qint64        seekMs_       = 2000;   ///< Target seek position in milliseconds.
-    QMediaPlayer *player_       = nullptr;
-    QVideoSink   *sink_         = nullptr;
-    QTimer       *timeout_      = nullptr;
-    QStringList   paths_;
-    int           currentIndex_ = 0;
-    int           successCount_ = 0;
-    int           failCount_    = 0;
+    QMediaPlayer *player_       = nullptr; ///< QMediaPlayer instance used for decoding.
+    QVideoSink   *sink_         = nullptr; ///< Video sink connected to player_ to receive frames.
+    QTimer       *timeout_      = nullptr; ///< Per-file watchdog; fires if a file takes too long.
+    QStringList   paths_;                  ///< Absolute paths of all video files to process.
+    int           currentIndex_ = 0;       ///< Index into paths_ for the file currently being processed.
+    int           successCount_ = 0;       ///< Running count of successfully captured frames.
+    int           failCount_    = 0;       ///< Running count of failed capture attempts.
     bool          processing_   = false;  ///< True while a file is being processed.
     QImage        currentFrame_;          ///< Frame captured for the current file.
     QMap<QString, QString> currentMeta_;  ///< Container metadata for the current file.

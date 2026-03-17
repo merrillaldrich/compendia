@@ -24,11 +24,11 @@ public:
     explicit TagWidgetCloseButton(QWidget *parent = nullptr);
 
 private:
-    QColor background_color_;
-    QColor highlight_edge_color_;
-    QColor shadow_edge_color_;
-    QColor mouse_over_color_;
-    QColor effective_color_;
+    QColor background_color_;       ///< Base button colour derived from the parent TaggingWidget.
+    QColor highlight_edge_color_;   ///< Light edge colour for the 3-D bevel effect.
+    QColor shadow_edge_color_;      ///< Dark edge colour for the 3-D bevel effect.
+    QColor mouse_over_color_;       ///< Brightened variant shown on hover.
+    QColor effective_color_;        ///< The colour currently being painted (background or hover).
 
 protected:
     /*! \brief Overrides the Qt base-class paint handler to draw the circular button and 'x'.

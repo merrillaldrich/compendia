@@ -16,11 +16,11 @@ class TagFamily : public QObject
     Q_OBJECT
 
 private:
-    QString tag_family_name_;
-    QColor tag_family_color_;
-    bool dirty_flag_ = false;
-    static int next_hue_; // Default for static val set in implementation file
-    static int starting_hue_;
+    QString tag_family_name_;           ///< The display name of this tag family.
+    QColor tag_family_color_;           ///< Auto-assigned colour used to visually distinguish this family.
+    bool dirty_flag_ = false;           ///< True when the family name has been changed since the last save.
+    static int next_hue_;               ///< Next hue value in the rotating colour sequence (set in .cpp).
+    static int starting_hue_;          ///< Initial hue value, used to reset the sequence.
 
     /*! \brief Generates the next colour in the rotating hue sequence.
      *

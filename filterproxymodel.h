@@ -30,9 +30,9 @@ public:
     };
 
 private:
-    QDate creation_date_;
-    QSet<Tag*> tags_ = QSet<Tag*>();
-    TagFilterMode tagFilterMode_ = AnyTag;
+    QDate creation_date_;                           ///< Active creation-date filter; invalid means no filter.
+    QSet<Tag*> tags_ = QSet<Tag*>();                ///< Set of tags currently active as filters.
+    TagFilterMode tagFilterMode_ = AnyTag;          ///< Whether the tag filter uses OR or AND logic.
     QSet<TaggedFile*> isolation_set_; ///< When non-empty, only listed files can pass.
     std::optional<int> rating_filter_; ///< When set, only files matching the mode+value pass.
     RatingFilterMode rating_filter_mode_ = Exactly; ///< Comparison mode for the rating filter.

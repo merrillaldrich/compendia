@@ -124,9 +124,9 @@ private:
      */
     int smartSpacing(QStyle::PixelMetric pm) const;
 
-    QList<QLayoutItem *> itemList;
-    int m_hSpace;
-    int m_vSpace;
+    QList<QLayoutItem *> itemList; ///< Ordered list of managed layout items.
+    int m_hSpace; ///< Explicit horizontal spacing between items, or -1 for style default.
+    int m_vSpace; ///< Explicit vertical spacing between rows, or -1 for style default.
 };
 
 #endif // FLOWLAYOUT_H

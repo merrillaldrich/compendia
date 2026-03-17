@@ -36,18 +36,18 @@ class LuminismCore : public QObject
     Q_OBJECT
 private:
 
-    QString root_directory_;
+    QString root_directory_; ///< Absolute path of the currently loaded media folder.
 
-    QSet<TagFamily*>* tag_families_;
-    QSet<Tag*>* tags_;
-    QStandardItemModel *tagged_files_;
-    FilterProxyModel *tagged_files_proxy_;
+    QSet<TagFamily*>* tag_families_; ///< All tag families in the library.
+    QSet<Tag*>* tags_;               ///< All tags in the library.
+    QStandardItemModel *tagged_files_;       ///< Source model; each item stores a TaggedFile* in Qt::UserRole+1.
+    FilterProxyModel *tagged_files_proxy_;   ///< Proxy wrapping tagged_files_ for filtering and sorting.
 
-    QMutex resultsMutex_;
-    QVector<std::tuple<QString, QString, QMap<QString, QString>, QVector<QImage>, quint64>> results_; // fileName, path, EXIF dict, images, pHash
-    QTimer uiFlushTimer_;
+    QMutex resultsMutex_; ///< Guards results_ against concurrent access from background threads.
+    QVector<std::tuple<QString, QString, QMap<QString, QString>, QVector<QImage>, quint64>> results_; ///< Background-thread queue: (fileName, path, EXIF dict, images, pHash).
+    QTimer uiFlushTimer_; ///< Periodic timer that drains results_ onto the model on the GUI thread.
 
-    QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.svg");
+    QPixmap default_icon_ = QPixmap(":/resources/NoImagePreviewIcon.svg"); ///< Placeholder shown before a thumbnail is loaded.
 
     /// LRU pool: holds at most kIconPoolCapacity QIcon objects keyed by absolute file path.
     QCache<QString, QIcon> iconPool_{500};
@@ -84,6 +84,17 @@ private:
                                       const QVector<QImage> &images,
                                       quint64 pHash);
 
+    /*! \brief Applies icon images, EXIF data, and pHash directly to a model item.
+     *
+     * Builds a multi-size QIcon from \p images and inserts it into the LRU icon
+     * pool (iconPool_) keyed by the item's file path.  Also stores EXIF and pHash
+     * on the item's TaggedFile via init calls so the load path does not mark dirty.
+     *
+     * \param item    The QStandardItem to update.
+     * \param images  Scaled thumbnail images (one per IconGenerator::kIconSizes entry).
+     * \param exifMap EXIF key-value pairs to store on the TaggedFile.
+     * \param pHash   Perceptual hash to store on the TaggedFile (0 for videos).
+     */
     void applyIconDataToItem(QStandardItem *item,
                              const QVector<QImage> &images,
                              const QMap<QString, QString> &exifMap,

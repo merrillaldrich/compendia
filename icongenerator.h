@@ -145,7 +145,7 @@ private:
      */
     static bool saveIconToCache(const QString &absoluteFileName, const QImage &pict, int size);
 
-    QAtomicInt    pendingImageCount_;        ///< Decremented as each image task completes.
+    QAtomicInt    pendingImageCount_;        ///< Tracks remaining image tasks; decremented as each completes.
     bool          videoGrabDone_ = true;     ///< True when no FrameGrabber work is pending.
     FrameGrabber *frameGrabber_  = nullptr;  ///< Active FrameGrabber, or nullptr.
 };

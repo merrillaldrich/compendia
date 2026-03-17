@@ -88,23 +88,23 @@ private slots:
 private:
     /*! \brief Holds runtime state for a single tracked process. */
     struct ProcessState {
-        int     min    = 0;
-        int     max    = 1;
-        int     value  = 0;
-        QString label;
-        bool    active = false;
+        int     min    = 0;     ///< Minimum progress value (usually 0).
+        int     max    = 1;     ///< Maximum progress value (completion threshold).
+        int     value  = 0;     ///< Current progress value.
+        QString label;          ///< Text displayed in the status label while this process is active.
+        bool    active = false; ///< True while this process is registered and not yet finished.
     };
 
     /*! \brief Pushes the currently cycled process state to label_ and bar_. */
     void updateDisplay();
 
-    QLabel        *label_;
-    QProgressBar  *bar_;
-    QTimer        *cycle_timer_;
-    QMap<Process, ProcessState> states_;
+    QLabel        *label_;          ///< Status label showing the name of the currently displayed process.
+    QProgressBar  *bar_;            ///< Progress bar reflecting the current process value.
+    QTimer        *cycle_timer_;    ///< Timer that advances cycle_index_ when multiple processes are active.
+    QMap<Process, ProcessState> states_; ///< State for each known process, keyed by Process enum value.
     QList<Process>              active_;   ///< Active processes in start order.
-    int cycle_index_       = 0;
-    int cycle_interval_ms_ = 2000;
+    int cycle_index_       = 0;    ///< Index into active_ indicating which process is currently displayed.
+    int cycle_interval_ms_ = 2000; ///< Milliseconds between display switches when cycling.
 };
 
 #endif // MULTIPROGRESSBAR_H

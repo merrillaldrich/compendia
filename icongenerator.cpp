@@ -313,7 +313,7 @@ IconGenerator::processImageFile(const QString &absolutePath)
 
 /*! \brief Returns true when all kIconSizes cache files exist and are newer than the source.
  *
- * \param absolutePath Absolute path to the source video file.
+ * \param absolutePath Absolute path to the source file.
  * \return True if the full cache is valid.
  */
 bool IconGenerator::iconCacheValid(const QString &absolutePath)
@@ -327,9 +327,9 @@ bool IconGenerator::iconCacheValid(const QString &absolutePath)
     return true;
 }
 
-/*! \brief Loads all kIconSizes cached images for a video file.
+/*! \brief Loads all kIconSizes cached images for a file.
  *
- * \param absolutePath Absolute path to the source video file.
+ * \param absolutePath Absolute path to the source file.
  * \return Loaded images ordered by kIconSizes, or an empty vector on any failure.
  */
 QVector<QImage> IconGenerator::loadIconsFromCache(const QString &absolutePath)
