@@ -240,9 +240,10 @@ std::optional<QRectF> TaggedFile::tagRect(Tag* tag) const
  */
 void TaggedFile::removeTag(Tag* tag)
 {
-    tags_->remove(tag);
-    tag_rects_.remove(tag);
-    dirty_flag_ = true;
+    if (tags_->remove(tag)) {
+        tag_rects_.remove(tag);
+        dirty_flag_ = true;
+    }
 }
 
 /*! \brief Returns true if this file has unsaved changes.

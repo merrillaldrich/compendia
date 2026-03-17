@@ -52,6 +52,15 @@ constexpr int BulkUntagWarningThreshold = 5;
  */
 constexpr int SimilarImageThreshold = 10;
 
+/*! \brief Milliseconds of idle time after the last rect adjustment before the
+ *  background face-cache warmup is triggered.
+ *
+ *  Increase to give the user more time to adjust before the expensive inference
+ *  starts; decrease for faster cache warming at the cost of potentially warming
+ *  an intermediate rect.
+ */
+constexpr int RectWarmupDelayMs = 3000;
+
 } // namespace Luminism
 
 #endif // CONSTANTS_H

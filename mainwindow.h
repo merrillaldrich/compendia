@@ -10,6 +10,7 @@
 #include <QGraphicsView>
 #include <QImageReader>
 #include <QMessageBox>
+#include <QTimer>
 #include "luminismcore.h"
 #include "multiprogressbar.h"
 #include "facerecognizer.h"
@@ -40,6 +41,8 @@ private:
     FaceRecognizer* face_recognizer_ = nullptr;
     FrameGrabber* frameGrabber_ = nullptr; ///< Active frame-grab batch, or nullptr when idle.
     QString drillCeilingPath_; ///< Root path the user explicitly opened; drill-up cannot exceed this.
+    QTimer* rectWarmupTimer_ = nullptr;       ///< Debounce timer for post-rect-adjust face cache warming.
+    TaggedFile* warmupPendingFile_ = nullptr; ///< File waiting for rect-adjust warmup when the timer fires.
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.

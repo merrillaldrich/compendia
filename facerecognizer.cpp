@@ -15,7 +15,6 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDateTime>
-#include <QElapsedTimer>
 #include <QMutexLocker>
 #include <QSet>
 #include <QThread>
@@ -175,23 +174,17 @@ dlib::matrix<float,0,1> FaceRecognizer::computeEmbedding(
     const dlib::array2d<dlib::rgb_pixel> &dlibImg,
     const dlib::rectangle &rect)
 {
-    QElapsedTimer t;
-    t.start();
-
     dlib::full_object_detection shape = sp_(dlibImg, rect);
-    qDebug() << "[FaceRecognizer]   shape predictor:  " << t.restart() << "ms";
 
     dlib::matrix<dlib::rgb_pixel> faceChip;
     dlib::extract_image_chip(dlibImg,
                              dlib::get_face_chip_details(shape, 150, 0.25),
                              faceChip);
-    qDebug() << "[FaceRecognizer]   extract chip:     " << t.restart() << "ms";
 
     std::vector<dlib::matrix<dlib::rgb_pixel>> batch;
     batch.push_back(faceChip);
 
     std::vector<dlib::matrix<float,0,1>> embeddings = net_(batch);
-    qDebug() << "[FaceRecognizer]   ResNet inference: " << t.elapsed() << "ms";
 
     if (embeddings.empty())
         return dlib::matrix<float,0,1>();
@@ -251,10 +244,6 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
 
     QMutexLocker lock(&embeddingMutex_);
 
-    QElapsedTimer t;
-    t.start();
-    qDebug() << "[FaceRecognizer] detectFacesWithEmbeddings — input:" << img.width() << "x" << img.height();
-
     static constexpr int kMaxDetectionDim = 1200;
     const int longEdge = qMax(img.width(), img.height());
     const QImage detectImg = (longEdge > kMaxDetectionDim)
@@ -263,14 +252,11 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
                      Qt::IgnoreAspectRatio,
                      Qt::SmoothTransformation)
         : img;
-    qDebug() << "[FaceRecognizer] downscale to" << detectImg.width() << "x" << detectImg.height() << ":" << t.restart() << "ms";
 
     dlib::array2d<dlib::rgb_pixel> dlibImg = qimageToDlibArray(detectImg);
-    qDebug() << "[FaceRecognizer] qimageToDlibArray:            " << t.restart() << "ms";
 
     std::vector<dlib::frontal_face_detector::rect_detection> rawDets;
     detector_(dlibImg, rawDets, detectionThreshold_);
-    qDebug() << "[FaceRecognizer] HOG detector (" << rawDets.size() << "faces found):" << t.restart() << "ms";
 
     std::vector<dlib::rectangle> dets;
     dets.reserve(rawDets.size());
@@ -302,16 +288,11 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
             // skip malformed detection
         }
     }
-    qDebug() << "[FaceRecognizer] shape predictor + chip extraction (" << chips.size() << "chips):" << t.restart() << "ms";
-
-    if (chips.empty()) {
-        qDebug() << "[FaceRecognizer] detectFacesWithEmbeddings done, 0 faces";
+    if (chips.empty())
         return {};
-    }
 
     // Phase B: single batched ResNet forward pass over all chips at once.
     std::vector<dlib::matrix<float,0,1>> embeddings = net_(chips);
-    qDebug() << "[FaceRecognizer] ResNet batch inference (" << chips.size() << "faces):" << t.elapsed() << "ms";
 
     // Phase C: pair each embedding with its normalised rect.
     QVector<QPair<QRectF, dlib::matrix<float,0,1>>> results;
@@ -319,7 +300,6 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
     for (size_t i = 0; i < embeddings.size(); ++i)
         results.append({normRects[i], embeddings[i]});
 
-    qDebug() << "[FaceRecognizer] detectFacesWithEmbeddings done, total faces:" << results.size();
     return results;
 }
 
@@ -335,10 +315,6 @@ FaceRecognizer::detectFacesWithEmbeddings(const QImage &img)
 dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegionUnlocked(
     const QImage &img, const QRectF &normalizedRect)
 {
-    QElapsedTimer t;
-    t.start();
-    qDebug() << "[FaceRecognizer] computeEmbeddingFromRegion — input:" << img.width() << "x" << img.height();
-
     // Downscale to at most kMaxDetectionDim on the longest edge, same as
     // detectFacesWithEmbeddings.  The normalised rect is dimensionless so it
     // maps directly into whatever pixel space we work in.
@@ -350,10 +326,8 @@ dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegionUnlocked(
                      Qt::IgnoreAspectRatio,
                      Qt::SmoothTransformation)
         : img;
-    qDebug() << "[FaceRecognizer] downscale to" << detectImg.width() << "x" << detectImg.height() << ":" << t.restart() << "ms";
 
     dlib::array2d<dlib::rgb_pixel> dlibImg = qimageToDlibArray(detectImg);
-    qDebug() << "[FaceRecognizer] qimageToDlibArray:            " << t.restart() << "ms";
 
     const double w = detectImg.width();
     const double h = detectImg.height();
@@ -368,7 +342,6 @@ dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegionUnlocked(
     // Find HOG detection with best IoU against the user rect
     std::vector<dlib::frontal_face_detector::rect_detection> rawDets;
     detector_(dlibImg, rawDets, detectionThreshold_);
-    qDebug() << "[FaceRecognizer] HOG detector (" << rawDets.size() << "dets):" << t.restart() << "ms";
 
     std::vector<dlib::rectangle> dets;
     dets.reserve(rawDets.size());
@@ -439,6 +412,51 @@ dlib::matrix<float,0,1> FaceRecognizer::computeEmbeddingFromRegion(
  *
  * \param tf The file being deselected. May be nullptr.
  */
+void FaceRecognizer::warmupDescriptorCache(const QString &imagePath)
+{
+    if (loadDescriptorCache(imagePath).has_value())
+        return;
+
+    qDebug() << "[FaceRecognizer] cache miss (descriptor) — warming:" << QFileInfo(imagePath).fileName();
+
+    QImageReader ir(imagePath);
+    ir.setAutoTransform(true);
+    QImage img = ir.read();
+    if (img.isNull()) {
+        qWarning() << "[FaceRecognizer] failed to load image for descriptor warmup:" << imagePath;
+        return;
+    }
+
+    auto faces = detectFacesWithEmbeddings(img);
+    qDebug() << "[FaceRecognizer] saving descriptor cache:" << QFileInfo(imagePath).fileName();
+    saveDescriptorCache(imagePath, faces);
+}
+
+void FaceRecognizer::scheduleRectAdjustWarmup(TaggedFile* tf)
+{
+    if (!tf || !models_loaded_)
+        return;
+
+    if (rectWarmupFuture_.isRunning())
+        return;
+
+    const QString imagePath = tf->filePath + "/" + tf->fileName;
+
+    // Extract tag regions on the main thread — TaggedFile must not be accessed
+    // from the background task.
+    QVector<std::tuple<QString, QString, QRectF>> regions;
+    for (Tag* tag : *tf->tags()) {
+        auto r = tf->tagRect(tag);
+        if (r.has_value())
+            regions.append({tag->tagFamily->getName(), tag->getName(), r.value()});
+    }
+
+    rectWarmupFuture_ = QtConcurrent::run([this, imagePath, regions]() {
+        warmupDescriptorCache(imagePath);
+        warmupKnownFaceEmbeddings(imagePath, regions);
+    });
+}
+
 void FaceRecognizer::scheduleEmbeddingWarmup(TaggedFile* tf)
 {
     if (!tf || !models_loaded_)
@@ -608,6 +626,8 @@ void FaceRecognizer::startBackgroundSweep(
                 continue;
             }
 
+            qDebug() << "[FaceRecognizer] processing (known-face):" << QFileInfo(fileInput.imagePath).fileName();
+
             auto cachedEntries = FaceRecognizer::loadKnownFaceCache(fileInput.imagePath);
 
             QVector<KnownFaceCacheEntry> updatedCache;
@@ -621,7 +641,7 @@ void FaceRecognizer::startBackgroundSweep(
                         if (entry.tagFamily == family
                                 && entry.tagName == name
                                 && entry.rect   == rect) {
-                            qDebug() << "[Phase1-bg] cache hit:" << name;
+                            qDebug() << "[FaceRecognizer] cache hit (known-face):" << name;
                             knownFaces.append({entry.embedding, family, name});
                             updatedCache.append(entry);
                             hitFound = true;
@@ -637,12 +657,12 @@ void FaceRecognizer::startBackgroundSweep(
                     ir.setAutoTransform(true);
                     img = ir.read();
                     if (img.isNull()) {
-                        qDebug() << "[Phase1-bg] failed to load image:" << fileInput.imagePath;
+                        qWarning() << "[FaceRecognizer] failed to load image:" << fileInput.imagePath;
                         break;
                     }
                 }
 
-                qDebug() << "[Phase1-bg] cache miss, computing embedding for:" << name;
+                qDebug() << "[FaceRecognizer] cache miss (known-face): computing embedding for:" << name;
                 // Use this instance's dlib objects under the mutex.
                 dlib::matrix<float,0,1> emb;
                 {
@@ -662,8 +682,10 @@ void FaceRecognizer::startBackgroundSweep(
                 cacheNeedsWrite = true;
             }
 
-            if (cacheNeedsWrite)
+            if (cacheNeedsWrite) {
+                qDebug() << "[FaceRecognizer] saving known-face cache:" << QFileInfo(fileInput.imagePath).fileName();
                 FaceRecognizer::saveKnownFaceCache(fileInput.imagePath, updatedCache);
+            }
 
             emit phase1Progress(++phase1Done, phase1Total);
         }
@@ -705,12 +727,16 @@ void FaceRecognizer::startBackgroundSweep(
                     return;
                 }
 
+                qDebug() << "[FaceRecognizer] processing:" << QFileInfo(imagePath).fileName();
+
                 auto cached = FaceRecognizer::loadDescriptorCache(imagePath);
                 QVector<QPair<QRectF, dlib::matrix<float,0,1>>> faces;
 
                 if (cached.has_value()) {
+                    qDebug() << "[FaceRecognizer] cache hit (descriptor):" << QFileInfo(imagePath).fileName();
                     faces = cached.value();
                 } else {
+                    qDebug() << "[FaceRecognizer] cache miss (descriptor):" << QFileInfo(imagePath).fileName();
                     QImageReader ir(imagePath);
                     ir.setAutoTransform(true);
                     QImage img = ir.read();
@@ -718,6 +744,7 @@ void FaceRecognizer::startBackgroundSweep(
                         FaceRecognizer* worker = pool.acquire();
                         faces = worker->detectFacesWithEmbeddings(img);
                         pool.release(worker);
+                        qDebug() << "[FaceRecognizer] saving descriptor cache:" << QFileInfo(imagePath).fileName();
                         FaceRecognizer::saveDescriptorCache(imagePath, faces);
                     }
                 }
@@ -937,7 +964,7 @@ void FaceRecognizer::promoteDescriptorEmbeddings(const QVector<PromotionEntry> &
             }
 
             if (!bestEmb) {
-                qDebug() << "[Promote] no descriptor match for" << entry.tagName
+                qDebug() << "[FaceRecognizer] promote: no descriptor match for" << entry.tagName
                          << "in" << QFileInfo(imagePath).fileName();
                 continue;
             }
@@ -949,7 +976,7 @@ void FaceRecognizer::promoteDescriptorEmbeddings(const QVector<PromotionEntry> &
             newEntry.embedding = *bestEmb;
             updatedKnown.append(newEntry);
             changed = true;
-            qDebug() << "[Promote] promoted" << entry.tagName
+            qDebug() << "[FaceRecognizer] promote: promoted" << entry.tagName
                      << "in" << QFileInfo(imagePath).fileName();
         }
 

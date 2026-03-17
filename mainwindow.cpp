@@ -381,6 +381,17 @@ MainWindow::MainWindow(QWidget *parent)
         QThreadPool::globalInstance()->setMaxThreadCount(idealThreads - 2);
     }
 
+    // Debounce timer for post-rect-adjust face cache warming.
+    // Interval is tunable via Luminism::RectWarmupDelayMs in constants.h.
+    rectWarmupTimer_ = new QTimer(this);
+    rectWarmupTimer_->setSingleShot(true);
+    rectWarmupTimer_->setInterval(Luminism::RectWarmupDelayMs);
+    connect(rectWarmupTimer_, &QTimer::timeout, this, [this]() {
+        if (warmupPendingFile_ && ensureFaceRecognizerLoaded())
+            face_recognizer_->scheduleRectAdjustWarmup(warmupPendingFile_);
+        warmupPendingFile_ = nullptr;
+    });
+
     // Install multi-line filename delegate on the file list view
     ui->fileListView->setItemDelegate(new FileNameDelegate(core, ui->fileListView));
 
@@ -932,8 +943,15 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         QModelIndex di = deselected.indexes().first();
         QModelIndex si = core->getItemModelProxy()->mapToSource(di);
         TaggedFile* prev = core->getItemModel()->data(si, Qt::UserRole + 1).value<TaggedFile*>();
+
+        // Cancel the pending debounce timer and immediately trigger a full warmup
+        // (descriptor cache + known-face cache) for the departing file, so that
+        // navigation away always completes cache warming regardless of the timer state.
+        rectWarmupTimer_->stop();
+        warmupPendingFile_ = nullptr;
+
         if (face_recognizer_)
-            face_recognizer_->scheduleEmbeddingWarmup(prev);
+            face_recognizer_->scheduleRectAdjustWarmup(prev);
     }
 
     // Use currentIndex() rather than selected.indexes().first().
@@ -1027,10 +1045,11 @@ void MainWindow::onTagDroppedOnPreview(const QString &family,
     else
         tf->addTag(tag, normalizedRect);
 
-    // Eagerly cache the embedding for this region so Phase 1 of a subsequent
-    // sweep finds a cache hit instead of recomputing it from scratch.
-    if (face_recognizer_)
-        face_recognizer_->scheduleEmbeddingWarmup(tf);
+    // Start (or restart) the debounce timer.  The user typically adjusts the
+    // rect immediately after dropping, so we wait for idle before warming the
+    // face caches — onTagRectResized will keep restarting the timer until they stop.
+    warmupPendingFile_ = tf;
+    rectWarmupTimer_->start();
 
     // Rebuild overlay list and push to preview
     refreshPreviewTagRects(tf);
@@ -1081,6 +1100,11 @@ void MainWindow::onTagDroppedOnExistingRegion(const QString &family,
     else
         tf->addTag(newTag, existingRect);
 
+    // The rect is already final here (existing region, not adjusted), so start
+    // the debounce timer to warm the face caches under the new tag name.
+    warmupPendingFile_ = tf;
+    rectWarmupTimer_->start();
+
     // Rebuild overlay list and push to preview
     refreshPreviewTagRects(tf);
 
@@ -1114,6 +1138,11 @@ void MainWindow::onTagRectResized(const QRectF &oldNorm, const QRectF &newNorm)
             break;
         }
     }
+
+    // Restart the debounce timer on every mouse-release so the cache is warmed
+    // only after the user has finished adjusting.
+    warmupPendingFile_ = tf;
+    rectWarmupTimer_->start();
 }
 
 /*! \brief Removes the tag region at \p normalizedRect from the selected file.

@@ -640,6 +640,12 @@ bool LuminismCore::hasUnsavedChanges()
 /*! \brief Writes JSON sidecar files for every file with unsaved changes. */
 void LuminismCore::writeFileMetadata(){
 
+    int dirtyCount = 0;
+    for (int row = 0; row < tagged_files_->rowCount(); ++row)
+        if (tagged_files_->item(row)->data().value<TaggedFile*>()->dirtyFlag())
+            ++dirtyCount;
+    qDebug() << "[LuminismCore] saving — dirty file count:" << dirtyCount;
+
     for (int row = 0; row < tagged_files_->rowCount(); ++row) {
         QVariant fi = tagged_files_->item(row)->data();
         TaggedFile* itemAsTaggedFile = fi.value<TaggedFile*>();

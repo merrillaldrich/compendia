@@ -140,7 +140,8 @@ private:
     FaceNet::anet_type net_;
     double detectionThreshold_ = Luminism::FaceDetectionThreshold;
     double matchThreshold_ = Luminism::FaceMatchThreshold; ///< Euclidean-distance threshold for recognising a known face.
-    QFuture<void> warmupFuture_; ///< Handle to the current background embedding warmup task.
+    QFuture<void> warmupFuture_;     ///< Handle to the current background embedding warmup task.
+    QFuture<void> rectWarmupFuture_; ///< Handle to the current background rect-adjust warmup task.
     QMutex embeddingMutex_; ///< Serialises all dlib inference calls; prevents concurrent access to non-thread-safe dlib models.
     QAtomicInt sweepCancelFlag_ {0}; ///< Set to 1 to request cancellation of the background sweep.
     QThread* sweepThread_ = nullptr; ///< The coordinator thread running the background sweep, or nullptr when idle.
@@ -223,6 +224,27 @@ public:
      * \param threshold The new match threshold value.
      */
     void setMatchThreshold(double threshold);
+
+    /*! \brief Warms the descriptor cache for a single image if it is missing or stale.
+     *
+     * Runs HOG detection + ResNet inference on \p imagePath and writes the result
+     * to the descriptor cache.  No-op if a valid cache already exists.
+     * Safe to call from a background thread; acquires embeddingMutex_ internally.
+     *
+     * \param imagePath Absolute path to the source image.
+     */
+    void warmupDescriptorCache(const QString &imagePath);
+
+    /*! \brief Schedules background warmup of both face caches for \p tf after a rect adjustment.
+     *
+     * Extracts the file path and tag regions from \p tf on the calling (main) thread,
+     * then launches a QtConcurrent task that warms the descriptor cache followed by
+     * the known-face cache.  Does nothing if models are not loaded or a rect warmup
+     * is already running.
+     *
+     * \param tf The file whose caches need warming. May be nullptr.
+     */
+    void scheduleRectAdjustWarmup(TaggedFile* tf);
 
     /*! \brief Triggers background known-face embedding warmup for \p tf if models are loaded.
      *
