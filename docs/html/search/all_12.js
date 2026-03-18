@@ -2,7 +2,7 @@ var searchData=
 [
   ['tag_0',['Tag',['../class_tag.html',1,'Tag'],['../class_tag.html#ab5bc29164dba636637c19eb80fa5ce45',1,'Tag::Tag(QObject *parent=nullptr)'],['../class_tag.html#a9dbbc2265eb7abb1f2a798c269725fad',1,'Tag::Tag(TagFamily *tf, QString t, QObject *parent=nullptr)']]],
   ['tag_1',['tag',['../struct_face_descriptor.html#a04775017a44d1ac32f77cece033c7d2c',1,'FaceDescriptor']]],
-  ['tag_20persistence_20format_2',['Tag persistence format',['../md__r_e_a_d_m_e.html#autotoc_md20',1,'']]],
+  ['tag_20persistence_20format_2',['Tag persistence format',['../md__r_e_a_d_m_e.html#autotoc_md25',1,'']]],
   ['tag_2ecpp_3',['tag.cpp',['../tag_8cpp.html',1,'']]],
   ['tag_2eh_4',['tag.h',['../tag_8h.html',1,'']]],
   ['tagassignmentcontainer_5',['TagAssignmentContainer',['../class_tag_assignment_container.html',1,'TagAssignmentContainer'],['../class_tag_assignment_container.html#a50559469a54b9da5d0889cf184d3d830',1,'TagAssignmentContainer::TagAssignmentContainer()']]],
@@ -38,7 +38,7 @@ var searchData=
   ['taggedfile_2ecpp_35',['taggedfile.cpp',['../taggedfile_8cpp.html',1,'']]],
   ['taggedfile_2eh_36',['taggedfile.h',['../taggedfile_8h.html',1,'']]],
   ['taggedfilejson_37',['TaggedFileJSON',['../class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688',1,'TaggedFile']]],
-  ['tagging_38',['Tagging',['../md__r_e_a_d_m_e.html#autotoc_md9',1,'']]],
+  ['tagging_38',['Tagging',['../md__r_e_a_d_m_e.html#autotoc_md10',1,'']]],
   ['taggingwidget_39',['TaggingWidget',['../class_tagging_widget.html',1,'TaggingWidget'],['../class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74',1,'TaggingWidget::TaggingWidget(QWidget *parent=nullptr)'],['../class_tagging_widget.html#aa6691ae072b8f48dfbd299bdee032cfe',1,'TaggingWidget::TaggingWidget(QColor color, QWidget *parent)']]],
   ['taggingwidget_2ecpp_40',['taggingwidget.cpp',['../taggingwidget_8cpp.html',1,'']]],
   ['taggingwidget_2eh_41',['taggingwidget.h',['../taggingwidget_8h.html',1,'']]],

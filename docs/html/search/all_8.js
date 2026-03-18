@@ -19,9 +19,10 @@ var searchData=
   ['inittagrect_16',['initTagRect',['../class_tagged_file.html#a545faeb645f4e753b20f86951410a650',1,'TaggedFile']]],
   ['iscollapsed_17',['isCollapsed',['../class_tag_family_widget.html#a4893c52530f20cf23e838999e836e8eb',1,'TagFamilyWidget::isCollapsed()'],['../class_tag_family_widget_collapse_button.html#ac7cb2ed804180d50404e8e65b602c92e',1,'TagFamilyWidgetCollapseButton::isCollapsed()']]],
   ['isisolated_18',['isIsolated',['../class_filter_proxy_model.html#afc9c90b1eb0745f8b88b9f232d664a96',1,'FilterProxyModel::isIsolated()'],['../class_luminism_core.html#ade881a7a01f98a39b23ddafc8c0fc019',1,'LuminismCore::isIsolated()']]],
-  ['isolationsetsize_19',['isolationSetSize',['../class_filter_proxy_model.html#ab95eb4eec0a0b26d26aba0a3648fa483',1,'FilterProxyModel::isolationSetSize()'],['../class_luminism_core.html#a5490029a780adb8cc266d4d251b8092f',1,'LuminismCore::isolationSetSize()']]],
-  ['isreadonly_20',['isReadOnly',['../class_star_rating_widget.html#a33cbc869002c7f2bc233825a5cb56c71',1,'StarRatingWidget']]],
-  ['issweeprunning_21',['isSweepRunning',['../class_face_recognizer.html#a596d5bde630fb2a78975559afe225d04',1,'FaceRecognizer']]],
-  ['iswelcomeshowing_22',['isWelcomeShowing',['../class_welcome_hint_container.html#ad29d37ebb7227b899df6a977c9917b10',1,'WelcomeHintContainer']]],
-  ['itemat_23',['itemAt',['../class_flow_layout.html#a14c3661044dd9b97ef0c0a34d0692ce4',1,'FlowLayout']]]
+  ['isolation_19',['Navigation &amp;amp; Isolation',['../md__r_e_a_d_m_e.html#autotoc_md14',1,'']]],
+  ['isolationsetsize_20',['isolationSetSize',['../class_filter_proxy_model.html#ab95eb4eec0a0b26d26aba0a3648fa483',1,'FilterProxyModel::isolationSetSize()'],['../class_luminism_core.html#a5490029a780adb8cc266d4d251b8092f',1,'LuminismCore::isolationSetSize()']]],
+  ['isreadonly_21',['isReadOnly',['../class_star_rating_widget.html#a33cbc869002c7f2bc233825a5cb56c71',1,'StarRatingWidget']]],
+  ['issweeprunning_22',['isSweepRunning',['../class_face_recognizer.html#a596d5bde630fb2a78975559afe225d04',1,'FaceRecognizer']]],
+  ['iswelcomeshowing_23',['isWelcomeShowing',['../class_welcome_hint_container.html#ad29d37ebb7227b899df6a977c9917b10',1,'WelcomeHintContainer']]],
+  ['itemat_24',['itemAt',['../class_flow_layout.html#a14c3661044dd9b97ef0c0a34d0692ce4',1,'FlowLayout']]]
 ];

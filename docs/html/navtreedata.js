@@ -31,21 +31,26 @@ var NAVTREE =
       [ "Architecture", "md__c_l_a_u_d_e.html#autotoc_md3", null ],
       [ "Key dependencies", "md__c_l_a_u_d_e.html#autotoc_md4", null ]
     ] ],
-    [ "Luminism", "md__r_e_a_d_m_e.html", [
+    [ "luminism", "md__r_e_a_d_m_e.html", [
       [ "Features", "md__r_e_a_d_m_e.html#autotoc_md7", [
-        [ "Browsing &amp; Preview", "md__r_e_a_d_m_e.html#autotoc_md8", null ],
-        [ "Tagging", "md__r_e_a_d_m_e.html#autotoc_md9", null ],
-        [ "Filtering", "md__r_e_a_d_m_e.html#autotoc_md10", null ],
-        [ "EXIF Metadata", "md__r_e_a_d_m_e.html#autotoc_md11", null ],
-        [ "Face Detection", "md__r_e_a_d_m_e.html#autotoc_md12", null ]
+        [ "Cross-Platform", "md__r_e_a_d_m_e.html#autotoc_md8", null ],
+        [ "Browsing &amp; Preview", "md__r_e_a_d_m_e.html#autotoc_md9", null ],
+        [ "Tagging", "md__r_e_a_d_m_e.html#autotoc_md10", null ],
+        [ "Filtering", "md__r_e_a_d_m_e.html#autotoc_md11", null ],
+        [ "EXIF Metadata", "md__r_e_a_d_m_e.html#autotoc_md12", null ],
+        [ "Star Ratings", "md__r_e_a_d_m_e.html#autotoc_md13", null ],
+        [ "Navigation &amp; Isolation", "md__r_e_a_d_m_e.html#autotoc_md14", null ],
+        [ "Autos", "md__r_e_a_d_m_e.html#autotoc_md15", null ],
+        [ "Face Detection", "md__r_e_a_d_m_e.html#autotoc_md16", null ],
+        [ "Export", "md__r_e_a_d_m_e.html#autotoc_md17", null ]
       ] ],
-      [ "Architecture", "md__r_e_a_d_m_e.html#autotoc_md14", null ],
-      [ "Building", "md__r_e_a_d_m_e.html#autotoc_md16", [
-        [ "Prerequisites", "md__r_e_a_d_m_e.html#autotoc_md17", null ],
-        [ "Configure and build", "md__r_e_a_d_m_e.html#autotoc_md18", null ]
+      [ "Architecture", "md__r_e_a_d_m_e.html#autotoc_md19", null ],
+      [ "Building", "md__r_e_a_d_m_e.html#autotoc_md21", [
+        [ "Prerequisites", "md__r_e_a_d_m_e.html#autotoc_md22", null ],
+        [ "Configure and build", "md__r_e_a_d_m_e.html#autotoc_md23", null ]
       ] ],
-      [ "Tag persistence format", "md__r_e_a_d_m_e.html#autotoc_md20", null ],
-      [ "License", "md__r_e_a_d_m_e.html#autotoc_md22", null ]
+      [ "Tag persistence format", "md__r_e_a_d_m_e.html#autotoc_md25", null ],
+      [ "License", "md__r_e_a_d_m_e.html#autotoc_md27", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],

@@ -3,7 +3,7 @@ var searchData=
   ['label_0',['label',['../struct_tag_rect_descriptor.html#a2ce0d3c15579a6bb19e060041cc11101',1,'TagRectDescriptor']]],
   ['leaveevent_1',['leaveEvent',['../class_star_rating_widget.html#a8c295803b8bbcee232c7ca8df20f385a',1,'StarRatingWidget::leaveEvent()'],['../class_tag_family_widget_collapse_button.html#a20bebc9afcf4cc0ae8b882a3c45bce93',1,'TagFamilyWidgetCollapseButton::leaveEvent()'],['../class_tag_widget_close_button.html#a6f760d60c5b11e596d5fb6134a435ce6',1,'TagWidgetCloseButton::leaveEvent()']]],
   ['lessorequal_2',['LessOrEqual',['../class_filter_proxy_model.html#a197d3dfd40f0e8f5a532a24b79c49957a6b28b4e7966b4898593756d407786388',1,'FilterProxyModel']]],
-  ['license_3',['License',['../md__r_e_a_d_m_e.html#autotoc_md22',1,'']]],
+  ['license_3',['License',['../md__r_e_a_d_m_e.html#autotoc_md27',1,'']]],
   ['loaddescriptorcache_4',['loadDescriptorCache',['../class_face_recognizer.html#af2c86b611c231f4e3b3b6b1d99410bba',1,'FaceRecognizer']]],
   ['loadheifimage_5',['loadHeifImage',['../class_exif_parser.html#adfffcd699ddaba06801187abdb478181',1,'ExifParser']]],
   ['loadiconfromcache_6',['loadIconFromCache',['../class_icon_generator.html#a2603878f77e894973369e8ef92393732',1,'IconGenerator']]],
@@ -11,8 +11,9 @@ var searchData=
   ['loadknownfacecache_8',['loadKnownFaceCache',['../class_face_recognizer.html#a73eb77b36b38abf6266b3cf144f55698',1,'FaceRecognizer']]],
   ['loadmodels_9',['loadModels',['../class_face_recognizer.html#a116c5898ca709e6b7937584702b9791d',1,'FaceRecognizer']]],
   ['loadrootdirectory_10',['loadRootDirectory',['../class_luminism_core.html#a797e7ab9f7b0c18348eb182c08abb980',1,'LuminismCore']]],
-  ['luminism_11',['Luminism',['../namespace_luminism.html',1,'Luminism'],['../md__r_e_a_d_m_e.html',1,'Luminism']]],
-  ['luminismcore_12',['LuminismCore',['../class_luminism_core.html',1,'LuminismCore'],['../class_luminism_core.html#a3934fffde12ddceb6394a338b76a9021',1,'LuminismCore::LuminismCore()']]],
-  ['luminismcore_2ecpp_13',['luminismcore.cpp',['../luminismcore_8cpp.html',1,'']]],
-  ['luminismcore_2eh_14',['luminismcore.h',['../luminismcore_8h.html',1,'']]]
+  ['luminism_11',['Luminism',['../namespace_luminism.html',1,'']]],
+  ['luminism_12',['luminism',['../md__r_e_a_d_m_e.html',1,'']]],
+  ['luminismcore_13',['LuminismCore',['../class_luminism_core.html',1,'LuminismCore'],['../class_luminism_core.html#a3934fffde12ddceb6394a338b76a9021',1,'LuminismCore::LuminismCore()']]],
+  ['luminismcore_2ecpp_14',['luminismcore.cpp',['../luminismcore_8cpp.html',1,'']]],
+  ['luminismcore_2eh_15',['luminismcore.h',['../luminismcore_8h.html',1,'']]]
 ];

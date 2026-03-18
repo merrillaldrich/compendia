@@ -21,14 +21,15 @@ var searchData=
   ['alevel4_18',['alevel4',['../namespace_face_net.html#aaa70af427fb01eb73895ed40f6088af9',1,'FaceNet']]],
   ['all_19',['all',['../struct_face_worker_pool.html#a9e6651b05e92933e41cd86839d93c0ea',1,'FaceWorkerPool']]],
   ['alltags_20',['AllTags',['../class_filter_proxy_model.html#aa60d4c14f6431fb80cd25bf579c07886ada903735a3e0764a39ffba0987342574',1,'FilterProxyModel']]],
-  ['and_20build_21',['Configure and build',['../md__r_e_a_d_m_e.html#autotoc_md18',1,'']]],
+  ['and_20build_21',['Configure and build',['../md__r_e_a_d_m_e.html#autotoc_md23',1,'']]],
   ['anet_5ftype_22',['anet_type',['../namespace_face_net.html#a28b094bb3ca685334991eb4daf08de32',1,'FaceNet']]],
   ['anytag_23',['AnyTag',['../class_filter_proxy_model.html#aa60d4c14f6431fb80cd25bf579c07886a928bd24129ac826caa8256f7364c76b8',1,'FilterProxyModel']]],
   ['applytag_24',['applyTag',['../class_luminism_core.html#a9fe93be3e6f05b1d8901f307f09a0880',1,'LuminismCore::applyTag(Tag *tag)'],['../class_luminism_core.html#acf6b3ddfa22ee738d40c7304edff0ce3',1,'LuminismCore::applyTag(TaggedFile *file, TagSet tagSet)']]],
   ['applyvideometadata_25',['applyVideoMetadata',['../class_luminism_core.html#acf347084d0c24766be9cc65de69ba4af',1,'LuminismCore']]],
-  ['architecture_26',['Architecture',['../md__c_l_a_u_d_e.html#autotoc_md3',1,'Architecture'],['../md__r_e_a_d_m_e.html#autotoc_md14',1,'Architecture']]],
+  ['architecture_26',['Architecture',['../md__c_l_a_u_d_e.html#autotoc_md3',1,'Architecture'],['../md__r_e_a_d_m_e.html#autotoc_md19',1,'Architecture']]],
   ['ares_27',['ares',['../namespace_face_net.html#aa3fdcd5db447bcdde71dafcbac99dff3',1,'FaceNet']]],
   ['ares_5fdown_28',['ares_down',['../namespace_face_net.html#a01c2e4d95e1c8443bebcdceaa6a1eb10',1,'FaceNet']]],
   ['autofacetagprefix_29',['AutoFaceTagPrefix',['../namespace_luminism.html#af20f2964b3cbd8b89167bec425aef4d2',1,'Luminism']]],
-  ['available_30',['available',['../struct_face_worker_pool.html#a44cee03bcd0f3b6e5564b5f426da0cff',1,'FaceWorkerPool']]]
+  ['autos_30',['Autos',['../md__r_e_a_d_m_e.html#autotoc_md15',1,'']]],
+  ['available_31',['available',['../struct_face_worker_pool.html#a44cee03bcd0f3b6e5564b5f426da0cff',1,'FaceWorkerPool']]]
 ];

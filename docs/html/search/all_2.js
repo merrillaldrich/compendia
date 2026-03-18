@@ -22,7 +22,7 @@ var searchData=
   ['computeembeddingfromregion_19',['computeEmbeddingFromRegion',['../class_face_recognizer.html#a54c8d6730fc07a45b820b98e9732cc9d',1,'FaceRecognizer']]],
   ['computehash_20',['computeHash',['../class_perceptual_hasher.html#a8cd0f79689bd75b97392b47a4bc30cb1',1,'PerceptualHasher']]],
   ['cond_21',['cond',['../struct_face_worker_pool.html#acfc24edc48a625c860695883f63b4aef',1,'FaceWorkerPool']]],
-  ['configure_20and_20build_22',['Configure and build',['../md__r_e_a_d_m_e.html#autotoc_md18',1,'']]],
+  ['configure_20and_20build_22',['Configure and build',['../md__r_e_a_d_m_e.html#autotoc_md23',1,'']]],
   ['connectfilecountlabel_23',['connectFileCountLabel',['../class_main_window.html#a5922ea5b8d1a4ddb7ac1667feedb97e9',1,'MainWindow']]],
   ['constants_2eh_24',['constants.h',['../constants_8h.html',1,'']]],
   ['containsfiles_25',['containsFiles',['../class_luminism_core.html#a7d3911b03d851bc2111456b424d8e8c9',1,'LuminismCore']]],
@@ -31,5 +31,6 @@ var searchData=
   ['count_28',['count',['../class_flow_layout.html#a35bdf8dac35631d59767d0c0fedc7248',1,'FlowLayout']]],
   ['countallfileswithtag_29',['countAllFilesWithTag',['../class_luminism_core.html#af677310c6e34245b39461540a93e7732',1,'LuminismCore']]],
   ['countvisiblefileswithtag_30',['countVisibleFilesWithTag',['../class_luminism_core.html#ac1ae1ed8d57eb11a2852ac1e3e27f832',1,'LuminismCore']]],
-  ['createandeditnewtag_31',['createAndEditNewTag',['../class_tag_family_widget.html#aa01d5624906b5ea17c66e37b70dc5c1f',1,'TagFamilyWidget']]]
+  ['createandeditnewtag_31',['createAndEditNewTag',['../class_tag_family_widget.html#aa01d5624906b5ea17c66e37b70dc5c1f',1,'TagFamilyWidget']]],
+  ['cross_20platform_32',['Cross-Platform',['../md__r_e_a_d_m_e.html#autotoc_md8',1,'']]]
 ];

@@ -14,7 +14,7 @@ var searchData=
   ['mediatype_11',['mediaType',['../class_tagged_file.html#a794a37b3f0fc475b9602d41dc45ef240',1,'TaggedFile']]],
   ['mergetag_12',['mergeTag',['../class_luminism_core.html#ad45fa14a20458c52ac754b4c4f836901',1,'LuminismCore']]],
   ['mergetagfamily_13',['mergeTagFamily',['../class_luminism_core.html#aa81cd544a2b00e02a90caa083df8bb11',1,'LuminismCore']]],
-  ['metadata_14',['EXIF Metadata',['../md__r_e_a_d_m_e.html#autotoc_md11',1,'']]],
+  ['metadata_14',['EXIF Metadata',['../md__r_e_a_d_m_e.html#autotoc_md12',1,'']]],
   ['metadatasaved_15',['metadataSaved',['../class_luminism_core.html#a76277bedc09c6d3fa112620cad940151',1,'LuminismCore']]],
   ['minimumsize_16',['minimumSize',['../class_flow_layout.html#a18816b6e9008a0731af92749975ce63f',1,'FlowLayout']]],
   ['minimumsizehint_17',['minimumSizeHint',['../class_star_rating_widget.html#a4d520686a81e3eeb74bad35374d203a1',1,'StarRatingWidget::minimumSizeHint()'],['../class_tag_widget.html#a9a26b6d251cdf5a553a1ad059298910e',1,'TagWidget::minimumSizeHint()'],['../class_wrap_label.html#a9fb2c6fd7640044eb10f26e8a9bee7fb',1,'WrapLabel::minimumSizeHint()']]],

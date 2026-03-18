@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['face_20detection_0',['Face Detection',['../md__r_e_a_d_m_e.html#autotoc_md12',1,'']]],
+  ['face_20detection_0',['Face Detection',['../md__r_e_a_d_m_e.html#autotoc_md16',1,'']]],
   ['facedescriptor_1',['FaceDescriptor',['../struct_face_descriptor.html',1,'']]],
   ['facedescriptorcachesuffix_2',['FaceDescriptorCacheSuffix',['../namespace_luminism.html#a26acd7bfc0d0e5e8b4f64ae6038f8880',1,'Luminism']]],
   ['facedetection_3',['FaceDetection',['../class_multi_progress_bar.html#a266201615bd29e484176359586b43a46ad52b2c30778c76c5feb01dd6660877d2',1,'MultiProgressBar']]],
@@ -30,7 +30,7 @@ var searchData=
   ['filesize_27',['fileSize',['../class_tagged_file.html#a0e19a34627b539ca06500d9cf5b42f25',1,'TaggedFile']]],
   ['filter_28',['filter',['../class_tag_container.html#a9ab18bddd7907259dfdd7558ebfb7c49',1,'TagContainer']]],
   ['filteracceptsrow_29',['filterAcceptsRow',['../class_filter_proxy_model.html#ae3b628e58b77cf9e8f0a45ae7b4aec1b',1,'FilterProxyModel']]],
-  ['filtering_30',['Filtering',['../md__r_e_a_d_m_e.html#autotoc_md10',1,'']]],
+  ['filtering_30',['Filtering',['../md__r_e_a_d_m_e.html#autotoc_md11',1,'']]],
   ['filterproxymodel_31',['FilterProxyModel',['../class_filter_proxy_model.html',1,'FilterProxyModel'],['../class_filter_proxy_model.html#ab54b4d26d99c470733a09fffd4b5fd4d',1,'FilterProxyModel::FilterProxyModel()']]],
   ['filterproxymodel_2ecpp_32',['filterproxymodel.cpp',['../filterproxymodel_8cpp.html',1,'']]],
   ['filterproxymodel_2eh_33',['filterproxymodel.h',['../filterproxymodel_8h.html',1,'']]],
@@ -51,7 +51,7 @@ var searchData=
   ['folderscanner_2ecpp_48',['folderscanner.cpp',['../folderscanner_8cpp.html',1,'']]],
   ['folderscanner_2eh_49',['folderscanner.h',['../folderscanner_8h.html',1,'']]],
   ['folderstats_50',['FolderStats',['../struct_luminism_core_1_1_folder_stats.html',1,'LuminismCore']]],
-  ['format_51',['Tag persistence format',['../md__r_e_a_d_m_e.html#autotoc_md20',1,'']]],
+  ['format_51',['Tag persistence format',['../md__r_e_a_d_m_e.html#autotoc_md25',1,'']]],
   ['framefailed_52',['frameFailed',['../class_frame_grabber.html#a0f0ce181dabff156cc277c3355ee1fa8',1,'FrameGrabber']]],
   ['framegrabbed_53',['frameGrabbed',['../class_frame_grabber.html#ac3dccb012627711871c7361d3adf9b8d',1,'FrameGrabber']]],
   ['framegrabber_54',['FrameGrabber',['../class_frame_grabber.html',1,'FrameGrabber'],['../class_frame_grabber.html#aa3831a484eaf10cef11820c0df7e0a90',1,'FrameGrabber::FrameGrabber()']]],

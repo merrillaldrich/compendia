@@ -11,7 +11,7 @@ var searchData=
   ['dependencies_8',['Key dependencies',['../md__c_l_a_u_d_e.html#autotoc_md4',1,'']]],
   ['detectfaces_9',['detectFaces',['../class_face_recognizer.html#a2101aef223e12cf1eb899617c40ec01d',1,'FaceRecognizer']]],
   ['detectfaceswithembeddings_10',['detectFacesWithEmbeddings',['../class_face_recognizer.html#a2ea1f1c2df07cbfa97977ef9f8e4b6bf',1,'FaceRecognizer']]],
-  ['detection_11',['Face Detection',['../md__r_e_a_d_m_e.html#autotoc_md12',1,'']]],
+  ['detection_11',['Face Detection',['../md__r_e_a_d_m_e.html#autotoc_md16',1,'']]],
   ['detectionthreshold_12',['detectionThreshold',['../class_face_recognition_settings_dialog.html#a4aefb0894df52c2bfeebe0679d19546c',1,'FaceRecognitionSettingsDialog::detectionThreshold()'],['../class_face_recognizer.html#a8673657acdccd3d07e078444d8ba2863',1,'FaceRecognizer::detectionThreshold()']]],
   ['dirtyflag_13',['dirtyFlag',['../class_tag.html#a0f4a341db369da475a9bffae4e59f896',1,'Tag::dirtyFlag()'],['../class_tag_family.html#a523d8565f13ea691c99f74d4389abc2a',1,'TagFamily::dirtyFlag()'],['../class_tagged_file.html#a13484167b27d2d3a20869742d082fd62',1,'TaggedFile::dirtyFlag()']]],
   ['dismisswelcome_14',['dismissWelcome',['../class_welcome_hint_container.html#a32ffaad64052a7df49382995d674b0ad',1,'WelcomeHintContainer']]],
