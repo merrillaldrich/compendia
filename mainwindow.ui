@@ -839,6 +839,8 @@
     <addaction name="actionSave_All"/>
     <addaction name="actionSave_Visible"/>
     <addaction name="separator"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuFilter">
@@ -925,6 +927,11 @@
   <action name="actionRemove_Auto_Detected_Faces">
    <property name="text">
     <string>Remove Auto Detected Faces</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export...</string>
    </property>
   </action>
   <action name="actionQuit">

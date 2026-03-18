@@ -404,6 +404,9 @@ private slots:
     /*! \brief Slot for Help → About Luminism; opens the About dialog. */
     void on_actionAbout_triggered();
 
+    /*! \brief Slot for File → Export; copies all visible files to a user-chosen folder. */
+    void on_actionExport_triggered();
+
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
      *

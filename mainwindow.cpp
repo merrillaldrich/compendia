@@ -7,6 +7,7 @@
 #include <QCheckBox>
 #include <QCoreApplication>
 #include <QDir>
+#include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QGraphicsView>
@@ -1942,4 +1943,106 @@ void MainWindow::on_actionAbout_triggered()
 {
     auto *dlg = new AboutDialog(this);
     dlg->show();
+}
+
+/*! \brief Slot for File → Export; copies all visible files to a user-chosen folder.
+ *
+ * Collects every file currently passing the proxy filter, asks the user for a
+ * destination folder, warns if that folder is inside the open project tree
+ * (which would create duplicates), then copies each media file (no sidecars,
+ * no cache files).
+ */
+void MainWindow::on_actionExport_triggered()
+{
+    FilterProxyModel *proxy = core->getItemModelProxy();
+    const int count = proxy->rowCount();
+    if (count == 0) {
+        QMessageBox::information(this, tr("Export"), tr("There are no visible files to export."));
+        return;
+    }
+
+    // Ask the user for a destination folder.
+    const QString destPath = QFileDialog::getExistingDirectory(
+        this,
+        tr("Export Files — Choose Destination Folder"),
+        QDir::homePath(),
+        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    if (destPath.isEmpty())
+        return;
+
+    // Warn if the destination is inside (or equal to) the project root.
+    const QString cleanRoot = QDir::cleanPath(core->rootDirectory());
+    const QString cleanDest = QDir::cleanPath(destPath);
+    if (!cleanRoot.isEmpty() &&
+        (cleanDest == cleanRoot || cleanDest.startsWith(cleanRoot + QDir::separator()))) {
+        QMessageBox mb(QMessageBox::Warning,
+                       tr("Export"),
+                       tr("The selected destination folder is inside the open project folder.\n\n"
+                          "Exporting here would create duplicate files within the project tree. "
+                          "Are you sure you want to continue?"),
+                       QMessageBox::Ok | QMessageBox::Cancel,
+                       this);
+        if (mb.exec() != QMessageBox::Ok)
+            return;
+    }
+
+    // Collect source paths from the proxy model.
+    QStringList sourcePaths;
+    sourcePaths.reserve(count);
+    for (int row = 0; row < count; ++row) {
+        QModelIndex proxyIdx = proxy->index(row, 0);
+        QModelIndex srcIdx   = proxy->mapToSource(proxyIdx);
+        auto *item = core->getItemModel()->itemFromIndex(srcIdx);
+        if (!item)
+            continue;
+        auto *tf = qvariant_cast<TaggedFile*>(item->data(Qt::UserRole + 1));
+        if (!tf || tf->filePath.isEmpty() || tf->fileName.isEmpty())
+            continue;
+        sourcePaths.append(tf->filePath + "/" + tf->fileName);
+    }
+
+    if (sourcePaths.isEmpty()) {
+        QMessageBox::information(this, tr("Export"), tr("No files were found to export."));
+        return;
+    }
+
+    // Copy files, skipping any that live inside a cache directory.
+    const QString cacheDirName = QStringLiteral(".luminism_cache");
+    int copied  = 0;
+    int skipped = 0;
+    QStringList errors;
+
+    for (const QString &src : std::as_const(sourcePaths)) {
+        // Skip cache files.
+        if (src.contains(cacheDirName))
+            continue;
+
+        const QString fileName = QFileInfo(src).fileName();
+        const QString dest     = QDir(destPath).filePath(fileName);
+
+        if (!QFile::copy(src, dest)) {
+            // If the copy failed because the file already exists, count as skipped.
+            if (QFile::exists(dest))
+                ++skipped;
+            else
+                errors.append(fileName);
+        } else {
+            ++copied;
+        }
+    }
+
+    // Report results (rich text so the folder link is clickable).
+    const QString folderUrl = QUrl::fromLocalFile(destPath).toString();
+    QString summary = tr("Export complete.<br><br>Copied: %1 file(s)").arg(copied);
+    if (skipped > 0)
+        summary += tr("<br>Skipped (already exist): %1 file(s)").arg(skipped);
+    if (!errors.isEmpty())
+        summary += tr("<br>Failed: %1 file(s)").arg(errors.size());
+    summary += tr("<br><br><a href=\"%1\">Open Folder</a>").arg(folderUrl);
+
+    QMessageBox mb(QMessageBox::Information, tr("Export"), summary, QMessageBox::Ok, this);
+    mb.setTextFormat(Qt::RichText);
+    mb.setTextInteractionFlags(Qt::TextBrowserInteraction);
+    mb.exec();
 }
