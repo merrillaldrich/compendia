@@ -279,12 +279,109 @@ endif()
 # ──────────────────────────────────────────────────────────────────────────────
 
 include(GNUInstallDirs)
-install(TARGETS luminism
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+
+# On Windows install the exe to the package root so windeployqt's DLLs,
+# Qt plugins, and the models/ directory all sit at the same level.
+if(WIN32)
+    install(TARGETS luminism RUNTIME DESTINATION .)
+else()
+    install(TARGETS luminism
+        BUNDLE  DESTINATION .
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+endif()
+
+# ── Model files ───────────────────────────────────────────────────────────────
+# dlib face-recognition .dat files are large (~30 MB combined) and not in the
+# repository.  Run  cmake -P cmake/DownloadModels.cmake  to download them.
+# Once present in models/ they are bundled into every installer package.
+set(MODEL_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/models/shape_predictor_5_face_landmarks.dat"
+    "${CMAKE_CURRENT_SOURCE_DIR}/models/dlib_face_recognition_resnet_model_v1.dat"
 )
+set(MODELS_FOUND TRUE)
+foreach(f IN LISTS MODEL_FILES)
+    if(NOT EXISTS "${f}")
+        set(MODELS_FOUND FALSE)
+    endif()
+endforeach()
+
+if(MODELS_FOUND)
+    install(FILES ${MODEL_FILES} DESTINATION models)
+else()
+    message(STATUS
+        "luminism: model .dat files not found in models/ — face recognition "
+        "will not work in the packaged app.\n"
+        "Run:  cmake -P cmake/DownloadModels.cmake  to download them.")
+endif()
+
+# Convenience target so Qt Creator / IDEs can trigger a download from the build.
+add_custom_target(download_models
+    COMMAND "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/DownloadModels.cmake"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMENT "Downloading dlib face recognition model files"
+)
+
+# ── Windows Qt + runtime deployment ───────────────────────────────────────────
+if(WIN32)
+    # Locate windeployqt from the same Qt installation used to build.
+    get_filename_component(QT_BIN_DIR "${Qt6_DIR}/../../../bin" ABSOLUTE)
+    find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt
+        HINTS "${QT_BIN_DIR}"
+              "C:/Qt/6.10.1/mingw_64/bin"
+        NO_DEFAULT_PATH)
+
+    # Locate the MinGW runtime DLLs that windeployqt does not copy.
+    get_filename_component(QT_ROOT "${Qt6_DIR}/../../../../../" ABSOLUTE)
+    file(GLOB _mingw_candidates "${QT_ROOT}/Tools/mingw*/bin")
+    if(_mingw_candidates)
+        list(SORT _mingw_candidates ORDER DESCENDING)
+        list(GET _mingw_candidates 0 MINGW_BIN_DIR)
+    else()
+        set(MINGW_BIN_DIR "C:/Qt/Tools/mingw1310_64/bin")
+    endif()
+    message(STATUS "MinGW bin dir: ${MINGW_BIN_DIR}")
+
+    if(WINDEPLOYQT_EXECUTABLE)
+        message(STATUS "windeployqt: ${WINDEPLOYQT_EXECUTABLE}")
+        # install(CODE) runs as part of every cmake --install, including
+        # CPack's internal install, so the DLLs end up in the package.
+        install(CODE "
+            message(STATUS \"Running windeployqt...\")
+            execute_process(
+                COMMAND \"${WINDEPLOYQT_EXECUTABLE}\"
+                    --release
+                    --no-translations
+                    \"\${CMAKE_INSTALL_PREFIX}/luminism.exe\"
+                RESULT_VARIABLE _wd_result
+            )
+            if(NOT _wd_result EQUAL 0)
+                message(WARNING \"windeployqt exited with code \${_wd_result}\")
+            endif()
+
+            message(STATUS \"Copying MinGW runtime DLLs...\")
+            foreach(_dll
+                    libgcc_s_seh-1.dll
+                    libstdc++-6.dll
+                    libwinpthread-1.dll)
+                if(EXISTS \"${MINGW_BIN_DIR}/\${_dll}\")
+                    file(COPY \"${MINGW_BIN_DIR}/\${_dll}\"
+                         DESTINATION \"\${CMAKE_INSTALL_PREFIX}\")
+                else()
+                    message(WARNING \"MinGW DLL not found: ${MINGW_BIN_DIR}/\${_dll}\")
+                endif()
+            endforeach()
+        ")
+    else()
+        message(WARNING
+            "luminism: windeployqt not found — Qt DLLs will not be deployed.\n"
+            "Set WINDEPLOYQT_EXECUTABLE in CMake cache or add Qt bin to PATH.")
+    endif()
+endif()
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(luminism)
 endif()
+
+include(cmake/Packaging.cmake)
