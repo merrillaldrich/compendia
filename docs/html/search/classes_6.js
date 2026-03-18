@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['luminismcore_0',['LuminismCore',['../class_luminism_core.html',1,'']]]
+  ['knownfacecacheentry_0',['KnownFaceCacheEntry',['../struct_known_face_cache_entry.html',1,'']]]
 ];

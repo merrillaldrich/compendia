@@ -1,5 +1,6 @@
 var annotated_dup =
 [
+    [ "AboutDialog", "class_about_dialog.html", "class_about_dialog" ],
     [ "ClickableLabel", "class_clickable_label.html", "class_clickable_label" ],
     [ "DateFilterButton", "class_date_filter_button.html", "class_date_filter_button" ],
     [ "ExifParser", "class_exif_parser.html", "class_exif_parser" ],

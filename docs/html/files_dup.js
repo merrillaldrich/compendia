@@ -1,5 +1,7 @@
 var files_dup =
 [
+    [ "aboutdialog.cpp", "aboutdialog_8cpp.html", null ],
+    [ "aboutdialog.h", "aboutdialog_8h.html", "aboutdialog_8h" ],
     [ "clickablelabel.cpp", "clickablelabel_8cpp.html", null ],
     [ "clickablelabel.h", "clickablelabel_8h.html", "clickablelabel_8h" ],
     [ "constants.h", "constants_8h.html", "constants_8h" ],

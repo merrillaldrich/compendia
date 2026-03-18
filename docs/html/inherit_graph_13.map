@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="Node000000" title=" " alt="" coords="5,31,68,57"/>
 <area shape="rect" id="Node000001" href="$class_clickable_label.html" title="A QLabel that emits a clicked() signal on mouse release." alt="" coords="116,5,222,32"/>
-<area shape="poly" id="edge6_Node000000_Node000001" title=" " alt="" coords="82,33,118,28,113,30,84,38"/>
+<area shape="poly" id="edge7_Node000000_Node000001" title=" " alt="" coords="82,33,118,28,113,30,84,38"/>
 <area shape="rect" id="Node000002" href="$class_wrap_label.html" title="A QLabel that grows in height to show all word&#45;wrapped text." alt="" coords="128,56,210,83"/>
-<area shape="poly" id="edge7_Node000000_Node000002" title=" " alt="" coords="83,50,130,61,125,62,83,55"/>
+<area shape="poly" id="edge8_Node000000_Node000002" title=" " alt="" coords="83,50,130,61,125,62,83,55"/>
 </map>

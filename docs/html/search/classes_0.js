@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['clickablelabel_0',['ClickableLabel',['../class_clickable_label.html',1,'']]]
+  ['aboutdialog_0',['AboutDialog',['../class_about_dialog.html',1,'']]]
 ];

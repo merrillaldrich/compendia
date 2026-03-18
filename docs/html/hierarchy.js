@@ -14,6 +14,7 @@ var hierarchy =
       [ "SpeakerButton", "class_speaker_button.html", null ]
     ] ],
     [ "QDialog", null, [
+      [ "AboutDialog", "class_about_dialog.html", null ],
       [ "FaceRecognitionSettingsDialog", "class_face_recognition_settings_dialog.html", null ]
     ] ],
     [ "QGraphicsObject", null, [

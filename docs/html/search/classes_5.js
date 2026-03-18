@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['knownfacecacheentry_0',['KnownFaceCacheEntry',['../struct_known_face_cache_entry.html',1,'']]]
+  ['icongenerator_0',['IconGenerator',['../class_icon_generator.html',1,'']]]
 ];
