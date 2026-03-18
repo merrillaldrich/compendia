@@ -12,5 +12,6 @@
         <file>resources/drill-into-folder.svg</file>
         <file>resources/drill-up-folder.svg</file>
         <file>resources/tag-search.svg</file>
+        <file>resources/about_background.svg</file>
     </qresource>
 </RCC>

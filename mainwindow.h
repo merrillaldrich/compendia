@@ -17,6 +17,7 @@
 #include "facerecognitionsettingsdialog.h"
 #include "framegrabber.h"
 #include "constants.h"
+#include "aboutdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -399,6 +400,9 @@ private slots:
 
     /*! \brief Navigates up one folder level, stopping at the drill ceiling. */
     void on_actionDrillUp_triggered();
+
+    /*! \brief Slot for Help → About Luminism; opens the About dialog. */
+    void on_actionAbout_triggered();
 
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
