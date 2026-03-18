@@ -1979,7 +1979,7 @@ void MainWindow::on_actionExport_triggered()
         QMessageBox mb(QMessageBox::Warning,
                        tr("Export"),
                        tr("The selected destination folder is inside the open project folder.\n\n"
-                          "Exporting here would create duplicate files within the project tree. "
+                          "Exporting here would create duplicate files within the project. "
                           "Are you sure you want to continue?"),
                        QMessageBox::Ok | QMessageBox::Cancel,
                        this);
@@ -2007,29 +2007,60 @@ void MainWindow::on_actionExport_triggered()
         return;
     }
 
-    // Copy files, skipping any that live inside a cache directory.
+    // Filter out cache files and build the final list of (src, dest) pairs.
     const QString cacheDirName = QStringLiteral(".luminism_cache");
+    struct CopyJob { QString src; QString dest; QString fileName; };
+    QList<CopyJob> jobs;
+    jobs.reserve(sourcePaths.size());
+    for (const QString &src : std::as_const(sourcePaths)) {
+        if (src.contains(cacheDirName))
+            continue;
+        const QString fileName = QFileInfo(src).fileName();
+        jobs.append({src, QDir(destPath).filePath(fileName), fileName});
+    }
+
+    // Check for pre-existing files at the destination.
+    const int existingCount = static_cast<int>(
+        std::count_if(jobs.cbegin(), jobs.cend(),
+                      [](const CopyJob &j){ return QFile::exists(j.dest); }));
+
+    bool overwrite = false;
+    if (existingCount > 0) {
+        QMessageBox mb(QMessageBox::Warning, tr("Export"),
+                       tr("%n of these files already exist in the destination folder. "
+                          "What would you like to do?", "", existingCount),
+                       QMessageBox::NoButton, this);
+        QPushButton *overwriteBtn = mb.addButton(tr("Overwrite Existing Files"),  QMessageBox::AcceptRole);
+        QPushButton *skipBtn      = mb.addButton(tr("Skip Existing Files"),       QMessageBox::AcceptRole);
+        mb.addButton(tr("Cancel Export"), QMessageBox::RejectRole);
+        mb.exec();
+
+        if (mb.clickedButton() == overwriteBtn)
+            overwrite = true;
+        else if (mb.clickedButton() == skipBtn)
+            overwrite = false;
+        else
+            return; // Cancel
+    }
+
+    // Copy files.
     int copied  = 0;
     int skipped = 0;
     QStringList errors;
 
-    for (const QString &src : std::as_const(sourcePaths)) {
-        // Skip cache files.
-        if (src.contains(cacheDirName))
-            continue;
-
-        const QString fileName = QFileInfo(src).fileName();
-        const QString dest     = QDir(destPath).filePath(fileName);
-
-        if (!QFile::copy(src, dest)) {
-            // If the copy failed because the file already exists, count as skipped.
-            if (QFile::exists(dest))
+    for (const CopyJob &job : std::as_const(jobs)) {
+        if (QFile::exists(job.dest)) {
+            if (!overwrite) {
                 ++skipped;
-            else
-                errors.append(fileName);
-        } else {
-            ++copied;
+                continue;
+            }
+            QFile::remove(job.dest);
         }
+
+        if (!QFile::copy(job.src, job.dest))
+            errors.append(job.fileName);
+        else
+            ++copied;
     }
 
     // Report results (rich text so the folder link is clickable).
