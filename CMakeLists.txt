@@ -323,6 +323,44 @@ add_custom_target(download_models
     COMMENT "Downloading dlib face recognition model files"
 )
 
+# ── Third-party DLLs (vcpkg) ──────────────────────────────────────────────────
+# libexif and libheif are import-library builds from vcpkg — their DLLs and
+# transitive codec dependencies must be deployed alongside the exe.
+# Auto-detect the vcpkg install tree relative to this repo; override with
+# -DVCPKG_INSTALLED_DIR=<path> if your vcpkg lives elsewhere.
+if(WIN32)
+    set(VCPKG_INSTALLED_DIR "" CACHE PATH
+        "Path to vcpkg installed/x64-windows (contains bin/heif.dll etc.)")
+
+    if(NOT VCPKG_INSTALLED_DIR)
+        foreach(_candidate
+                "${CMAKE_CURRENT_SOURCE_DIR}/../vcpkg/installed/x64-windows"
+                "$ENV{USERPROFILE}/vcpkg/installed/x64-windows"
+                "C:/vcpkg/installed/x64-windows")
+            if(EXISTS "${_candidate}/bin/heif.dll")
+                set(VCPKG_INSTALLED_DIR "${_candidate}" CACHE PATH "" FORCE)
+                break()
+            endif()
+        endforeach()
+    endif()
+
+    if(VCPKG_INSTALLED_DIR)
+        message(STATUS "vcpkg bin: ${VCPKG_INSTALLED_DIR}/bin")
+        set(_THIRD_PARTY_DLLS
+            "${VCPKG_INSTALLED_DIR}/bin/exif-12.dll"
+            "${VCPKG_INSTALLED_DIR}/bin/heif.dll"
+            "${VCPKG_INSTALLED_DIR}/bin/libde265.dll"
+            "${VCPKG_INSTALLED_DIR}/bin/libx265.dll"
+        )
+        install(FILES ${_THIRD_PARTY_DLLS} DESTINATION .)
+    else()
+        message(WARNING
+            "luminism: vcpkg installed dir not found — exif-12.dll, heif.dll "
+            "and codec DLLs will be absent from the package.\n"
+            "Set -DVCPKG_INSTALLED_DIR=<path/to/vcpkg/installed/x64-windows>")
+    endif()
+endif()
+
 # ── Windows Qt + runtime deployment ───────────────────────────────────────────
 if(WIN32)
     # Locate windeployqt from the same Qt installation used to build.
