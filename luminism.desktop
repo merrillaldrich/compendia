@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Luminism
+Comment=Media asset manager for photographers, hobbyists, and archivists
+Exec=luminism
+Icon=luminism
+Categories=Graphics;Photography;
+Terminal=false
+StartupWMClass=luminism

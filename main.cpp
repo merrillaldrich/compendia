@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QIcon>
 
 // ── Theme colours ──────────────────────────────────────────────────────────
 static const char* NAV_BLUE    = "rgb(96, 174, 233)"; ///< Lighter blue — nav panel
@@ -17,6 +18,7 @@ static const char* MENU_BLUE = "rgb(0, 135, 200)";  ///< Darker blue  — menu/s
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setWindowIcon(QIcon(":/resources/luminism_icon.svg"));
     QFile qss(":/resources/luminism.qss");
     if (qss.open(QFile::ReadOnly)) {
         QString styles = qss.readAll();

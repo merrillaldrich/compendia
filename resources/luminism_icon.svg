@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!--
+    Application icon — 256 × 256 square canvas.
+
+    Bold capital "L", scaled to 75% of the about-dialog original,
+    rotated 20° counter-clockwise, centred on the canvas.
+
+    Original path bounding box (local coords): 134 w × 225 h.
+    Centre of bounding box (local):            (67, 112.5).
+    Stem / foot thickness:                     31 px (local).
+
+    Transform derivation
+    ────────────────────
+    1. rotate(-20, 67, 112.5)  — rotate around local centre; centre stays at (67, 112.5).
+    2. scale(0.75)             — centre moves to (50.25, 84.375).
+    3. translate(77.75, 43.625)— centre arrives at (128, 128), the canvas midpoint.
+  -->
+
+  <!-- Background -->
+  <rect x="0" y="0" width="256" height="256" rx="24" ry="24" fill="#ffffff"/>
+
+  <!-- "L" glyph — shifted up 10% (25.6 px) from centred position -->
+  <g transform="translate(77.75, 30.825) scale(0.75) rotate(-20, 67, 112.5)">
+    <path d="M 0,0 L 31,0 L 31,194 L 134,194 L 134,225 L 0,225 Z"
+          fill="#666666"/>
+  </g>
+</svg>

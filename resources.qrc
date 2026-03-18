@@ -13,5 +13,6 @@
         <file>resources/drill-up-folder.svg</file>
         <file>resources/tag-search.svg</file>
         <file>resources/about_background.svg</file>
+        <file>resources/luminism_icon.svg</file>
     </qresource>
 </RCC>

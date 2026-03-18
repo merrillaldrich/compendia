@@ -186,6 +186,98 @@ set_target_properties(luminism PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+# ── Application icon ──────────────────────────────────────────────────────────
+set(ICON_SVG     "${CMAKE_CURRENT_SOURCE_DIR}/resources/luminism_icon.svg")
+set(ICON_ICO     "${CMAKE_CURRENT_BINARY_DIR}/luminism.ico")   # generated here
+set(ICON_ICO_SRC "${CMAKE_CURRENT_SOURCE_DIR}/resources/luminism.ico") # committed copy
+
+if(WIN32)
+    # Prefer Inkscape for accurate SVG rendering; fall back to ImageMagick alone.
+    find_program(INKSCAPE_EXECUTABLE NAMES inkscape
+        HINTS "C:/Program Files/Inkscape/bin")
+    find_program(MAGICK_EXECUTABLE NAMES magick
+        HINTS "C:/Program Files/ImageMagick-7.1.2-Q16-HDRI")
+
+    set(ICON_TOOLS_FOUND FALSE)
+
+    if(INKSCAPE_EXECUTABLE AND MAGICK_EXECUTABLE)
+        # Inkscape renders each PNG size; ImageMagick assembles the ICO.
+        add_custom_command(
+            OUTPUT "${ICON_ICO}"
+            COMMAND "${INKSCAPE_EXECUTABLE}" -w 16  -h 16  -o "${CMAKE_CURRENT_BINARY_DIR}/icon_16.png"  "${ICON_SVG}"
+            COMMAND "${INKSCAPE_EXECUTABLE}" -w 32  -h 32  -o "${CMAKE_CURRENT_BINARY_DIR}/icon_32.png"  "${ICON_SVG}"
+            COMMAND "${INKSCAPE_EXECUTABLE}" -w 48  -h 48  -o "${CMAKE_CURRENT_BINARY_DIR}/icon_48.png"  "${ICON_SVG}"
+            COMMAND "${INKSCAPE_EXECUTABLE}" -w 256 -h 256 -o "${CMAKE_CURRENT_BINARY_DIR}/icon_256.png" "${ICON_SVG}"
+            COMMAND "${MAGICK_EXECUTABLE}"
+                "${CMAKE_CURRENT_BINARY_DIR}/icon_16.png"
+                "${CMAKE_CURRENT_BINARY_DIR}/icon_32.png"
+                "${CMAKE_CURRENT_BINARY_DIR}/icon_48.png"
+                "${CMAKE_CURRENT_BINARY_DIR}/icon_256.png"
+                "${ICON_ICO}"
+            DEPENDS "${ICON_SVG}"
+            COMMENT "Generating luminism.ico (Inkscape + ImageMagick)"
+            VERBATIM
+        )
+        set(ICON_TOOLS_FOUND TRUE)
+    elseif(MAGICK_EXECUTABLE)
+        # ImageMagick renders the SVG directly and writes all ICO frames at once.
+        add_custom_command(
+            OUTPUT "${ICON_ICO}"
+            COMMAND "${MAGICK_EXECUTABLE}"
+                -background none -density 300
+                "${ICON_SVG}"
+                -define icon:auto-resize=256,48,32,16
+                "${ICON_ICO}"
+            DEPENDS "${ICON_SVG}"
+            COMMENT "Generating luminism.ico (ImageMagick)"
+            VERBATIM
+        )
+        set(ICON_TOOLS_FOUND TRUE)
+    endif()
+
+    if(ICON_TOOLS_FOUND)
+        # After generating into the build dir, copy back to resources/ so the
+        # result can be committed and used on machines without the tools.
+        add_custom_target(luminism_ico ALL
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${ICON_ICO}" "${ICON_ICO_SRC}"
+            DEPENDS "${ICON_ICO}"
+            COMMENT "Copying luminism.ico to resources/"
+            VERBATIM
+        )
+        add_dependencies(luminism luminism_ico)
+    elseif(EXISTS "${ICON_ICO_SRC}")
+        # No tools present — copy the checked-in ICO to the build dir at configure
+        # time so windres can find it.
+        message(STATUS "luminism: using checked-in resources/luminism.ico")
+        configure_file("${ICON_ICO_SRC}" "${ICON_ICO}" COPYONLY)
+    else()
+        message(WARNING
+            "luminism: Inkscape/ImageMagick not found and no checked-in ICO — "
+            "Windows icon will be absent. Install either tool and rebuild.")
+    endif()
+
+    # Wire up the .rc whenever we will have an ICO in the build dir
+    # (either freshly generated or copied from source at configure time).
+    if(ICON_TOOLS_FOUND OR EXISTS "${ICON_ICO_SRC}")
+        configure_file(
+            "${CMAKE_CURRENT_SOURCE_DIR}/luminism.rc.in"
+            "${CMAKE_CURRENT_BINARY_DIR}/luminism.rc"
+        )
+        target_sources(luminism PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/luminism.rc")
+    endif()
+endif()
+
+if(UNIX AND NOT APPLE)
+    # Install the scalable SVG into the hicolor icon theme so GNOME/KDE pick it up.
+    install(FILES "${ICON_SVG}"
+            DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps"
+            RENAME "luminism.svg")
+    # .desktop file makes the app appear in the GNOME application grid.
+    install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/luminism.desktop"
+            DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")
+endif()
+# ──────────────────────────────────────────────────────────────────────────────
+
 include(GNUInstallDirs)
 install(TARGETS luminism
     BUNDLE DESTINATION .
