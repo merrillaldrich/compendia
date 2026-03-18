@@ -880,9 +880,16 @@
     <addaction name="separator"/>
     <addaction name="actionFind_Similar_Images"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilter"/>
    <addaction name="menuAutos"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_Folder">
@@ -983,6 +990,11 @@
    </property>
    <property name="enabled">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About Luminism...</string>
    </property>
   </action>
  </widget>

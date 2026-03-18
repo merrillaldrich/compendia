@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(luminism VERSION 0.1 LANGUAGES CXX)
+project(luminism VERSION 0.1.0 LANGUAGES CXX)
+
+# Generate version.h from version.h.in, substituting project version variables.
+configure_file(version.h.in "${CMAKE_CURRENT_BINARY_DIR}/version.h")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -86,10 +89,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         perceptualhasher.h perceptualhasher.cpp
         starratingwidget.h starratingwidget.cpp
         folderscanner.h folderscanner.cpp
+        aboutdialog.h aboutdialog.cpp
 
     )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET luminism APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

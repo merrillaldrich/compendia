@@ -1937,3 +1937,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->ignore();
     }
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutDialog dlg(this);
+    dlg.exec();
+}
