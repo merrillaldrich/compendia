@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675">
+  <!--
+    Placeholder background for the About dialog — landscape 4:3 (900 x 675).
+    A bold capital "L" sits in the top-left third of the image area
+    (roughly 0-300 x, 0-225 y), rotated 20 degrees counter-clockwise.
+
+    The "L" is the same proportional shape as the original, scaled by 1.406
+    so its height (225 px) matches exactly one third of the canvas height,
+    preserving the original aspect ratio without distortion.
+
+    Path bounding box (local coords): 134 w x 225 h.
+    Stroke weight: 31 px (vertical) / 31 px (horizontal).
+
+    The shape is centred at (150, 112.5) — the centre of the top-left 1/3
+    region — then rotated -20° around that same point.
+    Rotation centre in local coords: (67, 112.5).
+    Translation to place that centre at (150, 112.5): translate(83, 0).
+  -->
+  <g transform="translate(83, 0) rotate(-20, 67, 112.5)">
+    <path d="M 0,0 L 31,0 L 31,194 L 134,194 L 134,225 L 0,225 Z"
+          fill="#666666" opacity="0.22"/>
+  </g>
+</svg>

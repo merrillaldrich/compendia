@@ -1940,6 +1940,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::on_actionAbout_triggered()
 {
-    AboutDialog dlg(this);
-    dlg.exec();
+    auto *dlg = new AboutDialog(this);
+    dlg->show();
 }

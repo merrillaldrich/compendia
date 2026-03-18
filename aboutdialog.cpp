@@ -1,52 +1,46 @@
 #include "aboutdialog.h"
+#include "ui_aboutdialog.h"
 #include "version.h"
-
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QPainter>
+#include <QSvgRenderer>
 
 AboutDialog::AboutDialog(QWidget *parent)
     : QDialog(parent)
+    , ui(new Ui::AboutDialog)
 {
-    setWindowTitle(tr("About Luminism"));
-    setMinimumWidth(420);
+    ui->setupUi(this);
+    setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint);
+    setAttribute(Qt::WA_DeleteOnClose);
+    resize(900, 675);
+    setMinimumSize(600, 450);
 
-    auto *layout = new QVBoxLayout(this);
-    layout->setSpacing(12);
+    // Make the scroll area and its interior transparent so the background
+    // image shows through.  QLabel's autoFillBackground is false by default,
+    // but QScrollArea and its viewport paint an opaque background unless told
+    // otherwise.
+    ui->scrollArea->setAutoFillBackground(false);
+    ui->scrollArea->viewport()->setAutoFillBackground(false);
+    ui->scrollAreaWidgetContents->setAutoFillBackground(false);
 
-    auto *content = new QLabel(this);
-    content->setTextFormat(Qt::RichText);
-    content->setWordWrap(true);
-    content->setOpenExternalLinks(false);
-    content->setText(
-        "<h2>Luminism</h2>"
-        "<p>Version " APP_VERSION_STRING "</p>"
-        "<p>A desktop application for managing and tagging media files.</p>"
-        "<hr>"
-        "<p><b>Third-party dependencies</b></p>"
-        "<ul>"
-        "<li><b>Qt 6</b> &mdash; UI framework (Widgets, Core, Concurrent, "
-        "Multimedia, MultimediaWidgets)<br>"
-        "Licensed under the GNU Lesser General Public License v3.</li>"
-        "<li><b>dlib</b> &mdash; Face detection and recognition<br>"
-        "Licensed under the Boost Software License 1.0.</li>"
-        "<li><b>libexif</b> &mdash; EXIF metadata extraction<br>"
-        "Licensed under the GNU Lesser General Public License v2.1.</li>"
-        "<li><b>libheif</b> &mdash; HEIF/HEIC image decoding<br>"
-        "Licensed under the GNU Lesser General Public License v3.</li>"
-        "</ul>"
-        "<hr>"
-        "<p><b>License</b></p>"
-        "<p>This program is free software: you can redistribute it and/or "
-        "modify it under the terms of the GNU General Public License as "
-        "published by the Free Software Foundation, version&nbsp;3.</p>"
-        "<hr>"
-        "<p>Copyright &copy; Merrill Aldrich. All rights reserved.</p>"
-    );
+    ui->versionLabel->setText(tr("Version %1").arg(APP_VERSION_STRING));
+    if (QPushButton *ok = ui->buttonBox->button(QDialogButtonBox::Ok))
+        ok->setIcon(QIcon());
+}
 
-    layout->addWidget(content);
+AboutDialog::~AboutDialog()
+{
+    delete ui;
+}
 
-    auto *buttons = new QDialogButtonBox(QDialogButtonBox::Ok, this);
-    connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
-    layout->addWidget(buttons);
+void AboutDialog::paintEvent(QPaintEvent *event)
+{
+    QDialog::paintEvent(event);
+    static QSvgRenderer renderer(QStringLiteral(":/resources/about_background.svg"));
+    QPainter p(this);
+    // Render at the SVG's native design size (900x675), pinned to the
+    // top-left corner.  When the window is smaller the image crops from the
+    // right and bottom edges; when larger the image simply doesn't fill the
+    // extra space.
+    renderer.render(&p, QRectF(0, 0, 900, 675));
 }
