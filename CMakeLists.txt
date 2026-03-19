@@ -267,6 +267,8 @@ if(WIN32)
     endif()
 endif()
 
+include(GNUInstallDirs)
+
 if(UNIX AND NOT APPLE)
     # Install the scalable SVG into the hicolor icon theme so GNOME/KDE pick it up.
     install(FILES "${ICON_SVG}"
@@ -277,8 +279,6 @@ if(UNIX AND NOT APPLE)
             DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")
 endif()
 # ──────────────────────────────────────────────────────────────────────────────
-
-include(GNUInstallDirs)
 
 # On Windows install the exe to the package root so windeployqt's DLLs,
 # Qt plugins, and the models/ directory all sit at the same level.

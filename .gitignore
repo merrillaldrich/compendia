@@ -59,3 +59,8 @@ build/
 models/shape_predictor_5_face_landmarks.dat
 models/dlib_face_recognition_resnet_model_v1.dat
 .claude/settings.local.json
+
+# AppImage packaging artifacts
+AppDir/
+packaging/tools/
+Luminism-*.AppImage
