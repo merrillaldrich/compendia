@@ -34,6 +34,9 @@ public:
     /*! \brief Returns the currently selected date, or an invalid QDate if none. */
     QDate date() const;
 
+    /*! \brief Clears the date filter and emits dateChanged() with an invalid date. */
+    void clear();
+
     /*! \brief Supplies the sorted list of dates that autocomplete draws from.
      *
      * Call this after every folder load.  Dates should correspond to the effective

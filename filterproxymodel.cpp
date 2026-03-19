@@ -134,6 +134,14 @@ void FilterProxyModel::removeTagFilter(Tag* tag){
     endFilterChange();
 }
 
+/*! \brief Clears all active tag filters and re-applies the filter. */
+void FilterProxyModel::clearTagFilters()
+{
+    beginFilterChange();
+    tags_.clear();
+    endFilterChange();
+}
+
 /*! \brief Returns a pointer to the set of tags currently used for filtering.
  *
  * \return Pointer to the internal active-filter tag set.

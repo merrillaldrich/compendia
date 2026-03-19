@@ -273,11 +273,10 @@ MainWindow::MainWindow(QWidget *parent)
         il->addSpacing(12);
 
         // How it works
-        il->addWidget(makeSectionLabel("How it works"));
+        il->addWidget(makeSectionLabel("Tips"));
 
         const QStringList tips = {
-            "Make groups of tags in the library (left)."
-            "Drag and drop tags onto files to apply them.",
+            "Make groups of tags in the library (left). Drag and drop tags onto files to apply them.",
             "Filter your view by tag, name, folder, or date using the filter panel (top).",
             "Right-click files and choose Isolate Selection to focus on a subset.",
             "Use Autos > Face Detection to find and tag faces automatically.",
@@ -753,6 +752,37 @@ void MainWindow::on_actionClearFolderIsolation_triggered()
     clearFolderIsolation();
 }
 
+/*! \brief Resets all filter controls to their default empty state. */
+void MainWindow::on_actionClearAllFilters_triggered()
+{
+    // Tag filters
+    core->clearAllTagFilters();
+    refreshTagFilterArea();
+
+    // Name and folder text fields (signals propagate to core automatically)
+    ui->fileNameFilterLineEdit->clear();
+    clearFolderIsolation();
+
+    // Date filter
+    ui->dateEdit->clear();
+
+    // Rating filter — setRating() is display-only and does not emit ratingChanged(),
+    // so clear the proxy directly as well.
+    ui->filterStarRating->setRating(std::nullopt);
+    core->setRatingFilter(std::nullopt);
+    core->setRatingFilterMode(FilterProxyModel::Exactly);
+    ui->ratingFilterModeButton->setText(tr("Exactly"));
+
+    // Tag filter mode — reset to ANY
+    core->getItemModelProxy()->setTagFilterMode(FilterProxyModel::AnyTag);
+    ui->tagFilterModeButton->setText(tr("ANY"));
+
+    // Isolation sets
+    clearSelectionIsolation();
+
+    refreshTagAssignmentArea();
+}
+
 bool MainWindow::isAtDrillCeiling() const
 {
     return drillCeilingPath_.isEmpty()
@@ -999,6 +1029,8 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
     QItemSelectionModel* sm = ui->fileListView->selectionModel();
     const QModelIndex proxyIndex = sm ? sm->currentIndex() : QModelIndex();
 
+    const bool hasSelection = sm && !sm->selectedIndexes().isEmpty();
+    ui->actionIsolateSelection->setEnabled(hasSelection);
     ui->actionIsolateFolderSelection->setEnabled(proxyIndex.isValid());
     ui->actionDrillToFolder->setEnabled(proxyIndex.isValid());
 

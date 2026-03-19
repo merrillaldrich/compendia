@@ -52,6 +52,16 @@ QDate DateFilterButton::date() const
     return date_;
 }
 
+/*! \brief Clears the date filter and emits dateChanged() with an invalid date. */
+void DateFilterButton::clear()
+{
+    if (!date_.isValid())
+        return;
+    date_ = QDate();
+    lineEdit_->clear();
+    emit dateChanged(date_);
+}
+
 /*! \brief Validates the typed text and emits dateChanged() when editing finishes. */
 void DateFilterButton::onEditingFinished()
 {

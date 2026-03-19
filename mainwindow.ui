@@ -853,6 +853,8 @@
     <addaction name="actionClearFolderIsolation"/>
     <addaction name="actionDrillToFolder"/>
     <addaction name="actionDrillUp"/>
+    <addaction name="separator"/>
+    <addaction name="actionClearAllFilters"/>
    </widget>
    <widget class="QMenu" name="menuAutos">
     <property name="title">
@@ -958,6 +960,9 @@
    <property name="text">
     <string>Isolate Selection</string>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionClearIsolation">
    <property name="text">
@@ -997,6 +1002,11 @@
    </property>
    <property name="enabled">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionClearAllFilters">
+   <property name="text">
+    <string>Clear All</string>
    </property>
   </action>
   <action name="actionAbout">

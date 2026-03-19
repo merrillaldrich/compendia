@@ -88,6 +88,9 @@ public:
      */
     void removeTagFilter(Tag* tag);
 
+    /*! \brief Clears all active tag filters and re-applies the filter. */
+    void clearTagFilters();
+
     /*! \brief Sets the tag-filter mode and re-applies the filter.
      *
      * \param mode AnyTag (OR) or AllTags (AND).

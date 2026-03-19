@@ -395,6 +395,9 @@ private slots:
     /*! \brief Clears the folder isolation and restores the full unfiltered view. */
     void on_actionClearFolderIsolation_triggered();
 
+    /*! \brief Resets all filter controls to their default empty state. */
+    void on_actionClearAllFilters_triggered();
+
     /*! \brief Drills into the folder of the selected file, reloading with it as the new root. */
     void on_actionDrillToFolder_triggered();
 

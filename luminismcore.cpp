@@ -1146,6 +1146,12 @@ void LuminismCore::removeTagFilter(Tag* tag){
     tagged_files_proxy_->removeTagFilter(tag);
 }
 
+/*! \brief Clears all active tag filters. */
+void LuminismCore::clearAllTagFilters()
+{
+    tagged_files_proxy_->clearTagFilters();
+}
+
 /*! \brief Restricts the visible set to the given files; other filters still apply within the set.
  *
  * \param files The set of TaggedFile pointers to isolate.
