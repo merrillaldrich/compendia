@@ -267,6 +267,8 @@ if(WIN32)
     endif()
 endif()
 
+include(GNUInstallDirs)
+
 if(UNIX AND NOT APPLE)
     # Install the scalable SVG into the hicolor icon theme so GNOME/KDE pick it up.
     install(FILES "${ICON_SVG}"
@@ -278,7 +280,6 @@ if(UNIX AND NOT APPLE)
 endif()
 # ──────────────────────────────────────────────────────────────────────────────
 
-include(GNUInstallDirs)
 install(TARGETS luminism
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
