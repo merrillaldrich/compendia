@@ -672,9 +672,29 @@ void LuminismCore::writeFileMetadata(){
     clearAllDirtyFlags();
 }
 
-/*! \brief Writes JSON sidecar files for every visible (proxy-filtered) file with unsaved changes. */
+/*! \brief Writes JSON sidecar files for every visible (proxy-filtered) file with unsaved changes.
+ *
+ * Non-visible files that are dirty via a tag or tag-family rename are explicitly promoted to
+ * file-level dirty before the global tag/family flags are cleared, so they remain dirty and will
+ * be picked up by the next Save All.
+ */
 void LuminismCore::writeVisibleFileMetadata()
 {
+    // Collect the set of source rows that are visible so we can exclude them below.
+    QSet<int> visibleSourceRows;
+    for (int row = 0; row < tagged_files_proxy_->rowCount(); ++row) {
+        QModelIndex srcIndex = tagged_files_proxy_->mapToSource(tagged_files_proxy_->index(row, 0));
+        visibleSourceRows.insert(srcIndex.row());
+    }
+
+    // Promote non-visible dirty files to file-level dirty before we clear the tag/family flags.
+    for (int row = 0; row < tagged_files_->rowCount(); ++row) {
+        if (visibleSourceRows.contains(row)) continue;
+        TaggedFile* tf = tagged_files_->item(row)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf->dirtyFlag())
+            tf->markDirty();
+    }
+
     for (int row = 0; row < tagged_files_proxy_->rowCount(); ++row) {
         QModelIndex proxyIndex = tagged_files_proxy_->index(row, 0);
         QModelIndex srcIndex   = tagged_files_proxy_->mapToSource(proxyIndex);
@@ -699,6 +719,14 @@ void LuminismCore::writeVisibleFileMetadata()
 
         emit metadataSaved();
     }
+
+    // Clear only the tag and family dirty flags — file-level flags are handled per-file above
+    // (visible files' flags are cleared by clearAllDirtyFlags below after Save All, but here we
+    // need a targeted clear so that non-visible files promoted to file-level dirty are not lost).
+    for (Tag* tag : *tags_)
+        tag->clearDirtyFlag();
+    for (TagFamily* family : *tag_families_)
+        family->clearDirtyFlag();
 }
 
 /*! \brief Clears the dirty flag on every file, tag, and tag family. */
