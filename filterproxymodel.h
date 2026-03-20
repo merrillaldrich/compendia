@@ -37,6 +37,16 @@ private:
     std::optional<int> rating_filter_; ///< When set, only files matching the mode+value pass.
     RatingFilterMode rating_filter_mode_ = Exactly; ///< Comparison mode for the rating filter.
 
+    /*! \brief Tests \a tf against all base filters (name, folder, tag, date, rating).
+     *
+     * Shared implementation used by both filterAcceptsRow() and passesNonIsolationFilters().
+     * Does not consider the isolation set.
+     *
+     * \param tf The TaggedFile to evaluate.
+     * \return True if \a tf passes all base filters.
+     */
+    bool passesBaseFilters(TaggedFile* tf) const;
+
 protected:
     /*! \brief Overrides the Qt base-class row-acceptance test to apply all active filters.
      *
@@ -145,6 +155,18 @@ public:
      * \return Size of isolation_set_, or 0 when not isolated.
      */
     int isolationSetSize() const;
+
+    /*! \brief Tests \a tf against all active filters except the isolation set.
+     *
+     * Evaluates the name, folder, tag, date, and rating filters in the same
+     * way as filterAcceptsRow(), but deliberately ignores isolation_set_.
+     * Use this to detect files that would be hidden by the current filters
+     * even if the isolation set were replaced.
+     *
+     * \param tf The TaggedFile to evaluate.
+     * \return True if \a tf passes all non-isolation filters.
+     */
+    bool passesNonIsolationFilters(TaggedFile* tf) const;
 
 };
 

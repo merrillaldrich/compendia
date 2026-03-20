@@ -453,6 +453,17 @@ public:
      */
     QList<QList<TaggedFile*>> findSimilarImages(int threshold);
 
+    /*! \brief Returns all files within \a threshold Hamming distance of any file in \a seeds.
+     *
+     * Includes the seeds themselves in the result.  Files with a zero pHash are skipped
+     * as candidates (but seeds with a zero pHash are still included in the result set).
+     *
+     * \param seeds     The set of TaggedFile pointers to compare against.
+     * \param threshold Maximum Hamming distance to consider a file similar to a seed.
+     * \return Set of similar files including all seeds.
+     */
+    QSet<TaggedFile*> findSimilarTo(const QSet<TaggedFile*> &seeds, int threshold);
+
     /*! \brief Removes all auto-detected face tags from every file, the active
      *  filter, and the tag library. Cleans up now-empty tag families and emits
      *  tagLibraryChanged() once when done.

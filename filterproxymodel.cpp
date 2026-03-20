@@ -8,76 +8,46 @@ FilterProxyModel::FilterProxyModel(QObject *parent)
     : QSortFilterProxyModel{parent}
 {}
 
-/*! \brief Overrides the Qt base-class row-acceptance test to apply all active filters.
+/*! \brief Tests \a tf against all base filters (name, folder, tag, date, rating).
  *
- * \param sourceRow    The row index in the source model to test.
- * \param sourceParent The parent index in the source model.
- * \return True if the row passes all active filters.
+ * Shared implementation used by both filterAcceptsRow() and passesNonIsolationFilters().
+ * Does not consider the isolation set.
+ *
+ * \param tf The TaggedFile to evaluate.
+ * \return True if \a tf passes all base filters.
  */
-bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+bool FilterProxyModel::passesBaseFilters(TaggedFile* tf) const
 {
-    QModelIndex i = sourceModel()->index(sourceRow, 0, sourceParent);
-    QVariant val = i.data(Qt::UserRole + 1);
-    TaggedFile* itemAsTaggedFile = val.value<TaggedFile*>();
+    bool nameResult = name_filter_.isEmpty()
+        || tf->fileName.contains(name_filter_, Qt::CaseInsensitive);
 
-    // Isolation filter — evaluated first so non-isolated files are rejected cheaply.
-    if (!isolation_set_.isEmpty() && !isolation_set_.contains(itemAsTaggedFile))
-        return false;
-
-    QString fileName = itemAsTaggedFile->fileName;
-    bool nameResult = false;
-
-    if (name_filter_ == ""){
-        nameResult = true;
-    }
-    else {
-        nameResult = fileName.contains(name_filter_, Qt::CaseInsensitive);
-    }
-
-    QString folderName = itemAsTaggedFile->filePath;
-    bool folderResult = false;
-
-    if (folder_filter_ == "") {
-        folderResult = true;
-    }
-    else {
-        // Append a delimiter to the path so that a filter like "italy/" matches the
-        // final segment "/pictures/vacation/italy" without any special-casing.
-        // Mid-path delimiters in the filter ("pictures/", "vacation/") continue to
-        // match normally since they are already present in the path.
-        folderResult = (folderName + QLatin1Char('/')).contains(folder_filter_, Qt::CaseInsensitive);
-    }
+    // Append a delimiter to the path so that a filter like "italy/" matches the
+    // final segment "/pictures/vacation/italy" without any special-casing.
+    bool folderResult = folder_filter_.isEmpty()
+        || (tf->filePath + QLatin1Char('/')).contains(folder_filter_, Qt::CaseInsensitive);
 
     bool tagResult = false;
-
     if (tags_.isEmpty()) {
         tagResult = true;
     } else {
-        const QSet<Tag*> &fileTags = *itemAsTaggedFile->tags();
+        const QSet<Tag*> &fileTags = *tf->tags();
         if (tagFilterMode_ == AnyTag) {
             tagResult = tags_.intersects(fileTags);
         } else {
             // AllTags: every filter tag must be present on the file
             tagResult = true;
             for (Tag* t : tags_) {
-                if (!fileTags.contains(t)) {
-                    tagResult = false;
-                    break;
-                }
+                if (!fileTags.contains(t)) { tagResult = false; break; }
             }
         }
     }
 
-    bool dateResult = false;
-    if (!creation_date_.isValid()) {
-        dateResult = true;
-    } else {
-        dateResult = itemAsTaggedFile->effectiveDate() == creation_date_;
-    }
+    bool dateResult = !creation_date_.isValid()
+        || tf->effectiveDate() == creation_date_;
 
     bool ratingResult = true;
     if (rating_filter_.has_value()) {
-        const std::optional<int> fileRating = itemAsTaggedFile->rating();
+        const std::optional<int> fileRating = tf->rating();
         if (!fileRating.has_value()) {
             ratingResult = false;
         } else {
@@ -92,6 +62,24 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &source
     }
 
     return nameResult && folderResult && tagResult && dateResult && ratingResult;
+}
+
+/*! \brief Overrides the Qt base-class row-acceptance test to apply all active filters.
+ *
+ * \param sourceRow    The row index in the source model to test.
+ * \param sourceParent The parent index in the source model.
+ * \return True if the row passes all active filters.
+ */
+bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    QModelIndex i = sourceModel()->index(sourceRow, 0, sourceParent);
+    TaggedFile* tf = i.data(Qt::UserRole + 1).value<TaggedFile*>();
+
+    // Isolation filter — evaluated first so non-isolated files are rejected cheaply.
+    if (!isolation_set_.isEmpty() && !isolation_set_.contains(tf))
+        return false;
+
+    return passesBaseFilters(tf);
 }
 
 /*! \brief Sets the filename substring filter and re-applies the filter.
@@ -218,4 +206,19 @@ bool FilterProxyModel::isIsolated() const {
  */
 int FilterProxyModel::isolationSetSize() const {
     return isolation_set_.size();
+}
+
+/*! \brief Tests \a tf against all active filters except the isolation set.
+ *
+ * Evaluates the name, folder, tag, date, and rating filters in the same
+ * way as filterAcceptsRow(), but deliberately ignores isolation_set_.
+ * Use this to detect files that would be hidden by the current filters
+ * even if the isolation set were replaced.
+ *
+ * \param tf The TaggedFile to evaluate.
+ * \return True if \a tf passes all non-isolation filters.
+ */
+bool FilterProxyModel::passesNonIsolationFilters(TaggedFile* tf) const
+{
+    return passesBaseFilters(tf);
 }

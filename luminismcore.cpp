@@ -1229,6 +1229,33 @@ QList<QList<TaggedFile*>> LuminismCore::findSimilarImages(int threshold)
     return result;
 }
 
+/*! \brief Returns all files within \a threshold Hamming distance of any file in \a seeds.
+ *
+ * Includes the seeds themselves in the result.  Files with a zero pHash are skipped
+ * as candidates (but seeds with a zero pHash are still included in the result set).
+ *
+ * \param seeds     The set of TaggedFile pointers to compare against.
+ * \param threshold Maximum Hamming distance to consider a file similar to a seed.
+ * \return Set of similar files including all seeds.
+ */
+QSet<TaggedFile*> LuminismCore::findSimilarTo(const QSet<TaggedFile*> &seeds, int threshold)
+{
+    QSet<TaggedFile*> result = seeds;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        TaggedFile* candidate = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!candidate || candidate->pHash() == 0 || result.contains(candidate))
+            continue;
+        for (TaggedFile* seed : seeds) {
+            if (seed->pHash() != 0 &&
+                PerceptualHasher::hammingDistance(candidate->pHash(), seed->pHash()) <= threshold) {
+                result.insert(candidate);
+                break;
+            }
+        }
+    }
+    return result;
+}
+
 /*! \brief Removes all auto-detected face tags from every file, the active
  *  filter, and the tag library. Cleans up now-empty tag families and emits
  *  tagLibraryChanged() once when done.

@@ -334,6 +334,58 @@ MainWindow::MainWindow(QWidget *parent)
 
             menu.addSeparator();
 
+            // Collect seed files (selected files with a valid pHash)
+            QSet<TaggedFile*> seeds;
+            const QModelIndexList selectedProxyIdxs = ui->fileListView->selectionModel()->selectedIndexes();
+            for (const QModelIndex &pi : selectedProxyIdxs) {
+                QModelIndex si = core->getItemModelProxy()->mapToSource(pi);
+                TaggedFile* tf = core->getItemModel()->data(si, Qt::UserRole + 1).value<TaggedFile*>();
+                if (tf && tf->pHash() != 0)
+                    seeds.insert(tf);
+            }
+
+            QAction* findSimilarAction = menu.addAction(tr("Find Similar Images"));
+            findSimilarAction->setEnabled(!seeds.isEmpty());
+            connect(findSimilarAction, &QAction::triggered, this, [this, seeds]() {
+                const QSet<TaggedFile*> similar = core->findSimilarTo(seeds, Luminism::SimilarImageThreshold);
+
+                if (similar.size() == seeds.size()) {
+                    QMessageBox::information(this, tr("Find Similar Images"),
+                        tr("No additional similar images were found for the selected file(s)."));
+                    return;
+                }
+
+                // Check which matches would be hidden by the current non-isolation filters.
+                QSet<TaggedFile*> hidden;
+                FilterProxyModel* proxy = core->getItemModelProxy();
+                for (TaggedFile* tf : similar) {
+                    if (!proxy->passesNonIsolationFilters(tf))
+                        hidden.insert(tf);
+                }
+
+                if (!hidden.isEmpty()) {
+                    QMessageBox dlg(this);
+                    dlg.setWindowTitle(tr("Find Similar Images"));
+                    dlg.setText(tr("%n similar image(s) found, but %1 would be hidden by the current filters. "
+                                   "What would you like to do?",
+                                   "", similar.size()).arg(hidden.size()));
+                    QPushButton* okBtn = dlg.addButton(tr("Show Available"), QMessageBox::AcceptRole);
+                    QPushButton* clearBtn = dlg.addButton(tr("Clear Filters"), QMessageBox::ResetRole);
+                    dlg.addButton(QMessageBox::Cancel);
+                    dlg.exec();
+
+                    QAbstractButton* clicked = dlg.clickedButton();
+                    if (clicked != okBtn && clicked != clearBtn)
+                        return;
+                    if (clicked == clearBtn)
+                        on_actionClearAllFilters_triggered();
+                }
+
+                core->setIsolationSet(similar);
+                ui->actionClearIsolation->setEnabled(true);
+                updateFileCountLabel();
+            });
+
             const QString fullPath = clickedTf->filePath + "/" + clickedTf->fileName;
             QAction* showInFileMgrAction = menu.addAction(tr("Open Folder in Filesystem"));
             connect(showInFileMgrAction, &QAction::triggered, this, [fullPath]() {
