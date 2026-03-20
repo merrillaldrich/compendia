@@ -973,6 +973,65 @@ void MainWindow::on_actionDrillUp_triggered()
     updateDrillUpEnabled();
 }
 
+/*! \brief Finds images similar to the current selection by perceptual hash and isolates them.
+ *
+ * Collects selected files that carry a valid pHash as seeds, then calls
+ * findSimilarTo() to locate near-duplicates across the whole project.  If any
+ * results would be hidden by the current filters the user is offered a chance
+ * to clear the filters or proceed with what is visible.
+ */
+void MainWindow::on_actionFind_Similar_In_Selection_triggered()
+{
+    QSet<TaggedFile*> seeds;
+    const QModelIndexList selectedProxyIdxs = ui->fileListView->selectionModel()->selectedIndexes();
+    for (const QModelIndex &pi : selectedProxyIdxs) {
+        QModelIndex si = core->getItemModelProxy()->mapToSource(pi);
+        TaggedFile* tf = core->getItemModel()->data(si, Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && tf->pHash() != 0)
+            seeds.insert(tf);
+    }
+
+    if (seeds.isEmpty()) return;
+
+    const QSet<TaggedFile*> similar = core->findSimilarTo(seeds, Luminism::SimilarImageThreshold);
+
+    if (similar.size() == seeds.size()) {
+        QMessageBox::information(this, tr("Find Similar Images"),
+            tr("No additional similar images were found for the selected file(s)."));
+        return;
+    }
+
+    // Check which matches would be hidden by the current non-isolation filters.
+    QSet<TaggedFile*> hidden;
+    FilterProxyModel* proxy = core->getItemModelProxy();
+    for (TaggedFile* tf : similar) {
+        if (!proxy->passesNonIsolationFilters(tf))
+            hidden.insert(tf);
+    }
+
+    if (!hidden.isEmpty()) {
+        QMessageBox dlg(this);
+        dlg.setWindowTitle(tr("Find Similar Images"));
+        dlg.setText(tr("%n similar image(s) found, but %1 would be hidden by the current filters. "
+                       "What would you like to do?",
+                       "", similar.size()).arg(hidden.size()));
+        QPushButton* okBtn  = dlg.addButton(tr("Show Available"), QMessageBox::AcceptRole);
+        QPushButton* clearBtn = dlg.addButton(tr("Clear Filters"), QMessageBox::ResetRole);
+        dlg.addButton(QMessageBox::Cancel);
+        dlg.exec();
+
+        QAbstractButton* clicked = dlg.clickedButton();
+        if (clicked != okBtn && clicked != clearBtn)
+            return;
+        if (clicked == clearBtn)
+            on_actionClearAllFilters_triggered();
+    }
+
+    core->setIsolationSet(similar);
+    ui->actionClearIsolation->setEnabled(true);
+    updateFileCountLabel();
+}
+
 /*! \brief Finds all near-duplicate image groups by perceptual hash and isolates them.
  *
  * Collects every file that belongs to a group of two or more near-duplicates and
@@ -1085,6 +1144,16 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
     ui->actionIsolateSelection->setEnabled(hasSelection);
     ui->actionIsolateFolderSelection->setEnabled(proxyIndex.isValid());
     ui->actionDrillToFolder->setEnabled(proxyIndex.isValid());
+
+    bool hasSeedInSelection = false;
+    if (sm) {
+        for (const QModelIndex &pi : sm->selectedIndexes()) {
+            QModelIndex si = core->getItemModelProxy()->mapToSource(pi);
+            TaggedFile* tf = core->getItemModel()->data(si, Qt::UserRole + 1).value<TaggedFile*>();
+            if (tf && tf->pHash() != 0) { hasSeedInSelection = true; break; }
+        }
+    }
+    ui->actionFind_Similar_In_Selection->setEnabled(hasSeedInSelection);
 
     if (!proxyIndex.isValid()) {
         ui->previewContainer->clear();

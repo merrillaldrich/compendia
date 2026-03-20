@@ -383,6 +383,9 @@ private slots:
     /*! \brief Isolates the currently selected files so only they pass the filter. */
     void on_actionIsolateSelection_triggered();
 
+    /*! \brief Finds images similar to the current selection by perceptual hash and isolates them. */
+    void on_actionFind_Similar_In_Selection_triggered();
+
     /*! \brief Finds all near-duplicate image groups by perceptual hash and isolates them. */
     void on_actionFind_Similar_Images_triggered();
 

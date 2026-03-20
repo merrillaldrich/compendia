@@ -882,7 +882,14 @@
     </widget>
     <addaction name="menuDates"/>
     <addaction name="separator"/>
-    <addaction name="actionFind_Similar_Images"/>
+    <widget class="QMenu" name="menuFind_Similar_Images">
+     <property name="title">
+      <string>Find Similar Images</string>
+     </property>
+     <addaction name="actionFind_Similar_In_Selection"/>
+     <addaction name="actionFind_Similar_Images"/>
+    </widget>
+    <addaction name="menuFind_Similar_Images"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -951,9 +958,17 @@
     <string>Auto Tag Month</string>
    </property>
   </action>
+  <action name="actionFind_Similar_In_Selection">
+   <property name="text">
+    <string>In Selection</string>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+  </action>
   <action name="actionFind_Similar_Images">
    <property name="text">
-    <string>Find Similar Images</string>
+    <string>Search Entire Project</string>
    </property>
   </action>
   <action name="actionIsolateSelection">
