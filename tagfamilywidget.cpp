@@ -455,4 +455,7 @@ void TagFamilyWidget::sort() {
     for (TagWidget* w : twlist) {
         layout()->addWidget(w);
     }
+
+    layout()->invalidate();
+    layout()->activate();
 }
