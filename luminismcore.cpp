@@ -2,10 +2,13 @@
 #include "constants.h"
 #include "perceptualhasher.h"
 #include "folderscanner.h"
+#include "exifparser.h"
 #include <algorithm>
 #include <functional>
 #include <numeric>
 #include <QDirIterator>
+#include <QDir>
+#include <QFile>
 #include <QFileInfo>
 #include <QDebug>
 #include <QIcon>
@@ -34,6 +37,11 @@ LuminismCore::LuminismCore(QObject *parent)
             this, &LuminismCore::onWatchedDirectoryChanged);
     connect(fileWatcher_, &QFileSystemWatcher::fileChanged,
             this, &LuminismCore::onWatchedFileChanged);
+
+    watcherDebounceTimer_.setSingleShot(true);
+    watcherDebounceTimer_.setInterval(300);
+    connect(&watcherDebounceTimer_, &QTimer::timeout,
+            this, &LuminismCore::processWatcherChanges);
 }
 
 /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model. */
@@ -1507,13 +1515,172 @@ QList<TagSet> LuminismCore::parseTagJson(QJsonObject tagsJson, QJsonObject tagRe
 /*! \brief Called when a watched directory's contents change on disk. */
 void LuminismCore::onWatchedDirectoryChanged(const QString& path)
 {
-    qDebug() << "[FileWatch] Directory changed:" << path;
-    // Future: diff directory contents against model, add/remove items
+    pendingChangedDirs_.insert(path);
+    watcherDebounceTimer_.start();  // restarts if already running
 }
 
 /*! \brief Called when a watched file is modified or deleted on disk. */
 void LuminismCore::onWatchedFileChanged(const QString& path)
 {
-    qDebug() << "[FileWatch] File changed:" << path;
-    // Future: handle file deletion or modification
+    Q_UNUSED(path)
+    // Individual file watches are not currently used; directory diffs cover removal detection.
+}
+
+/*! \brief Diffs disk contents of \a dirPath against the model; returns appeared and disappeared paths. */
+LuminismCore::DirDiff LuminismCore::diffDirectory(const QString& dirPath) const
+{
+    qDebug() << "[FileWatch] diffDirectory:" << dirPath;
+
+    static const QStringList nameFilters = {
+        "*.jpg",  "*.JPG",  "*.heic", "*.HEIC", "*.png",  "*.PNG",
+        "*.mp4",  "*.MP4",  "*.mov",  "*.MOV",  "*.avi",  "*.AVI",
+        "*.mkv",  "*.MKV",  "*.wmv",  "*.WMV",  "*.webm", "*.WEBM",
+        "*.m4v",  "*.M4V"
+    };
+
+    // Filenames currently on disk in this directory (excluding .trashed)
+    QSet<QString> onDisk;
+    for (const QString& name : QDir(dirPath).entryList(nameFilters, QDir::Files)) {
+        if (!name.startsWith(".trashed", Qt::CaseInsensitive))
+            onDisk.insert(name);
+    }
+
+    // Filenames the model knows about for this directory
+    QSet<QString> inModel;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        auto tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && tf->filePath == dirPath)
+            inModel.insert(tf->fileName);
+    }
+
+    DirDiff diff;
+    for (const QString& name : onDisk)
+        if (!inModel.contains(name))
+            diff.appeared.append(dirPath + "/" + name);
+    for (const QString& name : inModel)
+        if (!onDisk.contains(name))
+            diff.disappeared.append(dirPath + "/" + name);
+
+    return diff;
+}
+
+/*! \brief Flushes pendingChangedDirs_, correlates appeared/disappeared pairs as moves, dispatches handlers. */
+void LuminismCore::processWatcherChanges()
+{
+    qDebug() << "[FileWatch] processWatcherChanges: flushing" << pendingChangedDirs_.size() << "dir(s)";
+
+    QStringList allAppeared;
+    QStringList allDisappeared;
+
+    for (const QString& dir : pendingChangedDirs_) {
+        DirDiff diff = diffDirectory(dir);
+        allAppeared.append(diff.appeared);
+        allDisappeared.append(diff.disappeared);
+    }
+    pendingChangedDirs_.clear();
+
+    // Correlate same-filename disappearances and appearances as moves within the watched tree
+    QStringList unmatched;
+    for (const QString& oldPath : allDisappeared) {
+        const QString fileName = QFileInfo(oldPath).fileName();
+        auto it = std::find_if(allAppeared.begin(), allAppeared.end(),
+                               [&](const QString& p){ return QFileInfo(p).fileName() == fileName; });
+        if (it != allAppeared.end()) {
+            handleFileMoved(oldPath, *it);
+            allAppeared.erase(it);
+        } else {
+            unmatched.append(oldPath);
+        }
+    }
+
+    for (const QString& path : unmatched)
+        handleFileRemoved(path);
+
+    for (const QString& path : allAppeared)
+        handleFileAdded(path);
+}
+
+/*! \brief Handles a file that disappeared with no matching appearance elsewhere in the watched tree. */
+void LuminismCore::handleFileRemoved(const QString& absolutePath)
+{
+    qDebug() << "[FileWatch] handleFileRemoved:" << absolutePath;
+
+    // Locate the model entry
+    TaggedFile* tf = nullptr;
+    int foundRow = -1;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        auto candidate = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (candidate && candidate->filePath + "/" + candidate->fileName == absolutePath) {
+            tf = candidate;
+            foundRow = i;
+            break;
+        }
+    }
+
+    if (!tf) {
+        qDebug() << "[FileWatch] handleFileRemoved: no model entry found, ignoring";
+        return;
+    }
+
+    // Only handle the clean case for now; dirty files need user interaction (not yet implemented)
+    // TODO: come back and think through lost changes in sidecar
+    if (tf->dirtyFlag()) {
+        qDebug() << "[FileWatch] handleFileRemoved: file has unsaved changes, skipping (not yet handled)";
+        return;
+    }
+
+    // Delete sidecar if one exists alongside the (now-gone) image
+    const QString sidecarPath = tf->filePath + "/" + QFileInfo(tf->fileName).baseName() + ".json";
+    if (QFile::exists(sidecarPath)) {
+        if (QFile::remove(sidecarPath))
+            qDebug() << "[FileWatch] handleFileRemoved: deleted sidecar" << sidecarPath;
+        else
+            qDebug() << "[FileWatch] handleFileRemoved: failed to delete sidecar" << sidecarPath;
+    }
+
+    // Delete icon cache files (one per thumbnail size) and the EXIF cache
+    for (int size : IconGenerator::kIconSizes) {
+        const QString iconCache = IconGenerator::cacheFilePath(absolutePath, size);
+        if (QFile::exists(iconCache) && !QFile::remove(iconCache))
+            qDebug() << "[FileWatch] handleFileRemoved: failed to delete icon cache" << iconCache;
+    }
+    const QString exifCache = QFileInfo(absolutePath).absolutePath() + "/"
+                              + Luminism::CacheFolderName + "/"
+                              + QFileInfo(absolutePath).baseName() + "_exif.json";
+    if (QFile::exists(exifCache) && !QFile::remove(exifCache))
+        qDebug() << "[FileWatch] handleFileRemoved: failed to delete EXIF cache" << exifCache;
+
+    // Emit before removing so the pointer is still valid when MainWindow receives it
+    emit fileRemovedExternally(tf, false, false);
+
+    tagged_files_->removeRow(foundRow);
+    delete tf;
+
+    qDebug() << "[FileWatch] handleFileRemoved: removed from model";
+}
+
+/*! \brief Handles a file that moved from one watched directory to another. */
+void LuminismCore::handleFileMoved(const QString& oldPath, const QString& newPath)
+{
+    qDebug() << "[FileWatch] handleFileMoved:" << oldPath << "->" << newPath;
+    // TODO: locate TaggedFile in model by oldPath
+    // TODO: update filePath and fileName on the TaggedFile
+    // TODO: check whether sidecar travelled with the file or was stranded at oldPath
+    // TODO: schedule icon reload for newPath
+    // TODO: add newPath's directory to fileWatcher_ if not already watched
+    // TODO: emit fileMovedExternally(tf, oldPath, sidecarStranded)
+    Q_UNUSED(oldPath)
+    Q_UNUSED(newPath)
+}
+
+/*! \brief Handles a file that appeared in a watched directory with no matching disappearance elsewhere. */
+void LuminismCore::handleFileAdded(const QString& absolutePath)
+{
+    qDebug() << "[FileWatch] handleFileAdded:" << absolutePath;
+    // TODO: check whether a sidecar exists alongside the new file
+    // TODO: call appropriate addFile() overload (with or without sidecar JSON)
+    // TODO: schedule backfill (icon + EXIF) for the new file
+    // TODO: add directory to fileWatcher_ if not already watched (handles new subdirs)
+    // TODO: emit fileAddedExternally(absolutePath)
+    Q_UNUSED(absolutePath)
 }

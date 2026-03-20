@@ -60,7 +60,49 @@ private:
     FolderScanner *folderScanner_ = nullptr;  ///< Active FolderScanner, or nullptr.
     QThread       *scanThread_    = nullptr;  ///< Thread running folderScanner_, or nullptr.
     int            scanGeneration_ = 0;       ///< Incremented on each new scan; guards stale callbacks.
-    QFileSystemWatcher* fileWatcher_ = nullptr; ///< Watches all loaded directories for external filesystem changes.
+    QFileSystemWatcher* fileWatcher_ = nullptr;  ///< Watches all loaded directories for external filesystem changes.
+    QSet<QString>       pendingChangedDirs_;     ///< Directories that fired directoryChanged since the last debounce flush.
+    QTimer              watcherDebounceTimer_;   ///< Single-shot timer; fires processWatcherChanges() after a short delay.
+
+    /*! \brief Files that appeared on disk (not in model) and files that disappeared from disk (still in model)
+     *  for a single directory, as determined by diffDirectory(). */
+    struct DirDiff {
+        QStringList appeared;     ///< Absolute paths present on disk but absent from the model.
+        QStringList disappeared;  ///< Absolute paths present in the model but absent from disk.
+    };
+
+    /*! \brief Diffs the current disk contents of \a dirPath against what the model knows about that directory.
+     *
+     * Pure read — does not modify the model or the watcher.
+     * \param dirPath Absolute path to the directory to inspect.
+     * \return A DirDiff with appeared and disappeared file lists.
+     */
+    DirDiff diffDirectory(const QString& dirPath) const;
+
+    /*! \brief Processes all directories accumulated in pendingChangedDirs_, classifies changes,
+     *  and dispatches to the appropriate handler. Called by watcherDebounceTimer_. */
+    void processWatcherChanges();
+
+    /*! \brief Handles a file that has disappeared from the watched directory set with no matching appearance elsewhere.
+     *
+     * Covers deletion and moves out of the watched tree (indistinguishable from the watcher's perspective).
+     * \param absolutePath Absolute path the file occupied before it disappeared.
+     */
+    void handleFileRemoved(const QString& absolutePath);
+
+    /*! \brief Handles a file that moved from one watched directory to another within the same session.
+     *
+     * \param oldPath Absolute path before the move.
+     * \param newPath Absolute path after the move.
+     */
+    void handleFileMoved(const QString& oldPath, const QString& newPath);
+
+    /*! \brief Handles a file that appeared in a watched directory with no matching disappearance elsewhere.
+     *
+     * Covers both newly created files and files moved in from outside the watched tree.
+     * \param absolutePath Absolute path of the newly appeared file.
+     */
+    void handleFileAdded(const QString& absolutePath);
 
     /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model.
      */
@@ -560,6 +602,28 @@ signals:
      * \param toCache Number of files queued for icon generation (cache misses).
      */
     void scanFinished(int total, int toCache);
+
+    /*! \brief Emitted when a file has been removed or moved outside the watched tree.
+     *
+     * \param tf              The TaggedFile that is no longer on disk at its recorded path.
+     * \param hadPendingChanges True if the file had unsaved in-memory changes at the time of removal.
+     * \param sidecarOrphaned   True if a sidecar JSON file exists at the old path but the image is gone.
+     */
+    void fileRemovedExternally(TaggedFile* tf, bool hadPendingChanges, bool sidecarOrphaned);
+
+    /*! \brief Emitted when a file has been moved from one watched directory to another.
+     *
+     * \param tf             The TaggedFile whose path has changed (already updated in the model).
+     * \param oldPath        The absolute path the file occupied before the move.
+     * \param sidecarStranded True if a sidecar JSON file was left behind at \a oldPath.
+     */
+    void fileMovedExternally(TaggedFile* tf, const QString& oldPath, bool sidecarStranded);
+
+    /*! \brief Emitted when a new file has appeared in a watched directory.
+     *
+     * \param absolutePath Absolute path of the newly appeared file.
+     */
+    void fileAddedExternally(const QString& absolutePath);
 };
 
 #endif // LUMINISMCORE_H
