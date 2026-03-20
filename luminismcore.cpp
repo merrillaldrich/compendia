@@ -29,6 +29,11 @@ LuminismCore::LuminismCore(QObject *parent)
     tagged_files_proxy_->setSortCaseSensitivity(Qt::CaseInsensitive);
     tagged_files_proxy_->sort(0);
 
+    fileWatcher_ = new QFileSystemWatcher(this);
+    connect(fileWatcher_, &QFileSystemWatcher::directoryChanged,
+            this, &LuminismCore::onWatchedDirectoryChanged);
+    connect(fileWatcher_, &QFileSystemWatcher::fileChanged,
+            this, &LuminismCore::onWatchedFileChanged);
 }
 
 /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model. */
@@ -317,6 +322,14 @@ void LuminismCore::cancelIconGeneration(){
 
 /*! \brief Clears all existing data and starts an async scan of the current root directory. */
 void LuminismCore::loadRootDirectory(){
+
+    // Clear any previously watched paths before loading a new folder.
+    if (fileWatcher_) {
+        if (!fileWatcher_->directories().isEmpty())
+            fileWatcher_->removePaths(fileWatcher_->directories());
+        if (!fileWatcher_->files().isEmpty())
+            fileWatcher_->removePaths(fileWatcher_->files());
+    }
 
     // Pointing to a new folder means we have to clear any data already loaded.
     // (cancelIconGeneration() has already been called by the time we get here.)
@@ -616,6 +629,21 @@ void LuminismCore::onScanFinished()
     int toCache = uncachedPaths_.size();
     backfillMetadata();
     tagged_files_proxy_->sort(0);
+
+    // Populate the filesystem watcher with all unique directories containing tracked files.
+    if (fileWatcher_) {
+        QSet<QString> dirs;
+        dirs.insert(root_directory_);
+        for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+            auto tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+            dirs.insert(tf->filePath);  // filePath is already the containing directory
+        }
+        dirs.removeIf([](const QString& d) {
+            return d.contains(QLatin1String(Luminism::CacheFolderName));
+        });
+        fileWatcher_->addPaths(QStringList(dirs.begin(), dirs.end()));
+    }
+
     emit scanFinished(tagged_files_->rowCount(), toCache);
 }
 
@@ -1474,4 +1502,18 @@ QList<TagSet> LuminismCore::parseTagJson(QJsonObject tagsJson, QJsonObject tagRe
     }
 
     return tagSets;
+}
+
+/*! \brief Called when a watched directory's contents change on disk. */
+void LuminismCore::onWatchedDirectoryChanged(const QString& path)
+{
+    qDebug() << "[FileWatch] Directory changed:" << path;
+    // Future: diff directory contents against model, add/remove items
+}
+
+/*! \brief Called when a watched file is modified or deleted on disk. */
+void LuminismCore::onWatchedFileChanged(const QString& path)
+{
+    qDebug() << "[FileWatch] File changed:" << path;
+    // Future: handle file deletion or modification
 }

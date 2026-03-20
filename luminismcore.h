@@ -17,6 +17,7 @@
 #include <QIcon>
 #include <QSet>
 #include <QString>
+#include <QFileSystemWatcher>
 
 #include "tagset.h"
 #include "filterproxymodel.h"
@@ -59,6 +60,7 @@ private:
     FolderScanner *folderScanner_ = nullptr;  ///< Active FolderScanner, or nullptr.
     QThread       *scanThread_    = nullptr;  ///< Thread running folderScanner_, or nullptr.
     int            scanGeneration_ = 0;       ///< Incremented on each new scan; guards stale callbacks.
+    QFileSystemWatcher* fileWatcher_ = nullptr; ///< Watches all loaded directories for external filesystem changes.
 
     /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model.
      */
@@ -529,6 +531,12 @@ private slots:
 
     /*! \brief Called when FolderScanner finishes; starts icon generation and emits scanFinished(). */
     void onScanFinished();
+
+    /*! \brief Called when a watched directory's contents change on disk. */
+    void onWatchedDirectoryChanged(const QString& path);
+
+    /*! \brief Called when a watched file is modified or deleted on disk. */
+    void onWatchedFileChanged(const QString& path);
 
 signals:
     /*! \brief Emitted each time a thumbnail icon is applied to the model. */
