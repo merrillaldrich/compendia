@@ -464,6 +464,18 @@ public:
      */
     QSet<TaggedFile*> findSimilarTo(const QSet<TaggedFile*> &seeds, int threshold);
 
+    /*! \brief Partitions \a files into connected components by pHash similarity.
+     *
+     * Applies the same union-find algorithm as findSimilarImages() but operates on
+     * an arbitrary caller-supplied set rather than the full model.
+     * Only groups with two or more files are returned.
+     *
+     * \param files     The set of TaggedFile pointers to partition.
+     * \param threshold Maximum Hamming distance to consider two images near-duplicates.
+     * \return List of groups; each group contains two or more TaggedFile pointers.
+     */
+    QList<QList<TaggedFile*>> groupBySimilarity(const QSet<TaggedFile*> &files, int threshold) const;
+
     /*! \brief Removes all auto-detected face tags from every file, the active
      *  filter, and the tag library. Cleans up now-empty tag families and emits
      *  tagLibraryChanged() once when done.

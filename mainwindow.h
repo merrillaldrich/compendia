@@ -171,6 +171,17 @@ private:
     /*! \brief Guards dirty state, sets drill ceiling if needed, and loads \p targetPath as the new root. */
     void drillToFolder(const QString& targetPath);
 
+    /*! \brief Tags each group of similar files with "Set NN" in the "Similarity Sets" family.
+     *
+     * Creates or reuses tags named "Set 01", "Set 02", … (zero-padded to at least 2 digits,
+     * widening automatically for 100+ groups) in the "Similarity Sets" tag family, then applies
+     * the appropriate tag to every file in each group.  Refreshes the tag library and assignment
+     * panels when done.
+     *
+     * \param groups List of file groups as returned by findSimilarImages() or groupBySimilarity().
+     */
+    void applySimilaritySetTags(const QList<QList<TaggedFile*>> &groups);
+
     /*! \brief Moves the file list selection forward or backward by \p delta rows.
      *
      * Clamps at the first and last visible row. If multiple files are selected,

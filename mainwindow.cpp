@@ -973,6 +973,29 @@ void MainWindow::on_actionDrillUp_triggered()
     updateDrillUpEnabled();
 }
 
+/*! \brief Tags each group of similar files with "Set NN" in the "Similarity Sets" family.
+ *
+ * Creates or reuses tags named "Set 01", "Set 02", … (zero-padded to at least 2 digits,
+ * widening automatically for 100+ groups) in the "Similarity Sets" tag family, then applies
+ * the appropriate tag to every file in each group.  Refreshes the tag library and assignment
+ * panels when done.
+ *
+ * \param groups List of file groups as returned by findSimilarImages() or groupBySimilarity().
+ */
+void MainWindow::applySimilaritySetTags(const QList<QList<TaggedFile*>> &groups)
+{
+    const int digits = qMax(2, QString::number(groups.size()).length());
+    for (int i = 0; i < groups.size(); ++i) {
+        const QString tagName =
+            QStringLiteral("Set %1").arg(i + 1, digits, 10, QLatin1Char('0'));
+        Tag* tag = core->addLibraryTag(QStringLiteral("Similarity Sets"), tagName);
+        for (TaggedFile* tf : groups[i])
+            tf->addTag(tag);
+    }
+    refreshNavTagLibrary();
+    refreshTagAssignmentArea();
+}
+
 /*! \brief Finds images similar to the current selection by perceptual hash and isolates them.
  *
  * Collects selected files that carry a valid pHash as seeds, then calls
@@ -1000,6 +1023,22 @@ void MainWindow::on_actionFind_Similar_In_Selection_triggered()
             tr("No additional similar images were found for the selected file(s)."));
         return;
     }
+
+    const QList<QList<TaggedFile*>> groups =
+        core->groupBySimilarity(similar, Luminism::SimilarImageThreshold);
+
+    QMessageBox ask(this);
+    ask.setWindowTitle(tr("Find Similar Images"));
+    ask.setText(tr("%n similar image(s) found across %1 group(s). "
+                   "Would you like to tag the similar images in sets, or just display them?", "", similar.size()).arg(groups.size()));
+    QPushButton* tagBtn  = ask.addButton(tr("Tag Images in Sets"), QMessageBox::YesRole);
+    QPushButton* showBtn = ask.addButton(tr("Just Show Me"),    QMessageBox::NoRole);
+    ask.addButton(QMessageBox::Cancel);
+    ask.exec();
+    if (ask.clickedButton() != tagBtn && ask.clickedButton() != showBtn)
+        return;
+    if (ask.clickedButton() == tagBtn)
+        applySimilaritySetTags(groups);
 
     // Check which matches would be hidden by the current non-isolation filters.
     QSet<TaggedFile*> hidden;
@@ -1054,6 +1093,19 @@ void MainWindow::on_actionFind_Similar_Images_triggered()
     for (const auto &g : groups)
         for (TaggedFile *tf : g)
             similar.insert(tf);
+
+    QMessageBox ask(this);
+    ask.setWindowTitle(tr("Find Similar Images"));
+    ask.setText(tr("%n similar image(s) found across %1 group(s). "
+                   "Would you like to tag each set?", "", similar.size()).arg(groups.size()));
+    QPushButton* tagBtn  = ask.addButton(tr("Tag and Show"), QMessageBox::YesRole);
+    QPushButton* showBtn = ask.addButton(tr("Show Only"),    QMessageBox::NoRole);
+    ask.addButton(QMessageBox::Cancel);
+    ask.exec();
+    if (ask.clickedButton() != tagBtn && ask.clickedButton() != showBtn)
+        return;
+    if (ask.clickedButton() == tagBtn)
+        applySimilaritySetTags(groups);
 
     core->setIsolationSet(similar);
     ui->actionClearIsolation->setEnabled(true);

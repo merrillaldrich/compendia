@@ -1256,6 +1256,50 @@ QSet<TaggedFile*> LuminismCore::findSimilarTo(const QSet<TaggedFile*> &seeds, in
     return result;
 }
 
+/*! \brief Partitions \a files into connected components by pHash similarity.
+ *
+ * Applies the same union-find algorithm as findSimilarImages() but operates on
+ * an arbitrary caller-supplied set rather than the full model.
+ * Only groups with two or more files are returned.
+ *
+ * \param files     The set of TaggedFile pointers to partition.
+ * \param threshold Maximum Hamming distance to consider two images near-duplicates.
+ * \return List of groups; each group contains two or more TaggedFile pointers.
+ */
+QList<QList<TaggedFile*>> LuminismCore::groupBySimilarity(
+        const QSet<TaggedFile*> &files, int threshold) const
+{
+    QList<TaggedFile*> list = files.values();
+    const int n = list.size();
+    QVector<int> parent(n);
+    std::iota(parent.begin(), parent.end(), 0);
+
+    std::function<int(int)> find = [&](int x) -> int {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    };
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            if (list[i]->pHash() != 0 && list[j]->pHash() != 0 &&
+                PerceptualHasher::hammingDistance(list[i]->pHash(), list[j]->pHash()) <= threshold) {
+                int pi = find(i), pj = find(j);
+                if (pi != pj) parent[pi] = pj;
+            }
+        }
+    }
+
+    QMap<int, QList<TaggedFile*>> groups;
+    for (int i = 0; i < n; ++i)
+        groups[find(i)].append(list[i]);
+
+    QList<QList<TaggedFile*>> result;
+    for (const auto &g : groups)
+        if (g.size() >= 2)
+            result.append(g);
+    return result;
+}
+
 /*! \brief Removes all auto-detected face tags from every file, the active
  *  filter, and the tag library. Cleans up now-empty tag families and emits
  *  tagLibraryChanged() once when done.
