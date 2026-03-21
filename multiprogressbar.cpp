@@ -11,6 +11,7 @@ MultiProgressBar::MultiProgressBar(QWidget *parent)
     , label_(new QLabel("Progress:", this))
     , bar_(new QProgressBar(this))
     , cycle_timer_(new QTimer(this))
+    , notification_timer_(new QTimer(this))
 {
     auto *layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -29,6 +30,14 @@ MultiProgressBar::MultiProgressBar(QWidget *parent)
     cycle_timer_->setInterval(cycle_interval_ms_);
     connect(cycle_timer_, &QTimer::timeout, this, &MultiProgressBar::onCycleTimer);
     cycle_timer_->start();
+
+    notification_timer_->setSingleShot(true);
+    connect(notification_timer_, &QTimer::timeout, this, [this]() {
+        notification_active_ = false;
+        bar_->show();
+        cycle_timer_->start();
+        updateDisplay();
+    });
 }
 
 /*! \brief Registers (or re-registers) a process and immediately shows it.
@@ -125,9 +134,25 @@ void MultiProgressBar::onCycleTimer()
     updateDisplay();
 }
 
+/*! \brief Briefly replaces the progress display with a plain notification message.
+ *
+ * \param message    Text to display.
+ * \param durationMs How long to show the message.
+ */
+void MultiProgressBar::showNotification(const QString& message, int durationMs)
+{
+    notification_active_ = true;
+    cycle_timer_->stop();
+    bar_->hide();
+    label_->setText(message);
+    notification_timer_->start(durationMs);
+}
+
 /*! \brief Pushes the currently cycled process state to label_ and bar_. */
 void MultiProgressBar::updateDisplay()
 {
+    if (notification_active_) return;
+
     if (active_.isEmpty()) {
         label_->setText("Progress:");
         bar_->setMaximum(1);

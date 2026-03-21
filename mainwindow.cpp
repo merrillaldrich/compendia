@@ -108,6 +108,21 @@ MainWindow::MainWindow(QWidget *parent)
             ui->dateEdit->setAvailableDates(core->getFileDates());
     });
     connect(core, &LuminismCore::tagLibraryChanged, this, &MainWindow::onTagLibraryChanged);
+
+    connect(core, &LuminismCore::fileRemovedExternally,
+            this, [this](TaggedFile* tf, bool, bool) {
+        progress_->showNotification("Removed: " + tf->fileName);
+        updateFolderStatsLabel();
+    });
+    connect(core, &LuminismCore::fileMovedExternally,
+            this, [this](TaggedFile* tf, const QString&, bool) {
+        progress_->showNotification("Moved: " + tf->fileName);
+    });
+    connect(core, &LuminismCore::fileAddedExternally,
+            this, [this](const QString& path) {
+        progress_->showNotification("Added: " + QFileInfo(path).fileName());
+        updateFolderStatsLabel();
+    });
     connect(ui->navLibraryContainer, &TagContainer::tagNameChanged,
             this, &MainWindow::onTagNameChanged);
     connect(ui->navLibraryContainer, &TagContainer::tagDeleteRequested,

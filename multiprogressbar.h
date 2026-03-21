@@ -77,6 +77,17 @@ public:
      */
     void setCycleInterval(int ms);
 
+    /*! \brief Briefly replaces the progress display with a plain notification message.
+     *
+     * Hides the progress bar, shows \a message in the label, and restores the
+     * normal display after \a durationMs milliseconds.  Calling this again while
+     * a notification is already showing resets the timer and updates the text.
+     *
+     * \param message    Text to display.
+     * \param durationMs How long to show the message (default 4000 ms).
+     */
+    void showNotification(const QString& message, int durationMs = 4000);
+
 signals:
     /*! \brief Emitted when a process finishes (either via increment reaching max or finishProcess). */
     void processFinished(Process p);
@@ -101,10 +112,12 @@ private:
     QLabel        *label_;          ///< Status label showing the name of the currently displayed process.
     QProgressBar  *bar_;            ///< Progress bar reflecting the current process value.
     QTimer        *cycle_timer_;    ///< Timer that advances cycle_index_ when multiple processes are active.
+    QTimer        *notification_timer_; ///< Single-shot timer that clears the active notification.
     QMap<Process, ProcessState> states_; ///< State for each known process, keyed by Process enum value.
     QList<Process>              active_;   ///< Active processes in start order.
-    int cycle_index_       = 0;    ///< Index into active_ indicating which process is currently displayed.
-    int cycle_interval_ms_ = 2000; ///< Milliseconds between display switches when cycling.
+    int  cycle_index_          = 0;    ///< Index into active_ indicating which process is currently displayed.
+    int  cycle_interval_ms_    = 2000; ///< Milliseconds between display switches when cycling.
+    bool notification_active_  = false; ///< True while a transient notification is being displayed.
 };
 
 #endif // MULTIPROGRESSBAR_H
