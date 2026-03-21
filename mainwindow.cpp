@@ -208,8 +208,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         ui->ratingFilterModeButton->setMenu(menu);
         ui->ratingFilterModeButton->setMaximumWidth(90);
-        ui->ratingFilterModeButton->setStyleSheet(
-            "text-align: left; background-color: rgb(96, 174, 233);");
+        // background-color and text-align are set via the QSS token @NAV_BLUE;
     }
 
     // Filter star rating — apply a rating filter to the proxy model
@@ -483,8 +482,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         ui->tagFilterModeButton->setMenu(menu);
         ui->tagFilterModeButton->setMaximumWidth(60);
-        ui->tagFilterModeButton->setStyleSheet(
-            "text-align: left; background-color: rgb(96, 174, 233);");
+        // background-color and text-align are set via the QSS token @NAV_BLUE;
 
         // Ensure the proxy starts in AnyTag mode (matching the button's default label).
         core->getItemModelProxy()->setTagFilterMode(FilterProxyModel::AnyTag);

@@ -1,6 +1,10 @@
 /* Color tokens — values are substituted at load time in main.cpp:
- *   @NAV_BLUE    — lighter blue used throughout the navigation panel
- *   @MENU_BLUE   — darker blue used on the menu bar and status bar
+ *   @NAV_BLUE       — lighter blue used throughout the navigation panel
+ *   @MENU_BLUE      — darker blue used on the menu bar and status bar
+ *   @MENU_BORDER    — menu/status bar border; adapts to light/dark mode
+ *   @PROGRESS_BORDER — progress bar border; adapts to light/dark mode
+ *   @PROGRESS_BG    — progress bar background; adapts to light/dark mode
+ *   @PROGRESS_TEXT  — progress bar text; adapts to light/dark mode
  */
 
 /* ── Navigation panel ──────────────────────────────── */
@@ -16,6 +20,7 @@ QSplitter#navSplitter::handle {
     background-position: center;
 }
 
+QWidget#navTopContainer,
 QWidget#navFilterSection,
 QScrollArea#navFilterScrollArea,
 QWidget#navFilterContainer {
@@ -27,8 +32,16 @@ QScrollArea#navLibraryScrollArea {
     border: none;
 }
 
+QWidget#navLibrarySection,
 QScrollArea#navLibraryScrollArea,
 QWidget#navLibraryContainer {
+    background-color: @NAV_BLUE;
+}
+
+/* ── Nav flat buttons ──────────────────────────────────── */
+QPushButton#tagFilterModeButton,
+QPushButton#ratingFilterModeButton {
+    text-align: left;
     background-color: @NAV_BLUE;
 }
 
@@ -49,7 +62,7 @@ QSplitter#windowBodySplitter::handle {
 /* ── Menu bar ──────────────────────────────────────── */
 QMenuBar {
     background-color: @MENU_BLUE;
-    border-bottom: 1px solid #DDD;
+    border-bottom: 1px solid @MENU_BORDER;
 }
 
 QMenu {
@@ -59,16 +72,16 @@ QMenu {
 /* ── Status bar ────────────────────────────────────── */
 QStatusBar#statusBar {
     background-color: @MENU_BLUE;
-    border-top: 1px solid #DDD;
+    border-top: 1px solid @MENU_BORDER;
 }
 
 /* ── Progress bar ──────────────────────────────────── */
 QProgressBar {
-    border: 1px solid #AAAAAA;
+    border: 1px solid @PROGRESS_BORDER;
     border-radius: 1px;
     text-align: center;
-    background-color: #E0E0E0;
-    color: grey;
+    background-color: @PROGRESS_BG;
+    color: @PROGRESS_TEXT;
 }
 
 QProgressBar::chunk {
