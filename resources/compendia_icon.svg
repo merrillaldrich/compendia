@@ -2,12 +2,15 @@
   <!--
     Application icon — 256 × 256 square canvas.
 
-    Bold capital "L", scaled to 75% of the about-dialog original,
+    Bold capital "C", scaled to 75% of the about-dialog original,
     rotated 20° counter-clockwise, centred on the canvas.
 
-    Original path bounding box (local coords): 134 w × 225 h.
-    Centre of bounding box (local):            (67, 112.5).
-    Stem / foot thickness:                     31 px (local).
+    Path bounding box (local coords): 134 w × 225 h.
+    Centre of bounding box (local):   (67, 112.5).
+    Stroke thickness:                 31 px (local).
+
+    Outer arc: ellipse cx=67 cy=112.5 rx=67 ry=112.5
+    Inner arc: ellipse cx=67 cy=112.5 rx=36 ry=81.5  (67-31, 112.5-31)
 
     Transform derivation
     ────────────────────
@@ -19,9 +22,9 @@
   <!-- Background -->
   <rect x="0" y="0" width="256" height="256" rx="24" ry="24" fill="#ffffff"/>
 
-  <!-- "L" glyph — shifted up 10% (25.6 px) from centred position -->
+  <!-- "C" glyph — shifted up 10% (25.6 px) from centred position -->
   <g transform="translate(77.75, 30.825) scale(0.75) rotate(-20, 67, 112.5)">
-    <path d="M 0,0 L 31,0 L 31,194 L 134,194 L 134,225 L 0,225 Z"
+    <path d="M 134,0 L 67,0 A 67,112.5 0 0 0 67,225 L 134,225 L 134,194 L 67,194 A 36,81.5 0 0 1 67,31 L 134,31 L 134,0 Z"
           fill="#666666"/>
   </g>
 </svg>
