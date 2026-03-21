@@ -1,5 +1,18 @@
 var namespaces_dup =
 [
+    [ "Compendia", "namespace_compendia.html", [
+      [ "AutoFaceTagPrefix", "namespace_compendia.html#ac0a03b3852995dcb4b6fd4f0e712707a", null ],
+      [ "BulkUntagWarningThreshold", "namespace_compendia.html#a82c471ab22f5270ce9cf4a32e8915113", null ],
+      [ "CacheFolderName", "namespace_compendia.html#aa9e7856a85cf903e6c35b5c6c5334894", null ],
+      [ "DefaultTagRectSize", "namespace_compendia.html#ade0574035ec10c8d5fbb18b74936dbf0", null ],
+      [ "FaceDescriptorCacheSuffix", "namespace_compendia.html#ad2408a10dc51b3d44c779f67c82c70c5", null ],
+      [ "FaceDetectionThreshold", "namespace_compendia.html#a397fb87eb3bae372a35e72c2a16b7b9d", null ],
+      [ "FaceMatchThreshold", "namespace_compendia.html#a4cd86f1058f201b6bac10bc1df95faec", null ],
+      [ "KnownFaceCacheSuffix", "namespace_compendia.html#a2dacca26d934069917f6ee2d70ca148e", null ],
+      [ "MaxAutoFacesPerImage", "namespace_compendia.html#a1cce129a02a9fa16445d19be691fc380", null ],
+      [ "RectWarmupDelayMs", "namespace_compendia.html#a7285c0af65e7d1934dee85c97488679e", null ],
+      [ "SimilarImageThreshold", "namespace_compendia.html#a3a3f6e38d21d3a1315a6c6c67ad8da86", null ]
+    ] ],
     [ "FaceNet", "namespace_face_net.html", [
       [ "alevel0", "namespace_face_net.html#a706d19a440086ca847bbd346cad1239c", null ],
       [ "alevel1", "namespace_face_net.html#a2ddb2dd980e78cdf50667c6f3b0c92d3", null ],
@@ -12,19 +25,6 @@ var namespaces_dup =
       [ "block", "namespace_face_net.html#a3a916dc6ac91e9951f10b7dec4085143", null ],
       [ "residual", "namespace_face_net.html#a8b0b044113ef4ef3d789f44f477c83e1", null ],
       [ "residual_down", "namespace_face_net.html#acc4302cb443b4f53da24d2a77c0dbb10", null ]
-    ] ],
-    [ "Luminism", "namespace_luminism.html", [
-      [ "AutoFaceTagPrefix", "namespace_luminism.html#af20f2964b3cbd8b89167bec425aef4d2", null ],
-      [ "BulkUntagWarningThreshold", "namespace_luminism.html#a3420cc6284d7b51f79b0d60a3c215fc8", null ],
-      [ "CacheFolderName", "namespace_luminism.html#a52ead6400c81b7f6edbd8e6e17d94374", null ],
-      [ "DefaultTagRectSize", "namespace_luminism.html#a5f35d67f09927a4b765bc19f1af37982", null ],
-      [ "FaceDescriptorCacheSuffix", "namespace_luminism.html#a26acd7bfc0d0e5e8b4f64ae6038f8880", null ],
-      [ "FaceDetectionThreshold", "namespace_luminism.html#a854e0f9520ba04aef3ab64b1c8bfe282", null ],
-      [ "FaceMatchThreshold", "namespace_luminism.html#a54ac3f84488dccc1af8a46adc2a475de", null ],
-      [ "KnownFaceCacheSuffix", "namespace_luminism.html#ada5d2a6921fbc6915e39564cf86b8d64", null ],
-      [ "MaxAutoFacesPerImage", "namespace_luminism.html#af101d8fd33431950321b42069ff16570", null ],
-      [ "RectWarmupDelayMs", "namespace_luminism.html#a6a4be66e54e7e469af993b18919bcaec", null ],
-      [ "SimilarImageThreshold", "namespace_luminism.html#aa1a8c4da3becacf313e6e153ba5a2f1e", null ]
     ] ],
     [ "Ui", "namespace_ui.html", null ]
 ];

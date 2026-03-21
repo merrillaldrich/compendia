@@ -1,10 +1,10 @@
 <map id="TagAssignmentContainer::dropEvent" name="TagAssignmentContainer::dropEvent">
 <area shape="rect" id="Node000001" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,124,173,167"/>
-<area shape="rect" id="Node000002" href="$class_luminism_core.html#a9fe93be3e6f05b1d8901f307f09a0880" title="Applies a tag to all files currently visible in the filtered file list." alt="" coords="242,5,408,32"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#a9fe93be3e6f05b1d8901f307f09a0880" title="Applies a tag to all files currently visible in the filtered file list." alt="" coords="242,5,408,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,122,158,81,188,60,219,42,238,36,234,39,222,46,191,64,161,85,114,125"/>
 <area shape="rect" id="Node000004" href="$class_tag_widget.html#a1d3fa53f2f5ad9b93b553431bce2c67b" title="Emitted when the user clicks the close button to remove the tag." alt="" coords="230,56,420,83"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="140,121,220,92,249,86,244,89,221,97,143,126"/>
-<area shape="rect" id="Node000005" href="$class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="249,107,401,133"/>
+<area shape="rect" id="Node000005" href="$class_compendia_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="249,107,401,133"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="172,134,236,128,231,131,174,139"/>
 <area shape="rect" id="Node000008" href="$class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title="Returns the Tag pointer this widget represents." alt="" coords="260,157,390,184"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="173,152,247,161,242,163,174,157"/>

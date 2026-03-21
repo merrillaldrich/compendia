@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Compendia
+Comment=Media asset manager for photographers, hobbyists, and archivists
+Exec=compendia
+Icon=compendia
+Categories=Graphics;Photography;
+Terminal=false
+StartupWMClass=compendia

@@ -138,8 +138,8 @@ private:
     dlib::frontal_face_detector detector_;                    ///< HOG-based frontal face detector.
     dlib::shape_predictor sp_;                                ///< 5-point face landmark predictor for chip alignment.
     FaceNet::anet_type net_;                                  ///< ResNet face recognition network producing 128-d embeddings.
-    double detectionThreshold_ = Luminism::FaceDetectionThreshold; ///< HOG adjust_threshold; higher reduces false positives.
-    double matchThreshold_ = Luminism::FaceMatchThreshold; ///< Euclidean-distance threshold for recognising a known face.
+    double detectionThreshold_ = Compendia::FaceDetectionThreshold; ///< HOG adjust_threshold; higher reduces false positives.
+    double matchThreshold_ = Compendia::FaceMatchThreshold; ///< Euclidean-distance threshold for recognising a known face.
     QFuture<void> warmupFuture_;     ///< Handle to the current background embedding warmup task.
     QFuture<void> rectWarmupFuture_; ///< Handle to the current background rect-adjust warmup task.
     QMutex embeddingMutex_; ///< Serialises all dlib inference calls; prevents concurrent access to non-thread-safe dlib models.
@@ -355,7 +355,7 @@ public:
 
     /*! \brief Writes face descriptors for \p imagePath to the descriptor cache.
      *
-     * The cache file is written into the .luminism_cache sub-directory next to
+     * The cache file is written into the .compendia_cache sub-directory next to
      * the image file. The directory is created if it does not exist.
      *
      * \param imagePath   Absolute path to the source image file.
@@ -378,7 +378,7 @@ public:
 
     /*! \brief Writes known-face embedding entries for \p imagePath to the cache.
      *
-     * The cache file is written into the .luminism_cache sub-directory next to
+     * The cache file is written into the .compendia_cache sub-directory next to
      * the image file. The directory is created if it does not exist.
      *
      * \param imagePath Absolute path to the source image file.

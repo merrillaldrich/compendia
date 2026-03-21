@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## About
 
-Luminism is a Qt/C++17 desktop application for managing and tagging media files (images, HEIF/HEIC). Users select a root folder, browse files, create tag families and tags, and apply them to files. Tag data is persisted as JSON alongside media files.
+Compendia is a Qt/C++17 desktop application for managing and tagging media files (images, HEIF/HEIC). Users select a root folder, browse files, create tag families and tags, and apply them to files. Tag data is persisted as JSON alongside media files.
 
 ## Build
 
@@ -17,27 +17,27 @@ cmake -B build -S .
 # Build
 cmake --build build
 
-# Or open luminism.pro / CMakeLists.txt in Qt Creator and build from there
+# Or open compendia.pro / CMakeLists.txt in Qt Creator and build from there
 ```
 
 There is no test suite.
 
 ## Architecture
 
-**`LuminismCore`** is the central controller. It owns:
+**`CompendiaCore`** is the central controller. It owns:
 - `QStandardItemModel* tagged_files_` — the file list model; each item's data role stores a `TaggedFile*` via `QVariant`
 - `FilterProxyModel* tagged_files_proxy_` — wraps the model for filename/folder/tag filtering
 - `QSet<TagFamily*>* tag_families_` and `QSet<Tag*>* tags_` — the tag library
 
-**`MainWindow`** holds a `LuminismCore` instance and wires its own UI widgets to core operations. It does not own any data directly.
+**`MainWindow`** holds a `CompendiaCore` instance and wires its own UI widgets to core operations. It does not own any data directly.
 
 **`TaggedFile`** is the per-file data object (tags as `QSet<Tag*>`, EXIF as `QMap<QString, QString>`, dirty flag). It is stored as the `Qt::UserRole` data on each `QStandardItem` in the model.
 
-**Tag hierarchy:** `TagFamily` (has a color, owns conceptual grouping) → `Tag` (has a name and a `TagFamily*` pointer). Both live in heap-allocated `QSet`s managed by `LuminismCore`.
+**Tag hierarchy:** `TagFamily` (has a color, owns conceptual grouping) → `Tag` (has a name and a `TagFamily*` pointer). Both live in heap-allocated `QSet`s managed by `CompendiaCore`.
 
-**Asynchronous work:** `IconGenerator` runs background thumbnail generation using `QtConcurrent`. Results land in a mutex-protected `QVector<std::tuple<...>> results_` buffer inside `LuminismCore`, flushed to the model by a `QTimer` (`uiFlushTimer_`).
+**Asynchronous work:** `IconGenerator` runs background thumbnail generation using `QtConcurrent`. Results land in a mutex-protected `QVector<std::tuple<...>> results_` buffer inside `CompendiaCore`, flushed to the model by a `QTimer` (`uiFlushTimer_`).
 
-**Metadata I/O:** `ExifParser` reads EXIF from standard formats via libexif and from HEIF/HEIC via libheif, returning a `QMap<QString, QString>`. Tag data is saved/loaded as JSON (see `TaggedFile::TaggedFileJSON()` and `LuminismCore::parseTagJson()`).
+**Metadata I/O:** `ExifParser` reads EXIF from standard formats via libexif and from HEIF/HEIC via libheif, returning a `QMap<QString, QString>`. Tag data is saved/loaded as JSON (see `TaggedFile::TaggedFileJSON()` and `CompendiaCore::parseTagJson()`).
 
 **Filtering:** `FilterProxyModel` subclasses `QSortFilterProxyModel` and filters on filename text, folder path, and a set of active `Tag*` pointers.
 

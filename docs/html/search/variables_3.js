@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['defaulttagrectsize_0',['DefaultTagRectSize',['../namespace_luminism.html#a5f35d67f09927a4b765bc19f1af37982',1,'Luminism']]]
+  ['defaulttagrectsize_0',['DefaultTagRectSize',['../namespace_compendia.html#ade0574035ec10c8d5fbb18b74936dbf0',1,'Compendia']]]
 ];

@@ -18,8 +18,8 @@ static const char* MENU_BLUE = "rgb(0, 135, 200)";  ///< Darker blue  — menu/s
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setWindowIcon(QIcon(":/resources/luminism_icon.svg"));
-    QFile qss(":/resources/luminism.qss");
+    a.setWindowIcon(QIcon(":/resources/compendia_icon.svg"));
+    QFile qss(":/resources/compendia.qss");
     if (qss.open(QFile::ReadOnly)) {
         QString styles = qss.readAll();
         styles.replace("@NAV_BLUE",    NAV_BLUE);

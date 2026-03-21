@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Luminism: DateFilterButton Class Reference</title>
+<title>Compendia: DateFilterButton Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Luminism
+   <div id="projectname">Compendia
    </div>
    <div id="projectbrief">Media asset management tool</div>
   </td>
@@ -129,6 +129,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aba50722caa2a7c51eea87ed2c2e90ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_date_filter_button.html" title="A date-entry widget combining a free-form line edit with a calendar popup button.">DateFilterButton</a>.  <br /></td></tr>
 <tr class="memitem:a533c505f324b616924ba72bcf553f4be" id="r_a533c505f324b616924ba72bcf553f4be"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a533c505f324b616924ba72bcf553f4be">date</a> () const</td></tr>
 <tr class="memdesc:a533c505f324b616924ba72bcf553f4be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the currently selected date, or an invalid QDate if none.  <br /></td></tr>
+<tr class="memitem:a94064be61bc23dfaf2fa3b324ab2e114" id="r_a94064be61bc23dfaf2fa3b324ab2e114"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a94064be61bc23dfaf2fa3b324ab2e114">clear</a> ()</td></tr>
+<tr class="memdesc:a94064be61bc23dfaf2fa3b324ab2e114"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the date filter and emits <a class="el" href="#a619d8374015628be2f216f0c7818f87a" title="Emitted when the selected date changes.">dateChanged()</a> with an invalid date.  <br /></td></tr>
 <tr class="memitem:acdaed2a38153cd8b5e9b1e03b17f5d17" id="r_acdaed2a38153cd8b5e9b1e03b17f5d17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acdaed2a38153cd8b5e9b1e03b17f5d17">setAvailableDates</a> (const QList&lt; QDate &gt; &amp;dates)</td></tr>
 <tr class="memdesc:acdaed2a38153cd8b5e9b1e03b17f5d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supplies the sorted list of dates that autocomplete draws from.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -176,6 +178,25 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a94064be61bc23dfaf2fa3b324ab2e114" name="a94064be61bc23dfaf2fa3b324ab2e114"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94064be61bc23dfaf2fa3b324ab2e114">&#9670;&#160;</a></span>clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DateFilterButton::clear </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clears the date filter and emits <a class="el" href="#a619d8374015628be2f216f0c7818f87a" title="Emitted when the selected date changes.">dateChanged()</a> with an invalid date. </p>
+
+</div>
+</div>
 <a id="a533c505f324b616924ba72bcf553f4be" name="a533c505f324b616924ba72bcf553f4be"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a533c505f324b616924ba72bcf553f4be">&#9670;&#160;</a></span>date()</h2>
 

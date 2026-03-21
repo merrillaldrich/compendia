@@ -24,14 +24,14 @@
 */
 var NAVTREE =
 [
-  [ "Luminism", "index.html", [
+  [ "Compendia", "index.html", [
     [ "CLAUDE.md", "md__c_l_a_u_d_e.html", [
       [ "About", "md__c_l_a_u_d_e.html#autotoc_md1", null ],
       [ "Build", "md__c_l_a_u_d_e.html#autotoc_md2", null ],
       [ "Architecture", "md__c_l_a_u_d_e.html#autotoc_md3", null ],
       [ "Key dependencies", "md__c_l_a_u_d_e.html#autotoc_md4", null ]
     ] ],
-    [ "luminism", "md__r_e_a_d_m_e.html", [
+    [ "compendia", "md__r_e_a_d_m_e.html", [
       [ "Features", "md__r_e_a_d_m_e.html#autotoc_md7", [
         [ "Cross-Platform", "md__r_e_a_d_m_e.html#autotoc_md8", null ],
         [ "Browsing &amp; Preview", "md__r_e_a_d_m_e.html#autotoc_md9", null ],
@@ -85,8 +85,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "aboutdialog_8cpp.html",
-"class_preview_container.html#af820d1ea99343d488aa4b47203bb8521",
-"functions_c.html"
+"class_preview_container.html#a517e6ac101dbb20c39b07c5962190715",
+"flowlayout_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

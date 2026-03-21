@@ -4,6 +4,6 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="396,33,366,32,366,26,401,33"/>
 <area shape="rect" id="Node000004" href="$class_tagged_file.html#accc28242518fddd41f54d454f3adb5ca" title="Constructs a TaggedFile from a QFileInfo, a tag set, and an EXIF map." alt="" coords="210,56,365,83"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="401,55,366,62,365,57,396,55"/>
-<area shape="rect" id="Node000003" href="$class_luminism_core.html#a59ad1f5d267dd567fdbcaf7cb71510e4" title="Adds a file to the model with an explicit tag list and optional initial EXIF map." alt="" coords="5,5,161,32"/>
+<area shape="rect" id="Node000003" href="$class_compendia_core.html#a59ad1f5d267dd567fdbcaf7cb71510e4" title="Adds a file to the model with an explicit tag list and optional initial EXIF map." alt="" coords="5,5,161,32"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,19,161,21,160,16,196,18"/>
 </map>

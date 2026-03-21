@@ -7,5 +7,5 @@ var searchData=
   ['tagrect_4',['tagRect',['../struct_promotion_entry.html#aa59f7848e0a3406ce53af3c3df80ce01',1,'PromotionEntry']]],
   ['tagregions_5',['tagRegions',['../struct_phase1_file_input.html#a432a9d32a393fc455b4ef1f287e598da',1,'Phase1FileInput']]],
   ['tagsjson_6',['tagsJson',['../struct_scan_item.html#a2376d48ecd6c984222722cc992cb444f',1,'ScanItem']]],
-  ['totalbytes_7',['totalBytes',['../struct_luminism_core_1_1_folder_stats.html#a3172b5937c81e6a785b5850fb68a6c0f',1,'LuminismCore::FolderStats']]]
+  ['totalbytes_7',['totalBytes',['../struct_compendia_core_1_1_folder_stats.html#ade4025056d417615896e24867eb80e30',1,'CompendiaCore::FolderStats']]]
 ];

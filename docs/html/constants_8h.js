@@ -1,14 +1,14 @@
 var constants_8h =
 [
-    [ "Luminism::AutoFaceTagPrefix", "namespace_luminism.html#af20f2964b3cbd8b89167bec425aef4d2", null ],
-    [ "Luminism::BulkUntagWarningThreshold", "namespace_luminism.html#a3420cc6284d7b51f79b0d60a3c215fc8", null ],
-    [ "Luminism::CacheFolderName", "namespace_luminism.html#a52ead6400c81b7f6edbd8e6e17d94374", null ],
-    [ "Luminism::DefaultTagRectSize", "namespace_luminism.html#a5f35d67f09927a4b765bc19f1af37982", null ],
-    [ "Luminism::FaceDescriptorCacheSuffix", "namespace_luminism.html#a26acd7bfc0d0e5e8b4f64ae6038f8880", null ],
-    [ "Luminism::FaceDetectionThreshold", "namespace_luminism.html#a854e0f9520ba04aef3ab64b1c8bfe282", null ],
-    [ "Luminism::FaceMatchThreshold", "namespace_luminism.html#a54ac3f84488dccc1af8a46adc2a475de", null ],
-    [ "Luminism::KnownFaceCacheSuffix", "namespace_luminism.html#ada5d2a6921fbc6915e39564cf86b8d64", null ],
-    [ "Luminism::MaxAutoFacesPerImage", "namespace_luminism.html#af101d8fd33431950321b42069ff16570", null ],
-    [ "Luminism::RectWarmupDelayMs", "namespace_luminism.html#a6a4be66e54e7e469af993b18919bcaec", null ],
-    [ "Luminism::SimilarImageThreshold", "namespace_luminism.html#aa1a8c4da3becacf313e6e153ba5a2f1e", null ]
+    [ "Compendia::AutoFaceTagPrefix", "namespace_compendia.html#ac0a03b3852995dcb4b6fd4f0e712707a", null ],
+    [ "Compendia::BulkUntagWarningThreshold", "namespace_compendia.html#a82c471ab22f5270ce9cf4a32e8915113", null ],
+    [ "Compendia::CacheFolderName", "namespace_compendia.html#aa9e7856a85cf903e6c35b5c6c5334894", null ],
+    [ "Compendia::DefaultTagRectSize", "namespace_compendia.html#ade0574035ec10c8d5fbb18b74936dbf0", null ],
+    [ "Compendia::FaceDescriptorCacheSuffix", "namespace_compendia.html#ad2408a10dc51b3d44c779f67c82c70c5", null ],
+    [ "Compendia::FaceDetectionThreshold", "namespace_compendia.html#a397fb87eb3bae372a35e72c2a16b7b9d", null ],
+    [ "Compendia::FaceMatchThreshold", "namespace_compendia.html#a4cd86f1058f201b6bac10bc1df95faec", null ],
+    [ "Compendia::KnownFaceCacheSuffix", "namespace_compendia.html#a2dacca26d934069917f6ee2d70ca148e", null ],
+    [ "Compendia::MaxAutoFacesPerImage", "namespace_compendia.html#a1cce129a02a9fa16445d19be691fc380", null ],
+    [ "Compendia::RectWarmupDelayMs", "namespace_compendia.html#a7285c0af65e7d1934dee85c97488679e", null ],
+    [ "Compendia::SimilarImageThreshold", "namespace_compendia.html#a3a3f6e38d21d3a1315a6c6c67ad8da86", null ]
 ];

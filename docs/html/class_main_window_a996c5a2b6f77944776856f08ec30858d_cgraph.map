@@ -1,9 +1,9 @@
 <map id="MainWindow::MainWindow" name="MainWindow::MainWindow">
 <area shape="rect" id="Node000001" title="Constructs the main window, sets up layouts, status bar, and default pane sizes." alt="" coords="5,56,185,83"/>
 <area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="53,56,45,47,51,37,67,31,95,29,125,32,142,41,137,42,124,37,95,35,69,37,54,42,51,47,58,55"/>
-<area shape="rect" id="Node000002" href="$class_luminism_core.html#ad935634d9d59823babd5df1ccea851ab" title="Emitted each time a thumbnail icon is applied to the model." alt="" coords="252,5,438,32"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#ad935634d9d59823babd5df1ccea851ab" title="Emitted each time a thumbnail icon is applied to the model." alt="" coords="252,5,438,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,53,263,34,259,37,165,58"/>
-<area shape="rect" id="Node000003" href="$class_luminism_core.html#a76277bedc09c6d3fa112620cad940151" title="Emitted each time a sidecar metadata file is written successfully." alt="" coords="243,56,448,83"/>
+<area shape="rect" id="Node000003" href="$class_compendia_core.html#a76277bedc09c6d3fa112620cad940151" title="Emitted each time a sidecar metadata file is written successfully." alt="" coords="243,56,448,83"/>
 <area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="185,67,231,69,225,70,185,72"/>
 <area shape="rect" id="Node000004" href="$class_tag_container.html#a77602fc59503bc656061e5f1fc096791" title="Emitted when the user requests removal of a tag from this container." alt="" coords="233,107,458,133"/>
 <area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="165,81,263,102,258,104,164,86"/>

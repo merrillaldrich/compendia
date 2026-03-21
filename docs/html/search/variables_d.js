@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['similarimagethreshold_0',['SimilarImageThreshold',['../namespace_luminism.html#aa1a8c4da3becacf313e6e153ba5a2f1e',1,'Luminism']]]
+  ['similarimagethreshold_0',['SimilarImageThreshold',['../namespace_compendia.html#a3a3f6e38d21d3a1315a6c6c67ad8da86',1,'Compendia']]]
 ];

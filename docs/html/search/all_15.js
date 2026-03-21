@@ -12,6 +12,6 @@ var searchData=
   ['wrapfilename_9',['wrapFileName',['../class_file_name_delegate.html#a38fadee1df325e64aeeacc09fa73535d',1,'FileNameDelegate']]],
   ['wraplabel_10',['WrapLabel',['../class_wrap_label.html',1,'WrapLabel'],['../class_wrap_label.html#a31c41dae362c18bd30e18fe753ab3e99',1,'WrapLabel::WrapLabel()']]],
   ['wraplabel_2eh_11',['wraplabel.h',['../wraplabel_8h.html',1,'']]],
-  ['writefilemetadata_12',['writeFileMetadata',['../class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc',1,'LuminismCore']]],
-  ['writevisiblefilemetadata_13',['writeVisibleFileMetadata',['../class_luminism_core.html#a9de41cca6143d5699f3e51a7ee58894b',1,'LuminismCore']]]
+  ['writefilemetadata_12',['writeFileMetadata',['../class_compendia_core.html#a6ecfaeae961cdf6bd20458d9f4c616b4',1,'CompendiaCore']]],
+  ['writevisiblefilemetadata_13',['writeVisibleFileMetadata',['../class_compendia_core.html#ac870c3b8dddd9978a8cf741f075228ae',1,'CompendiaCore']]]
 ];

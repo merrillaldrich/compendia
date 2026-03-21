@@ -53,7 +53,7 @@ compile_commands.json
 
 *_qmlcache.qrc
 
-LuminismApp-Debug/
+CompendiaApp-Debug/
 build/
 3rdParty/
 models/shape_predictor_5_face_landmarks.dat
@@ -63,4 +63,4 @@ models/dlib_face_recognition_resnet_model_v1.dat
 # AppImage packaging artifacts
 AppDir/
 packaging/tools/
-Luminism-*.AppImage
+Compendia-*.AppImage

@@ -5,7 +5,7 @@
 #include <QFontMetrics>
 #include <QStringList>
 
-class LuminismCore;
+class CompendiaCore;
 
 /*! \brief Item delegate that renders filenames as wrapped multi-line text beneath each icon.
  *
@@ -15,8 +15,8 @@ class LuminismCore;
  * exceeds the cell width on its own.  Output is capped at three lines, with an
  * ellipsis appended if the full name does not fit.
  *
- * The delegate looks up icons from LuminismCore::iconForPath() rather than from
- * Qt::DecorationRole, so that the LRU icon pool in LuminismCore remains the sole
+ * The delegate looks up icons from CompendiaCore::iconForPath() rather than from
+ * Qt::DecorationRole, so that the LRU icon pool in CompendiaCore remains the sole
  * source of truth for loaded thumbnails.
  */
 class FileNameDelegate : public QStyledItemDelegate
@@ -26,10 +26,10 @@ class FileNameDelegate : public QStyledItemDelegate
 public:
     /*! \brief Constructs a FileNameDelegate.
      *
-     * \param core   LuminismCore instance used for on-demand icon lookup.
+     * \param core   CompendiaCore instance used for on-demand icon lookup.
      * \param parent Optional Qt parent object.
      */
-    explicit FileNameDelegate(LuminismCore *core, QObject *parent = nullptr);
+    explicit FileNameDelegate(CompendiaCore *core, QObject *parent = nullptr);
 
     /*! \brief Paints an item: icon via the base class, then wrapped filename text below it.
      *
@@ -66,7 +66,7 @@ public:
                                     int maxWidth);
 
 private:
-    LuminismCore *core_ = nullptr; ///< LuminismCore used to look up cached icons by file path.
+    CompendiaCore *core_ = nullptr; ///< CompendiaCore used to look up cached icons by file path.
 
 protected:
     /*! \brief Populates \a option from the model and then clears the text field.

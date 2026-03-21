@@ -3,7 +3,7 @@ var hierarchy =
     [ "FaceDescriptor", "struct_face_descriptor.html", null ],
     [ "FaceTagAssignment", "struct_face_tag_assignment.html", null ],
     [ "FaceWorkerPool", "struct_face_worker_pool.html", null ],
-    [ "LuminismCore::FolderStats", "struct_luminism_core_1_1_folder_stats.html", null ],
+    [ "CompendiaCore::FolderStats", "struct_compendia_core_1_1_folder_stats.html", null ],
     [ "KnownFaceCacheEntry", "struct_known_face_cache_entry.html", null ],
     [ "PendingDescriptor", "struct_pending_descriptor.html", null ],
     [ "PerceptualHasher", "class_perceptual_hasher.html", null ],
@@ -41,12 +41,12 @@ var hierarchy =
       [ "MainWindow", "class_main_window.html", null ]
     ] ],
     [ "QObject", null, [
+      [ "CompendiaCore", "class_compendia_core.html", null ],
       [ "ExifParser", "class_exif_parser.html", null ],
       [ "FaceRecognizer", "class_face_recognizer.html", null ],
       [ "FolderScanner", "class_folder_scanner.html", null ],
       [ "FrameGrabber", "class_frame_grabber.html", null ],
       [ "IconGenerator", "class_icon_generator.html", null ],
-      [ "LuminismCore", "class_luminism_core.html", null ],
       [ "Tag", "class_tag.html", null ],
       [ "TagFamily", "class_tag_family.html", null ],
       [ "TaggedFile", "class_tagged_file.html", null ]

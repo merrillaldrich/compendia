@@ -1,5 +1,5 @@
 <map id="TaggedFile::TaggedFileJSON" name="TaggedFile::TaggedFileJSON">
 <area shape="rect" id="Node000001" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="270,5,461,32"/>
-<area shape="rect" id="Node000002" href="$class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,5,222,32"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,5,222,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="251,19,222,21,222,16,256,19"/>
 </map>

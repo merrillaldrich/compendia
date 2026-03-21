@@ -1,7 +1,7 @@
-# luminism
+# compendia
 
 A media asset manager for vacationers, photographers, hobbyists, archivists, 
-luminism's mission is to make our huge collections of photos and videos fun 
+compendia's mission is to make our huge collections of photos and videos fun 
 again! Browse large libraries, organise your photos and videos with a fully 
 customizable set of labels. Interactively search and filter your collection
 using tags and criteria you define and control.
@@ -11,20 +11,20 @@ using tags and criteria you define and control.
 ## Features
 
 ### Cross-Platform
-- luminism has been built and tested on Windows 11 and Linux (Ubunu/Gnome). 
+- compendia has been built and tested on Windows 11 and Linux (Ubunu/Gnome). 
   A Mac version is in the pipeline. Files and metadata are 100% identical across
   platforms so you can seamlessly move between them if needed.
 
 ### Browsing & Preview
-- Point luminism at any folder; it recursively discovers all images and videos,
+- Point compendia at any folder; it recursively discovers all images and videos,
   presenting them with high quality previews.
-- Handles a LOT of images. luminism has been tested with libraries up to 60,000 
+- Handles a LOT of images. compendia has been tested with libraries up to 60,000 
   files.
 - Click any thumbnail to open a full-size preview pane with smooth pinch/scroll
   zoom.
 
 ### Tagging
-- luminism's main organizing principle is easy and intuitive tagging.
+- compendia's main organizing principle is easy and intuitive tagging.
 - Apply tags to one or 100 or 1000+ selected files by dragging a tag onto the file, 
   selection of files, or use the tag assignment panel below the preview for mass
   assignment to large numbers of files.
@@ -39,7 +39,7 @@ using tags and criteria you define and control.
 
 Search thousands of files with ease
 
-- **Tags** — groups of tags are the main organizing principle in luminism. Filter 
+- **Tags** — groups of tags are the main organizing principle in compendia. Filter 
   even a huge library interactively. **Any (OR)** or **All (AND)** mode enables 
   more search options.
 - **Filename** — substring match, case-insensitive.
@@ -119,7 +119,7 @@ Built with **Qt 6 / C++17**
 
 | Component | Role |
 |---|---|
-| `LuminismCore` | Central controller; owns the file model, proxy model, tag library, and async workers |
+| `CompendiaCore` | Central controller; owns the file model, proxy model, tag library, and async workers |
 | `MainWindow` | UI shell; wires widgets to core operations |
 | `TaggedFile` | Per-file data object — path, timestamps, tag set, EXIF map, dirty flag |
 | `FilterProxyModel` | `QSortFilterProxyModel` subclass; applies filename / folder / tag / date filters |

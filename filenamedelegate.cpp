@@ -1,5 +1,5 @@
 #include "filenamedelegate.h"
-#include "luminismcore.h"
+#include "compendiacore.h"
 #include "taggedfile.h"
 #include <QPainter>
 #include <QApplication>
@@ -8,7 +8,7 @@
  *
  * \param parent Optional Qt parent object.
  */
-FileNameDelegate::FileNameDelegate(LuminismCore *core, QObject *parent)
+FileNameDelegate::FileNameDelegate(CompendiaCore *core, QObject *parent)
     : QStyledItemDelegate(parent)
     , core_(core)
 {

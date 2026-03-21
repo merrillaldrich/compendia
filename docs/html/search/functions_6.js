@@ -1,19 +1,20 @@
 var searchData=
 [
-  ['getassignedtags_0',['getAssignedTags',['../class_luminism_core.html#a0ce8ff76fc0457058162381e4bf4331f',1,'LuminismCore']]],
-  ['getassignedtags_5ffilteredfiles_1',['getAssignedTags_FilteredFiles',['../class_luminism_core.html#ab94d6cae69aa49c88e5c0df6d06d01ba',1,'LuminismCore']]],
+  ['getassignedtags_0',['getAssignedTags',['../class_compendia_core.html#ac37caf27965f0f87667f74b8a25247ef',1,'CompendiaCore']]],
+  ['getassignedtags_5ffilteredfiles_1',['getAssignedTags_FilteredFiles',['../class_compendia_core.html#a4e1bf26c35767fe75ccba27bb9ed90d9',1,'CompendiaCore']]],
   ['getcolor_2',['getColor',['../class_tag_family.html#add056f5d6128b49387a4923bd3a3198d',1,'TagFamily']]],
   ['getexifmap_3',['getExifMap',['../class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7',1,'ExifParser']]],
-  ['getfiledates_4',['getFileDates',['../class_luminism_core.html#ad1e3298571b9003686e63b9b59151592',1,'LuminismCore']]],
-  ['getfilefolders_5',['getFileFolders',['../class_luminism_core.html#a772901ad55bbcf3869811cea42655024',1,'LuminismCore']]],
+  ['getfiledates_4',['getFileDates',['../class_compendia_core.html#a5168172bcc2c4a290b54eea538c3c86e',1,'CompendiaCore']]],
+  ['getfilefolders_5',['getFileFolders',['../class_compendia_core.html#a971d0333ccc9dfdd935727e30f670cee',1,'CompendiaCore']]],
   ['getfiltercreationdate_6',['getFilterCreationDate',['../class_filter_proxy_model.html#a938e8b371f366de31c071e03e1c904ce',1,'FilterProxyModel']]],
-  ['getfiltertags_7',['getFilterTags',['../class_filter_proxy_model.html#a7113f86982695f24a02bac4d80919cf7',1,'FilterProxyModel::getFilterTags()'],['../class_luminism_core.html#a72a92192e4a842f8b2896cdfc1d00956',1,'LuminismCore::getFilterTags()']]],
-  ['getfolderstats_8',['getFolderStats',['../class_luminism_core.html#a5d6e79dbb688047f6e5da16c259b99e2',1,'LuminismCore']]],
-  ['getitemmodel_9',['getItemModel',['../class_luminism_core.html#abde1217c9f067c103db0d1f903880a9c',1,'LuminismCore']]],
-  ['getitemmodelproxy_10',['getItemModelProxy',['../class_luminism_core.html#affb257e3d695377774c5fbb6531cbc32',1,'LuminismCore']]],
-  ['getlibrarytags_11',['getLibraryTags',['../class_luminism_core.html#a92ca175522004a3fa53f458f773fb97c',1,'LuminismCore']]],
+  ['getfiltertags_7',['getFilterTags',['../class_compendia_core.html#a684b475b63a113098f310b132d386681',1,'CompendiaCore::getFilterTags()'],['../class_filter_proxy_model.html#a7113f86982695f24a02bac4d80919cf7',1,'FilterProxyModel::getFilterTags()']]],
+  ['getfolderstats_8',['getFolderStats',['../class_compendia_core.html#a0291840fc9bf2e53cad45266dad0f00c',1,'CompendiaCore']]],
+  ['getitemmodel_9',['getItemModel',['../class_compendia_core.html#ab55f948e6dc7e5bc3b159b20c6c04d97',1,'CompendiaCore']]],
+  ['getitemmodelproxy_10',['getItemModelProxy',['../class_compendia_core.html#a5e7994d5bbc059b46e01138b14f525ad',1,'CompendiaCore']]],
+  ['getlibrarytags_11',['getLibraryTags',['../class_compendia_core.html#a3300f02bc76651d6405703beb59c9b1f',1,'CompendiaCore']]],
   ['getname_12',['getName',['../class_tag.html#a43ca27cdad4847fa79c48741d4bb567a',1,'Tag::getName()'],['../class_tag_family.html#a9d344211abfce9b2852e454d98507949',1,'TagFamily::getName()']]],
-  ['gettag_13',['getTag',['../class_luminism_core.html#ab3abeb957ed6015b509e1022568377de',1,'LuminismCore::getTag()'],['../class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0',1,'TagWidget::getTag()']]],
-  ['gettagfamily_14',['getTagFamily',['../class_luminism_core.html#ab1bfb52f20623c4aaca07a3ddda3a513',1,'LuminismCore::getTagFamily()'],['../class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3',1,'TagFamilyWidget::getTagFamily()']]],
-  ['grab_15',['grab',['../class_frame_grabber.html#a027d1b8f07ad4ea56bc899721088ad30',1,'FrameGrabber']]]
+  ['gettag_13',['getTag',['../class_compendia_core.html#a54220eebdc0fc0d177e35ea935ce6540',1,'CompendiaCore::getTag()'],['../class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0',1,'TagWidget::getTag()']]],
+  ['gettagfamily_14',['getTagFamily',['../class_compendia_core.html#a05af3f8d709cf749673bc807112663f4',1,'CompendiaCore::getTagFamily()'],['../class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3',1,'TagFamilyWidget::getTagFamily()']]],
+  ['grab_15',['grab',['../class_frame_grabber.html#a027d1b8f07ad4ea56bc899721088ad30',1,'FrameGrabber']]],
+  ['groupbysimilarity_16',['groupBySimilarity',['../class_compendia_core.html#a7b2fafe8f41744c957a7b0a4e79dd9fe',1,'CompendiaCore']]]
 ];

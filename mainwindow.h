@@ -11,7 +11,7 @@
 #include <QImageReader>
 #include <QMessageBox>
 #include <QTimer>
-#include "luminismcore.h"
+#include "compendiacore.h"
 #include "multiprogressbar.h"
 #include "facerecognizer.h"
 #include "facerecognitionsettingsdialog.h"
@@ -25,9 +25,9 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-/*! \brief The application's main window, wiring UI widgets to LuminismCore operations.
+/*! \brief The application's main window, wiring UI widgets to CompendiaCore operations.
  *
- * MainWindow owns the generated Ui::MainWindow and a LuminismCore instance.
+ * MainWindow owns the generated Ui::MainWindow and a CompendiaCore instance.
  * It does not own any file or tag data directly; all data lives in core.
  */
 class MainWindow : public QMainWindow
@@ -56,7 +56,7 @@ public:
     ~MainWindow();
 
     /*! \brief The central application controller; provides access to data and business logic. */
-    LuminismCore *core;
+    CompendiaCore *core;
 
     /*! \brief Opens a folder-picker dialog and loads the selected folder into core. */
     void setRootFolder();
@@ -93,7 +93,7 @@ public:
     void refreshTagFilterArea();
 
 private:
-    /*! \brief Checks whether a luminismcache folder exists in \p folder and, if not,
+    /*! \brief Checks whether a compendiacache folder exists in \p folder and, if not,
      *         prompts the user for confirmation before creating one.
      *
      * \param folder The root folder the user is about to load.
@@ -418,7 +418,7 @@ private slots:
     /*! \brief Navigates up one folder level, stopping at the drill ceiling. */
     void on_actionDrillUp_triggered();
 
-    /*! \brief Slot for Help → About Luminism; opens the About dialog. */
+    /*! \brief Slot for Help → About Compendia; opens the About dialog. */
     void on_actionAbout_triggered();
 
     /*! \brief Slot for File → Export; copies all visible files to a user-chosen folder. */

@@ -42,7 +42,7 @@ var searchData=
   ['taggingwidget_39',['TaggingWidget',['../class_tagging_widget.html',1,'TaggingWidget'],['../class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74',1,'TaggingWidget::TaggingWidget(QWidget *parent=nullptr)'],['../class_tagging_widget.html#aa6691ae072b8f48dfbd299bdee032cfe',1,'TaggingWidget::TaggingWidget(QColor color, QWidget *parent)']]],
   ['taggingwidget_2ecpp_40',['taggingwidget.cpp',['../taggingwidget_8cpp.html',1,'']]],
   ['taggingwidget_2eh_41',['taggingwidget.h',['../taggingwidget_8h.html',1,'']]],
-  ['taglibrarychanged_42',['tagLibraryChanged',['../class_luminism_core.html#a86445b2245b56e0441d691dfd4381415',1,'LuminismCore']]],
+  ['taglibrarychanged_42',['tagLibraryChanged',['../class_compendia_core.html#af30400a8de5bef7228128ab2e5250965',1,'CompendiaCore']]],
   ['tagname_43',['tagName',['../struct_pending_descriptor.html#a48c7e1b2d94a81abfa375f0780764e5c',1,'PendingDescriptor::tagName'],['../struct_known_face_cache_entry.html#a1a07bb07337711201576357391ccab02',1,'KnownFaceCacheEntry::tagName'],['../struct_promotion_entry.html#acec1dd838d635b07e249e22a2c350cc5',1,'PromotionEntry::tagName'],['../class_tag_set.html#a1c000f57e28abed0cf90db5753bc97b4',1,'TagSet::tagName']]],
   ['tagnamechanged_44',['tagNameChanged',['../class_tag_container.html#aa0dd55fb9a844b51f3fd5c7638e23016',1,'TagContainer::tagNameChanged()'],['../class_tag_widget.html#ac5b6dedfc17ed661099ebad0978cdac8',1,'TagWidget::tagNameChanged()']]],
   ['tagpreviewdragentered_45',['tagPreviewDragEntered',['../class_preview_container.html#ad2addd748403849a74ae9af5492fe1ce',1,'PreviewContainer']]],
@@ -65,5 +65,5 @@ var searchData=
   ['tagwidgetclosebutton_2ecpp_62',['tagwidgetclosebutton.cpp',['../tagwidgetclosebutton_8cpp.html',1,'']]],
   ['tagwidgetclosebutton_2eh_63',['tagwidgetclosebutton.h',['../tagwidgetclosebutton_8h.html',1,'']]],
   ['takeat_64',['takeAt',['../class_flow_layout.html#a77bbbcb308aeb94164dc365942d28f06',1,'FlowLayout']]],
-  ['totalbytes_65',['totalBytes',['../struct_luminism_core_1_1_folder_stats.html#a3172b5937c81e6a785b5850fb68a6c0f',1,'LuminismCore::FolderStats']]]
+  ['totalbytes_65',['totalBytes',['../struct_compendia_core_1_1_folder_stats.html#ade4025056d417615896e24867eb80e30',1,'CompendiaCore::FolderStats']]]
 ];

@@ -357,7 +357,7 @@ QVector<QImage> IconGenerator::loadIconsFromCache(const QString &absolutePath)
 QString IconGenerator::cacheFilePath(const QString &absoluteFileName, int size)
 {
     QFileInfo fi(absoluteFileName);
-    return fi.absolutePath() + "/" + Luminism::CacheFolderName + "/" + fi.fileName()
+    return fi.absolutePath() + "/" + Compendia::CacheFolderName + "/" + fi.fileName()
            + "_" + QString::number(size) + ".png";
 }
 
@@ -371,7 +371,7 @@ QString IconGenerator::cacheFilePath(const QString &absoluteFileName, int size)
 bool IconGenerator::saveIconToCache(const QString &absoluteFileName, const QImage &pict, int size)
 {
     QFileInfo fi(absoluteFileName);
-    QString cachePath = fi.absolutePath() + "/" + Luminism::CacheFolderName;
+    QString cachePath = fi.absolutePath() + "/" + Compendia::CacheFolderName;
     QDir dir(cachePath);
 
     if (!dir.exists()) {

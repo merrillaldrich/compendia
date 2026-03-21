@@ -1,0 +1,15 @@
+<map id="CompendiaCore::writeFileMetadata" name="CompendiaCore::writeFileMetadata">
+<area shape="rect" id="Node000001" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,56,222,83"/>
+<area shape="rect" id="Node000002" href="$class_tagged_file.html#a13484167b27d2d3a20869742d082fd62" title="Returns true if this file has unsaved changes." alt="" coords="301,5,443,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,53,287,34,283,37,186,58"/>
+<area shape="rect" id="Node000003" href="$class_compendia_core.html#a76277bedc09c6d3fa112620cad940151" title="Emitted each time a sidecar metadata file is written successfully." alt="" coords="270,56,474,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,67,257,69,252,70,223,72"/>
+<area shape="rect" id="Node000004" href="$class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="276,107,468,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="185,81,288,102,283,104,185,86"/>
+<area shape="rect" id="Node000005" href="$class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="542,56,645,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="433,103,523,85,529,84,434,109"/>
+<area shape="rect" id="Node000006" href="$class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="522,107,664,133"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="468,117,509,120,504,120,468,123"/>
+<area shape="rect" id="Node000007" href="$class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="534,157,652,184"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="434,131,522,154,517,154,433,137"/>
+</map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['luminism_0',['Luminism',['../namespace_luminism.html',1,'']]]
+  ['facenet_0',['FaceNet',['../namespace_face_net.html',1,'']]]
 ];

@@ -15,6 +15,7 @@ var class_multi_progress_bar =
     [ "processFinished", "class_multi_progress_bar.html#ace387d8686f64f53a6a0025c190347bb", null ],
     [ "setCycleInterval", "class_multi_progress_bar.html#a3783d556085b8f7d589adfe8f0f82579", null ],
     [ "setLabel", "class_multi_progress_bar.html#a894f01270203561f4c4bf9664fcb193f", null ],
+    [ "showNotification", "class_multi_progress_bar.html#a60769b76c939a67c32b71fabd8914272", null ],
     [ "startProcess", "class_multi_progress_bar.html#a884488b73725a0752e59c31d780cdaac", null ],
     [ "value", "class_multi_progress_bar.html#a77ddefc134dc7aba4a02d790f6505e17", null ]
 ];

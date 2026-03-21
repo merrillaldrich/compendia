@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Luminism: MultiProgressBar Class Reference</title>
+<title>Compendia: MultiProgressBar Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Luminism
+   <div id="projectname">Compendia
    </div>
    <div id="projectbrief">Media asset management tool</div>
   </td>
@@ -155,6 +155,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a66b2f7b377b52dbdabd22d55bb60987f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the maximum progress value for <code class="param">p</code>, or 0 if not active.  <br /></td></tr>
 <tr class="memitem:a3783d556085b8f7d589adfe8f0f82579" id="r_a3783d556085b8f7d589adfe8f0f82579"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3783d556085b8f7d589adfe8f0f82579">setCycleInterval</a> (int ms)</td></tr>
 <tr class="memdesc:a3783d556085b8f7d589adfe8f0f82579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the label-cycling interval.  <br /></td></tr>
+<tr class="memitem:a60769b76c939a67c32b71fabd8914272" id="r_a60769b76c939a67c32b71fabd8914272"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a60769b76c939a67c32b71fabd8914272">showNotification</a> (const QString &amp;message, int durationMs=4000)</td></tr>
+<tr class="memdesc:a60769b76c939a67c32b71fabd8914272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Briefly replaces the progress display with a plain notification message.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A status-bar widget that tracks multiple concurrent background processes and cycles the display between them when more than one is active. </p>
@@ -383,6 +385,39 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">p</td><td>The process whose label to update. </td></tr>
     <tr><td class="paramname">label</td><td>The new label text. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a60769b76c939a67c32b71fabd8914272" name="a60769b76c939a67c32b71fabd8914272"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60769b76c939a67c32b71fabd8914272">&#9670;&#160;</a></span>showNotification()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MultiProgressBar::showNotification </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>durationMs</em></span><span class="paramdefsep"> = </span><span class="paramdefval">4000</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Briefly replaces the progress display with a plain notification message. </p>
+<p>Hides the progress bar, shows <em class="arg">message</em> in the label, and restores the normal display after <em class="arg">durationMs</em> milliseconds. Calling this again while a notification is already showing resets the timer and updates the text.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>Text to display. </td></tr>
+    <tr><td class="paramname">durationMs</td><td>How long to show the message (default 4000 ms).</td></tr>
+    <tr><td class="paramname">message</td><td>Text to display. </td></tr>
+    <tr><td class="paramname">durationMs</td><td>How long to show the message. </td></tr>
   </table>
   </dd>
 </dl>

@@ -1,0 +1,5 @@
+<map id="CompendiaCore::addLibraryTag" name="CompendiaCore::addLibraryTag">
+<area shape="rect" id="Node000001" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="189,5,383,32"/>
+<area shape="rect" id="Node000002" href="$class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="5,5,141,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,19,141,21,141,16,176,18"/>
+</map>

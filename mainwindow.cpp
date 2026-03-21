@@ -19,7 +19,7 @@
 #include <QProgressDialog>
 
 #include "./ui_mainwindow.h"
-#include "luminismcore.h"
+#include "compendiacore.h"
 #include "tagwidget.h"
 #include "tagfamilywidget.h"
 #include "filenamedelegate.h"
@@ -32,7 +32,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , core(new LuminismCore(this))
+    , core(new CompendiaCore(this))
 {
 
     ui->setupUi(this);
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Default Root Folder
     QLineEdit* le = ui->fileListFiltersContainer->findChild<QLineEdit*>("mediaFolderLineEdit");
     {
-        QSettings s(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism");
+        QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
         le->setText(s.value("folder/lastPath").toString());
     }
 
@@ -71,21 +71,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusBar->addWidget(folderStatsLabel_);
     progress_ = new MultiProgressBar(this);
     ui->statusBar->addPermanentWidget(progress_);
-    connect(core, &LuminismCore::iconUpdated, this, &MainWindow::onIconUpdated);
-    connect(core, &LuminismCore::batchFinished, this, [this]() {
+    connect(core, &CompendiaCore::iconUpdated, this, &MainWindow::onIconUpdated);
+    connect(core, &CompendiaCore::batchFinished, this, [this]() {
         progress_->finishProcess(MultiProgressBar::Process::IconGeneration);
     });
-    connect(core, &LuminismCore::metadataSaved, this, &MainWindow::onMetadataSaved);
+    connect(core, &CompendiaCore::metadataSaved, this, &MainWindow::onMetadataSaved);
 
-    connect(core, &LuminismCore::scanStarted, this, [this]() {
+    connect(core, &CompendiaCore::scanStarted, this, [this]() {
         folderStatsLabel_->clear();
         progress_->startProcess(MultiProgressBar::Process::FolderScan, 0, 0, "Scanning…");
     });
-    connect(core, &LuminismCore::scanProgress, this, [this](int n) {
+    connect(core, &CompendiaCore::scanProgress, this, [this](int n) {
         progress_->startProcess(MultiProgressBar::Process::FolderScan, 0, 0,
                                 QString("Scanning… %L1 files").arg(n));
     });
-    connect(core, &LuminismCore::scanFinished, this, [this](int total, int toCache) {
+    connect(core, &CompendiaCore::scanFinished, this, [this](int total, int toCache) {
         progress_->finishProcess(MultiProgressBar::Process::FolderScan);
         ui->dateEdit->setAvailableDates(core->getFileDates());
         ui->folderFilterLineEdit->setAvailablePaths(core->getFileFolders());
@@ -107,18 +107,18 @@ MainWindow::MainWindow(QWidget *parent)
         if (p == MultiProgressBar::Process::IconGeneration)
             ui->dateEdit->setAvailableDates(core->getFileDates());
     });
-    connect(core, &LuminismCore::tagLibraryChanged, this, &MainWindow::onTagLibraryChanged);
+    connect(core, &CompendiaCore::tagLibraryChanged, this, &MainWindow::onTagLibraryChanged);
 
-    connect(core, &LuminismCore::fileRemovedExternally,
+    connect(core, &CompendiaCore::fileRemovedExternally,
             this, [this](TaggedFile* tf, bool, bool) {
         progress_->showNotification("Removed: " + tf->fileName);
         updateFolderStatsLabel();
     });
-    connect(core, &LuminismCore::fileMovedExternally,
+    connect(core, &CompendiaCore::fileMovedExternally,
             this, [this](TaggedFile* tf, const QString&, bool) {
         progress_->showNotification("Moved: " + tf->fileName);
     });
-    connect(core, &LuminismCore::fileAddedExternally,
+    connect(core, &CompendiaCore::fileAddedExternally,
             this, [this](const QString& path) {
         progress_->showNotification("Added: " + QFileInfo(path).fileName());
         updateFolderStatsLabel();
@@ -252,7 +252,7 @@ MainWindow::MainWindow(QWidget *parent)
         };
 
         // Title
-        auto* title = new QLabel("Luminism");
+        auto* title = new QLabel("Compendia");
         QFont tf = title->font();
         tf.setPointSize(tf.pointSize() + 8);
         tf.setBold(true);
@@ -272,7 +272,7 @@ MainWindow::MainWindow(QWidget *parent)
         il->addWidget(openLink);
 
         {
-            QSettings qs(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism");
+            QSettings qs(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
             QString lastPath = qs.value("folder/lastPath").toString();
             if (!lastPath.isEmpty()) {
                 auto* recentLink = new QLabel(
@@ -362,7 +362,7 @@ MainWindow::MainWindow(QWidget *parent)
             QAction* findSimilarAction = menu.addAction(tr("Find Similar Images"));
             findSimilarAction->setEnabled(!seeds.isEmpty());
             connect(findSimilarAction, &QAction::triggered, this, [this, seeds]() {
-                const QSet<TaggedFile*> similar = core->findSimilarTo(seeds, Luminism::SimilarImageThreshold);
+                const QSet<TaggedFile*> similar = core->findSimilarTo(seeds, Compendia::SimilarImageThreshold);
 
                 if (similar.size() == seeds.size()) {
                     QMessageBox::information(this, tr("Find Similar Images"),
@@ -449,10 +449,10 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // Debounce timer for post-rect-adjust face cache warming.
-    // Interval is tunable via Luminism::RectWarmupDelayMs in constants.h.
+    // Interval is tunable via Compendia::RectWarmupDelayMs in constants.h.
     rectWarmupTimer_ = new QTimer(this);
     rectWarmupTimer_->setSingleShot(true);
-    rectWarmupTimer_->setInterval(Luminism::RectWarmupDelayMs);
+    rectWarmupTimer_->setInterval(Compendia::RectWarmupDelayMs);
     connect(rectWarmupTimer_, &QTimer::timeout, this, [this]() {
         if (warmupPendingFile_ && ensureFaceRecognizerLoaded())
             face_recognizer_->scheduleRectAdjustWarmup(warmupPendingFile_);
@@ -530,19 +530,19 @@ bool MainWindow::validateFolder(const QString &folder)
     QFileInfo fi(folder);
 
     if (!fi.exists()) {
-        QMessageBox::warning(this, "Luminism",
+        QMessageBox::warning(this, "Compendia",
             QString("The folder \"%1\" does not exist.").arg(folder));
         return false;
     }
 
     if (!fi.isDir()) {
-        QMessageBox::warning(this, "Luminism",
+        QMessageBox::warning(this, "Compendia",
             QString("\"%1\" is not a folder.").arg(folder));
         return false;
     }
 
     if (!fi.isReadable()) {
-        QMessageBox::warning(this, "Luminism",
+        QMessageBox::warning(this, "Compendia",
             QString("The folder \"%1\" cannot be read. Check that you have permission to access it.").arg(folder));
         return false;
     }
@@ -550,23 +550,23 @@ bool MainWindow::validateFolder(const QString &folder)
     return true;
 }
 
-/*! \brief Checks for a luminismcache folder and prompts the user if none exists.
+/*! \brief Checks for a compendiacache folder and prompts the user if none exists.
  *
  * \param folder The root folder the user is about to load.
  * \return \c true if loading should proceed; \c false if the user cancelled.
  */
 bool MainWindow::confirmCacheFolder(const QString &folder)
 {
-    if (QDir(folder).exists(Luminism::CacheFolderName))
+    if (QDir(folder).exists(Compendia::CacheFolderName))
         return true;
 
-    QSettings s(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism");
+    QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
     if (s.value("warnings/skipCacheFolderWarning", false).toBool())
         return true;
 
     QMessageBox mb(this);
-    mb.setWindowTitle("Luminism");
-    mb.setText("For performance with large libraries of images, luminism will make a cache "
+    mb.setWindowTitle("Compendia");
+    mb.setText("For performance with large libraries of images, compendia will make a cache "
                "folder alongside your files, for thumbnails. Is that OK?");
     mb.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     mb.setDefaultButton(QMessageBox::Ok);
@@ -621,7 +621,7 @@ void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
 
     le->setText(folder);
     le->clearFocus();
-    QSettings(QSettings::IniFormat, QSettings::UserScope, "luminism", "luminism")
+    QSettings(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia")
         .setValue("folder/lastPath", folder);
 
     welcome_widget_->hide();
@@ -1031,7 +1031,7 @@ void MainWindow::on_actionFind_Similar_In_Selection_triggered()
 
     if (seeds.isEmpty()) return;
 
-    const QSet<TaggedFile*> similar = core->findSimilarTo(seeds, Luminism::SimilarImageThreshold);
+    const QSet<TaggedFile*> similar = core->findSimilarTo(seeds, Compendia::SimilarImageThreshold);
 
     if (similar.size() == seeds.size()) {
         QMessageBox::information(this, tr("Find Similar Images"),
@@ -1040,7 +1040,7 @@ void MainWindow::on_actionFind_Similar_In_Selection_triggered()
     }
 
     const QList<QList<TaggedFile*>> groups =
-        core->groupBySimilarity(similar, Luminism::SimilarImageThreshold);
+        core->groupBySimilarity(similar, Compendia::SimilarImageThreshold);
 
     QMessageBox ask(this);
     ask.setWindowTitle(tr("Find Similar Images"));
@@ -1096,7 +1096,7 @@ void MainWindow::on_actionFind_Similar_Images_triggered()
 {
     if (!core->containsFiles()) return;
 
-    auto groups = core->findSimilarImages(Luminism::SimilarImageThreshold);
+    auto groups = core->findSimilarImages(Compendia::SimilarImageThreshold);
 
     if (groups.isEmpty()) {
         QMessageBox::information(this, "Find Similar Images",
@@ -1539,7 +1539,7 @@ void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
  */
 void MainWindow::on_fileListTagAssignmentContainer_tagDeleteRequested(Tag* tag){
     const int affected = core->countVisibleFilesWithTag(tag);
-    if (affected >= Luminism::BulkUntagWarningThreshold) {
+    if (affected >= Compendia::BulkUntagWarningThreshold) {
         const QString label = tag->tagFamily->getName() + ":" + tag->getName();
         const auto result = QMessageBox::warning(
             this, "Remove tag",
@@ -1639,7 +1639,7 @@ void MainWindow::updateFileCountLabel()
 /*! \brief Updates the persistent folder-stats label in the status bar.
  *
  * Shows the number of images, videos, folders, and total file size for the
- * currently loaded folder. Files inside .luminism_cache directories are excluded.
+ * currently loaded folder. Files inside .compendia_cache directories are excluded.
  * Clears the label when no files are loaded.
  */
 void MainWindow::updateFolderStatsLabel()
@@ -1863,7 +1863,7 @@ void MainWindow::on_actionFind_Faces_triggered()
     for (TaggedFile* tf : targetFiles) {
         QSet<Tag*> toRemove;
         for (Tag* t : *tf->tags()) {
-            if (t->getName().startsWith(Luminism::AutoFaceTagPrefix))
+            if (t->getName().startsWith(Compendia::AutoFaceTagPrefix))
                 toRemove.insert(t);
         }
         for (Tag* t : toRemove)
@@ -1877,7 +1877,7 @@ void MainWindow::on_actionFind_Faces_triggered()
         Phase1FileInput fi;
         fi.imagePath = tf->filePath + "/" + tf->fileName;
         for (Tag* tag : *tf->tags()) {
-            if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
+            if (tag->getName().startsWith(Compendia::AutoFaceTagPrefix))
                 continue;
             auto r = tf->tagRect(tag);
             if (!r.has_value())
@@ -2228,7 +2228,7 @@ void MainWindow::on_actionExport_triggered()
     }
 
     // Filter out cache files and build the final list of (src, dest) pairs.
-    const QString cacheDirName = QStringLiteral(".luminism_cache");
+    const QString cacheDirName = QStringLiteral(".compendia_cache");
     struct CopyJob { QString src; QString dest; QString fileName; };
     QList<CopyJob> jobs;
     jobs.reserve(sourcePaths.size());

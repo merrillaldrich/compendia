@@ -10,10 +10,5 @@ var searchData=
   ['loadiconsfromcache_7',['loadIconsFromCache',['../class_icon_generator.html#a7c7e7d0d1d932d65ffad7a46b89c7933',1,'IconGenerator']]],
   ['loadknownfacecache_8',['loadKnownFaceCache',['../class_face_recognizer.html#a73eb77b36b38abf6266b3cf144f55698',1,'FaceRecognizer']]],
   ['loadmodels_9',['loadModels',['../class_face_recognizer.html#a116c5898ca709e6b7937584702b9791d',1,'FaceRecognizer']]],
-  ['loadrootdirectory_10',['loadRootDirectory',['../class_luminism_core.html#a797e7ab9f7b0c18348eb182c08abb980',1,'LuminismCore']]],
-  ['luminism_11',['Luminism',['../namespace_luminism.html',1,'']]],
-  ['luminism_12',['luminism',['../md__r_e_a_d_m_e.html',1,'']]],
-  ['luminismcore_13',['LuminismCore',['../class_luminism_core.html',1,'LuminismCore'],['../class_luminism_core.html#a3934fffde12ddceb6394a338b76a9021',1,'LuminismCore::LuminismCore()']]],
-  ['luminismcore_2ecpp_14',['luminismcore.cpp',['../luminismcore_8cpp.html',1,'']]],
-  ['luminismcore_2eh_15',['luminismcore.h',['../luminismcore_8h.html',1,'']]]
+  ['loadrootdirectory_10',['loadRootDirectory',['../class_compendia_core.html#a70368667aa28ae57c39f36b6f709b534',1,'CompendiaCore']]]
 ];

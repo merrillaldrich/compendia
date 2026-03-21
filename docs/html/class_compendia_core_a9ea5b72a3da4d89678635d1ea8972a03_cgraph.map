@@ -1,0 +1,5 @@
+<map id="CompendiaCore::unapplyTag" name="CompendiaCore::unapplyTag">
+<area shape="rect" id="Node000001" title="Removes a tag from all files currently visible in the filtered file list." alt="" coords="5,5,185,32"/>
+<area shape="rect" id="Node000002" href="$class_tagged_file.html#a1f4a54d6c439d062fbc0144494f44960" title="Removes a tag from this file and marks the file dirty." alt="" coords="233,5,389,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,16,219,19,214,19,185,21"/>
+</map>

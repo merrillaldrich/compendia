@@ -4,7 +4,7 @@ var searchData=
   ['datechanged_1',['dateChanged',['../class_date_filter_button.html#a619d8374015628be2f216f0c7818f87a',1,'DateFilterButton']]],
   ['datefilterbutton_2',['DateFilterButton',['../class_date_filter_button.html#aba50722caa2a7c51eea87ed2c2e90ec2',1,'DateFilterButton']]],
   ['deleterequested_3',['deleteRequested',['../class_tag_rect_item.html#a4859a5327ae569bfc06f20cb88b39649',1,'TagRectItem::deleteRequested()'],['../class_tag_widget.html#a1d3fa53f2f5ad9b93b553431bce2c67b',1,'TagWidget::deleteRequested()']]],
-  ['deletetagfromlibrary_4',['deleteTagFromLibrary',['../class_luminism_core.html#a52cbb512b580008060bf329f98ecc79d',1,'LuminismCore']]],
+  ['deletetagfromlibrary_4',['deleteTagFromLibrary',['../class_compendia_core.html#a118fe12bf10eb0177cbf230092234bfb',1,'CompendiaCore']]],
   ['detectfaces_5',['detectFaces',['../class_face_recognizer.html#a2101aef223e12cf1eb899617c40ec01d',1,'FaceRecognizer']]],
   ['detectfaceswithembeddings_6',['detectFacesWithEmbeddings',['../class_face_recognizer.html#a2ea1f1c2df07cbfa97977ef9f8e4b6bf',1,'FaceRecognizer']]],
   ['detectionthreshold_7',['detectionThreshold',['../class_face_recognition_settings_dialog.html#a4aefb0894df52c2bfeebe0679d19546c',1,'FaceRecognitionSettingsDialog::detectionThreshold()'],['../class_face_recognizer.html#a8673657acdccd3d07e078444d8ba2863',1,'FaceRecognizer::detectionThreshold()']]],

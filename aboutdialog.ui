@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>About Luminism</string>
+   <string>About Compendia</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
@@ -73,7 +73,7 @@
       <item>
        <widget class="QLabel" name="appNameLabel">
         <property name="text">
-         <string>&lt;h2&gt;luminism&lt;/h2&gt;</string>
+         <string>&lt;h2&gt;compendia&lt;/h2&gt;</string>
         </property>
         <property name="textFormat">
          <enum>Qt::TextFormat::RichText</enum>
@@ -116,7 +116,7 @@
           <item>
            <widget class="QLabel" name="contentLabel">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tag your stuff&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://luminism.io&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#27bf73;&quot;&gt;luminism.io&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Third-party Libraries&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Qt 6&lt;/span&gt;&lt;br/&gt;Licensed under the GNU Lesser General Public License v3.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;dlib&lt;/span&gt; — Face detection and recognition&lt;br/&gt;Licensed under the Boost Software License 1.0.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;libexif&lt;/span&gt; — EXIF metadata extraction&lt;br/&gt;Licensed under the GNU Lesser General Public License v2.1.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;libheif&lt;/span&gt; — HEIF/HEIC image decoding&lt;br/&gt;Licensed under the GNU Lesser General Public License v3.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;License&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 3.&lt;/p&gt;&lt;p&gt;Copyright © Merrill Aldrich. All rights reserved.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tag your stuff&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://compendia.io&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#27bf73;&quot;&gt;compendia.io&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Third-party Libraries&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Qt 6&lt;/span&gt;&lt;br/&gt;Licensed under the GNU Lesser General Public License v3.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;dlib&lt;/span&gt; — Face detection and recognition&lt;br/&gt;Licensed under the Boost Software License 1.0.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;libexif&lt;/span&gt; — EXIF metadata extraction&lt;br/&gt;Licensed under the GNU Lesser General Public License v2.1.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;libheif&lt;/span&gt; — HEIF/HEIC image decoding&lt;br/&gt;Licensed under the GNU Lesser General Public License v3.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;License&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 3.&lt;/p&gt;&lt;p&gt;Copyright © Merrill Aldrich. All rights reserved.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::TextFormat::RichText</enum>

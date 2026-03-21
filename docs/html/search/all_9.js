@@ -4,5 +4,5 @@ var searchData=
   ['keypressevent_1',['keyPressEvent',['../class_folder_filter_line_edit.html#a59bd39523813e939e5b164cf96ed3f35',1,'FolderFilterLineEdit']]],
   ['kiconsizes_2',['kIconSizes',['../class_icon_generator.html#ae7a21d99f35d0a67cebd6574e75497e3',1,'IconGenerator']]],
   ['knownfacecacheentry_3',['KnownFaceCacheEntry',['../struct_known_face_cache_entry.html',1,'']]],
-  ['knownfacecachesuffix_4',['KnownFaceCacheSuffix',['../namespace_luminism.html#ada5d2a6921fbc6915e39564cf86b8d64',1,'Luminism']]]
+  ['knownfacecachesuffix_4',['KnownFaceCacheSuffix',['../namespace_compendia.html#a2dacca26d934069917f6ee2d70ca148e',1,'Compendia']]]
 ];

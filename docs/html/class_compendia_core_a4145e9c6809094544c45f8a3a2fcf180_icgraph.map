@@ -1,0 +1,7 @@
+<map id="CompendiaCore::backfillMetadata" name="CompendiaCore::backfillMetadata">
+<area shape="rect" id="Node000001" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="532,5,740,32"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#a797e7ab9f7b0c18348eb182c08abb980" title="Clears all existing data and reloads files from the current root directory." alt="" coords="266,5,484,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="514,19,484,21,484,16,519,19"/>
+<area shape="rect" id="Node000003" href="$class_compendia_core.html#a5ee748e28577573181f5a442a71e2f29" title="Sets the root directory path and immediately loads it." alt="" coords="5,5,218,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="248,19,218,21,218,16,253,19"/>
+</map>

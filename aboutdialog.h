@@ -10,7 +10,7 @@ class AboutDialog;
 }
 QT_END_NAMESPACE
 
-/*! \brief Modal "About Luminism" dialog.
+/*! \brief Modal "About Compendia" dialog.
  *
  * Displays the application name, version number, third-party dependency
  * acknowledgements, license, and copyright notice.  Layout is defined in

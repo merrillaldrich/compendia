@@ -1,0 +1,7 @@
+<map id="CompendiaCore::getTag" name="CompendiaCore::getTag">
+<area shape="rect" id="Node000001" title="Retrieve a tag from the library by name." alt="" coords="5,31,158,57"/>
+<area shape="rect" id="Node000002" href="$class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="225,5,328,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,32,212,27,207,28,158,37"/>
+<area shape="rect" id="Node000003" href="$class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="206,56,348,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="158,51,193,58,188,58,158,57"/>
+</map>

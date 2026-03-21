@@ -1,9 +1,0 @@
-<map id="LuminismCore::addLibraryTagFamily" name="LuminismCore::addLibraryTagFamily">
-<area shape="rect" id="Node000001" title="Creates or retrieves a tag family in the library by name." alt="" coords="431,23,604,65"/>
-<area shape="rect" id="Node000002" href="$class_luminism_core.html#a1c32ba0f603caecb8cc8d52233f3603b" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="189,5,383,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="412,33,384,32,384,27,418,33"/>
-<area shape="rect" id="Node000004" href="$class_tag_family_widget.html#a1b322fec8851b3248f2abe24e426c6c4" title="Commits the edited family name and switches back to read mode." alt="" coords="199,56,373,83"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="418,55,374,62,373,57,413,55"/>
-<area shape="rect" id="Node000003" href="$class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="5,5,141,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="170,19,141,21,140,16,176,18"/>
-</map>

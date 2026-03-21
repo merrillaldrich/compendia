@@ -9,6 +9,6 @@ var searchData=
   ['widthchangedduringedit_6',['widthChangedDuringEdit',['../class_tag_widget.html#a2f09a27f47713458af3fc05b4f7d926f',1,'TagWidget']]],
   ['wrapfilename_7',['wrapFileName',['../class_file_name_delegate.html#a38fadee1df325e64aeeacc09fa73535d',1,'FileNameDelegate']]],
   ['wraplabel_8',['WrapLabel',['../class_wrap_label.html#a31c41dae362c18bd30e18fe753ab3e99',1,'WrapLabel']]],
-  ['writefilemetadata_9',['writeFileMetadata',['../class_luminism_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc',1,'LuminismCore']]],
-  ['writevisiblefilemetadata_10',['writeVisibleFileMetadata',['../class_luminism_core.html#a9de41cca6143d5699f3e51a7ee58894b',1,'LuminismCore']]]
+  ['writefilemetadata_9',['writeFileMetadata',['../class_compendia_core.html#a6ecfaeae961cdf6bd20458d9f4c616b4',1,'CompendiaCore']]],
+  ['writevisiblefilemetadata_10',['writeVisibleFileMetadata',['../class_compendia_core.html#ac870c3b8dddd9978a8cf741f075228ae',1,'CompendiaCore']]]
 ];

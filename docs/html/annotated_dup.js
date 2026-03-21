@@ -2,6 +2,7 @@ var annotated_dup =
 [
     [ "AboutDialog", "class_about_dialog.html", "class_about_dialog" ],
     [ "ClickableLabel", "class_clickable_label.html", "class_clickable_label" ],
+    [ "CompendiaCore", "class_compendia_core.html", "class_compendia_core" ],
     [ "DateFilterButton", "class_date_filter_button.html", "class_date_filter_button" ],
     [ "ExifParser", "class_exif_parser.html", "class_exif_parser" ],
     [ "FaceDescriptor", "struct_face_descriptor.html", "struct_face_descriptor" ],
@@ -17,7 +18,6 @@ var annotated_dup =
     [ "FrameGrabber", "class_frame_grabber.html", "class_frame_grabber" ],
     [ "IconGenerator", "class_icon_generator.html", "class_icon_generator" ],
     [ "KnownFaceCacheEntry", "struct_known_face_cache_entry.html", "struct_known_face_cache_entry" ],
-    [ "LuminismCore", "class_luminism_core.html", "class_luminism_core" ],
     [ "MainWindow", "class_main_window.html", "class_main_window" ],
     [ "MultiProgressBar", "class_multi_progress_bar.html", "class_multi_progress_bar" ],
     [ "NavArrowButton", "class_nav_arrow_button.html", "class_nav_arrow_button" ],

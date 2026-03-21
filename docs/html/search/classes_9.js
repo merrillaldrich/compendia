@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['navarrowbutton_0',['NavArrowButton',['../class_nav_arrow_button.html',1,'']]],
-  ['navfiltercontainer_1',['NavFilterContainer',['../class_nav_filter_container.html',1,'']]],
-  ['navlibrarycontainer_2',['NavLibraryContainer',['../class_nav_library_container.html',1,'']]]
+  ['pendingdescriptor_0',['PendingDescriptor',['../struct_pending_descriptor.html',1,'']]],
+  ['perceptualhasher_1',['PerceptualHasher',['../class_perceptual_hasher.html',1,'']]],
+  ['phase1fileinput_2',['Phase1FileInput',['../struct_phase1_file_input.html',1,'']]],
+  ['previewcontainer_3',['PreviewContainer',['../class_preview_container.html',1,'']]],
+  ['promotionentry_4',['PromotionEntry',['../struct_promotion_entry.html',1,'']]]
 ];

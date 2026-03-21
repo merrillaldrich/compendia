@@ -1,0 +1,5 @@
+<map id="CompendiaCore::getAssignedTags" name="CompendiaCore::getAssignedTags">
+<area shape="rect" id="Node000001" title="Returns a new set of tags that are assigned to at least one file." alt="" coords="5,5,219,32"/>
+<area shape="rect" id="Node000002" href="$class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="267,5,384,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,16,254,19,248,19,219,21"/>
+</map>

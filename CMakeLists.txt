@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(luminism VERSION 0.1.0 LANGUAGES CXX)
+project(compendia VERSION 0.1.0 LANGUAGES CXX)
 
 # Generate version.h from version.h.in, substituting project version variables.
 configure_file(version.h.in "${CMAKE_CURRENT_BINARY_DIR}/version.h")
@@ -52,13 +52,13 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(luminism
+    qt_add_executable(compendia
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         tagset.cpp
         tag.cpp tagfamily.cpp taggedfile.cpp
-        luminismcore.h tagfamily.h taggedfile.h  tagset.h
-        luminismcore.cpp
+        compendiacore.h tagfamily.h taggedfile.h  tagset.h
+        compendiacore.cpp
         tag.h
         resources.qrc
         tagwidget.h tagwidget.cpp
@@ -98,18 +98,18 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Define target properties for Android with Qt 6 as:
-#    set_property(TARGET luminism APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#    set_property(TARGET compendia APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
-        add_library(luminism SHARED
+        add_library(compendia SHARED
             ${PROJECT_SOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(luminism
+        add_executable(compendia
             ${PROJECT_SOURCES}
         )
     endif()
@@ -117,7 +117,7 @@ endif()
 
 # Add dlib library from 3rdParty subdirectory
 add_subdirectory(3rdParty/src/dlib)
-target_link_libraries(luminism PRIVATE dlib)
+target_link_libraries(compendia PRIVATE dlib)
 
 # facerecognizer.cpp instantiates dlib's DNN templates, which generate an object
 # file with more than 65 535 COFF sections on Windows — exceeding the default
@@ -148,25 +148,25 @@ endif()
 # If these files are absent the action shows an informative warning and exits early.
 # ---------------------------------------------------------------------------
 
-target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Core)
-target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent)
-target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Multimedia)
-target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::MultimediaWidgets)
-target_link_libraries(luminism PRIVATE Qt${QT_VERSION_MAJOR}::Svg)
+target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent)
+target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Multimedia)
+target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::MultimediaWidgets)
+target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Svg)
 
 # Add libexif library from 3rdParty subdirectory
-target_include_directories(luminism PRIVATE ${LIBEXIF_INCLUDE_DIR})
-target_link_libraries(luminism PRIVATE ${LIBEXIF_LIBRARY})
+target_include_directories(compendia PRIVATE ${LIBEXIF_INCLUDE_DIR})
+target_link_libraries(compendia PRIVATE ${LIBEXIF_LIBRARY})
 
 # Add libheif library from 3rdParty subdirectory
-target_include_directories(luminism PRIVATE ${LIBHEIF_INCLUDE_DIR})
-target_link_libraries(luminism PRIVATE ${LIBHEIF_LIBRARY})
+target_include_directories(compendia PRIVATE ${LIBHEIF_INCLUDE_DIR})
+target_link_libraries(compendia PRIVATE ${LIBHEIF_LIBRARY})
 
 # On Linux, force the binary to prefer the system libheif (which has decoder plugins)
 # over /usr/local/lib/libheif.so.1 (built from source, no plugins).
 if(UNIX AND NOT APPLE)
-    set_target_properties(luminism PROPERTIES
+    set_target_properties(compendia PROPERTIES
         BUILD_RPATH "/usr/lib/x86_64-linux-gnu"
     )
 endif()
@@ -176,9 +176,9 @@ endif()
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.luminism)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.compendia)
 endif()
-set_target_properties(luminism PROPERTIES
+set_target_properties(compendia PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -187,9 +187,9 @@ set_target_properties(luminism PROPERTIES
 )
 
 # ── Application icon ──────────────────────────────────────────────────────────
-set(ICON_SVG     "${CMAKE_CURRENT_SOURCE_DIR}/resources/luminism_icon.svg")
-set(ICON_ICO     "${CMAKE_CURRENT_BINARY_DIR}/luminism.ico")   # generated here
-set(ICON_ICO_SRC "${CMAKE_CURRENT_SOURCE_DIR}/resources/luminism.ico") # committed copy
+set(ICON_SVG     "${CMAKE_CURRENT_SOURCE_DIR}/resources/compendia_icon.svg")
+set(ICON_ICO     "${CMAKE_CURRENT_BINARY_DIR}/compendia.ico")   # generated here
+set(ICON_ICO_SRC "${CMAKE_CURRENT_SOURCE_DIR}/resources/compendia.ico") # committed copy
 
 if(WIN32)
     # Prefer Inkscape for accurate SVG rendering; fall back to ImageMagick alone.
@@ -215,7 +215,7 @@ if(WIN32)
                 "${CMAKE_CURRENT_BINARY_DIR}/icon_256.png"
                 "${ICON_ICO}"
             DEPENDS "${ICON_SVG}"
-            COMMENT "Generating luminism.ico (Inkscape + ImageMagick)"
+            COMMENT "Generating compendia.ico (Inkscape + ImageMagick)"
             VERBATIM
         )
         set(ICON_TOOLS_FOUND TRUE)
@@ -229,7 +229,7 @@ if(WIN32)
                 -define icon:auto-resize=256,48,32,16
                 "${ICON_ICO}"
             DEPENDS "${ICON_SVG}"
-            COMMENT "Generating luminism.ico (ImageMagick)"
+            COMMENT "Generating compendia.ico (ImageMagick)"
             VERBATIM
         )
         set(ICON_TOOLS_FOUND TRUE)
@@ -238,21 +238,21 @@ if(WIN32)
     if(ICON_TOOLS_FOUND)
         # After generating into the build dir, copy back to resources/ so the
         # result can be committed and used on machines without the tools.
-        add_custom_target(luminism_ico ALL
+        add_custom_target(compendia_ico ALL
             COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${ICON_ICO}" "${ICON_ICO_SRC}"
             DEPENDS "${ICON_ICO}"
-            COMMENT "Copying luminism.ico to resources/"
+            COMMENT "Copying compendia.ico to resources/"
             VERBATIM
         )
-        add_dependencies(luminism luminism_ico)
+        add_dependencies(compendia compendia_ico)
     elseif(EXISTS "${ICON_ICO_SRC}")
         # No tools present — copy the checked-in ICO to the build dir at configure
         # time so windres can find it.
-        message(STATUS "luminism: using checked-in resources/luminism.ico")
+        message(STATUS "compendia: using checked-in resources/compendia.ico")
         configure_file("${ICON_ICO_SRC}" "${ICON_ICO}" COPYONLY)
     else()
         message(WARNING
-            "luminism: Inkscape/ImageMagick not found and no checked-in ICO — "
+            "compendia: Inkscape/ImageMagick not found and no checked-in ICO — "
             "Windows icon will be absent. Install either tool and rebuild.")
     endif()
 
@@ -260,10 +260,10 @@ if(WIN32)
     # (either freshly generated or copied from source at configure time).
     if(ICON_TOOLS_FOUND OR EXISTS "${ICON_ICO_SRC}")
         configure_file(
-            "${CMAKE_CURRENT_SOURCE_DIR}/luminism.rc.in"
-            "${CMAKE_CURRENT_BINARY_DIR}/luminism.rc"
+            "${CMAKE_CURRENT_SOURCE_DIR}/compendia.rc.in"
+            "${CMAKE_CURRENT_BINARY_DIR}/compendia.rc"
         )
-        target_sources(luminism PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/luminism.rc")
+        target_sources(compendia PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/compendia.rc")
     endif()
 endif()
 
@@ -273,9 +273,9 @@ if(UNIX AND NOT APPLE)
     # Install the scalable SVG into the hicolor icon theme so GNOME/KDE pick it up.
     install(FILES "${ICON_SVG}"
             DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps"
-            RENAME "luminism.svg")
+            RENAME "compendia.svg")
     # .desktop file makes the app appear in the GNOME application grid.
-    install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/luminism.desktop"
+    install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/compendia.desktop"
             DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")
 endif()
 # ──────────────────────────────────────────────────────────────────────────────
@@ -283,9 +283,9 @@ endif()
 # On Windows install the exe to the package root so windeployqt's DLLs,
 # Qt plugins, and the models/ directory all sit at the same level.
 if(WIN32)
-    install(TARGETS luminism RUNTIME DESTINATION .)
+    install(TARGETS compendia RUNTIME DESTINATION .)
 else()
-    install(TARGETS luminism
+    install(TARGETS compendia
         BUNDLE  DESTINATION .
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -311,7 +311,7 @@ if(MODELS_FOUND)
     install(FILES ${MODEL_FILES} DESTINATION models)
 else()
     message(STATUS
-        "luminism: model .dat files not found in models/ — face recognition "
+        "compendia: model .dat files not found in models/ — face recognition "
         "will not work in the packaged app.\n"
         "Run:  cmake -P cmake/DownloadModels.cmake  to download them.")
 endif()
@@ -355,7 +355,7 @@ if(WIN32)
         install(FILES ${_THIRD_PARTY_DLLS} DESTINATION .)
     else()
         message(WARNING
-            "luminism: vcpkg installed dir not found — exif-12.dll, heif.dll "
+            "compendia: vcpkg installed dir not found — exif-12.dll, heif.dll "
             "and codec DLLs will be absent from the package.\n"
             "Set -DVCPKG_INSTALLED_DIR=<path/to/vcpkg/installed/x64-windows>")
     endif()
@@ -391,7 +391,7 @@ if(WIN32)
                 COMMAND \"${WINDEPLOYQT_EXECUTABLE}\"
                     --release
                     --no-translations
-                    \"\${CMAKE_INSTALL_PREFIX}/luminism.exe\"
+                    \"\${CMAKE_INSTALL_PREFIX}/compendia.exe\"
                 RESULT_VARIABLE _wd_result
             )
             if(NOT _wd_result EQUAL 0)
@@ -413,13 +413,13 @@ if(WIN32)
         ")
     else()
         message(WARNING
-            "luminism: windeployqt not found — Qt DLLs will not be deployed.\n"
+            "compendia: windeployqt not found — Qt DLLs will not be deployed.\n"
             "Set WINDEPLOYQT_EXECUTABLE in CMake cache or add Qt bin to PATH.")
     endif()
 endif()
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(luminism)
+    qt_finalize_executable(compendia)
 endif()
 
 include(cmake/Packaging.cmake)

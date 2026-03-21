@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Luminism: mainwindow.h Source File</title>
+<title>Compendia: mainwindow.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Luminism
+   <div id="projectname">Compendia
    </div>
    <div id="projectbrief">Media asset management tool</div>
   </td>
@@ -105,7 +105,7 @@ $(function(){initNavTree('mainwindow_8h_source.html','',''); });
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;QImageReader&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;QMessageBox&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;QTimer&gt;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="luminismcore_8h.html">luminismcore.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="compendiacore_8h.html">compendiacore.h</a>&quot;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="multiprogressbar_8h.html">multiprogressbar.h</a>&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="facerecognizer_8h.html">facerecognizer.h</a>&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="facerecognitionsettingsdialog_8h.html">facerecognitionsettingsdialog.h</a>&quot;</span></div>
@@ -140,7 +140,7 @@ $(function(){initNavTree('mainwindow_8h_source.html','',''); });
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span></div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <a class="code hl_function" href="class_main_window.html#ae98d00a93bc118200eeef9f9bba1dba7">~MainWindow</a>();</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="class_main_window.html#aacbe910633e17d081e6b36467feb8e53">   59</a></span>    <a class="code hl_class" href="class_luminism_core.html">LuminismCore</a> *<a class="code hl_variable" href="class_main_window.html#aacbe910633e17d081e6b36467feb8e53">core</a>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="class_main_window.html#aba88ec7cefcb7dcd47389fe3214a6339">   59</a></span>    <a class="code hl_class" href="class_compendia_core.html">CompendiaCore</a> *<a class="code hl_variable" href="class_main_window.html#aba88ec7cefcb7dcd47389fe3214a6339">core</a>;</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span></div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706">setRootFolder</a>();</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
@@ -191,142 +191,148 @@ $(function(){initNavTree('mainwindow_8h_source.html','',''); });
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span></div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keywordtype">void</span> drillToFolder(<span class="keyword">const</span> QString&amp; targetPath);</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span></div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <span class="keywordtype">void</span> navigatePreview(<span class="keywordtype">int</span> delta);</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="keyword">private</span> slots:</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span></div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="keywordtype">void</span> on_iconZoomSlider_valueChanged(<span class="keywordtype">int</span> value);</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span></div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="keywordtype">void</span> on_actionOpen_Folder_triggered();</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <span class="keywordtype">void</span> on_actionQuit_triggered();</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span></div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keywordtype">void</span> onFileSelectionChanged(<span class="keyword">const</span> QItemSelection &amp;selected, <span class="keyword">const</span> QItemSelection &amp;deselected);</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span></div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <span class="keywordtype">void</span> on_previewSplitter_splitterMoved(<span class="keywordtype">int</span> pos, <span class="keywordtype">int</span> index);</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span></div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    <span class="keywordtype">void</span> on_windowBodySplitter_splitterMoved(<span class="keywordtype">int</span> pos, <span class="keywordtype">int</span> index);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span></div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keywordtype">void</span> on_mediaFolderBrowseButton_clicked();</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span></div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <span class="keywordtype">void</span> on_mediaFolderLineEdit_returnPressed();</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span></div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="keywordtype">void</span> on_saveButton_clicked();</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span></div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    <span class="keywordtype">void</span> on_actionSave_All_triggered();</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span></div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    <span class="keywordtype">void</span> on_actionSave_Visible_triggered();</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span></div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="keywordtype">void</span> on_fileListTagAssignmentContainer_tagDeleteRequested(<a class="code hl_class" href="class_tag.html">Tag</a>* tag);</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span></div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keywordtype">void</span> on_navFilterContainer_tagDeleteRequested(<a class="code hl_class" href="class_tag.html">Tag</a>* tag);</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span></div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="keywordtype">void</span> onNavLibraryContainerTagDeleteRequested(<a class="code hl_class" href="class_tag.html">Tag</a>* tag);</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span></div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    <span class="keywordtype">void</span> on_fileNameFilterLineEdit_textChanged(<span class="keyword">const</span> QString &amp;arg1);</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span></div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <span class="keywordtype">void</span> on_folderFilterLineEdit_textChanged(<span class="keyword">const</span> QString &amp;arg1);</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span></div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <span class="keywordtype">void</span> onIconUpdated();</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span></div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <span class="keywordtype">void</span> onMetadataSaved();</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span></div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    <span class="keywordtype">void</span> on_actionFind_Faces_triggered();</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span></div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    <span class="keywordtype">void</span> on_actionFace_Recognition_Settings_triggered();</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span></div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    <span class="keywordtype">void</span> on_actionRemove_Auto_Detected_Faces_triggered();</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span></div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    <span class="keywordtype">void</span> on_showTaggedRegionsCheckbox_stateChanged(<span class="keywordtype">int</span> state);</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span></div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keywordtype">void</span> onTagDroppedOnPreview(<span class="keyword">const</span> QString &amp;family,</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                               <span class="keyword">const</span> QString &amp;tagName,</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                               <span class="keyword">const</span> QRectF  &amp;normalizedRect);</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span></div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    <span class="keywordtype">void</span> onTagDroppedOnExistingRegion(<span class="keyword">const</span> QString &amp;family,</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                                      <span class="keyword">const</span> QString &amp;tagName,</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>                                      <span class="keyword">const</span> QRectF  &amp;existingRect);</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span></div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    <span class="keywordtype">void</span> onTagRectResized(<span class="keyword">const</span> QRectF &amp;oldNorm, <span class="keyword">const</span> QRectF &amp;newNorm);</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span></div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    <span class="keywordtype">void</span> onTagRectDeleteRequested(<span class="keyword">const</span> QRectF &amp;normalizedRect);</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span></div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    <span class="keywordtype">void</span> on_dateEdit_dateChanged(<span class="keyword">const</span> QDate &amp;date);</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span></div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    <span class="keywordtype">void</span> onTagNameChanged(<a class="code hl_class" href="class_tag.html">Tag</a>* tag);</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span></div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    <span class="keywordtype">void</span> onTagLibraryChanged();</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span></div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>    <span class="keywordtype">void</span> on_actionGrab_Video_Frame_triggered();</div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span></div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    <span class="keywordtype">void</span> onVideoFrameGrabbed(<span class="keyword">const</span> QString &amp;path, <span class="keyword">const</span> QImage &amp;frame,</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                             <span class="keyword">const</span> QMap&lt;QString, QString&gt; &amp;meta);</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span></div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    <span class="keywordtype">void</span> onVideoFrameFailed(<span class="keyword">const</span> QString &amp;path, <span class="keyword">const</span> QString &amp;reason,</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>                            <span class="keyword">const</span> QMap&lt;QString, QString&gt; &amp;meta);</div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span></div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="keywordtype">void</span> onVideoGrabProgress(<span class="keywordtype">int</span> done, <span class="keywordtype">int</span> total);</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span></div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>    <span class="keywordtype">void</span> onVideoGrabFinished(<span class="keywordtype">int</span> success, <span class="keywordtype">int</span> fail);</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span></div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>    <span class="keywordtype">void</span> on_actionAuto_Tag_Year_triggered();</div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span></div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>    <span class="keywordtype">void</span> on_actionAuto_Tag_Month_triggered();</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span></div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>    <span class="keywordtype">void</span> on_actionIsolateSelection_triggered();</div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span></div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>    <span class="keywordtype">void</span> on_actionFind_Similar_Images_triggered();</div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span></div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>    <span class="keywordtype">void</span> on_actionClearIsolation_triggered();</div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span></div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    <span class="keywordtype">void</span> on_actionIsolateFolderSelection_triggered();</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span></div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>    <span class="keywordtype">void</span> on_actionClearFolderIsolation_triggered();</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span></div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>    <span class="keywordtype">void</span> on_actionDrillToFolder_triggered();</div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span></div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>    <span class="keywordtype">void</span> on_actionDrillUp_triggered();</div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span></div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    <span class="keywordtype">void</span> on_actionAbout_triggered();</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span></div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>    <span class="keywordtype">void</span> on_actionExport_triggered();</div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span> </div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f">resizeEvent</a>(QResizeEvent *event) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span></div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_window.html#a05fb9d72c044aa3bb7d187b994704e2f">closeEvent</a>(QCloseEvent *event) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>};</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keywordtype">void</span> applySimilaritySetTags(<span class="keyword">const</span> QList&lt;QList&lt;TaggedFile*&gt;&gt; &amp;groups);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="keywordtype">void</span> navigatePreview(<span class="keywordtype">int</span> delta);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="keyword">private</span> slots:</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordtype">void</span> on_iconZoomSlider_valueChanged(<span class="keywordtype">int</span> value);</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="keywordtype">void</span> on_actionOpen_Folder_triggered();</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <span class="keywordtype">void</span> on_actionQuit_triggered();</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keywordtype">void</span> onFileSelectionChanged(<span class="keyword">const</span> QItemSelection &amp;selected, <span class="keyword">const</span> QItemSelection &amp;deselected);</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="keywordtype">void</span> on_previewSplitter_splitterMoved(<span class="keywordtype">int</span> pos, <span class="keywordtype">int</span> index);</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keywordtype">void</span> on_windowBodySplitter_splitterMoved(<span class="keywordtype">int</span> pos, <span class="keywordtype">int</span> index);</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="keywordtype">void</span> on_mediaFolderBrowseButton_clicked();</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    <span class="keywordtype">void</span> on_mediaFolderLineEdit_returnPressed();</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keywordtype">void</span> on_saveButton_clicked();</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span></div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    <span class="keywordtype">void</span> on_actionSave_All_triggered();</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span></div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    <span class="keywordtype">void</span> on_actionSave_Visible_triggered();</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordtype">void</span> on_fileListTagAssignmentContainer_tagDeleteRequested(<a class="code hl_class" href="class_tag.html">Tag</a>* tag);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <span class="keywordtype">void</span> on_navFilterContainer_tagDeleteRequested(<a class="code hl_class" href="class_tag.html">Tag</a>* tag);</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span></div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <span class="keywordtype">void</span> onNavLibraryContainerTagDeleteRequested(<a class="code hl_class" href="class_tag.html">Tag</a>* tag);</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span></div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keywordtype">void</span> on_fileNameFilterLineEdit_textChanged(<span class="keyword">const</span> QString &amp;arg1);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span></div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    <span class="keywordtype">void</span> on_folderFilterLineEdit_textChanged(<span class="keyword">const</span> QString &amp;arg1);</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span></div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <span class="keywordtype">void</span> onIconUpdated();</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span></div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keywordtype">void</span> onMetadataSaved();</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span></div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    <span class="keywordtype">void</span> on_actionFind_Faces_triggered();</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span></div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <span class="keywordtype">void</span> on_actionFace_Recognition_Settings_triggered();</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    <span class="keywordtype">void</span> on_actionRemove_Auto_Detected_Faces_triggered();</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span></div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    <span class="keywordtype">void</span> on_showTaggedRegionsCheckbox_stateChanged(<span class="keywordtype">int</span> state);</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span></div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <span class="keywordtype">void</span> onTagDroppedOnPreview(<span class="keyword">const</span> QString &amp;family,</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                               <span class="keyword">const</span> QString &amp;tagName,</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                               <span class="keyword">const</span> QRectF  &amp;normalizedRect);</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span></div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keywordtype">void</span> onTagDroppedOnExistingRegion(<span class="keyword">const</span> QString &amp;family,</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                                      <span class="keyword">const</span> QString &amp;tagName,</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                                      <span class="keyword">const</span> QRectF  &amp;existingRect);</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span></div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>    <span class="keywordtype">void</span> onTagRectResized(<span class="keyword">const</span> QRectF &amp;oldNorm, <span class="keyword">const</span> QRectF &amp;newNorm);</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span></div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <span class="keywordtype">void</span> onTagRectDeleteRequested(<span class="keyword">const</span> QRectF &amp;normalizedRect);</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span></div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    <span class="keywordtype">void</span> on_dateEdit_dateChanged(<span class="keyword">const</span> QDate &amp;date);</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span></div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>    <span class="keywordtype">void</span> onTagNameChanged(<a class="code hl_class" href="class_tag.html">Tag</a>* tag);</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span></div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    <span class="keywordtype">void</span> onTagLibraryChanged();</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span></div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>    <span class="keywordtype">void</span> on_actionGrab_Video_Frame_triggered();</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span></div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>    <span class="keywordtype">void</span> onVideoFrameGrabbed(<span class="keyword">const</span> QString &amp;path, <span class="keyword">const</span> QImage &amp;frame,</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>                             <span class="keyword">const</span> QMap&lt;QString, QString&gt; &amp;meta);</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span></div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    <span class="keywordtype">void</span> onVideoFrameFailed(<span class="keyword">const</span> QString &amp;path, <span class="keyword">const</span> QString &amp;reason,</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>                            <span class="keyword">const</span> QMap&lt;QString, QString&gt; &amp;meta);</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span></div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>    <span class="keywordtype">void</span> onVideoGrabProgress(<span class="keywordtype">int</span> done, <span class="keywordtype">int</span> total);</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span></div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>    <span class="keywordtype">void</span> onVideoGrabFinished(<span class="keywordtype">int</span> success, <span class="keywordtype">int</span> fail);</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span></div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>    <span class="keywordtype">void</span> on_actionAuto_Tag_Year_triggered();</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span></div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    <span class="keywordtype">void</span> on_actionAuto_Tag_Month_triggered();</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span></div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>    <span class="keywordtype">void</span> on_actionIsolateSelection_triggered();</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span></div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>    <span class="keywordtype">void</span> on_actionFind_Similar_In_Selection_triggered();</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span></div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>    <span class="keywordtype">void</span> on_actionFind_Similar_Images_triggered();</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span></div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>    <span class="keywordtype">void</span> on_actionClearIsolation_triggered();</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span></div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    <span class="keywordtype">void</span> on_actionIsolateFolderSelection_triggered();</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span></div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>    <span class="keywordtype">void</span> on_actionClearFolderIsolation_triggered();</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span></div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>    <span class="keywordtype">void</span> on_actionClearAllFilters_triggered();</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span></div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>    <span class="keywordtype">void</span> on_actionDrillToFolder_triggered();</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span></div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>    <span class="keywordtype">void</span> on_actionDrillUp_triggered();</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span></div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>    <span class="keywordtype">void</span> on_actionAbout_triggered();</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span></div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>    <span class="keywordtype">void</span> on_actionExport_triggered();</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span> </div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f">resizeEvent</a>(QResizeEvent *event) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span></div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_window.html#a05fb9d72c044aa3bb7d187b994704e2f">closeEvent</a>(QCloseEvent *event) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>};</div>
 </div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span> </div>
-<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span><span class="preprocessor">#endif </span><span class="comment">// MAINWINDOW_H</span></div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span> </div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span><span class="preprocessor">#endif </span><span class="comment">// MAINWINDOW_H</span></div>
 <div class="ttc" id="aaboutdialog_8h_html"><div class="ttname"><a href="aboutdialog_8h.html">aboutdialog.h</a></div></div>
+<div class="ttc" id="aclass_compendia_core_html"><div class="ttname"><a href="class_compendia_core.html">CompendiaCore</a></div><div class="ttdoc">Central controller that owns all application data and business logic.</div><div class="ttdef"><b>Definition</b> compendiacore.h:36</div></div>
 <div class="ttc" id="aclass_face_recognizer_html"><div class="ttname"><a href="class_face_recognizer.html">FaceRecognizer</a></div><div class="ttdoc">Detects and recognises faces across images using dlib&#39;s HOG detector and ResNet embeddings.</div><div class="ttdef"><b>Definition</b> facerecognizer.h:133</div></div>
 <div class="ttc" id="aclass_frame_grabber_html"><div class="ttname"><a href="class_frame_grabber.html">FrameGrabber</a></div><div class="ttdoc">Captures a representative frame from each video file in a batch.</div><div class="ttdef"><b>Definition</b> framegrabber.h:25</div></div>
-<div class="ttc" id="aclass_luminism_core_html"><div class="ttname"><a href="class_luminism_core.html">LuminismCore</a></div><div class="ttdoc">Central controller that owns all application data and business logic.</div><div class="ttdef"><b>Definition</b> luminismcore.h:35</div></div>
-<div class="ttc" id="aclass_main_window_html_a05fb9d72c044aa3bb7d187b994704e2f"><div class="ttname"><a href="class_main_window.html#a05fb9d72c044aa3bb7d187b994704e2f">MainWindow::closeEvent</a></div><div class="ttdeci">void closeEvent(QCloseEvent *event) override</div><div class="ttdoc">Intercepts the window close event to prompt for unsaved changes.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1912</div></div>
-<div class="ttc" id="aclass_main_window_html_a2b165548de96b2ce566501f01078e6cb"><div class="ttname"><a href="class_main_window.html#a2b165548de96b2ce566501f01078e6cb">MainWindow::freshenPreview</a></div><div class="ttdeci">void freshenPreview()</div><div class="ttdoc">Refreshes the preview pane to reflect the current viewport size.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1217</div></div>
-<div class="ttc" id="aclass_main_window_html_a2d43721963df0ad1356a4c6162882a37"><div class="ttname"><a href="class_main_window.html#a2d43721963df0ad1356a4c6162882a37">MainWindow::updateFolderStatsLabel</a></div><div class="ttdeci">void updateFolderStatsLabel()</div><div class="ttdoc">Updates the persistent folder-stats label in the status bar.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1425</div></div>
-<div class="ttc" id="aclass_main_window_html_a385141ecb8e37eceb78cb64f68a4c706"><div class="ttname"><a href="class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706">MainWindow::setRootFolder</a></div><div class="ttdeci">void setRootFolder()</div><div class="ttdoc">Opens a folder-picker dialog and loads the selected folder into core.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:519</div></div>
-<div class="ttc" id="aclass_main_window_html_a3d32035c5a2e69fdb73b66bab8e62ca8"><div class="ttname"><a href="class_main_window.html#a3d32035c5a2e69fdb73b66bab8e62ca8">MainWindow::refreshTagAssignmentArea</a></div><div class="ttdeci">void refreshTagAssignmentArea()</div><div class="ttdoc">Rebuilds the tag-assignment area from tags on the currently filtered files.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:610</div></div>
-<div class="ttc" id="aclass_main_window_html_a5462e6afbcba2e363e598347a9ed9432"><div class="ttname"><a href="class_main_window.html#a5462e6afbcba2e363e598347a9ed9432">MainWindow::onTagRefamilyRequested</a></div><div class="ttdeci">void onTagRefamilyRequested(Tag *tag, TagFamily *newFamily)</div><div class="ttdoc">Prompts for confirmation then moves tag to newFamily via core-&gt;refamilyTag().</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:669</div></div>
-<div class="ttc" id="aclass_main_window_html_a5922ea5b8d1a4ddb7ac1667feedb97e9"><div class="ttname"><a href="class_main_window.html#a5922ea5b8d1a4ddb7ac1667feedb97e9">MainWindow::connectFileCountLabel</a></div><div class="ttdeci">void connectFileCountLabel()</div><div class="ttdoc">Connects the file-count label to the current proxy model&#39;s signals.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1446</div></div>
-<div class="ttc" id="aclass_main_window_html_a61753721c377d394196e2240f42fd130"><div class="ttname"><a href="class_main_window.html#a61753721c377d394196e2240f42fd130">MainWindow::updateFileCountLabel</a></div><div class="ttdeci">void updateFileCountLabel()</div><div class="ttdoc">Updates the file-count label to show visible vs. total file counts.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1401</div></div>
-<div class="ttc" id="aclass_main_window_html_a70f1571a374bc94df84f935f8af0fffe"><div class="ttname"><a href="class_main_window.html#a70f1571a374bc94df84f935f8af0fffe">MainWindow::clearPreview</a></div><div class="ttdeci">void clearPreview()</div><div class="ttdoc">Clears the preview pane of any displayed image.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1222</div></div>
+<div class="ttc" id="aclass_main_window_html_a05fb9d72c044aa3bb7d187b994704e2f"><div class="ttname"><a href="class_main_window.html#a05fb9d72c044aa3bb7d187b994704e2f">MainWindow::closeEvent</a></div><div class="ttdeci">void closeEvent(QCloseEvent *event) override</div><div class="ttdoc">Intercepts the window close event to prompt for unsaved changes.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:2132</div></div>
+<div class="ttc" id="aclass_main_window_html_a2b165548de96b2ce566501f01078e6cb"><div class="ttname"><a href="class_main_window.html#a2b165548de96b2ce566501f01078e6cb">MainWindow::freshenPreview</a></div><div class="ttdeci">void freshenPreview()</div><div class="ttdoc">Refreshes the preview pane to reflect the current viewport size.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1437</div></div>
+<div class="ttc" id="aclass_main_window_html_a2d43721963df0ad1356a4c6162882a37"><div class="ttname"><a href="class_main_window.html#a2d43721963df0ad1356a4c6162882a37">MainWindow::updateFolderStatsLabel</a></div><div class="ttdeci">void updateFolderStatsLabel()</div><div class="ttdoc">Updates the persistent folder-stats label in the status bar.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1645</div></div>
+<div class="ttc" id="aclass_main_window_html_a385141ecb8e37eceb78cb64f68a4c706"><div class="ttname"><a href="class_main_window.html#a385141ecb8e37eceb78cb64f68a4c706">MainWindow::setRootFolder</a></div><div class="ttdeci">void setRootFolder()</div><div class="ttdoc">Opens a folder-picker dialog and loads the selected folder into core.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:585</div></div>
+<div class="ttc" id="aclass_main_window_html_a3d32035c5a2e69fdb73b66bab8e62ca8"><div class="ttname"><a href="class_main_window.html#a3d32035c5a2e69fdb73b66bab8e62ca8">MainWindow::refreshTagAssignmentArea</a></div><div class="ttdeci">void refreshTagAssignmentArea()</div><div class="ttdoc">Rebuilds the tag-assignment area from tags on the currently filtered files.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:676</div></div>
+<div class="ttc" id="aclass_main_window_html_a5462e6afbcba2e363e598347a9ed9432"><div class="ttname"><a href="class_main_window.html#a5462e6afbcba2e363e598347a9ed9432">MainWindow::onTagRefamilyRequested</a></div><div class="ttdeci">void onTagRefamilyRequested(Tag *tag, TagFamily *newFamily)</div><div class="ttdoc">Prompts for confirmation then moves tag to newFamily via core-&gt;refamilyTag().</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:735</div></div>
+<div class="ttc" id="aclass_main_window_html_a5922ea5b8d1a4ddb7ac1667feedb97e9"><div class="ttname"><a href="class_main_window.html#a5922ea5b8d1a4ddb7ac1667feedb97e9">MainWindow::connectFileCountLabel</a></div><div class="ttdeci">void connectFileCountLabel()</div><div class="ttdoc">Connects the file-count label to the current proxy model&#39;s signals.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1666</div></div>
+<div class="ttc" id="aclass_main_window_html_a61753721c377d394196e2240f42fd130"><div class="ttname"><a href="class_main_window.html#a61753721c377d394196e2240f42fd130">MainWindow::updateFileCountLabel</a></div><div class="ttdeci">void updateFileCountLabel()</div><div class="ttdoc">Updates the file-count label to show visible vs. total file counts.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1621</div></div>
+<div class="ttc" id="aclass_main_window_html_a70f1571a374bc94df84f935f8af0fffe"><div class="ttname"><a href="class_main_window.html#a70f1571a374bc94df84f935f8af0fffe">MainWindow::clearPreview</a></div><div class="ttdeci">void clearPreview()</div><div class="ttdoc">Clears the preview pane of any displayed image.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1442</div></div>
 <div class="ttc" id="aclass_main_window_html_a996c5a2b6f77944776856f08ec30858d"><div class="ttname"><a href="class_main_window.html#a996c5a2b6f77944776856f08ec30858d">MainWindow::MainWindow</a></div><div class="ttdeci">MainWindow(QWidget *parent=nullptr)</div><div class="ttdoc">Constructs the main window, sets up layouts, status bar, and default pane sizes.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:32</div></div>
-<div class="ttc" id="aclass_main_window_html_aacbe910633e17d081e6b36467feb8e53"><div class="ttname"><a href="class_main_window.html#aacbe910633e17d081e6b36467feb8e53">MainWindow::core</a></div><div class="ttdeci">LuminismCore * core</div><div class="ttdoc">The central application controller; provides access to data and business logic.</div><div class="ttdef"><b>Definition</b> mainwindow.h:59</div></div>
-<div class="ttc" id="aclass_main_window_html_aad75236c74a5c340c3e18749a9b5eb4f"><div class="ttname"><a href="class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f">MainWindow::resizeEvent</a></div><div class="ttdeci">void resizeEvent(QResizeEvent *event) override</div><div class="ttdoc">Overrides the Qt base-class resize handler to freshen the preview on resize.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1280</div></div>
-<div class="ttc" id="aclass_main_window_html_ac5901d3d7006ac0f0114162453bff817"><div class="ttname"><a href="class_main_window.html#ac5901d3d7006ac0f0114162453bff817">MainWindow::refreshTagFilterArea</a></div><div class="ttdeci">void refreshTagFilterArea()</div><div class="ttdoc">Rebuilds the tag-filter area from the currently active filter tags.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:928</div></div>
-<div class="ttc" id="aclass_main_window_html_aca5c9eb33d047612d55528a0abfd7d05"><div class="ttname"><a href="class_main_window.html#aca5c9eb33d047612d55528a0abfd7d05">MainWindow::refreshNavTagLibrary</a></div><div class="ttdeci">void refreshNavTagLibrary()</div><div class="ttdoc">Rebuilds the tag-library navigation area from the current library tags.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:585</div></div>
-<div class="ttc" id="aclass_main_window_html_ae98d00a93bc118200eeef9f9bba1dba7"><div class="ttname"><a href="class_main_window.html#ae98d00a93bc118200eeef9f9bba1dba7">MainWindow::~MainWindow</a></div><div class="ttdeci">~MainWindow()</div><div class="ttdoc">Destroys the main window and releases owned UI and core resources.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:429</div></div>
+<div class="ttc" id="aclass_main_window_html_aad75236c74a5c340c3e18749a9b5eb4f"><div class="ttname"><a href="class_main_window.html#aad75236c74a5c340c3e18749a9b5eb4f">MainWindow::resizeEvent</a></div><div class="ttdeci">void resizeEvent(QResizeEvent *event) override</div><div class="ttdoc">Overrides the Qt base-class resize handler to freshen the preview on resize.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1500</div></div>
+<div class="ttc" id="aclass_main_window_html_aba88ec7cefcb7dcd47389fe3214a6339"><div class="ttname"><a href="class_main_window.html#aba88ec7cefcb7dcd47389fe3214a6339">MainWindow::core</a></div><div class="ttdeci">CompendiaCore * core</div><div class="ttdoc">The central application controller; provides access to data and business logic.</div><div class="ttdef"><b>Definition</b> mainwindow.h:59</div></div>
+<div class="ttc" id="aclass_main_window_html_ac5901d3d7006ac0f0114162453bff817"><div class="ttname"><a href="class_main_window.html#ac5901d3d7006ac0f0114162453bff817">MainWindow::refreshTagFilterArea</a></div><div class="ttdeci">void refreshTagFilterArea()</div><div class="ttdoc">Rebuilds the tag-filter area from the currently active filter tags.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:1136</div></div>
+<div class="ttc" id="aclass_main_window_html_aca5c9eb33d047612d55528a0abfd7d05"><div class="ttname"><a href="class_main_window.html#aca5c9eb33d047612d55528a0abfd7d05">MainWindow::refreshNavTagLibrary</a></div><div class="ttdeci">void refreshNavTagLibrary()</div><div class="ttdoc">Rebuilds the tag-library navigation area from the current library tags.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:651</div></div>
+<div class="ttc" id="aclass_main_window_html_ae98d00a93bc118200eeef9f9bba1dba7"><div class="ttname"><a href="class_main_window.html#ae98d00a93bc118200eeef9f9bba1dba7">MainWindow::~MainWindow</a></div><div class="ttdeci">~MainWindow()</div><div class="ttdoc">Destroys the main window and releases owned UI and core resources.</div><div class="ttdef"><b>Definition</b> mainwindow.cpp:495</div></div>
 <div class="ttc" id="aclass_multi_progress_bar_html"><div class="ttname"><a href="class_multi_progress_bar.html">MultiProgressBar</a></div><div class="ttdoc">A status-bar widget that tracks multiple concurrent background processes and cycles the display betwe...</div><div class="ttdef"><b>Definition</b> multiprogressbar.h:20</div></div>
 <div class="ttc" id="aclass_tag_family_html"><div class="ttname"><a href="class_tag_family.html">TagFamily</a></div><div class="ttdoc">Represents a named group of related tags, each with an auto-assigned colour.</div><div class="ttdef"><b>Definition</b> tagfamily.h:15</div></div>
 <div class="ttc" id="aclass_tag_html"><div class="ttname"><a href="class_tag.html">Tag</a></div><div class="ttdoc">Represents a single tag that can be applied to media files.</div><div class="ttdef"><b>Definition</b> tag.h:14</div></div>
-<div class="ttc" id="aclass_tagged_file_html"><div class="ttname"><a href="class_tagged_file.html">TaggedFile</a></div><div class="ttdoc">Holds all data associated with a single media file managed by Luminism.</div><div class="ttdef"><b>Definition</b> taggedfile.h:22</div></div>
+<div class="ttc" id="aclass_tagged_file_html"><div class="ttname"><a href="class_tagged_file.html">TaggedFile</a></div><div class="ttdoc">Holds all data associated with a single media file managed by Compendia.</div><div class="ttdef"><b>Definition</b> taggedfile.h:22</div></div>
+<div class="ttc" id="acompendiacore_8h_html"><div class="ttname"><a href="compendiacore_8h.html">compendiacore.h</a></div></div>
 <div class="ttc" id="aconstants_8h_html"><div class="ttname"><a href="constants_8h.html">constants.h</a></div></div>
 <div class="ttc" id="afacerecognitionsettingsdialog_8h_html"><div class="ttname"><a href="facerecognitionsettingsdialog_8h.html">facerecognitionsettingsdialog.h</a></div></div>
 <div class="ttc" id="afacerecognizer_8h_html"><div class="ttname"><a href="facerecognizer_8h.html">facerecognizer.h</a></div></div>
 <div class="ttc" id="aframegrabber_8h_html"><div class="ttname"><a href="framegrabber_8h.html">framegrabber.h</a></div></div>
-<div class="ttc" id="aluminismcore_8h_html"><div class="ttname"><a href="luminismcore_8h.html">luminismcore.h</a></div></div>
 <div class="ttc" id="amultiprogressbar_8h_html"><div class="ttname"><a href="multiprogressbar_8h.html">multiprogressbar.h</a></div></div>
 <div class="ttc" id="anamespace_ui_html"><div class="ttname"><a href="namespace_ui.html">Ui</a></div><div class="ttdef"><b>Definition</b> aboutdialog.h:8</div></div>
 </div><!-- fragment --></div><!-- contents -->

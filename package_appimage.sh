@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# package_appimage.sh — Build and package Luminism as a Linux AppImage.
+# package_appimage.sh — Build and package Compendia as a Linux AppImage.
 #
 # Usage:
 #   ./package_appimage.sh
@@ -13,7 +13,7 @@
 #
 # The script downloads its own packaging tools (linuxdeploy, appimagetool) into
 # packaging/tools/ the first time it runs — internet access is required.
-# Output: Luminism-<version>-x86_64.AppImage in the repo root.
+# Output: Compendia-<version>-x86_64.AppImage in the repo root.
 
 set -euo pipefail
 
@@ -84,12 +84,12 @@ export QMAKE="$QT_DIR/bin/qmake"
 # ldd (used by linuxdeploy) must be able to resolve Qt's shared libraries.
 export LD_LIBRARY_PATH="$QT_DIR/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-# Pre-generate a 256x256 PNG icon.  The file must be named "luminism.png"
+# Pre-generate a 256x256 PNG icon.  The file must be named "compendia.png"
 # because linuxdeploy uses the source filename as the destination filename.
 # Use a temp directory outside AppDir so linuxdeploy performs a real copy.
 ICON_TMPDIR="$(mktemp -d)"
-ICON_PNG="$ICON_TMPDIR/luminism.png"
-rsvg-convert -w 256 -h 256 -o "$ICON_PNG" "$SCRIPT_DIR/resources/luminism_icon.svg"
+ICON_PNG="$ICON_TMPDIR/compendia.png"
+rsvg-convert -w 256 -h 256 -o "$ICON_PNG" "$SCRIPT_DIR/resources/compendia_icon.svg"
 trap 'rm -rf "$ICON_TMPDIR"' EXIT
 
 # Run linuxdeploy to:
@@ -102,8 +102,8 @@ trap 'rm -rf "$ICON_TMPDIR"' EXIT
 set +e
 "$LINUXDEPLOY" \
     --appdir "$APPDIR" \
-    --executable "$APPDIR/usr/bin/luminism" \
-    --desktop-file "$SCRIPT_DIR/luminism.desktop" \
+    --executable "$APPDIR/usr/bin/compendia" \
+    --desktop-file "$SCRIPT_DIR/compendia.desktop" \
     --icon-file "$ICON_PNG" \
     --plugin qt
 LINUXDEPLOY_EXIT=$?
@@ -112,7 +112,7 @@ set -e
 # linuxdeploy exits 1 only for the icon-in-AppDir-root step; everything else
 # (lib deployment, Qt plugin) runs first and succeeds.  Verify the critical
 # outputs are present before continuing.
-if [[ ! -f "$APPDIR/usr/bin/luminism" ]]; then
+if [[ ! -f "$APPDIR/usr/bin/compendia" ]]; then
     echo "ERROR: linuxdeploy failed to deploy the binary — aborting."
     exit 1
 fi
@@ -128,8 +128,8 @@ fi
 #
 # appimagetool requires three files at the AppDir root:
 #   AppRun          — entry-point script
-#   luminism.desktop — desktop file (symlink or copy)
-#   luminism.png    — application icon (symlink or copy)
+#   compendia.desktop — desktop file (symlink or copy)
+#   compendia.png    — application icon (symlink or copy)
 #
 # linuxdeploy (Qt 6) skips AppRun creation and fails before placing the icon,
 # so we create all three here.
@@ -150,23 +150,23 @@ export LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH:-}"
 # libheif decoder plugins (libde265, aom) — needed for HEIC support.
 export LIBHEIF_PLUGINS_PATH="${APPDIR}/usr/lib/libheif/"
 
-exec "${APPDIR}/usr/bin/luminism" "$@"
+exec "${APPDIR}/usr/bin/compendia" "$@"
 APPRUN_EOF
     chmod +x "$APPRUN"
 fi
 
 # Desktop file symlink at AppDir root.
-if [[ ! -e "$APPDIR/luminism.desktop" ]]; then
-    ln -sf "usr/share/applications/luminism.desktop" "$APPDIR/luminism.desktop"
+if [[ ! -e "$APPDIR/compendia.desktop" ]]; then
+    ln -sf "usr/share/applications/compendia.desktop" "$APPDIR/compendia.desktop"
 fi
 
 # Icon at AppDir root (PNG preferred; fall back to SVG).
-if [[ ! -e "$APPDIR/luminism.png" ]]; then
-    ICON_IN_APPDIR="$APPDIR/usr/share/icons/hicolor/256x256/apps/luminism.png"
+if [[ ! -e "$APPDIR/compendia.png" ]]; then
+    ICON_IN_APPDIR="$APPDIR/usr/share/icons/hicolor/256x256/apps/compendia.png"
     if [[ -f "$ICON_IN_APPDIR" ]]; then
-        ln -sf "usr/share/icons/hicolor/256x256/apps/luminism.png" "$APPDIR/luminism.png"
+        ln -sf "usr/share/icons/hicolor/256x256/apps/compendia.png" "$APPDIR/compendia.png"
     else
-        ln -sf "usr/share/icons/hicolor/scalable/apps/luminism.svg" "$APPDIR/luminism.svg"
+        ln -sf "usr/share/icons/hicolor/scalable/apps/compendia.svg" "$APPDIR/compendia.svg"
     fi
 fi
 
@@ -218,7 +218,7 @@ VERSION="$(cmake -L -N "$BUILD_DIR" 2>/dev/null \
     | cut -d= -f2 \
     || echo "0.1.0")"
 
-OUTPUT="$SCRIPT_DIR/Luminism-${VERSION}-x86_64.AppImage"
+OUTPUT="$SCRIPT_DIR/Compendia-${VERSION}-x86_64.AppImage"
 
 # ── Package ───────────────────────────────────────────────────────────────────
 

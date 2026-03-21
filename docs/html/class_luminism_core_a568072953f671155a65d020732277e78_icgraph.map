@@ -1,5 +1,0 @@
-<map id="LuminismCore::addTagFilter" name="LuminismCore::addTagFilter">
-<area shape="rect" id="Node000001" title="Adds a tag to the active tag filter set." alt="" coords="184,13,368,40"/>
-<area shape="rect" id="Node000002" href="$class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="5,5,136,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,27,136,29,136,24,171,26"/>
-</map>

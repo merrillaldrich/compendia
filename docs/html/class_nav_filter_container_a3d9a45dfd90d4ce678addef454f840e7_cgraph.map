@@ -1,10 +1,10 @@
 <map id="NavFilterContainer::dropEvent" name="NavFilterContainer::dropEvent">
 <area shape="rect" id="Node000001" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="5,124,136,167"/>
-<area shape="rect" id="Node000002" href="$class_luminism_core.html#a568072953f671155a65d020732277e78" title="Adds a tag to the active tag filter set." alt="" coords="196,5,380,32"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#a568072953f671155a65d020732277e78" title="Adds a tag to the active tag filter set." alt="" coords="196,5,380,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,122,128,81,154,60,182,42,199,36,195,39,185,46,157,64,132,85,92,125"/>
 <area shape="rect" id="Node000003" href="$class_tag_widget.html#a1d3fa53f2f5ad9b93b553431bce2c67b" title="Emitted when the user clicks the close button to remove the tag." alt="" coords="193,56,382,83"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="114,121,183,92,210,86,205,89,185,97,117,126"/>
-<area shape="rect" id="Node000004" href="$class_luminism_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="212,107,364,133"/>
+<area shape="rect" id="Node000004" href="$class_compendia_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="212,107,364,133"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="135,135,198,129,194,132,137,140"/>
 <area shape="rect" id="Node000007" href="$class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title="Returns the Tag pointer this widget represents." alt="" coords="223,157,353,184"/>
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="136,150,209,160,205,163,137,156"/>

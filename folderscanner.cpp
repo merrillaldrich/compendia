@@ -46,7 +46,7 @@ void FolderScanner::scan(const QString &rootPath)
         if (fileInfo.fileName().startsWith(".trashed", Qt::CaseInsensitive))
             continue;
 
-        if (fileInfo.absolutePath().contains(QLatin1String(Luminism::CacheFolderName)))
+        if (fileInfo.absolutePath().contains(QLatin1String(Compendia::CacheFolderName)))
             continue;
 
         ScanItem item;

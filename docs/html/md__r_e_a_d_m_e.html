@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Luminism: luminism</title>
+<title>Compendia: compendia</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Luminism
+   <div id="projectname">Compendia
    </div>
    <div id="projectbrief">Media asset management tool</div>
   </td>
@@ -89,30 +89,30 @@ $(function(){initNavTree('md__r_e_a_d_m_e.html','',''); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">luminism </div></div>
+  <div class="headertitle"><div class="title">compendia </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="autotoc_md5"></a></p>
-<p>A media asset manager for vacationers, photographers, hobbyists, archivists, luminism's mission is to make our huge collections of photos and videos fun again! Browse large libraries, organise your photos and videos with a fully customizable set of labels. Interactively search and filter your collection using tags and criteria you define and control.</p>
+<p>A media asset manager for vacationers, photographers, hobbyists, archivists, compendia's mission is to make our huge collections of photos and videos fun again! Browse large libraries, organise your photos and videos with a fully customizable set of labels. Interactively search and filter your collection using tags and criteria you define and control.</p>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
 Features</h1>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
 Cross-Platform</h2>
 <ul>
-<li>luminism has been built and tested on Windows 11 and Linux (Ubunu/Gnome). A Mac version is in the pipeline. Files and metadata are 100% identical across platforms so you can seamlessly move between them if needed.</li>
+<li>compendia has been built and tested on Windows 11 and Linux (Ubunu/Gnome). A Mac version is in the pipeline. Files and metadata are 100% identical across platforms so you can seamlessly move between them if needed.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
 Browsing &amp; Preview</h2>
 <ul>
-<li>Point luminism at any folder; it recursively discovers all images and videos, presenting them with high quality previews.</li>
-<li>Handles a LOT of images. luminism has been tested with libraries up to 60,000 files.</li>
+<li>Point compendia at any folder; it recursively discovers all images and videos, presenting them with high quality previews.</li>
+<li>Handles a LOT of images. compendia has been tested with libraries up to 60,000 files.</li>
 <li>Click any thumbnail to open a full-size preview pane with smooth pinch/scroll zoom.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
 Tagging</h2>
 <ul>
-<li>luminism's main organizing principle is easy and intuitive tagging.</li>
+<li>compendia's main organizing principle is easy and intuitive tagging.</li>
 <li>Apply tags to one or 100 or 1000+ selected files by dragging a tag onto the file, selection of files, or use the tag assignment panel below the preview for mass assignment to large numbers of files.</li>
 <li>Tags are organised into groups called <b><a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> Families</b>, each with a unique colour, for clear visual grouping.</li>
 <li>Tags can apply to a whole image or to a region you define, for example to identify people in images.</li>
@@ -122,7 +122,7 @@ Tagging</h2>
 Filtering</h2>
 <p>Search thousands of files with ease</p>
 <ul>
-<li><b>Tags</b> — groups of tags are the main organizing principle in luminism. Filter even a huge library interactively. <b>Any (OR)</b> or <b>All (AND)</b> mode enables more search options.</li>
+<li><b>Tags</b> — groups of tags are the main organizing principle in compendia. Filter even a huge library interactively. <b>Any (OR)</b> or <b>All (AND)</b> mode enables more search options.</li>
 <li><b>Filename</b> — substring match, case-insensitive.</li>
 <li><b>Folder path</b> — substring match with shell-style inline autocomplete; Tab or Enter accepts the suggestion, Backspace dismisses it cleanly.</li>
 <li><b>Capture date</b> — type a date or use the calendar popup; uses EXIF capture date when available, falls back to filesystem creation date. Leaving the field blank shows all files.</li>
@@ -182,11 +182,11 @@ Architecture</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Component  </th><th class="markdownTableHeadNone">Role  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_luminism_core.html" title="Central controller that owns all application data and business logic.">LuminismCore</a></span>  </td><td class="markdownTableBodyNone">Central controller; owns the file model, proxy model, tag library, and async workers  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_compendia_core.html" title="Central controller that owns all application data and business logic.">CompendiaCore</a></span>  </td><td class="markdownTableBodyNone">Central controller; owns the file model, proxy model, tag library, and async workers  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_main_window.html" title="The application&#39;s main window, wiring UI widgets to LuminismCore operations.">MainWindow</a></span>  </td><td class="markdownTableBodyNone">UI shell; wires widgets to core operations  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_main_window.html" title="The application&#39;s main window, wiring UI widgets to CompendiaCore operations.">MainWindow</a></span>  </td><td class="markdownTableBodyNone">UI shell; wires widgets to core operations  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a></span>  </td><td class="markdownTableBodyNone">Per-file data object — path, timestamps, tag set, EXIF map, dirty flag  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Compendia.">TaggedFile</a></span>  </td><td class="markdownTableBodyNone">Per-file data object — path, timestamps, tag set, EXIF map, dirty flag  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt"><a class="el" href="class_filter_proxy_model.html" title="Proxy model that filters the tagged-file list by name, folder, and tags.">FilterProxyModel</a></span>  </td><td class="markdownTableBodyNone"><span class="tt">QSortFilterProxyModel</span> subclass; applies filename / folder / tag / date filters  </td></tr>
 <tr class="markdownTableRowOdd">

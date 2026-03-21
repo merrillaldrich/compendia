@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['facenet_0',['FaceNet',['../namespace_face_net.html',1,'']]]
+  ['compendia_0',['Compendia',['../namespace_compendia.html',1,'']]]
 ];

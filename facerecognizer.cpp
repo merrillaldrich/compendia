@@ -29,7 +29,7 @@ static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"
 
 /*! \brief Returns the absolute path of the face-descriptor cache file for \p imagePath.
  *
- * The cache lives at: {imageDir}/.luminism_cache/{baseName}-face-descriptors.json
+ * The cache lives at: {imageDir}/.compendia_cache/{baseName}-face-descriptors.json
  *
  * \param imagePath Absolute path to the source image.
  * \return Absolute path to the corresponding cache file.
@@ -38,14 +38,14 @@ static QString descriptorCacheFilePath(const QString &imagePath)
 {
     QFileInfo fi(imagePath);
     return fi.dir().absolutePath()
-           + "/" + Luminism::CacheFolderName
+           + "/" + Compendia::CacheFolderName
            + "/" + fi.completeBaseName()
-           + Luminism::FaceDescriptorCacheSuffix;
+           + Compendia::FaceDescriptorCacheSuffix;
 }
 
 /*! \brief Returns the absolute path of the known-face embedding cache file for \p imagePath.
  *
- * The cache lives at: {imageDir}/.luminism_cache/{baseName}-known-faces.json
+ * The cache lives at: {imageDir}/.compendia_cache/{baseName}-known-faces.json
  *
  * \param imagePath Absolute path to the source image.
  * \return Absolute path to the corresponding cache file.
@@ -54,9 +54,9 @@ static QString knownFaceCacheFilePath(const QString &imagePath)
 {
     QFileInfo fi(imagePath);
     return fi.dir().absolutePath()
-           + "/" + Luminism::CacheFolderName
+           + "/" + Compendia::CacheFolderName
            + "/" + fi.completeBaseName()
-           + Luminism::KnownFaceCacheSuffix;
+           + Compendia::KnownFaceCacheSuffix;
 }
 
 // ---------------------------------------------------------------------------
@@ -470,7 +470,7 @@ void FaceRecognizer::scheduleEmbeddingWarmup(TaggedFile* tf)
 
     QVector<std::tuple<QString, QString, QRectF>> regions;
     for (Tag* tag : *tf->tags()) {
-        if (tag->getName().startsWith(Luminism::AutoFaceTagPrefix))
+        if (tag->getName().startsWith(Compendia::AutoFaceTagPrefix))
             continue;
         auto r = tf->tagRect(tag);
         if (!r.has_value())
@@ -773,7 +773,7 @@ void FaceRecognizer::startBackgroundSweep(
 
                     const bool isUserNamedMatch = minDist < matchThr
                                                   && !bestName.isEmpty()
-                                                  && !bestName.startsWith(Luminism::AutoFaceTagPrefix);
+                                                  && !bestName.startsWith(Compendia::AutoFaceTagPrefix);
 
                     if (isUserNamedMatch) {
                         assignments.append({bestFamily, bestName, rect});
@@ -786,7 +786,7 @@ void FaceRecognizer::startBackgroundSweep(
                         e.embedding = embedding;
                         newKnownEntries.append(e);
                     } else {
-                        if (autoFacesThisImage >= Luminism::MaxAutoFacesPerImage)
+                        if (autoFacesThisImage >= Compendia::MaxAutoFacesPerImage)
                             continue;
 
                         if (minDist < matchThr && !bestName.isEmpty()) {
@@ -796,7 +796,7 @@ void FaceRecognizer::startBackgroundSweep(
                             // New unknown face — claim a unique ID
                             int id = autoFaceCounter.fetchAndAddOrdered(1);
                             QString tagName = QString("%1%2")
-                                .arg(Luminism::AutoFaceTagPrefix)
+                                .arg(Compendia::AutoFaceTagPrefix)
                                 .arg(id, 2, 10, QChar('0'));
                             assignments.append({"People", tagName, rect});
 
@@ -1085,7 +1085,7 @@ FaceRecognizer::loadDescriptorCache(const QString &imagePath)
 
 /*! \brief Writes face descriptors for \p imagePath to the descriptor cache.
  *
- * The cache file is written into the .luminism_cache sub-directory next to
+ * The cache file is written into the .compendia_cache sub-directory next to
  * the image file. The directory is created if it does not exist.
  *
  * \param imagePath   Absolute path to the source image file.
@@ -1195,7 +1195,7 @@ FaceRecognizer::loadKnownFaceCache(const QString &imagePath)
 
 /*! \brief Writes known-face embedding entries for \p imagePath to the cache.
  *
- * The cache file is written into the .luminism_cache sub-directory next to
+ * The cache file is written into the .compendia_cache sub-directory next to
  * the image file. The directory is created if it does not exist.
  *
  * \param imagePath Absolute path to the source image file.

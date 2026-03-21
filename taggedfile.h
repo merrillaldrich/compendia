@@ -13,7 +13,7 @@
 #include <QFileInfo>
 #include "tag.h"
 
-/*! \brief Holds all data associated with a single media file managed by Luminism.
+/*! \brief Holds all data associated with a single media file managed by Compendia.
  *
  * Stores the file path, timestamps, applied tags, and EXIF metadata for one
  * image file.  A dirty flag tracks whether unsaved changes exist, either on

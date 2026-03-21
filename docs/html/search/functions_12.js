@@ -18,7 +18,7 @@ var searchData=
   ['taggedfile_15',['TaggedFile',['../class_tagged_file.html#a43c3f4264871eb417ea34e0cfbdf354f',1,'TaggedFile::TaggedFile(QObject *parent=nullptr)'],['../class_tagged_file.html#accc28242518fddd41f54d454f3adb5ca',1,'TaggedFile::TaggedFile(QFileInfo fileInfo, QSet&lt; Tag * &gt; *tags, QMap&lt; QString, QString &gt; *exifMap, QObject *parent=nullptr)']]],
   ['taggedfilejson_16',['TaggedFileJSON',['../class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688',1,'TaggedFile']]],
   ['taggingwidget_17',['TaggingWidget',['../class_tagging_widget.html#a527b1e071b7771cc0389895101d89d74',1,'TaggingWidget::TaggingWidget(QWidget *parent=nullptr)'],['../class_tagging_widget.html#aa6691ae072b8f48dfbd299bdee032cfe',1,'TaggingWidget::TaggingWidget(QColor color, QWidget *parent)']]],
-  ['taglibrarychanged_18',['tagLibraryChanged',['../class_luminism_core.html#a86445b2245b56e0441d691dfd4381415',1,'LuminismCore']]],
+  ['taglibrarychanged_18',['tagLibraryChanged',['../class_compendia_core.html#af30400a8de5bef7228128ab2e5250965',1,'CompendiaCore']]],
   ['tagnamechanged_19',['tagNameChanged',['../class_tag_container.html#aa0dd55fb9a844b51f3fd5c7638e23016',1,'TagContainer::tagNameChanged()'],['../class_tag_widget.html#ac5b6dedfc17ed661099ebad0978cdac8',1,'TagWidget::tagNameChanged()']]],
   ['tagpreviewdragentered_20',['tagPreviewDragEntered',['../class_preview_container.html#ad2addd748403849a74ae9af5492fe1ce',1,'PreviewContainer']]],
   ['tagrect_21',['tagRect',['../class_tagged_file.html#af417da0b80b202e812bb9f397499c585',1,'TaggedFile']]],

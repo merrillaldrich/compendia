@@ -1,0 +1,14 @@
+<map id="CompendiaCore::setRootDirectory" name="CompendiaCore::setRootDirectory">
+<area shape="rect" id="Node000001" title="Sets the root directory path and immediately loads it." alt="" coords="5,55,218,81"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#a797e7ab9f7b0c18348eb182c08abb980" title="Clears all existing data and reloads files from the current root directory." alt="" coords="266,55,484,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="218,65,253,68,248,68,218,71"/>
+<area shape="rect" id="Node000003" href="$class_compendia_core.html#ab45cd00fe04fbc92f6bd6c67b3fd6e66" title="Adds a file to the model with no tags." alt="" coords="558,29,714,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="484,55,546,51,541,52,485,60"/>
+<area shape="rect" id="Node000004" href="$class_compendia_core.html#a4145e9c6809094544c45f8a3a2fcf180" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="532,80,740,107"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="484,76,519,82,514,82,484,81"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="595,28,588,21,593,11,609,5,636,3,666,5,683,15,677,14,664,10,636,8,610,10,596,15,593,20,600,30"/>
+<area shape="rect" id="Node000005" href="$class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27" title="Returns a 100&#45;pixel&#45;bounded thumbnail for the given image file." alt="" coords="788,55,975,81"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="741,80,770,79,775,79,741,85"/>
+<area shape="rect" id="Node000006" href="$class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7" title="Returns a map of EXIF key&#45;value pairs for the given image file." alt="" coords="803,105,960,132"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="741,101,790,109,785,109,741,107"/>
+</map>

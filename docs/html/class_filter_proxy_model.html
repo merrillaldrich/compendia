@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Luminism: FilterProxyModel Class Reference</title>
+<title>Compendia: FilterProxyModel Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Luminism
+   <div id="projectname">Compendia
    </div>
    <div id="projectbrief">Media asset management tool</div>
   </td>
@@ -144,6 +144,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a24702ad7e993c6b687edffa866a1309f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a tag to the active tag filter set and re-applies the filter.  <br /></td></tr>
 <tr class="memitem:a2dee4b7929c110ee0f1f0d218eb794e6" id="r_a2dee4b7929c110ee0f1f0d218eb794e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dee4b7929c110ee0f1f0d218eb794e6">removeTagFilter</a> (<a class="el" href="class_tag.html">Tag</a> *tag)</td></tr>
 <tr class="memdesc:a2dee4b7929c110ee0f1f0d218eb794e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from the active tag filter set and re-applies the filter.  <br /></td></tr>
+<tr class="memitem:af9def31fa9f6f8f9e7b53a60823f411a" id="r_af9def31fa9f6f8f9e7b53a60823f411a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9def31fa9f6f8f9e7b53a60823f411a">clearTagFilters</a> ()</td></tr>
+<tr class="memdesc:af9def31fa9f6f8f9e7b53a60823f411a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all active tag filters and re-applies the filter.  <br /></td></tr>
 <tr class="memitem:af353110d9d103a55032c1c7736415ab6" id="r_af353110d9d103a55032c1c7736415ab6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af353110d9d103a55032c1c7736415ab6">setTagFilterMode</a> (<a class="el" href="#aa60d4c14f6431fb80cd25bf579c07886">TagFilterMode</a> mode)</td></tr>
 <tr class="memdesc:af353110d9d103a55032c1c7736415ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the tag-filter mode and re-applies the filter.  <br /></td></tr>
 <tr class="memitem:a938e8b371f366de31c071e03e1c904ce" id="r_a938e8b371f366de31c071e03e1c904ce"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a938e8b371f366de31c071e03e1c904ce">getFilterCreationDate</a> () const</td></tr>
@@ -162,6 +164,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:afc9c90b1eb0745f8b88b9f232d664a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true when an isolation set is active.  <br /></td></tr>
 <tr class="memitem:ab95eb4eec0a0b26d26aba0a3648fa483" id="r_ab95eb4eec0a0b26d26aba0a3648fa483"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab95eb4eec0a0b26d26aba0a3648fa483">isolationSetSize</a> () const</td></tr>
 <tr class="memdesc:ab95eb4eec0a0b26d26aba0a3648fa483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of files in the current isolation set.  <br /></td></tr>
+<tr class="memitem:a37e0bbb2023db0255803b15fd2c881d8" id="r_a37e0bbb2023db0255803b15fd2c881d8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a37e0bbb2023db0255803b15fd2c881d8">passesNonIsolationFilters</a> (<a class="el" href="class_tagged_file.html">TaggedFile</a> *tf) const</td></tr>
+<tr class="memdesc:a37e0bbb2023db0255803b15fd2c881d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <em class="arg">tf</em> against all active filters except the isolation set.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -177,7 +181,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Proxy model that filters the tagged-file list by name, folder, and tags. </p>
-<p>Wraps a QStandardItemModel containing <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> items and exposes only the rows that satisfy the currently active name-substring, folder-substring, and tag filters. The tag filter can operate in AnyTag (OR) or AllTags (AND) mode. </p>
+<p>Wraps a QStandardItemModel containing <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Compendia.">TaggedFile</a> items and exposes only the rows that satisfy the currently active name-substring, folder-substring, and tag filters. The tag filter can operate in AnyTag (OR) or AllTags (AND) mode. </p>
 </div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
 <a id="a197d3dfd40f0e8f5a532a24b79c49957" name="a197d3dfd40f0e8f5a532a24b79c49957"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a197d3dfd40f0e8f5a532a24b79c49957">&#9670;&#160;</a></span>RatingFilterMode</h2>
@@ -301,6 +305,25 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clears the isolation set so all files are eligible again. </p>
+
+</div>
+</div>
+<a id="af9def31fa9f6f8f9e7b53a60823f411a" name="af9def31fa9f6f8f9e7b53a60823f411a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9def31fa9f6f8f9e7b53a60823f411a">&#9670;&#160;</a></span>clearTagFilters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilterProxyModel::clearTagFilters </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clears all active tag filters and re-applies the filter. </p>
 
 </div>
 </div>
@@ -431,6 +454,33 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a37e0bbb2023db0255803b15fd2c881d8" name="a37e0bbb2023db0255803b15fd2c881d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e0bbb2023db0255803b15fd2c881d8">&#9670;&#160;</a></span>passesNonIsolationFilters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FilterProxyModel::passesNonIsolationFilters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tagged_file.html">TaggedFile</a> *</td>          <td class="paramname"><span class="paramname"><em>tf</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests <em class="arg">tf</em> against all active filters except the isolation set. </p>
+<p>Evaluates the name, folder, tag, date, and rating filters in the same way as <a class="el" href="#ae3b628e58b77cf9e8f0a45ae7b4aec1b" title="Overrides the Qt base-class row-acceptance test to apply all active filters.">filterAcceptsRow()</a>, but deliberately ignores isolation_set_. Use this to detect files that would be hidden by the current filters even if the isolation set were replaced.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tf</td><td>The <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Compendia.">TaggedFile</a> to evaluate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if <em class="arg">tf</em> passes all non-isolation filters. </dd></dl>
+
+</div>
+</div>
 <a id="a2dee4b7929c110ee0f1f0d218eb794e6" name="a2dee4b7929c110ee0f1f0d218eb794e6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2dee4b7929c110ee0f1f0d218eb794e6">&#9670;&#160;</a></span>removeTagFilter()</h2>
 
@@ -525,7 +575,7 @@ Protected Member Functions</h2></td></tr>
 <p>Restricts the visible set to the given files; other filters still apply within the set. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">files</td><td>The set of <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Luminism.">TaggedFile</a> pointers to isolate. </td></tr>
+    <tr><td class="paramname">files</td><td>The set of <a class="el" href="class_tagged_file.html" title="Holds all data associated with a single media file managed by Compendia.">TaggedFile</a> pointers to isolate. </td></tr>
   </table>
   </dd>
 </dl>

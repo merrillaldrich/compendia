@@ -10,6 +10,6 @@ var searchData=
   ['flowlayout_7',['FlowLayout',['../class_flow_layout.html',1,'']]],
   ['folderfilterlineedit_8',['FolderFilterLineEdit',['../class_folder_filter_line_edit.html',1,'']]],
   ['folderscanner_9',['FolderScanner',['../class_folder_scanner.html',1,'']]],
-  ['folderstats_10',['FolderStats',['../struct_luminism_core_1_1_folder_stats.html',1,'LuminismCore']]],
+  ['folderstats_10',['FolderStats',['../struct_compendia_core_1_1_folder_stats.html',1,'CompendiaCore']]],
   ['framegrabber_11',['FrameGrabber',['../class_frame_grabber.html',1,'']]]
 ];
