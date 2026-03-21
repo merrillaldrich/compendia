@@ -1,0 +1,23 @@
+<map id="zoomablegraphicsview.h" name="zoomablegraphicsview.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="478,5,642,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,118,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="478,33,134,82,133,77,478,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="142,80,211,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="482,32,364,55,226,82,225,77,363,50,476,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="234,80,337,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="515,32,349,78,348,73,510,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="360,80,430,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="534,32,439,76,437,71,529,33"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="454,80,538,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="551,31,519,70,516,66,547,34"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="562,80,686,107"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="572,30,606,69,600,67,570,35"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="711,80,836,107"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="598,30,725,75,719,75,597,35"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="860,80,988,107"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="624,30,848,76,843,77,624,35"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1012,80,1106,107"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="642,27,803,48,1000,80,995,80,802,53,642,32"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1129,80,1234,107"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="642,24,852,44,1117,80,1111,80,852,50,642,29"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="CompendiaCore::backfillMetadata" name="CompendiaCore::backfillMetadata">
+<area shape="rect" id="Node000001" title="Launches background thumbnail and EXIF generation for all files in the model." alt="" coords="5,31,214,57"/>
+<area shape="rect" id="Node000002" href="$class_icon_generator.html#a7ba8f2daa30729dc5167d0187ba0cf27" title="Returns a 100&#45;pixel&#45;bounded thumbnail for the given image file." alt="" coords="262,5,448,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,31,249,29,244,30,215,36"/>
+<area shape="rect" id="Node000003" href="$class_exif_parser.html#a14e14eb1a9d0407854e3e118571ed6d7" title="Returns a map of EXIF key&#45;value pairs for the given image file." alt="" coords="277,56,433,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="214,52,264,60,258,60,214,57"/>
+</map>

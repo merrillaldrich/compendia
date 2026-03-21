@@ -1,0 +1,9 @@
+<map id="TaggableListView::dropEvent" name="TaggableListView::dropEvent">
+<area shape="rect" id="Node000001" title="Overrides the Qt base&#45;class handler to apply a dropped tag to the target file(s)." alt="" coords="5,31,196,57"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#a9fe93be3e6f05b1d8901f307f09a0880" title="Applies a tag to all files currently visible in the filtered file list." alt="" coords="292,5,457,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,33,279,27,273,28,197,38"/>
+<area shape="rect" id="Node000004" href="$class_main_window.html#a3d32035c5a2e69fdb73b66bab8e62ca8" title="Rebuilds the tag&#45;assignment area from tags on the currently filtered files." alt="" coords="244,56,505,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="196,50,231,56,225,56,196,55"/>
+<area shape="rect" id="Node000003" href="$class_tagged_file.html#abbe4ad626b1573e223002a76f8afdc18" title="Adds a tag to this file and marks the file dirty." alt="" coords="553,5,687,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="458,16,540,18,535,19,458,21"/>
+</map>

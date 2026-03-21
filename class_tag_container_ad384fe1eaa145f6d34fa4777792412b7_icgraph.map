@@ -1,0 +1,5 @@
+<map id="TagContainer::clear" name="TagContainer::clear">
+<area shape="rect" id="Node000001" title="Removes all child TagFamilyWidget and TagWidget items from the layout." alt="" coords="200,5,334,32"/>
+<area shape="rect" id="Node000002" href="$class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="5,5,152,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,19,152,21,152,16,187,19"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="FlowLayout::minimumSize" name="FlowLayout::minimumSize">
+<area shape="rect" id="Node000001" title="Returns the minimum size needed to display at least one item with margins." alt="" coords="198,5,373,32"/>
+<area shape="rect" id="Node000002" href="$class_flow_layout.html#a44acc6a84aaeee36b9d119096f6aa30c" title="Returns the preferred size, equal to the minimum size." alt="" coords="5,5,150,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,19,150,21,150,16,185,19"/>
+</map>

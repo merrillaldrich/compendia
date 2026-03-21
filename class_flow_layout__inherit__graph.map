@@ -1,0 +1,5 @@
+<map id="FlowLayout" name="FlowLayout">
+<area shape="rect" id="Node000001" title="A custom QLayout that arranges child widgets in a wrapping flow, like inline text." alt="" coords="5,80,94,107"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="14,5,85,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="51,46,52,80,47,79,48,50"/>
+</map>

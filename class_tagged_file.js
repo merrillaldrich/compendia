@@ -1,0 +1,38 @@
+var class_tagged_file =
+[
+    [ "MediaType", "class_tagged_file.html#ada10fdd48177f7eec2ead6dcb1b0dc88", [
+      [ "Image", "class_tagged_file.html#ada10fdd48177f7eec2ead6dcb1b0dc88a3ca6d2c6e0adf02682b3b2a1d36c6417", null ],
+      [ "Video", "class_tagged_file.html#ada10fdd48177f7eec2ead6dcb1b0dc88a8479ce6499fb6c3212d1224164b8cff5", null ]
+    ] ],
+    [ "TaggedFile", "class_tagged_file.html#a43c3f4264871eb417ea34e0cfbdf354f", null ],
+    [ "TaggedFile", "class_tagged_file.html#accc28242518fddd41f54d454f3adb5ca", null ],
+    [ "addTag", "class_tagged_file.html#abbe4ad626b1573e223002a76f8afdc18", null ],
+    [ "addTag", "class_tagged_file.html#acdd9621dfa2b2a528e8b69ddbc7b09d1", null ],
+    [ "clearDirtyFlag", "class_tagged_file.html#a5ca873b8ca2baff54f8e8fbf19a98c1f", null ],
+    [ "dirtyFlag", "class_tagged_file.html#a13484167b27d2d3a20869742d082fd62", null ],
+    [ "effectiveDate", "class_tagged_file.html#a6fe2a8b9b757c8434c039edeeb4c227d", null ],
+    [ "exifMap", "class_tagged_file.html#a6bc53d43fb454cb93148835a39da63d8", null ],
+    [ "fileSize", "class_tagged_file.html#a0e19a34627b539ca06500d9cf5b42f25", null ],
+    [ "initExifMap", "class_tagged_file.html#a0293e71d352a09803da0f5462f2e48ac", null ],
+    [ "initPHash", "class_tagged_file.html#a8fd19f21922dea1b0da2e9b53985b33c", null ],
+    [ "initRating", "class_tagged_file.html#a22e2e65bab887ed45553f8b6cd014bb4", null ],
+    [ "initTagRect", "class_tagged_file.html#a545faeb645f4e753b20f86951410a650", null ],
+    [ "markDirty", "class_tagged_file.html#a04f161afaff4dc99a2437788a5247999", null ],
+    [ "mediaType", "class_tagged_file.html#a794a37b3f0fc475b9602d41dc45ef240", null ],
+    [ "pHash", "class_tagged_file.html#a42db7f5f3392a6914f0d8612bad8b0c5", null ],
+    [ "rating", "class_tagged_file.html#a87e02bdcb8bb2f3a2da1aa9751294421", null ],
+    [ "removeTag", "class_tagged_file.html#a1f4a54d6c439d062fbc0144494f44960", null ],
+    [ "setExifMap", "class_tagged_file.html#a66d61b158c4fd7c6d433684060ef5d33", null ],
+    [ "setPHash", "class_tagged_file.html#aa580c9baff6f6222b917591c0e870122", null ],
+    [ "setRating", "class_tagged_file.html#a7fb36112c28ae736ad8e37eb6b851257", null ],
+    [ "setTagRect", "class_tagged_file.html#ae9de78c171110ad722a7362aee49415f", null ],
+    [ "TaggedFileJSON", "class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688", null ],
+    [ "tagRect", "class_tagged_file.html#af417da0b80b202e812bb9f397499c585", null ],
+    [ "tags", "class_tagged_file.html#a8edb5df0c37cdb939972049814b20e7a", null ],
+    [ "fileCreationDateTime", "class_tagged_file.html#a7e54143de1a32c5f3de94bb599425978", null ],
+    [ "fileModificationDateTime", "class_tagged_file.html#a67d08ef165cbfa1788e401a0c336fa1e", null ],
+    [ "fileName", "class_tagged_file.html#a395e15a9eb8834de8951d68136ba4c81", null ],
+    [ "fileNameInferredDate", "class_tagged_file.html#aac9d9e49596888167be2649f5b92061b", null ],
+    [ "filePath", "class_tagged_file.html#a6cd8d12c7a36b3422f78a895e4f73d76", null ],
+    [ "imageCaptureDateTime", "class_tagged_file.html#a2edcb100a1af260ae0914661fb977677", null ]
+];

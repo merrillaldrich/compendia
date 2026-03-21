@@ -1,0 +1,10 @@
+<map id="FaceDescriptor" name="FaceDescriptor">
+<area shape="rect" id="Node000001" title="A face embedding paired with the Tag it is associated with." alt="" coords="5,279,116,305"/>
+<area shape="rect" id="Node000002" href="$class_tag.html" title="Represents a single tag that can be applied to media files." alt="" coords="39,180,82,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,221,63,279,58,278,58,224"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="20,5,90,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="58,46,63,180,57,180,54,49"/>
+<area shape="rect" id="Node000004" href="$class_tag_family.html" title="Represents a named group of related tags, each with an auto&#45;assigned colour." alt="" coords="77,81,158,108"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="75,41,110,80,105,82,75,46"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="101,124,70,181,66,178,104,119"/>
+</map>

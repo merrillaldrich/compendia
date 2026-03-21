@@ -1,0 +1,5 @@
+<map id="TagContainer::sort" name="TagContainer::sort">
+<area shape="rect" id="Node000001" title="Sorts all TagFamilyWidget children alphabetically by family name, and sorts tags within each family a..." alt="" coords="200,5,328,32"/>
+<area shape="rect" id="Node000002" href="$class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags." alt="" coords="5,5,152,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,19,152,21,152,16,186,19"/>
+</map>

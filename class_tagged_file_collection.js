@@ -1,0 +1,25 @@
+var class_tagged_file_collection =
+[
+    [ "TaggedFileCollection", "class_tagged_file_collection.html#a1f1fd591180aee48780558bc8f424710", null ],
+    [ "addFile", "class_tagged_file_collection.html#af5c422dd3256dc7f8ad22e2f0bbc48d2", null ],
+    [ "addFile", "class_tagged_file_collection.html#a09e91930d6b8e7b744e3aee5ebe089a7", null ],
+    [ "addFile", "class_tagged_file_collection.html#a05f6e0137aaacd051caef88e5af77376", null ],
+    [ "addLibraryTag", "class_tagged_file_collection.html#adcb7c9ac635de9df3b7068025a49367d", null ],
+    [ "addLibraryTag", "class_tagged_file_collection.html#acbb0f04756b5864878961b59e796b4d2", null ],
+    [ "addLibraryTagFamily", "class_tagged_file_collection.html#afb7a9fb67490ea9e0c855b73fbf51704", null ],
+    [ "addLibraryTagFamily", "class_tagged_file_collection.html#a569db9b0e65960968c080655b9305bf8", null ],
+    [ "applyTag", "class_tagged_file_collection.html#a6f151b884d7ed89cec2122a883a1b4cd", null ],
+    [ "applyTag", "class_tagged_file_collection.html#ae0cbbcbe0e5d9837f435ce7d732af93e", null ],
+    [ "containsFiles", "class_tagged_file_collection.html#a0b2eadb1eb4178a4a95e1a92e7b0c1d7", null ],
+    [ "getAssignedTags", "class_tagged_file_collection.html#a45a6855e893c93182be6d417b45984e5", null ],
+    [ "getAssignedTags_FilteredFiles", "class_tagged_file_collection.html#a48f02fcecff6e80c342fc08bd40d185e", null ],
+    [ "getItemModel", "class_tagged_file_collection.html#afe5b1a73f7892294bfef0716d7b514bc", null ],
+    [ "getItemModelProxy", "class_tagged_file_collection.html#a05c1524a43ae0dbbe44627110baa8f9d", null ],
+    [ "getLibraryTags", "class_tagged_file_collection.html#af0685a06f744c8604a61c15bd2abd8ff", null ],
+    [ "getTag", "class_tagged_file_collection.html#a3f8358b95712d17c0e5716bec1037f86", null ],
+    [ "getTagFamily", "class_tagged_file_collection.html#a972da14a9161a300f6296421a18d0cdf", null ],
+    [ "parseTagJson", "class_tagged_file_collection.html#a011f61a99f743fa70b5e1086f202ba12", null ],
+    [ "renameFamily", "class_tagged_file_collection.html#a46ef48da12d722ec18ef12137d871b6b", null ],
+    [ "setFileNameFilter", "class_tagged_file_collection.html#a5d74a768c516c69eead8c63e8da5354d", null ],
+    [ "unApplyTag", "class_tagged_file_collection.html#a8f55219577a78f416c05f0e9eee6eb53", null ]
+];

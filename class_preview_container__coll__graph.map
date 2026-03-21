@@ -1,0 +1,5 @@
+<map id="PreviewContainer" name="PreviewContainer">
+<area shape="rect" id="Node000001" title="Widget that displays a full&#45;size image preview inside a zoomable graphics view." alt="" coords="5,80,130,107"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="31,5,104,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,46,70,80,65,79,66,50"/>
+</map>

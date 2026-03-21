@@ -1,0 +1,15 @@
+<map id="TaggedFile::tags" name="TaggedFile::tags">
+<area shape="rect" id="Node000001" title="Returns a pointer to the set of tags currently applied to this file." alt="" coords="531,131,648,157"/>
+<area shape="rect" id="Node000002" href="$class_filter_proxy_model.html#ae3b628e58b77cf9e8f0a45ae7b4aec1b" title="Overrides the Qt base&#45;class row&#45;acceptance test to apply all active filters." alt="" coords="300,5,452,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="561,120,526,91,482,62,453,49,453,44,484,58,529,87,566,121"/>
+<area shape="rect" id="Node000003" href="$class_compendia_core.html#a0ce8ff76fc0457058162381e4bf4331f" title="Returns a new set of tags that are assigned to at least one file." alt="" coords="270,72,483,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="529,125,482,113,439,102,439,97,484,108,535,125"/>
+<area shape="rect" id="Node000004" href="$class_compendia_core.html#ab94d6cae69aa49c88e5c0df6d06d01ba" title="Returns a new set of tags assigned to any currently visible (filtered) file." alt="" coords="284,123,469,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="513,144,470,147,469,141,518,144"/>
+<area shape="rect" id="Node000005" href="$class_tagged_file.html#accc28242518fddd41f54d454f3adb5ca" title="Constructs a TaggedFile from a QFileInfo, a tag set, and an EXIF map." alt="" coords="299,189,454,216"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="535,162,484,180,439,191,438,186,482,175,529,163"/>
+<area shape="rect" id="Node000006" href="$class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="281,240,472,267"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="567,167,530,201,484,230,454,242,453,237,482,226,527,197,562,169"/>
+<area shape="rect" id="Node000007" href="$class_compendia_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,240,222,267"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="262,253,222,256,222,251,268,253"/>
+</map>

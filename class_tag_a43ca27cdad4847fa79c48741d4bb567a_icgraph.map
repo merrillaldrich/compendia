@@ -1,0 +1,27 @@
+<map id="Tag::getName" name="Tag::getName">
+<area shape="rect" id="Node000001" title="Returns the current tag name." alt="" coords="514,201,617,228"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#a1c32ba0f603caecb8cc8d52233f3603b" title="Creates or retrieves a tag in the library by family name and tag name." alt="" coords="271,35,465,61"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="547,187,513,139,490,113,464,90,441,76,417,65,416,59,443,71,468,86,494,109,517,136,552,188"/>
+<area shape="rect" id="Node000004" href="$class_compendia_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="292,100,444,127"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="537,190,504,166,465,141,437,130,437,125,467,136,507,161,542,191"/>
+<area shape="rect" id="Node000008" href="$class_tag_widget.html#af7a7bc637053188b7106dba0e533f20e" title="Overrides the Qt base&#45;class mouse&#45;move handler to initiate a drag operation." alt="" coords="270,151,466,177"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="496,198,423,181,423,175,502,197"/>
+<area shape="rect" id="Node000009" href="$tag_8cpp.html#a53842d615ae3cb82bfa54db2f4268a0b" title="Serialises a Tag&#39;s name to a QDataStream for drag&#45;and&#45;drop transfer." alt="" coords="326,201,410,228"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="496,215,411,217,410,212,501,214"/>
+<area shape="rect" id="Node000010" href="$class_tag.html#ac573654c99464b6f22d53af4cd12be8c" title="Equality operator comparing tag name and family name." alt="" coords="311,252,424,279"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="496,232,423,254,422,249,502,231"/>
+<area shape="rect" id="Node000011" href="$class_tagged_file.html#a8384506bb24ab3fcaa922a6515f9b688" title="Serialises the file&#39;s tags and EXIF data to a JSON string." alt="" coords="272,303,464,329"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="542,238,507,268,467,293,437,305,436,300,465,288,504,264,537,240"/>
+<area shape="rect" id="Node000013" href="$class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="291,353,444,380"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="553,240,519,295,495,321,467,344,444,355,443,350,465,339,491,317,514,291,548,243"/>
+<area shape="rect" id="Node000003" href="$class_tag_widget.html#a4ce89e05d394f377a1f093a12e63ce8c" title="Commits the edited name to the Tag and switches back to read mode." alt="" coords="46,5,181,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="253,37,183,29,181,24,257,34"/>
+<area shape="rect" id="Node000005" href="$class_compendia_core.html#acf6b3ddfa22ee738d40c7304edff0ce3" title="Applies the tag identified by a TagSet to a specific file." alt="" coords="31,56,196,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="274,99,195,86,194,81,279,96"/>
+<area shape="rect" id="Node000006" href="$class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="48,107,179,149"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="274,120,180,127,178,122,278,117"/>
+<area shape="rect" id="Node000007" href="$class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="30,173,197,216"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="289,133,271,141,223,164,191,175,188,171,221,159,269,136,294,130"/>
+<area shape="rect" id="Node000012" href="$class_compendia_core.html#a7c0abeb7e6ddf61af205da0e435cb5cc" title="Writes JSON sidecar files for every file with unsaved changes." alt="" coords="5,303,222,329"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="254,316,222,319,222,313,259,316"/>
+</map>

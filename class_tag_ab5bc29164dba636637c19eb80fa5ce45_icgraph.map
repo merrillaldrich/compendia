@@ -1,0 +1,5 @@
+<map id="Tag::Tag" name="Tag::Tag">
+<area shape="rect" id="Node000001" title="Constructs a default Tag with an empty name and a new default TagFamily." alt="" coords="167,5,238,32"/>
+<area shape="rect" id="Node000002" href="$class_tag.html#ac573654c99464b6f22d53af4cd12be8c" title="Equality operator comparing tag name and family name." alt="" coords="5,5,119,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,19,119,21,119,16,154,18"/>
+</map>

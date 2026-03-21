@@ -1,0 +1,5 @@
+<map id="PreviewContainer::preview" name="PreviewContainer::preview">
+<area shape="rect" id="Node000001" title="Displays the given QImage in the preview pane." alt="" coords="231,5,408,32"/>
+<area shape="rect" id="Node000002" href="$class_preview_container.html#a10cdd4a21c08f38fab99b28bdcc5fc83" title="Loads and displays the image at the given absolute file path." alt="" coords="5,5,183,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,19,183,21,183,16,218,19"/>
+</map>

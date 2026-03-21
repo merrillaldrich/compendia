@@ -1,0 +1,7 @@
+<map id="TagFamily::getColor" name="TagFamily::getColor">
+<area shape="rect" id="Node000001" title="Returns the colour assigned to this family." alt="" coords="244,43,382,69"/>
+<area shape="rect" id="Node000002" href="$class_tag_family_widget.html#aafc6de5e5fbc7740ad587c6f4199af44" title="Constructs a TagFamilyWidget bound to the given TagFamily." alt="" coords="5,5,196,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,45,196,43,196,37,231,44"/>
+<area shape="rect" id="Node000003" href="$class_tag_widget.html#af0dfbb7badba109187359087285c99e8" title="Constructs a TagWidget bound to the given Tag and styled with its family colour." alt="" coords="24,72,177,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,67,178,77,177,72,226,68"/>
+</map>

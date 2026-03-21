@@ -1,0 +1,21 @@
+<map id="NavFilterContainer::dropEvent" name="NavFilterContainer::dropEvent">
+<area shape="rect" id="Node000001" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="5,124,136,167"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#a568072953f671155a65d020732277e78" title="Adds a tag to the active tag filter set." alt="" coords="196,5,380,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,122,128,81,154,60,182,42,199,36,195,39,185,46,157,64,132,85,92,125"/>
+<area shape="rect" id="Node000003" href="$class_tag_widget.html#a1d3fa53f2f5ad9b93b553431bce2c67b" title="Emitted when the user clicks the close button to remove the tag." alt="" coords="193,56,382,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="114,121,183,92,210,86,205,89,185,97,117,126"/>
+<area shape="rect" id="Node000004" href="$class_compendia_core.html#ab3abeb957ed6015b509e1022568377de" title="Retrieve a tag from the library by name." alt="" coords="212,107,364,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="135,135,198,129,194,132,137,140"/>
+<area shape="rect" id="Node000007" href="$class_tag_widget.html#ae92137283e581ac1970ddcd5241348d0" title="Returns the Tag pointer this widget represents." alt="" coords="223,157,353,184"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="136,150,209,160,205,163,137,156"/>
+<area shape="rect" id="Node000008" href="$class_tag_family_widget.html#aa7453ba168e0ea4da69db6580fa982b3" title="Returns the TagFamily pointer this widget represents." alt="" coords="184,208,392,235"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="115,165,185,193,210,203,205,204,183,199,115,170"/>
+<area shape="rect" id="Node000009" href="$class_tag_container.html#a6e7ec330ab93a0c21ec4e1f0864ad56f" title="Forwards a tag&#45;delete request up to the tagDeleteRequested signal." alt="" coords="198,259,378,301"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="91,165,133,205,185,244,196,252,191,252,182,249,129,209,90,170"/>
+<area shape="rect" id="Node000005" href="$class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="501,81,604,108"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="364,110,488,100,483,102,365,115"/>
+<area shape="rect" id="Node000006" href="$class_tag_family.html#a9d344211abfce9b2852e454d98507949" title="Returns the current family name." alt="" coords="482,132,624,159"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="364,125,468,136,463,138,365,130"/>
+<area shape="rect" id="Node000010" href="$class_tag_container.html#a77602fc59503bc656061e5f1fc096791" title="Emitted when the user requests removal of a tag from this container." alt="" coords="440,267,665,293"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="378,277,427,280,422,280,378,283"/>
+</map>

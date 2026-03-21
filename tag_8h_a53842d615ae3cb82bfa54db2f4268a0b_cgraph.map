@@ -1,0 +1,5 @@
+<map id="operator&lt;&lt;" name="operator&lt;&lt;">
+<area shape="rect" id="Node000001" title="Serialises a Tag&#39;s name to a QDataStream for drag&#45;and&#45;drop transfer." alt="" coords="5,5,90,32"/>
+<area shape="rect" id="Node000002" href="$class_tag.html#a43ca27cdad4847fa79c48741d4bb567a" title="Returns the current tag name." alt="" coords="138,5,241,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,16,125,18,119,19,90,21"/>
+</map>

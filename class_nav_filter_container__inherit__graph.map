@@ -1,0 +1,9 @@
+<map id="NavFilterContainer" name="NavFilterContainer">
+<area shape="rect" id="Node000001" title="Tag container that displays the active filter tags and accepts tag drops to add filters." alt="" coords="18,229,148,256"/>
+<area shape="rect" id="Node000002" href="$class_welcome_hint_container.html" title="Intermediate base class that adds a dismissible welcome hint label to TagContainer." alt="" coords="5,155,161,181"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,195,86,230,80,228,81,199"/>
+<area shape="rect" id="Node000003" href="$class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items." alt="" coords="34,80,132,107"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="84,120,86,155,80,154,82,125"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="47,5,119,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="84,45,86,80,80,79,82,50"/>
+</map>

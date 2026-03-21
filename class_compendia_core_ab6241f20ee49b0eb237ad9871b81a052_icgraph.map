@@ -1,0 +1,5 @@
+<map id="CompendiaCore::parseTagJson" name="CompendiaCore::parseTagJson">
+<area shape="rect" id="Node000001" title="Parses a JSON object of tag&#45;family to tag&#45;name arrays into a TagSet list." alt="" coords="209,5,403,32"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#ace04e0d11d898ab69a5821c3e2be5fbf" title="Adds a file to the model, parsing tags and EXIF from a JSON object." alt="" coords="5,5,161,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,19,161,21,161,16,196,19"/>
+</map>

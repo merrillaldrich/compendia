@@ -1,0 +1,9 @@
+<map id="datefilterbutton.h" name="datefilterbutton.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="56,5,174,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,65,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,32,62,72,58,68,99,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="89,80,141,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="117,31,117,65,113,63,113,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="166,80,238,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="131,30,178,70,173,70,129,35"/>
+</map>

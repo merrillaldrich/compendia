@@ -1,0 +1,19 @@
+<map id="starratingwidget.cpp" name="starratingwidget.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="263,5,401,32"/>
+<area shape="rect" id="Node000002" href="$starratingwidget_8h.html" title=" " alt="" coords="70,80,194,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="295,34,182,77,180,72,299,31"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="218,80,275,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="319,31,274,72,271,68,315,34"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="299,80,364,107"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="333,30,334,66,330,63,330,35"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="389,80,461,107"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="349,30,400,71,395,70,347,35"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="485,80,589,107"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="368,30,490,74,484,75,367,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,155,72,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="118,107,68,147,65,143,113,108"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="96,155,168,181"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="134,105,134,140,129,138,130,109"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="192,155,291,181"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="152,105,212,145,207,146,150,110"/>
+</map>

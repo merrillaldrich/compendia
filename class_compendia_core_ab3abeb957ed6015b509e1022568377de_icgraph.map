@@ -1,0 +1,9 @@
+<map id="CompendiaCore::getTag" name="CompendiaCore::getTag">
+<area shape="rect" id="Node000001" title="Retrieve a tag from the library by name." alt="" coords="221,64,373,91"/>
+<area shape="rect" id="Node000002" href="$class_compendia_core.html#acf6b3ddfa22ee738d40c7304edff0ce3" title="Applies the tag identified by a TagSet to a specific file." alt="" coords="6,5,172,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,61,139,35,139,30,234,58"/>
+<area shape="rect" id="Node000003" href="$class_nav_filter_container.html#a3d9a45dfd90d4ce678addef454f840e7" title="Overrides the Qt base&#45;class handler to apply the dropped tag as a filter." alt="" coords="24,56,154,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="202,78,155,80,154,75,207,76"/>
+<area shape="rect" id="Node000004" href="$class_tag_assignment_container.html#acc294e5cea082d4375b9be7876b828de" title="Overrides the Qt base&#45;class handler to apply the dropped tag to all filtered files." alt="" coords="5,123,173,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="241,95,159,125,157,119,235,97"/>
+</map>
