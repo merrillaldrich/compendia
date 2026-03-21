@@ -690,7 +690,7 @@ void CompendiaCore::writeFileMetadata(){
         if (itemAsTaggedFile->dirtyFlag()) {
             QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
             QFileInfo fileInfo(origFile);
-            QString metaFilePath = itemAsTaggedFile->filePath + "/" + fileInfo.baseName() + ".json";
+            QString metaFilePath = itemAsTaggedFile->filePath + "/" + fileInfo.completeBaseName() + ".json";
 
             QFile metaFile(metaFilePath);
 
@@ -740,7 +740,7 @@ void CompendiaCore::writeVisibleFileMetadata()
         if (itemAsTaggedFile->dirtyFlag()) {
             QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
             QFileInfo fileInfo(origFile);
-            QString metaFilePath = itemAsTaggedFile->filePath + "/" + fileInfo.baseName() + ".json";
+            QString metaFilePath = itemAsTaggedFile->filePath + "/" + fileInfo.completeBaseName() + ".json";
 
             QFile metaFile(metaFilePath);
 
@@ -1631,7 +1631,7 @@ void CompendiaCore::handleFileRemoved(const QString& absolutePath)
     }
 
     // Delete sidecar if one exists alongside the (now-gone) image
-    const QString sidecarPath = tf->filePath + "/" + QFileInfo(tf->fileName).baseName() + ".json";
+    const QString sidecarPath = tf->filePath + "/" + QFileInfo(tf->fileName).completeBaseName() + ".json";
     if (QFile::exists(sidecarPath)) {
         if (QFile::remove(sidecarPath))
             qDebug() << "[FileWatch] handleFileRemoved: deleted sidecar" << sidecarPath;
@@ -1647,7 +1647,7 @@ void CompendiaCore::handleFileRemoved(const QString& absolutePath)
     }
     const QString exifCache = QFileInfo(absolutePath).absolutePath() + "/"
                               + Compendia::CacheFolderName + "/"
-                              + QFileInfo(absolutePath).baseName() + "_exif.json";
+                              + QFileInfo(absolutePath).completeBaseName() + "_exif.json";
     if (QFile::exists(exifCache) && !QFile::remove(exifCache))
         qDebug() << "[FileWatch] handleFileRemoved: failed to delete EXIF cache" << exifCache;
 
@@ -1685,8 +1685,8 @@ void CompendiaCore::handleFileMoved(const QString& oldPath, const QString& newPa
 
     const QFileInfo oldInfo(oldPath);
     const QFileInfo newInfo(newPath);
-    const QString oldSidecar = oldInfo.absolutePath() + "/" + oldInfo.baseName() + ".json";
-    const QString newSidecar = newInfo.absolutePath() + "/" + newInfo.baseName() + ".json";
+    const QString oldSidecar = oldInfo.absolutePath() + "/" + oldInfo.completeBaseName() + ".json";
+    const QString newSidecar = newInfo.absolutePath() + "/" + newInfo.completeBaseName() + ".json";
 
     // Move sidecar if it was left behind at the old location
     bool sidecarStranded = false;
@@ -1713,9 +1713,9 @@ void CompendiaCore::handleFileMoved(const QString& oldPath, const QString& newPa
 
     // Move EXIF cache
     const QString oldExif = oldInfo.absolutePath() + "/" + Compendia::CacheFolderName + "/"
-                            + oldInfo.baseName() + "_exif.json";
+                            + oldInfo.completeBaseName() + "_exif.json";
     const QString newExif = newInfo.absolutePath() + "/" + Compendia::CacheFolderName + "/"
-                            + newInfo.baseName() + "_exif.json";
+                            + newInfo.completeBaseName() + "_exif.json";
     if (QFile::exists(oldExif)) {
         QDir().mkpath(QFileInfo(newExif).absolutePath());
         if (!QFile::rename(oldExif, newExif))
@@ -1750,7 +1750,7 @@ void CompendiaCore::handleFileAdded(const QString& absolutePath)
         return;
 
     // Load sidecar JSON if one exists alongside the new file
-    const QString sidecarPath = fileInfo.absolutePath() + "/" + fileInfo.baseName() + ".json";
+    const QString sidecarPath = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName() + ".json";
     QFile sidecarFile(sidecarPath);
     if (sidecarFile.exists() && sidecarFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QJsonObject tagsJson = QJsonDocument::fromJson(sidecarFile.readAll()).object();

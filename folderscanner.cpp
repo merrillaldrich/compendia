@@ -52,7 +52,7 @@ void FolderScanner::scan(const QString &rootPath)
         ScanItem item;
         item.fileInfo = fileInfo;
 
-        QString metaFileName = fileInfo.baseName() + ".json";
+        QString metaFileName = fileInfo.completeBaseName() + ".json";
         QFileInfo metaFileInfo(fileInfo.absolutePath() + "/" + metaFileName);
 
         if (metaFileInfo.exists() && metaFileInfo.isFile()) {
