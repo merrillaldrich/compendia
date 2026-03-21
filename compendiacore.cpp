@@ -43,6 +43,58 @@ CompendiaCore::CompendiaCore(QObject *parent)
     watcherDebounceTimer_.setInterval(300);
     connect(&watcherDebounceTimer_, &QTimer::timeout,
             this, &CompendiaCore::processWatcherChanges);
+
+    wantedUpdateTimer_.setSingleShot(true);
+    wantedUpdateTimer_.setInterval(80);
+    connect(&wantedUpdateTimer_, &QTimer::timeout, this, &CompendiaCore::updateWantedPaths);
+}
+
+void CompendiaCore::setListView(QListView *view)
+{
+    listView_ = view;
+}
+
+void CompendiaCore::scheduleWantedUpdate()
+{
+    wantedUpdateTimer_.start();   // restarts (debounces) on repeated calls
+}
+
+void CompendiaCore::updateWantedPaths()
+{
+    if (!listView_ || !tagged_files_proxy_)
+        return;
+
+    const QRect vp       = listView_->viewport()->rect();
+    const int   rowCount = tagged_files_proxy_->rowCount();
+    if (rowCount == 0)
+        return;
+
+    QModelIndex topIdx    = listView_->indexAt(vp.topLeft());
+    QModelIndex bottomIdx = listView_->indexAt(vp.bottomRight());
+
+    int firstRow = topIdx.isValid()    ? topIdx.row()    : 0;
+    int lastRow  = bottomIdx.isValid() ? bottomIdx.row() : rowCount - 1;
+
+    const int kBuffer = 20;
+    firstRow = qMax(0,            firstRow - kBuffer);
+    lastRow  = qMin(rowCount - 1, lastRow  + kBuffer);
+
+    QSet<QString> wanted;
+    wanted.reserve(lastRow - firstRow + 1);
+    for (int row = firstRow; row <= lastRow; ++row) {
+        QModelIndex proxyIdx = tagged_files_proxy_->index(row, 0);
+        QModelIndex srcIdx   = tagged_files_proxy_->mapToSource(proxyIdx);
+        QStandardItem *item  = tagged_files_->itemFromIndex(srcIdx);
+        if (!item) continue;
+        TaggedFile *tf = item->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf)
+            wanted.insert(tf->filePath + "/" + tf->fileName);
+    }
+
+    {
+        QWriteLocker lock(&wantedMutex_);
+        wantedIconPaths_ = std::move(wanted);
+    }
 }
 
 /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model. */
@@ -222,9 +274,29 @@ void CompendiaCore::scheduleIconLoad(const QString &path)
 {
     if (pendingIconLoads_.contains(path))
         return;
+
+    // Only schedule if the view currently wants this icon.
+    // wantedIconPaths_ is empty until setListView() is called (first loadFolder),
+    // so skip the guard when listView_ is null to avoid blocking early loads.
+    if (listView_ && !wantedIconPaths_.contains(path))
+        return;
+
     pendingIconLoads_.insert(path);
 
     auto *runnable = QRunnable::create([this, path]() {
+        // Cross-thread staleness check before any disk I/O.
+        {
+            QReadLocker lock(&wantedMutex_);
+            if (!wantedIconPaths_.contains(path)) {
+                // Path is no longer wanted. Remove from pending so it can be
+                // re-queued when it scrolls back into view.
+                QMetaObject::invokeMethod(this, [this, path]() {
+                    pendingIconLoads_.remove(path);
+                }, Qt::QueuedConnection);
+                return;
+            }
+        }
+
         if (!IconGenerator::iconCacheValid(path))
             return;
 
@@ -356,6 +428,10 @@ void CompendiaCore::loadRootDirectory(){
     uncachedPaths_.clear();
     iconPool_.clear();
     pendingIconLoads_.clear();
+    {
+        QWriteLocker lock(&wantedMutex_);
+        wantedIconPaths_.clear();
+    }
 
     // Start a background scan.  The generation counter is already up-to-date
     // because cancelIconGeneration() incremented it; capture the current value

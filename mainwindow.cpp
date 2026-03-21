@@ -6,6 +6,7 @@
 
 #include <QCheckBox>
 #include <QCoreApplication>
+#include <QScrollBar>
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
@@ -629,6 +630,18 @@ void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
     ui->fileListView->show();
     ui->actionClearIsolation->setEnabled(false);
     lv->setModel(core->getItemModelProxy());
+
+    // Viewport-priority icon loading: keep CompendiaCore informed of what is visible.
+    core->setListView(lv);
+    core->updateWantedPaths();  // compute immediately for the initial view
+
+    connect(lv->verticalScrollBar(), &QScrollBar::valueChanged,
+            core, &CompendiaCore::scheduleWantedUpdate);
+    connect(core->getItemModelProxy(), &QAbstractItemModel::modelReset,
+            core, &CompendiaCore::scheduleWantedUpdate);
+    connect(core->getItemModelProxy(), &QAbstractItemModel::rowsInserted,
+            core, [this](){ core->scheduleWantedUpdate(); });
+
     connectFileCountLabel();
     connect(lv->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onFileSelectionChanged);
     lv->show();
@@ -1501,6 +1514,8 @@ void MainWindow::on_windowBodySplitter_splitterMoved(int pos, int index)
 void MainWindow::resizeEvent(QResizeEvent *event) {
 
     freshenPreview();
+    if (core)
+        core->scheduleWantedUpdate();
     QMainWindow::resizeEvent(event);
 }
 
