@@ -1664,14 +1664,80 @@ void LuminismCore::handleFileRemoved(const QString& absolutePath)
 void LuminismCore::handleFileMoved(const QString& oldPath, const QString& newPath)
 {
     qDebug() << "[FileWatch] handleFileMoved:" << oldPath << "->" << newPath;
-    // TODO: locate TaggedFile in model by oldPath
-    // TODO: update filePath and fileName on the TaggedFile
-    // TODO: check whether sidecar travelled with the file or was stranded at oldPath
-    // TODO: schedule icon reload for newPath
-    // TODO: add newPath's directory to fileWatcher_ if not already watched
-    // TODO: emit fileMovedExternally(tf, oldPath, sidecarStranded)
-    Q_UNUSED(oldPath)
-    Q_UNUSED(newPath)
+
+    // Locate the model entry by old absolute path
+    TaggedFile* tf = nullptr;
+    QStandardItem* tfItem = nullptr;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        QStandardItem* item = tagged_files_->item(i);
+        auto candidate = item->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (candidate && candidate->filePath + "/" + candidate->fileName == oldPath) {
+            tf = candidate;
+            tfItem = item;
+            break;
+        }
+    }
+
+    if (!tf) {
+        qDebug() << "[FileWatch] handleFileMoved: no model entry for oldPath, ignoring";
+        return;
+    }
+
+    const QFileInfo oldInfo(oldPath);
+    const QFileInfo newInfo(newPath);
+    const QString oldSidecar = oldInfo.absolutePath() + "/" + oldInfo.baseName() + ".json";
+    const QString newSidecar = newInfo.absolutePath() + "/" + newInfo.baseName() + ".json";
+
+    // Move sidecar if it was left behind at the old location
+    bool sidecarStranded = false;
+    if (QFile::exists(oldSidecar)) {
+        QDir().mkpath(newInfo.absolutePath());
+        if (QFile::rename(oldSidecar, newSidecar))
+            qDebug() << "[FileWatch] handleFileMoved: moved sidecar" << oldSidecar << "->" << newSidecar;
+        else {
+            sidecarStranded = true;
+            qDebug() << "[FileWatch] handleFileMoved: failed to move sidecar" << oldSidecar;
+        }
+    }
+
+    // Move icon cache files (one per thumbnail size)
+    for (int size : IconGenerator::kIconSizes) {
+        const QString oldIcon = IconGenerator::cacheFilePath(oldPath, size);
+        const QString newIcon = IconGenerator::cacheFilePath(newPath, size);
+        if (QFile::exists(oldIcon)) {
+            QDir().mkpath(QFileInfo(newIcon).absolutePath());
+            if (!QFile::rename(oldIcon, newIcon))
+                qDebug() << "[FileWatch] handleFileMoved: failed to move icon cache" << oldIcon;
+        }
+    }
+
+    // Move EXIF cache
+    const QString oldExif = oldInfo.absolutePath() + "/" + Luminism::CacheFolderName + "/"
+                            + oldInfo.baseName() + "_exif.json";
+    const QString newExif = newInfo.absolutePath() + "/" + Luminism::CacheFolderName + "/"
+                            + newInfo.baseName() + "_exif.json";
+    if (QFile::exists(oldExif)) {
+        QDir().mkpath(QFileInfo(newExif).absolutePath());
+        if (!QFile::rename(oldExif, newExif))
+            qDebug() << "[FileWatch] handleFileMoved: failed to move EXIF cache" << oldExif;
+    }
+
+    // Update TaggedFile in-memory and the model item display text
+    tf->filePath = newInfo.absolutePath();
+    tf->fileName = newInfo.fileName();
+    tfItem->setText(newInfo.fileName());
+
+    // Watch the new directory if not already watched
+    if (fileWatcher_ && !fileWatcher_->directories().contains(newInfo.absolutePath()))
+        fileWatcher_->addPath(newInfo.absolutePath());
+
+    // Last-ditch safety: if no sidecar exists at the new location, mark dirty so
+    // the user will be prompted to save and the data won't be silently lost.
+    if (!QFile::exists(newSidecar))
+        tf->markDirty();
+
+    emit fileMovedExternally(tf, oldPath, sidecarStranded);
+    qDebug() << "[FileWatch] handleFileMoved: model updated";
 }
 
 /*! \brief Handles a file that appeared in a watched directory with no matching disappearance elsewhere. */
