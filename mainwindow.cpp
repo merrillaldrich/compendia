@@ -566,8 +566,11 @@ bool MainWindow::confirmCacheFolder(const QString &folder)
 
     QMessageBox mb(this);
     mb.setWindowTitle("Compendia");
-    mb.setText("For performance with large libraries of images, compendia will make a cache "
-               "folder alongside your files, for thumbnails. Is that OK?");
+    mb.setText("<p>For performance with large libraries of images, compendia <b>makes files</b>.</p> "
+               "<p>A cache folder will appear alongside the files in each of your project folders.</p>"
+               "<p>When you save, a metadata file (sometimes called a <i>sidecar</i>) will be created "
+               "alongside each of your images</p>"
+               "<p><b>OK to make all these files?<b></p>");
     mb.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     mb.setDefaultButton(QMessageBox::Ok);
 
