@@ -10,6 +10,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QJsonDocument>
 #include <QDebug>
 #include <QIcon>
 #include <QSet>
@@ -1677,10 +1678,61 @@ void LuminismCore::handleFileMoved(const QString& oldPath, const QString& newPat
 void LuminismCore::handleFileAdded(const QString& absolutePath)
 {
     qDebug() << "[FileWatch] handleFileAdded:" << absolutePath;
-    // TODO: check whether a sidecar exists alongside the new file
-    // TODO: call appropriate addFile() overload (with or without sidecar JSON)
-    // TODO: schedule backfill (icon + EXIF) for the new file
-    // TODO: add directory to fileWatcher_ if not already watched (handles new subdirs)
-    // TODO: emit fileAddedExternally(absolutePath)
-    Q_UNUSED(absolutePath)
+
+    QFileInfo fileInfo(absolutePath);
+    if (!fileInfo.exists() || !fileInfo.isFile())
+        return;
+
+    // Load sidecar JSON if one exists alongside the new file
+    const QString sidecarPath = fileInfo.absolutePath() + "/" + fileInfo.baseName() + ".json";
+    QFile sidecarFile(sidecarPath);
+    if (sidecarFile.exists() && sidecarFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QJsonObject tagsJson = QJsonDocument::fromJson(sidecarFile.readAll()).object();
+        sidecarFile.close();
+        addFile(fileInfo, tagsJson);
+        qDebug() << "[FileWatch] handleFileAdded: loaded with sidecar";
+    } else {
+        addFile(fileInfo);
+    }
+
+    // Apply cached EXIF immediately if the cache is already valid, otherwise schedule generation
+    if (IconGenerator::iconCacheValid(absolutePath)) {
+        QMap<QString, QString> cachedExif = ExifParser::getExifMap(absolutePath);
+        QStandardItem *si = tagged_files_->item(tagged_files_->rowCount() - 1);
+        if (si && !cachedExif.isEmpty()) {
+            TaggedFile *tf = si->data(Qt::UserRole + 1).value<TaggedFile*>();
+            if (tf) {
+                tf->initExifMap(cachedExif);
+                QDateTime dt = QDateTime::fromString(cachedExif["DateTime"], "yyyy:MM:dd HH:mm:ss");
+                if (dt.isValid())
+                    tf->imageCaptureDateTime = dt;
+            }
+        }
+        qDebug() << "[FileWatch] handleFileAdded: icon cache valid, EXIF applied";
+    } else if (iconGenerator_ == nullptr) {
+        // No batch currently running — start one just for this file
+        uiFlushTimer_.disconnect();
+        connect(&uiFlushTimer_, &QTimer::timeout, this, &LuminismCore::flushIconGeneratorQueue);
+        uiFlushTimer_.setInterval(50);
+        iconGenerator_ = new IconGenerator(this);
+        connect(iconGenerator_, &IconGenerator::fileReady,  this, &LuminismCore::onIconReady);
+        connect(iconGenerator_, &IconGenerator::batchFinished, this, &LuminismCore::onIconBatchFinished);
+        iconGenerator_->processFiles({absolutePath});
+        qDebug() << "[FileWatch] handleFileAdded: icon generation started";
+    } else {
+        // A batch is already in flight — queue this path and start a new batch when it finishes
+        uncachedPaths_.append(absolutePath);
+        connect(iconGenerator_, &IconGenerator::batchFinished, this, [this]() {
+            if (!uncachedPaths_.isEmpty())
+                backfillMetadata();
+        }, Qt::SingleShotConnection);
+        qDebug() << "[FileWatch] handleFileAdded: queued for icon generation after current batch";
+    }
+
+    // Watch the new file's directory if it isn't already (handles files dropped into new subdirs)
+    if (fileWatcher_ && !fileWatcher_->directories().contains(fileInfo.absolutePath()))
+        fileWatcher_->addPath(fileInfo.absolutePath());
+
+    tagged_files_proxy_->sort(0);
+    emit fileAddedExternally(absolutePath);
 }
