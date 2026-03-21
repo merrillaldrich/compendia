@@ -23,6 +23,7 @@ AboutDialog::AboutDialog(QWidget *parent)
     ui->scrollArea->viewport()->setAutoFillBackground(false);
     ui->scrollAreaWidgetContents->setAutoFillBackground(false);
 
+    ui->contentLabel->setOpenExternalLinks(true);
     ui->versionLabel->setText(tr("Version %1").arg(APP_VERSION_STRING));
     if (QPushButton *ok = ui->buttonBox->button(QDialogButtonBox::Ok))
         ok->setIcon(QIcon());

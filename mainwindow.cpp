@@ -252,7 +252,7 @@ MainWindow::MainWindow(QWidget *parent)
         };
 
         // Title
-        auto* title = new QLabel("Compendia");
+        auto* title = new QLabel("compendia");
         QFont tf = title->font();
         tf.setPointSize(tf.pointSize() + 8);
         tf.setBold(true);

@@ -11,7 +11,12 @@
 WelcomeHintContainer::WelcomeHintContainer(QWidget *parent)
     : TagContainer(parent)
 {
-    setLayout(new FlowLayout(this));
+    auto *fl = new FlowLayout(this);
+    QMargins m = fl->contentsMargins();
+    m.setLeft(8);
+    m.setRight(8);
+    fl->setContentsMargins(m);
+    setLayout(fl);
 }
 
 /*! \brief Creates and configures the welcome_label_ with \p hint text. */
