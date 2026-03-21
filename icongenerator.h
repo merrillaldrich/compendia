@@ -13,6 +13,7 @@
 #include <QImage>
 #include <QAtomicInt>
 #include <QMap>
+#include <QThreadPool>
 
 #include "framegrabber.h"
 #include "perceptualhasher.h"
@@ -148,6 +149,7 @@ private:
     QAtomicInt    pendingImageCount_;        ///< Tracks remaining image tasks; decremented as each completes.
     bool          videoGrabDone_ = true;     ///< True when no FrameGrabber work is pending.
     FrameGrabber *frameGrabber_  = nullptr;  ///< Active FrameGrabber, or nullptr.
+    QThreadPool   backfillPool_;             ///< Dedicated pool for backfill; keeps jobs off the global pool so demand loads are never queue-starved.
 };
 
 #endif // ICONGENERATOR_H

@@ -3,6 +3,7 @@
 #include "exifparser.h"
 #include <QImageReader>
 #include <QFileInfo>
+#include <QThread>
 #include <QTimer>
 #include <QtConcurrent>
 #include <utility>
@@ -105,6 +106,8 @@ static QImage videoPlaceholderIcon(int size)
 IconGenerator::IconGenerator(QObject *parent)
     : QObject(parent)
 {
+    backfillPool_.setMaxThreadCount(qMax(1, QThread::idealThreadCount() - 1));
+    backfillPool_.setExpiryTimeout(5000);
 }
 
 /*! \brief Begins thumbnail generation for all given file paths. */
@@ -166,7 +169,7 @@ void IconGenerator::processFiles(const QStringList &absolutePaths)
 
     // --- Image handling ---
     for (const QString &path : imagePaths) {
-        QtConcurrent::run([this, path]() {
+        QtConcurrent::run(&backfillPool_, [this, path]() {
             auto [exifMap, images, pHash] = processImageFile(path);
             QMetaObject::invokeMethod(this, [this, path, exifMap, images, pHash]() {
                 onImageTaskComplete(path, exifMap, images, pHash);
