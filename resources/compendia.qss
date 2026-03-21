@@ -38,11 +38,54 @@ QWidget#navLibraryContainer {
     background-color: @NAV_BLUE;
 }
 
+/* ── Nav scrollbars ─────────────────────────────────────── */
+QScrollArea#navFilterScrollArea QScrollBar:vertical,
+QScrollArea#navLibraryScrollArea QScrollBar:vertical {
+    background-color: @NAV_BLUE;
+    width: 8px;
+    margin: 0;
+}
+
+QScrollArea#navFilterScrollArea QScrollBar::handle:vertical,
+QScrollArea#navLibraryScrollArea QScrollBar::handle:vertical {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+QScrollArea#navFilterScrollArea QScrollBar::add-line:vertical,
+QScrollArea#navLibraryScrollArea QScrollBar::add-line:vertical,
+QScrollArea#navFilterScrollArea QScrollBar::sub-line:vertical,
+QScrollArea#navLibraryScrollArea QScrollBar::sub-line:vertical {
+    height: 0;
+    background: none;
+}
+
+QScrollArea#navFilterScrollArea QScrollBar::add-page:vertical,
+QScrollArea#navLibraryScrollArea QScrollBar::add-page:vertical,
+QScrollArea#navFilterScrollArea QScrollBar::sub-page:vertical,
+QScrollArea#navLibraryScrollArea QScrollBar::sub-page:vertical {
+    background: none;
+}
+
 /* ── Nav flat buttons ──────────────────────────────────── */
 QPushButton#tagFilterModeButton,
 QPushButton#ratingFilterModeButton {
     text-align: left;
     background-color: @NAV_BLUE;
+}
+
+/* ── Tag assignment area ─────────────────────────────────── */
+QScrollArea#fileListTagAssignmentScrollArea,
+QScrollArea#fileListTagAssignmentScrollArea > QWidget {
+    background-color: palette(window);
+}
+
+/* ── Preview properties area ─────────────────────────────── */
+QScrollArea#previewScrollArea,
+QScrollArea#previewScrollArea > QWidget,
+QWidget#previewWidget {
+    background-color: palette(window);
 }
 
 /* ── Other splitters (light background) ───────────────── */
