@@ -8,7 +8,9 @@ description: Getting Started
 
 Welcome to compendia. Here are the basics to help you get started wrangling your photos and videos.
 
-## Opening a Folder
+## Getting Started
+
+### Opening a Folder
 
 Compendia works with folders of images on your local machine. To get started:
 
@@ -20,7 +22,7 @@ Supported formats include JPEG, PNG, TIFF, HEIC/HEIF, and common video formats.
 
 > **Tip:** Compendia saves tag data as small `.json` sidecar files alongside your media, so your tags travel with your files.
 
-## The Interface
+### The Interface
 
 The window is divided into three main areas:
 
@@ -31,39 +33,39 @@ The window is divided into three main areas:
 | **File List** (center)        | Thumbnails of files matching the current filters |
 | **Tag Assignment** (right)    | Tags applied to the currently selected files     |
 
-## Creating Tags
+### Creating Tags
 
 Tags are organized into **Tag Families** — groups that share a theme or color. For example, you might have a family called _Subject_ containing tags like _Portrait_, _Landscape_, and _Architecture_.
 
-### Create a Tag Family
+#### Create a Tag Family
 
 1. Click **Add Family** in the Tag Library area.
 2. Enter a name and choose a color.
 3. Click **OK**. The new family appears in the Tag Library.
 
-### Create a Tag
+#### Create a Tag
 
 1. Click the **+** button next to a tag family in the Tag Library.
 2. Enter a tag name and click **OK**.
 3. The tag appears inside its family in the library.
 
-## Applying Tags to Files
+### Applying Tags to Files
 
-### By dragging from the library
+#### By dragging from the library onto File(s)
 
 1. Select one or more files in the file list (click to select; **Ctrl+click** or **Shift+click** for multiple).
 2. Drag a tag from the Tag Library and drop it onto the selected file(s) in the file list.
 
-### By dragging into the Tag Assignment area
+#### By dragging into the Tag Assignment area
 
 1. Select one or more files.
 2. Drag a tag from the Tag Library and drop it into the **Tag Assignment** area on the right. The tag is applied to all currently visible (filtered) files.
 
 ### Removing a tag
 
-Click the **×** button on any tag chip in the Tag Assignment area to remove that tag from the selected files.
+Click the **×** button on any tag chip in the Tag Assignment area to remove that tag from all the visible files.
 
-## Filtering by Tag
+### Filtering by Tag
 
 To narrow the file list to only files that have a specific tag:
 
@@ -73,11 +75,11 @@ To narrow the file list to only files that have a specific tag:
 
 You can stack multiple filters — only files matching **all** active tags are shown.
 
-## Searching by Filename
+### Searching by Name
 
 Type in the search box at the top of the file list to filter by filename. This works alongside tag filters — both are applied at the same time.
 
-## Saving Your Work
+### Saving Your Work
 
 Tag data is saved by clicking **Save** in the toolbar, or using **File → Save**. Each file's tags are stored in a `.json` sidecar file in the same folder as the image.
 
