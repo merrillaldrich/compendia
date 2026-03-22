@@ -26,7 +26,7 @@ Where multiple fields are present, Compendia prioritises the original capture da
 
 ## Using Dates for Organisation
 
-The capture date is displayed in the file list and the preview panel. You can also filter the file list by date range, making it easy to find photos from a specific trip, event, or time period. Date filtering works alongside tag filters and search fields, so you can combine all of them to narrow your results precisely.
+The capture date is displayed in the preview panel when you open an image. You can also filter the file list by date range, making it easy to find photos from a specific trip, event, or time period. Date filtering works alongside tag filters and search fields, so you can combine all of them to narrow your results precisely.
 
 ## When Date Information Is Missing
 
