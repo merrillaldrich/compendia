@@ -22,8 +22,7 @@ This two-level structure keeps your tag library organised as it grows, and makes
 
 1. Click the **Add Family** button in the Tag Library area (top-left panel).
 2. Enter a name for the family.
-3. Choose a color — this color will appear on all tags within the family.
-4. Click **OK**. The new family appears in the Tag Library, ready for tags to be added.
+3. Click **OK**. The new family appears in the Tag Library, ready for tags to be added.
 
 ## Creating a Tag
 
@@ -75,6 +74,4 @@ When you delete a tag, it is removed from all files it was assigned to. This can
 
 ## Tag Colors
 
-Each tag family has a color that is displayed on its tag chips throughout the interface — in the Tag Library, the Tag Assignment area, and the Tag Filters area. Colors make it easy to identify which family a tag belongs to at a glance.
-
-To change a family's color, right-click the family name in the Tag Library and choose **Edit Family**. All tags in that family will update to the new color immediately.
+Each tag family is automatically assigned a color, which is displayed on its tag chips throughout the interface — in the Tag Library, the Tag Assignment area, and the Tag Filters area. Colors make it easy to identify which family a tag belongs to at a glance.
