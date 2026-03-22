@@ -65,13 +65,11 @@ The tag is applied to every file in the selection. The Tag Assignment area shows
 
 ## Removing Tags
 
-To remove a tag from the selected file or files, click the **×** button on the tag chip in the Tag Assignment area. The tag is removed from all currently selected files.
+To remove a tag from your files, click the **×** button on the tag chip in the Tag Assignment area. The tag is removed from all files that are currently visible on screen (i.e. all files matching the active filters). If you want to remove a tag from only a subset of your files, apply filters first to narrow the visible set before clicking **×**.
 
 ## Renaming and Deleting Tags
 
-Right-click a tag in the Tag Library to access rename and delete options.
-
-When you rename a tag, all existing assignments are updated automatically — you do not need to re-tag your files.
+To rename a tag, left-click its name in the Tag Library. The name becomes editable in place. All existing assignments are updated automatically — you do not need to re-tag your files.
 
 When you delete a tag, it is removed from all files it was assigned to. This cannot be undone, so take care when deleting tags that have been widely applied.
 
