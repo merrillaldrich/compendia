@@ -10,19 +10,19 @@ Filtering is how you narrow the file list down to just the files you want to see
 
 ## The Tag Filter Area
 
-The Tag Filter area is the lower-left panel in the main window. It shows all the tag filters that are currently active. When no filters are set, the file list shows all files in the loaded folder. As you add filters, the list narrows to show only files that match.
+The Tag Filter area is the upper-left panel in the main window. It shows all the tag filters that are currently active. When no filters are set, the file list shows all files in the loaded folder. As you add filters, the list narrows to show only files that match.
 
-Tags in the filter area are displayed as colored chips, one per tag, grouped by family — the same visual style used in the Tag Library and Tag Assignment area.
+Tags in the filter area are displayed as colored chips, one per tag, grouped by family. This is the same visual style used in the Tag Library and Tag Assignment area.
 
 ## Adding a Filter
 
 To filter by a tag, drag it from the Tag Library and drop it into the Tag Filter area. The file list updates immediately to show only files that have that tag assigned.
 
-You can add filters from different families in the same way — just drag and drop each tag you want to filter by.
+You can add filters from different families in the same way. Just drag and drop each tag you want to filter by.
 
 ## Stacking Multiple Filters
 
-When more than one tag filter is active, Compendia applies them together using AND logic: only files that have **all** of the active filter tags are shown. This lets you progressively narrow the list — for example, filtering first by _Location: Paris_ and then by _Subject: Portrait_ to find portraits taken in Paris.
+When more than one tag filter is active, Compendia applies them together using AND logic: only files that have **all** of the active filter tags are shown. This lets you progressively narrow the list. For example, you could filter first by _Location: Paris_ and then by _Subject: Portrait_ to find portraits taken in Paris.
 
 There is no limit to the number of filters you can stack.
 
@@ -40,4 +40,4 @@ Selecting a subfolder acts as an additional filter on top of any active tag filt
 
 ## Combining Tag Filters with Folder Navigation
 
-Tag filters and folder navigation work together. You can select a subfolder to limit the scope to that location, then add tag filters to narrow further within it — or set tag filters first and then navigate into a subfolder to intersect the two. Either way, the file list always reflects all active constraints at once.
+Tag filters and folder navigation work together. You can select a subfolder to limit the scope to that location, then add tag filters to narrow further within it. You can also set tag filters first and then navigate into a subfolder. Either way, the file list always reflects all active constraints at once.
