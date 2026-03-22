@@ -12,7 +12,7 @@ Filtering is how you narrow the file list down to just the files you want to see
 
 The Tag Filter area is the upper-left panel in the main window. It shows all the tag filters that are currently active. When no filters are set, the file list shows all files in the loaded folder. As you add filters, the list narrows to show only files that match.
 
-Tags in the filter area are displayed as colored chips, one per tag, grouped by family. This is the same visual style used in the Tag Library and Tag Assignment area.
+Active filters are shown as colored tags grouped by family, using the same visual style as the Tag Library and Tag Assignment area.
 
 ## Adding a Filter
 
@@ -28,9 +28,9 @@ There is no limit to the number of filters you can stack.
 
 ## Removing a Filter
 
-To remove a tag filter, click the **×** button on its chip in the Tag Filter area. The file list immediately updates to reflect the remaining filters.
+To remove a tag filter, click the **×** button on the tag in the Tag Filter area. The file list immediately updates to reflect the remaining filters.
 
-To clear all filters at once, remove each chip individually.
+To clear all filters at once, remove each tag individually.
 
 ## Folder Navigation
 

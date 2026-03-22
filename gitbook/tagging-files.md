@@ -64,7 +64,7 @@ The tag is applied to every file in the selection. The Tag Assignment area shows
 
 ## Removing Tags
 
-To remove a tag from your files, click the **×** button on the tag chip in the Tag Assignment area. The tag is removed from all files that are currently visible on screen (i.e. all files matching the active filters). If you want to remove a tag from only a subset of your files, apply filters first to narrow the visible set before clicking **×**.
+To remove a tag from your files, click the **×** button on the tag in the Tag Assignment area. The tag is removed from all files that are currently visible on screen (i.e. all files matching the active filters). If you want to remove a tag from only a subset of your files, apply filters first to narrow the visible set before clicking **×**.
 
 ## Renaming and Deleting Tags
 
@@ -74,4 +74,4 @@ When you delete a tag, it is removed from all files it was assigned to. This can
 
 ## Tag Colors
 
-Each tag family is automatically assigned a color, which is displayed on its tag chips throughout the interface — in the Tag Library, the Tag Assignment area, and the Tag Filters area. Colors make it easy to identify which family a tag belongs to at a glance.
+Each tag family is automatically assigned a color, which is displayed on its tags throughout the interface — in the Tag Library, the Tag Assignment area, and the Tag Filters area. Colors make it easy to identify which family a tag belongs to at a glance.
