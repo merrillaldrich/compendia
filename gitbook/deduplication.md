@@ -20,6 +20,8 @@ Compendia calculates a similarity score for each pair of images to determine how
 
 Results are presented as groups of similar images. You can view each group side by side in the review panel and compare them directly. For each group, examine the images and decide which version or versions you want to keep.
 
+Compendia can also tag each group with a Similarity Set tag if you choose. This gives each group a shared tag that you can use later with the standard tag filtering system to recall the set for further review or cleanup. This is useful if you want to work through your duplicates gradually rather than all at once.
+
 ## Removing Duplicates
 
 Compendia does not delete files directly. To remove a duplicate, right-click the file and use the menu option to open its containing folder in your file system browser (Windows Explorer on Windows, Finder on Mac). From there you can move or delete the file as you normally would.
