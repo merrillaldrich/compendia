@@ -56,7 +56,7 @@ This is useful when you need to apply a unique set of tags to a specific group o
 
 Folder isolation filters the file list to the folder that a specific file belongs to, including its subdirectories. To use it, right-click a file and choose **Isolate Folder**. The file list will update to show only files in that folder and below.
 
-This is a quick way to focus on a particular location in your folder tree without having to navigate to it manually. Use **Filter > Clear All Filters** to return to viewing all files in the project.
+This is a quick way to focus on a particular location in your folder tree without having to navigate to it manually. To clear folder isolation, use the clear folder isolation button or the corresponding menu command. If you also want to clear any other active filters at the same time, use **Filter > Clear All Filters**.
 
 ### Drill
 
