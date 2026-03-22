@@ -30,6 +30,30 @@ Taking time to review and correct the results improves the accuracy of future re
 
 Once you are satisfied with the identified groups, you can assign a name to each identity. Compendia will create a tag for that person and apply it to all files where their face was detected. These tags work like any other tag in your library and can be used for filtering, searching, and organising your photos.
 
+## Suggested Workflow: Build a Known Set First
+
+Facial recognition works best when Compendia has some known examples to work from before the automated scan runs. The recommended approach is to manually identify a handful of people first, which gives the model a reference set to match against.
+
+**Step 1: Create a tag for each person you want to identify.**
+In the Tag Library, create a tag family called _People_ if you do not already have one. Add a tag for each person, for example _People: Susan_ or _People: Dad_.
+
+**Step 2: Find a clear photo of each person.**
+Browse your library and open a photo where the person's face is clearly visible in the preview panel.
+
+**Step 3: Drag the person's tag onto their face in the preview.**
+Drag the tag from the Tag Library and drop it directly onto the person's face in the image preview. Compendia will place a face rectangle around the detected face.
+
+**Step 4: Adjust the face rectangle.**
+Resize and reposition the rectangle so it fits snugly around the person's face.
+
+**Step 5: Repeat for each person.**
+Work through a few example photos for each person you want to identify. You do not need to manually tag every photo, just enough to establish a clear reference for each individual.
+
+**Step 6: Run Find Faces.**
+Once you have built up a known set, run **Autos > Face Detection > Find Faces**. Compendia will use your manually tagged examples to help identify those same people across the rest of your library.
+
+Taking a few minutes to build a known set before running the automation significantly improves the quality of the results.
+
 ## Privacy Considerations
 
 All facial recognition processing is performed locally on your computer. Your photos and the generated face data are never uploaded or shared. The recognition model and any derived data remain on your machine at all times.
