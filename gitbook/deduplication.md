@@ -22,4 +22,6 @@ Results are presented as groups of similar images. You can view each group side 
 
 ## Removing Duplicates
 
-To remove an image you do not want to keep, select it and delete it from within Compendia. The file will be moved to the system trash. Take care when removing files, as this affects the original files on your disk. If you are unsure, it is safer to tag duplicates for later review rather than deleting them immediately.
+Compendia does not delete files directly. To remove a duplicate, right-click the file and use the menu option to open its containing folder in your file system browser (Windows Explorer on Windows, Finder on Mac). From there you can move or delete the file as you normally would.
+
+Take care when removing files, as changes made in the file system are not undone by Compendia. If you are unsure, it is safer to tag duplicates for later review rather than removing them immediately.
