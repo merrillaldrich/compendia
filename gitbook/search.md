@@ -24,6 +24,14 @@ For example, typing `2023` would show files from any subfolder whose name contai
 
 Both search fields work alongside all other active filters. If you have tag filters, a star rating filter, or a date filter active, the search fields narrow the results further within that already-filtered set. You can combine filename search, folder search, and tag filters freely to zero in on exactly the files you need.
 
+## Searching the Tag Library
+
+The Tag Library has its own search box, separate from the file search fields. It filters the tags displayed in the Tag Library by name, making it easy to find a specific tag when your library has grown large.
+
+For example, if you have tagged a hundred people and want to find the tag for Susan, type `Susan` in the Tag Library search box. Only tags whose names contain that text will be shown. The file list is not affected.
+
+This is useful any time you need to locate, drag, or inspect a specific tag without scrolling through the full library.
+
 ## Clearing a Search
 
 To clear a search field, delete the text in it or click the clear button at the right end of the field. The file list updates immediately. You can clear each field independently.
