@@ -44,15 +44,6 @@ The most direct way to tag a file is to drag a tag from the Tag Library and drop
 
 The tag is applied immediately and appears in the Tag Assignment area on the right.
 
-### Drag and Drop into the Tag Assignment Area
-
-You can also apply a tag by dropping it into the Tag Assignment area on the right side of the window. This is useful when you have multiple files selected and want to apply a tag to all of them at once.
-
-1. Select one or more files in the file list.
-2. Drag a tag from the Tag Library and drop it into the Tag Assignment area.
-
-The tag is applied to all currently selected files.
-
 ### Applying a Tag to Multiple Files at Once
 
 To tag several files in one action:
@@ -61,6 +52,15 @@ To tag several files in one action:
 2. Drag a tag from the Tag Library and drop it into the Tag Assignment area.
 
 The tag is applied to every file in the selection. The Tag Assignment area shows all tags that are common to the selected files.
+
+### Drag and Drop into the Tag Assignment Area
+
+You can also apply a tag by dropping it into the Tag Assignment area on the right side of the window. This is useful when you have multiple files selected and want to apply a tag to all of them at once.
+
+1. Select one or more files in the file list.
+2. Drag a tag from the Tag Library and drop it into the Tag Assignment area.
+
+The tag is applied to all currently selected files.
 
 ## Removing Tags
 
