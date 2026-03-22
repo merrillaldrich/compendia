@@ -16,7 +16,7 @@ When you run facial recognition, Compendia scans the visible files for faces. It
 
 ## Running Facial Recognition
 
-To run facial recognition, use the **Tools** menu and select the facial recognition option. You can choose to process the selected files, all currently visible files, or all files in your entire project. Depending on the number of files and the speed of your computer, this may take some time.
+To run facial recognition, use **Autos > Face Detection > Find Faces**. You can choose to process the selected files, all currently visible files, or all files in your entire project. Depending on the number of files and the speed of your computer, this may take some time.
 
 You can continue using the application while recognition runs in the background.
 
