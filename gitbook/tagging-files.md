@@ -6,7 +6,7 @@ description: How to create, apply, and manage tags on your media files
 
 ## Overview
 
-Tags are the core of how Compendia helps you organise your media. Rather than relying on folder structure alone, you can attach any number of descriptive tags to each file — and then use those tags to filter and find exactly what you're looking for. Tags are flexible: a single photo can have tags from multiple families, and you can add or remove them at any time.
+Tags are the core of how Compendia helps you organise your media. Rather than relying on folder structure alone, you can attach any number of descriptive tags to each file, and then use those tags to filter and find exactly what you're looking for. Tags are flexible: a single photo can have tags from multiple families, and you can add or remove them at any time.
 
 ## Tag Families and Tags
 
