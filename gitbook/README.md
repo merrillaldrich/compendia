@@ -20,8 +20,6 @@ Supported formats include JPEG, PNG, TIFF, HEIC/HEIF, and common video formats.
 
 > **Tip:** Compendia saves tag data as small `.json` sidecar files alongside your media, so your tags travel with your files.
 
-***
-
 ## The Interface
 
 The window is divided into three main areas:
@@ -32,8 +30,6 @@ The window is divided into three main areas:
 | **Tag Filters** (bottom-left) | Active filters that narrow the file list         |
 | **File List** (center)        | Thumbnails of files matching the current filters |
 | **Tag Assignment** (right)    | Tags applied to the currently selected files     |
-
-***
 
 ## Creating Tags
 
@@ -51,8 +47,6 @@ Tags are organized into **Tag Families** — groups that share a theme or color.
 2. Enter a tag name and click **OK**.
 3. The tag appears inside its family in the library.
 
-***
-
 ## Applying Tags to Files
 
 ### By dragging from the library
@@ -69,8 +63,6 @@ Tags are organized into **Tag Families** — groups that share a theme or color.
 
 Click the **×** button on any tag chip in the Tag Assignment area to remove that tag from the selected files.
 
-***
-
 ## Filtering by Tag
 
 To narrow the file list to only files that have a specific tag:
@@ -81,21 +73,15 @@ To narrow the file list to only files that have a specific tag:
 
 You can stack multiple filters — only files matching **all** active tags are shown.
 
-***
-
 ## Searching by Filename
 
 Type in the search box at the top of the file list to filter by filename. This works alongside tag filters — both are applied at the same time.
-
-***
 
 ## Saving Your Work
 
 Tag data is saved by clicking **Save** in the toolbar, or using **File → Save**. Each file's tags are stored in a `.json` sidecar file in the same folder as the image.
 
 When you have unsaved changes, save before closing to avoid losing your work.
-
-***
 
 ## Next Steps
 
