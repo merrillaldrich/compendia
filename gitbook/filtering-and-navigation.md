@@ -41,3 +41,25 @@ Selecting a subfolder acts as an additional filter on top of any active tag filt
 ## Combining Tag Filters with Folder Navigation
 
 Tag filters and folder navigation work together. You can select a subfolder to limit the scope to that location, then add tag filters to narrow further within it. You can also set tag filters first and then navigate into a subfolder. Either way, the file list always reflects all active constraints at once.
+
+## Advanced: Isolating Sets of Files
+
+Compendia provides three methods for focusing on a specific subset of files. Each is suited to a different situation.
+
+### Selection Isolation
+
+Selection isolation temporarily filters the file list down to exactly the files you have selected. To use it, select the files you want to work with using click, **Ctrl+click**, or **Shift+click**, then activate selection isolation. The file list will show only those files until you clear the isolation.
+
+This is useful when you need to apply a unique set of tags to a specific group of files that do not share a common folder or tag. For example, you might hand-pick 20 files from across your library and then tag them all without affecting anything else.
+
+### Folder Isolation
+
+Folder isolation filters the file list to the folder that a specific file belongs to, including its subdirectories. To use it, right-click a file and choose **Isolate Folder**. The file list will update to show only files in that folder and below.
+
+This is a quick way to focus on a particular location in your folder tree without having to navigate to it manually. Use **Filter > Clear All Filters** to return to viewing all files in the project.
+
+### Drill
+
+Drill is designed for very large projects where keeping the entire library in memory is slow or impractical. Rather than just filtering the view, drill physically opens a subfolder as if it were its own project, unloading everything outside that location from memory. This frees up resources and makes working with that portion of the library faster.
+
+Each folder in Compendia is self-contained with its own tag data, so you can drill into any subfolder and work on it independently. For example, in a project with 50,000 images across 600 folders, you might drill into a section covering one year or one location, work through it, then come back up to the top level and drill into another section. To exit drill mode and return to the full project, close the drilled folder and reopen the root.
