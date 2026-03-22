@@ -6,7 +6,7 @@ description: How to use tag filters and folder navigation to find your files
 
 ## Overview
 
-Filtering is how you narrow the file list down to just the files you want to see. Compendia supports two complementary types of filtering: by tag, and by folder. Both work simultaneously, so you can combine them to pinpoint exactly the files you need.
+Filtering is how you narrow the file list down to just the files you want to see. Compendia supports several types of filtering: by tag, by star rating, by file or folder name, by date, and by folder. All active filters work simultaneously, so you can combine them to pinpoint exactly the files you need.
 
 ## The Tag Filter Area
 
@@ -30,7 +30,7 @@ There is no limit to the number of filters you can stack.
 
 To remove a tag filter, click the **×** button on the tag in the Tag Filter area. The file list immediately updates to reflect the remaining filters.
 
-To clear all filters at once, remove each tag individually.
+To clear all active filters at once, use **Filter > Clear All Filters**. This removes all tag filters, as well as any active star rating, filename, and date filters. It does not affect the tags assigned to your files.
 
 ## Folder Navigation
 
