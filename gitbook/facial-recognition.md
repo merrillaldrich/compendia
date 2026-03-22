@@ -30,6 +30,22 @@ Taking time to review and correct the results improves the accuracy of future re
 
 Once you are satisfied with the identified groups, you can assign a name to each identity. Compendia will create a tag for that person and apply it to all files where their face was detected. These tags work like any other tag in your library and can be used for filtering, searching, and organising your photos.
 
+## Correcting Detected Faces
+
+After running automatic face detection you will likely need to review and clean up the results. There are three common situations and a straightforward fix for each.
+
+**The same person appears across many images under an auto-generated name.**
+When Compendia detects a face it does not recognise, it creates a tag with a placeholder name. If you see a group of detections that all belong to the same person, just rename the auto-generated tag in the Tag Library by left-clicking it and typing the correct name. All images that have that tag will update immediately.
+
+**A face has been tagged with the wrong person's name.**
+People can look similar, and the model may occasionally assign the wrong identity. To correct a single face, drag the correct tag from the Tag Library and drop it onto the face rectangle in the image preview. The tag will be reassigned to the correct person.
+
+**A face region does not correspond to a real person you want to track.**
+Automatic detection sometimes picks up faces in crowds, strangers in the background, or false positives on textures like foliage or patterned fabric. There are two ways to handle these:
+
+* To remove a single face region from one image, right-click the face rectangle in the preview and select **Delete**.
+* To remove an entire auto-generated tag and all of its detections across every image, click the **×** on the tag in the Tag Library. This deletes the tag and removes it from all files it was assigned to.
+
 ## Suggested Workflow: Build a Known Set First
 
 Facial recognition works best when Compendia has some known examples to work from before the automated scan runs. The recommended approach is to manually identify a handful of people first, which gives the model a reference set to match against.
