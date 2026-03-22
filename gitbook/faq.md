@@ -20,6 +20,8 @@ Compendia supports JPEG, PNG, TIFF, and HEIC/HEIF files. Video files will appear
 
 Yes. You can rename a tag family or individual tags at any time by left-clicking the name in the Tag Library. All existing tag assignments update automatically. No re-tagging is required.
 
+You can also move tags from one family to another using drag and drop. This is useful when a family grows too large and you want to split it up. For example, you might start with a single _People_ family, then later create separate _Family_, _Friends_, and _Coworkers_ families and drag individual person tags into each one. The tag assignments on your files are preserved throughout.
+
 ## My tags disappeared after moving my folder. What happened?
 
 Compendia stores tag data in `.json` sidecar files alongside your images. If you moved your images without also moving the sidecar files, or if the sidecar files were left behind in the original location, Compendia will not be able to find them. To recover your tags, move the sidecar files to the same folder as the images and reload the folder in Compendia.
