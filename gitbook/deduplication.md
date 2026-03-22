@@ -14,9 +14,7 @@ To scan for duplicates and similar images, use **Autos > Find Similar Images**. 
 
 ## Understanding Similarity Scores
 
-Each pair of similar images is assigned a similarity score that reflects how visually alike they are. A score of 100 indicates an exact or near-exact duplicate. Lower scores indicate images that share strong visual similarities but are not identical, such as photos taken in quick succession or the same scene shot at slightly different exposures.
-
-You can adjust the similarity threshold to control how aggressively Compendia groups images. A higher threshold shows only very close matches, while a lower threshold surfaces a broader range of similar images.
+Compendia calculates a similarity score for each pair of images to determine how visually alike they are. Exact or near-exact duplicates receive the highest scores, while images that share strong visual similarities but are not identical, such as photos taken in quick succession or the same scene at slightly different exposures, receive lower scores. The similarity threshold is set automatically and is not user-configurable.
 
 ## Reviewing Similar Image Groups
 
