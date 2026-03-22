@@ -28,6 +28,16 @@ Where multiple fields are present, Compendia prioritises the original capture da
 
 The capture date is displayed in the preview panel when you open an image. You can also filter the file list by date range, making it easy to find photos from a specific trip, event, or time period. Date filtering works alongside tag filters and search fields, so you can combine all of them to narrow your results precisely.
 
+## Automatic Date Tagging
+
+Because Compendia knows the capture date of most images, it can automatically apply year and month tags to your files based on that date. This gives you a fast way to browse and filter your library by time period without any manual tagging.
+
+You can choose to tag by year, by month, or both. When you run automatic date tagging, Compendia reads the capture date from each file and applies the corresponding tags. For example, a photo taken in March 2022 would receive a year tag of _2022_ and a month tag of _March_ (or _2022-03_, depending on your settings).
+
+Once the tags are applied they behave like any other tag in your library. You can use them as filters, combine them with other tag filters, and remove them individually if needed. This makes browsing a large library by year or year-and-month combination quick and straightforward.
+
+Files that do not have a readable capture date will be skipped during automatic date tagging.
+
 ## When Date Information Is Missing
 
 Some files do not contain EXIF metadata, or the date fields may not have been set correctly by the camera. In these cases Compendia will fall back to the file modification date where possible. If no date information is available at all, the date fields will appear empty for that file.
