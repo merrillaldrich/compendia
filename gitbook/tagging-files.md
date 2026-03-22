@@ -68,10 +68,10 @@ To remove a tag from your files, click the **×** button on the tag in the Tag A
 
 ## Renaming and Deleting Tags
 
-To rename a tag, left-click its name in the Tag Library. The name becomes editable in place. All existing assignments are updated automatically — you do not need to re-tag your files.
+To rename a tag, left-click its name in the Tag Library. The name becomes editable in place. All existing assignments are updated automatically, so you do not need to re-tag your files.
 
 When you delete a tag, it is removed from all files it was assigned to. This cannot be undone, so take care when deleting tags that have been widely applied.
 
 ## Tag Colors
 
-Each tag family is automatically assigned a color, which is displayed on its tags throughout the interface — in the Tag Library, the Tag Assignment area, and the Tag Filters area. Colors make it easy to identify which family a tag belongs to at a glance.
+Each tag family is automatically assigned a color, which is displayed on its tags throughout the interface, including the Tag Library, the Tag Assignment area, and the Tag Filters area. Colors make it easy to identify which family a tag belongs to at a glance.

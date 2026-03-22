@@ -20,7 +20,7 @@ _Coming soon._
 
 _Coming soon._
 
-## My tags disappeared after moving my folder — what happened?
+## My tags disappeared after moving my folder. What happened?
 
 _Coming soon._
 

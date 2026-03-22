@@ -35,7 +35,7 @@ The window is divided into three main areas:
 
 ### Creating Tags
 
-Tags are organized into **Tag Families** — groups that share a theme or color. For example, you might have a family called _Subject_ containing tags like _Portrait_, _Landscape_, and _Architecture_.
+Tags are organized into **Tag Families**, which are groups that share a theme or color. For example, you might have a family called _Subject_ containing tags like _Portrait_, _Landscape_, and _Architecture_.
 
 #### Create a Tag Family
 
@@ -73,11 +73,11 @@ To narrow the file list to only files that have a specific tag:
 2. The file list updates immediately to show only files that have all the active filter tags.
 3. To remove a filter, click the **×** on the tag chip in the Tag Filters area.
 
-You can stack multiple filters — only files matching **all** active tags are shown.
+You can stack multiple filters. Only files matching **all** active tags are shown.
 
 ### Searching by Name
 
-Type in the search box at the top of the file list to filter by filename. This works alongside tag filters — both are applied at the same time.
+Type in the search box at the top of the file list to filter by filename. This works alongside tag filters, and both are applied at the same time.
 
 ### Saving Your Work
 
@@ -90,5 +90,5 @@ When you have unsaved changes, save before closing to avoid losing your work.
 Once you have tagged your library you can:
 
 * Use multiple simultaneous tag filters to find exactly the files you need.
-* Reopen the same folder later — Compendia reads the sidecar files and restores all your tags.
+* Reopen the same folder later. Compendia reads the sidecar files and restores all your tags.
 * Reorganise your tag families and rename tags at any time; existing assignments update automatically.
