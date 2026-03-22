@@ -22,7 +22,7 @@ ExifParser::ExifParser(QObject *parent)
 QString ExifParser::cacheFilePath(const QString &filePath)
 {
     QFileInfo fi(filePath);
-    return fi.absolutePath() + "/" + Compendia::CacheFolderName + "/" + fi.baseName() + "_exif.json";
+    return fi.absolutePath() + "/" + Compendia::CacheFolderName + "/" + fi.completeBaseName() + "_exif.json";
 }
 
 /*! \brief Saves an EXIF map to the per-folder cache directory as a JSON file.

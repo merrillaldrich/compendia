@@ -43,6 +43,58 @@ CompendiaCore::CompendiaCore(QObject *parent)
     watcherDebounceTimer_.setInterval(300);
     connect(&watcherDebounceTimer_, &QTimer::timeout,
             this, &CompendiaCore::processWatcherChanges);
+
+    wantedUpdateTimer_.setSingleShot(true);
+    wantedUpdateTimer_.setInterval(80);
+    connect(&wantedUpdateTimer_, &QTimer::timeout, this, &CompendiaCore::updateWantedPaths);
+}
+
+void CompendiaCore::setListView(QListView *view)
+{
+    listView_ = view;
+}
+
+void CompendiaCore::scheduleWantedUpdate()
+{
+    wantedUpdateTimer_.start();   // restarts (debounces) on repeated calls
+}
+
+void CompendiaCore::updateWantedPaths()
+{
+    if (!listView_ || !tagged_files_proxy_)
+        return;
+
+    const QRect vp       = listView_->viewport()->rect();
+    const int   rowCount = tagged_files_proxy_->rowCount();
+    if (rowCount == 0)
+        return;
+
+    QModelIndex topIdx    = listView_->indexAt(vp.topLeft());
+    QModelIndex bottomIdx = listView_->indexAt(vp.bottomRight());
+
+    int firstRow = topIdx.isValid()    ? topIdx.row()    : 0;
+    int lastRow  = bottomIdx.isValid() ? bottomIdx.row() : rowCount - 1;
+
+    const int kBuffer = 20;
+    firstRow = qMax(0,            firstRow - kBuffer);
+    lastRow  = qMin(rowCount - 1, lastRow  + kBuffer);
+
+    QSet<QString> wanted;
+    wanted.reserve(lastRow - firstRow + 1);
+    for (int row = firstRow; row <= lastRow; ++row) {
+        QModelIndex proxyIdx = tagged_files_proxy_->index(row, 0);
+        QModelIndex srcIdx   = tagged_files_proxy_->mapToSource(proxyIdx);
+        QStandardItem *item  = tagged_files_->itemFromIndex(srcIdx);
+        if (!item) continue;
+        TaggedFile *tf = item->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf)
+            wanted.insert(tf->filePath + "/" + tf->fileName);
+    }
+
+    {
+        QWriteLocker lock(&wantedMutex_);
+        wantedIconPaths_ = std::move(wanted);
+    }
 }
 
 /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model. */
@@ -222,9 +274,29 @@ void CompendiaCore::scheduleIconLoad(const QString &path)
 {
     if (pendingIconLoads_.contains(path))
         return;
+
+    // Only schedule if the view currently wants this icon.
+    // wantedIconPaths_ is empty until setListView() is called (first loadFolder),
+    // so skip the guard when listView_ is null to avoid blocking early loads.
+    if (listView_ && !wantedIconPaths_.contains(path))
+        return;
+
     pendingIconLoads_.insert(path);
 
     auto *runnable = QRunnable::create([this, path]() {
+        // Cross-thread staleness check before any disk I/O.
+        {
+            QReadLocker lock(&wantedMutex_);
+            if (!wantedIconPaths_.contains(path)) {
+                // Path is no longer wanted. Remove from pending so it can be
+                // re-queued when it scrolls back into view.
+                QMetaObject::invokeMethod(this, [this, path]() {
+                    pendingIconLoads_.remove(path);
+                }, Qt::QueuedConnection);
+                return;
+            }
+        }
+
         if (!IconGenerator::iconCacheValid(path))
             return;
 
@@ -356,6 +428,10 @@ void CompendiaCore::loadRootDirectory(){
     uncachedPaths_.clear();
     iconPool_.clear();
     pendingIconLoads_.clear();
+    {
+        QWriteLocker lock(&wantedMutex_);
+        wantedIconPaths_.clear();
+    }
 
     // Start a background scan.  The generation counter is already up-to-date
     // because cancelIconGeneration() incremented it; capture the current value
@@ -690,7 +766,7 @@ void CompendiaCore::writeFileMetadata(){
         if (itemAsTaggedFile->dirtyFlag()) {
             QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
             QFileInfo fileInfo(origFile);
-            QString metaFilePath = itemAsTaggedFile->filePath + "/" + fileInfo.baseName() + ".json";
+            QString metaFilePath = itemAsTaggedFile->filePath + "/" + fileInfo.completeBaseName() + ".json";
 
             QFile metaFile(metaFilePath);
 
@@ -740,7 +816,7 @@ void CompendiaCore::writeVisibleFileMetadata()
         if (itemAsTaggedFile->dirtyFlag()) {
             QString origFile = itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName;
             QFileInfo fileInfo(origFile);
-            QString metaFilePath = itemAsTaggedFile->filePath + "/" + fileInfo.baseName() + ".json";
+            QString metaFilePath = itemAsTaggedFile->filePath + "/" + fileInfo.completeBaseName() + ".json";
 
             QFile metaFile(metaFilePath);
 
@@ -1631,7 +1707,7 @@ void CompendiaCore::handleFileRemoved(const QString& absolutePath)
     }
 
     // Delete sidecar if one exists alongside the (now-gone) image
-    const QString sidecarPath = tf->filePath + "/" + QFileInfo(tf->fileName).baseName() + ".json";
+    const QString sidecarPath = tf->filePath + "/" + QFileInfo(tf->fileName).completeBaseName() + ".json";
     if (QFile::exists(sidecarPath)) {
         if (QFile::remove(sidecarPath))
             qDebug() << "[FileWatch] handleFileRemoved: deleted sidecar" << sidecarPath;
@@ -1647,7 +1723,7 @@ void CompendiaCore::handleFileRemoved(const QString& absolutePath)
     }
     const QString exifCache = QFileInfo(absolutePath).absolutePath() + "/"
                               + Compendia::CacheFolderName + "/"
-                              + QFileInfo(absolutePath).baseName() + "_exif.json";
+                              + QFileInfo(absolutePath).completeBaseName() + "_exif.json";
     if (QFile::exists(exifCache) && !QFile::remove(exifCache))
         qDebug() << "[FileWatch] handleFileRemoved: failed to delete EXIF cache" << exifCache;
 
@@ -1685,8 +1761,8 @@ void CompendiaCore::handleFileMoved(const QString& oldPath, const QString& newPa
 
     const QFileInfo oldInfo(oldPath);
     const QFileInfo newInfo(newPath);
-    const QString oldSidecar = oldInfo.absolutePath() + "/" + oldInfo.baseName() + ".json";
-    const QString newSidecar = newInfo.absolutePath() + "/" + newInfo.baseName() + ".json";
+    const QString oldSidecar = oldInfo.absolutePath() + "/" + oldInfo.completeBaseName() + ".json";
+    const QString newSidecar = newInfo.absolutePath() + "/" + newInfo.completeBaseName() + ".json";
 
     // Move sidecar if it was left behind at the old location
     bool sidecarStranded = false;
@@ -1713,9 +1789,9 @@ void CompendiaCore::handleFileMoved(const QString& oldPath, const QString& newPa
 
     // Move EXIF cache
     const QString oldExif = oldInfo.absolutePath() + "/" + Compendia::CacheFolderName + "/"
-                            + oldInfo.baseName() + "_exif.json";
+                            + oldInfo.completeBaseName() + "_exif.json";
     const QString newExif = newInfo.absolutePath() + "/" + Compendia::CacheFolderName + "/"
-                            + newInfo.baseName() + "_exif.json";
+                            + newInfo.completeBaseName() + "_exif.json";
     if (QFile::exists(oldExif)) {
         QDir().mkpath(QFileInfo(newExif).absolutePath());
         if (!QFile::rename(oldExif, newExif))
@@ -1750,7 +1826,7 @@ void CompendiaCore::handleFileAdded(const QString& absolutePath)
         return;
 
     // Load sidecar JSON if one exists alongside the new file
-    const QString sidecarPath = fileInfo.absolutePath() + "/" + fileInfo.baseName() + ".json";
+    const QString sidecarPath = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName() + ".json";
     QFile sidecarFile(sidecarPath);
     if (sidecarFile.exists() && sidecarFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QJsonObject tagsJson = QJsonDocument::fromJson(sidecarFile.readAll()).object();

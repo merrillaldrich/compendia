@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QStandardItemModel>
 #include <QMutex>
+#include <QReadWriteLock>
 #include <QTimer>
 #include <QThread>
 #include <QtConcurrent>
@@ -18,6 +19,7 @@
 #include <QSet>
 #include <QString>
 #include <QFileSystemWatcher>
+#include <QListView>
 
 #include "tagset.h"
 #include "filterproxymodel.h"
@@ -54,6 +56,15 @@ private:
     QCache<QString, QIcon> iconPool_{500};
     /// Paths for which an async disk read is already in flight; guards against double-scheduling.
     QSet<QString> pendingIconLoads_;
+    /// Paths whose icons the view currently wants. Written on the main thread only;
+    /// read on background threads — protected by wantedMutex_.
+    QSet<QString>   wantedIconPaths_;
+    /// Guards wantedIconPaths_ for cross-thread reads from runnables.
+    mutable QReadWriteLock wantedMutex_;
+    /// Debounce timer (~80 ms, single-shot) that fires updateWantedPaths().
+    QTimer          wantedUpdateTimer_;
+    /// Non-owning pointer to the file-list view; set once from MainWindow::loadFolder.
+    QListView      *listView_ = nullptr;
 
     IconGenerator *iconGenerator_ = nullptr;  ///< Active IconGenerator, or nullptr.
     QStringList uncachedPaths_;  ///< Paths with no icon cache; populated by onScanBatch, consumed by backfillMetadata.
@@ -536,6 +547,9 @@ public:
      *  recursively, then removes and schedules \a from for deletion. Emits tagLibraryChanged(). */
     void mergeTagFamily(TagFamily* from, TagFamily* into);
 
+    /*! \brief Stores a non-owning reference to the file-list view used to detect visible items. */
+    void setListView(QListView *view);
+
     /*! \brief Moves \a tag to \a newFamily, merging with a same-name tag if one already exists.
      *  Removes the old family if it becomes empty. Emits tagLibraryChanged(). */
     void refamilyTag(Tag* tag, TagFamily* newFamily);
@@ -549,7 +563,14 @@ public slots:
      */
     void ensureUiFlushTimerRunning();
 
+    /*! \brief Restarts the debounce timer so updateWantedPaths() fires shortly after scroll/resize. */
+    void scheduleWantedUpdate();
+
+    /*! \brief Recomputes wantedIconPaths_ from the current viewport geometry. */
+    void updateWantedPaths();
+
 private slots:
+
     /*! \brief Receives a completed file result from IconGenerator and pushes it to the flush queue.
      *
      * \param absolutePath Absolute path to the source file.
