@@ -87,7 +87,9 @@ Type in the search box at the top of the file list to filter by filename. This w
 
 ## Saving Your Work
 
-Tag data is saved automatically whenever you apply or remove a tag. There is no manual save step. Each file's tags are stored in a `.json` sidecar file in the same folder as the image.
+Tag data is saved by clicking **Save** in the toolbar, or using **File → Save**. Each file's tags are stored in a `.json` sidecar file in the same folder as the image.
+
+When you have unsaved changes, save before closing to avoid losing your work.
 
 ---
 
