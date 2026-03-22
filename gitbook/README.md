@@ -1,5 +1,5 @@
 ---
-description: How to load photos, create tags, and filter your media library
+description: Getting Started
 ---
 
 # compendia
@@ -10,7 +10,7 @@ Welcome to compendia. Here are the basics to help you get started wrangling your
 
 ## Opening a Folder
 
-Compendia works with a folder of images on your local machine. To get started:
+Compendia works with folders of images on your local machine. To get started:
 
 1. Click **Open Folder** in the toolbar (or use **File → Open Folder**).
 2. Navigate to a folder containing images or videos and click **Select Folder**.
@@ -20,24 +20,24 @@ Supported formats include JPEG, PNG, TIFF, HEIC/HEIF, and common video formats.
 
 > **Tip:** Compendia saves tag data as small `.json` sidecar files alongside your media, so your tags travel with your files.
 
----
+***
 
 ## The Interface
 
 The window is divided into three main areas:
 
-| Area | Purpose |
-|---|---|
-| **Tag Library** (top-left) | All tag families and tags you have created |
-| **Tag Filters** (bottom-left) | Active filters that narrow the file list |
-| **File List** (center) | Thumbnails of files matching the current filters |
-| **Tag Assignment** (right) | Tags applied to the currently selected files |
+| Area                          | Purpose                                          |
+| ----------------------------- | ------------------------------------------------ |
+| **Tag Library** (top-left)    | All tag families and tags you have created       |
+| **Tag Filters** (bottom-left) | Active filters that narrow the file list         |
+| **File List** (center)        | Thumbnails of files matching the current filters |
+| **Tag Assignment** (right)    | Tags applied to the currently selected files     |
 
----
+***
 
 ## Creating Tags
 
-Tags are organized into **Tag Families** — groups that share a theme or color. For example, you might have a family called *Subject* containing tags like *Portrait*, *Landscape*, and *Architecture*.
+Tags are organized into **Tag Families** — groups that share a theme or color. For example, you might have a family called _Subject_ containing tags like _Portrait_, _Landscape_, and _Architecture_.
 
 ### Create a Tag Family
 
@@ -51,7 +51,7 @@ Tags are organized into **Tag Families** — groups that share a theme or color.
 2. Enter a tag name and click **OK**.
 3. The tag appears inside its family in the library.
 
----
+***
 
 ## Applying Tags to Files
 
@@ -69,7 +69,7 @@ Tags are organized into **Tag Families** — groups that share a theme or color.
 
 Click the **×** button on any tag chip in the Tag Assignment area to remove that tag from the selected files.
 
----
+***
 
 ## Filtering by Tag
 
@@ -81,13 +81,13 @@ To narrow the file list to only files that have a specific tag:
 
 You can stack multiple filters — only files matching **all** active tags are shown.
 
----
+***
 
 ## Searching by Filename
 
 Type in the search box at the top of the file list to filter by filename. This works alongside tag filters — both are applied at the same time.
 
----
+***
 
 ## Saving Your Work
 
@@ -95,12 +95,12 @@ Tag data is saved by clicking **Save** in the toolbar, or using **File → Save*
 
 When you have unsaved changes, save before closing to avoid losing your work.
 
----
+***
 
 ## Next Steps
 
 Once you have tagged your library you can:
 
-- Use multiple simultaneous tag filters to find exactly the files you need.
-- Reopen the same folder later — Compendia reads the sidecar files and restores all your tags.
-- Reorganise your tag families and rename tags at any time; existing assignments update automatically.
+* Use multiple simultaneous tag filters to find exactly the files you need.
+* Reopen the same folder later — Compendia reads the sidecar files and restores all your tags.
+* Reorganise your tag families and rename tags at any time; existing assignments update automatically.
