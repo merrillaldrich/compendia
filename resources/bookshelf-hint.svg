@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 64">
+  <g opacity="0.32">
+    <!-- Shelf: extends 3 px beyond the books on each side -->
+    <rect x="2" y="57" width="62" height="4" rx="1" fill="#888"/>
+    <!-- Book 1 (leftmost book at x=5, shelf starts at x=2 → 3 px overhang) -->
+    <rect x="5"  y="29" width="7" height="28" fill="#999"/>
+    <rect x="5"  y="29" width="7" height="3"  fill="#777"/>
+    <!-- Book 2 -->
+    <rect x="13" y="33" width="6" height="24" fill="#aaa"/>
+    <rect x="13" y="33" width="6" height="3"  fill="#888"/>
+    <!-- Book 3: tallest -->
+    <rect x="20" y="23" width="9" height="34" fill="#888"/>
+    <rect x="20" y="23" width="9" height="3"  fill="#666"/>
+    <!-- Book 4 -->
+    <rect x="30" y="31" width="7" height="26" fill="#bbb"/>
+    <rect x="30" y="31" width="7" height="3"  fill="#999"/>
+    <!-- Book 5 -->
+    <rect x="38" y="27" width="8" height="30" fill="#999"/>
+    <rect x="38" y="27" width="8" height="3"  fill="#777"/>
+    <!-- Book 6 -->
+    <rect x="47" y="33" width="6" height="24" fill="#aaa"/>
+    <rect x="47" y="33" width="6" height="3"  fill="#888"/>
+    <!-- Book 7 (rightmost book ends at x=62, shelf ends at x=64 → 3 px overhang) -->
+    <rect x="54" y="29" width="8" height="28" fill="#888"/>
+    <rect x="54" y="29" width="8" height="3"  fill="#666"/>
+  </g>
+</svg>

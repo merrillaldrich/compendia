@@ -6,6 +6,7 @@
 #include <QSplitter>
 #include <QVBoxLayout>
 #include <QDragMoveEvent>
+#include <QShowEvent>
 #include "tagcontainer.h"
 
 /*! \brief Intermediate base class that adds a dismissible welcome hint label to TagContainer.
@@ -67,6 +68,17 @@ public:
     /*! \brief Returns true if the welcome hint label is currently showing. */
     bool isWelcomeShowing() const;
 
+    /*! \brief Registers a background SVG hint icon to be shown after the welcome is dismissed.
+     *
+     * The icon is painted centred in the scroll area's viewport, behind the scrollable
+     * content, so it stays fixed on screen while tags scroll over it.
+     *
+     * \param svgPath Qt resource path to the SVG file.
+     * \param w       Render width in pixels.
+     * \param h       Render height in pixels.
+     */
+    void setHint(const QString &svgPath, int w, int h);
+
 signals:
     /*! \brief Emitted when the welcome hint is dismissed by the user. */
     void welcomeDismissed();
@@ -99,9 +111,20 @@ protected:
      */
     bool eventFilter(QObject *obj, QEvent *event) override;
 
+    /*! \brief Creates the hint overlay widget on the viewport when the container first shows. */
+    void showEvent(QShowEvent *event) override;
+
 private:
     /*! \brief Creates and configures the welcome_label_ with \p hint text. */
     void initLabel(const QString &hint);
+
+    /*! \brief Creates the hint overlay (if not yet created) and sizes it to the viewport.
+     *
+     * Safe to call multiple times; idempotent once the overlay exists.
+     * Uses scroll_area_->viewport() directly so it works regardless of
+     * when parentWidget() is resolved.
+     */
+    void ensureHintOverlay();
 
     QLabel      *welcome_label_   = nullptr;
     QScrollArea *scroll_area_     = nullptr;
@@ -109,6 +132,11 @@ private:
     QVBoxLayout *parent_layout_   = nullptr;
     bool accepts_click_ = false;
     bool accepts_drop_  = false;
+
+    QWidget    *hint_overlay_  = nullptr;
+    QString     hint_svg_path_;
+    int         hint_w_        = 0;
+    int         hint_h_        = 0;
 };
 
 #endif // WELCOMEHINTCONTAINER_H

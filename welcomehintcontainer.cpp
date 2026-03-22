@@ -3,6 +3,34 @@
 
 #include <QDataStream>
 #include <QDropEvent>
+#include <QPainter>
+#include <QResizeEvent>
+#include <QSvgRenderer>
+
+// ---------------------------------------------------------------------------
+// SvgHintOverlay — a transparent, mouse-passthrough widget that paints a
+// single SVG centred in itself.  Parented to the scroll area's viewport so
+// it stays fixed while the content widget scrolls over it.
+// ---------------------------------------------------------------------------
+namespace {
+class SvgHintOverlay : public QWidget {
+    QSvgRenderer renderer_;
+    int w_, h_;
+public:
+    SvgHintOverlay(const QString &path, int w, int h, QWidget *parent)
+        : QWidget(parent), renderer_(path), w_(w), h_(h)
+    {
+        setAttribute(Qt::WA_TransparentForMouseEvents);
+        setAutoFillBackground(false);
+    }
+protected:
+    void paintEvent(QPaintEvent *) override {
+        QPainter p(this);
+        renderer_.render(&p, QRectF((width()  - w_) / 2.0,
+                                    (height() - h_) / 2.0, w_, h_));
+    }
+};
+} // namespace
 
 /*! \brief Constructs a WelcomeHintContainer with a FlowLayout installed.
  *
@@ -89,9 +117,12 @@ void WelcomeHintContainer::dismissWelcome()
         delete welcome_label_; welcome_label_ = nullptr;
         scroll_area_->show();
         parent_splitter_->setSizes(sz.mid(0, sz.size() - 1));
+        // Layout is now settled — create/size the overlay using the final viewport size.
+        ensureHintOverlay();
     } else {
         delete welcome_label_; welcome_label_ = nullptr;
         scroll_area_->show();
+        ensureHintOverlay();
     }
     emit welcomeDismissed();
 }
@@ -100,6 +131,41 @@ void WelcomeHintContainer::dismissWelcome()
 bool WelcomeHintContainer::isWelcomeShowing() const
 {
     return welcome_label_ != nullptr;
+}
+
+/*! \brief Registers a background SVG hint icon. */
+void WelcomeHintContainer::setHint(const QString &svgPath, int w, int h)
+{
+    hint_svg_path_ = svgPath;
+    hint_w_ = w;
+    hint_h_ = h;
+}
+
+/*! \brief Creates the hint overlay (if needed) and sizes it to the viewport.
+ *
+ * Always uses scroll_area_->viewport() directly so the overlay is parented to
+ * the correct fixed-size widget regardless of when this is called.
+ */
+void WelcomeHintContainer::ensureHintOverlay()
+{
+    if (hint_svg_path_.isEmpty() || !scroll_area_)
+        return;
+    QWidget *vp = scroll_area_->viewport();
+    if (!hint_overlay_) {
+        hint_overlay_ = new SvgHintOverlay(hint_svg_path_, hint_w_, hint_h_, vp);
+        vp->installEventFilter(this);
+        hint_overlay_->lower();   // behind the scrollable container
+        hint_overlay_->show();
+    }
+    hint_overlay_->resize(vp->size());
+}
+
+/*! \brief Falls back to ensureHintOverlay() when the container is shown without
+ *  going through dismissWelcome() (e.g. if no welcome was configured). */
+void WelcomeHintContainer::showEvent(QShowEvent *event)
+{
+    QWidget::showEvent(event);
+    ensureHintOverlay();
 }
 
 /*! \brief Enables click-to-dismiss behaviour on the hint label.
@@ -128,6 +194,10 @@ void WelcomeHintContainer::setAcceptsDropToDismiss(bool v)
  */
 bool WelcomeHintContainer::eventFilter(QObject *obj, QEvent *event)
 {
+    // Keep the hint overlay filling the viewport when it resizes.
+    if (hint_overlay_ && obj == hint_overlay_->parentWidget() && event->type() == QEvent::Resize)
+        hint_overlay_->resize(static_cast<QResizeEvent *>(event)->size());
+
     if (obj != welcome_label_) return QWidget::eventFilter(obj, event);
 
     if (accepts_click_ && event->type() == QEvent::MouseButtonPress) {

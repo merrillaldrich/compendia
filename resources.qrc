@@ -12,6 +12,9 @@
         <file>resources/drill-into-folder.svg</file>
         <file>resources/drill-up-folder.svg</file>
         <file>resources/tag-search.svg</file>
+        <file>resources/bookshelf-hint.svg</file>
+        <file>resources/funnel-hint.svg</file>
+        <file>resources/tag-hint.svg</file>
         <file>resources/about_background.svg</file>
         <file>resources/compendia_icon.svg</file>
     </qresource>

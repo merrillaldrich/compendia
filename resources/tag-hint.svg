@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+  <g opacity="0.32" transform="rotate(-9, 35, 35)">
+    <!-- Tag body with punched hole using evenodd fill rule.
+         Body: x=18 y=24 w=44 h=22 rx=3  (right edge at 62, center at 40,35)
+         Hole: cx=23 cy=35 r=3.5         (5 px from left edge)  -->
+    <path fill-rule="evenodd" fill="#aaa"
+      d="M 21,24 h 38 a 3,3 0 0 1 3,3 v 16 a 3,3 0 0 1 -3,3 h -38 a 3,3 0 0 1 -3,-3 v -16 a 3,3 0 0 1 3,-3 Z
+         M 19.5,35 a 3.5,3.5 0 1 0 7,0 a 3.5,3.5 0 1 0 -7,0 Z"/>
+    <!-- Ring through the hole; extends ~4 px beyond left edge of tag -->
+    <circle cx="15.71" cy="35" r="7.29" fill="none" stroke="#888" stroke-width="2.5"/>
+  </g>
+</svg>

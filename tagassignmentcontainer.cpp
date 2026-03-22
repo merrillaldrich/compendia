@@ -9,6 +9,8 @@ TagAssignmentContainer::TagAssignmentContainer(QWidget *parent)
 {
     setAcceptDrops(true);
     setAcceptsDropToDismiss(true);
+    setHint(QStringLiteral(":/resources/tag-hint.svg"), 70, 70);
+    setAutoFillBackground(false);
     connect(this, &WelcomeHintContainer::tagDroppedOnWelcome,
             this, [this](const QString &family, const QString &tagName) {
         auto *mw = qobject_cast<MainWindow *>(window());

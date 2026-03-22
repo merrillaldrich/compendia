@@ -9,6 +9,8 @@ NavFilterContainer::NavFilterContainer(QWidget *parent)
 {
     setAcceptDrops(true);
     setAcceptsDropToDismiss(true);
+    setHint(QStringLiteral(":/resources/funnel-hint.svg"), 48, 51);
+    setAutoFillBackground(false);
     connect(this, &WelcomeHintContainer::tagDroppedOnWelcome,
             this, [this](const QString &family, const QString &tagName) {
         auto *mw = qobject_cast<MainWindow *>(window());
