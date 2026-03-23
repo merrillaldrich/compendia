@@ -33,14 +33,14 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
       <widget class="QSplitter" name="navSplitter">
-       <property name="orientation">
-        <enum>Qt::Orientation::Vertical</enum>
-       </property>
        <property name="minimumSize">
         <size>
-         <width>340</width>
+         <width>344</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <widget class="QWidget" name="navTopContainer" native="true"/>
        <widget class="QWidget" name="navFilterSection">
@@ -127,7 +127,7 @@
             </widget>
            </item>
            <item>
-            <widget class="StarRatingWidget" name="filterStarRating">
+            <widget class="StarRatingWidget" name="filterStarRating" native="true">
              <property name="minimumSize">
               <size>
                <width>120</width>
@@ -167,8 +167,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>395</width>
-              <height>496</height>
+              <width>322</width>
+              <height>313</height>
              </rect>
             </property>
            </widget>
@@ -216,8 +216,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>403</width>
-              <height>64</height>
+              <width>322</width>
+              <height>258</height>
              </rect>
             </property>
            </widget>
@@ -419,65 +419,65 @@
               </item>
               <item>
                <widget class="QToolButton" name="isolateFolderButton">
-                <property name="toolButtonStyle">
-                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-                </property>
-                <property name="autoRaise">
-                 <bool>true</bool>
-                </property>
                 <property name="iconSize">
                  <size>
                   <width>40</width>
                   <height>24</height>
                  </size>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QToolButton" name="clearFolderIsolationButton">
-                <property name="toolButtonStyle">
-                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-                </property>
-                <property name="autoRaise">
-                 <bool>true</bool>
-                </property>
                 <property name="iconSize">
                  <size>
                   <width>40</width>
                   <height>24</height>
                  </size>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QToolButton" name="isolateSelectionButton">
-                <property name="toolButtonStyle">
-                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-                </property>
-                <property name="autoRaise">
-                 <bool>true</bool>
-                </property>
                 <property name="iconSize">
                  <size>
                   <width>40</width>
                   <height>24</height>
                  </size>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QToolButton" name="clearIsolationButton">
-                <property name="toolButtonStyle">
-                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
-                </property>
-                <property name="autoRaise">
-                 <bool>true</bool>
-                </property>
                 <property name="iconSize">
                  <size>
                   <width>40</width>
                   <height>24</height>
                  </size>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -498,7 +498,7 @@
                </widget>
               </item>
               <item>
-               <widget class="StarRatingWidget" name="fileListStarRating">
+               <widget class="StarRatingWidget" name="fileListStarRating" native="true">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -526,7 +526,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>492</width>
+              <width>517</width>
               <height>64</height>
              </rect>
             </property>
@@ -572,7 +572,7 @@
            <item>
             <spacer>
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -583,7 +583,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="StarRatingWidget" name="previewStarRating">
+            <widget class="StarRatingWidget" name="previewStarRating" native="true">
              <property name="minimumSize">
               <size>
                <width>120</width>
@@ -603,231 +603,231 @@
         </layout>
        </widget>
        <widget class="QScrollArea" name="previewScrollArea">
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
-       <property name="widgetResizable">
-        <bool>true</bool>
-       </property>
-       <widget class="QWidget" name="previewWidget">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>300</width>
-          <height>200</height>
-         </rect>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
         </property>
-        <layout class="QFormLayout" name="formLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="previewFileNameLabel">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>File</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="WrapLabel" name="previewFileNameValue">
-           <property name="text">
-            <string>File</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="previewFileLocationLabel">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>File Location</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="WrapLabel" name="previewFileLocationValue">
-           <property name="text">
-            <string>Location</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="previewImageCapturedLabel">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Image Captured</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="WrapLabel" name="previewImageCapturedValue">
-           <property name="text">
-            <string>Captured</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="previewFileCreatedLabel">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>File Created</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="WrapLabel" name="previewFileCreatedValue">
-           <property name="text">
-            <string>Created</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="previewFileModifiedLabel">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>File Modified</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="WrapLabel" name="previewFileModifiedValue">
-           <property name="text">
-            <string>Modified</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="previewFileNameTimestampLabel">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>File Name Timestamp</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="WrapLabel" name="previewFileNameTimestampValue">
-           <property name="text">
-            <string>Timestamp</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="previewFileTagsLabel">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Tags</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="WrapLabel" name="previewFileTagsValue">
-           <property name="text">
-            <string>Tags</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QLabel" name="previewExifLabel">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>EXIF</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="1">
-          <widget class="WrapLabel" name="previewExifValue">
-           <property name="text">
-            <string>EXIF Properties</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="previewWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>317</width>
+           <height>572</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="previewFileNameLabel">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>File</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="WrapLabel" name="previewFileNameValue">
+            <property name="text">
+             <string>File</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="previewFileLocationLabel">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>File Location</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="WrapLabel" name="previewFileLocationValue">
+            <property name="text">
+             <string>Location</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="previewImageCapturedLabel">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Image Captured</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="WrapLabel" name="previewImageCapturedValue">
+            <property name="text">
+             <string>Captured</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="previewFileCreatedLabel">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>File Created</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="WrapLabel" name="previewFileCreatedValue">
+            <property name="text">
+             <string>Created</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="previewFileModifiedLabel">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>File Modified</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="WrapLabel" name="previewFileModifiedValue">
+            <property name="text">
+             <string>Modified</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="previewFileNameTimestampLabel">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>File Name Timestamp</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="WrapLabel" name="previewFileNameTimestampValue">
+            <property name="text">
+             <string>Timestamp</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="previewFileTagsLabel">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Tags</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="WrapLabel" name="previewFileTagsValue">
+            <property name="text">
+             <string>Tags</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="previewExifLabel">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>EXIF</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="WrapLabel" name="previewExifValue">
+            <property name="text">
+             <string>EXIF Properties</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </widget>
      </widget>
-    </widget>
-   </item>
-  </layout>
- </widget>
- <widget class="QMenuBar" name="menubar">
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -866,8 +866,6 @@
     <property name="title">
      <string>Autos</string>
     </property>
-    <addaction name="actionGrab_Video_Frame"/>
-    <addaction name="separator"/>
     <widget class="QMenu" name="menuFace_Detection">
      <property name="title">
       <string>Face Detection</string>
@@ -877,8 +875,6 @@
      <addaction name="separator"/>
      <addaction name="actionRemove_Auto_Detected_Faces"/>
     </widget>
-    <addaction name="menuFace_Detection"/>
-    <addaction name="separator"/>
     <widget class="QMenu" name="menuDates">
      <property name="title">
       <string>Dates</string>
@@ -886,8 +882,6 @@
      <addaction name="actionAuto_Tag_Year"/>
      <addaction name="actionAuto_Tag_Month"/>
     </widget>
-    <addaction name="menuDates"/>
-    <addaction name="separator"/>
     <widget class="QMenu" name="menuFind_Similar_Images">
      <property name="title">
       <string>Find Similar Images</string>
@@ -895,6 +889,12 @@
      <addaction name="actionFind_Similar_In_Selection"/>
      <addaction name="actionFind_Similar_Images"/>
     </widget>
+    <addaction name="actionGrab_Video_Frame"/>
+    <addaction name="separator"/>
+    <addaction name="menuFace_Detection"/>
+    <addaction name="separator"/>
+    <addaction name="menuDates"/>
+    <addaction name="separator"/>
     <addaction name="menuFind_Similar_Images"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -965,11 +965,11 @@
    </property>
   </action>
   <action name="actionFind_Similar_In_Selection">
-   <property name="text">
-    <string>In Selection</string>
-   </property>
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>In Selection</string>
    </property>
   </action>
   <action name="actionFind_Similar_Images">
@@ -978,51 +978,51 @@
    </property>
   </action>
   <action name="actionIsolateSelection">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Isolate Selection</string>
    </property>
+  </action>
+  <action name="actionClearIsolation">
    <property name="enabled">
     <bool>false</bool>
    </property>
-  </action>
-  <action name="actionClearIsolation">
    <property name="text">
     <string>Clear Isolation</string>
    </property>
+  </action>
+  <action name="actionIsolateFolderSelection">
    <property name="enabled">
     <bool>false</bool>
    </property>
-  </action>
-  <action name="actionIsolateFolderSelection">
    <property name="text">
     <string>Isolate Folder</string>
    </property>
+  </action>
+  <action name="actionClearFolderIsolation">
    <property name="enabled">
     <bool>false</bool>
    </property>
-  </action>
-  <action name="actionClearFolderIsolation">
    <property name="text">
     <string>Clear Folder Isolation</string>
    </property>
+  </action>
+  <action name="actionDrillToFolder">
    <property name="enabled">
     <bool>false</bool>
    </property>
-  </action>
-  <action name="actionDrillToFolder">
    <property name="text">
     <string>Drill to this Folder</string>
    </property>
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
   </action>
   <action name="actionDrillUp">
-   <property name="text">
-    <string>Drill Up</string>
-   </property>
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Drill Up</string>
    </property>
   </action>
   <action name="actionClearAllFilters">
