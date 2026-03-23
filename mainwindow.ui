@@ -889,8 +889,6 @@
      <addaction name="actionFind_Similar_In_Selection"/>
      <addaction name="actionFind_Similar_Images"/>
     </widget>
-    <addaction name="actionGrab_Video_Frame"/>
-    <addaction name="separator"/>
     <addaction name="menuFace_Detection"/>
     <addaction name="separator"/>
     <addaction name="menuDates"/>
@@ -924,11 +922,7 @@
     <string>Save Visible</string>
    </property>
   </action>
-  <action name="actionGrab_Video_Frame">
-   <property name="text">
-    <string>Grab Video Frames</string>
-   </property>
-  </action>
+
   <action name="actionFind_Faces">
    <property name="text">
     <string>Find Faces</string>
