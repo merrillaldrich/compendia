@@ -30,6 +30,19 @@ static void applyTheme(QApplication &a, bool dark)
     styles.replace("@PROGRESS_BG",     dark ? "#3A3A3A" : "#E0E0E0");
     styles.replace("@PROGRESS_TEXT",   dark ? "#CCCCCC" : "#555555");
     a.setStyleSheet(styles);
+
+    // Qt sends QEvent::StyleChange to all widgets when the application stylesheet
+    // changes, but some platform backends cache palette-derived colours (e.g.
+    // palette(window) values and widget-level stylesheet combinations) and do not
+    // fully repaint on a live scheme switch.  Walking every widget with an explicit
+    // unpolish → polish → update cycle discards those stale caches and guarantees
+    // that every widget repaints exactly as it would on a cold start.
+    // At launch this loop is a no-op because no widgets have been created yet.
+    for (QWidget *w : QApplication::allWidgets()) {
+        w->style()->unpolish(w);
+        w->style()->polish(w);
+        w->update();
+    }
 }
 
 int main(int argc, char *argv[])
