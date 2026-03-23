@@ -708,6 +708,7 @@ void CompendiaCore::onScanFinished()
     int toCache = uncachedPaths_.size();
     backfillMetadata();
     tagged_files_proxy_->sort(0);
+    updateWantedPaths();   // seed visible-icon set so first paint schedules loads without a scroll/resize event
 
     // Populate the filesystem watcher with all unique directories containing tracked files.
     if (fileWatcher_) {
