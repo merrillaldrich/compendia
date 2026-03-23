@@ -47,6 +47,12 @@ constexpr int MaxAutoFacesPerImage = 5;
  */
 constexpr int BulkUntagWarningThreshold = 5;
 
+/*! \brief When \c true, a pre-release warning dialog is shown before the first folder load.
+ *
+ *  Set to \c true for alpha/beta builds and \c false for production releases.
+ */
+constexpr bool ShowPreReleaseWarning = true;
+
 /*! \brief Maximum Hamming distance between two pHash values for the images to be
  *  considered near-duplicates by the "Find Similar Images" feature.
  */

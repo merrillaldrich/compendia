@@ -549,6 +549,39 @@ bool MainWindow::validateFolder(const QString &folder)
     return true;
 }
 
+/*! \brief Shows the pre-release warning dialog.
+ *
+ * The OK button is disabled until the user checks the acknowledgement checkbox.
+ * Sets preReleaseWarningAccepted_ to \c true on success so the dialog is only
+ * shown once per session.
+ *
+ * \return \c true if the user accepted; \c false if they cancelled.
+ */
+bool MainWindow::confirmPreRelease()
+{
+    QMessageBox mb(this);
+    mb.setWindowTitle("Pre-release Software");
+    mb.setText("<p>Thank you for testing! You are trying a pre-release version of <i>compendia</i>. "
+               "This software may behave in unexpected ways, and has only had limited testing.</p>");
+    mb.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    mb.setDefaultButton(QMessageBox::Cancel);
+
+    QPushButton* okButton = qobject_cast<QPushButton*>(mb.button(QMessageBox::Ok));
+    okButton->setEnabled(false);
+
+    QCheckBox* cb = new QCheckBox("I like to live dangerously.");
+    mb.setCheckBox(cb);
+
+    QObject::connect(cb, &QCheckBox::stateChanged, okButton, [okButton](int state) {
+        okButton->setEnabled(state == Qt::Checked);
+    });
+
+    bool accepted = (mb.exec() == QMessageBox::Ok);
+    if (accepted)
+        preReleaseWarningAccepted_ = true;
+    return accepted;
+}
+
 /*! \brief Checks for a compendiacache folder and prompts the user if none exists.
  *
  * \param folder The root folder the user is about to load.
@@ -600,6 +633,9 @@ void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
 {
     if (!validateFolder(folder))
         return;
+    if (Compendia::ShowPreReleaseWarning && !preReleaseWarningAccepted_ && !skipCacheConfirm)
+        if (!confirmPreRelease())
+            return;
     if (!skipCacheConfirm && !confirmCacheFolder(folder))
         return;
 

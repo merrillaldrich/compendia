@@ -44,6 +44,7 @@ private:
     QString drillCeilingPath_; ///< Root path the user explicitly opened; drill-up cannot exceed this.
     QTimer* rectWarmupTimer_ = nullptr;       ///< Debounce timer for post-rect-adjust face cache warming.
     TaggedFile* warmupPendingFile_ = nullptr; ///< File waiting for rect-adjust warmup when the timer fires.
+    bool preReleaseWarningAccepted_ = false;  ///< True once the user has accepted the pre-release warning this session.
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
@@ -93,6 +94,14 @@ public:
     void refreshTagFilterArea();
 
 private:
+    /*! \brief Shows the pre-release warning dialog and returns \c true if the user accepted.
+     *
+     * Only called when Compendia::ShowPreReleaseWarning is \c true and the warning has not
+     * yet been accepted this session.  Sets preReleaseWarningAccepted_ on success.
+     * \return \c true if loading should proceed; \c false if the user cancelled.
+     */
+    bool confirmPreRelease();
+
     /*! \brief Checks whether a compendiacache folder exists in \p folder and, if not,
      *         prompts the user for confirmation before creating one.
      *
