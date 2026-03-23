@@ -29,7 +29,23 @@ static void applyTheme(QApplication &a, bool dark)
     styles.replace("@PROGRESS_BORDER", dark ? "#666666" : "#AAAAAA");
     styles.replace("@PROGRESS_BG",     dark ? "#3A3A3A" : "#E0E0E0");
     styles.replace("@PROGRESS_TEXT",   dark ? "#CCCCCC" : "#555555");
+    // Substitute an explicit hex for the window background rather than leaving
+    // the literal text "palette(window)" in the stylesheet.  Qt's stylesheet
+    // engine can cache the colour it resolved for "palette(window)" from a
+    // previous setStyleSheet() call and reuse it even when the palette has
+    // since changed — a Linux-specific quirk that manifests on the second
+    // colour-scheme switch (e.g. dark→light→dark).  Using a concrete hex
+    // avoids that cache entirely.
+    styles.replace("@WINDOW_BG",       a.palette().color(QPalette::Window).name());
     a.setStyleSheet(styles);
+
+    // Discard every widget's cached style state so that each one repaints
+    // exactly as it would on a cold start under the new colour scheme.
+    for (QWidget *w : QApplication::allWidgets()) {
+        w->style()->unpolish(w);
+        w->style()->polish(w);
+        w->update();
+    }
 }
 
 int main(int argc, char *argv[])
@@ -41,9 +57,13 @@ int main(int argc, char *argv[])
 
     QObject::connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged,
                      &a, [&a](Qt::ColorScheme scheme) {
-        // Defer one event-loop tick so Qt finishes updating its own palette first.
         const bool dark = (scheme == Qt::ColorScheme::Dark);
-        QTimer::singleShot(0, &a, [&a, dark]() { applyTheme(a, dark); });
+        // Two deferred ticks on Linux: the first tick lets Qt finish updating
+        // QStyleHints; the second lets the platform backend propagate the new
+        // palette to QApplication::palette() before we read it in applyTheme().
+        QTimer::singleShot(0, &a, [&a, dark]() {
+            QTimer::singleShot(0, &a, [&a, dark]() { applyTheme(a, dark); });
+        });
     });
 
     MainWindow w;
