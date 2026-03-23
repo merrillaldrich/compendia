@@ -35,7 +35,7 @@
       <widget class="QSplitter" name="navSplitter">
        <property name="minimumSize">
         <size>
-         <width>344</width>
+         <width>348</width>
          <height>0</height>
         </size>
        </property>
