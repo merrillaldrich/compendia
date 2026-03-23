@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Compendia</string>
+   <string>compendia</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -167,7 +167,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>322</width>
+              <width>326</width>
               <height>313</height>
              </rect>
             </property>
@@ -216,7 +216,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>322</width>
+              <width>326</width>
               <height>258</height>
              </rect>
             </property>
@@ -526,7 +526,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>517</width>
+              <width>515</width>
               <height>64</height>
              </rect>
             </property>
@@ -614,7 +614,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>317</width>
+           <width>315</width>
            <height>572</height>
           </rect>
          </property>
