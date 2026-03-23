@@ -516,22 +516,16 @@ void CompendiaCore::addFile(QFileInfo fileInfo, QJsonObject tagsJson){
     QMap<QString, QString> exifMap;
     quint64 pHash = 0;
 
-    if (tagsJson.contains("tags")) {
-        // New format: tags and exif are under separate keys
-        QJsonObject tagRectsJson = tagsJson["tag_rects"].toObject();
-        tagSets = parseTagJson(tagsJson["tags"].toObject(), tagRectsJson);
-        QJsonObject exifObj = tagsJson["exif"].toObject();
-        for (auto it = exifObj.begin(); it != exifObj.end(); ++it) {
-            exifMap.insert(it.key(), it.value().toString());
-        }
-        if (tagsJson.contains("pHash")) {
-            bool ok = false;
-            quint64 h = tagsJson["pHash"].toString().toULongLong(&ok, 16);
-            if (ok) pHash = h;
-        }
-    } else {
-        // Old format: top-level object is the tags map
-        tagSets = parseTagJson(tagsJson);
+    QJsonObject tagRectsJson = tagsJson["tag_rects"].toObject();
+    tagSets = parseTagJson(tagsJson["tags"].toObject(), tagRectsJson);
+    QJsonObject exifObj = tagsJson["exif"].toObject();
+    for (auto it = exifObj.begin(); it != exifObj.end(); ++it) {
+        exifMap.insert(it.key(), it.value().toString());
+    }
+    if (tagsJson.contains("pHash")) {
+        bool ok = false;
+        quint64 h = tagsJson["pHash"].toString().toULongLong(&ok, 16);
+        if (ok) pHash = h;
     }
 
     std::optional<int> rating = std::nullopt;
