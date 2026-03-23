@@ -45,6 +45,10 @@ There is no test suite.
 
 **Drag-drop tagging:** `TaggableListView` subclasses `QListView` and accepts tag drops to apply tags to the file(s) under the cursor.
 
+## Documentation
+
+The user documentation site is hosted at https://compendia.gitbook.io/compendia via GitBook. The source files for the documentation live in a separate branch of this repository. Screenshots for the documentation are created and stored in Figma.
+
 ## Key dependencies
 
 | Library | Role | Linked via |

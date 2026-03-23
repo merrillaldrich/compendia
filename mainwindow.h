@@ -418,6 +418,9 @@ private slots:
     /*! \brief Navigates up one folder level, stopping at the drill ceiling. */
     void on_actionDrillUp_triggered();
 
+    /*! \brief Slot for Help → Documentation; opens the online documentation in the default browser. */
+    void on_actionDocumentation_triggered();
+
     /*! \brief Slot for Help → About Compendia; opens the About dialog. */
     void on_actionAbout_triggered();
 

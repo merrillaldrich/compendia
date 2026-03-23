@@ -2175,6 +2175,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
+void MainWindow::on_actionDocumentation_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://compendia.gitbook.io/compendia"));
+}
+
 void MainWindow::on_actionAbout_triggered()
 {
     auto *dlg = new AboutDialog(this);
