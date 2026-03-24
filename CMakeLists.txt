@@ -292,6 +292,16 @@ else()
     )
 endif()
 
+# ── License files ─────────────────────────────────────────────────────────────
+# The project LICENSE (GPLv3) must be distributed with the binary.
+# dlib is statically compiled in; its Boost Software License requires that the
+# copyright notice and license text accompany all copies of the software.
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
+        DESTINATION .)
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/src/dlib/LICENSE.txt"
+        DESTINATION licenses
+        RENAME dlib-LICENSE.txt)
+
 # ── Model files ───────────────────────────────────────────────────────────────
 # dlib face-recognition .dat files are large (~30 MB combined) and not in the
 # repository.  Run  cmake -P cmake/DownloadModels.cmake  to download them.
