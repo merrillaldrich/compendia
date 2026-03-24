@@ -68,7 +68,7 @@ The bottom area of the interface, below the file list, is the _Tag Assignment Ar
 
 The idea is that you **filter** the images you want, by name or by folder or by other means, and then you can assign tags to larger batches of files, which is essential for organizing a large library.
 
-### Removing a tag
+### Removing a Tag
 
 Click the **×** button on any tag in the **Tag Assignment** area to remove that tag from **all** the visible files.
 
@@ -90,7 +90,7 @@ On the other hand, if you want to see pictures from Paris _or_ New York, put bot
 
 ### Searching by Name
 
-Type in the search boxes at the top of the file list to filter by file or folder name. This works alongside tag filters, and both are applied at the same time. This is very handy if you have a large set of folders but some naming criteria that you can use to isolate some, like the last batch of pictures from your phone, or a date that appears in the folder name.
+Type in the search boxes at the top of the file list to filter by file or folder name. This works alongside tag filters, and both are applied at the same time. This is very handy if you have a large set of folders but there is some naming criteria that you can use to narrow it down, like the last batch of pictures from your phone, or a date that appears in the folder name.
 
 ### Saving Your Work
 
