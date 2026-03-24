@@ -10,6 +10,17 @@ Welcome to compendia. Here are the basics to help you get started wrangling your
 
 ## Getting Started
 
+<figure><img src=".gitbook/assets/gettingstarted-welcome-mainwindow.png" alt=""><figcaption></figcaption></figure>
+
+### Quick Tour
+
+1. Load a folder into Compendia by setting the Media Folder using the **Browse** button or **File > Open**
+2. Images from the folder will appear in the **File List**
+3. Make custom groups of tags by clicking in the **Tag Library**
+4. Click (or ctrl-click or shift-click) to **select** images
+5. The selected image shows in the **Previewer**
+6. Metadata details about the selected images appear in the **Properties Preview**
+
 ### Opening a Folder
 
 Compendia works with folders of images on your local machine. To get started:
@@ -17,8 +28,7 @@ Compendia works with folders of images on your local machine. To get started:
 1. Make sure you have your images locally. If you use a cloud service like Apple or Google, download your pictures.
 2. Open the folder containing your pictures, either with the link in the center of the screen or the **Browse** button.
 3. Navigate to a folder containing images or videos and click **Select Folder**.
-4. Compendia will show a brief warning about how it creates files to tag your images.
-5. It'll scan the folder and subfolders, and display thumbnails for all supported files.
+4. Compendia will show a brief warning about how it creates files to tag your images, then it'll scan the folder and subfolders, and display thumbnails for all supported files.
 
 Supported formats include JPEG, PNG, TIFF, HEIC/HEIF, and common video formats.
 
@@ -30,40 +40,37 @@ If you have a very large library of images, it may be best to start by exploring
 
 The application's main window is divided into these areas:
 
-<table><thead><tr><th width="279.99993896484375">Area</th><th>Purpose</th></tr></thead><tbody><tr><td><strong>File List</strong> (center)</td><td>Thumbnails of files. When filters are applied, this list shows just the matching files.</td></tr><tr><td><strong>Tag Library</strong> (bottom-left)</td><td>All tag families and tags you have created.</td></tr><tr><td><strong>Tag Filters</strong> (top-left)</td><td>Active filters that narrow the file list.</td></tr><tr><td><strong>Tag Assignment</strong> (center-bottom)</td><td>Tags applied to the currently selected files.</td></tr><tr><td><strong>Previewer</strong> (right)</td><td>Examine and scroll through individual images at full size, with zoom and pan.</td></tr></tbody></table>
+<table><thead><tr><th width="279.99993896484375">Area</th><th>Purpose</th></tr></thead><tbody><tr><td><strong>File List</strong> (center)</td><td>Thumbnails of files. When filters are applied, this list shows just the matching files.</td></tr><tr><td><strong>Tag Library</strong> (bottom left)</td><td>All tag families and tags you have created.</td></tr><tr><td><strong>Tag Filters</strong> (top left)</td><td>Active filters that narrow the file list.</td></tr><tr><td><strong>Tag Assignment</strong> (center bottom)</td><td>Tags applied to the currently selected files.</td></tr><tr><td><strong>Previewer</strong> (right)</td><td>Examine and scroll through individual images at full size, with zoom and pan.</td></tr></tbody></table>
 
 ### Creating Tags
 
 Tags are organized into **Tag Families**, which are groups that share a theme or color. For example, you might have a families called _People_, _Places_, _Year_, and _Events_. Inside those you'd place _Susan, Dad, Mom_, or _Paris, New York, Yosemite,_ and _2025, 2026_ etc.
 
-#### Create a Tag Family
+#### Create a Tag Family and a Tag
 
-1. Click in the Tag Library area to add a family.
+1. Click in an empty part of the **Tag Library** to add a family.
 2. Enter a name for the family and press _Enter_.
-
-#### Create a Tag
-
-1. An empty tag will appear. If it doesn't or you lose it, just click anywhere in the body of the Tag Family box.
-2. Enter a tag name and press _Enter_.
+3. An empty tag will appear. If it doesn't or you lose it, just click anywhere in the body of the Tag Family box.
+4. Enter a tag name and press _Enter_.
 
 ### Applying Tags to Files
 
-#### By dragging from the library onto File(s)
+#### by dragging from the library onto specific file(s)
 
 * Drag and drop a tag onto an individual file to apply it to that file
-* Select a set of files and drag a tag onto any selected file to apply it to all selected files
+* Select a set of files and drag a tag onto any one of them to apply it to all selected files
 
-#### By dragging into the Tag Assignment area
+#### by dragging into the Tag Assignment area
 
 The bottom area of the interface, below the file list, is the _Tag Assignment Area._ One of the most powerful ways to assign tags is to drag tags here - but note that a tag added in this way will be applied to _all_ the visible files.
 
-The idea here is that you filter the images you want, by name or by folder or by other means, and then you can assign tags to larger batches of files, essential for organizing a large library.
+The idea is that you **filter** the images you want, by name or by folder or by other means, and then you can assign tags to larger batches of files, which is essential for organizing a large library.
 
 ### Removing a tag
 
-Click the **×** button on any tag in the Tag Assignment area to remove that tag from **all** the visible files.
+Click the **×** button on any tag in the **Tag Assignment** area to remove that tag from **all** the visible files.
 
-Click the **×** button on any tag in the Tag Library (bottom left) to remove it completely from all files in your project.
+Click the **×** button on any tag in the **Tag Library** (bottom left) to remove it completely from all files in your project.
 
 ### Filtering by Tag
 
