@@ -83,11 +83,87 @@ Distribute the ZIP as-is. The recipient unzips to any folder and runs `compendia
 
 ---
 
-## Linux — TGZ Archive
+## Linux — AppImage (Self-Contained)
 
-The Linux package is a `.tar.gz` archive produced by CPack. It contains the binary, `.desktop` file, and icon — but **does not bundle Qt or system libraries**. The target system must have Qt 6 and `libheif` installed.
+The preferred Linux distribution format is an AppImage — a single portable file that bundles Qt and all required libraries. It runs on any modern Linux distribution without installation or matching system Qt versions.
 
-> **Note:** For a fully self-contained portable package (no Qt dependency on the target), an AppImage built with `linuxdeploy` would be the right tool. That is not yet wired into the CMake build; the TGZ approach below is the current workflow.
+### Prerequisites
+
+- Qt 6.10+ installed via the Qt Online Installer (used for compilation in Qt Creator)
+- A Release build already compiled in Qt Creator
+- `cmake` available in the terminal
+- Internet access on first run (linuxdeploy tools are downloaded automatically)
+
+### Steps
+
+#### 1. Build in Qt Creator
+
+Build the project with the **Release** configuration in Qt Creator.
+
+#### 2. Build the AppImage
+
+From the terminal, pointing at your Qt Creator Release build directory:
+
+```bash
+cmake --build /path/to/build --target appimage
+```
+
+On first run this downloads `linuxdeploy` and `linuxdeploy-plugin-qt` into `<build>/linuxdeploy/` (~30 MB combined), then builds the image. Subsequent runs skip the download.
+
+This produces:
+
+```
+<build>/Compendia-<version>-x86_64.AppImage
+```
+
+e.g. `Compendia-0.1.1-x86_64.AppImage`
+
+### What the package contains
+
+linuxdeploy bundles:
+
+- `compendia` binary
+- All Qt 6 shared libraries and plugins required at runtime
+- `libheif`, `libexif`, and their codec dependencies
+- The `.desktop` file and SVG icon (for desktop integration when mounted)
+- `LICENSE` and `licenses/dlib-LICENSE.txt`
+- dlib face-recognition model files from `models/` if present at build time
+
+### Deployment
+
+Mark the AppImage executable and run it directly — no installation needed:
+
+```bash
+chmod +x Compendia-0.1.1-x86_64.AppImage
+./Compendia-0.1.1-x86_64.AppImage
+```
+
+### Uploading to a GitHub Release
+
+```bash
+gh release upload v<version> Compendia-<version>-x86_64.AppImage
+```
+
+### Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Download fails during build | No internet / GitHub unreachable | Download tools manually into `<build>/linuxdeploy/` and make them executable |
+| `FUSE` error on launch | FUSE not available (some containers/VMs) | Run with `--appimage-extract-and-run` flag, or extract with `--appimage-extract` |
+| Wrong Qt bundled | Multiple Qt installs; wrong qmake found | Check CMake output for `qmake (for AppImage):` line; pass correct Qt to CMake |
+| App crashes on launch | Missing Qt plugin | Run from terminal to see the error; re-check qmake path |
+
+---
+
+## Linux — TGZ Archive (requires system Qt)
+
+The TGZ is a lighter-weight archive produced by CPack. It contains the binary, `.desktop` file, and icon but **does not bundle Qt or system libraries**. Use this only when the target system is known to have Qt 6.10+ installed (e.g. developer machines). For general distribution, use the AppImage above.
+
+### Prerequisites
+
+- Qt 6.10+ installed on the target system
+- A Release build already compiled in Qt Creator
+- `cmake` available in the terminal
 
 ### Prerequisites
 
@@ -141,8 +217,9 @@ Qt and system libraries (libheif, libexif) are **not** included. The recipient's
 
 ### Deployment
 
-The target system needs:
-- Qt 6 Widgets, Multimedia, Concurrent, Svg (`sudo apt install libqt6widgets6 libqt6multimediawidgets6 libqt6svg6` or equivalent)
+The target system needs Qt 6.10 or later. The Qt packages shipped with most distros (e.g. Ubuntu 24.04 ships Qt 6.4) are too old — install Qt 6.10 via the Qt Online Installer.
+
+Also required:
 - `libheif` (`sudo apt install libheif1`)
 - `libexif` (`sudo apt install libexif12`)
 

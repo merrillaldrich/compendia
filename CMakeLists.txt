@@ -433,3 +433,4 @@ if(QT_VERSION_MAJOR EQUAL 6)
 endif()
 
 include(cmake/Packaging.cmake)
+include(cmake/AppImage.cmake)
