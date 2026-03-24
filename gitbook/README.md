@@ -26,21 +26,23 @@ Welcome to compendia. Here are the basics to help you get started wrangling your
 Compendia works with folders of images on your local machine. To get started:
 
 1. Make sure you have your images locally. If you use a cloud service like Apple or Google, download your pictures.
-2. Open the folder containing your pictures, either with the link in the center of the screen or the **Browse** button.
+2. Open the folder containing your pictures, either with the link in the center of the welcome screen or the **Browse** button.
 3. Navigate to a folder containing images or videos and click **Select Folder**.
 4. Compendia will show a brief warning about how it creates files to tag your images, then it'll scan the folder and subfolders, and display thumbnails for all supported files.
 
-Supported formats include JPEG, PNG, TIFF, HEIC/HEIF, and common video formats.
+Supported formats include JPEG, PNG, TIFF, HEIC/HEIF, and common video formats like MP4 and MOV.
 
+{% hint style="info" %}
 If you have a very large library of images, it may be best to start by exploring with a small set. Compendia can handle large sets of images, but it may be slower to try to work on your whole collection while you experiment and learn the application.
-
-> **Tip:** Compendia saves tag data as small `.json` sidecar files alongside your media, so your tags travel with your files.
+{% endhint %}
 
 ### The Interface
 
 The application's main window is divided into these areas:
 
-<table><thead><tr><th width="279.99993896484375">Area</th><th>Purpose</th></tr></thead><tbody><tr><td><strong>File List</strong> (center)</td><td>Thumbnails of files. When filters are applied, this list shows just the matching files.</td></tr><tr><td><strong>Tag Library</strong> (bottom left)</td><td>All tag families and tags you have created.</td></tr><tr><td><strong>Tag Filters</strong> (top left)</td><td>Active filters that narrow the file list.</td></tr><tr><td><strong>Tag Assignment</strong> (center bottom)</td><td>Tags applied to the currently selected files.</td></tr><tr><td><strong>Previewer</strong> (right)</td><td>Examine and scroll through individual images at full size, with zoom and pan.</td></tr></tbody></table>
+<table><thead><tr><th width="279.99993896484375">Area</th><th>Purpose</th></tr></thead><tbody><tr><td><ol><li><strong>File List</strong></li></ol></td><td>Thumbnails of files. When filters are applied, this list shows just the matching files.</td></tr><tr><td><ol start="2"><li><strong>Tag Library</strong></li></ol></td><td>All tag families and tags you have assigned to files in the current folder.</td></tr><tr><td><ol start="3"><li><strong>Tag Filters</strong></li></ol></td><td>Active filters that narrow the file list.</td></tr><tr><td><ol start="4"><li><strong>Tag Assignment</strong></li></ol></td><td>Tags applied to the files that are currently visible in the list.</td></tr><tr><td><ol start="5"><li><strong>Previewer</strong></li></ol></td><td>Full size zoom and pan image preview and video player, with metadata properties below.</td></tr></tbody></table>
+
+<figure><img src=".gitbook/assets/gettingstarted-anatomy-mainwindow.png" alt=""><figcaption></figcaption></figure>
 
 ### Creating Tags
 
