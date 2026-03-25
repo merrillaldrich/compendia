@@ -53,21 +53,24 @@ The application's main window is divided into these areas:
 
 ### Creating Tags
 
-Tags are organized into **Tag Families**, which are groups that share a color. For example, you might have a families called _People_, _Places_, _Year_, and _Events_. Inside those you'd place _Susan, Dad, Mom_, or _Paris, New York, Yosemite,_ and _2025, 2026_ etc.
+**Tags** are organized into **Tag Families**, which are groups that share a color. For example, you might have a families called _People_, _Places_, _Year_, and _Events_. Inside those you'd place _Susan, Dad, Mom_, or _Paris, New York, Yosemite,_ and _2025, 2026_ etc.
 
 #### Create a Tag Family and a Tag
 
-1. Click in an empty part of the **Tag Library** to add a family.
+1. Click in an empty part of the **Tag Library** (2) to add a family.
 2. Enter a name for the family and press _Enter_.
 3. An empty tag will appear. If it doesn't or you lose it, just click anywhere in the body of the Tag Family box.
+
+<figure><img src=".gitbook/assets/gettingstarted-makeatag.png" alt="" width="383"><figcaption></figcaption></figure>
+
 4. Enter a tag name and press _Enter_.
 
 ### Applying Tags to Files
 
 #### by dragging from the library onto specific file(s)
 
-* Drag and drop a tag onto an individual file to apply it to that file
-* Select a set of files and drag a tag onto any one of them to apply it to all selected files
+* Drag and drop a tag onto an individual file to apply it to that file.
+* Select a set of files and drag a tag onto any one of them to apply it to all selected files.
 
 #### by dragging into the Tag Assignment area
 
