@@ -10,11 +10,11 @@ Welcome to compendia. Here are the basics to get started wrangling your photos a
 
 ## Getting Started in 3 Steps
 
-1. Load a folder into Compendia by setting the Media Folder using the **Browse** button or **File > Open**. Images from the folder will appear in the **File List**:
+1. Load a folder into Compendia by setting the Media Folder using the link on the welcome screen, the **Browse** button, or **File > Open**. Images from the folder will appear in the **File List**:
 
 <figure><img src=".gitbook/assets/gettingstarted-welcome-browse.png" alt="" width="563"><figcaption></figcaption></figure>
 
-2. Make tags in groups by clicking in the **Tag Library** and filling in the names. **Tags** are the core organizing element in compendia:
+2. Make **tags** in groups by clicking in the **Tag Library** and filling in the names. **Tags** are the core organizing element in compendia:
 
 <figure><img src=".gitbook/assets/gettingstarted-welcome-taglibrary.png" alt="" width="563"><figcaption></figcaption></figure>
 
@@ -24,13 +24,13 @@ Welcome to compendia. Here are the basics to get started wrangling your photos a
 
 3. Apply tags to one or more images by dragging a tag from the **Tag Library** onto any **individual image icon**, or a **selected set** of images:
 
-<figure><img src=".gitbook/assets/gettingstarted-welcome-assignment.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/gettingstarted-welcome-assignment.png" alt=""><figcaption></figcaption></figure>
 
 ## More Details
 
 ### Opening a Folder
 
-Compendia works with folders of images on your local machine. To get started:
+Compendia works with folders of images on your local machine:
 
 1. Make sure you have your images locally. If you use a cloud service like Apple or Google, download your pictures.
 2. Open the folder containing your pictures, either with the link in the center of the welcome screen or the **Browse** button.
@@ -57,26 +57,30 @@ The application's main window is divided into these areas:
 
 #### Create a Tag Family and a Tag
 
-1. Click in an empty part of the **Tag Library** (2) to add a family.
+1. Click in an empty part of the **Tag Library** to add a family.
 2. Enter a name for the family and press _Enter_.
 3. An empty tag will appear. If it doesn't or you lose it, just click anywhere in the body of the Tag Family box.
 
 <figure><img src=".gitbook/assets/gettingstarted-makeatag.png" alt="" width="383"><figcaption></figcaption></figure>
 
 4. Enter a tag name and press _Enter_.
+5. To add more tags or families, click in an empty area of the tag library.
 
 ### Applying Tags to Files
 
 #### by dragging from the library onto specific file(s)
 
 * Drag and drop a tag onto an individual file to apply it to that file.
+
+<figure><img src=".gitbook/assets/gettingstarted-welcome-dragdetail.png" alt="" width="563"><figcaption></figcaption></figure>
+
 * Select a set of files and drag a tag onto any one of them to apply it to all selected files.
 
 #### by dragging into the Tag Assignment area
 
-The bottom area of the interface, below the file list, is the _Tag Assignment Area._ One of the most powerful ways to assign tags is to drag tags here - but note that a tag added in this way will be applied to _all_ the visible files.
+The bottom center area of the interface, below the file list, is the **Tag Assignment Area**_._ One of the most powerful ways to assign tags is to drag tags here - but note that a tag added in this way will be applied to _all_ the visible files.
 
-The idea is that you **filter** the images you want, by name or by folder or by other means, and then you can assign tags to larger batches of files, which is essential for organizing a large library.
+The idea is that you first **filter** the images you want, by name or by folder or by other means, and then you can assign tags to larger batches of files, which is essential for organizing a large library.
 
 ### Removing a Tag
 
