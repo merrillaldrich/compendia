@@ -29,6 +29,7 @@ static void applyTheme(QApplication &a, bool dark)
     styles.replace("@PROGRESS_BORDER", dark ? "#666666" : "#AAAAAA");
     styles.replace("@PROGRESS_BG",     dark ? "#3A3A3A" : "#E0E0E0");
     styles.replace("@PROGRESS_TEXT",   dark ? "#CCCCCC" : "#555555");
+    styles.replace("@WINDOW_BG",       a.palette().window().color().name());
     a.setStyleSheet(styles);
 
     // Qt sends QEvent::StyleChange to all widgets when the application stylesheet

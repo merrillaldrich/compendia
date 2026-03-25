@@ -5,6 +5,7 @@
  *   @PROGRESS_BORDER — progress bar border; adapts to light/dark mode
  *   @PROGRESS_BG    — progress bar background; adapts to light/dark mode
  *   @PROGRESS_TEXT  — progress bar text; adapts to light/dark mode
+ *   @WINDOW_BG      — window background; resolved from palette at theme-apply time
  */
 
 /* ── Navigation panel ──────────────────────────────── */
@@ -124,15 +125,14 @@ QPushButton#ratingFilterModeButton {
 
 /* ── Tag assignment area ─────────────────────────────────── */
 QScrollArea#fileListTagAssignmentScrollArea,
-QScrollArea#fileListTagAssignmentScrollArea > QWidget {
-    background-color: palette(window);
+QWidget#fileListTagAssignmentContainer {
+    background-color: @WINDOW_BG;
 }
 
 /* ── Preview properties area ─────────────────────────────── */
 QScrollArea#previewScrollArea,
-QScrollArea#previewScrollArea > QWidget,
 QWidget#previewWidget {
-    background-color: palette(window);
+    background-color: @WINDOW_BG;
 }
 
 /* ── Other splitters (light background) ───────────────── */
