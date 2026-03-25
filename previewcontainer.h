@@ -157,6 +157,11 @@ signals:
      */
     void tagRectDeleteRequested(const QRectF &normalizedRect);
 
+    /*! \brief Emitted when the user selects "Find this person" from a tag region's context menu.
+     *  \param normalizedRect The normalized rect of the region whose person should be searched for.
+     */
+    void tagRectFindPersonRequested(const QRectF &normalizedRect);
+
 protected:
     /*! \brief Repositions the nav overlay buttons when the widget is resized.
      *

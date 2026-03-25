@@ -138,6 +138,8 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::onTagRectResized);
     connect(ui->previewContainer, &PreviewContainer::tagRectDeleteRequested,
             this, &MainWindow::onTagRectDeleteRequested);
+    connect(ui->previewContainer, &PreviewContainer::tagRectFindPersonRequested,
+            this, &MainWindow::onTagRectFindPersonRequested);
     connect(ui->previewContainer, &PreviewContainer::tagPreviewDragEntered,
             this, [this](const QString &family, const QString &tagName) {
         Tag* tag = core->getTag(family, tagName);
@@ -1481,6 +1483,114 @@ void MainWindow::onTagRectDeleteRequested(const QRectF &normalizedRect)
     refreshPreviewTagRects(tf);
 
     refreshTagAssignmentArea();
+}
+
+/*! \brief Launches a "Find this person" search for the tag region at \p normalizedRect.
+ *
+ * Identifies the tag whose stored rect matches \p normalizedRect on the currently
+ * selected file, prompts for scope, then runs a targeted background sweep that
+ * tags matching faces across the chosen files without generating auto-face tags.
+ *
+ * \param normalizedRect Normalized (0–1) rect identifying the query face region.
+ */
+void MainWindow::onTagRectFindPersonRequested(const QRectF &normalizedRect)
+{
+    // Resolve the selected file and the tag that owns this rect.
+    QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
+    if (sel.isEmpty()) return;
+
+    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
+    TaggedFile* tf  = core->getItemModel()
+                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!tf) return;
+
+    Tag* queryTag = nullptr;
+    for (Tag* tag : *tf->tags()) {
+        auto r = tf->tagRect(tag);
+        if (r.has_value() && r.value() == normalizedRect) {
+            queryTag = tag;
+            break;
+        }
+    }
+    if (!queryTag) return;
+
+    if (!ensureFaceRecognizerLoaded()) return;
+
+    if (face_recognizer_->isSweepRunning()) {
+        QMessageBox::information(this, tr("Face Search"),
+            tr("A face recognition sweep is already running. Please wait for it to finish or cancel it first."));
+        return;
+    }
+
+    QStandardItemModel* model = core->getItemModel();
+    const int rowCount = model->rowCount();
+
+    // Collect all TaggedFiles (main thread — safe).
+    QVector<TaggedFile*> allFiles;
+    allFiles.reserve(rowCount);
+    for (int r = 0; r < rowCount; ++r) {
+        TaggedFile* f = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (f) allFiles.append(f);
+    }
+
+    // ----- Scope selection -----
+    FilterProxyModel* proxy = core->getItemModelProxy();
+    const bool isFiltered   = proxy->rowCount() < model->rowCount();
+    QModelIndexList selIndexes = ui->fileListView->selectionModel()->selectedIndexes();
+    const bool hasSelection = !selIndexes.isEmpty();
+
+    QVector<TaggedFile*> targetFiles;
+
+    if (!isFiltered && !hasSelection) {
+        targetFiles = allFiles;
+    } else {
+        QMessageBox msgBox(this);
+        msgBox.setWindowTitle(tr("Find This Person"));
+        msgBox.setText(tr("Search for \"%1\" in which files?").arg(queryTag->getName()));
+
+        QPushButton *selectedBtn = hasSelection ? msgBox.addButton(tr("Selected Files"), QMessageBox::AcceptRole) : nullptr;
+        QPushButton *visibleBtn  = isFiltered   ? msgBox.addButton(tr("Visible Files"),  QMessageBox::AcceptRole) : nullptr;
+        QPushButton *allBtn      = msgBox.addButton(tr("All Files"), QMessageBox::AcceptRole);
+        msgBox.addButton(QMessageBox::Cancel);
+
+        msgBox.exec();
+        QAbstractButton* clicked = msgBox.clickedButton();
+
+        if (clicked == allBtn) {
+            targetFiles = allFiles;
+        } else if (visibleBtn && clicked == visibleBtn) {
+            for (int r = 0; r < proxy->rowCount(); ++r) {
+                QModelIndex s = proxy->mapToSource(proxy->index(r, 0));
+                TaggedFile* f = model->data(s, Qt::UserRole + 1).value<TaggedFile*>();
+                if (f) targetFiles.append(f);
+            }
+        } else if (selectedBtn && clicked == selectedBtn) {
+            for (const QModelIndex &pi : selIndexes) {
+                QModelIndex s = proxy->mapToSource(pi);
+                TaggedFile* f = model->data(s, Qt::UserRole + 1).value<TaggedFile*>();
+                if (f) targetFiles.append(f);
+            }
+        } else {
+            return; // Cancel
+        }
+    }
+
+    // Build phase1Input with just the source file and the single query region.
+    const QString sourceImagePath = tf->filePath + "/" + tf->fileName;
+    Phase1FileInput queryInput;
+    queryInput.imagePath = sourceImagePath;
+    queryInput.tagRegions.append({ queryTag->tagFamily->getName(), queryTag->getName(), normalizedRect });
+
+    // Build phase3 paths (image files only).
+    static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
+    QStringList phase3Paths;
+    phase3Paths.reserve(targetFiles.size());
+    for (TaggedFile* f : targetFiles) {
+        if (!videoExts.contains(QFileInfo(f->fileName).suffix().toLower()))
+            phase3Paths.append(f->filePath + "/" + f->fileName);
+    }
+
+    face_recognizer_->startBackgroundSweep({queryInput}, phase3Paths, 0, /*suppressAutoFaces=*/true);
 }
 
 /*! \brief Refreshes the preview pane to reflect the current viewport size. */

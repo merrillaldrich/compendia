@@ -267,14 +267,17 @@ public:
      * Results arrive via sweepFileResult() on the main thread (Qt::QueuedConnection).
      * Completion is signalled by sweepFinished() or sweepCancelled().
      *
-     * \param phase1Input   Per-file known-face data extracted from TaggedFile*s on the main thread.
-     * \param phase3Paths   Image file paths to scan (video files excluded by the caller).
-     * \param numWorkers    Number of parallel workers (0 = auto: idealThreadCount(), capped at maxWorkers_).
+     * \param phase1Input        Per-file known-face data extracted from TaggedFile*s on the main thread.
+     * \param phase3Paths        Image file paths to scan (video files excluded by the caller).
+     * \param numWorkers         Number of parallel workers (0 = auto: idealThreadCount(), capped at maxWorkers_).
+     * \param suppressAutoFaces  When true, unmatched faces are silently ignored instead of receiving
+     *                           auto-detected-face tags. Use for targeted single-person searches.
      */
     void startBackgroundSweep(
         const QVector<Phase1FileInput> &phase1Input,
         const QStringList &phase3Paths,
-        int numWorkers = 0);
+        int numWorkers = 0,
+        bool suppressAutoFaces = false);
 
     /*! \brief Requests cancellation of the active background sweep.  No-op if none is running. */
     void cancelSweep();

@@ -582,7 +582,8 @@ void FaceRecognizer::cancelSweep()
 void FaceRecognizer::startBackgroundSweep(
     const QVector<Phase1FileInput> &phase1Input,
     const QStringList &phase3Paths,
-    int numWorkers)
+    int numWorkers,
+    bool suppressAutoFaces)
 {
     if (isSweepRunning())
         return;
@@ -606,7 +607,7 @@ void FaceRecognizer::startBackgroundSweep(
 
     // Capture by value: phase1Input, phase3Paths are plain Qt value types (safe to copy).
     sweepThread_ = QThread::create([this, phase1Input, phase3Paths,
-                                    workerCount, modelsDir, matchThr]()
+                                    workerCount, modelsDir, matchThr, suppressAutoFaces]()
     {
         // ---- Phase 1: seed known-face embeddings (serial, on coordinator thread) ----
         // We use THIS instance's dlib objects here, so we need the mutex.
@@ -719,7 +720,7 @@ void FaceRecognizer::startBackgroundSweep(
 
             (void)QtConcurrent::run(&taskPool, [this, imagePath, total, &pool, &sharedMutex,
                                &sharedKnownFaces, &autoFaceCounter, &doneCount,
-                               matchThr]()
+                               matchThr, suppressAutoFaces]()
             {
                 if (sweepCancelFlag_.loadRelaxed()) {
                     int d = ++doneCount;
@@ -785,7 +786,7 @@ void FaceRecognizer::startBackgroundSweep(
                         e.rect      = rect;
                         e.embedding = embedding;
                         newKnownEntries.append(e);
-                    } else {
+                    } else if (!suppressAutoFaces) {
                         if (autoFacesThisImage >= Compendia::MaxAutoFacesPerImage)
                             continue;
 

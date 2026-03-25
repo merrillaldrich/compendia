@@ -445,9 +445,14 @@ public:
     {
         if (!interactive_) { event->ignore(); return; }
         QMenu menu;
+        QAction *findPersonAct = menu.addAction(QObject::tr("Find this person"));
+        menu.addSeparator();
         QAction *deleteAct = menu.addAction(QObject::tr("Delete Tag"));
-        if (menu.exec(event->screenPos()) == deleteAct)
+        QAction *chosen = menu.exec(event->screenPos());
+        if (chosen == deleteAct)
             emit deleteRequested(rect_);
+        else if (chosen == findPersonAct)
+            emit findPersonRequested(rect_);
         event->accept();
     }
 
@@ -461,6 +466,11 @@ signals:
      *  \param sceneRect The scene-coordinate rect of this item.
      */
     void deleteRequested(const QRectF &sceneRect);
+
+    /*! \brief Emitted when the user selects "Find this person" from the context menu.
+     *  \param sceneRect The scene-coordinate rect of this item.
+     */
+    void findPersonRequested(const QRectF &sceneRect);
 };
 
 /*! \brief Constructs the preview container and sets up the internal scene and view.
@@ -844,6 +854,10 @@ void PreviewContainer::setTagRects(const QList<TagRectDescriptor> &rects)
         connect(item, &TagRectItem::deleteRequested, this,
                 [this, normRectPtr](const QRectF &) {
             emit tagRectDeleteRequested(*normRectPtr);
+        });
+        connect(item, &TagRectItem::findPersonRequested, this,
+                [this, normRectPtr](const QRectF &) {
+            emit tagRectFindPersonRequested(*normRectPtr);
         });
     }
 }

@@ -339,6 +339,16 @@ private slots:
      */
     void onTagRectDeleteRequested(const QRectF &normalizedRect);
 
+    /*! \brief Launches a "Find this person" search for the tag region at \p normalizedRect.
+     *
+     * Identifies the tag whose stored rect matches \p normalizedRect, shows a scope
+     * selection dialog, then runs a background sweep that tags any matching faces
+     * across the chosen files without creating auto-detected-face tags for non-matches.
+     *
+     * \param normalizedRect Normalized (0–1) rect identifying the tag region to use as query.
+     */
+    void onTagRectFindPersonRequested(const QRectF &normalizedRect);
+
     /*! \brief Slot — forwards creation-date filter changes to the core.
      *
      * A date equal to the widget's minimum is treated as "no filter" (null QDate).
