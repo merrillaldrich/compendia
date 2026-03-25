@@ -45,7 +45,7 @@ If you have a very large library of images, it may be best to start by exploring
 
 ### The Interface
 
-The application's main window is divided into these areas:
+The application window is divided into these areas:
 
 <table><thead><tr><th width="279.99993896484375">Area</th><th>Purpose</th></tr></thead><tbody><tr><td><ol><li><strong>File List</strong></li></ol></td><td>Thumbnails of files. When filters are applied, this list shows just the matching files.</td></tr><tr><td><ol start="2"><li><strong>Tag Library</strong></li></ol></td><td>All tag families and tags you have assigned to files in the current folder.</td></tr><tr><td><ol start="3"><li><strong>Tag Filters</strong></li></ol></td><td>Active filters that narrow the file list.</td></tr><tr><td><ol start="4"><li><strong>Tag Assignment</strong></li></ol></td><td>Tags applied to the files that are currently visible in the list.</td></tr><tr><td><ol start="5"><li><strong>Previewer</strong></li></ol></td><td>Full size zoom and pan image preview and video player, with metadata properties below.</td></tr></tbody></table>
 
@@ -53,7 +53,7 @@ The application's main window is divided into these areas:
 
 ### Creating Tags
 
-**Tags** are organized into **Tag Families**, which are groups that share a color. For example, you might have a families called _People_, _Places_, _Year_, and _Events_. Inside those you'd place _Susan, Dad, Mom_, or _Paris, New York, Yosemite,_ and _2025, 2026_ etc.
+**Tags** are organized into **Tag Families**, which are groups that share a color. For example, you might create families called _People_, _Places_, _Year_, and _Events_. Inside those you'd place _Susan, Dad, Mom_, or _Paris, New York, Yosemite,_ and _2025, 2026_ etc. Any structure of families and tags that you find useful, you can use.
 
 #### Create a Tag Family and a Tag
 
@@ -66,9 +66,13 @@ The application's main window is divided into these areas:
 4. Enter a tag name and press _Enter_.
 5. To add more tags or families, click in an empty area of the tag library.
 
+{% hint style="info" %}
+**Important**: Compendia only saves tags that have **been applied to your files**. It may be tempting to lay out a whole structure, but it's a better practice to make _and assign_ tags incrementally as you use them on files.
+{% endhint %}
+
 ### Applying Tags to Files
 
-#### by dragging from the library onto specific file(s)
+#### Dragging from the library onto specific file(s)
 
 * Drag and drop a tag onto an individual file to apply it to that file.
 
@@ -76,7 +80,7 @@ The application's main window is divided into these areas:
 
 * Select a set of files and drag a tag onto any one of them to apply it to all selected files.
 
-#### by dragging into the Tag Assignment area
+#### Dragging into the Tag Assignment area
 
 The bottom center area of the interface, below the file list, is the **Tag Assignment Area**_._ One of the most powerful ways to assign tags is to drag tags here - but note that a tag added in this way will be applied to _all_ the visible files.
 
