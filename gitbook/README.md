@@ -1,25 +1,32 @@
 ---
-description: Getting Started
+description: Home
 ---
 
 # compendia
 
-<figure><img src=".gitbook/assets/Corner.png" alt="" width="188"><figcaption></figcaption></figure>
-
-Welcome to compendia. Here are the basics to help you get started wrangling your photos and videos.
-
-## Getting Started
-
 <figure><img src=".gitbook/assets/gettingstarted-welcome-mainwindow.png" alt=""><figcaption></figcaption></figure>
 
-### Quick Tour
+Welcome to compendia. Here are the basics to get started wrangling your photos and videos.
 
-1. Load a folder into Compendia by setting the Media Folder using the **Browse** button or **File > Open**
-2. Images from the folder will appear in the **File List**
-3. Make custom groups of tags by clicking in the **Tag Library**
-4. Click (or ctrl-click or shift-click) to **select** images
-5. The selected image shows in the **Previewer**
-6. Metadata details about the selected images appear in the **Properties Preview**
+## Getting Started in 3 Steps
+
+1. Load a folder into Compendia by setting the Media Folder using the **Browse** button or **File > Open**. Images from the folder will appear in the **File List**:
+
+<figure><img src=".gitbook/assets/gettingstarted-welcome-browse.png" alt="" width="563"><figcaption></figcaption></figure>
+
+2. Make tags in groups by clicking in the **Tag Library** and filling in the names. **Tags** are the core organizing element in compendia:
+
+<figure><img src=".gitbook/assets/gettingstarted-welcome-taglibrary.png" alt="" width="563"><figcaption></figcaption></figure>
+
+2. Click (or ctrl-click or shift-click) in the file list to **select** images. The selected image shows in the **Previewer**, and Metadata details about the selected image appears in the **Properties Preview** below it:
+
+<figure><img src=".gitbook/assets/gettingstarted-welcome-previewer.png" alt="" width="563"><figcaption></figcaption></figure>
+
+3. Apply tags to one or more images by dragging a tag from the **Tag Library** onto any **individual image icon**, or a **selected set** of images:
+
+<figure><img src=".gitbook/assets/gettingstarted-welcome-assignment.png" alt="" width="563"><figcaption></figcaption></figure>
+
+## More Details
 
 ### Opening a Folder
 
@@ -46,7 +53,7 @@ The application's main window is divided into these areas:
 
 ### Creating Tags
 
-Tags are organized into **Tag Families**, which are groups that share a theme or color. For example, you might have a families called _People_, _Places_, _Year_, and _Events_. Inside those you'd place _Susan, Dad, Mom_, or _Paris, New York, Yosemite,_ and _2025, 2026_ etc.
+Tags are organized into **Tag Families**, which are groups that share a color. For example, you might have a families called _People_, _Places_, _Year_, and _Events_. Inside those you'd place _Susan, Dad, Mom_, or _Paris, New York, Yosemite,_ and _2025, 2026_ etc.
 
 #### Create a Tag Family and a Tag
 
