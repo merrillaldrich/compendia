@@ -1,4 +1,5 @@
 #include "taggedfile.h"
+#include "version.h"
 
 #include <QRegularExpression>
 
@@ -127,6 +128,7 @@ QString TaggedFile::TaggedFileJSON(){
 
     // Wrap under top-level keys
     QJsonObject root;
+    root.insert("compendia_version", APP_VERSION_STRING);
     root.insert("tags", families);
     if (!tagRectsObj.isEmpty())
         root.insert("tag_rects", tagRectsObj);
