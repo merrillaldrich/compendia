@@ -166,6 +166,17 @@ void TagFamily::setNextHue(int hue) {
     next_hue_ = hue;
 }
 
+/*! \brief Updates this family's colour to the one corresponding to the given hue-sequence index.
+ *
+ * Does not advance the shared hue counter.
+ *
+ * \param colorIndex The hue-sequence index to apply.
+ */
+void TagFamily::setColorFromIndex(int colorIndex) {
+    color_index_ = colorIndex;
+    tag_family_color_ = generateColorForIndex(colorIndex);
+}
+
 /*! \brief Resets the colour-generation sequence back to the starting hue. */
 void TagFamily::restartColorSequence(){
     next_hue_ = starting_hue_;

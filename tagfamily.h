@@ -98,6 +98,15 @@ public:
      */
     static QColor generateColorForIndex(int hueIndex);
 
+    /*! \brief Updates this family's colour to the one corresponding to the given hue-sequence index.
+     *
+     * Does not advance the shared hue counter. Used when applying a color looked up from a
+     * library file to an already-existing TagFamily instance.
+     *
+     * \param colorIndex The hue-sequence index to apply.
+     */
+    void setColorFromIndex(int colorIndex);
+
     /*! \brief Resets the colour-generation sequence back to the starting hue. */
     static void restartColorSequence();
 

@@ -943,6 +943,8 @@ void CompendiaCore::loadTagLibraryFile()
                             : new TagFamily(familyName, this);
                         tag_families_->insert(fam);
                         connect(fam, &TagFamily::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
+                    } else if (colorIndex >= 0) {
+                        fam->setColorFromIndex(colorIndex);
                     }
                     for (const QJsonValue& v : tagArr)
                         addLibraryTag(familyName, v.toString());
@@ -959,11 +961,93 @@ void CompendiaCore::loadTagLibraryFile()
             }
         }
     }
-    // Restore the sequence counter so new families continue from where the last session left off
-    if (storedNextHue >= 0)
+    if (storedNextHue >= 0) {
+        // Restore the sequence counter so new families continue from where the last session left off
         TagFamily::setNextHue(storedNextHue);
+    } else if (!file.exists()) {
+        // No library at this folder — infer colors from related libraries in the directory tree
+        inferTagLibraryColors();
+    }
 
     libraryFileInitialized_ = true;
+    // Rebuild the UI with the correct colours and persist any inferred assignments to disk.
+    // This must fire after libraryFileInitialized_ is set so writeTagLibraryFile() is not suppressed.
+    emit tagLibraryChanged();
+}
+
+/*! \brief Attempts to assign consistent colours to all known tag families by consulting
+ *  library files found in parent and child directories.
+ *
+ *  Called from loadTagLibraryFile() when no library exists at the current root.
+ *  All TagFamily objects are already present in tag_families_ with auto-generated colours
+ *  at this point; this method overrides those colours for any family whose name is found
+ *  in a neighbouring library.
+ *
+ *  Pass 1 walks up the directory tree (closest parent first).
+ *  Pass 2 scans subdirectories if any families remain unmatched after Pass 1.
+ *  Families with no match in any library keep their auto-generated colours.
+ */
+void CompendiaCore::inferTagLibraryColors()
+{
+    QSet<QString> unassigned;
+    for (TagFamily* fam : std::as_const(*tag_families_))
+        unassigned.insert(fam->getName());
+
+    // Pass 1: walk UP — closest parent first
+    QDir dir(root_directory_);
+    while (dir.cdUp() && !unassigned.isEmpty()) {
+        QString libPath = dir.absolutePath() + "/_compendia_tag_library.json";
+        if (QFile::exists(libPath))
+            applyColorsFromLibrary(libPath, unassigned);
+    }
+
+    // Pass 2: walk DOWN into subdirectories
+    if (!unassigned.isEmpty()) {
+        QDirIterator it(root_directory_,
+                        QStringList() << "_compendia_tag_library.json",
+                        QDir::Files,
+                        QDirIterator::Subdirectories);
+        while (it.hasNext() && !unassigned.isEmpty()) {
+            it.next();
+            applyColorsFromLibrary(it.filePath(), unassigned);
+        }
+    }
+
+    // Families still in unassigned keep their auto-generated colours — next_hue_ is already
+    // at a valid continuation point from the scan, so no further action is needed.
+}
+
+/*! \brief Reads one library file and applies stored colour indices to any tag families
+ *  whose names appear in both that file and the \a unassigned set.
+ *
+ *  Each matched family is removed from \a unassigned.
+ *
+ *  \param libPath   Absolute path to a _compendia_tag_library.json file.
+ *  \param unassigned  Set of family names that still need a colour assignment; modified in place.
+ */
+void CompendiaCore::applyColorsFromLibrary(const QString &libPath, QSet<QString> &unassigned)
+{
+    QFile file(libPath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    if (doc.isNull()) return;
+
+    QJsonObject tagsObj = doc.object()["tags"].toObject();
+    for (auto it = tagsObj.begin(); it != tagsObj.end() && !unassigned.isEmpty(); ++it) {
+        const QString familyName = it.key();
+        if (!unassigned.contains(familyName)) continue;
+        if (!it.value().isObject()) continue;
+        int colorIndex = it.value().toObject()["color_index"].toInt(-1);
+        if (colorIndex < 0) continue;
+
+        for (TagFamily* fam : std::as_const(*tag_families_)) {
+            if (fam->getName() == familyName) {
+                fam->setColorFromIndex(colorIndex);
+                unassigned.remove(familyName);
+                break;
+            }
+        }
+    }
 }
 
 /*! \brief Returns a pointer to the complete tag library.

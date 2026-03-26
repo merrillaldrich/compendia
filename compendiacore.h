@@ -125,6 +125,8 @@ private:
     bool libraryFileInitialized_ = false; ///< True after loadTagLibraryFile() completes; guards writeTagLibraryFile() during scan loading.
     void writeTagLibraryFile();
     void loadTagLibraryFile();
+    void inferTagLibraryColors();
+    void applyColorsFromLibrary(const QString &libPath, QSet<QString> &unassigned);
 
     /*! \brief Removes \a family from the library if no tags reference it any longer. */
     void cleanupFamilyIfEmpty(TagFamily* family);
