@@ -122,6 +122,10 @@ private:
     /*! \brief Clears the dirty flag on every file, tag, and tag family. */
     void clearAllDirtyFlags();
 
+    bool libraryFileInitialized_ = false; ///< True after loadTagLibraryFile() completes; guards writeTagLibraryFile() during scan loading.
+    void writeTagLibraryFile();
+    void loadTagLibraryFile();
+
     /*! \brief Removes \a family from the library if no tags reference it any longer. */
     void cleanupFamilyIfEmpty(TagFamily* family);
 

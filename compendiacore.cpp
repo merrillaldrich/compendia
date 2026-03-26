@@ -3,6 +3,7 @@
 #include "perceptualhasher.h"
 #include "folderscanner.h"
 #include "exifparser.h"
+#include "version.h"
 #include <algorithm>
 #include <functional>
 #include <numeric>
@@ -47,6 +48,8 @@ CompendiaCore::CompendiaCore(QObject *parent)
     wantedUpdateTimer_.setSingleShot(true);
     wantedUpdateTimer_.setInterval(80);
     connect(&wantedUpdateTimer_, &QTimer::timeout, this, &CompendiaCore::updateWantedPaths);
+
+    connect(this, &CompendiaCore::tagLibraryChanged, this, &CompendiaCore::writeTagLibraryFile);
 }
 
 void CompendiaCore::setListView(QListView *view)
@@ -412,6 +415,8 @@ void CompendiaCore::loadRootDirectory(){
             fileWatcher_->removePaths(fileWatcher_->files());
     }
 
+    libraryFileInitialized_ = false;
+
     // Pointing to a new folder means we have to clear any data already loaded.
     // (cancelIconGeneration() has already been called by the time we get here.)
     delete tagged_files_proxy_;
@@ -566,6 +571,7 @@ void CompendiaCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString
         if( ! current_family ){
             current_family = new TagFamily(value.tagFamilyName, this);
             tag_families_->insert(current_family);
+            connect(current_family, &TagFamily::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
         }
 
         Tag *current_tag = nullptr;
@@ -579,6 +585,7 @@ void CompendiaCore::addFile(QFileInfo fileInfo, QList<TagSet> tags, QMap<QString
         if( ! current_tag ){
             current_tag = new Tag(current_family, value.tagName, this);
             tags_->insert(current_tag);
+            connect(current_tag, &Tag::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
         }
 
         newOrExistingTags->insert(current_tag);
@@ -725,6 +732,7 @@ void CompendiaCore::onScanFinished()
     }
 
     emit scanFinished(tagged_files_->rowCount(), toCache);
+    loadTagLibraryFile();
 }
 
 /*! \brief Starts the UI flush timer if it is not already running. */
@@ -846,6 +854,70 @@ void CompendiaCore::clearAllDirtyFlags()
         tag->clearDirtyFlag();
     for (TagFamily* family : *tag_families_)
         family->clearDirtyFlag();
+}
+
+/*! \brief Writes all library tags and families to _compendia_tag_library.json at the root folder.
+ *
+ * No-op until libraryFileInitialized_ is true (prevents spurious writes during scan loading).
+ * Triggered automatically via the tagLibraryChanged signal and Tag/TagFamily::nameChanged connections.
+ */
+void CompendiaCore::writeTagLibraryFile()
+{
+    if (!libraryFileInitialized_ || root_directory_.isEmpty()) return;
+
+    QJsonObject families;
+    for (Tag* tag : std::as_const(*tags_)) {
+        QString fn = tag->tagFamily->getName();
+        if (!families.contains(fn))
+            families.insert(fn, QJsonArray());
+        QJsonArray arr = families[fn].toArray();
+        arr.append(tag->getName());
+        families[fn] = arr;
+    }
+    // Include families that have no tags
+    for (TagFamily* fam : std::as_const(*tag_families_)) {
+        if (!families.contains(fam->getName()))
+            families.insert(fam->getName(), QJsonArray());
+    }
+
+    QJsonObject root;
+    root.insert("compendia_version", APP_VERSION_STRING);
+    root.insert("tags", families);
+
+    QFile file(root_directory_ + "/_compendia_tag_library.json");
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "[CompendiaCore] Could not write tag library:" << file.errorString();
+        return;
+    }
+    QTextStream(&file) << QJsonDocument(root).toJson();
+}
+
+/*! \brief Reads _compendia_tag_library.json from the root folder and merges any tags not already
+ *  in the library (e.g. tags the user created but never applied to a file).
+ *
+ * Sets libraryFileInitialized_ to true when done, enabling subsequent auto-saves.
+ * Silently no-ops if the file does not exist or cannot be parsed.
+ */
+void CompendiaCore::loadTagLibraryFile()
+{
+    QString libPath = root_directory_ + "/_compendia_tag_library.json";
+    QFile file(libPath);
+    if (file.exists() && file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        if (!doc.isNull()) {
+            QJsonObject tagsObj = doc.object()["tags"].toObject();
+            for (auto it = tagsObj.begin(); it != tagsObj.end(); ++it) {
+                QString familyName = it.key();
+                QJsonArray tagArr = it.value().toArray();
+                if (tagArr.isEmpty())
+                    addLibraryTagFamily(familyName);
+                else
+                    for (const QJsonValue& v : tagArr)
+                        addLibraryTag(familyName, v.toString());
+            }
+        }
+    }
+    libraryFileInitialized_ = true;
 }
 
 /*! \brief Returns a pointer to the complete tag library.
@@ -972,7 +1044,9 @@ Tag* CompendiaCore::addLibraryTag(QString tagFamilyName, QString tagName){
     if(matchingTag == nullptr){
         matchingTag = new Tag(tf, tagName, this);
         tags_->insert(matchingTag);
+        connect(matchingTag, &Tag::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
     }
+    emit tagLibraryChanged();
     return matchingTag;
 }
 
@@ -987,6 +1061,8 @@ Tag* CompendiaCore::addLibraryTag(QString tagFamilyName, QString tagName){
 void CompendiaCore::addLibraryTag(Tag* tag){
     tag->setParent(this);  // Take ownership: prevent widget destruction from deleting the tag
     tags_->insert(tag);
+    connect(tag, &Tag::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
+    emit tagLibraryChanged();
 }
 
 /*! \brief Creates or retrieves a tag family in the library by name.
@@ -1010,7 +1086,9 @@ TagFamily* CompendiaCore::addLibraryTagFamily(QString tagFamilyName){
     if(matchingFam == nullptr){
         matchingFam = new TagFamily(tagFamilyName, this);
         tag_families_->insert(matchingFam);
+        connect(matchingFam, &TagFamily::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
     }
+    writeTagLibraryFile();
     return matchingFam;
 }
 
@@ -1021,6 +1099,8 @@ TagFamily* CompendiaCore::addLibraryTagFamily(QString tagFamilyName){
 void CompendiaCore::addLibraryTagFamily(TagFamily* tagFamily){
     if(! tag_families_->contains(tagFamily)){
         tag_families_->insert(tagFamily);
+        connect(tagFamily, &TagFamily::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
+        writeTagLibraryFile();
     }
 }
 

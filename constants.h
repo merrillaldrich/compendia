@@ -51,7 +51,7 @@ constexpr int BulkUntagWarningThreshold = 5;
  *
  *  Set to \c true for alpha/beta builds and \c false for production releases.
  */
-constexpr bool ShowPreReleaseWarning = true;
+constexpr bool ShowPreReleaseWarning = false;
 
 /*! \brief Maximum Hamming distance between two pHash values for the images to be
  *  considered near-duplicates by the "Find Similar Images" feature.
