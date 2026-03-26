@@ -868,20 +868,31 @@ void CompendiaCore::writeTagLibraryFile()
     QJsonObject families;
     for (Tag* tag : std::as_const(*tags_)) {
         QString fn = tag->tagFamily->getName();
-        if (!families.contains(fn))
-            families.insert(fn, QJsonArray());
-        QJsonArray arr = families[fn].toArray();
+        if (!families.contains(fn)) {
+            QJsonObject famObj;
+            famObj.insert("color_index", tag->tagFamily->getColorIndex());
+            famObj.insert("tags", QJsonArray());
+            families.insert(fn, famObj);
+        }
+        QJsonObject famObj = families[fn].toObject();
+        QJsonArray arr = famObj["tags"].toArray();
         arr.append(tag->getName());
-        families[fn] = arr;
+        famObj["tags"] = arr;
+        families[fn] = famObj;
     }
     // Include families that have no tags
     for (TagFamily* fam : std::as_const(*tag_families_)) {
-        if (!families.contains(fam->getName()))
-            families.insert(fam->getName(), QJsonArray());
+        if (!families.contains(fam->getName())) {
+            QJsonObject famObj;
+            famObj.insert("color_index", fam->getColorIndex());
+            famObj.insert("tags", QJsonArray());
+            families.insert(fam->getName(), famObj);
+        }
     }
 
     QJsonObject root;
     root.insert("compendia_version", APP_VERSION_STRING);
+    root.insert("next_color_index", TagFamily::getNextHue());
     root.insert("tags", families);
 
     QFile file(root_directory_ + "/_compendia_tag_library.json");
@@ -902,21 +913,56 @@ void CompendiaCore::loadTagLibraryFile()
 {
     QString libPath = root_directory_ + "/_compendia_tag_library.json";
     QFile file(libPath);
+    int storedNextHue = -1;
     if (file.exists() && file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         if (!doc.isNull()) {
-            QJsonObject tagsObj = doc.object()["tags"].toObject();
+            QJsonObject rootObj = doc.object();
+            if (rootObj.contains("next_color_index"))
+                storedNextHue = rootObj["next_color_index"].toInt(-1);
+
+            QJsonObject tagsObj = rootObj["tags"].toObject();
             for (auto it = tagsObj.begin(); it != tagsObj.end(); ++it) {
                 QString familyName = it.key();
-                QJsonArray tagArr = it.value().toArray();
-                if (tagArr.isEmpty())
-                    addLibraryTagFamily(familyName);
-                else
+                QJsonValue val = it.value();
+
+                if (val.isObject()) {
+                    // New format: { "color_index": N, "tags": [...] }
+                    QJsonObject famObj = val.toObject();
+                    int colorIndex = famObj["color_index"].toInt(-1);
+                    QJsonArray tagArr = famObj["tags"].toArray();
+
+                    // Find or create family using the stored colour index
+                    TagFamily* fam = nullptr;
+                    for (TagFamily* f : std::as_const(*tag_families_)) {
+                        if (f->getName() == familyName) { fam = f; break; }
+                    }
+                    if (!fam) {
+                        fam = (colorIndex >= 0)
+                            ? new TagFamily(familyName, colorIndex, this)
+                            : new TagFamily(familyName, this);
+                        tag_families_->insert(fam);
+                        connect(fam, &TagFamily::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
+                    }
                     for (const QJsonValue& v : tagArr)
                         addLibraryTag(familyName, v.toString());
+
+                } else if (val.isArray()) {
+                    // Old format: bare array — fall back to auto-generated colour
+                    QJsonArray tagArr = val.toArray();
+                    if (tagArr.isEmpty())
+                        addLibraryTagFamily(familyName);
+                    else
+                        for (const QJsonValue& v : tagArr)
+                            addLibraryTag(familyName, v.toString());
+                }
             }
         }
     }
+    // Restore the sequence counter so new families continue from where the last session left off
+    if (storedNextHue >= 0)
+        TagFamily::setNextHue(storedNextHue);
+
     libraryFileInitialized_ = true;
 }
 

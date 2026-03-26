@@ -18,15 +18,17 @@ class TagFamily : public QObject
 private:
     QString tag_family_name_;           ///< The display name of this tag family.
     QColor tag_family_color_;           ///< Auto-assigned colour used to visually distinguish this family.
+    int color_index_ = 0;               ///< The hue-sequence index used to generate this family's colour.
     bool dirty_flag_ = false;           ///< True when the family name has been changed since the last save.
     static int next_hue_;               ///< Next hue value in the rotating colour sequence (set in .cpp).
     static int starting_hue_;          ///< Initial hue value, used to reset the sequence.
 
-    /*! \brief Generates the next colour in the rotating hue sequence.
+    /*! \brief Generates the next colour in the rotating hue sequence, advances the counter,
+     *  and records the index used on this instance.
      *
      * \return A new QColor for the next tag family.
      */
-    static QColor generateNextColor();
+    QColor generateNextColor();
 
 public:
     /*! \brief Constructs a TagFamily with an empty name and an auto-assigned colour.
@@ -41,6 +43,17 @@ public:
      * \param parent Qt parent object.
      */
     TagFamily(QString tf, QObject *parent);
+
+    /*! \brief Constructs a TagFamily with the given name and a colour restored from a stored index.
+     *
+     * Does not advance the shared hue counter, so the sequence is not disturbed when
+     * reloading persisted families.
+     *
+     * \param tf         The family name string.
+     * \param colorIndex The hue-sequence index that was used when this family was first created.
+     * \param parent     Qt parent object.
+     */
+    TagFamily(QString tf, int colorIndex, QObject *parent);
 
     /*! \brief Sets the family name and marks the dirty flag if the name changed.
      *
@@ -68,6 +81,22 @@ public:
 
     /*! \brief Clears the dirty flag after changes have been persisted. */
     void clearDirtyFlag();
+
+    /*! \brief Returns the hue-sequence index used to generate this family's colour. */
+    int getColorIndex() const;
+
+    /*! \brief Returns the current value of the shared hue counter (i.e. the index the next new family will use). */
+    static int getNextHue();
+
+    /*! \brief Sets the shared hue counter, allowing a saved sequence position to be restored. */
+    static void setNextHue(int hue);
+
+    /*! \brief Computes the colour for a given hue-sequence index without advancing the counter.
+     *
+     * \param hueIndex The index to compute a colour for.
+     * \return The corresponding QColor.
+     */
+    static QColor generateColorForIndex(int hueIndex);
 
     /*! \brief Resets the colour-generation sequence back to the starting hue. */
     static void restartColorSequence();

@@ -26,6 +26,21 @@ TagFamily::TagFamily(QString tf, QObject *parent = nullptr)
     tag_family_color_ = TagFamily::generateNextColor();
 }
 
+/*! \brief Constructs a TagFamily with the given name and a colour restored from a stored index.
+ *
+ * Does not advance the shared hue counter.
+ *
+ * \param tf         The family name string.
+ * \param colorIndex The hue-sequence index that was used when this family was first created.
+ * \param parent     Qt parent object.
+ */
+TagFamily::TagFamily(QString tf, int colorIndex, QObject *parent)
+    : QObject{parent}{
+    tag_family_name_ = tf;
+    color_index_ = colorIndex;
+    tag_family_color_ = TagFamily::generateColorForIndex(colorIndex);
+}
+
 /*! \brief Sets the family name and marks the dirty flag if the name changed.
  *
  * \param tagFamilyName The new name for this family.
@@ -94,7 +109,26 @@ QDataStream &operator>>(QDataStream &in, TagFamily &t) {
     return in;
 }
 
-/*! \brief Generates the next colour in the rotating hue sequence.
+/*! \brief Computes the colour for a given hue-sequence index without advancing the counter.
+ *
+ * \param hueIndex The index to compute a colour for.
+ * \return The corresponding QColor.
+ */
+QColor TagFamily::generateColorForIndex(int hueIndex){
+    int current_hue = hueIndex % 360;
+    double times_around_the_wheel = hueIndex / 360.0;
+    int default_saturation = 190;
+    int default_value = 220;
+
+    int current_saturation = default_saturation - (default_saturation * times_around_the_wheel * 0.2);
+    int current_value = default_value - (default_value * times_around_the_wheel * 0.07);
+
+    QColor color = QColor();
+    color.setHsv(current_hue, current_saturation, current_value);
+    return color;
+}
+
+/*! \brief Generates the next colour in the rotating hue sequence and advances the counter.
  *
  * Steps the hue by a fixed increment each call, skipping quickly through
  * the green range where human colour discrimination is lower.
@@ -102,14 +136,9 @@ QDataStream &operator>>(QDataStream &in, TagFamily &t) {
  * \return A new QColor for the next tag family.
  */
 QColor TagFamily::generateNextColor(){
+    color_index_ = next_hue_;
 
-    int current_hue = next_hue_ % 360;
-    double times_around_the_wheel = next_hue_ / 360;
-    int default_saturation = 190;
-    int default_value = 220;
-
-    int current_saturation = default_saturation - (default_saturation * times_around_the_wheel * 0.2);
-    int current_value = default_value - (default_value * times_around_the_wheel * 0.07);
+    QColor color = generateColorForIndex(next_hue_);
 
     next_hue_ += 32;
 
@@ -119,9 +148,22 @@ QColor TagFamily::generateNextColor(){
     if (next_hue_ % 360 > 95 && next_hue_ % 360 < 175)
         next_hue_ += 7;
 
-    QColor color = QColor();
-    color.setHsv(current_hue, current_saturation, current_value);
     return color;
+}
+
+/*! \brief Returns the hue-sequence index used to generate this family's colour. */
+int TagFamily::getColorIndex() const {
+    return color_index_;
+}
+
+/*! \brief Returns the current value of the shared hue counter. */
+int TagFamily::getNextHue() {
+    return next_hue_;
+}
+
+/*! \brief Sets the shared hue counter, restoring a saved sequence position. */
+void TagFamily::setNextHue(int hue) {
+    next_hue_ = hue;
 }
 
 /*! \brief Resets the colour-generation sequence back to the starting hue. */
