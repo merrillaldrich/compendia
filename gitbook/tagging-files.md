@@ -1,27 +1,29 @@
 ---
-description: Compendia uses Tags, organized in groups, to manage your media.
+description: >-
+  Tags, structured in groups, are the main way to organize, search, and filter
+  your media in compendia.
 ---
 
 # Tagging Files
 
 ## Overview
 
-Tags the core of how Compendia organizes your media. Rather than relying on folder structure alone, you can attach any number of descriptive tags to each file, then use those tags to filter and find exactly what you're looking for. Tags are flexible: a single photo can have many tags from different families, which is more flexible than storing each image in a single folder.
+Tags are at the core of how compendia helps you organize your media. Rather than relying on folder structure alone, you can attach any number of descriptive tags to each file, and use those tags to filter and find exactly what you're looking for. Tags are flexible: a single photo can have multiple tags from multiple families, where a folder structure can only place each image in a single folder.
 
 ## Tag Families and Tags
 
-Compendia organizes tags into two levels:
+Compendia organizes tags into groups, called families, instead of just a long list.
 
-**Tag Families** are top-level groups. A family might represent a broad category like _Subject_, _Event_, _Location_, or _Status_. Each family has a name and a color, which is used to visually distinguish its tags throughout the interface.
+**Tag Families** are groups of tags. A family might represent a broad category like _People_, _Events_, _Locations_, or _Year_. Each family has a name and a color, which is used to visually distinguish its tags throughout the interface.
 
-**Tags** belong to a family and represent specific values within that category. For example, the _Subject_ family might contain tags like _Portrait_, _Landscape_, _Architecture_, and _Wildlife_.
+**Tags** belong to a family and represent specific values within that category. For example, the _People_ family might contain tags like _Susan_, _Bill_, _Mom_, while the _Events_ category might contain _Paris Vacation_ and _Maddy's Wedding_.
 
-This two-level structure keeps your tag library organized as it grows, and makes it easy to scan and apply tags quickly.
+This two-level structure keeps your tag library organized as it grows, and makes it easy to scan through and find or apply tags quickly. When you filter your images you can use combinations of tags, for example to find pictures of _Susan_, taken in _2025_, at _Maddy's Wedding_.
 
 ## Creating a Tag Family
 
-1. Click the **Add Family** button in the Tag Library area (top-left panel).
-2. Enter a name for the family.
+1. Click in any empty area of the Tag Library to make a new family.
+2. Enter a name for the family and press &#x52;_&#x6E;ter_.
 3. Click **OK**. The new family appears in the Tag Library, ready for tags to be added.
 
 ## Creating a Tag
