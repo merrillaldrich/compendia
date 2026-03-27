@@ -1,22 +1,22 @@
 ---
-description: How to create, apply, and manage tags on your media files
+description: Compendia uses Tags, organized in groups, to manage your media.
 ---
 
 # Tagging Files
 
 ## Overview
 
-Tags are the core of how Compendia helps you organise your media. Rather than relying on folder structure alone, you can attach any number of descriptive tags to each file, and then use those tags to filter and find exactly what you're looking for. Tags are flexible: a single photo can have tags from multiple families, and you can add or remove them at any time.
+Tags the core of how Compendia organizes your media. Rather than relying on folder structure alone, you can attach any number of descriptive tags to each file, then use those tags to filter and find exactly what you're looking for. Tags are flexible: a single photo can have many tags from different families, which is more flexible than storing each image in a single folder.
 
 ## Tag Families and Tags
 
-Compendia organises tags into two levels:
+Compendia organizes tags into two levels:
 
 **Tag Families** are top-level groups. A family might represent a broad category like _Subject_, _Event_, _Location_, or _Status_. Each family has a name and a color, which is used to visually distinguish its tags throughout the interface.
 
 **Tags** belong to a family and represent specific values within that category. For example, the _Subject_ family might contain tags like _Portrait_, _Landscape_, _Architecture_, and _Wildlife_.
 
-This two-level structure keeps your tag library organised as it grows, and makes it easy to scan and apply tags quickly.
+This two-level structure keeps your tag library organized as it grows, and makes it easy to scan and apply tags quickly.
 
 ## Creating a Tag Family
 
