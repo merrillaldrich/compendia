@@ -20,33 +20,41 @@ Active filters are shown as colored tags grouped by family, using the same visua
 
 To remove a filter, just click the **×** button on the tag, being careful to do it in the filter area and not the library. The tag will disappear from the filter set and the files displayed will no longer be restricted to that tag.
 
-## Multiple Tags
+## Filter with Multiple Tags
 
 One of the more powerful ways to filter is to stack multiple tags in the filter.
 
-When more than one tag filter is active, Compendia can apply them together, using either OR or AND logic.&#x20;
+When more than one tag filter is active, compendia can apply them together, using either OR or AND logic.&#x20;
 
-Example: if you have tags for years, you could place 2024 and 2025 into the filter area to see only photos taken in 2024 _or_ 2025 but not other years. Here you would set the filter preference just above the tags to "Show files with **ANY** of these tags." (The "or" filter.)
+Example: if you have tags for years, you could place 2024 and 2025 into the filter area to see only photos taken in 2024 _or_ 2025 but not other years. Here you would set the filter preference just above the tags to "Show files with **ANY** of these tags." ("or" filter.)
 
-Alternatively, if you have tags for People and Events and Places, you could add "Meredith," "European Vacation," and "Germany" to show only pictures of Meredith, in Germany, during the European Vacation. Here set the filter preference to "Show files with **ALL** of these tags." (The "and" filter.)
-
-There is no limit to the number of filters you can stack.
+Alternatively, if you have tags for People and Events and Places, you could add "Meredith," "European Vacation," and "Germany" to show only pictures of Meredith, in Germany, during the European Vacation. Here set the filter preference to "Show files with **ALL** of these tags." ("and" filter.)
 
 ## Removing a Filter
 
-To remove a tag filter, click the **×** button on the tag in the Tag Filter area. The file list immediately updates to reflect the remaining filters.
+To remove a tag filter, just click the **×** button on the tag in the Tag Filter area. The file list updates to reflect the remaining filters, if any, or the whole set.
 
 To clear all active filters at once, you can use **Filter > Clear All Filters**. This removes all tag filters, as well as any active star rating, folder or file name, and date filters. It does not affect the tags assigned to your files.
 
 ## Folder Navigation
 
-When a folder is loaded, Compendia shows all files from that folder and its subfolders. The folder navigation panel lets you drill down into a specific subfolder to limit the file list to just those files.
+Your photos may be organized into multiple subfolders on disk. When a parent folder is loaded, Compendia shows all files from that folder and its subfolders - but you can use a **folder filter** to restrict the file list to just one portion of your files. For example, if you have a folder from each time you uploaded images from your camera or phone, you might want to restrict the view in compendia to one of those folders, perhaps just the last one.&#x20;
 
-Selecting a subfolder acts as an additional filter on top of any active tag filters.
+There are several ways to do this:
+
+* You can locate one image that you know to be in that subfolder, right-click on it, and choose **Isolate this Folder**.
+* Or you can select that image and click the **Isolate Folder** button below the list.
+* You can even just type a unique part of that folder name into the **Folder Matches** field.
+
+<figure><img src=".gitbook/assets/filteringandnav-isolatefolder (1).png" alt="" width="563"><figcaption></figcaption></figure>
+
+The filters will be set to show only images that have a matching folder name (and subfolders within, if any), isolating a subset of your images which you can tag in isolation.
+
+To remove the folder isolation filter, there is a **Clear Isolation** command in the same menu, and a **clear button** in the tool bar, next to the Isolate Folder button.
 
 ## Combining Tag Filters with Folder Navigation
 
-Tag filters and folder navigation work together. You can select a subfolder to limit the scope to that location, then add tag filters to narrow further within it. You can also set tag filters first and then navigate into a subfolder. Either way, the file list always reflects all active constraints at once.
+Tag filters and folder navigation work together. You can select a subfolder to limit the scope to that location, then add tag filters to narrow further within it. You can also set tag filters first and then navigate into a subfolder. Either way, the file list always reflects all active filters at once.
 
 ## Advanced: Isolating Sets of Files
 
@@ -54,18 +62,26 @@ Compendia provides three methods for focusing on a specific subset of files. Eac
 
 ### Selection Isolation
 
-Selection isolation temporarily filters the file list down to exactly the files you have selected. To use it, select the files you want to work with using click, **Ctrl+click**, or **Shift+click**, then activate selection isolation. The file list will show only those files until you clear the isolation.
+Selection isolation temporarily filters the file list down to exactly the files you select. To use it, select the files you want to work with using **click**, **ctrl+click**, or **shift+click**, then activate selection isolation. The file list will show only those files until you clear the isolation.
 
-This is useful when you need to apply a unique set of tags to a specific group of files that do not share a common folder or tag. For example, you might hand-pick 20 files from across your library and then tag them all without affecting anything else.
+**Isolate Selection** is available in the right-click menu and as a button below the file list:
+
+<figure><img src=".gitbook/assets/filteringandnav-isolateselection.png" alt="" width="563"><figcaption></figcaption></figure>
+
+This is useful when you need to apply a unique set of tags to a specific group of files that do not share a common folder location or other tag. For example, you might hand-pick 20 files from across your library and then tag them, without affecting anything else.
+
+This is also very handy for removing tags that were applied to the wrong files. Select and then isolate the images for tag removal, and then use the **×** button in the tag assignment area to remove the tags from the set.
 
 ### Folder Isolation
 
-Folder isolation filters the file list to the folder that a specific file belongs to, including its subdirectories. To use it, right-click a file and choose **Isolate Folder**. The file list will update to show only files in that folder and below.
+Folder isolation, also described above, filters the file list to the folder that a specific file belongs to, including its subdirectories. To use it, right-click a file and choose **Isolate Folder**. The file list will update to show only files in that folder and below.
 
 This is a quick way to focus on a particular location in your folder tree without having to navigate to it manually. To clear folder isolation, use the clear folder isolation button or the corresponding menu command. If you also want to clear any other active filters at the same time, use **Filter > Clear All Filters**.
 
 ### Drill
 
-Drill is designed for very large projects where keeping the entire library in memory is slow or impractical. Rather than just filtering the view, drill physically opens a subfolder as if it were its own project, unloading everything outside that location from memory. This frees up resources and makes working with that portion of the library faster.
+**Drill** is designed for very large projects where keeping the entire library in memory is slow or impractical. Rather than just _filtering_ the view, drill physically opens a subfolder as if it were its own project, unloading everything outside that location from memory. This frees up resources and makes working with that portion of the library faster:
 
-Each folder in Compendia is self-contained with its own tag data, so you can drill into any subfolder and work on it independently. For example, in a project with 50,000 images across 600 folders, you might drill into a section covering one year or one location, work through it, and then move on to another section. To move back up through the folder tree, use the **Drill Up** button. This moves up one directory level at a time, up to the root folder where you originally opened the project.
+<figure><img src=".gitbook/assets/filteringandnav-drilltofolder (2).png" alt="" width="563"><figcaption></figcaption></figure>
+
+Each folder in compendia is modular and self-contained, with its own tag data, so you can drill into any subfolder and work on it independently. For example, in a project with 50,000 images across 600 folders, you might drill into a section covering one year or one location, work through it, and then move on to another section. To move back up through the folder tree, use the **Drill Up** button. This moves up one directory level at a time, up to the root folder where you originally opened the project.
