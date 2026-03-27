@@ -1,28 +1,34 @@
 ---
-description: How to use tag filters and folder navigation to find your files
+description: >-
+  How to use tag, name, folder, date, and ratings filters - separately and in
+  combination
 ---
 
 # Filtering and Navigation
 
 ## Overview
 
-Filtering is how you narrow the file list down to just the files you want to see. Compendia supports several types of filtering: by tag, by star rating, by file or folder name, by date, and by folder. All active filters work simultaneously, so you can combine them to pinpoint exactly the files you need.
+Compendia implements several types of filtering: by tags, by star rating, by file or folder name, and by capture date. All active filters work simultaneously, so you can combine them to pinpoint exactly the files you need.
 
-## The Tag Filter Area
+## Tag Filters
 
-The Tag Filter area is the upper-left panel in the main window. It shows all the tag filters that are currently active. When no filters are set, the file list shows all files in the loaded folder. As you add filters, the list narrows to show only files that match.
+The **Tag Filter** area is the upper-left panel in the main window. Drag and drop tags here to narrow the displayed files to only the ones with certain tags.
 
-Active filters are shown as colored tags grouped by family, using the same visual style as the Tag Library and Tag Assignment area.
+<figure><img src=".gitbook/assets/filteringandnav-dragdrop.png" alt=""><figcaption></figcaption></figure>
 
-## Adding a Filter
+Active filters are shown as colored tags grouped by family, using the same visual style as the Tag Library and Tag Assignment area. Note under the file list we have a filtered view showin 4 out of a total of 28 files.
 
-To filter by a tag, drag it from the Tag Library and drop it into the Tag Filter area. The file list updates immediately to show only files that have that tag assigned.
+To remove a filter, just click the **×** button on the tag, being careful to do it in the filter area and not the library. The tag will disappear from the filter set and the files displayed will no longer be restricted to that tag.
 
-You can add filters from different families in the same way. Just drag and drop each tag you want to filter by.
+## Multiple Tags
 
-## Stacking Multiple Filters
+One of the more powerful ways to filter is to stack multiple tags in the filter.
 
-When more than one tag filter is active, Compendia applies them together using AND logic: only files that have **all** of the active filter tags are shown. This lets you progressively narrow the list. For example, you could filter first by _Location: Paris_ and then by _Subject: Portrait_ to find portraits taken in Paris.
+When more than one tag filter is active, Compendia can apply them together, using either OR or AND logic.&#x20;
+
+Example: if you have tags for years, you could place 2024 and 2025 into the filter area to see only photos taken in 2024 _or_ 2025 but not other years. Here you would set the filter preference just above the tags to "Show files with **ANY** of these tags." (The "or" filter.)
+
+Alternatively, if you have tags for People and Events and Places, you could add "Meredith," "European Vacation," and "Germany" to show only pictures of Meredith, in Germany, during the European Vacation. Here set the filter preference to "Show files with **ALL** of these tags." (The "and" filter.)
 
 There is no limit to the number of filters you can stack.
 
@@ -30,7 +36,7 @@ There is no limit to the number of filters you can stack.
 
 To remove a tag filter, click the **×** button on the tag in the Tag Filter area. The file list immediately updates to reflect the remaining filters.
 
-To clear all active filters at once, use **Filter > Clear All Filters**. This removes all tag filters, as well as any active star rating, filename, and date filters. It does not affect the tags assigned to your files.
+To clear all active filters at once, you can use **Filter > Clear All Filters**. This removes all tag filters, as well as any active star rating, folder or file name, and date filters. It does not affect the tags assigned to your files.
 
 ## Folder Navigation
 
