@@ -83,6 +83,87 @@ Distribute the ZIP as-is. The recipient unzips to any folder and runs `compendia
 
 ---
 
+## Windows — MSIX (Microsoft Store)
+
+The MSIX package is the format required for Microsoft Store distribution. It is self-contained — no dependencies, no separate model downloads.
+
+### Prerequisites
+
+- Everything from the ZIP prerequisites (Qt 6 MinGW, CMake, vcpkg)
+- Model `.dat` files present in `models/` (see ZIP section — download with `cmake -P cmake/DownloadModels.cmake`)
+- [Inkscape](https://inkscape.org) installed (default path or in PATH)
+- [ImageMagick](https://imagemagick.org) installed (`magick.exe` in PATH)
+- Windows SDK installed — provides `makeappx.exe` (auto-detected by the script)
+- `msix/AppxManifest.xml`: the `REPLACE_WITH_PACKAGE_IDENTITY_NAME` placeholder replaced with the **Package/Identity/Name** from Partner Center → your app → App identity
+
+### Steps
+
+#### 1. Build in Qt Creator
+
+Build with the **Release** configuration in Qt Creator.
+
+#### 2. Run the packaging script
+
+From the repository root (PowerShell):
+
+```powershell
+.\package-msix.ps1 -BuildDir build
+```
+
+This produces `Compendia-<version>-x64.msix` in the repo root. The script:
+
+1. Runs `cmake --install` to stage `compendia.exe`, all Qt DLLs, MinGW runtimes, vcpkg DLLs, and model files.
+2. Generates all required Store visual assets (tiles, logos, splash screen) from `resources/compendia_icon.svg`.
+3. Injects the current version into `msix/AppxManifest.xml` and copies it into the staging directory.
+4. Packs the staging directory into an MSIX using `makeappx.exe`.
+
+#### 3. Submit to Partner Center
+
+Upload `Compendia-<version>-x64.msix` as a new package in your Partner Center submission. Microsoft signs the package during Store ingestion — no code signing certificate purchase is required.
+
+### Updating the version
+
+The script reads the version automatically from `CMakeLists.txt`. The manifest `Version` field is always set to `MAJOR.MINOR.PATCH.0`. Just increment `project(compendia VERSION ...)` in `CMakeLists.txt` as normal.
+
+### `broadFileSystemAccess` justification
+
+The manifest declares `broadFileSystemAccess`. When submitting, Partner Center asks for a business justification. Use this text:
+
+> Compendia is a file management application that reads and writes metadata alongside user-selected media files. It writes `.compendia_cache/` subdirectories and a tag library JSON file in the same folders as the user's photos and videos, which can be located anywhere on the user's drives. The app does not collect, transmit, or share any file data externally.
+
+### Testing locally
+
+To install and test the package on your own machine before submitting:
+
+```powershell
+# Create a self-signed test certificate (one-time setup)
+$cert = New-SelfSignedCertificate -Subject "CN=1DFEABBD-CF47-4AC4-85C7-F2B014071012" `
+    -CertStoreLocation Cert:\CurrentUser\My -Type CodeSigningCert
+Export-PfxCertificate -Cert $cert -FilePath test-cert.pfx -Password (ConvertTo-SecureString "test" -AsPlainText -Force)
+
+# Sign the MSIX
+& "C:\Program Files (x86)\Windows Kits\10\bin\<SDK version>\x64\signtool.exe" sign `
+    /fd SHA256 /p7ce DetachedSignedData /p test /f test-cert.pfx `
+    Compendia-<version>-x64.msix
+
+# Trust the test cert (run once as administrator)
+Import-Certificate -FilePath test-cert.pfx -CertStoreLocation Cert:\LocalMachine\Root
+
+# Install
+Add-AppxPackage -Path Compendia-<version>-x64.msix
+```
+
+### Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| `makeappx: publisher mismatch` | Identity.Publisher in manifest doesn't match cert CN | Ensure both use `CN=1DFEABBD-CF47-4AC4-85C7-F2B014071012` |
+| Asset file missing error | Inkscape or ImageMagick failed silently | Run the asset commands manually; check Inkscape/magick are in PATH |
+| Face recognition missing | Model files absent | `cmake -P cmake/DownloadModels.cmake` then re-run the script |
+| Store certification fails on `broadFileSystemAccess` | Justification not provided | Add the justification text in the submission notes |
+
+---
+
 ## Linux — AppImage (Self-Contained)
 
 The preferred Linux distribution format is an AppImage — a single portable file that bundles Qt and all required libraries. It runs on any modern Linux distribution without installation or matching system Qt versions.

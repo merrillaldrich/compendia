@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  AppxManifest.xml for Compendia — Microsoft Store (Desktop Bridge / Win32)
+
+  The Version attribute is overwritten at package time by package-msix.ps1
+  with the current PROJECT_VERSION from CMakeLists.txt (four-part: X.Y.Z.0).
+  Do not edit Version here — it will be replaced.
+-->
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap">
+
+  <Identity
+    Name="MerrillAldrich.compendia"
+    Publisher="CN=1DFEABBD-CF47-4AC4-85C7-F2B014071012"
+    Version="0.1.1.0"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>Compendia</DisplayName>
+    <PublisherDisplayName>Merrill Aldrich</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <!--
+      MinVersion 18362 = Windows 10 May 2019 Update (1903).
+      Required for transparent tile BackgroundColor support.
+      MaxVersionTested should match the latest Windows build you have tested on.
+    -->
+    <TargetDeviceFamily
+      Name="Windows.Desktop"
+      MinVersion="10.0.18362.0"
+      MaxVersionTested="10.0.26200.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Applications>
+    <Application
+      Id="Compendia"
+      Executable="compendia.exe"
+      EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="Compendia"
+        Description="Media asset manager for photographers, hobbyists, and archivists."
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile
+          Wide310x150Logo="Assets\Wide310x150Logo.png"
+          Square310x310Logo="Assets\Square310x310Logo.png"
+          ShortName="Compendia" />
+        <uap:SplashScreen
+          Image="Assets\SplashScreen.png"
+          BackgroundColor="#1a2035" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <!--
+      runFullTrust: required for all Desktop Bridge (Win32) packaged apps.
+
+      broadFileSystemAccess: Compendia reads and writes files in user-chosen
+      folders anywhere on disk — it writes .compendia_cache/ subdirectories and
+      _compendia_tag_library.json alongside media files. Without this capability
+      the MSIX sandbox blocks those writes silently. Declared here and justified
+      in the Store submission notes.
+    -->
+    <rescap:Capability Name="runFullTrust" />
+    <rescap:Capability Name="broadFileSystemAccess" />
+  </Capabilities>
+
+</Package>
