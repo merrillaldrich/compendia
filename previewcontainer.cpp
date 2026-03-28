@@ -1137,6 +1137,11 @@ bool PreviewContainer::eventFilter(QObject *obj, QEvent *e)
                 emit navigateRequested(+1);
                 return true;
             }
+        } else if (e->type() == QEvent::MouseButtonPress && is_video_) {
+            if (static_cast<QMouseEvent*>(e)->button() == Qt::LeftButton) {
+                playPauseButton_->click();
+                return true;
+            }
         } else if (e->type() == QEvent::MouseMove) {
             const int x = static_cast<QMouseEvent*>(e)->pos().x();
             const bool inZone = x < kNavHotZoneWidth ||
