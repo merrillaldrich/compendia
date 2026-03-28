@@ -5,12 +5,14 @@
 
 /*! \brief Searches \p baseName for an embedded timestamp and converts it to a QDateTime.
  *
- * Looks for a run of exactly 14 or 8 consecutive digits that appears at the start of
- * \p baseName or immediately after a non-digit character, and whose first four digits
- * form a year in the range 2000–2999.  14-digit sequences are interpreted as
- * YYYYMMDDHHmmss; 8-digit sequences as YYYYMMDD with a noon (12:00:00) time component.
- * At each candidate position the 14-digit alternative is tested first, so a full
- * timestamp always wins over a date-only prefix.
+ * Looks for a run of exactly 14 or 8 consecutive digits, or a 10-character
+ * hyphenated date (yyyy-MM-dd), that appears at the start of \p baseName or
+ * immediately after a non-digit character, and whose first four digits form a year
+ * in the range 1800–3000.  14-digit sequences are interpreted as YYYYMMDDHHmmss;
+ * 8-digit sequences as YYYYMMDD; 10-character hyphenated sequences as YYYY-MM-DD.
+ * The latter two formats are given a noon (12:00:00) time component.  At each
+ * candidate position the 14-digit alternative is tested first, so a full timestamp
+ * always wins over a date-only prefix.
  *
  * \param baseName File base name (without extension) to search.
  * \return A valid QDateTime on success; an invalid QDateTime when no match is found.
@@ -18,17 +20,21 @@
 static QDateTime inferDateTimeFromFileName(const QString &baseName)
 {
     static const QRegularExpression re(
-        R"((?:^|(?<=[^\d]))(\d{14}|\d{8})(?=[^\d]|$))");
+        R"((?:^|(?<=[^\d]))(\d{14}|\d{8}|\d{4}-\d{2}-\d{2})(?=[^\d]|$))");
     QRegularExpressionMatchIterator it = re.globalMatch(baseName);
     while (it.hasNext()) {
         QString seq = it.next().captured(1);
         int year = seq.left(4).toInt();
-        if (year < 2000 || year > 2999)
+        if (year < 1800 || year > 3000)
             continue;
         if (seq.length() == 14) {
             QDateTime dt = QDateTime::fromString(seq, "yyyyMMddHHmmss");
             if (dt.isValid())
                 return dt;
+        } else if (seq.length() == 10) {
+            QDate d = QDate::fromString(seq, "yyyy-MM-dd");
+            if (d.isValid())
+                return QDateTime(d, QTime(12, 0, 0));
         } else {
             QDate d = QDate::fromString(seq, "yyyyMMdd");
             if (d.isValid())
