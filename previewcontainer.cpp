@@ -607,12 +607,34 @@ PreviewContainer::PreviewContainer(QWidget *parent)
     navLeftButton_->installEventFilter(this);
     navRightButton_->installEventFilter(this);
 
-    // Play/pause button toggles playback state
+    // Play/pause button toggles playback state.
+    // If a video thumbnail is shown but playback hasn't started yet, clicking
+    // Play sets up the videoItem and starts from the beginning of the file.
     connect(playPauseButton_, &QPushButton::clicked, this, [this]() {
-        if (mediaPlayer->playbackState() == QMediaPlayer::PlayingState)
-            mediaPlayer->pause();
-        else
+        if (!pending_video_path_.isEmpty()) {
+            // Transition from static thumbnail to real video playback.
+            drop_preview_rect_ = nullptr;
+            scene->clear();
+            videoItem = nullptr;
+
+            videoItem = new QGraphicsVideoItem;
+            scene->addItem(videoItem);
+            connect(videoItem, &QGraphicsVideoItem::nativeSizeChanged, this, [this](const QSizeF &size) {
+                if (size.isEmpty()) return;
+                videoItem->setSize(size);
+                scene->setSceneRect(videoItem->boundingRect());
+                view->fitInView(videoItem, Qt::KeepAspectRatio);
+            });
+
+            mediaPlayer->setVideoSink(videoItem->videoSink());
+            mediaPlayer->setSource(QUrl::fromLocalFile(pending_video_path_));
+            pending_video_path_.clear();
             mediaPlayer->play();
+        } else if (mediaPlayer->playbackState() == QMediaPlayer::PlayingState) {
+            mediaPlayer->pause();
+        } else {
+            mediaPlayer->play();
+        }
     });
 
     // Keep button label in sync with actual playback state
@@ -662,6 +684,12 @@ void PreviewContainer::updateTimeLabel(qint64 position, qint64 duration)
  * \param image The image to display.
  */
 void PreviewContainer::preview(QImage image){
+    if (frameSink_) {
+        frameSink_->disconnect();
+        frameSink_->deleteLater();
+        frameSink_ = nullptr;
+    }
+    pending_video_path_.clear();
     mediaPlayer->stop();
     is_video_ = false;
     view->setAcceptDrops(true);
@@ -695,8 +723,20 @@ void PreviewContainer::preview(QImage image){
  */
 void PreviewContainer::preview(QString absoluteFilePath){
 
+    // Always cancel any in-progress frame capture before doing anything else.
+    // This must run unconditionally so that switching from a video to an image
+    // (or to a different video) never leaves a stale lambda able to fire and
+    // corrupt state that belongs to the new selection.
+    if (frameSink_) {
+        frameSink_->disconnect();
+        frameSink_->deleteLater();
+        frameSink_ = nullptr;
+    }
+    pending_video_path_.clear();
+
     if (isVideoFile(absoluteFilePath)) {
         mediaPlayer->stop();
+
         drop_preview_rect_ = nullptr; // scene->clear() below will delete it
         scene->clear();
         videoItem = nullptr;
@@ -704,24 +744,53 @@ void PreviewContainer::preview(QString absoluteFilePath){
         tag_rect_descriptors_.clear();
         image_size_ = QSizeF();
 
-        videoItem = new QGraphicsVideoItem;
-        scene->addItem(videoItem);
-
-        connect(videoItem, &QGraphicsVideoItem::nativeSizeChanged, this, [this](const QSizeF &size) {
-            if (size.isEmpty()) return;
-            videoItem->setSize(size);
-            scene->setSceneRect(videoItem->boundingRect());
-            view->fitInView(videoItem, Qt::KeepAspectRatio);
-        });
-
+        pending_video_path_ = absoluteFilePath;
         is_video_ = true;
         view->setAcceptDrops(false);
+        view->setDragMode(QGraphicsView::NoDrag);
         controlBar_->show();
-        mediaPlayer->setVideoSink(videoItem->videoSink());
+        playPauseButton_->setText("Play");
+
+        // Capture the first decoded frame and display it as a static thumbnail.
+        // A temporary QVideoSink receives frames without touching the scene's
+        // videoItem, which is only created when the user actually clicks Play.
+        frameSink_ = new QVideoSink(this);
+
+        // Capture the exact sink pointer so the lambda can detect whether it
+        // has been superseded (frameSink_ replaced or nulled) before it fires.
+        QVideoSink* thisSink = frameSink_;
+        connect(frameSink_, &QVideoSink::videoFrameChanged, this,
+                [this, thisSink](const QVideoFrame &frame) {
+            // Bail out if this callback is stale (a newer selection already
+            // replaced frameSink_) or the frame contains no data.
+            if (!frame.isValid() || thisSink != frameSink_) return;
+
+            frameSink_->disconnect();
+            frameSink_->deleteLater();
+            frameSink_ = nullptr;
+            mediaPlayer->stop();
+
+            QImage img = frame.toImage();
+            const QSize viewSize = view->size();
+            const int targetW = viewSize.width()  * 2;
+            const int targetH = viewSize.height() * 2;
+            if (!img.isNull() && (img.width() > targetW || img.height() > targetH))
+                img = img.scaled(targetW, targetH, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+            // preview(QImage) clears pending_video_path_, but we still need it
+            // so the Play button knows to set up the videoItem on first press.
+            QString savedPath = pending_video_path_;
+            preview(img);       // displays the frame; also sets is_video_=false and hides controlBar_
+            pending_video_path_ = savedPath;
+            is_video_ = true;   // restore video state so freshen() and other callers behave correctly
+            controlBar_->show();
+            playPauseButton_->setText("Play");
+        });
+
+        mediaPlayer->setVideoSink(frameSink_);
         mediaPlayer->setSource(QUrl::fromLocalFile(absoluteFilePath));
         mediaPlayer->play();
 
-        view->setDragMode(QGraphicsView::NoDrag);
         view->show();
         return;
     }

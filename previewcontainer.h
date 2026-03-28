@@ -21,6 +21,8 @@
 
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QVideoSink>
+#include <QVideoFrame>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSlider>
@@ -217,6 +219,8 @@ private:
     QColor             drop_preview_color_ = Qt::white; ///< Fill colour of the drop-preview rectangle.
     QSizeF             image_size_;               ///< Pixel dimensions of the currently displayed image.
     bool               is_video_ = false;         ///< True when the current preview is a video file.
+    QString            pending_video_path_;        ///< Path of a video whose thumbnail has been shown but playback not yet started.
+    QVideoSink*        frameSink_ = nullptr;       ///< Temporary sink used to capture the first video frame for the thumbnail.
 
     QWidget*           controlBar_ = nullptr;     ///< Transport control bar shown below video previews.
     QPushButton*       playPauseButton_ = nullptr; ///< Toggles video playback.
