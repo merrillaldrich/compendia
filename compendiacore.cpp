@@ -743,7 +743,11 @@ void CompendiaCore::onScanFinished()
     }
 
     emit scanFinished(tagged_files_->rowCount(), toCache);
-    loadTagLibraryFile();
+    // Defer one event-loop cycle so the scanFinished UI effects (progress bar, date
+    // picker, folder filter) are processed before the tag library load begins.  This
+    // keeps the main thread alive for the OS watchdog and lets the user see the
+    // "scan complete" state before the single tag-UI rebuild that follows.
+    QTimer::singleShot(0, this, &CompendiaCore::loadTagLibraryFile);
 }
 
 /*! \brief Starts the UI flush timer if it is not already running. */
@@ -1187,7 +1191,13 @@ Tag* CompendiaCore::addLibraryTag(QString tagFamilyName, QString tagName){
         tags_->insert(matchingTag);
         connect(matchingTag, &Tag::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
     }
-    emit tagLibraryChanged();
+    // Guard against emitting during bulk load (libraryFileInitialized_ is false until
+    // loadTagLibraryFile() completes).  Without this, addLibraryTag() fires a full
+    // TagContainer rebuild for every tag in the library — hundreds of widget rebuilds
+    // with no event-loop cycles between them, causing the OS "hung application" dialog.
+    // loadTagLibraryFile() emits tagLibraryChanged() exactly once after setting the flag.
+    if (libraryFileInitialized_)
+        emit tagLibraryChanged();
     return matchingTag;
 }
 
