@@ -363,6 +363,16 @@ if(WIN32)
             "${VCPKG_INSTALLED_DIR}/bin/libx265.dll"
         )
         install(FILES ${_THIRD_PARTY_DLLS} DESTINATION .)
+
+        # License files for the vcpkg-provided libraries.
+        foreach(_lib libexif libheif libde265 x265 openblas fftw3)
+            set(_lic "${VCPKG_INSTALLED_DIR}/share/${_lib}/copyright")
+            if(EXISTS "${_lic}")
+                install(FILES "${_lic}"
+                        DESTINATION licenses
+                        RENAME "${_lib}-LICENSE.txt")
+            endif()
+        endforeach()
     else()
         message(WARNING
             "compendia: vcpkg installed dir not found — exif-12.dll, heif.dll "
