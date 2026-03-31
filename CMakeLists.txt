@@ -364,6 +364,24 @@ if(WIN32)
         )
         install(FILES ${_THIRD_PARTY_DLLS} DESTINATION .)
 
+        # The vcpkg DLLs above are built with MSVC and depend on the Visual C++
+        # runtime.  Bundle these DLLs so the package runs on machines that do not
+        # have the VC++ Redistributable installed.
+        file(TO_CMAKE_PATH "$ENV{SystemRoot}" _sysroot)
+        foreach(_msvcrt
+                vcruntime140.dll
+                vcruntime140_1.dll
+                msvcp140.dll)
+            if(EXISTS "${_sysroot}/System32/${_msvcrt}")
+                install(FILES "${_sysroot}/System32/${_msvcrt}" DESTINATION .)
+                message(STATUS "Bundling MSVC runtime: ${_msvcrt}")
+            else()
+                message(WARNING
+                    "compendia: MSVC runtime DLL not found: ${_sysroot}/System32/${_msvcrt}\n"
+                    "The package may fail on machines without the VC++ Redistributable.")
+            endif()
+        endforeach()
+
         # License files for the vcpkg-provided libraries.
         foreach(_lib libexif libheif libde265 x265 openblas fftw3)
             set(_lic "${VCPKG_INSTALLED_DIR}/share/${_lib}/copyright")
