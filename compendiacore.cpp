@@ -395,9 +395,20 @@ void CompendiaCore::cancelIconGeneration(){
     }
 
     if (iconGenerator_) {
-        iconGenerator_->disconnect();
-        iconGenerator_->deleteLater();
+        // Disconnect from CompendiaCore so cancelled results are never applied to the
+        // model and onIconBatchFinished() is not called for this stale generator.
+        // Then wire batchFinished() directly to deleteLater() on the generator itself:
+        // once all in-flight background tasks have checked the cancel flag and posted
+        // their (empty) completion callbacks, batchFinished() fires and the generator
+        // safely deletes itself. This guarantees the generator outlives every pending
+        // QMetaObject::invokeMethod call captured against its 'this' pointer, avoiding
+        // use-after-free when the pool threads post results after the cancel.
+        IconGenerator *oldGen = iconGenerator_;
         iconGenerator_ = nullptr;
+        disconnect(oldGen, &IconGenerator::fileReady,     this, &CompendiaCore::onIconReady);
+        disconnect(oldGen, &IconGenerator::batchFinished, this, &CompendiaCore::onIconBatchFinished);
+        connect(   oldGen, &IconGenerator::batchFinished, oldGen, &QObject::deleteLater);
+        oldGen->cancel();
     }
     uiFlushTimer_.stop();
     QMutexLocker lock(&resultsMutex_);

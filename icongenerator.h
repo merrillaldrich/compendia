@@ -52,6 +52,16 @@ public:
      */
     void processFiles(const QStringList &absolutePaths);
 
+    /*! \brief Requests cancellation of all pending work.
+     *
+     * Sets a flag that causes in-flight background image tasks to skip processing and
+     * return immediately with empty results. Any active FrameGrabber is disconnected and
+     * scheduled for deletion. batchFinished() will still be emitted once all tasks have
+     * posted their (empty) completion callbacks, so it is safe to connect batchFinished()
+     * to this object's deleteLater() after calling cancel().
+     */
+    void cancel();
+
     /*! \brief Returns true when all kIconSizes cache files exist and are newer than the source. */
     static bool             iconCacheValid(const QString &absolutePath);
 
@@ -147,6 +157,7 @@ private:
     static bool saveIconToCache(const QString &absoluteFileName, const QImage &pict, int size);
 
     QAtomicInt    pendingImageCount_;        ///< Tracks remaining image tasks; decremented as each completes.
+    QAtomicInt    cancelRequested_{0};       ///< Set to 1 by cancel(); background tasks check this and skip processing if set.
     bool          videoGrabDone_ = true;     ///< True when no FrameGrabber work is pending.
     FrameGrabber *frameGrabber_  = nullptr;  ///< Active FrameGrabber, or nullptr.
     QThreadPool   backfillPool_;             ///< Dedicated pool for backfill; keeps jobs off the global pool so demand loads are never queue-starved.

@@ -170,13 +170,46 @@ void IconGenerator::processFiles(const QStringList &absolutePaths)
     // --- Image handling ---
     for (const QString &path : imagePaths) {
         QtConcurrent::run(&backfillPool_, [this, path]() {
-            auto [exifMap, images, pHash] = processImageFile(path);
+            // Check for cancellation before doing any heavy work. If cancelled, post
+            // an empty result so the counter is still decremented and batchFinished()
+            // can fire once all tasks have reported back.
+            QMap<QString, QString> exifMap;
+            QVector<QImage> images;
+            quint64 pHash = 0;
+            if (!cancelRequested_.loadAcquire()) {
+                auto result = processImageFile(path);
+                exifMap = std::get<0>(std::move(result));
+                images  = std::get<1>(std::move(result));
+                pHash   = std::get<2>(result);
+            }
             QMetaObject::invokeMethod(this, [this, path, exifMap, images, pHash]() {
                 onImageTaskComplete(path, exifMap, images, pHash);
             }, Qt::QueuedConnection);
         });
     }
 
+    checkBatchComplete();
+}
+
+/*! \brief Requests cancellation of all pending work. */
+void IconGenerator::cancel()
+{
+    cancelRequested_.storeRelaxed(1);
+
+    // Stop the video state machine immediately. Disconnect its signals so none of
+    // onFrameGrabbed / onFrameFailed / onVideoGrabFinished fire after this point,
+    // then mark video as done so checkBatchComplete() is not gated on it.
+    if (frameGrabber_) {
+        frameGrabber_->disconnect();
+        frameGrabber_->deleteLater();
+        frameGrabber_ = nullptr;
+        videoGrabDone_ = true;
+    }
+
+    // If all image tasks were already done (or there were none), batchFinished()
+    // would have been gated only on the video grab which we just cleared. Kick
+    // checkBatchComplete() so batchFinished() can emit without waiting for
+    // background tasks that no longer exist.
     checkBatchComplete();
 }
 
