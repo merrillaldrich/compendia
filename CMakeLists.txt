@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(compendia VERSION 0.1.1 LANGUAGES CXX)
+project(compendia VERSION 0.1.2 LANGUAGES CXX)
 
 # Generate version.h from version.h.in, substituting project version variables.
 configure_file(version.h.in "${CMAKE_CURRENT_BINARY_DIR}/version.h")
