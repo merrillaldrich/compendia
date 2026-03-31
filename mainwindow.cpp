@@ -75,6 +75,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(core, &CompendiaCore::iconUpdated, this, &MainWindow::onIconUpdated);
     connect(core, &CompendiaCore::batchFinished, this, [this]() {
         progress_->finishProcess(MultiProgressBar::Process::IconGeneration);
+        const bool hasUnreadable = core->hasUnreadableFiles();
+        ui->actionUnreadableFiles->setEnabled(hasUnreadable);
+        ui->actionUnreadableFiles->setIcon(hasUnreadable
+            ? QIcon(":/resources/unreadable-files.svg") : QIcon());
     });
     connect(core, &CompendiaCore::metadataSaved, this, &MainWindow::onMetadataSaved);
 
@@ -667,6 +671,8 @@ void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
     welcome_widget_->hide();
     ui->fileListView->show();
     ui->actionClearIsolation->setEnabled(false);
+    ui->actionUnreadableFiles->setEnabled(false);
+    ui->actionUnreadableFiles->setIcon(QIcon());
     lv->setModel(core->getItemModelProxy());
 
     // Viewport-priority icon loading: keep CompendiaCore informed of what is visible.
@@ -899,6 +905,15 @@ void MainWindow::on_actionClearAllFilters_triggered()
     // Isolation sets
     clearSelectionIsolation();
 
+    refreshTagAssignmentArea();
+}
+
+/*! \brief Isolates files that could not be opened during icon generation. */
+void MainWindow::on_actionUnreadableFiles_triggered()
+{
+    core->isolateUnreadableFiles();
+    ui->actionClearIsolation->setEnabled(true);
+    updateFileCountLabel();
     refreshTagAssignmentArea();
 }
 

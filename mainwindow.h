@@ -431,6 +431,9 @@ private slots:
     /*! \brief Resets all filter controls to their default empty state. */
     void on_actionClearAllFilters_triggered();
 
+    /*! \brief Isolates files that could not be opened during icon generation. */
+    void on_actionUnreadableFiles_triggered();
+
     /*! \brief Drills into the folder of the selected file, reloading with it as the new root. */
     void on_actionDrillToFolder_triggered();
 

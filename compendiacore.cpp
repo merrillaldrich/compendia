@@ -406,6 +406,7 @@ void CompendiaCore::cancelIconGeneration(){
         IconGenerator *oldGen = iconGenerator_;
         iconGenerator_ = nullptr;
         disconnect(oldGen, &IconGenerator::fileReady,     this, &CompendiaCore::onIconReady);
+        disconnect(oldGen, &IconGenerator::fileFailed,    this, &CompendiaCore::onFileFailed);
         disconnect(oldGen, &IconGenerator::batchFinished, this, &CompendiaCore::onIconBatchFinished);
         connect(   oldGen, &IconGenerator::batchFinished, oldGen, &QObject::deleteLater);
         oldGen->cancel();
@@ -444,6 +445,7 @@ void CompendiaCore::loadRootDirectory(){
     uncachedPaths_.clear();
     iconPool_.clear();
     pendingIconLoads_.clear();
+    unreadableFiles_.clear();
     {
         QWriteLocker lock(&wantedMutex_);
         wantedIconPaths_.clear();
@@ -646,6 +648,8 @@ void CompendiaCore::backfillMetadata(){
     iconGenerator_ = new IconGenerator(this);
     connect(iconGenerator_, &IconGenerator::fileReady,
             this, &CompendiaCore::onIconReady);
+    connect(iconGenerator_, &IconGenerator::fileFailed,
+            this, &CompendiaCore::onFileFailed);
     connect(iconGenerator_, &IconGenerator::batchFinished,
             this, &CompendiaCore::onIconBatchFinished);
     iconGenerator_->processFiles(pathsToProcess);
@@ -683,6 +687,32 @@ void CompendiaCore::onIconBatchFinished()
     emit batchFinished();
     iconGenerator_->deleteLater();
     iconGenerator_ = nullptr;
+}
+
+/*! \brief Called when IconGenerator reports that a file could not be opened. */
+void CompendiaCore::onFileFailed(const QString &absolutePath)
+{
+    const int n = tagged_files_->rowCount();
+    for (int i = 0; i < n; ++i) {
+        auto *tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && (tf->filePath + "/" + tf->fileName) == absolutePath) {
+            unreadableFiles_.insert(tf);
+            return;
+        }
+    }
+}
+
+/*! \brief Returns true if any files failed to open during the last icon generation batch. */
+bool CompendiaCore::hasUnreadableFiles() const
+{
+    return !unreadableFiles_.isEmpty();
+}
+
+/*! \brief Isolates the set of files that could not be opened during icon generation. */
+void CompendiaCore::isolateUnreadableFiles()
+{
+    if (!unreadableFiles_.isEmpty())
+        setIsolationSet(unreadableFiles_);
 }
 
 /*! \brief Receives a batch of scanned files from the background FolderScanner. */
@@ -2083,7 +2113,8 @@ void CompendiaCore::handleFileAdded(const QString& absolutePath)
         connect(&uiFlushTimer_, &QTimer::timeout, this, &CompendiaCore::flushIconGeneratorQueue);
         uiFlushTimer_.setInterval(50);
         iconGenerator_ = new IconGenerator(this);
-        connect(iconGenerator_, &IconGenerator::fileReady,  this, &CompendiaCore::onIconReady);
+        connect(iconGenerator_, &IconGenerator::fileReady,    this, &CompendiaCore::onIconReady);
+        connect(iconGenerator_, &IconGenerator::fileFailed,   this, &CompendiaCore::onFileFailed);
         connect(iconGenerator_, &IconGenerator::batchFinished, this, &CompendiaCore::onIconBatchFinished);
         iconGenerator_->processFiles({absolutePath});
         qDebug() << "[FileWatch] handleFileAdded: icon generation started";

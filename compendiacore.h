@@ -66,6 +66,8 @@ private:
     /// Non-owning pointer to the file-list view; set once from MainWindow::loadFolder.
     QListView      *listView_ = nullptr;
 
+    QSet<TaggedFile*> unreadableFiles_; ///< Files that could not be opened during icon generation (possibly corrupt).
+
     IconGenerator *iconGenerator_ = nullptr;  ///< Active IconGenerator, or nullptr.
     QStringList uncachedPaths_;  ///< Paths with no icon cache; populated by onScanBatch, consumed by backfillMetadata.
     FolderScanner *folderScanner_ = nullptr;  ///< Active FolderScanner, or nullptr.
@@ -428,6 +430,16 @@ public:
     /*! \brief Clears all active tag filters. */
     void clearAllTagFilters();
 
+    /*! \brief Returns true if any files failed to open during the last icon generation batch. */
+    bool hasUnreadableFiles() const;
+
+    /*! \brief Isolates the set of files that could not be opened during icon generation.
+     *
+     * Calls setIsolationSet() with the internally tracked unreadable-files set.
+     * No-op if no files failed.
+     */
+    void isolateUnreadableFiles();
+
     /*! \brief Restricts the visible set to the given files; other filters still apply within the set.
      *
      * \param files The set of TaggedFile pointers to isolate.
@@ -576,6 +588,13 @@ public slots:
     void updateWantedPaths();
 
 private slots:
+
+    /*! \brief Called when IconGenerator reports that a file could not be opened.
+     *
+     * Finds the matching TaggedFile by path and records it in unreadableFiles_.
+     * \param absolutePath Absolute path to the file that failed.
+     */
+    void onFileFailed(const QString &absolutePath);
 
     /*! \brief Receives a completed file result from IconGenerator and pushes it to the flush queue.
      *

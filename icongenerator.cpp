@@ -224,6 +224,8 @@ void IconGenerator::onImageTaskComplete(const QString &path,
                                         const QVector<QImage> &images,
                                         quint64 pHash)
 {
+    if (images.isEmpty() && !cancelRequested_.loadAcquire())
+        emit fileFailed(path);
     emit fileReady(path, exifMap, images, pHash);
     if (pendingImageCount_.fetchAndAddOrdered(-1) - 1 == 0)
         checkBatchComplete();
@@ -258,6 +260,7 @@ void IconGenerator::onFrameFailed(const QString &path, const QString &reason,
                                   const QMap<QString, QString> &meta)
 {
     qWarning() << "IconGenerator: frame capture failed for" << path << ":" << reason;
+    emit fileFailed(path);
     QVector<QImage> placeholders;
     for (int size : kIconSizes)
         placeholders << videoPlaceholderIcon(size);

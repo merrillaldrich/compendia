@@ -861,6 +861,8 @@
     <addaction name="actionDrillUp"/>
     <addaction name="separator"/>
     <addaction name="actionClearAllFilters"/>
+    <addaction name="separator"/>
+    <addaction name="actionUnreadableFiles"/>
    </widget>
    <widget class="QMenu" name="menuAutos">
     <property name="title">
@@ -1023,6 +1025,14 @@
   <action name="actionClearAllFilters">
    <property name="text">
     <string>Clear All</string>
+   </property>
+  </action>
+  <action name="actionUnreadableFiles">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Unreadable Files</string>
    </property>
   </action>
   <action name="actionAbout">

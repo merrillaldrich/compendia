@@ -17,5 +17,6 @@
         <file>resources/tag-hint.svg</file>
         <file>resources/about_background.svg</file>
         <file>resources/compendia_icon.svg</file>
+        <file>resources/unreadable-files.svg</file>
     </qresource>
 </RCC>

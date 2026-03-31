@@ -90,6 +90,12 @@ signals:
                    const QVector<QImage> &images,
                    quint64 pHash);
 
+    /*! \brief Emitted when a file could not be opened or decoded (image decode failure or video frame-grab failure).
+     *
+     * \param absolutePath Absolute path to the file that could not be read.
+     */
+    void fileFailed(const QString &absolutePath);
+
     /*! \brief Emitted exactly once when all image tasks and video grabs are complete. */
     void batchFinished();
 
