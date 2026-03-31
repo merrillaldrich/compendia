@@ -221,6 +221,8 @@ private:
     bool               is_video_ = false;         ///< True when the current preview is a video file.
     QString            pending_video_path_;        ///< Path of a video whose thumbnail has been shown but playback not yet started.
     QVideoSink*        frameSink_ = nullptr;       ///< Temporary sink used to capture the first video frame for the thumbnail.
+    QVideoSink*        videoPlaybackSink_ = nullptr; ///< Persistent sink for per-frame software video rendering (Linux + SoftwareVideoScaling only).
+    QGraphicsPixmapItem* videoPixmapItem_ = nullptr; ///< Scene item updated each frame in the software rendering path.
 
     QWidget*           controlBar_ = nullptr;     ///< Transport control bar shown below video previews.
     QPushButton*       playPauseButton_ = nullptr; ///< Toggles video playback.

@@ -53,6 +53,15 @@ constexpr int BulkUntagWarningThreshold = 5;
  */
 constexpr bool ShowPreReleaseWarning = false;
 
+/*! \brief When \c true and running on Linux, video frames are decoded to \c QImage and
+ *  scaled in software before display, eliminating the moiré and aliasing artefacts
+ *  produced by the platform video renderer (GStreamer) when downscaling large frames.
+ *
+ *  Has no effect on non-Linux platforms.  Set to \c false to revert to the native
+ *  \c QGraphicsVideoItem path on all platforms.
+ */
+constexpr bool SoftwareVideoScaling = true;
+
 /*! \brief Maximum Hamming distance between two pHash values for the images to be
  *  considered near-duplicates by the "Find Similar Images" feature.
  */

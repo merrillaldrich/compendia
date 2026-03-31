@@ -17,6 +17,14 @@
 #include <QMenu>
 #include <memory>
 
+// True only when the Linux software-scaling path is enabled via constants.h.
+// Used with if constexpr so the compiler eliminates the dead branch entirely.
+#ifdef Q_OS_LINUX
+static constexpr bool kSoftwareVideo = Compendia::SoftwareVideoScaling;
+#else
+static constexpr bool kSoftwareVideo = false;
+#endif
+
 static bool isVideoFile(const QString &path)
 {
     static const QStringList videoExts = {"mp4","mov","avi","mkv","wmv","webm","m4v"};
@@ -614,19 +622,51 @@ PreviewContainer::PreviewContainer(QWidget *parent)
         if (!pending_video_path_.isEmpty()) {
             // Transition from static thumbnail to real video playback.
             drop_preview_rect_ = nullptr;
+            if (videoPlaybackSink_) {
+                videoPlaybackSink_->disconnect();
+                videoPlaybackSink_->deleteLater();
+                videoPlaybackSink_ = nullptr;
+            }
             scene->clear();
             videoItem = nullptr;
+            videoPixmapItem_ = nullptr;
 
-            videoItem = new QGraphicsVideoItem;
-            scene->addItem(videoItem);
-            connect(videoItem, &QGraphicsVideoItem::nativeSizeChanged, this, [this](const QSizeF &size) {
-                if (size.isEmpty()) return;
-                videoItem->setSize(size);
-                scene->setSceneRect(videoItem->boundingRect());
-                view->fitInView(videoItem, Qt::KeepAspectRatio);
-            });
+            if constexpr (kSoftwareVideo) {
+                // Software path: receive each decoded frame as a QVideoFrame, scale it
+                // in software using Qt's area-averaging filter, and push it to a plain
+                // QGraphicsPixmapItem.  This avoids the moiré / aliasing artefacts that
+                // the GStreamer-backed QGraphicsVideoItem produces on Linux when
+                // downscaling large frames through the view transform.
+                videoPixmapItem_ = new QGraphicsPixmapItem;
+                videoPixmapItem_->setTransformationMode(Qt::SmoothTransformation);
+                scene->addItem(videoPixmapItem_);
+                view->setRenderHint(QPainter::Antialiasing);
+                view->setRenderHint(QPainter::SmoothPixmapTransform);
 
-            mediaPlayer->setVideoSink(videoItem->videoSink());
+                videoPlaybackSink_ = new QVideoSink(this);
+                connect(videoPlaybackSink_, &QVideoSink::videoFrameChanged, this,
+                        [this](const QVideoFrame &frame) {
+                    if (!frame.isValid() || !videoPixmapItem_) return;
+                    QImage img = frame.toImage().convertToFormat(QImage::Format_RGB32);
+                    if (!img.isNull())
+                        img = img.scaled(view->size(), Qt::KeepAspectRatio,
+                                         Qt::SmoothTransformation);
+                    videoPixmapItem_->setPixmap(QPixmap::fromImage(img));
+                    scene->setSceneRect(videoPixmapItem_->boundingRect());
+                    view->fitInView(videoPixmapItem_, Qt::KeepAspectRatio);
+                });
+                mediaPlayer->setVideoSink(videoPlaybackSink_);
+            } else {
+                videoItem = new QGraphicsVideoItem;
+                scene->addItem(videoItem);
+                connect(videoItem, &QGraphicsVideoItem::nativeSizeChanged, this, [this](const QSizeF &size) {
+                    if (size.isEmpty()) return;
+                    videoItem->setSize(size);
+                    scene->setSceneRect(videoItem->boundingRect());
+                    view->fitInView(videoItem, Qt::KeepAspectRatio);
+                });
+                mediaPlayer->setVideoSink(videoItem->videoSink());
+            }
             mediaPlayer->setSource(QUrl::fromLocalFile(pending_video_path_));
             pending_video_path_.clear();
             mediaPlayer->play();
@@ -697,8 +737,14 @@ void PreviewContainer::preview(QImage image){
     if (volumePopup_) volumePopup_->hide();
     // Replace the image in the scene; scene->clear() deletes all items including overlays
     drop_preview_rect_ = nullptr; // scene->clear() below will delete it
+    if (videoPlaybackSink_) {
+        videoPlaybackSink_->disconnect();
+        videoPlaybackSink_->deleteLater();
+        videoPlaybackSink_ = nullptr;
+    }
     scene->clear();
-    videoItem = nullptr; // scene->clear() deleted it if it was present
+    videoItem = nullptr;        // scene->clear() deleted it if it was present
+    videoPixmapItem_ = nullptr; // scene->clear() deleted it if it was present
     tag_rect_items_.clear();
     tag_rect_descriptors_.clear();
     image_size_ = image.size();
@@ -738,8 +784,14 @@ void PreviewContainer::preview(QString absoluteFilePath){
         mediaPlayer->stop();
 
         drop_preview_rect_ = nullptr; // scene->clear() below will delete it
+        if (videoPlaybackSink_) {
+            videoPlaybackSink_->disconnect();
+            videoPlaybackSink_->deleteLater();
+            videoPlaybackSink_ = nullptr;
+        }
         scene->clear();
         videoItem = nullptr;
+        videoPixmapItem_ = nullptr;
         tag_rect_items_.clear();
         tag_rect_descriptors_.clear();
         image_size_ = QSizeF();
@@ -829,8 +881,13 @@ void PreviewContainer::preview(QString absoluteFilePath){
 void PreviewContainer::freshen(){
 
     if (is_video_) {
-        if (videoItem && !videoItem->boundingRect().isEmpty())
-            view->fitInView(videoItem, Qt::KeepAspectRatio);
+        if constexpr (kSoftwareVideo) {
+            if (videoPixmapItem_ && !videoPixmapItem_->boundingRect().isEmpty())
+                view->fitInView(videoPixmapItem_, Qt::KeepAspectRatio);
+        } else {
+            if (videoItem && !videoItem->boundingRect().isEmpty())
+                view->fitInView(videoItem, Qt::KeepAspectRatio);
+        }
         return;
     }
 
@@ -863,8 +920,14 @@ void PreviewContainer::clear(){
     timeLabel_->setText("0:00 / 0:00");
     if (view->scene() != nullptr){
         drop_preview_rect_ = nullptr; // scene->clear() below will delete it
+        if (videoPlaybackSink_) {
+            videoPlaybackSink_->disconnect();
+            videoPlaybackSink_->deleteLater();
+            videoPlaybackSink_ = nullptr;
+        }
         view->scene()->clear();
-        videoItem = nullptr; // scene->clear() deleted it
+        videoItem = nullptr;        // scene->clear() deleted it
+        videoPixmapItem_ = nullptr; // scene->clear() deleted it
         tag_rect_items_.clear();
         tag_rect_descriptors_.clear();
         image_size_ = QSizeF();
