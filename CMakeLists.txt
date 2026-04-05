@@ -31,6 +31,18 @@ if(WIN32)
     # libheif does not provide CMAKE config, so link straight to files
     set(LIBHEIF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/src")
     set(LIBHEIF_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/lib/heif.lib")
+elseif(APPLE)
+    # macOS: use Homebrew-installed libraries.
+    # Run: brew install libexif libheif
+    # Apple Silicon Homebrew prefix is /opt/homebrew; Intel Mac is /usr/local.
+    execute_process(COMMAND brew --prefix libexif
+        OUTPUT_VARIABLE _LIBEXIF_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND brew --prefix libheif
+        OUTPUT_VARIABLE _LIBHEIF_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+    set(LIBEXIF_INCLUDE_DIR "${_LIBEXIF_PREFIX}/include")
+    set(LIBHEIF_INCLUDE_DIR "${_LIBHEIF_PREFIX}/include")
+    find_library(LIBEXIF_LIBRARY NAMES exif HINTS "${_LIBEXIF_PREFIX}/lib" REQUIRED)
+    find_library(LIBHEIF_LIBRARY NAMES heif HINTS "${_LIBHEIF_PREFIX}/lib" REQUIRED)
 else()
     # Linux: use system-installed libraries.
     # Run: sudo apt install libexif-dev
@@ -125,6 +137,11 @@ target_link_libraries(compendia PRIVATE dlib)
 # single translation unit to avoid the "file too big" assembler error.
 if (MSVC)
     set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "/bigobj;/O2;/arch:AVX2")
+elseif(APPLE AND CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
+    # Apple Silicon (arm64): AVX2/FMA are x86-only; NEON is always available on ARM64.
+    # -O2 : aggressive inlining reduces symbol count
+    # -g0 : skip debug info to speed up this heavy translation unit
+    set_source_files_properties(facerecognizer.cpp PROPERTIES COMPILE_OPTIONS "-O2;-g0")
 else()
     # -O2      : aggressive inlining collapses per-instantiation functions,
     #            reducing the number of generated symbols
