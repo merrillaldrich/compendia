@@ -178,3 +178,28 @@ QProgressBar::chunk {
     background-color: #4CAF50;
     width: 12px;
 }
+
+/* ── File list toolbar buttons ──────────────────────────── */
+QToolButton#isolateFolderButton,
+QToolButton#clearFolderIsolationButton,
+QToolButton#isolateSelectionButton,
+QToolButton#clearIsolationButton {
+    border: none;
+    background: transparent;
+}
+
+QToolButton#isolateFolderButton:hover:enabled,
+QToolButton#clearFolderIsolationButton:hover:enabled,
+QToolButton#isolateSelectionButton:hover:enabled,
+QToolButton#clearIsolationButton:hover:enabled {
+    background-color: rgba(128, 128, 128, 0.15);
+    border-radius: 3px;
+}
+
+QToolButton#isolateFolderButton:pressed,
+QToolButton#clearFolderIsolationButton:pressed,
+QToolButton#isolateSelectionButton:pressed,
+QToolButton#clearIsolationButton:pressed {
+    background-color: rgba(128, 128, 128, 0.3);
+    border-radius: 3px;
+}
