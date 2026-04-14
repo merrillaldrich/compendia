@@ -26,6 +26,7 @@
 #include "icongenerator.h"
 #include "taggedfile.h"
 #include "folderscanner.h"
+#include "undomanager.h"
 
 /*! \brief Central controller that owns all application data and business logic.
  *
@@ -126,12 +127,21 @@ private:
 
     bool libraryFileInitialized_ = false; ///< True after loadTagLibraryFile() completes; guards writeTagLibraryFile() during scan loading.
     void writeTagLibraryFile();
+
+    UndoManager* undoManager_ = nullptr; ///< Snapshot-based undo/redo history manager.
     void loadTagLibraryFile();
     void inferTagLibraryColors();
     void applyColorsFromLibrary(const QString &libPath, QSet<QString> &unassigned);
 
     /*! \brief Removes \a family from the library if no tags reference it any longer. */
     void cleanupFamilyIfEmpty(TagFamily* family);
+
+    /*! \brief Core merge implementation shared by mergeTag() and mergeTagFamily()/refamilyTag().
+     *
+     * Re-routes files and the filter set from \a from to \a into, removes \a from
+     * from the library, and schedules it for deletion.  Does NOT checkpoint or
+     * clear the undo stack — callers handle that. */
+    void mergeTagImpl(Tag* from, Tag* into);
 
     /*! \brief Applies a generated thumbnail, EXIF data, and pHash to the matching model item.
      *
@@ -572,6 +582,43 @@ public:
      *  Removes the old family if it becomes empty. Emits tagLibraryChanged(). */
     void refamilyTag(Tag* tag, TagFamily* newFamily);
 
+    /*! \brief Returns the undo/redo history manager. */
+    UndoManager* undoManager() const { return undoManager_; }
+
+    /*! \brief Captures the full mutable model state as a snapshot.
+     *
+     * Includes the tag library (families, tags, colour indices) and per-file
+     * tag assignments and ratings.  Called by UndoManager::checkpoint().
+     * \param description Human-readable label for the action about to be performed.
+     */
+    ModelSnapshot captureSnapshot(const QString& description) const;
+
+    /*! \brief Restores the model to the state described by \a snap.
+     *
+     * Rebuilds the tag library in-memory, re-applies file tag assignments, and emits
+     * tagLibraryChanged() to refresh all tag UI.  Files whose state changed are
+     * marked dirty so the user can save the restored state.
+     * Called by UndoManager::undo() and UndoManager::redo().
+     */
+    void restoreSnapshot(const ModelSnapshot& snap);
+
+    /*! \brief Captures a checkpoint before a user mutation; no-op if undoManager_ is null.
+     *
+     * Convenience wrapper around undoManager_->checkpoint() intended for use
+     * at the top of each user-initiated mutation method.
+     * \param description Human-readable label for the action about to be performed.
+     */
+    void checkpoint(const QString& description);
+
+    /*! \brief Sets the rating for \a file, checkpointing for undo first.
+     *
+     * Routes the rating change through the undo system instead of calling
+     * TaggedFile::setRating() directly.
+     * \param file   The file whose rating to change.
+     * \param rating A value in [1,5], or std::nullopt to clear.
+     */
+    void setFileRating(TaggedFile* file, std::optional<int> rating);
+
 public slots:
 
     /*! \brief Starts the UI flush timer if it is not already running.
@@ -670,6 +717,13 @@ signals:
      * \param absolutePath Absolute path of the newly appeared file.
      */
     void fileAddedExternally(const QString& absolutePath);
+
+    /*! \brief Emitted at the end of restoreSnapshot(), after tagLibraryChanged() has fired.
+     *
+     * Connect to this signal to refresh UI elements that depend on per-file state
+     * (e.g. the preview star rating) but are not covered by tagLibraryChanged().
+     */
+    void snapshotRestored();
 };
 
 #endif // COMPENDIACORE_H

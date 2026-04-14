@@ -113,6 +113,17 @@ MainWindow::MainWindow(QWidget *parent)
             ui->dateEdit->setAvailableDates(core->getFileDates());
     });
     connect(core, &CompendiaCore::tagLibraryChanged, this, &MainWindow::onTagLibraryChanged);
+    connect(core, &CompendiaCore::snapshotRestored,  this, &MainWindow::onSnapshotRestored);
+
+    // Undo / Redo — wire actions into the Edit menu
+    {
+        QAction* undoAct = core->undoManager()->createUndoAction(this, tr("Undo"));
+        undoAct->setShortcut(QKeySequence::Undo);
+        QAction* redoAct = core->undoManager()->createRedoAction(this, tr("Redo"));
+        redoAct->setShortcut(QKeySequence::Redo);
+        ui->menuEdit->addAction(undoAct);
+        ui->menuEdit->addAction(redoAct);
+    }
 
     connect(core, &CompendiaCore::fileRemovedExternally,
             this, [this](TaggedFile* tf, bool, bool) {
@@ -179,12 +190,14 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->fileListStarRating->setRating(std::nullopt);
                 return;
             }
+            core->checkpoint(tr("Set rating"));
             for (int i = 0; i < n; ++i) {
                 TaggedFile *tf = model->data(
                     proxy->mapToSource(proxy->index(i, 0)), Qt::UserRole + 1).value<TaggedFile*>();
                 if (tf) tf->setRating(rating);
             }
         } else {
+            core->checkpoint(tr("Set rating"));
             for (const QModelIndex &idx : sel) {
                 TaggedFile *tf = model->data(
                     proxy->mapToSource(idx), Qt::UserRole + 1).value<TaggedFile*>();
@@ -234,7 +247,7 @@ MainWindow::MainWindow(QWidget *parent)
             selModel->selectedIndexes().first());
         TaggedFile *tf = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
         if (tf)
-            tf->setRating(rating);
+            core->setFileRating(tf, rating);
     });
 
 
@@ -826,6 +839,17 @@ void MainWindow::onTagLibraryChanged()
     onTagNameChanged(nullptr);  // refresh preview tag-region overlays
 }
 
+/*! \brief Refreshes per-file preview UI elements not covered by onTagLibraryChanged(). */
+void MainWindow::onSnapshotRestored()
+{
+    QItemSelectionModel* sm = ui->fileListView->selectionModel();
+    if (!sm || !sm->currentIndex().isValid()) return;
+    QModelIndex src = core->getItemModelProxy()->mapToSource(sm->currentIndex());
+    TaggedFile* tf  = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    if (!tf) return;
+    ui->previewStarRating->setRating(tf->rating());
+}
+
 /*! \brief Isolates the currently selected files so only they pass the filter.
  *
  * Collects every selected file's TaggedFile pointer and passes them to the core
@@ -1364,6 +1388,8 @@ void MainWindow::onTagDroppedOnPreview(const QString &family,
     Tag* tag = core->getTag(family, tagName);
     if (!tag) return;
 
+    core->checkpoint(tr("Tag region"));
+
     if (tf->tags()->contains(tag))
         tf->setTagRect(tag, normalizedRect);
     else
@@ -1403,6 +1429,8 @@ void MainWindow::onTagDroppedOnExistingRegion(const QString &family,
 
     Tag* newTag = core->getTag(family, tagName);
     if (!newTag) return;
+
+    core->checkpoint(tr("Tag region"));
 
     // Find the tag currently assigned to the hit region
     Tag* oldTag = nullptr;

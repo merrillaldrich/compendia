@@ -50,6 +50,8 @@ CompendiaCore::CompendiaCore(QObject *parent)
     connect(&wantedUpdateTimer_, &QTimer::timeout, this, &CompendiaCore::updateWantedPaths);
 
     connect(this, &CompendiaCore::tagLibraryChanged, this, &CompendiaCore::writeTagLibraryFile);
+
+    undoManager_ = new UndoManager(this, this);
 }
 
 void CompendiaCore::setListView(QListView *view)
@@ -418,6 +420,11 @@ void CompendiaCore::cancelIconGeneration(){
 
 /*! \brief Clears all existing data and starts an async scan of the current root directory. */
 void CompendiaCore::loadRootDirectory(){
+
+    // Loading a new folder starts a fresh session; undo history from the
+    // previous folder is no longer meaningful.
+    if (undoManager_)
+        undoManager_->clear();
 
     // Clear any previously watched paths before loading a new folder.
     if (fileWatcher_) {
@@ -1290,6 +1297,7 @@ void CompendiaCore::addLibraryTagFamily(TagFamily* tagFamily){
  * \param tag The Tag to apply.
  */
 void CompendiaCore::applyTag(Tag* tag){
+    checkpoint(tr("Apply \u2018%1\u2019").arg(tag->getName()));
     // Apply tag to all the files in the filtered file list
     for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i){
         QModelIndex proxyIndex = tagged_files_proxy_->index(i, 0);
@@ -1308,6 +1316,7 @@ void CompendiaCore::applyTag(Tag* tag){
  * \param t The TagSet identifying the tag to apply.
  */
 void CompendiaCore::applyTag(TaggedFile* f, TagSet t){
+    checkpoint(tr("Apply tag"));
     Tag* tag = getTag(t.tagFamilyName, t.tagName);
     f->addTag(tag);
 }
@@ -1317,6 +1326,7 @@ void CompendiaCore::applyTag(TaggedFile* f, TagSet t){
  * \param tag The Tag to remove.
  */
 void CompendiaCore::unapplyTag(Tag* tag){
+    checkpoint(tr("Remove \u2018%1\u2019").arg(tag->getName()));
     // Remove tag from all the files in the filtered file list
     for (int i = 0; i < tagged_files_proxy_->rowCount(); ++i){
         QModelIndex proxyIndex = tagged_files_proxy_->index(i, 0);
@@ -1367,6 +1377,7 @@ int CompendiaCore::countAllFilesWithTag(Tag* tag){
  * \param tag The Tag to delete.
  */
 void CompendiaCore::deleteTagFromLibrary(Tag* tag){
+    checkpoint(tr("Delete \u2018%1\u2019").arg(tag->getName()));
     TagFamily* family = tag->tagFamily;
 
     for (int i = 0; i < tagged_files_->rowCount(); ++i) {
@@ -1395,6 +1406,7 @@ void CompendiaCore::deleteTagFromLibrary(Tag* tag){
  * \param tag  The Tag to remove.
  */
 void CompendiaCore::unapplyTag(TaggedFile* file, Tag* tag){
+    checkpoint(tr("Remove tag"));
     // Locate the file and remove the indicated tag from it
     for( int i = 0; i < tagged_files_->rowCount(); ++i ){
         QStandardItem* item = tagged_files_->item(i);
@@ -1722,7 +1734,7 @@ int CompendiaCore::removeAutoDetectedFaceTags()
  * \param from The Tag to be removed after merging.
  * \param into The Tag that survives the merge and receives all file/filter references.
  */
-void CompendiaCore::mergeTag(Tag* from, Tag* into)
+void CompendiaCore::mergeTagImpl(Tag* from, Tag* into)
 {
     // Re-route every file that carries 'from'
     for (int row = 0; row < tagged_files_->rowCount(); ++row) {
@@ -1750,6 +1762,16 @@ void CompendiaCore::mergeTag(Tag* from, Tag* into)
 
     tags_->remove(from);
     from->deleteLater();
+}
+
+void CompendiaCore::mergeTag(Tag* from, Tag* into)
+{
+    // Merge cannot be undone; clear history so the user cannot undo into
+    // an inconsistent state.
+    checkpoint(tr("Merge tags"));
+    if (undoManager_) undoManager_->clear();
+
+    mergeTagImpl(from, into);
     emit tagLibraryChanged();
 }
 
@@ -1761,6 +1783,9 @@ void CompendiaCore::mergeTag(Tag* from, Tag* into)
  */
 void CompendiaCore::mergeTagFamily(TagFamily* from, TagFamily* into)
 {
+    checkpoint(tr("Merge families"));
+    if (undoManager_) undoManager_->clear();
+
     // Iterate a snapshot because mergeTag may modify tags_
     QList<Tag*> tagSnapshot(tags_->begin(), tags_->end());
     for (Tag* t : tagSnapshot) {
@@ -1769,7 +1794,7 @@ void CompendiaCore::mergeTagFamily(TagFamily* from, TagFamily* into)
         // Look for a same-name tag already in 'into'
         Tag* collision = getTag(into->getName(), t->getName());
         if (collision) {
-            mergeTag(t, collision);   // handles file re-routing and deletion
+            mergeTagImpl(t, collision);   // handles file re-routing and deletion
         } else {
             t->tagFamily = into;
             t->markDirty();
@@ -1798,11 +1823,12 @@ void CompendiaCore::refamilyTag(Tag* tag, TagFamily* newFamily)
 {
     if (!tag || !newFamily || tag->tagFamily == newFamily)
         return;
+    checkpoint(tr("Move \u2018%1\u2019").arg(tag->getName()));
 
     TagFamily* oldFamily = tag->tagFamily;
     Tag* collision = getTag(newFamily->getName(), tag->getName());
     if (collision) {
-        mergeTag(tag, collision);   // re-routes files, emits tagLibraryChanged
+        mergeTagImpl(tag, collision);   // re-routes files (no checkpoint/clear)
     } else {
         tag->setTagFamily(newFamily);
     }
@@ -1810,6 +1836,142 @@ void CompendiaCore::refamilyTag(Tag* tag, TagFamily* newFamily)
     cleanupFamilyIfEmpty(oldFamily);
     emit tagLibraryChanged();
 }
+
+// ---------------------------------------------------------------------------
+// Undo / redo — snapshot capture and restore
+// ---------------------------------------------------------------------------
+
+ModelSnapshot CompendiaCore::captureSnapshot(const QString& description) const
+{
+    ModelSnapshot snap;
+    snap.description   = description;
+    snap.nextColorIndex = TagFamily::getNextHue();
+
+    for (TagFamily* f : std::as_const(*tag_families_))
+        snap.families.append({f->getName(), f->getColorIndex()});
+
+    for (Tag* t : std::as_const(*tags_))
+        snap.tags.append({t->tagFamily->getName(), t->getName()});
+
+    for (int row = 0; row < tagged_files_->rowCount(); ++row) {
+        auto* tf = tagged_files_->item(row)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+        ModelSnapshot::FileSnap fs;
+        fs.key    = tf->filePath + u"/" + tf->fileName;
+        fs.rating = tf->rating();
+        for (Tag* t : std::as_const(*tf->tags())) {
+            const QString k = t->tagFamily->getName() + u"\t" + t->getName();
+            fs.tagKeys.insert(k);
+            auto rect = tf->tagRect(t);
+            if (rect.has_value())
+                fs.tagRects[k] = rect.value();
+        }
+        snap.files.append(fs);
+    }
+    return snap;
+}
+
+void CompendiaCore::restoreSnapshot(const ModelSnapshot& snap)
+{
+    // 1. Mark all files dirty and clear their tag assignments.
+    //    Do this BEFORE deleting Tag objects so no dangling pointers remain.
+    for (int row = 0; row < tagged_files_->rowCount(); ++row) {
+        auto* tf = tagged_files_->item(row)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf) {
+            tf->clearAllTags();
+            tf->markDirty();
+        }
+    }
+
+    // 2. Clear the proxy filter set (holds Tag* pointers we are about to delete).
+    tagged_files_proxy_->clearTagFilters();
+
+    // 3. Tear down the existing tag library.
+    //    Use deleteLater() rather than immediate delete so that existing UI widgets
+    //    (TagFamilyWidget, TagWidget) can still access their Tag*/TagFamily* pointers
+    //    during the synchronous tagLibraryChanged → refresh() call that follows.
+    //    The deferred deletes execute after the event loop returns from restoreSnapshot.
+    for (Tag* t : std::as_const(*tags_)) {
+        disconnect(t, nullptr, this, nullptr);
+        t->deleteLater();
+    }
+    tags_->clear();
+    for (TagFamily* f : std::as_const(*tag_families_)) {
+        disconnect(f, nullptr, this, nullptr);
+        f->deleteLater();
+    }
+    tag_families_->clear();
+    TagFamily::setNextHue(snap.nextColorIndex);
+
+    // 4. Rebuild tag library from snapshot.
+    //    Suppress tagLibraryChanged emissions and disk writes during the rebuild.
+    const bool wasInit = libraryFileInitialized_;
+    libraryFileInitialized_ = false;
+
+    for (const auto& fs : snap.families) {
+        auto* fam = new TagFamily(fs.name, fs.colorIndex, this);
+        tag_families_->insert(fam);
+        connect(fam, &TagFamily::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
+    }
+    for (const auto& ts : snap.tags) {
+        // addLibraryTag finds the family by name (just created above) then creates the tag.
+        addLibraryTag(ts.familyName, ts.tagName);
+    }
+
+    libraryFileInitialized_ = wasInit;
+
+    // 5. Re-apply file tag assignments from snapshot.
+    QHash<QString, TaggedFile*> byKey;
+    byKey.reserve(tagged_files_->rowCount());
+    for (int row = 0; row < tagged_files_->rowCount(); ++row) {
+        auto* tf = tagged_files_->item(row)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf)
+            byKey[tf->filePath + u"/" + tf->fileName] = tf;
+    }
+    for (const auto& fs : snap.files) {
+        TaggedFile* tf = byKey.value(fs.key);
+        if (!tf) continue;
+        tf->initRating(fs.rating);
+        for (const QString& k : std::as_const(fs.tagKeys)) {
+            const QStringList parts = k.split(u'\t');
+            if (parts.size() != 2) continue;
+            Tag* t = getTag(parts[0], parts[1]);
+            if (!t) continue;
+            if (fs.tagRects.contains(k))
+                tf->addTag(t, fs.tagRects[k]);
+            else
+                tf->addTag(t);
+        }
+    }
+
+    // 6. Persist the restored tag library and refresh all tag UI.
+    //    tagLibraryChanged is connected to writeTagLibraryFile, so one emit covers both.
+    emit tagLibraryChanged();
+
+    // 7. Notify the file-list view that item data (tag assignments) changed.
+    const int rowCount = tagged_files_->rowCount();
+    if (rowCount > 0)
+        tagged_files_->dataChanged(tagged_files_->index(0, 0),
+                                   tagged_files_->index(rowCount - 1, 0));
+
+    // 8. Let MainWindow refresh UI elements that depend on per-file state and
+    //    are not covered by tagLibraryChanged() (e.g. the preview star rating).
+    emit snapshotRestored();
+}
+
+void CompendiaCore::checkpoint(const QString& description)
+{
+    if (undoManager_)
+        undoManager_->checkpoint(description);
+}
+
+void CompendiaCore::setFileRating(TaggedFile* file, std::optional<int> rating)
+{
+    checkpoint(tr("Set rating"));
+    file->setRating(rating);
+}
+
+// ---------------------------------------------------------------------------
 
 /*! \brief Parses a JSON object of tag-family to tag-name arrays into a TagSet list.
  *

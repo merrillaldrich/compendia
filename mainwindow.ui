@@ -849,6 +849,11 @@
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
    <widget class="QMenu" name="menuFilter">
     <property name="title">
      <string>Filter</string>
@@ -905,6 +910,7 @@
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuFilter"/>
    <addaction name="menuAutos"/>
    <addaction name="menuHelp"/>

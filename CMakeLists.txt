@@ -102,6 +102,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         perceptualhasher.h perceptualhasher.cpp
         starratingwidget.h starratingwidget.cpp
         folderscanner.h folderscanner.cpp
+        undomanager.h undomanager.cpp
         aboutdialog.h aboutdialog.cpp aboutdialog.ui
 
     )

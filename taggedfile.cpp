@@ -328,3 +328,10 @@ void TaggedFile::setRating(std::optional<int> rating)
         dirty_flag_ = true;
     }
 }
+
+/*! \brief Removes all applied tags and bounding rects without marking the file dirty. */
+void TaggedFile::clearAllTags()
+{
+    tags_->clear();
+    tag_rects_.clear();
+}

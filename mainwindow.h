@@ -369,6 +369,13 @@ private slots:
     /*! \brief Refreshes all tag-related containers after a merge changes the library. */
     void onTagLibraryChanged();
 
+    /*! \brief Refreshes per-file preview UI elements not covered by onTagLibraryChanged().
+     *
+     * Called after snapshot restore (undo/redo) to update the preview star rating
+     * for the currently selected file.
+     */
+    void onSnapshotRestored();
+
     /*! \brief Slot for Autos → Grab Video Frames; begins a frame-grab batch for all video files. */
     void on_actionGrab_Video_Frame_triggered();
 
