@@ -156,7 +156,7 @@ public:
      * external code (e.g. CompendiaCore) can trigger a full filter refresh after
      * in-place model mutations that do not emit dataChanged.
      */
-    void refreshFilter() { invalidateFilter(); }
+    void refreshFilter() { beginFilterChange(); endFilterChange(); }
 
     /*! \brief Returns the number of files in the current isolation set.
      *
