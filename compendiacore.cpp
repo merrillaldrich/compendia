@@ -2076,6 +2076,7 @@ void CompendiaCore::processWatcherChanges()
 
     // Correlate same-filename disappearances and appearances as moves within the watched tree
     QStringList unmatched;
+    bool hadMoves = false;
     for (const QString& oldPath : allDisappeared) {
         const QString fileName = QFileInfo(oldPath).fileName();
         auto it = std::find_if(allAppeared.begin(), allAppeared.end(),
@@ -2083,6 +2084,7 @@ void CompendiaCore::processWatcherChanges()
         if (it != allAppeared.end()) {
             handleFileMoved(oldPath, *it);
             allAppeared.erase(it);
+            hadMoves = true;
         } else {
             unmatched.append(oldPath);
         }
@@ -2098,6 +2100,14 @@ void CompendiaCore::processWatcherChanges()
     // where only the destination-directory event fires: the source entry becomes stale and is
     // never matched by the correlation pass above.
     removeStaleModelEntries();
+
+    // After file moves, force the proxy to re-evaluate its filter. When a file moves to a
+    // different folder, tf->filePath is updated in-memory but setText() on the model item
+    // may not emit dataChanged (if the filename is unchanged), so QSortFilterProxyModel
+    // would never re-run filterAcceptsRow() and the item would stay visible despite no
+    // longer passing the folder filter.
+    if (hadMoves)
+        tagged_files_proxy_->invalidateFilter();
 }
 
 /*! \brief Handles a file that disappeared with no matching appearance elsewhere in the watched tree. */
