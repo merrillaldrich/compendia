@@ -480,6 +480,17 @@ public:
      */
     int isolationSetSize() const;
 
+    /*! \brief Enables or disables the untagged-only filter.
+     *
+     * When enabled, only files with no tags are shown.
+     *
+     * \param untaggedOnly True to show only untagged files; false to disable the filter.
+     */
+    void setUntaggedOnly(bool untaggedOnly);
+
+    /*! \brief Returns true when the untagged-only filter is active. */
+    bool isUntaggedOnly() const;
+
     /*! \brief Returns the underlying QStandardItemModel containing all file items.
      *
      * \return Pointer to the source item model.

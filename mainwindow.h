@@ -445,6 +445,9 @@ private slots:
     /*! \brief Isolates files that could not be opened during icon generation. */
     void on_actionUnreadableFiles_triggered();
 
+    /*! \brief Toggles the untagged-only filter to show only files with no tags. */
+    void on_actionUntaggedImages_triggered();
+
     /*! \brief Drills into the folder of the selected file, reloading with it as the new root. */
     void on_actionDrillToFolder_triggered();
 
