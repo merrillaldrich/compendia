@@ -145,6 +145,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6e7ec330ab93a0c21ec4e1f0864ad56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards a tag-delete request up to the tagDeleteRequested signal.  <br /></td></tr>
 <tr class="memitem:a702b14de4154b65fabee32cd7fbc1c7a" id="r_a702b14de4154b65fabee32cd7fbc1c7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a702b14de4154b65fabee32cd7fbc1c7a">sort</a> ()</td></tr>
 <tr class="memdesc:a702b14de4154b65fabee32cd7fbc1c7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts all <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> children alphabetically by family name, and sorts tags within each family alphabetically by tag name.  <br /></td></tr>
+<tr class="memitem:acafa2a0ef170c460d023bd0802e7ca71" id="r_acafa2a0ef170c460d023bd0802e7ca71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acafa2a0ef170c460d023bd0802e7ca71">setAutoSortOnRefresh</a> (bool autoSort)</td></tr>
+<tr class="memdesc:acafa2a0ef170c460d023bd0802e7ca71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls whether <a class="el" href="#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags.">refresh()</a> auto-sorts; pass false to preserve insertion order.  <br /></td></tr>
 <tr class="memitem:a9ab18bddd7907259dfdd7558ebfb7c49" id="r_a9ab18bddd7907259dfdd7558ebfb7c49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ab18bddd7907259dfdd7558ebfb7c49">filter</a> (const QString &amp;text)</td></tr>
 <tr class="memdesc:a9ab18bddd7907259dfdd7558ebfb7c49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows only tag families and tags whose name starts with <code class="param">text</code>.  <br /></td></tr>
 </table>
@@ -279,6 +281,27 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="acafa2a0ef170c460d023bd0802e7ca71" name="acafa2a0ef170c460d023bd0802e7ca71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acafa2a0ef170c460d023bd0802e7ca71">&#9670;&#160;</a></span>setAutoSortOnRefresh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagContainer::setAutoSortOnRefresh </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>autoSort</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Controls whether <a class="el" href="#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags.">refresh()</a> auto-sorts; pass false to preserve insertion order. </p>
+<p>Controls whether <a class="el" href="#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags.">refresh()</a> auto-sorts alphabetically on every call.</p>
+<p>Set to false on the library container so insertion order is preserved. Defaults to true so assignment and filter containers stay alphabetical. </p>
 
 </div>
 </div>

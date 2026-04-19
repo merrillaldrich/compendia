@@ -129,6 +129,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a88c3c36aeb7f46ae7b6ad984ccc6fcc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> with an empty name and an auto-assigned colour.  <br /></td></tr>
 <tr class="memitem:ad984137ef12707072c2048bd926636b2" id="r_ad984137ef12707072c2048bd926636b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad984137ef12707072c2048bd926636b2">TagFamily</a> (QString tf, QObject *parent)</td></tr>
 <tr class="memdesc:ad984137ef12707072c2048bd926636b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> with the given name and an auto-assigned colour.  <br /></td></tr>
+<tr class="memitem:ae2129aa38bd63bc276ee0796333b66d5" id="r_ae2129aa38bd63bc276ee0796333b66d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2129aa38bd63bc276ee0796333b66d5">TagFamily</a> (QString tf, int colorIndex, QObject *parent)</td></tr>
+<tr class="memdesc:ae2129aa38bd63bc276ee0796333b66d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> with the given name and a colour restored from a stored index.  <br /></td></tr>
 <tr class="memitem:a8cb81c8dd65532fcf6552960fd515608" id="r_a8cb81c8dd65532fcf6552960fd515608"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8cb81c8dd65532fcf6552960fd515608">setName</a> (QString tagFamilyName)</td></tr>
 <tr class="memdesc:a8cb81c8dd65532fcf6552960fd515608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the family name and marks the dirty flag if the name changed.  <br /></td></tr>
 <tr class="memitem:a9d344211abfce9b2852e454d98507949" id="r_a9d344211abfce9b2852e454d98507949"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d344211abfce9b2852e454d98507949">getName</a> () const</td></tr>
@@ -139,9 +141,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a523d8565f13ea691c99f74d4389abc2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the family name has been modified since the last save.  <br /></td></tr>
 <tr class="memitem:a7ff45e76026cd5ad9fe7a800009dd5fc" id="r_a7ff45e76026cd5ad9fe7a800009dd5fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ff45e76026cd5ad9fe7a800009dd5fc">clearDirtyFlag</a> ()</td></tr>
 <tr class="memdesc:a7ff45e76026cd5ad9fe7a800009dd5fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the dirty flag after changes have been persisted.  <br /></td></tr>
+<tr class="memitem:aa53348f3dfcd2ea200c3703247d1cd25" id="r_aa53348f3dfcd2ea200c3703247d1cd25"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa53348f3dfcd2ea200c3703247d1cd25">getColorIndex</a> () const</td></tr>
+<tr class="memdesc:aa53348f3dfcd2ea200c3703247d1cd25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the hue-sequence index used to generate this family's colour.  <br /></td></tr>
+<tr class="memitem:a592c6538d746edb19477f515c4d263ec" id="r_a592c6538d746edb19477f515c4d263ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a592c6538d746edb19477f515c4d263ec">setColorFromIndex</a> (int colorIndex)</td></tr>
+<tr class="memdesc:a592c6538d746edb19477f515c4d263ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates this family's colour to the one corresponding to the given hue-sequence index.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a122a34bfa6529f4a9518e376ebc26818" id="r_a122a34bfa6529f4a9518e376ebc26818"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a122a34bfa6529f4a9518e376ebc26818">getNextHue</a> ()</td></tr>
+<tr class="memdesc:a122a34bfa6529f4a9518e376ebc26818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current value of the shared hue counter (i.e. the index the next new family will use).  <br /></td></tr>
+<tr class="memitem:aa5c390e0b54d7a561ff936ea20423f82" id="r_aa5c390e0b54d7a561ff936ea20423f82"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5c390e0b54d7a561ff936ea20423f82">setNextHue</a> (int hue)</td></tr>
+<tr class="memdesc:aa5c390e0b54d7a561ff936ea20423f82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the shared hue counter, allowing a saved sequence position to be restored.  <br /></td></tr>
+<tr class="memitem:a0ebe0a8264a20b2982374f48b7a7fe45" id="r_a0ebe0a8264a20b2982374f48b7a7fe45"><td class="memItemLeft" align="right" valign="top">static QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ebe0a8264a20b2982374f48b7a7fe45">generateColorForIndex</a> (int hueIndex)</td></tr>
+<tr class="memdesc:a0ebe0a8264a20b2982374f48b7a7fe45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the colour for a given hue-sequence index without advancing the counter.  <br /></td></tr>
 <tr class="memitem:acf9648243726db04d1233589fea6a7e1" id="r_acf9648243726db04d1233589fea6a7e1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf9648243726db04d1233589fea6a7e1">restartColorSequence</a> ()</td></tr>
 <tr class="memdesc:acf9648243726db04d1233589fea6a7e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the colour-generation sequence back to the starting hue.  <br /></td></tr>
 </table>
@@ -150,7 +162,7 @@ Static Public Member Functions</h2></td></tr>
 <p><a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> acts as the conceptual container for one or more <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> objects. Colours are assigned automatically from a rotating hue sequence so that different families are visually distinct. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a88c3c36aeb7f46ae7b6ad984ccc6fcc7" name="a88c3c36aeb7f46ae7b6ad984ccc6fcc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88c3c36aeb7f46ae7b6ad984ccc6fcc7">&#9670;&#160;</a></span>TagFamily() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a88c3c36aeb7f46ae7b6ad984ccc6fcc7">&#9670;&#160;</a></span>TagFamily() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,7 +195,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad984137ef12707072c2048bd926636b2" name="ad984137ef12707072c2048bd926636b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad984137ef12707072c2048bd926636b2">&#9670;&#160;</a></span>TagFamily() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad984137ef12707072c2048bd926636b2">&#9670;&#160;</a></span>TagFamily() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,6 +217,52 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tf</td><td>The family name string. </td></tr>
+    <tr><td class="paramname">parent</td><td>Qt parent object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae2129aa38bd63bc276ee0796333b66d5" name="ae2129aa38bd63bc276ee0796333b66d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2129aa38bd63bc276ee0796333b66d5">&#9670;&#160;</a></span>TagFamily() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TagFamily::TagFamily </td>
+          <td>(</td>
+          <td class="paramtype">QString</td>          <td class="paramname"><span class="paramname"><em>tf</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>colorIndex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QObject *</td>          <td class="paramname"><span class="paramname"><em>parent</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> with the given name and a colour restored from a stored index. </p>
+<p>Does not advance the shared hue counter, so the sequence is not disturbed when reloading persisted families.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tf</td><td>The family name string. </td></tr>
+    <tr><td class="paramname">colorIndex</td><td>The hue-sequence index that was used when this family was first created. </td></tr>
+    <tr><td class="paramname">parent</td><td>Qt parent object.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Does not advance the shared hue counter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tf</td><td>The family name string. </td></tr>
+    <tr><td class="paramname">colorIndex</td><td>The hue-sequence index that was used when this family was first created. </td></tr>
     <tr><td class="paramname">parent</td><td>Qt parent object. </td></tr>
   </table>
   </dd>
@@ -252,6 +310,40 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0ebe0a8264a20b2982374f48b7a7fe45" name="a0ebe0a8264a20b2982374f48b7a7fe45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ebe0a8264a20b2982374f48b7a7fe45">&#9670;&#160;</a></span>generateColorForIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QColor TagFamily::generateColorForIndex </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>hueIndex</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the colour for a given hue-sequence index without advancing the counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hueIndex</td><td>The index to compute a colour for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The corresponding QColor. </dd></dl>
+
+</div>
+</div>
 <a id="add056f5d6128b49387a4923bd3a3198d" name="add056f5d6128b49387a4923bd3a3198d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#add056f5d6128b49387a4923bd3a3198d">&#9670;&#160;</a></span>getColor()</h2>
 
@@ -272,6 +364,25 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aa53348f3dfcd2ea200c3703247d1cd25" name="aa53348f3dfcd2ea200c3703247d1cd25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa53348f3dfcd2ea200c3703247d1cd25">&#9670;&#160;</a></span>getColorIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int TagFamily::getColorIndex </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the hue-sequence index used to generate this family's colour. </p>
+
+</div>
+</div>
 <a id="a9d344211abfce9b2852e454d98507949" name="a9d344211abfce9b2852e454d98507949"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9d344211abfce9b2852e454d98507949">&#9670;&#160;</a></span>getName()</h2>
 
@@ -289,6 +400,34 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Returns the current family name. </p>
 <dl class="section return"><dt>Returns</dt><dd>The family name string. </dd></dl>
+
+</div>
+</div>
+<a id="a122a34bfa6529f4a9518e376ebc26818" name="a122a34bfa6529f4a9518e376ebc26818"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a122a34bfa6529f4a9518e376ebc26818">&#9670;&#160;</a></span>getNextHue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int TagFamily::getNextHue </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the current value of the shared hue counter (i.e. the index the next new family will use). </p>
+<p>Returns the current value of the shared hue counter. </p>
 
 </div>
 </div>
@@ -346,6 +485,39 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a592c6538d746edb19477f515c4d263ec" name="a592c6538d746edb19477f515c4d263ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a592c6538d746edb19477f515c4d263ec">&#9670;&#160;</a></span>setColorFromIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagFamily::setColorFromIndex </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>colorIndex</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates this family's colour to the one corresponding to the given hue-sequence index. </p>
+<p>Does not advance the shared hue counter. Used when applying a color looked up from a library file to an already-existing <a class="el" href="class_tag_family.html" title="Represents a named group of related tags, each with an auto-assigned colour.">TagFamily</a> instance.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">colorIndex</td><td>The hue-sequence index to apply.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Does not advance the shared hue counter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">colorIndex</td><td>The hue-sequence index to apply. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a8cb81c8dd65532fcf6552960fd515608" name="a8cb81c8dd65532fcf6552960fd515608"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8cb81c8dd65532fcf6552960fd515608">&#9670;&#160;</a></span>setName()</h2>
 
@@ -368,6 +540,34 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aa5c390e0b54d7a561ff936ea20423f82" name="aa5c390e0b54d7a561ff936ea20423f82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5c390e0b54d7a561ff936ea20423f82">&#9670;&#160;</a></span>setNextHue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TagFamily::setNextHue </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>hue</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the shared hue counter, allowing a saved sequence position to be restored. </p>
+<p>Sets the shared hue counter, restoring a saved sequence position. </p>
 
 </div>
 </div>

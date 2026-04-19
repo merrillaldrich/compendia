@@ -1,7 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,31,84,57"/>
-<area shape="rect" id="Node000001" href="$class_folder_filter_line_edit.html" title="A QLineEdit with shell&#45;style path autocomplete for the folder filter." alt="" coords="139,5,272,32"/>
-<area shape="poly" id="edge10_Node000000_Node000001" title=" " alt="" coords="98,33,141,28,136,30,100,38"/>
-<area shape="rect" id="Node000002" href="$class_variable_width_line_edit.html" title="A QLineEdit that automatically resizes its width to fit its text content." alt="" coords="132,56,280,83"/>
-<area shape="poly" id="edge11_Node000000_Node000002" title=" " alt="" coords="99,50,134,57,128,58,99,55"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,127,32"/>
+<area shape="rect" id="Node000001" href="$class_tag_rect_item.html" title="Graphics item that draws a rounded rectangle overlay and supports edge/corner dragging." alt="" coords="175,5,271,32"/>
+<area shape="poly" id="edge5_Node000000_Node000001" title=" " alt="" coords="142,16,177,18,172,19,142,21"/>
 </map>

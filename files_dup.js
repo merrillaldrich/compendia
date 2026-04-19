@@ -68,6 +68,8 @@ var files_dup =
     [ "tagwidget.h", "tagwidget_8h.html", "tagwidget_8h" ],
     [ "tagwidgetclosebutton.cpp", "tagwidgetclosebutton_8cpp.html", null ],
     [ "tagwidgetclosebutton.h", "tagwidgetclosebutton_8h.html", "tagwidgetclosebutton_8h" ],
+    [ "undomanager.cpp", "undomanager_8cpp.html", null ],
+    [ "undomanager.h", "undomanager_8h.html", "undomanager_8h" ],
     [ "variablewidthlineedit.cpp", "variablewidthlineedit_8cpp.html", null ],
     [ "variablewidthlineedit.h", "variablewidthlineedit_8h.html", "variablewidthlineedit_8h" ],
     [ "welcomehintcontainer.cpp", "welcomehintcontainer_8cpp.html", null ],

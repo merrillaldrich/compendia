@@ -11,7 +11,9 @@ var namespaces_dup =
       [ "KnownFaceCacheSuffix", "namespace_compendia.html#a2dacca26d934069917f6ee2d70ca148e", null ],
       [ "MaxAutoFacesPerImage", "namespace_compendia.html#a1cce129a02a9fa16445d19be691fc380", null ],
       [ "RectWarmupDelayMs", "namespace_compendia.html#a7285c0af65e7d1934dee85c97488679e", null ],
-      [ "SimilarImageThreshold", "namespace_compendia.html#a3a3f6e38d21d3a1315a6c6c67ad8da86", null ]
+      [ "ShowPreReleaseWarning", "namespace_compendia.html#a23c9b8a28c64b90539a0e9c92c0a6211", null ],
+      [ "SimilarImageThreshold", "namespace_compendia.html#a3a3f6e38d21d3a1315a6c6c67ad8da86", null ],
+      [ "SoftwareVideoScaling", "namespace_compendia.html#a2f2ae8d4803b381abd1d32a86b345921", null ]
     ] ],
     [ "FaceNet", "namespace_face_net.html", [
       [ "alevel0", "namespace_face_net.html#a706d19a440086ca847bbd346cad1239c", null ],

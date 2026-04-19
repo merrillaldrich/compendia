@@ -12,9 +12,10 @@ var searchData=
   ['inittagrect_9',['initTagRect',['../class_tagged_file.html#a545faeb645f4e753b20f86951410a650',1,'TaggedFile']]],
   ['iscollapsed_10',['isCollapsed',['../class_tag_family_widget.html#a4893c52530f20cf23e838999e836e8eb',1,'TagFamilyWidget::isCollapsed()'],['../class_tag_family_widget_collapse_button.html#ac7cb2ed804180d50404e8e65b602c92e',1,'TagFamilyWidgetCollapseButton::isCollapsed()']]],
   ['isisolated_11',['isIsolated',['../class_compendia_core.html#a2f72e1325db47cb4d4faba76a31680d2',1,'CompendiaCore::isIsolated()'],['../class_filter_proxy_model.html#afc9c90b1eb0745f8b88b9f232d664a96',1,'FilterProxyModel::isIsolated()']]],
-  ['isolationsetsize_12',['isolationSetSize',['../class_compendia_core.html#a5136723051fa16fa1eeb3a84c1f6a35e',1,'CompendiaCore::isolationSetSize()'],['../class_filter_proxy_model.html#ab95eb4eec0a0b26d26aba0a3648fa483',1,'FilterProxyModel::isolationSetSize()']]],
-  ['isreadonly_13',['isReadOnly',['../class_star_rating_widget.html#a33cbc869002c7f2bc233825a5cb56c71',1,'StarRatingWidget']]],
-  ['issweeprunning_14',['isSweepRunning',['../class_face_recognizer.html#a596d5bde630fb2a78975559afe225d04',1,'FaceRecognizer']]],
-  ['iswelcomeshowing_15',['isWelcomeShowing',['../class_welcome_hint_container.html#ad29d37ebb7227b899df6a977c9917b10',1,'WelcomeHintContainer']]],
-  ['itemat_16',['itemAt',['../class_flow_layout.html#a14c3661044dd9b97ef0c0a34d0692ce4',1,'FlowLayout']]]
+  ['isolateunreadablefiles_12',['isolateUnreadableFiles',['../class_compendia_core.html#a25cd11190bb641a61741a37cd0d1a5f1',1,'CompendiaCore']]],
+  ['isolationsetsize_13',['isolationSetSize',['../class_compendia_core.html#a5136723051fa16fa1eeb3a84c1f6a35e',1,'CompendiaCore::isolationSetSize()'],['../class_filter_proxy_model.html#ab95eb4eec0a0b26d26aba0a3648fa483',1,'FilterProxyModel::isolationSetSize()']]],
+  ['isreadonly_14',['isReadOnly',['../class_star_rating_widget.html#a33cbc869002c7f2bc233825a5cb56c71',1,'StarRatingWidget']]],
+  ['issweeprunning_15',['isSweepRunning',['../class_face_recognizer.html#a596d5bde630fb2a78975559afe225d04',1,'FaceRecognizer']]],
+  ['iswelcomeshowing_16',['isWelcomeShowing',['../class_welcome_hint_container.html#ad29d37ebb7227b899df6a977c9917b10',1,'WelcomeHintContainer']]],
+  ['itemat_17',['itemAt',['../class_flow_layout.html#a14c3661044dd9b97ef0c0a34d0692ce4',1,'FlowLayout']]]
 ];

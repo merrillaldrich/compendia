@@ -177,6 +177,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a22e2e65bab887ed45553f8b6cd014bb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rating without marking the file dirty (used during JSON load).  <br /></td></tr>
 <tr class="memitem:a7fb36112c28ae736ad8e37eb6b851257" id="r_a7fb36112c28ae736ad8e37eb6b851257"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fb36112c28ae736ad8e37eb6b851257">setRating</a> (std::optional&lt; int &gt; <a class="el" href="#a87e02bdcb8bb2f3a2da1aa9751294421">rating</a>)</td></tr>
 <tr class="memdesc:a7fb36112c28ae736ad8e37eb6b851257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rating and marks the file dirty if the value changed.  <br /></td></tr>
+<tr class="memitem:ab2720dabf810590766b99cff3c07990a" id="r_ab2720dabf810590766b99cff3c07990a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2720dabf810590766b99cff3c07990a">clearAllTags</a> ()</td></tr>
+<tr class="memdesc:ab2720dabf810590766b99cff3c07990a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all applied tags and bounding rects without marking the file dirty.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -341,6 +343,26 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ab2720dabf810590766b99cff3c07990a" name="ab2720dabf810590766b99cff3c07990a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2720dabf810590766b99cff3c07990a">&#9670;&#160;</a></span>clearAllTags()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TaggedFile::clearAllTags </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes all applied tags and bounding rects without marking the file dirty. </p>
+<p>Used exclusively during snapshot restore to reset file tag state before re-applying the snapshot's tag assignments. </p>
 
 </div>
 </div>
@@ -892,7 +914,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Date/time inferred from a timestamp embedded in the file name, if present. </p>
-<p>Populated at construction time by scanning the file's base name for an 8-digit (YYYYMMDD) or 14-digit (YYYYMMDDHHmmss) numeric sequence whose first four digits form a year in the range 2000–2999. 8-digit matches are given a noon (12:00:00) time component. Remains invalid when no qualifying sequence is found. </p>
+<p>Populated at construction time by scanning the file's base name for an 8-digit (YYYYMMDD), 14-digit (YYYYMMDDHHmmss), or 10-character hyphenated (YYYY-MM-DD) sequence whose first four digits form a year in the range 1800–3000. 8-digit and hyphenated matches are given a noon (12:00:00) time component. Remains invalid when no qualifying sequence is found. </p>
 
 </div>
 </div>

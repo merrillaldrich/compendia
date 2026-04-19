@@ -163,8 +163,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:afe18f4d0a45e509a414594b541500fff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedules background warmup of both face caches for <code class="param">tf</code> after a rect adjustment.  <br /></td></tr>
 <tr class="memitem:ac0738fc4c42135feb10e272dd4f89569" id="r_ac0738fc4c42135feb10e272dd4f89569"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0738fc4c42135feb10e272dd4f89569">scheduleEmbeddingWarmup</a> (<a class="el" href="class_tagged_file.html">TaggedFile</a> *tf)</td></tr>
 <tr class="memdesc:ac0738fc4c42135feb10e272dd4f89569"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers background known-face embedding warmup for <code class="param">tf</code> if models are loaded.  <br /></td></tr>
-<tr class="memitem:a0eea056b689b044408f556bb760f4eae" id="r_a0eea056b689b044408f556bb760f4eae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0eea056b689b044408f556bb760f4eae">startBackgroundSweep</a> (const QVector&lt; <a class="el" href="struct_phase1_file_input.html">Phase1FileInput</a> &gt; &amp;phase1Input, const QStringList &amp;phase3Paths, int numWorkers=0)</td></tr>
-<tr class="memdesc:a0eea056b689b044408f556bb760f4eae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Launches a background face recognition sweep.  <br /></td></tr>
+<tr class="memitem:ad8075571404932eabf03258e04cacde6" id="r_ad8075571404932eabf03258e04cacde6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8075571404932eabf03258e04cacde6">startBackgroundSweep</a> (const QVector&lt; <a class="el" href="struct_phase1_file_input.html">Phase1FileInput</a> &gt; &amp;phase1Input, const QStringList &amp;phase3Paths, int numWorkers=0, bool suppressAutoFaces=false)</td></tr>
+<tr class="memdesc:ad8075571404932eabf03258e04cacde6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Launches a background face recognition sweep.  <br /></td></tr>
 <tr class="memitem:a495940b7e69894a11b941c7b675c3e8a" id="r_a495940b7e69894a11b941c7b675c3e8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a495940b7e69894a11b941c7b675c3e8a">cancelSweep</a> ()</td></tr>
 <tr class="memdesc:a495940b7e69894a11b941c7b675c3e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests cancellation of the active background sweep. No-op if none is running.  <br /></td></tr>
 <tr class="memitem:a596d5bde630fb2a78975559afe225d04" id="r_a596d5bde630fb2a78975559afe225d04"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a596d5bde630fb2a78975559afe225d04">isSweepRunning</a> () const</td></tr>
@@ -904,8 +904,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0eea056b689b044408f556bb760f4eae" name="a0eea056b689b044408f556bb760f4eae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0eea056b689b044408f556bb760f4eae">&#9670;&#160;</a></span>startBackgroundSweep()</h2>
+<a id="ad8075571404932eabf03258e04cacde6" name="ad8075571404932eabf03258e04cacde6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8075571404932eabf03258e04cacde6">&#9670;&#160;</a></span>startBackgroundSweep()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -923,7 +923,12 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>numWorkers</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>numWorkers</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>suppressAutoFaces</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -935,7 +940,8 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">phase1Input</td><td>Per-file known-face data extracted from TaggedFile*s on the main thread. </td></tr>
     <tr><td class="paramname">phase3Paths</td><td>Image file paths to scan (video files excluded by the caller). </td></tr>
-    <tr><td class="paramname">numWorkers</td><td>Number of parallel workers (0 = auto: idealThreadCount(), capped at maxWorkers_).</td></tr>
+    <tr><td class="paramname">numWorkers</td><td>Number of parallel workers (0 = auto: idealThreadCount(), capped at maxWorkers_). </td></tr>
+    <tr><td class="paramname">suppressAutoFaces</td><td>When true, unmatched faces are silently ignored instead of receiving auto-detected-face tags. Use for targeted single-person searches.</td></tr>
   </table>
   </dd>
 </dl>

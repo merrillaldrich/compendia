@@ -127,6 +127,10 @@ Classes</h2></td></tr>
 Public Slots</h2></td></tr>
 <tr class="memitem:ab60a16623ea9898386d36906b940f77b" id="r_ab60a16623ea9898386d36906b940f77b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab60a16623ea9898386d36906b940f77b">ensureUiFlushTimerRunning</a> ()</td></tr>
 <tr class="memdesc:ab60a16623ea9898386d36906b940f77b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the UI flush timer if it is not already running.  <br /></td></tr>
+<tr class="memitem:a51551c590a37c272a0faa39e5082e4cf" id="r_a51551c590a37c272a0faa39e5082e4cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51551c590a37c272a0faa39e5082e4cf">scheduleWantedUpdate</a> ()</td></tr>
+<tr class="memdesc:a51551c590a37c272a0faa39e5082e4cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restarts the debounce timer so <a class="el" href="#a40cfa83ddc1c853cc4c6b53e7f802a09" title="Recomputes wantedIconPaths_ from the current viewport geometry.">updateWantedPaths()</a> fires shortly after scroll/resize.  <br /></td></tr>
+<tr class="memitem:a40cfa83ddc1c853cc4c6b53e7f802a09" id="r_a40cfa83ddc1c853cc4c6b53e7f802a09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40cfa83ddc1c853cc4c6b53e7f802a09">updateWantedPaths</a> ()</td></tr>
+<tr class="memdesc:a40cfa83ddc1c853cc4c6b53e7f802a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recomputes wantedIconPaths_ from the current viewport geometry.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
@@ -150,6 +154,8 @@ Signals</h2></td></tr>
 <tr class="memdesc:a1044b27dd44cc61a6e04c1aff23e9912"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a file has been moved from one watched directory to another.  <br /></td></tr>
 <tr class="memitem:a75eb16f03daa5673480ff8307ace6642" id="r_a75eb16f03daa5673480ff8307ace6642"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75eb16f03daa5673480ff8307ace6642">fileAddedExternally</a> (const QString &amp;absolutePath)</td></tr>
 <tr class="memdesc:a75eb16f03daa5673480ff8307ace6642"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a new file has appeared in a watched directory.  <br /></td></tr>
+<tr class="memitem:af1b302476789f6d403f2d7ec5ad246a4" id="r_af1b302476789f6d403f2d7ec5ad246a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1b302476789f6d403f2d7ec5ad246a4">snapshotRestored</a> ()</td></tr>
+<tr class="memdesc:af1b302476789f6d403f2d7ec5ad246a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted at the end of <a class="el" href="#a8200000ca61a16bb2085e15aad3fe26a" title="Restores the model to the state described by snap.">restoreSnapshot()</a>, after <a class="el" href="#af30400a8de5bef7228128ab2e5250965" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> has fired.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -235,6 +241,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2ce450a615c8e6afc537a7396edbe2ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tag from the active tag filter set.  <br /></td></tr>
 <tr class="memitem:a032a7ba36be96dda0b42e91776f8c0af" id="r_a032a7ba36be96dda0b42e91776f8c0af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a032a7ba36be96dda0b42e91776f8c0af">clearAllTagFilters</a> ()</td></tr>
 <tr class="memdesc:a032a7ba36be96dda0b42e91776f8c0af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all active tag filters.  <br /></td></tr>
+<tr class="memitem:a2fb99267c078c17ac498f79a1668a6c4" id="r_a2fb99267c078c17ac498f79a1668a6c4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fb99267c078c17ac498f79a1668a6c4">hasUnreadableFiles</a> () const</td></tr>
+<tr class="memdesc:a2fb99267c078c17ac498f79a1668a6c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if any files failed to open during the last icon generation batch.  <br /></td></tr>
+<tr class="memitem:a25cd11190bb641a61741a37cd0d1a5f1" id="r_a25cd11190bb641a61741a37cd0d1a5f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25cd11190bb641a61741a37cd0d1a5f1">isolateUnreadableFiles</a> ()</td></tr>
+<tr class="memdesc:a25cd11190bb641a61741a37cd0d1a5f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Isolates the set of files that could not be opened during icon generation.  <br /></td></tr>
 <tr class="memitem:a33524a0ff262e087da83927047383f27" id="r_a33524a0ff262e087da83927047383f27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33524a0ff262e087da83927047383f27">setIsolationSet</a> (const QSet&lt; <a class="el" href="class_tagged_file.html">TaggedFile</a> * &gt; &amp;files)</td></tr>
 <tr class="memdesc:a33524a0ff262e087da83927047383f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restricts the visible set to the given files; other filters still apply within the set.  <br /></td></tr>
 <tr class="memitem:a41d58208dfd82c13acc218502eaeb331" id="r_a41d58208dfd82c13acc218502eaeb331"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41d58208dfd82c13acc218502eaeb331">clearIsolationSet</a> ()</td></tr>
@@ -267,8 +277,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5b33dfa6f7d3e5b5b3da03c2a1adf26e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges <em class="arg">from</em> into <em class="arg">into</em> across all files, then removes and schedules <em class="arg">from</em> for deletion. Emits <a class="el" href="#af30400a8de5bef7228128ab2e5250965" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> when done.  <br /></td></tr>
 <tr class="memitem:a97c55f8347ef0e4bed8204d0c9cef50e" id="r_a97c55f8347ef0e4bed8204d0c9cef50e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97c55f8347ef0e4bed8204d0c9cef50e">mergeTagFamily</a> (<a class="el" href="class_tag_family.html">TagFamily</a> *from, <a class="el" href="class_tag_family.html">TagFamily</a> *into)</td></tr>
 <tr class="memdesc:a97c55f8347ef0e4bed8204d0c9cef50e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges all tags of family <em class="arg">from</em> into family <em class="arg">into</em>, handling per-tag collisions recursively, then removes and schedules <em class="arg">from</em> for deletion. Emits <a class="el" href="#af30400a8de5bef7228128ab2e5250965" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a>.  <br /></td></tr>
+<tr class="memitem:ae2d86a4b0c5af5bd7494af2e9f61cc79" id="r_ae2d86a4b0c5af5bd7494af2e9f61cc79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2d86a4b0c5af5bd7494af2e9f61cc79">setListView</a> (QListView *view)</td></tr>
+<tr class="memdesc:ae2d86a4b0c5af5bd7494af2e9f61cc79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores a non-owning reference to the file-list view used to detect visible items.  <br /></td></tr>
 <tr class="memitem:a787ca59f32d4438e34ea9ef522e11323" id="r_a787ca59f32d4438e34ea9ef522e11323"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a787ca59f32d4438e34ea9ef522e11323">refamilyTag</a> (<a class="el" href="class_tag.html">Tag</a> *tag, <a class="el" href="class_tag_family.html">TagFamily</a> *newFamily)</td></tr>
 <tr class="memdesc:a787ca59f32d4438e34ea9ef522e11323"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves <em class="arg">tag</em> to <em class="arg">newFamily</em>, merging with a same-name tag if one already exists. Removes the old family if it becomes empty. Emits <a class="el" href="#af30400a8de5bef7228128ab2e5250965" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a>.  <br /></td></tr>
+<tr class="memitem:afb7cbf18572f8ad6a21cea2ddbcc8668" id="r_afb7cbf18572f8ad6a21cea2ddbcc8668"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_undo_manager.html">UndoManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb7cbf18572f8ad6a21cea2ddbcc8668">undoManager</a> () const</td></tr>
+<tr class="memdesc:afb7cbf18572f8ad6a21cea2ddbcc8668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the undo/redo history manager.  <br /></td></tr>
+<tr class="memitem:ac3a02c471e7639cbeba6825db0fb8fdb" id="r_ac3a02c471e7639cbeba6825db0fb8fdb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_model_snapshot.html">ModelSnapshot</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3a02c471e7639cbeba6825db0fb8fdb">captureSnapshot</a> (const QString &amp;description) const</td></tr>
+<tr class="memdesc:ac3a02c471e7639cbeba6825db0fb8fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Captures the full mutable model state as a snapshot.  <br /></td></tr>
+<tr class="memitem:a8200000ca61a16bb2085e15aad3fe26a" id="r_a8200000ca61a16bb2085e15aad3fe26a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8200000ca61a16bb2085e15aad3fe26a">restoreSnapshot</a> (const <a class="el" href="struct_model_snapshot.html">ModelSnapshot</a> &amp;snap)</td></tr>
+<tr class="memdesc:a8200000ca61a16bb2085e15aad3fe26a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restores the model to the state described by <em class="arg">snap</em>.  <br /></td></tr>
+<tr class="memitem:a16cecd685decb8e3a9c58c24bceafde3" id="r_a16cecd685decb8e3a9c58c24bceafde3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16cecd685decb8e3a9c58c24bceafde3">checkpoint</a> (const QString &amp;description)</td></tr>
+<tr class="memdesc:a16cecd685decb8e3a9c58c24bceafde3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Captures a checkpoint before a user mutation; no-op if undoManager_ is null.  <br /></td></tr>
+<tr class="memitem:a40fcd0548a034320d7751381f47b64c9" id="r_a40fcd0548a034320d7751381f47b64c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40fcd0548a034320d7751381f47b64c9">setFileRating</a> (<a class="el" href="class_tagged_file.html">TaggedFile</a> *file, std::optional&lt; int &gt; rating)</td></tr>
+<tr class="memdesc:a40fcd0548a034320d7751381f47b64c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rating for <em class="arg">file</em>, checkpointing for undo first.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Central controller that owns all application data and business logic. </p>
@@ -716,6 +738,56 @@ Public Member Functions</h2></td></tr>
 
 <p>Stops in-flight icon generation and discards any queued results. </p>
 <p>Does not affect in-progress metadata saves. </p>
+
+</div>
+</div>
+<a id="ac3a02c471e7639cbeba6825db0fb8fdb" name="ac3a02c471e7639cbeba6825db0fb8fdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3a02c471e7639cbeba6825db0fb8fdb">&#9670;&#160;</a></span>captureSnapshot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_model_snapshot.html">ModelSnapshot</a> CompendiaCore::captureSnapshot </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>description</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Captures the full mutable model state as a snapshot. </p>
+<p>Includes the tag library (families, tags, colour indices) and per-file tag assignments and ratings. Called by <a class="el" href="class_undo_manager.html#a679401e4ad08b6b8630ee12802b70bf2" title="Captures the current model state and pushes it onto the undo stack.">UndoManager::checkpoint()</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">description</td><td>Human-readable label for the action about to be performed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a16cecd685decb8e3a9c58c24bceafde3" name="a16cecd685decb8e3a9c58c24bceafde3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16cecd685decb8e3a9c58c24bceafde3">&#9670;&#160;</a></span>checkpoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CompendiaCore::checkpoint </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>description</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Captures a checkpoint before a user mutation; no-op if undoManager_ is null. </p>
+<p>Convenience wrapper around undoManager_-&gt;<a class="el" href="#a16cecd685decb8e3a9c58c24bceafde3" title="Captures a checkpoint before a user mutation; no-op if undoManager_ is null.">checkpoint()</a> intended for use at the top of each user-initiated mutation method. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">description</td><td>Human-readable label for the action about to be performed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1341,6 +1413,25 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a2fb99267c078c17ac498f79a1668a6c4" name="a2fb99267c078c17ac498f79a1668a6c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fb99267c078c17ac498f79a1668a6c4">&#9670;&#160;</a></span>hasUnreadableFiles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CompendiaCore::hasUnreadableFiles </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns true if any files failed to open during the last icon generation batch. </p>
+
+</div>
+</div>
 <a id="a6af3d7e69f8ab6d5c5cfa82f90c70099" name="a6af3d7e69f8ab6d5c5cfa82f90c70099"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6af3d7e69f8ab6d5c5cfa82f90c70099">&#9670;&#160;</a></span>hasUnsavedChanges()</h2>
 
@@ -1437,6 +1528,26 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a25cd11190bb641a61741a37cd0d1a5f1" name="a25cd11190bb641a61741a37cd0d1a5f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25cd11190bb641a61741a37cd0d1a5f1">&#9670;&#160;</a></span>isolateUnreadableFiles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CompendiaCore::isolateUnreadableFiles </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Isolates the set of files that could not be opened during icon generation. </p>
+<p>Calls <a class="el" href="#a33524a0ff262e087da83927047383f27" title="Restricts the visible set to the given files; other filters still apply within the set.">setIsolationSet()</a> with the internally tracked unreadable-files set. No-op if no files failed. </p>
+
+</div>
+</div>
 <a id="a5136723051fa16fa1eeb3a84c1f6a35e" name="a5136723051fa16fa1eeb3a84c1f6a35e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5136723051fa16fa1eeb3a84c1f6a35e">&#9670;&#160;</a></span>isolationSetSize()</h2>
 
@@ -1497,13 +1608,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Merges <em class="arg">from</em> into <em class="arg">into</em> across all files, then removes and schedules <em class="arg">from</em> for deletion. Emits <a class="el" href="#af30400a8de5bef7228128ab2e5250965" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> when done. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">from</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> to be removed after merging. </td></tr>
-    <tr><td class="paramname">into</td><td>The <a class="el" href="class_tag.html" title="Represents a single tag that can be applied to media files.">Tag</a> that survives the merge and receives all file/filter references. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -1663,6 +1767,26 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a8200000ca61a16bb2085e15aad3fe26a" name="a8200000ca61a16bb2085e15aad3fe26a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8200000ca61a16bb2085e15aad3fe26a">&#9670;&#160;</a></span>restoreSnapshot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CompendiaCore::restoreSnapshot </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_model_snapshot.html">ModelSnapshot</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>snap</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Restores the model to the state described by <em class="arg">snap</em>. </p>
+<p>Rebuilds the tag library in-memory, re-applies file tag assignments, and emits <a class="el" href="#af30400a8de5bef7228128ab2e5250965" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> to refresh all tag UI. Files whose state changed are marked dirty so the user can save the restored state. Called by <a class="el" href="class_undo_manager.html#ae14096735d539276885e77c5bd28c830">UndoManager::undo()</a> and <a class="el" href="class_undo_manager.html#aac581dfeb322f4dfdc35f429bedd72c4">UndoManager::redo()</a>. </p>
+
+</div>
+</div>
 <a id="a247b4ead2e7c0e7e611a9216638e8934" name="a247b4ead2e7c0e7e611a9216638e8934"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a247b4ead2e7c0e7e611a9216638e8934">&#9670;&#160;</a></span>rootDirectory()</h2>
 
@@ -1788,6 +1912,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a51551c590a37c272a0faa39e5082e4cf" name="a51551c590a37c272a0faa39e5082e4cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51551c590a37c272a0faa39e5082e4cf">&#9670;&#160;</a></span>scheduleWantedUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CompendiaCore::scheduleWantedUpdate </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel slot">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Restarts the debounce timer so <a class="el" href="#a40cfa83ddc1c853cc4c6b53e7f802a09" title="Recomputes wantedIconPaths_ from the current viewport geometry.">updateWantedPaths()</a> fires shortly after scroll/resize. </p>
+
+</div>
+</div>
 <a id="a831e4eb1ac59c5d7644a0c8f743ff439" name="a831e4eb1ac59c5d7644a0c8f743ff439"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a831e4eb1ac59c5d7644a0c8f743ff439">&#9670;&#160;</a></span>setCreationDateFilter()</h2>
 
@@ -1832,6 +1983,36 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filterText</td><td>The substring to match against file names. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a40fcd0548a034320d7751381f47b64c9" name="a40fcd0548a034320d7751381f47b64c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40fcd0548a034320d7751381f47b64c9">&#9670;&#160;</a></span>setFileRating()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CompendiaCore::setFileRating </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tagged_file.html">TaggedFile</a> *</td>          <td class="paramname"><span class="paramname"><em>file</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>rating</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the rating for <em class="arg">file</em>, checkpointing for undo first. </p>
+<p>Routes the rating change through the undo system instead of calling <a class="el" href="class_tagged_file.html#a7fb36112c28ae736ad8e37eb6b851257" title="Sets the rating and marks the file dirty if the value changed.">TaggedFile::setRating()</a> directly. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>The file whose rating to change. </td></tr>
+    <tr><td class="paramname">rating</td><td>A value in [1,5], or std::nullopt to clear. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1885,6 +2066,25 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ae2d86a4b0c5af5bd7494af2e9f61cc79" name="ae2d86a4b0c5af5bd7494af2e9f61cc79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2d86a4b0c5af5bd7494af2e9f61cc79">&#9670;&#160;</a></span>setListView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CompendiaCore::setListView </td>
+          <td>(</td>
+          <td class="paramtype">QListView *</td>          <td class="paramname"><span class="paramname"><em>view</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stores a non-owning reference to the file-list view used to detect visible items. </p>
 
 </div>
 </div>
@@ -1962,6 +2162,34 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="af1b302476789f6d403f2d7ec5ad246a4" name="af1b302476789f6d403f2d7ec5ad246a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1b302476789f6d403f2d7ec5ad246a4">&#9670;&#160;</a></span>snapshotRestored</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CompendiaCore::snapshotRestored </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted at the end of <a class="el" href="#a8200000ca61a16bb2085e15aad3fe26a" title="Restores the model to the state described by snap.">restoreSnapshot()</a>, after <a class="el" href="#af30400a8de5bef7228128ab2e5250965" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a> has fired. </p>
+<p>Connect to this signal to refresh UI elements that depend on per-file state (e.g. the preview star rating) but are not covered by <a class="el" href="#af30400a8de5bef7228128ab2e5250965" title="Emitted after a tag or tag-family merge alters the library.">tagLibraryChanged()</a>. </p>
 
 </div>
 </div>
@@ -2047,6 +2275,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="afb7cbf18572f8ad6a21cea2ddbcc8668" name="afb7cbf18572f8ad6a21cea2ddbcc8668"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb7cbf18572f8ad6a21cea2ddbcc8668">&#9670;&#160;</a></span>undoManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_undo_manager.html">UndoManager</a> * CompendiaCore::undoManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the undo/redo history manager. </p>
+
+</div>
+</div>
 <a id="a8fe4da3c8a187883be900f067ab5678c" name="a8fe4da3c8a187883be900f067ab5678c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8fe4da3c8a187883be900f067ab5678c">&#9670;&#160;</a></span>updateFileIcons()</h2>
 
@@ -2077,6 +2332,33 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a40cfa83ddc1c853cc4c6b53e7f802a09" name="a40cfa83ddc1c853cc4c6b53e7f802a09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40cfa83ddc1c853cc4c6b53e7f802a09">&#9670;&#160;</a></span>updateWantedPaths</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CompendiaCore::updateWantedPaths </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel slot">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Recomputes wantedIconPaths_ from the current viewport geometry. </p>
 
 </div>
 </div>

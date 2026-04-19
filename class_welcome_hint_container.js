@@ -7,8 +7,10 @@ var class_welcome_hint_container =
     [ "isWelcomeShowing", "class_welcome_hint_container.html#ad29d37ebb7227b899df6a977c9917b10", null ],
     [ "setAcceptsClickToDismiss", "class_welcome_hint_container.html#a818e50744782abbf249304c9d3b1b24a", null ],
     [ "setAcceptsDropToDismiss", "class_welcome_hint_container.html#a4e83a58c95accf529e95158ab741fd3a", null ],
+    [ "setHint", "class_welcome_hint_container.html#ac60b1bdd9dc51354cbb1feb8abdb3c73", null ],
     [ "setupWelcome", "class_welcome_hint_container.html#a72420b7f59a0284da4d596c7fe7a89e2", null ],
     [ "setupWelcome", "class_welcome_hint_container.html#a240795e81196108fb72c1f43465fbe56", null ],
+    [ "showEvent", "class_welcome_hint_container.html#a42dc284fada81eaca595a0420365f8db", null ],
     [ "tagDroppedOnWelcome", "class_welcome_hint_container.html#ad48708f200d3ef475c5288facdc8fbcc", null ],
     [ "welcomeDismissed", "class_welcome_hint_container.html#a08cb0c24ca7dbead1a92e89c27902dbc", null ]
 ];
