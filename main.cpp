@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QGuiApplication>
 #include <QIcon>
+#include <QImageReader>
 #include <QStyleHints>
 #include <QTimer>
 
@@ -49,6 +50,7 @@ static void applyTheme(QApplication &a, bool dark)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QImageReader::setAllocationLimit(0);
     a.setWindowIcon(QIcon(":/resources/compendia_icon.svg"));
 
     applyTheme(a, QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark);
