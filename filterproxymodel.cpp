@@ -61,9 +61,7 @@ bool FilterProxyModel::passesBaseFilters(TaggedFile* tf) const
         }
     }
 
-    bool untaggedResult = !untagged_only_ || tf->tags()->isEmpty();
-
-    return nameResult && folderResult && tagResult && dateResult && ratingResult && untaggedResult;
+    return nameResult && folderResult && tagResult && dateResult && ratingResult;
 }
 
 /*! \brief Overrides the Qt base-class row-acceptance test to apply all active filters.
@@ -225,12 +223,3 @@ bool FilterProxyModel::passesNonIsolationFilters(TaggedFile* tf) const
     return passesBaseFilters(tf);
 }
 
-void FilterProxyModel::setUntaggedOnly(bool untaggedOnly) {
-    beginFilterChange();
-    untagged_only_ = untaggedOnly;
-    endFilterChange();
-}
-
-bool FilterProxyModel::isUntaggedOnly() const {
-    return untagged_only_;
-}

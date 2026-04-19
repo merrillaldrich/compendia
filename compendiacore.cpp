@@ -1547,14 +1547,6 @@ void CompendiaCore::clearIsolationSet() {
     tagged_files_proxy_->clearIsolationSet();
 }
 
-void CompendiaCore::setUntaggedOnly(bool untaggedOnly) {
-    tagged_files_proxy_->setUntaggedOnly(untaggedOnly);
-}
-
-bool CompendiaCore::isUntaggedOnly() const {
-    return tagged_files_proxy_->isUntaggedOnly();
-}
-
 /*! \brief Returns true when an isolation set is active.
  *
  * \return True if the proxy model has a non-empty isolation set.

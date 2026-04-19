@@ -36,7 +36,6 @@ private:
     QSet<TaggedFile*> isolation_set_; ///< When non-empty, only listed files can pass.
     std::optional<int> rating_filter_; ///< When set, only files matching the mode+value pass.
     RatingFilterMode rating_filter_mode_ = Exactly; ///< Comparison mode for the rating filter.
-    bool untagged_only_ = false; ///< When true, only files with no tags pass.
 
     /*! \brief Tests \a tf against all base filters (name, folder, tag, date, rating).
      *
@@ -176,20 +175,6 @@ public:
      * \return True if \a tf passes all non-isolation filters.
      */
     bool passesNonIsolationFilters(TaggedFile* tf) const;
-
-    /*! \brief Enables or disables the untagged-only filter and re-applies the filter.
-     *
-     * When enabled, only files with no tags pass. When disabled, all files are eligible.
-     *
-     * \param untaggedOnly True to show only untagged files; false to disable the filter.
-     */
-    void setUntaggedOnly(bool untaggedOnly);
-
-    /*! \brief Returns true when the untagged-only filter is active.
-     *
-     * \return True if only untagged files are shown.
-     */
-    bool isUntaggedOnly() const;
 
 };
 

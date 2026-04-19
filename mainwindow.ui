@@ -1075,9 +1075,6 @@
    </property>
   </action>
   <action name="actionUntaggedImages">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Untagged Images</string>
    </property>
