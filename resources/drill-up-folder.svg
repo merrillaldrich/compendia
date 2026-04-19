@@ -23,8 +23,8 @@
       }
     </style>
   </defs>
-  <path class="st0" d="M5,10v-3h5l2,3h-7Z"/>
-  <path class="st1" d="M5,10h20v8H5v-8Z"/>
-  <line class="st3" x1="32" y1="7" x2="32" y2="19"/>
-  <polyline class="st2" points="28 11 32 6 36 11"/>
+  <path class="st0" d="M6,10v-3h5l2,3h-7Z"/>
+  <path class="st1" d="M6,10h17v8H6v-8Z"/>
+  <line class="st3" x1="30" y1="7" x2="30" y2="19"/>
+  <polyline class="st2" points="26 11 30 6 34 11"/>
 </svg>
