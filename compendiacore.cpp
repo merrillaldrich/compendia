@@ -2093,6 +2093,11 @@ void CompendiaCore::processWatcherChanges()
 
     for (const QString& path : allAppeared)
         handleFileAdded(path);
+
+    // Remove any model entries whose backing files no longer exist. This catches the macOS case
+    // where only the destination-directory event fires: the source entry becomes stale and is
+    // never matched by the correlation pass above.
+    removeStaleModelEntries();
 }
 
 /*! \brief Handles a file that disappeared with no matching appearance elsewhere in the watched tree. */
@@ -2307,4 +2312,23 @@ void CompendiaCore::handleFileAdded(const QString& absolutePath)
 
     tagged_files_proxy_->sort(0);
     emit fileAddedExternally(absolutePath);
+}
+
+void CompendiaCore::removeStaleModelEntries()
+{
+    // Collect stale paths first to avoid modifying the model while iterating it.
+    QStringList stalePaths;
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        auto* tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf) {
+            const QString absPath = QDir::cleanPath(tf->filePath + "/" + tf->fileName);
+            if (!QFileInfo::exists(absPath))
+                stalePaths.append(absPath);
+        }
+    }
+
+    for (const QString& path : stalePaths) {
+        qDebug() << "[FileWatch] removeStaleModelEntries: removing stale entry" << path;
+        handleFileRemoved(path);
+    }
 }
