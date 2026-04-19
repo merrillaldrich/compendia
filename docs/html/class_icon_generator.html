@@ -122,6 +122,8 @@ Collaboration diagram for IconGenerator:</div>
 Signals</h2></td></tr>
 <tr class="memitem:a8819e18d40762e81adfacc8e8bcfada8" id="r_a8819e18d40762e81adfacc8e8bcfada8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8819e18d40762e81adfacc8e8bcfada8">fileReady</a> (const QString &amp;absolutePath, const QMap&lt; QString, QString &gt; &amp;exifMap, const QVector&lt; QImage &gt; &amp;images, quint64 pHash)</td></tr>
 <tr class="memdesc:a8819e18d40762e81adfacc8e8bcfada8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted once per completed file (success). Always delivered on the main thread.  <br /></td></tr>
+<tr class="memitem:acddd5d8c037b3f39d5f50aa3f3185915" id="r_acddd5d8c037b3f39d5f50aa3f3185915"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acddd5d8c037b3f39d5f50aa3f3185915">fileFailed</a> (const QString &amp;absolutePath)</td></tr>
+<tr class="memdesc:acddd5d8c037b3f39d5f50aa3f3185915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a file could not be opened or decoded (image decode failure or video frame-grab failure).  <br /></td></tr>
 <tr class="memitem:ad347236209bc7b5f7fd22dbcdf2a8170" id="r_ad347236209bc7b5f7fd22dbcdf2a8170"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad347236209bc7b5f7fd22dbcdf2a8170">batchFinished</a> ()</td></tr>
 <tr class="memdesc:ad347236209bc7b5f7fd22dbcdf2a8170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted exactly once when all image tasks and video grabs are complete.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -131,6 +133,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a771bb1953a926df5cbf85bebe3985b8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="class_icon_generator.html" title="Generates and caches scaled thumbnail images for media files (images and videos).">IconGenerator</a>.  <br /></td></tr>
 <tr class="memitem:a64b3f0d211909b003fd56cc03f09ebe6" id="r_a64b3f0d211909b003fd56cc03f09ebe6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64b3f0d211909b003fd56cc03f09ebe6">processFiles</a> (const QStringList &amp;absolutePaths)</td></tr>
 <tr class="memdesc:a64b3f0d211909b003fd56cc03f09ebe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins thumbnail generation for all given file paths.  <br /></td></tr>
+<tr class="memitem:a36622f03c1448f2268e51d43959803ce" id="r_a36622f03c1448f2268e51d43959803ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36622f03c1448f2268e51d43959803ce">cancel</a> ()</td></tr>
+<tr class="memdesc:a36622f03c1448f2268e51d43959803ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests cancellation of all pending work.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -252,6 +256,59 @@ Static Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Absolute path to the corresponding cache file. </dd></dl>
+
+</div>
+</div>
+<a id="a36622f03c1448f2268e51d43959803ce" name="a36622f03c1448f2268e51d43959803ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36622f03c1448f2268e51d43959803ce">&#9670;&#160;</a></span>cancel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void IconGenerator::cancel </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Requests cancellation of all pending work. </p>
+<p>Sets a flag that causes in-flight background image tasks to skip processing and return immediately with empty results. Any active <a class="el" href="class_frame_grabber.html" title="Captures a representative frame from each video file in a batch.">FrameGrabber</a> is disconnected and scheduled for deletion. <a class="el" href="#ad347236209bc7b5f7fd22dbcdf2a8170" title="Emitted exactly once when all image tasks and video grabs are complete.">batchFinished()</a> will still be emitted once all tasks have posted their (empty) completion callbacks, so it is safe to connect <a class="el" href="#ad347236209bc7b5f7fd22dbcdf2a8170" title="Emitted exactly once when all image tasks and video grabs are complete.">batchFinished()</a> to this object's deleteLater() after calling <a class="el" href="#a36622f03c1448f2268e51d43959803ce" title="Requests cancellation of all pending work.">cancel()</a>. </p>
+
+</div>
+</div>
+<a id="acddd5d8c037b3f39d5f50aa3f3185915" name="acddd5d8c037b3f39d5f50aa3f3185915"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acddd5d8c037b3f39d5f50aa3f3185915">&#9670;&#160;</a></span>fileFailed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void IconGenerator::fileFailed </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>absolutePath</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Emitted when a file could not be opened or decoded (image decode failure or video frame-grab failure). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">absolutePath</td><td>Absolute path to the file that could not be read. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

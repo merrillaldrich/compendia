@@ -154,6 +154,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a32ffaad64052a7df49382995d674b0ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the hint label and reveals the scroll area.  <br /></td></tr>
 <tr class="memitem:ad29d37ebb7227b899df6a977c9917b10" id="r_ad29d37ebb7227b899df6a977c9917b10"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad29d37ebb7227b899df6a977c9917b10">isWelcomeShowing</a> () const</td></tr>
 <tr class="memdesc:ad29d37ebb7227b899df6a977c9917b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the welcome hint label is currently showing.  <br /></td></tr>
+<tr class="memitem:ac60b1bdd9dc51354cbb1feb8abdb3c73" id="r_ac60b1bdd9dc51354cbb1feb8abdb3c73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac60b1bdd9dc51354cbb1feb8abdb3c73">setHint</a> (const QString &amp;svgPath, int w, int h)</td></tr>
+<tr class="memdesc:ac60b1bdd9dc51354cbb1feb8abdb3c73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a background SVG hint icon to be shown after the welcome is dismissed.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_tag_container"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_tag_container')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_tag_container.html">TagContainer</a></td></tr>
 <tr class="memitem:afb444c43d124279f636dcb76b2dcc57d inherit pub_methods_class_tag_container" id="r_afb444c43d124279f636dcb76b2dcc57d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#afb444c43d124279f636dcb76b2dcc57d">TagContainer</a> (QWidget *parent=nullptr)</td></tr>
 <tr class="memdesc:afb444c43d124279f636dcb76b2dcc57d inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty <a class="el" href="class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items.">TagContainer</a>.  <br /></td></tr>
@@ -165,6 +167,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6e7ec330ab93a0c21ec4e1f0864ad56f inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards a tag-delete request up to the tagDeleteRequested signal.  <br /></td></tr>
 <tr class="memitem:a702b14de4154b65fabee32cd7fbc1c7a inherit pub_methods_class_tag_container" id="r_a702b14de4154b65fabee32cd7fbc1c7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#a702b14de4154b65fabee32cd7fbc1c7a">sort</a> ()</td></tr>
 <tr class="memdesc:a702b14de4154b65fabee32cd7fbc1c7a inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts all <a class="el" href="class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items.">TagFamilyWidget</a> children alphabetically by family name, and sorts tags within each family alphabetically by tag name.  <br /></td></tr>
+<tr class="memitem:acafa2a0ef170c460d023bd0802e7ca71 inherit pub_methods_class_tag_container" id="r_acafa2a0ef170c460d023bd0802e7ca71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#acafa2a0ef170c460d023bd0802e7ca71">setAutoSortOnRefresh</a> (bool autoSort)</td></tr>
+<tr class="memdesc:acafa2a0ef170c460d023bd0802e7ca71 inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls whether <a class="el" href="class_tag_container.html#a3445dd238a7a7f43cfb10322e8492ca6" title="Rebuilds the widget hierarchy to display exactly the given set of tags.">refresh()</a> auto-sorts; pass false to preserve insertion order.  <br /></td></tr>
 <tr class="memitem:a9ab18bddd7907259dfdd7558ebfb7c49 inherit pub_methods_class_tag_container" id="r_a9ab18bddd7907259dfdd7558ebfb7c49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tag_container.html#a9ab18bddd7907259dfdd7558ebfb7c49">filter</a> (const QString &amp;text)</td></tr>
 <tr class="memdesc:a9ab18bddd7907259dfdd7558ebfb7c49 inherit pub_methods_class_tag_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows only tag families and tags whose name starts with <code class="param">text</code>.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -176,6 +180,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a4e83a58c95accf529e95158ab741fd3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables drop-to-dismiss behaviour on the hint label.  <br /></td></tr>
 <tr class="memitem:a163d45ded0d4b1c325b00ebb07d555b0" id="r_a163d45ded0d4b1c325b00ebb07d555b0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a163d45ded0d4b1c325b00ebb07d555b0">eventFilter</a> (QObject *obj, QEvent *event) override</td></tr>
 <tr class="memdesc:a163d45ded0d4b1c325b00ebb07d555b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intercepts mouse and drag events on the hint label.  <br /></td></tr>
+<tr class="memitem:a42dc284fada81eaca595a0420365f8db" id="r_a42dc284fada81eaca595a0420365f8db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42dc284fada81eaca595a0420365f8db">showEvent</a> (QShowEvent *event) override</td></tr>
+<tr class="memdesc:a42dc284fada81eaca595a0420365f8db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the hint overlay widget on the viewport when the container first shows.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Intermediate base class that adds a dismissible welcome hint label to <a class="el" href="class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items.">TagContainer</a>. </p>
@@ -381,6 +387,44 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac60b1bdd9dc51354cbb1feb8abdb3c73" name="ac60b1bdd9dc51354cbb1feb8abdb3c73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac60b1bdd9dc51354cbb1feb8abdb3c73">&#9670;&#160;</a></span>setHint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WelcomeHintContainer::setHint </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>svgPath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>w</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers a background SVG hint icon to be shown after the welcome is dismissed. </p>
+<p>Registers a background SVG hint icon.</p>
+<p>The icon is painted centred in the scroll area's viewport, behind the scrollable content, so it stays fixed on screen while tags scroll over it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">svgPath</td><td>Qt resource path to the SVG file. </td></tr>
+    <tr><td class="paramname">w</td><td>Render width in pixels. </td></tr>
+    <tr><td class="paramname">h</td><td>Render height in pixels. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a72420b7f59a0284da4d596c7fe7a89e2" name="a72420b7f59a0284da4d596c7fe7a89e2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a72420b7f59a0284da4d596c7fe7a89e2">&#9670;&#160;</a></span>setupWelcome() <span class="overload">[1/2]</span></h2>
 
@@ -472,6 +516,34 @@ Protected Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a42dc284fada81eaca595a0420365f8db" name="a42dc284fada81eaca595a0420365f8db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42dc284fada81eaca595a0420365f8db">&#9670;&#160;</a></span>showEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WelcomeHintContainer::showEvent </td>
+          <td>(</td>
+          <td class="paramtype">QShowEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates the hint overlay widget on the viewport when the container first shows. </p>
+<p>Falls back to ensureHintOverlay() when the container is shown without going through <a class="el" href="#a32ffaad64052a7df49382995d674b0ad" title="Deletes the hint label and reveals the scroll area.">dismissWelcome()</a> (e.g. if no welcome was configured). </p>
 
 </div>
 </div>

@@ -1,14 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 24" width="40" height="24">
-  <!-- Left asterisk half: 3 lines radiating leftward -->
-  <line x1="8" y1="12" x2="2" y2="12" stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
-  <line x1="7" y1="9"  x2="3" y2="7"  stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
-  <line x1="7" y1="15" x2="3" y2="17" stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
-  <!-- Folder tab -->
-  <path d="M 12,10 L 12,7 L 20,7 L 22,10 Z" fill="#a0a0a0"/>
-  <!-- Folder body -->
-  <path d="M 12,10 L 28,10 L 28,18 L 12,18 Z" fill="#c0c0c0"/>
-  <!-- Right asterisk half: 3 lines radiating rightward -->
-  <line x1="32" y1="12" x2="38" y2="12" stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
-  <line x1="33" y1="9"  x2="37" y2="7"  stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
-  <line x1="33" y1="15" x2="37" y2="17" stroke="#888888" stroke-width="1.8" stroke-linecap="round"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 40 24">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #a0a0a0;
+      }
+
+      .st1 {
+        fill: silver;
+      }
+
+      .st2 {
+        fill: none;
+        stroke: #888;
+        stroke-linecap: round;
+        stroke-width: 1.8px;
+      }
+    </style>
+  </defs>
+  <line class="st2" x1="8" y1="12" x2="2" y2="12"/>
+  <line class="st2" x1="7" y1="9" x2="3" y2="7"/>
+  <line class="st2" x1="7" y1="15" x2="3" y2="17"/>
+  <path class="st0" d="M12,10v-3h5l2,3h-7Z"/>
+  <path class="st1" d="M12,10h16v8H12v-8Z"/>
+  <line class="st2" x1="32" y1="12" x2="38" y2="12"/>
+  <line class="st2" x1="33" y1="9" x2="37" y2="7"/>
+  <line class="st2" x1="33" y1="15" x2="37" y2="17"/>
 </svg>

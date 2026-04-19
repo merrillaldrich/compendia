@@ -15,6 +15,7 @@ var class_preview_container =
     [ "tagDroppedOnPreview", "class_preview_container.html#a517e6ac101dbb20c39b07c5962190715", null ],
     [ "tagPreviewDragEntered", "class_preview_container.html#ad2addd748403849a74ae9af5492fe1ce", null ],
     [ "tagRectDeleteRequested", "class_preview_container.html#ac96d378fa00c9adcc27a71c6a517fd15", null ],
+    [ "tagRectFindPersonRequested", "class_preview_container.html#a7480334e6f6241193a2e790e652a7651", null ],
     [ "tagRectResized", "class_preview_container.html#ae205391efc82ff2116c158fe96668005", null ],
     [ "updateTagRectDescriptor", "class_preview_container.html#a8a7b3451c70ce2cf26c4564b3eb6c5cd", null ]
 ];

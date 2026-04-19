@@ -3,8 +3,11 @@ var hierarchy =
     [ "FaceDescriptor", "struct_face_descriptor.html", null ],
     [ "FaceTagAssignment", "struct_face_tag_assignment.html", null ],
     [ "FaceWorkerPool", "struct_face_worker_pool.html", null ],
+    [ "ModelSnapshot::FamilySnap", "struct_model_snapshot_1_1_family_snap.html", null ],
+    [ "ModelSnapshot::FileSnap", "struct_model_snapshot_1_1_file_snap.html", null ],
     [ "CompendiaCore::FolderStats", "struct_compendia_core_1_1_folder_stats.html", null ],
     [ "KnownFaceCacheEntry", "struct_known_face_cache_entry.html", null ],
+    [ "ModelSnapshot", "struct_model_snapshot.html", null ],
     [ "PendingDescriptor", "struct_pending_descriptor.html", null ],
     [ "PerceptualHasher", "class_perceptual_hasher.html", null ],
     [ "Phase1FileInput", "struct_phase1_file_input.html", null ],
@@ -49,7 +52,8 @@ var hierarchy =
       [ "IconGenerator", "class_icon_generator.html", null ],
       [ "Tag", "class_tag.html", null ],
       [ "TagFamily", "class_tag_family.html", null ],
-      [ "TaggedFile", "class_tagged_file.html", null ]
+      [ "TaggedFile", "class_tagged_file.html", null ],
+      [ "UndoManager", "class_undo_manager.html", null ]
     ] ],
     [ "QPushButton", null, [
       [ "TagFamilyWidgetCollapseButton", "class_tag_family_widget_collapse_button.html", null ],
@@ -80,5 +84,6 @@ var hierarchy =
     ] ],
     [ "ScanItem", "struct_scan_item.html", null ],
     [ "TagRectDescriptor", "struct_tag_rect_descriptor.html", null ],
-    [ "TagSet", "class_tag_set.html", null ]
+    [ "TagSet", "class_tag_set.html", null ],
+    [ "ModelSnapshot::TagSnap", "struct_model_snapshot_1_1_tag_snap.html", null ]
 ];

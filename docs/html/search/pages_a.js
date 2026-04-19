@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['navigation_20isolation_0',['Navigation &amp;amp; Isolation',['../md__r_e_a_d_m_e.html#autotoc_md14',1,'']]]
+  ['github_20release_0',['GitHub Release',['../md__v_e_r_s_i_o_n_i_n_g.html#autotoc_md80',1,'Publishing a GitHub Release'],['../md__p_a_c_k_a_g_i_n_g.html#autotoc_md36',1,'Uploading to a GitHub Release'],['../md__p_a_c_k_a_g_i_n_g.html#autotoc_md48',1,'Uploading to a GitHub Release']]]
 ];

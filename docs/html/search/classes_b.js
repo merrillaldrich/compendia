@@ -12,6 +12,7 @@ var searchData=
   ['tagrectdescriptor_9',['TagRectDescriptor',['../struct_tag_rect_descriptor.html',1,'']]],
   ['tagrectitem_10',['TagRectItem',['../class_tag_rect_item.html',1,'']]],
   ['tagset_11',['TagSet',['../class_tag_set.html',1,'']]],
-  ['tagwidget_12',['TagWidget',['../class_tag_widget.html',1,'']]],
-  ['tagwidgetclosebutton_13',['TagWidgetCloseButton',['../class_tag_widget_close_button.html',1,'']]]
+  ['tagsnap_12',['TagSnap',['../struct_model_snapshot_1_1_tag_snap.html',1,'ModelSnapshot']]],
+  ['tagwidget_13',['TagWidget',['../class_tag_widget.html',1,'']]],
+  ['tagwidgetclosebutton_14',['TagWidgetCloseButton',['../class_tag_widget_close_button.html',1,'']]]
 ];

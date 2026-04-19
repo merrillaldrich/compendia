@@ -1,5 +1,6 @@
 #include "tagcontainer.h"
 #include <QLayout>
+#include <algorithm>
 
 /*! \brief Constructs an empty TagContainer.
  *
@@ -8,6 +9,16 @@
 TagContainer::TagContainer(QWidget *parent)
     : QWidget{parent}
 {}
+
+/*! \brief Controls whether refresh() auto-sorts alphabetically on every call.
+ *
+ * Set to false on the library container so insertion order is preserved.
+ * Defaults to true so assignment and filter containers stay alphabetical.
+ */
+void TagContainer::setAutoSortOnRefresh(bool autoSort)
+{
+    autoSortOnRefresh_ = autoSort;
+}
 
 /*! \brief Rebuilds the widget hierarchy to display exactly the given set of tags.
  *
@@ -23,58 +34,63 @@ void TagContainer::refresh(QSet<Tag*>* tags){
 
     clear();
 
-    // Insert all tags in the incoming set, resolving into families
-    QSetIterator<Tag *> i(*tags);
-    while (i.hasNext()) {
-        Tag* currentTag = i.next();
-        TagFamily* currentTagFamily = currentTag->tagFamily;
+    // Build lookup: family -> its tags in this refresh pass.
+    QMap<TagFamily*, QList<Tag*>> incoming;
+    for (Tag* tag : *tags)
+        incoming[tag->tagFamily].append(tag);
 
-        TagFamilyWidget* w = nullptr;
-        TagWidget* tw = nullptr;
+    // Update family_order_: remove absent families, append new ones at the end.
+    family_order_.removeIf([&incoming](TagFamily* f){ return !incoming.contains(f); });
+    for (TagFamily* fam : incoming.keys()) {
+        if (!family_order_.contains(fam))
+            family_order_.append(fam);
+    }
 
-        // If there are no tag family widgets or there's no tagfamilywidget for the current tag's family, add a new tagfamilywidget
-        QList<TagFamilyWidget*> existingTFWidgets = findChildren<TagFamilyWidget*>();
-
-        for(int tfwi = 0; tfwi < existingTFWidgets.count(); ++tfwi){
-            TagFamilyWidget* existingTFWidget = existingTFWidgets.at(tfwi);
-
-            if (existingTFWidget->getTagFamily() == currentTagFamily) {
-                // Tag family widget exists, use it
-                w = existingTFWidget;
-            }
+    // Update tag_order_ for each tracked family.
+    for (TagFamily* fam : family_order_) {
+        QList<Tag*>& order = tag_order_[fam];
+        const QList<Tag*>& incomingTags = incoming[fam];
+        order.removeIf([&incomingTags](Tag* t){ return !incomingTags.contains(t); });
+        for (Tag* tag : incomingTags) {
+            if (!order.contains(tag))
+                order.append(tag);
         }
+    }
+    // Drop stale family entries from tag_order_.
+    for (TagFamily* fam : tag_order_.keys()) {
+        if (!family_order_.contains(fam))
+            tag_order_.remove(fam);
+    }
 
-        if (w==nullptr){
-            w = new TagFamilyWidget(currentTag->tagFamily, this);
-            layout()->addWidget(w);
-            w->show();
-        }
+    // Sort tracking lists alphabetically when auto-sort is on.
+    if (autoSortOnRefresh_) {
+        std::sort(family_order_.begin(), family_order_.end(),
+                  [](TagFamily* a, TagFamily* b){ return a->getName() < b->getName(); });
+        for (QList<Tag*>& tagList : tag_order_)
+            std::sort(tagList.begin(), tagList.end(),
+                      [](Tag* a, Tag* b){ return a->getName() < b->getName(); });
+    }
 
-        // If there are no tag widgets, or there's no tagwidget for the current tag in the current family widget, add a new tagwidget
-        QList<TagWidget*> existingTWidgets = w->findChildren<TagWidget*>();
+    // Build widgets in tracked order.
+    for (TagFamily* fam : family_order_) {
+        TagFamilyWidget* w = new TagFamilyWidget(fam, this);
+        layout()->addWidget(w);
+        w->show();
 
-        for(int twi = 0; twi < existingTWidgets.count(); ++twi){
-            TagWidget* existingTWidget = existingTWidgets.at(twi);
-            if(existingTWidget->getTag() == currentTag){
-                // Tag widget exists, use it
-                tw = existingTWidget;
-            }
-        }
-
-        if (tw==nullptr){
-            tw = new TagWidget(currentTag, w);
-            if (! connect(tw, &TagWidget::deleteRequested, this, &TagContainer::onTagDeleteRequested))
+        for (Tag* tag : tag_order_[fam]) {
+            TagWidget* tw = new TagWidget(tag, w);
+            if (!connect(tw, &TagWidget::deleteRequested, this, &TagContainer::onTagDeleteRequested))
                 qWarning() << "Failed to connect tag widget delete to container delete";
             connect(tw, &TagWidget::tagNameChanged, this, &TagContainer::tagNameChanged);
-            connect(tw, &TagWidget::tagNameChanged, w, [w](Tag*){ w->sort(); });
+            if (autoSortOnRefresh_)
+                connect(tw, &TagWidget::tagNameChanged, w, [w](Tag*){ w->sort(); });
             connect(tw, &TagWidget::widthChangedDuringEdit, w, &TagFamilyWidget::onChildTagWidthChanged);
             w->layout()->addWidget(tw);
             tw->show();
-
-            // Cause the family to grow if there are more tags than space in the family widget
             w->refreshMinimumHeight();
         }
     }
+
     // Restore collapsed state for newly created widgets.
     const QList<TagFamilyWidget*> created =
         findChildren<TagFamilyWidget*>(QString(), Qt::FindDirectChildrenOnly);
@@ -83,8 +99,6 @@ void TagContainer::refresh(QSet<Tag*>* tags){
         if (collapsed_state_.contains(name))
             fw->setCollapsed(collapsed_state_.value(name));
     }
-
-    this->sort();
 }
 
 /*! \brief Removes all child TagFamilyWidget and TagWidget items from the layout. */
@@ -147,29 +161,32 @@ void TagContainer::filter(const QString &text) {
 /*! \brief Sorts all TagFamilyWidget children alphabetically by family name,
  *  and sorts tags within each family alphabetically by tag name. */
 void TagContainer::sort() {
+    // Sort tracking lists alphabetically.
+    std::sort(family_order_.begin(), family_order_.end(),
+              [](TagFamily* a, TagFamily* b){ return a->getName() < b->getName(); });
+    for (QList<Tag*>& tagList : tag_order_)
+        std::sort(tagList.begin(), tagList.end(),
+                  [](Tag* a, Tag* b){ return a->getName() < b->getName(); });
+
+    // Pull all TagFamilyWidgets out of the layout.
     QList<TagFamilyWidget*> fwlist;
     QLayoutItem* item = nullptr;
-
-    // Temporarily move child widgets to a list
     while ((item = layout()->takeAt(0)) != nullptr) {
-        if (QWidget *widget = item->widget()) {
-            if (auto *tfw = qobject_cast<TagFamilyWidget*>(widget)) {
+        if (QWidget *widget = item->widget())
+            if (auto *tfw = qobject_cast<TagFamilyWidget*>(widget))
                 fwlist.append(tfw);
-            }
-        }
-        delete item; // is this needed to avoid QLayoutItem leak?
+        delete item;
     }
 
-    // Sort the list (compare pointers)
-    std::sort(fwlist.begin(), fwlist.end(),
-              [](TagFamilyWidget* a, TagFamilyWidget* b) {
-                  return a->getTagFamily()->getName() < b->getTagFamily()->getName();
-              });
-
-    // Put the widgets back in the layout, in order
-    for (TagFamilyWidget* w : fwlist) {
-        w->sort();
-        layout()->addWidget(w);
-        w->refreshMinimumHeight();
+    // Re-insert them in the order dictated by the now-sorted family_order_.
+    for (TagFamily* fam : family_order_) {
+        for (TagFamilyWidget* w : fwlist) {
+            if (w->getTagFamily() == fam) {
+                w->sort();
+                layout()->addWidget(w);
+                w->refreshMinimumHeight();
+                break;
+            }
+        }
     }
 }

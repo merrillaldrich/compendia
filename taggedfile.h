@@ -194,6 +194,13 @@ public:
      * \param rating A value in [1,5], or std::nullopt to clear.
      */
     void setRating(std::optional<int> rating);
+
+    /*! \brief Removes all applied tags and bounding rects without marking the file dirty.
+     *
+     * Used exclusively during snapshot restore to reset file tag state before
+     * re-applying the snapshot's tag assignments.
+     */
+    void clearAllTags();
 };
 
 Q_DECLARE_METATYPE(TaggedFile)
