@@ -10,6 +10,7 @@ NavLibraryContainer::NavLibraryContainer(QWidget *parent)
     setAcceptsClickToDismiss(true);
     setHint(QStringLiteral(":/resources/bookshelf-hint.svg"), 66, 64);
     setAutoFillBackground(false);
+    setAutoSortOnRefresh(false);
 }
 
 /*! \brief Overrides the Qt base-class mouse-release handler to create a new tag family on click.
