@@ -125,6 +125,17 @@ MainWindow::MainWindow(QWidget *parent)
         ui->menuEdit->addAction(redoAct);
     }
 
+    // Sort Library — shared with the Sort button above the tag library panel
+    {
+        ui->menuEdit->addSeparator();
+        QAction* sortAct = new QAction(tr("Sort Library"), this);
+        connect(sortAct, &QAction::triggered, this, &MainWindow::sortTagLibrary);
+        ui->menuEdit->addAction(sortAct);
+    }
+
+    connect(ui->sortLibraryButton, &QPushButton::clicked,
+            this, &MainWindow::sortTagLibrary);
+
     connect(core, &CompendiaCore::fileRemovedExternally,
             this, [this](TaggedFile* tf, bool, bool) {
         progress_->showNotification("Removed: " + tf->fileName);
@@ -708,6 +719,7 @@ void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
     ui->navFilterContainer->activateWelcome();
     ui->fileListTagAssignmentContainer->activateWelcome();
 
+    sortLibraryOnNextRefresh_ = true;
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
     clearPreview();
@@ -725,6 +737,13 @@ void MainWindow::refreshNavTagLibrary(){
 
     QSet<Tag*>* libTags = core->getLibraryTags();
     ui->navLibraryContainer->refresh(libTags);
+
+    // On the first non-empty refresh after a folder load, sort once so the
+    // starting view is alphabetical even though auto-sort is disabled.
+    if (sortLibraryOnNextRefresh_ && !libTags->isEmpty()) {
+        sortTagLibrary();
+        sortLibraryOnNextRefresh_ = false;
+    }
 
     // Dismiss all welcome hints the moment the first tag exists, regardless of
     // which code path created it (tag dialog, face detection, drag-drop, etc.).
@@ -753,6 +772,15 @@ void MainWindow::refreshTagAssignmentArea(){
     ui->fileListTagAssignmentContainer->refresh(assignedTags);
     refreshPreviewTagsLabel();
 
+}
+
+/*! \brief Alphabetizes tag families and tags in the library panel.
+ *
+ * Shared by the Sort button and Edit > Sort Library menu action.
+ */
+void MainWindow::sortTagLibrary()
+{
+    ui->navLibraryContainer->sort();
 }
 
 /*! \brief Rebuilds the tag-region overlays in the preview when a tag is renamed.

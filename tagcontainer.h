@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QLayout>
+#include <QList>
 #include <QMap>
 #include <QSet>
 #include "tagwidget.h"
@@ -25,13 +26,16 @@ private:
     /// Collapsed state keyed by family name; persisted across refresh() calls.
     QMap<QString, bool> collapsed_state_;
 
-    /*! \brief Comparison helper for sorting TagFamilyWidgets by family name.
-     *
-     * \param a First TagFamilyWidget to compare.
-     * \param b Second TagFamilyWidget to compare.
-     * \return True if a's family name is less than b's.
-     */
-    bool const famNameLessThan(const TagFamilyWidget &a, const TagFamilyWidget &b) ;
+    /// Display order for tag families; new families append at end.
+    QList<TagFamily*> family_order_;
+
+    /// Display order for tags within each family; new tags append at end.
+    QMap<TagFamily*, QList<Tag*>> tag_order_;
+
+    /// When true, refresh() sorts alphabetically; when false, insertion order is preserved.
+    bool autoSortOnRefresh_ = true;
+
+    bool const famNameLessThan(const TagFamilyWidget &a, const TagFamilyWidget &b);
 
 public:
     /*! \brief Constructs an empty TagContainer.
@@ -58,6 +62,9 @@ public:
     /*! \brief Sorts all TagFamilyWidget children alphabetically by family name,
      *  and sorts tags within each family alphabetically by tag name. */
     void sort();
+
+    /*! \brief Controls whether refresh() auto-sorts; pass false to preserve insertion order. */
+    void setAutoSortOnRefresh(bool autoSort);
 
     /*! \brief Shows only tag families and tags whose name starts with \p text.
      *

@@ -45,6 +45,7 @@ private:
     QTimer* rectWarmupTimer_ = nullptr;       ///< Debounce timer for post-rect-adjust face cache warming.
     TaggedFile* warmupPendingFile_ = nullptr; ///< File waiting for rect-adjust warmup when the timer fires.
     bool preReleaseWarningAccepted_ = false;  ///< True once the user has accepted the pre-release warning this session.
+    bool sortLibraryOnNextRefresh_ = false;   ///< Set by loadFolder(); consumed by the first non-empty refreshNavTagLibrary() to sort on load.
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
@@ -167,6 +168,9 @@ private:
 
     /*! \brief Starts the Save progress bar and writes metadata for all dirty files. */
     void saveAll();
+
+    /*! \brief Alphabetizes tag families and tags in the library panel. Shared by the Sort button and Edit menu. */
+    void sortTagLibrary();
 
     /*! \brief Sets the folder filter to \p folderPath and enables both clear-isolation actions. */
     void applyFolderIsolation(const QString& folderPath);
