@@ -957,10 +957,6 @@ void MainWindow::on_actionClearAllFilters_triggered()
     // Isolation sets
     clearSelectionIsolation();
 
-    // Untagged-only filter
-    ui->actionUntaggedImages->setChecked(false);
-    core->setUntaggedOnly(false);
-
     refreshTagAssignmentArea();
 }
 
@@ -973,11 +969,18 @@ void MainWindow::on_actionUnreadableFiles_triggered()
     refreshTagAssignmentArea();
 }
 
-/*! \brief Toggles the untagged-only filter to show only files with no tags. */
+/*! \brief Captures all currently untagged files into the isolation set. */
 void MainWindow::on_actionUntaggedImages_triggered()
 {
-    bool active = ui->actionUntaggedImages->isChecked();
-    core->setUntaggedOnly(active);
+    QSet<TaggedFile*> untagged;
+    QStandardItemModel* model = core->getItemModel();
+    for (int row = 0; row < model->rowCount(); ++row) {
+        TaggedFile* tf = model->item(row)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && tf->tags()->isEmpty())
+            untagged.insert(tf);
+    }
+    core->setIsolationSet(untagged);
+    ui->actionClearIsolation->setEnabled(true);
     updateFileCountLabel();
     refreshTagAssignmentArea();
 }
