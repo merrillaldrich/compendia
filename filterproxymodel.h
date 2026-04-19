@@ -151,6 +151,14 @@ public:
      */
     bool isIsolated() const;
 
+    /*! \brief Forces the proxy to re-evaluate filterAcceptsRow() for every row.
+     *
+     * Exposes the protected QSortFilterProxyModel::invalidateFilter() so that
+     * external code (e.g. CompendiaCore) can trigger a full filter refresh after
+     * in-place model mutations that do not emit dataChanged.
+     */
+    void refreshFilter() { invalidateFilter(); }
+
     /*! \brief Returns the number of files in the current isolation set.
      *
      * \return Size of isolation_set_, or 0 when not isolated.
