@@ -2243,6 +2243,17 @@ void CompendiaCore::handleFileAdded(const QString& absolutePath)
     if (!fileInfo.exists() || !fileInfo.isFile())
         return;
 
+    // Reject if a model entry for this path already exists (guards against duplicate entries
+    // when macOS delivers the destination-directory event before the source-directory event,
+    // causing the file to appear as a new addition rather than a move).
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        auto* tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && QDir::cleanPath(tf->filePath + "/" + tf->fileName) == QDir::cleanPath(absolutePath)) {
+            qDebug() << "[FileWatch] handleFileAdded: already in model, skipping" << absolutePath;
+            return;
+        }
+    }
+
     // Load sidecar JSON if one exists alongside the new file
     const QString sidecarPath = fileInfo.absolutePath() + "/" + fileInfo.completeBaseName() + ".json";
     QFile sidecarFile(sidecarPath);
