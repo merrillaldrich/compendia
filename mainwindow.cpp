@@ -128,7 +128,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Sort Library — shared with the Sort button above the tag library panel
     {
         ui->menuEdit->addSeparator();
-        QAction* sortAct = new QAction(tr("Sort Library"), this);
+        QAction* sortAct = new QAction(tr("Sort Tag Library"), this);
         connect(sortAct, &QAction::triggered, this, &MainWindow::sortTagLibrary);
         ui->menuEdit->addAction(sortAct);
     }
