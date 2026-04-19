@@ -30,16 +30,16 @@
         fill: #e6e6e6;
       }
     </style>
-    <linearGradient id="linear-gradient" x1="50.71" y1="163.37" x2="377.3" y2="98.34" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#b3b3b3"/>
+    <linearGradient id="linear-gradient" x1="-.39" y1="122.05" x2="377.01" y2="225.37" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a0a0a0"/>
       <stop offset=".45" stop-color="gray"/>
-      <stop offset="1" stop-color="#666"/>
     </linearGradient>
-    <linearGradient id="linear-gradient-2" x1="42.4" y1="163.61" x2="135.86" y2="161.79" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-2" x1="32.74" y1="163.67" x2="123.83" y2="163.37" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#ccc"/>
-      <stop offset=".42" stop-color="#a4a4a4"/>
-      <stop offset=".79" stop-color="#898989"/>
-      <stop offset="1" stop-color="gray"/>
+      <stop offset=".07" stop-color="#bebebe"/>
+      <stop offset=".33" stop-color="#929292"/>
+      <stop offset=".53" stop-color="#777"/>
+      <stop offset=".65" stop-color="#6e6e6e"/>
     </linearGradient>
     <linearGradient id="linear-gradient-3" x1="105.63" y1="285.08" x2="430.17" y2="311.26" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#b3b3b3"/>
@@ -56,7 +56,7 @@
     </linearGradient>
     <linearGradient id="linear-gradient-5" x1="294.55" y1="326.58" x2="375.39" y2="411.64" gradientUnits="userSpaceOnUse">
       <stop offset=".13" stop-color="#e6e6e6"/>
-      <stop offset="1" stop-color="gray"/>
+      <stop offset=".82" stop-color="#737373"/>
     </linearGradient>
   </defs>
   <g id="Back">
