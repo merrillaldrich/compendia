@@ -118,6 +118,14 @@ private:
      */
     void handleFileAdded(const QString& absolutePath);
 
+    /*! \brief Scans every model entry and removes any whose backing file no longer exists on disk.
+     *
+     * Called at the end of each watcher debounce cycle. Recovers from the macOS case where the
+     * source-directory event is never delivered for a moved file, leaving a stale entry behind
+     * that handleFileAdded()'s duplicate guard would then preserve incorrectly.
+     */
+    void removeStaleModelEntries();
+
     /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model.
      */
     void flushIconGeneratorQueue();
