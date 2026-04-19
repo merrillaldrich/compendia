@@ -2107,7 +2107,7 @@ void CompendiaCore::processWatcherChanges()
     // would never re-run filterAcceptsRow() and the item would stay visible despite no
     // longer passing the folder filter.
     if (hadMoves)
-        tagged_files_proxy_->invalidateFilter();
+        tagged_files_proxy_->refreshFilter();
 }
 
 /*! \brief Handles a file that disappeared with no matching appearance elsewhere in the watched tree. */
