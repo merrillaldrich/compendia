@@ -1,10 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 24" width="40" height="24">
-  <!-- Left bracket [ -->
-  <path d="M 8,5 L 5,5 L 5,19 L 8,19" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-  <!-- Folder tab -->
-  <path d="M 12,10 L 12,7 L 20,7 L 22,10 Z" fill="#a0a0a0"/>
-  <!-- Folder body -->
-  <path d="M 12,10 L 28,10 L 28,18 L 12,18 Z" fill="#c0c0c0"/>
-  <!-- Right bracket ] -->
-  <path d="M 32,5 L 35,5 L 35,19 L 32,19" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 40 24">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #a0a0a0;
+      }
+
+      .st1 {
+        fill: silver;
+      }
+
+      .st2 {
+        fill: none;
+        stroke: #888;
+        stroke-linecap: square;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <path class="st2" d="M8,5h-3v14h3"/>
+  <path class="st0" d="M12,10v-3h5l2,3h-7Z"/>
+  <path class="st1" d="M12,10h16v8H12v-8Z"/>
+  <path class="st2" d="M32,5h3v14h-3"/>
 </svg>

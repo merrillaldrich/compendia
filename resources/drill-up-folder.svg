@@ -1,9 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 24" width="40" height="24">
-  <!-- Folder tab -->
-  <path d="M 8,10 L 8,7 L 16,7 L 18,10 Z" fill="#a0a0a0"/>
-  <!-- Folder body -->
-  <path d="M 8,10 L 28,10 L 28,18 L 8,18 Z" fill="#c0c0c0"/>
-  <!-- Up arrow -->
-  <line x1="34" y1="7" x2="34" y2="19" stroke="#888888" stroke-width="2" stroke-linecap="round"/>
-  <polyline points="30,11 34,6 38,11" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 40 24">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #a0a0a0;
+      }
+
+      .st1 {
+        fill: silver;
+      }
+
+      .st2 {
+        stroke-linejoin: round;
+      }
+
+      .st2, .st3 {
+        fill: none;
+        stroke: #888;
+        stroke-linecap: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <path class="st0" d="M5,10v-3h5l2,3h-7Z"/>
+  <path class="st1" d="M5,10h20v8H5v-8Z"/>
+  <line class="st3" x1="32" y1="7" x2="32" y2="19"/>
+  <polyline class="st2" points="28 11 32 6 36 11"/>
 </svg>
