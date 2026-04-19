@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,31,105,57"/>
-<area shape="rect" id="Node000001" href="$class_tag_family_widget_collapse_button.html" title="A custom collapse/expand button used inside TagFamilyWidget." alt="" coords="153,5,364,32"/>
-<area shape="poly" id="edge23_Node000000_Node000001" title=" " alt="" coords="119,33,155,31,150,33,121,39"/>
-<area shape="rect" id="Node000002" href="$class_tag_widget_close_button.html" title="A custom circular close button used inside TagWidget." alt="" coords="181,56,336,83"/>
-<area shape="poly" id="edge24_Node000000_Node000002" title=" " alt="" coords="120,49,183,59,178,60,120,55"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,31,84,57"/>
+<area shape="rect" id="Node000001" href="$class_folder_filter_line_edit.html" title="A QLineEdit with shell&#45;style path autocomplete for the folder filter." alt="" coords="139,5,272,32"/>
+<area shape="poly" id="edge10_Node000000_Node000001" title=" " alt="" coords="98,33,141,28,136,30,100,38"/>
+<area shape="rect" id="Node000002" href="$class_variable_width_line_edit.html" title="A QLineEdit that automatically resizes its width to fit its text content." alt="" coords="132,56,280,83"/>
+<area shape="poly" id="edge11_Node000000_Node000002" title=" " alt="" coords="99,50,134,57,128,58,99,55"/>
 </map>

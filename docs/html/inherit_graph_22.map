@@ -1,27 +1,23 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,132,78,159"/>
-<area shape="rect" id="Node000001" href="$class_date_filter_button.html" title="A date&#45;entry widget combining a free&#45;form line edit with a calendar popup button." alt="" coords="130,5,246,32"/>
-<area shape="poly" id="edge27_Node000000_Node000001" title=" " alt="" coords="57,117,86,79,124,42,147,31,143,35,127,46,90,82,61,120"/>
-<area shape="rect" id="Node000002" href="$class_multi_progress_bar.html" title="A status&#45;bar widget that tracks multiple concurrent background processes and cycles the display betwe..." alt="" coords="127,56,248,83"/>
-<area shape="poly" id="edge28_Node000000_Node000002" title=" " alt="" coords="74,121,124,92,153,81,149,85,127,97,78,125"/>
-<area shape="rect" id="Node000003" href="$class_preview_container.html" title="Widget that displays a full&#45;size image preview inside a zoomable graphics view." alt="" coords="126,107,250,133"/>
-<area shape="poly" id="edge29_Node000000_Node000003" title=" " alt="" coords="91,134,127,129,123,133,94,139"/>
-<area shape="rect" id="Node000004" href="$class_star_rating_widget.html" title="A five&#45;star rating widget that can display, set, or clear a 1–5 rating." alt="" coords="126,157,250,184"/>
-<area shape="poly" id="edge30_Node000000_Node000004" title=" " alt="" coords="92,152,128,158,123,161,94,157"/>
-<area shape="rect" id="Node000005" href="$class_tag_container.html" title="Base container widget that displays a set of tags grouped into TagFamilyWidget items." alt="" coords="139,208,237,235"/>
-<area shape="poly" id="edge31_Node000000_Node000005" title=" " alt="" coords="76,165,127,194,153,207,148,208,124,198,76,170"/>
-<area shape="rect" id="Node000010" href="$class_tagging_widget.html" title="Base widget class that carries a base colour for tag and tag&#45;family widgets." alt="" coords="134,259,242,285"/>
-<area shape="poly" id="edge36_Node000000_Node000010" title=" " alt="" coords="59,169,90,208,127,245,148,258,142,258,124,249,86,212,59,175"/>
-<area shape="rect" id="Node000006" href="$class_welcome_hint_container.html" title="Intermediate base class that adds a dismissible welcome hint label to TagContainer." alt="" coords="298,208,453,235"/>
-<area shape="poly" id="edge32_Node000005_Node000006" title=" " alt="" coords="252,219,300,221,295,222,253,224"/>
-<area shape="rect" id="Node000007" href="$class_nav_filter_container.html" title="Tag container that displays the active filter tags and accepts tag drops to add filters." alt="" coords="520,157,650,184"/>
-<area shape="poly" id="edge33_Node000006_Node000007" title=" " alt="" coords="448,201,529,184,524,185,449,206"/>
-<area shape="rect" id="Node000008" href="$class_nav_library_container.html" title="Tag container that displays the full tag library and allows new families to be created." alt="" coords="515,208,655,235"/>
-<area shape="poly" id="edge34_Node000006_Node000008" title=" " alt="" coords="469,219,517,221,512,222,469,224"/>
-<area shape="rect" id="Node000009" href="$class_tag_assignment_container.html" title="Tag container showing tags assigned to the current file selection, accepting tag drops." alt="" coords="501,259,669,285"/>
-<area shape="poly" id="edge35_Node000006_Node000009" title=" " alt="" coords="449,236,529,258,524,258,448,242"/>
-<area shape="rect" id="Node000011" href="$class_tag_family_widget.html" title="Visual widget representing a tag family, containing its child TagWidget items." alt="" coords="314,259,437,285"/>
-<area shape="poly" id="edge37_Node000010_Node000011" title=" " alt="" coords="256,269,317,272,312,272,257,275"/>
-<area shape="rect" id="Node000012" href="$class_tag_widget.html" title="Visual widget representing a single tag, supporting inline editing and drag&#45;and&#45;drop." alt="" coords="334,309,417,336"/>
-<area shape="poly" id="edge38_Node000010_Node000012" title=" " alt="" coords="255,287,336,311,331,312,254,293"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,233,75,260"/>
+<area shape="rect" id="Node000001" href="$class_compendia_core.html" title="Central controller that owns all application data and business logic." alt="" coords="123,5,238,32"/>
+<area shape="poly" id="edge14_Node000000_Node000001" title=" " alt="" coords="43,217,52,179,67,133,89,85,121,42,139,30,136,35,125,46,94,87,72,134,57,180,48,219"/>
+<area shape="rect" id="Node000002" href="$class_exif_parser.html" title="Utility class for extracting EXIF metadata from JPEG and HEIF/HEIC image files." alt="" coords="140,56,222,83"/>
+<area shape="poly" id="edge15_Node000000_Node000002" title=" " alt="" coords="48,218,74,156,95,122,121,93,141,81,138,85,124,97,99,126,79,158,53,219"/>
+<area shape="rect" id="Node000003" href="$class_face_recognizer.html" title="Detects and recognises faces across images using dlib&#39;s HOG detector and ResNet embeddings." alt="" coords="123,107,239,133"/>
+<area shape="poly" id="edge16_Node000000_Node000003" title=" " alt="" coords="55,219,83,180,121,143,143,132,140,136,124,147,87,184,60,221"/>
+<area shape="rect" id="Node000004" href="$class_folder_scanner.html" title="Background worker that recursively scans a directory for media files." alt="" coords="128,157,234,184"/>
+<area shape="poly" id="edge17_Node000000_Node000004" title=" " alt="" coords="72,223,121,194,148,183,144,187,124,198,76,227"/>
+<area shape="rect" id="Node000005" href="$class_frame_grabber.html" title="Captures a representative frame from each video file in a batch." alt="" coords="129,208,233,235"/>
+<area shape="poly" id="edge18_Node000000_Node000005" title=" " alt="" coords="89,236,130,229,126,233,92,240"/>
+<area shape="rect" id="Node000006" href="$class_icon_generator.html" title="Generates and caches scaled thumbnail images for media files (images and videos)." alt="" coords="129,259,232,285"/>
+<area shape="poly" id="edge19_Node000000_Node000006" title=" " alt="" coords="89,253,131,261,127,264,91,258"/>
+<area shape="rect" id="Node000007" href="$class_tag.html" title="Represents a single tag that can be applied to media files." alt="" coords="160,309,202,336"/>
+<area shape="poly" id="edge20_Node000000_Node000007" title=" " alt="" coords="74,266,124,295,162,313,157,315,121,300,74,271"/>
+<area shape="rect" id="Node000008" href="$class_tag_family.html" title="Represents a named group of related tags, each with an auto&#45;assigned colour." alt="" coords="140,360,222,387"/>
+<area shape="poly" id="edge21_Node000000_Node000008" title=" " alt="" coords="57,270,87,309,124,346,144,359,139,360,121,350,83,313,57,276"/>
+<area shape="rect" id="Node000009" href="$class_tagged_file.html" title="Holds all data associated with a single media file managed by Compendia." alt="" coords="139,411,223,437"/>
+<area shape="poly" id="edge22_Node000000_Node000009" title=" " alt="" coords="51,272,79,335,99,368,124,397,142,410,137,411,121,401,95,371,74,338,50,277"/>
+<area shape="rect" id="Node000010" href="$class_undo_manager.html" title="Two&#45;stack undo/redo manager using full model snapshots." alt="" coords="130,461,232,488"/>
+<area shape="poly" id="edge23_Node000000_Node000010" title=" " alt="" coords="46,273,57,313,72,359,94,406,125,447,141,461,135,460,121,451,89,409,67,361,52,314,46,278"/>
 </map>

@@ -19,7 +19,7 @@ var class_face_recognizer =
     [ "setDetectionThreshold", "class_face_recognizer.html#aa32e54c077a1e0bc2435514e6dc8b06f", null ],
     [ "setMatchThreshold", "class_face_recognizer.html#a3d554eeb9650c24614f5faa1880d1485", null ],
     [ "setMaxWorkers", "class_face_recognizer.html#aee68136481c70d077042850bc2574ea4", null ],
-    [ "startBackgroundSweep", "class_face_recognizer.html#a0eea056b689b044408f556bb760f4eae", null ],
+    [ "startBackgroundSweep", "class_face_recognizer.html#ad8075571404932eabf03258e04cacde6", null ],
     [ "sweepCancelled", "class_face_recognizer.html#ac6277a58761d9e07e69c9d592e456ee4", null ],
     [ "sweepFileResult", "class_face_recognizer.html#ad95186dadf12b915ec8f81ba54573867", null ],
     [ "sweepFinished", "class_face_recognizer.html#a88080ba1121a38107da5b0983fa32237", null ],

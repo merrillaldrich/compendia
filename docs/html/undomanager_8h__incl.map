@@ -1,0 +1,19 @@
+<map id="undomanager.h" name="undomanager.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="277,5,387,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,75,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="280,35,90,82,89,77,279,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="99,80,168,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="300,32,183,77,181,72,295,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="191,80,244,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="315,32,251,74,249,69,309,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="268,80,319,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="328,31,309,68,305,64,323,34"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="342,80,399,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="340,30,359,67,354,65,337,35"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="422,80,490,107"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="354,30,424,72,419,72,353,35"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="514,80,579,107"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="370,30,502,76,497,76,369,35"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="603,80,669,107"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="388,29,590,79,585,79,387,35"/>
+</map>

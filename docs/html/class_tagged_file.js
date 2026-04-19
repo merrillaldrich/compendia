@@ -8,6 +8,7 @@ var class_tagged_file =
     [ "TaggedFile", "class_tagged_file.html#accc28242518fddd41f54d454f3adb5ca", null ],
     [ "addTag", "class_tagged_file.html#abbe4ad626b1573e223002a76f8afdc18", null ],
     [ "addTag", "class_tagged_file.html#acdd9621dfa2b2a528e8b69ddbc7b09d1", null ],
+    [ "clearAllTags", "class_tagged_file.html#ab2720dabf810590766b99cff3c07990a", null ],
     [ "clearDirtyFlag", "class_tagged_file.html#a5ca873b8ca2baff54f8e8fbf19a98c1f", null ],
     [ "dirtyFlag", "class_tagged_file.html#a13484167b27d2d3a20869742d082fd62", null ],
     [ "effectiveDate", "class_tagged_file.html#a6fe2a8b9b757c8434c039edeeb4c227d", null ],

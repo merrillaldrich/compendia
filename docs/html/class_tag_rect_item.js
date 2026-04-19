@@ -4,6 +4,7 @@ var class_tag_rect_item =
     [ "boundingRect", "class_tag_rect_item.html#a49b51c6e542c442485ca492a6023d141", null ],
     [ "contextMenuEvent", "class_tag_rect_item.html#aad778e52799f977da62dd3e348c0dca5", null ],
     [ "deleteRequested", "class_tag_rect_item.html#a4859a5327ae569bfc06f20cb88b39649", null ],
+    [ "findPersonRequested", "class_tag_rect_item.html#a108c1cea35b27bdf1d162d3b5a6fc29e", null ],
     [ "hoverLeaveEvent", "class_tag_rect_item.html#a6cf23a2c7876b4a24d4a5cc2cda7f594", null ],
     [ "hoverMoveEvent", "class_tag_rect_item.html#a6942efe9ae8c2a04863fd2468d2e5b38", null ],
     [ "mouseMoveEvent", "class_tag_rect_item.html#a17a06b3b11bc3577d67a060c275b7cb8", null ],

@@ -116,6 +116,10 @@ Variables</h2></td></tr>
 <tr class="memdesc:a1cce129a02a9fa16445d19be691fc380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of auto-detected faces tagged per image during a recognition sweep.  <br /></td></tr>
 <tr class="memitem:a82c471ab22f5270ce9cf4a32e8915113" id="r_a82c471ab22f5270ce9cf4a32e8915113"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82c471ab22f5270ce9cf4a32e8915113">BulkUntagWarningThreshold</a> = 5</td></tr>
 <tr class="memdesc:a82c471ab22f5270ce9cf4a32e8915113"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum number of affected files that triggers a confirmation dialog before removing a tag via the assignment-area close button.  <br /></td></tr>
+<tr class="memitem:a23c9b8a28c64b90539a0e9c92c0a6211" id="r_a23c9b8a28c64b90539a0e9c92c0a6211"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a23c9b8a28c64b90539a0e9c92c0a6211">ShowPreReleaseWarning</a> = false</td></tr>
+<tr class="memdesc:a23c9b8a28c64b90539a0e9c92c0a6211"><td class="mdescLeft">&#160;</td><td class="mdescRight">When <code>true</code>, a pre-release warning dialog is shown before the first folder load.  <br /></td></tr>
+<tr class="memitem:a2f2ae8d4803b381abd1d32a86b345921" id="r_a2f2ae8d4803b381abd1d32a86b345921"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f2ae8d4803b381abd1d32a86b345921">SoftwareVideoScaling</a> = true</td></tr>
+<tr class="memdesc:a2f2ae8d4803b381abd1d32a86b345921"><td class="mdescLeft">&#160;</td><td class="mdescRight">When <code>true</code> and running on Linux, video frames are decoded to <code>QImage</code> and scaled in software before display, eliminating the moiré and aliasing artefacts produced by the platform video renderer (GStreamer) when downscaling large frames.  <br /></td></tr>
 <tr class="memitem:a3a3f6e38d21d3a1315a6c6c67ad8da86" id="r_a3a3f6e38d21d3a1315a6c6c67ad8da86"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a3f6e38d21d3a1315a6c6c67ad8da86">SimilarImageThreshold</a> = 10</td></tr>
 <tr class="memdesc:a3a3f6e38d21d3a1315a6c6c67ad8da86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum Hamming distance between two pHash values for the images to be considered near-duplicates by the "Find Similar Images" feature.  <br /></td></tr>
 <tr class="memitem:a7285c0af65e7d1934dee85c97488679e" id="r_a7285c0af65e7d1934dee85c97488679e"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7285c0af65e7d1934dee85c97488679e">RectWarmupDelayMs</a> = 3000</td></tr>
@@ -368,6 +372,31 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a23c9b8a28c64b90539a0e9c92c0a6211" name="a23c9b8a28c64b90539a0e9c92c0a6211"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23c9b8a28c64b90539a0e9c92c0a6211">&#9670;&#160;</a></span>ShowPreReleaseWarning</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Compendia::ShowPreReleaseWarning = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>When <code>true</code>, a pre-release warning dialog is shown before the first folder load. </p>
+<p>Set to <code>true</code> for alpha/beta builds and <code>false</code> for production releases. </p>
+
+</div>
+</div>
 <a id="a3a3f6e38d21d3a1315a6c6c67ad8da86" name="a3a3f6e38d21d3a1315a6c6c67ad8da86"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3a3f6e38d21d3a1315a6c6c67ad8da86">&#9670;&#160;</a></span>SimilarImageThreshold</h2>
 
@@ -389,6 +418,31 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Maximum Hamming distance between two pHash values for the images to be considered near-duplicates by the "Find Similar Images" feature. </p>
+
+</div>
+</div>
+<a id="a2f2ae8d4803b381abd1d32a86b345921" name="a2f2ae8d4803b381abd1d32a86b345921"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f2ae8d4803b381abd1d32a86b345921">&#9670;&#160;</a></span>SoftwareVideoScaling</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Compendia::SoftwareVideoScaling = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>When <code>true</code> and running on Linux, video frames are decoded to <code>QImage</code> and scaled in software before display, eliminating the moiré and aliasing artefacts produced by the platform video renderer (GStreamer) when downscaling large frames. </p>
+<p>Has no effect on non-Linux platforms. Set to <code>false</code> to revert to the native <code>QGraphicsVideoItem</code> path on all platforms. </p>
 
 </div>
 </div>
