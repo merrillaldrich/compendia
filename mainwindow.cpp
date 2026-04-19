@@ -957,6 +957,10 @@ void MainWindow::on_actionClearAllFilters_triggered()
     // Isolation sets
     clearSelectionIsolation();
 
+    // Untagged-only filter
+    ui->actionUntaggedImages->setChecked(false);
+    core->setUntaggedOnly(false);
+
     refreshTagAssignmentArea();
 }
 
@@ -965,6 +969,15 @@ void MainWindow::on_actionUnreadableFiles_triggered()
 {
     core->isolateUnreadableFiles();
     ui->actionClearIsolation->setEnabled(true);
+    updateFileCountLabel();
+    refreshTagAssignmentArea();
+}
+
+/*! \brief Toggles the untagged-only filter to show only files with no tags. */
+void MainWindow::on_actionUntaggedImages_triggered()
+{
+    bool active = ui->actionUntaggedImages->isChecked();
+    core->setUntaggedOnly(active);
     updateFileCountLabel();
     refreshTagAssignmentArea();
 }
