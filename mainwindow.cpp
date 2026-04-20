@@ -18,6 +18,7 @@
 #include <QMenu>
 #include <QProcess>
 #include <QProgressDialog>
+#include <QStyleFactory>
 
 #include "./ui_mainwindow.h"
 #include "compendiacore.h"
@@ -135,6 +136,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->sortLibraryButton, &QPushButton::clicked,
             this, &MainWindow::sortTagLibrary);
+
+#ifdef Q_OS_WIN
+    // On Windows, Qt's QStyleSheetStyle wraps the native button style with an
+    // alpha-compositing layer that blends the button chrome against the parent
+    // background colour.  Because navLibrarySection is painted with the nav blue,
+    // this produces a blue tint on sortLibraryButton.  Assigning the button its
+    // own QWindowsVistaStyle instance takes it outside the QStyleSheetStyle chain
+    // so the native chrome renders opaquely against its own background.
+    // This issue does not occur on macOS or Linux, which use different style engines.
+    ui->sortLibraryButton->setStyle(QStyleFactory::create("windowsvista"));
+#endif
 
     connect(core, &CompendiaCore::fileRemovedExternally,
             this, [this](TaggedFile* tf, bool, bool) {
