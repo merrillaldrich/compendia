@@ -193,6 +193,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui->previewStarRating->setEnabled(false);
     ui->fileListStarRating->setEnabled(false);
 
+    // Actions that require an open folder — disabled until one is loaded
+    ui->actionSave_All->setEnabled(false);
+    ui->actionSave_Visible->setEnabled(false);
+    ui->actionExport->setEnabled(false);
+    ui->actionFind_Faces->setEnabled(false);
+    ui->actionRemove_Auto_Detected_Faces->setEnabled(false);
+    ui->actionAuto_Tag_Year->setEnabled(false);
+    ui->actionAuto_Tag_Month->setEnabled(false);
+    ui->actionFind_Similar_Images->setEnabled(false);
+    ui->actionUntaggedImages->setEnabled(false);
+    ui->actionClearAllFilters->setEnabled(false);
+    ui->saveButton->setEnabled(false);
+
     // File-list star rating — apply a rating to selected files, or all visible files with confirmation
     connect(ui->fileListStarRating, &StarRatingWidget::ratingChanged,
             this, [this](std::optional<int> rating) {
@@ -259,6 +272,7 @@ MainWindow::MainWindow(QWidget *parent)
             this, [this](std::optional<int> rating) {
         core->setRatingFilter(rating);
         updateFileCountLabel();
+        updateClearAllFiltersEnabled();
     });
 
     // Star rating widget — update the selected file's rating when the user clicks a star
@@ -441,6 +455,7 @@ MainWindow::MainWindow(QWidget *parent)
                 core->setIsolationSet(similar);
                 ui->actionClearIsolation->setEnabled(true);
                 updateFileCountLabel();
+                updateClearAllFiltersEnabled();
             });
 
             const QString fullPath = clickedTf->filePath + "/" + clickedTf->fileName;
@@ -709,6 +724,18 @@ void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
     ui->actionClearIsolation->setEnabled(false);
     ui->actionUnreadableFiles->setEnabled(false);
     ui->actionUnreadableFiles->setIcon(QIcon());
+
+    // Enable actions now that a folder is open
+    ui->actionSave_All->setEnabled(true);
+    ui->actionSave_Visible->setEnabled(true);
+    ui->actionExport->setEnabled(true);
+    ui->actionFind_Faces->setEnabled(true);
+    ui->actionRemove_Auto_Detected_Faces->setEnabled(true);
+    ui->actionAuto_Tag_Year->setEnabled(true);
+    ui->actionAuto_Tag_Month->setEnabled(true);
+    ui->actionFind_Similar_Images->setEnabled(true);
+    ui->actionUntaggedImages->setEnabled(true);
+    ui->saveButton->setEnabled(true);
     lv->setModel(core->getItemModelProxy());
 
     // Viewport-priority icon loading: keep CompendiaCore informed of what is visible.
@@ -738,6 +765,8 @@ void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
     ui->filterStarRating->setEnabled(true);
     ui->previewStarRating->setEnabled(false);
     ui->fileListStarRating->setEnabled(true);
+    // Filters are reset by loadRootDirectory(); start with Clear All disabled.
+    updateClearAllFiltersEnabled();
     // Icon generation progress bar and folder stats are started from the
     // scanFinished signal handler once the file count is known.
 }
@@ -912,6 +941,7 @@ void MainWindow::on_actionIsolateSelection_triggered()
     ui->actionClearIsolation->setEnabled(true);
     updateFileCountLabel();
     refreshTagAssignmentArea();
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Clears the selection isolation set. */
@@ -979,6 +1009,7 @@ void MainWindow::on_actionUnreadableFiles_triggered()
     ui->actionClearIsolation->setEnabled(true);
     updateFileCountLabel();
     refreshTagAssignmentArea();
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Captures all currently untagged files into the isolation set. */
@@ -995,6 +1026,23 @@ void MainWindow::on_actionUntaggedImages_triggered()
     ui->actionClearIsolation->setEnabled(true);
     updateFileCountLabel();
     refreshTagAssignmentArea();
+    updateClearAllFiltersEnabled();
+}
+
+bool MainWindow::hasAnyActiveFilter() const
+{
+    auto* proxy = core->getItemModelProxy();
+    return !ui->fileNameFilterLineEdit->text().isEmpty()
+        || !ui->folderFilterLineEdit->text().isEmpty()
+        || !proxy->getFilterTags()->isEmpty()
+        || proxy->getFilterCreationDate().isValid()
+        || proxy->isIsolated()
+        || proxy->getRatingFilter().has_value();
+}
+
+void MainWindow::updateClearAllFiltersEnabled()
+{
+    ui->actionClearAllFilters->setEnabled(hasAnyActiveFilter());
 }
 
 bool MainWindow::isAtDrillCeiling() const
@@ -1064,6 +1112,7 @@ void MainWindow::applyFolderIsolation(const QString& folderPath)
     ui->folderFilterLineEdit->setText(folderPath);
     ui->actionClearFolderIsolation->setEnabled(true);
     ui->actionClearIsolation->setEnabled(true);
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Clears the selection isolation set and disables its clear action. */
@@ -1072,6 +1121,7 @@ void MainWindow::clearSelectionIsolation()
     core->clearIsolationSet();
     ui->actionClearIsolation->setEnabled(false);
     updateFileCountLabel();
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Clears the folder filter and disables its clear action. */
@@ -1079,6 +1129,7 @@ void MainWindow::clearFolderIsolation()
 {
     ui->folderFilterLineEdit->setText("");
     ui->actionClearFolderIsolation->setEnabled(false);
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Guards dirty state, sets drill ceiling if needed, and loads \p targetPath as the new root. */
@@ -1231,6 +1282,7 @@ void MainWindow::on_actionFind_Similar_In_Selection_triggered()
     core->setIsolationSet(similar);
     ui->actionClearIsolation->setEnabled(true);
     updateFileCountLabel();
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Finds all near-duplicate image groups by perceptual hash and isolates them.
@@ -1272,6 +1324,7 @@ void MainWindow::on_actionFind_Similar_Images_triggered()
     core->setIsolationSet(similar);
     ui->actionClearIsolation->setEnabled(true);
     updateFileCountLabel();
+    updateClearAllFiltersEnabled();
 
     QString msg = QString("%1 similar image(s) found across %2 group(s).")
                       .arg(similar.size())
@@ -1288,6 +1341,7 @@ void MainWindow::refreshTagFilterArea(){
     QSet<Tag*>* filterTags = core->getFilterTags();
     ui->navFilterContainer->refresh(filterTags);
 
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Rebuilds the previewFileTagsValue label from the currently selected file's tags. */
@@ -1792,6 +1846,7 @@ void MainWindow::on_fileNameFilterLineEdit_textChanged(const QString &arg1)
         ui->fileListView->selectionModel()->clearSelection();
     }
     refreshTagAssignmentArea();
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Removes a tag from all filtered files when an unassign is requested.
@@ -1859,6 +1914,7 @@ void MainWindow::on_folderFilterLineEdit_textChanged(const QString &arg1)
         ui->fileListView->selectionModel()->clearSelection();
     }
     refreshTagAssignmentArea();
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Adjusts the file-list icon and grid size when the zoom slider moves.
@@ -2214,6 +2270,7 @@ void MainWindow::on_showTaggedRegionsCheckbox_stateChanged(int state)
 void MainWindow::on_dateEdit_dateChanged(const QDate &date)
 {
     core->setCreationDateFilter(date);  // invalid QDate = no filter
+    updateClearAllFiltersEnabled();
 }
 
 /*! \brief Tags every file with its capture/creation year in the "Year" tag family.

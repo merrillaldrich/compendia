@@ -113,6 +113,12 @@ public:
      */
     QDate getFilterCreationDate() const { return creation_date_; }
 
+    /*! \brief Returns the rating filter value.
+     *
+     * \return The currently active rating filter, or std::nullopt when inactive.
+     */
+    std::optional<int> getRatingFilter() const { return rating_filter_; }
+
     /*! \brief Sets the creation-date filter and re-applies the filter.
      *
      * \param creationDate The date to filter by.
