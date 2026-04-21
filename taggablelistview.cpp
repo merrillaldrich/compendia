@@ -12,6 +12,7 @@ TaggableListView::TaggableListView(QWidget *parent)
     setDefaultDropAction(Qt::CopyAction);
     setDragDropMode(QAbstractItemView::DropOnly);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
+    setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 }
 
 /*! \brief Overrides the Qt base-class handler to apply a dropped tag to the target file(s).
