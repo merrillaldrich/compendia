@@ -24,9 +24,9 @@ DateFilterButton::DateFilterButton(QWidget *parent)
 {
     auto *layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
-    layout->addWidget(lineEdit_,       0, Qt::AlignVCenter);
-    layout->addWidget(calendarButton_, 0, Qt::AlignVCenter);
+    layout->setSpacing(2);
+    layout->addWidget(lineEdit_,       0, Qt::AlignTop);
+    layout->addWidget(calendarButton_, 0, Qt::AlignTop);
 
     lineEdit_->setPlaceholderText("Any date");
     lineEdit_->setFixedWidth(lineEdit_->fontMetrics().horizontalAdvance("00/00/0000") + 12);
