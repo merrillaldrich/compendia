@@ -198,7 +198,7 @@
            <property name="spacing">
             <number>4</number>
            </property>
-           <item>
+           <item alignment="Qt::AlignVCenter">
             <widget class="QLineEdit" name="tagSearchLineEdit">
              <property name="minimumSize">
               <size>
@@ -211,7 +211,7 @@
              </property>
             </widget>
            </item>
-           <item>
+           <item alignment="Qt::AlignVCenter">
             <widget class="QPushButton" name="sortLibraryButton">
              <property name="minimumSize">
               <size>
@@ -265,14 +265,14 @@
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
             <layout class="QHBoxLayout" name="mediaFolderLayout">
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="QLabel" name="mediaFolderLabel">
                <property name="text">
                 <string>Media Folder</string>
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="QLineEdit" name="mediaFolderLineEdit">
                <property name="minimumSize">
                 <size>
@@ -282,7 +282,7 @@
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="QPushButton" name="mediaFolderBrowseButton">
                <property name="minimumSize">
                 <size>
@@ -301,7 +301,7 @@
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="QPushButton" name="saveButton">
                <property name="minimumSize">
                 <size>
@@ -327,14 +327,14 @@
              <property name="spacing">
               <number>4</number>
              </property>
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="QLabel" name="nameMatchesLabel">
                <property name="text">
                 <string>Name Matches</string>
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="QLineEdit" name="fileNameFilterLineEdit">
                <property name="minimumSize">
                 <size>
@@ -344,14 +344,14 @@
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="QLabel" name="dateEditLabel">
                <property name="text">
                 <string>Creation Date</string>
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="DateFilterButton" name="dateEdit" native="true">
                <property name="minimumSize">
                 <size>
@@ -365,14 +365,14 @@
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="QLabel" name="folderMatchesLabel">
                <property name="text">
                 <string>Folder Matches</string>
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignVCenter">
               <widget class="FolderFilterLineEdit" name="folderFilterLineEdit">
                <property name="minimumSize">
                 <size>
