@@ -11,7 +11,6 @@
 #include <QLineEdit>
 #include <QLocale>
 #include <QPushButton>
-#include <QToolButton>
 #include <QVBoxLayout>
 
 /*! \brief Constructs a DateFilterButton.
@@ -21,7 +20,7 @@
 DateFilterButton::DateFilterButton(QWidget *parent)
     : QWidget(parent)
     , lineEdit_(new QLineEdit(this))
-    , calendarButton_(new QToolButton(this))
+    , calendarButton_(new QPushButton(this))
 {
     auto *layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -38,12 +37,18 @@ DateFilterButton::DateFilterButton(QWidget *parent)
     calendarButton_->setText("▾");
     calendarButton_->setFocusPolicy(Qt::NoFocus);
     calendarButton_->setFixedHeight(24);
+#ifdef Q_OS_MAC
+    // setFixedHeight(24) caps the maximum at 24 px.  On macOS the native push
+    // button bezel (NSBezelStyleRounded) requires at least ~28 pt; lifting the
+    // cap lets AppKit render it natively while keeping the minimum at 24 px.
+    calendarButton_->setMaximumHeight(QWIDGETSIZE_MAX);
+#endif
 
     lineEdit_->installEventFilter(this);
 
     connect(lineEdit_, &QLineEdit::editingFinished, this, &DateFilterButton::onEditingFinished);
     connect(lineEdit_, &QLineEdit::textEdited,      this, &DateFilterButton::onTextEdited);
-    connect(calendarButton_, &QToolButton::clicked,  this, &DateFilterButton::showCalendar);
+    connect(calendarButton_, &QPushButton::clicked,  this, &DateFilterButton::showCalendar);
 }
 
 /*! \brief Returns the currently selected date, or an invalid QDate if none. */

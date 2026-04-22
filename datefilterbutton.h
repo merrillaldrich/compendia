@@ -6,7 +6,7 @@
 #include <QWidget>
 
 class QLineEdit;
-class QToolButton;
+class QPushButton;
 
 /*! \brief A date-entry widget combining a free-form line edit with a calendar popup button.
  *
@@ -83,7 +83,7 @@ private:
     void updateLineEdit();
 
     QLineEdit   *lineEdit_;                              ///< Free-form text entry for the date.
-    QToolButton *calendarButton_;                        ///< Button that opens the calendar popup.
+    QPushButton *calendarButton_;                        ///< Button that opens the calendar popup.
     QDate        date_;                                  ///< Currently selected date; invalid when none.
 
     QList<QDate> availableDates_;                        ///< Sorted list of dates for autocomplete suggestions.
