@@ -11,6 +11,7 @@
 #include <QLineEdit>
 #include <QLocale>
 #include <QPushButton>
+#include <QStyle>
 #include <QVBoxLayout>
 
 /*! \brief Constructs a DateFilterButton.
@@ -34,7 +35,8 @@ DateFilterButton::DateFilterButton(QWidget *parent)
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 
-    calendarButton_->setText("▾");
+    calendarButton_->setIcon(style()->standardIcon(QStyle::SP_ArrowDown));
+    calendarButton_->setIconSize(QSize(10, 10));
     calendarButton_->setFocusPolicy(Qt::NoFocus);
     calendarButton_->setFixedSize(24, 24);
 #ifdef Q_OS_MAC
