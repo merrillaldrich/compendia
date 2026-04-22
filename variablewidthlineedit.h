@@ -17,7 +17,7 @@ private:
      *
      * \param e The key press event.
      */
-    void keyPressEvent(QKeyEvent *e);
+    void keyPressEvent(QKeyEvent *e) override;
 
 public:
     /*! \brief Constructs the line edit and sets an initial minimum width based on font metrics.
@@ -38,7 +38,7 @@ protected:
      *
      * \return The minimum size.
      */
-    QSize sizeHint() const;
+    QSize sizeHint() const override;
 
 signals:
     /*! \brief Emitted when the user presses the Escape key. */

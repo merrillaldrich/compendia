@@ -47,7 +47,7 @@ protected:
      *
      * \param event The mouse release event.
      */
-    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
     /*! \brief Overrides the Qt base-class resize handler to keep the collapse button anchored.
      *
@@ -90,7 +90,7 @@ protected:
      *
      * \return The size hint.
      */
-    QSize sizeHint() const ;
+    QSize sizeHint() const override;
 
 public:
     /*! \brief Constructs a default, empty TagFamilyWidget.
@@ -110,7 +110,7 @@ public:
      *
      * \param event The paint event.
      */
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event) override;
 
     /*! \brief Switches the widget into inline-edit mode for the family name. */
     void startEdit();

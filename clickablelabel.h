@@ -32,7 +32,7 @@ protected:
      *
      * \param event The mouse release event.
      */
-    void mouseReleaseEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event) override;
 
 };
 

@@ -636,7 +636,7 @@ bool MainWindow::confirmPreRelease()
     QCheckBox* cb = new QCheckBox("I like to live dangerously.");
     mb.setCheckBox(cb);
 
-    QObject::connect(cb, &QCheckBox::stateChanged, okButton, [okButton](int state) {
+    QObject::connect(cb, &QCheckBox::checkStateChanged, okButton, [okButton](Qt::CheckState state) {
         okButton->setEnabled(state == Qt::Checked);
     });
 
