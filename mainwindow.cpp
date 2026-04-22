@@ -144,8 +144,14 @@ MainWindow::MainWindow(QWidget *parent)
     // this produces a blue tint on sortLibraryButton.  Assigning the button its
     // own QWindowsVistaStyle instance takes it outside the QStyleSheetStyle chain
     // so the native chrome renders opaquely against its own background.
-    // This issue does not occur on macOS or Linux, which use different style engines.
     ui->sortLibraryButton->setStyle(QStyleFactory::create("windowsvista"));
+#elif defined(Q_OS_MAC)
+    // The .ui file caps sortLibraryButton's maximumHeight at 24 px to match the
+    // adjacent search field.  On macOS, NSBezelStyleRounded (the standard push
+    // button) requires at least ~28 pt; at 24 px AppKit falls back to a
+    // non-standard bordered bezel that looks like a gradient rectangle.
+    // Remove the cap so the button renders at its natural native height.
+    ui->sortLibraryButton->setMaximumHeight(QWIDGETSIZE_MAX);
 #endif
 
     connect(core, &CompendiaCore::fileRemovedExternally,
@@ -538,6 +544,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete core;
 }
+
 
 /*! \brief Slot for the Open Folder menu action; delegates to setRootFolder(). */
 void MainWindow::on_actionOpen_Folder_triggered()

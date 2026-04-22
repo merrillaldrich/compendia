@@ -475,6 +475,7 @@ protected:
      * \param event The close event to accept or ignore.
      */
     void closeEvent(QCloseEvent *event) override;
+
 };
 
 #endif // MAINWINDOW_H
