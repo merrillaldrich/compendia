@@ -69,6 +69,9 @@ public:
     /*! \brief Updates the file-count label to show visible vs. total file counts. */
     void updateFileCountLabel();
 
+    /*! \brief Updates the enabled state of actionClearAllFilters based on active filter state. */
+    void updateClearAllFiltersEnabled();
+
     /*! \brief Updates the persistent folder-stats label in the status bar. */
     void updateFolderStatsLabel();
 
@@ -148,6 +151,9 @@ private:
 
     /*! \brief Returns true when the current root equals the drill ceiling (or no drill session is active). */
     bool isAtDrillCeiling() const;
+
+    /*! \brief Returns true when any filter is currently active. */
+    bool hasAnyActiveFilter() const;
 
     /*! \brief Updates the enabled state of actionDrillUp based on current drill position. */
     void updateDrillUpEnabled();
