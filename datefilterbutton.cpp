@@ -24,7 +24,7 @@ DateFilterButton::DateFilterButton(QWidget *parent)
 {
     auto *layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(2);
+    layout->setSpacing(0);
     layout->addWidget(lineEdit_,       0, Qt::AlignTop);
     layout->addWidget(calendarButton_, 0, Qt::AlignTop);
 
@@ -36,7 +36,7 @@ DateFilterButton::DateFilterButton(QWidget *parent)
 
     calendarButton_->setText("▾");
     calendarButton_->setFocusPolicy(Qt::NoFocus);
-    calendarButton_->setFixedHeight(24);
+    calendarButton_->setFixedSize(24, 24);
 #ifdef Q_OS_MAC
     // setFixedHeight(24) caps the maximum at 24 px.  On macOS the native push
     // button bezel (NSBezelStyleRounded) requires at least ~28 pt; lifting the
