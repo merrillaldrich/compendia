@@ -213,10 +213,9 @@ fi
 
 # ── Determine version ─────────────────────────────────────────────────────────
 
-VERSION="$(cmake -L -N "$BUILD_DIR" 2>/dev/null \
-    | grep '^CMAKE_PROJECT_VERSION:' \
+VERSION="$(grep '^CMAKE_PROJECT_VERSION:' "$BUILD_DIR/CMakeCache.txt" 2>/dev/null \
     | cut -d= -f2 \
-    || echo "0.1.0")"
+    || echo "0.0.0")"
 
 OUTPUT="$SCRIPT_DIR/Compendia-${VERSION}-x86_64.AppImage"
 
