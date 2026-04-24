@@ -336,7 +336,24 @@ foreach(f IN LISTS MODEL_FILES)
 endforeach()
 
 if(MODELS_FOUND)
-    install(FILES ${MODEL_FILES} DESTINATION models)
+    if(APPLE)
+        # On macOS the executable lives inside the bundle at Contents/MacOS/, so
+        # applicationDirPath() resolves there.  Install the models inside the bundle
+        # so they are found at runtime and packaged correctly in the DMG.
+        install(FILES ${MODEL_FILES}
+                DESTINATION "compendia.app/Contents/MacOS/models")
+        # Copy into the build-time bundle so the app works when launched from Qt Creator.
+        add_custom_command(TARGET compendia POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E make_directory
+                "$<TARGET_BUNDLE_DIR:compendia>/Contents/MacOS/models"
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+                ${MODEL_FILES}
+                "$<TARGET_BUNDLE_DIR:compendia>/Contents/MacOS/models/"
+            COMMENT "Copying face recognition model files into app bundle"
+        )
+    else()
+        install(FILES ${MODEL_FILES} DESTINATION models)
+    endif()
 else()
     message(STATUS
         "compendia: model .dat files not found in models/ — face recognition "
