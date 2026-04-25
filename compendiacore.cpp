@@ -765,7 +765,8 @@ void CompendiaCore::onScanFinished()
     tagged_files_proxy_->sort(0);
     updateWantedPaths();   // seed visible-icon set so first paint schedules loads without a scroll/resize event
 
-    // Populate the filesystem watcher with all unique directories containing tracked files.
+    // Populate the filesystem watcher with all unique directories containing tracked files,
+    // plus all their ancestors up to root_directory_ (required to detect subdirectory renames).
     if (fileWatcher_) {
         QSet<QString> dirs;
         dirs.insert(root_directory_);
@@ -776,7 +777,7 @@ void CompendiaCore::onScanFinished()
         dirs.removeIf([](const QString& d) {
             return d.contains(QLatin1String(Compendia::CacheFolderName));
         });
-        fileWatcher_->addPaths(QStringList(dirs.begin(), dirs.end()));
+        addWatchPaths(dirs);
     }
 
     emit scanFinished(tagged_files_->rowCount(), toCache);
@@ -2059,20 +2060,115 @@ CompendiaCore::DirDiff CompendiaCore::diffDirectory(const QString& dirPath) cons
     return diff;
 }
 
+/*! \brief Adds seedDirs and all their ancestors up to root_directory_ to fileWatcher_. */
+void CompendiaCore::addWatchPaths(const QSet<QString>& seedDirs)
+{
+    if (!fileWatcher_)
+        return;
+    QSet<QString> toWatch = seedDirs;
+    const QString cleanRoot = QDir::cleanPath(root_directory_);
+    for (const QString& dir : seedDirs) {
+        QDir d(dir);
+        while (true) {
+            const QString current = QDir::cleanPath(d.absolutePath());
+            if (current == cleanRoot)
+                break;
+            if (!d.cdUp())
+                break;
+            toWatch.insert(QDir::cleanPath(d.absolutePath()));
+        }
+    }
+    toWatch.insert(cleanRoot);
+    fileWatcher_->addPaths(QStringList(toWatch.begin(), toWatch.end()));
+}
+
+/*! \brief Diffs the immediate subdirectories of parentPath against the set of watched paths. */
+CompendiaCore::FolderDiff CompendiaCore::diffSubdirectories(const QString& parentPath) const
+{
+    const QString cleanParent = QDir::cleanPath(parentPath);
+
+    // Immediate subdirectories currently on disk
+    QSet<QString> onDisk;
+    for (const QString& name : QDir(cleanParent).entryList(QDir::Dirs | QDir::NoDotAndDotDot))
+        onDisk.insert(cleanParent + "/" + name);
+
+    // Immediate subdirectories currently registered in the watcher
+    QSet<QString> watched;
+    if (fileWatcher_) {
+        for (const QString& p : fileWatcher_->directories()) {
+            const QString cleanP = QDir::cleanPath(p);
+            if (QFileInfo(cleanP).absolutePath() == cleanParent)
+                watched.insert(cleanP);
+        }
+    }
+
+    FolderDiff diff;
+    for (const QString& d : watched)
+        if (!QDir(d).exists()) diff.disappearedFolders.append(d);
+    for (const QString& d : onDisk)
+        if (!watched.contains(d)) diff.appearedFolders.append(d);
+
+    return diff;
+}
+
+/*! \brief Handles a subfolder renamed from oldPath to newPath, patching all in-memory state. */
+void CompendiaCore::handleFolderRenamed(const QString& oldPath, const QString& newPath)
+{
+    qDebug() << "[FileWatch] handleFolderRenamed:" << oldPath << "->" << newPath;
+
+    const QString cleanOld = QDir::cleanPath(oldPath);
+    const QString cleanNew = QDir::cleanPath(newPath);
+
+    // Prefix-patch all model entries whose filePath is inside oldPath
+    for (int i = 0; i < tagged_files_->rowCount(); ++i) {
+        auto tf = tagged_files_->item(i)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+        const QString cleanFilePath = QDir::cleanPath(tf->filePath);
+        if (cleanFilePath == cleanOld || cleanFilePath.startsWith(cleanOld + "/"))
+            tf->filePath = cleanNew + tf->filePath.mid(cleanOld.length());
+    }
+
+    // Swap watcher registrations: remove old paths, add new paths
+    if (fileWatcher_) {
+        QStringList oldWatched;
+        for (const QString& p : fileWatcher_->directories()) {
+            const QString cleanP = QDir::cleanPath(p);
+            if (cleanP == cleanOld || cleanP.startsWith(cleanOld + "/"))
+                oldWatched.append(p);
+        }
+        if (!oldWatched.isEmpty())
+            fileWatcher_->removePaths(oldWatched);
+
+        QSet<QString> newPaths;
+        newPaths.insert(cleanNew);
+        for (const QString& p : oldWatched) {
+            const QString cleanP = QDir::cleanPath(p);
+            newPaths.insert(cleanNew + cleanP.mid(cleanOld.length()));
+        }
+        fileWatcher_->addPaths(QStringList(newPaths.begin(), newPaths.end()));
+    }
+
+    tagged_files_proxy_->refreshFilter();
+    emit folderRenamedExternally(oldPath, newPath);
+    qDebug() << "[FileWatch] handleFolderRenamed: complete";
+}
+
 /*! \brief Flushes pendingChangedDirs_, correlates appeared/disappeared pairs as moves, dispatches handlers. */
 void CompendiaCore::processWatcherChanges()
 {
     qDebug() << "[FileWatch] processWatcherChanges: flushing" << pendingChangedDirs_.size() << "dir(s)";
 
+    const QSet<QString> dirsBatch = pendingChangedDirs_;
+    pendingChangedDirs_.clear();
+
     QStringList allAppeared;
     QStringList allDisappeared;
 
-    for (const QString& dir : pendingChangedDirs_) {
+    for (const QString& dir : dirsBatch) {
         DirDiff diff = diffDirectory(dir);
         allAppeared.append(diff.appeared);
         allDisappeared.append(diff.disappeared);
     }
-    pendingChangedDirs_.clear();
 
     // Correlate same-filename disappearances and appearances as moves within the watched tree
     QStringList unmatched;
@@ -2096,16 +2192,39 @@ void CompendiaCore::processWatcherChanges()
     for (const QString& path : allAppeared)
         handleFileAdded(path);
 
+    // --- Folder-level rename detection ---
+    // Must run before removeStaleModelEntries() so that renamed-folder entries get their paths
+    // updated and are not incorrectly swept as stale.
+    for (const QString& dir : dirsBatch) {
+        FolderDiff fd = diffSubdirectories(dir);
+
+        if (fd.disappearedFolders.size() == 1 && fd.appearedFolders.size() == 1) {
+            // Unambiguous 1:1 rename — update all in-memory state
+            handleFolderRenamed(fd.disappearedFolders.first(), fd.appearedFolders.first());
+            hadMoves = true;
+        } else {
+            // Multiple or unknown changes: start watching any new directories so their
+            // contents are picked up via the normal file-level pipeline on the next tick.
+            for (const QString& appeared : fd.appearedFolders) {
+                QSet<QString> newDirs;
+                newDirs.insert(appeared);
+                QDirIterator it(appeared, QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+                while (it.hasNext())
+                    newDirs.insert(it.next());
+                addWatchPaths(newDirs);
+            }
+        }
+    }
+
     // Remove any model entries whose backing files no longer exist. This catches the macOS case
     // where only the destination-directory event fires: the source entry becomes stale and is
     // never matched by the correlation pass above.
     removeStaleModelEntries();
 
-    // After file moves, force the proxy to re-evaluate its filter. When a file moves to a
-    // different folder, tf->filePath is updated in-memory but setText() on the model item
-    // may not emit dataChanged (if the filename is unchanged), so QSortFilterProxyModel
-    // would never re-run filterAcceptsRow() and the item would stay visible despite no
-    // longer passing the folder filter.
+    // After file moves or folder renames, force the proxy to re-evaluate its filter. When a
+    // file's tf->filePath is updated in-memory, setText() on the model item may not emit
+    // dataChanged (if the filename is unchanged), so QSortFilterProxyModel would never re-run
+    // filterAcceptsRow() and the item would stay visible despite no longer passing the folder filter.
     if (hadMoves)
         tagged_files_proxy_->refreshFilter();
 }
@@ -2236,9 +2355,8 @@ void CompendiaCore::handleFileMoved(const QString& oldPath, const QString& newPa
     tf->fileName = newInfo.fileName();
     tfItem->setText(newInfo.fileName());
 
-    // Watch the new directory if not already watched
-    if (fileWatcher_ && !fileWatcher_->directories().contains(newInfo.absolutePath()))
-        fileWatcher_->addPath(newInfo.absolutePath());
+    // Watch the new directory and all its ancestors up to root
+    addWatchPaths({newInfo.absolutePath()});
 
     // Last-ditch safety: if no sidecar exists at the new location, mark dirty so
     // the user will be prompted to save and the data won't be silently lost.
@@ -2316,9 +2434,8 @@ void CompendiaCore::handleFileAdded(const QString& absolutePath)
         qDebug() << "[FileWatch] handleFileAdded: queued for icon generation after current batch";
     }
 
-    // Watch the new file's directory if it isn't already (handles files dropped into new subdirs)
-    if (fileWatcher_ && !fileWatcher_->directories().contains(fileInfo.absolutePath()))
-        fileWatcher_->addPath(fileInfo.absolutePath());
+    // Watch the new file's directory and all ancestors up to root (handles files dropped into new subdirs)
+    addWatchPaths({fileInfo.absolutePath()});
 
     tagged_files_proxy_->sort(0);
     emit fileAddedExternally(absolutePath);
