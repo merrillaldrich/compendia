@@ -18,6 +18,8 @@
 #include "framegrabber.h"
 #include "constants.h"
 #include "aboutdialog.h"
+#include "geo.h"
+#include "mapdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -46,6 +48,21 @@ private:
     TaggedFile* warmupPendingFile_ = nullptr; ///< File waiting for rect-adjust warmup when the timer fires.
     bool preReleaseWarningAccepted_ = false;  ///< True once the user has accepted the pre-release warning this session.
     bool sortLibraryOnNextRefresh_ = false;   ///< Set by loadFolder(); consumed by the first non-empty refreshNavTagLibrary() to sort on load.
+
+    // --- Geography / map ---
+    double previewMapLat_ = 0.0;  ///< Latitude of the currently previewed file's GPS location.
+    double previewMapLon_ = 0.0;  ///< Longitude of the currently previewed file's GPS location.
+
+    /*! \brief Per-file entry used by the location auto-tagging queue. */
+    struct GeocodeQueueEntry {
+        TaggedFile *tf;
+        double lat;
+        double lon;
+    };
+    QList<GeocodeQueueEntry> geocodeQueue_;  ///< Pending reverse-geocode requests.
+    QTimer *geocodeTimer_ = nullptr;          ///< Fires every NominatimDelayMs to drain geocodeQueue_.
+    int geocodeDone_ = 0;                     ///< Count of completed geocode requests in the current batch.
+    int geocodeTotal_ = 0;                    ///< Total geocode requests in the current batch.
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
@@ -189,6 +206,15 @@ private:
 
     /*! \brief Guards dirty state, sets drill ceiling if needed, and loads \p targetPath as the new root. */
     void drillToFolder(const QString& targetPath);
+
+    /*! \brief Parses GPS from \p tf's EXIF map and updates the preview map overlay.
+     *
+     * If GPS coordinates are found the overlay is set and shown (when the "Show Map"
+     * checkbox is on); otherwise the overlay is cleared.
+     *
+     * \param tf The file whose EXIF map to inspect.
+     */
+    void updatePreviewMap(TaggedFile *tf);
 
     /*! \brief Tags each group of similar files with "Set NN" in the "Similarity Sets" family.
      *
@@ -459,6 +485,18 @@ private slots:
 
     /*! \brief Navigates up one folder level, stopping at the drill ceiling. */
     void on_actionDrillUp_triggered();
+
+    /*! \brief Shows or hides the map overlay when the Show Map checkbox is toggled.
+     *
+     * \param state The new checkbox state (Qt::Checked or Qt::Unchecked).
+     */
+    void on_showMapCheckbox_stateChanged(int state);
+
+    /*! \brief Reverse-geocodes GPS coordinates in all loaded images and creates location tags. */
+    void on_actionAuto_Tag_Location_triggered();
+
+    /*! \brief Removes all City, State/Province, and Country tags from the library after confirmation. */
+    void on_actionRemove_Location_Tags_triggered();
 
     /*! \brief Slot for Help → Documentation; opens the online documentation in the default browser. */
     void on_actionDocumentation_triggered();

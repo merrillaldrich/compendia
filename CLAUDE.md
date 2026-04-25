@@ -45,6 +45,8 @@ There is no test suite.
 
 **Drag-drop tagging:** `TaggableListView` subclasses `QListView` and accepts tag drops to apply tags to the file(s) under the cursor.
 
+**Geography display:** `Geo` (static utility class) parses GPS EXIF keys ("GPSLatitude", "GPSLatitudeRef", "GPSLongitude", "GPSLongitudeRef" — camelCase names as produced by libexif's `exif_tag_get_name()`) into decimal degrees, performs OSM tile math, and initiates async Nominatim reverse-geocode requests. `MapTileCache` (singleton) owns the `QNetworkAccessManager` and fetches/caches up to 200 OSM tile pixmaps. `MapWidget` is a custom `QWidget` that renders tile layers with a red location marker; in interactive mode it supports drag-to-pan and scroll-to-zoom. `MapDialog` wraps a large interactive `MapWidget`. A small non-interactive `MapWidget` (`mapOverlay_`) is parented directly to `PreviewContainer` and positioned absolutely in the lower-right corner — same pattern as the nav arrow buttons.
+
 ## Documentation
 
 The user documentation site is hosted at https://compendia.gitbook.io/compendia via GitBook. The source files for the documentation live in a separate branch of this repository. Screenshots for the documentation are created and stored in Figma.
@@ -53,7 +55,7 @@ The user documentation site is hosted at https://compendia.gitbook.io/compendia 
 
 | Library | Role | Linked via |
 |---|---|---|
-| Qt 6 (Widgets, Core, Concurrent, Multimedia, MultimediaWidgets) | UI and async | `find_package` |
+| Qt 6 (Widgets, Core, Concurrent, Multimedia, MultimediaWidgets, Network) | UI, async, HTTP | `find_package` |
 | dlib | Face detection (`FaceRecognizer`) | `add_subdirectory(3rdParty/src/dlib)` |
 | libexif | EXIF extraction for standard images | Static `.lib` in `3rdParty/lib/` |
 | libheif | HEIF/HEIC support | Static `.lib` in `3rdParty/lib/` |

@@ -623,6 +623,13 @@
             </widget>
            </item>
            <item>
+            <widget class="QCheckBox" name="showMapCheckbox">
+             <property name="text">
+              <string>Show Map</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <spacer>
              <property name="orientation">
               <enum>Qt::Orientation::Horizontal</enum>
@@ -950,9 +957,17 @@
      <addaction name="actionFind_Similar_In_Selection"/>
      <addaction name="actionFind_Similar_Images"/>
     </widget>
+    <widget class="QMenu" name="menuLocation">
+     <property name="title">
+      <string>Location</string>
+     </property>
+     <addaction name="actionAuto_Tag_Location"/>
+     <addaction name="actionRemove_Location_Tags"/>
+    </widget>
     <addaction name="menuFace_Detection"/>
     <addaction name="separator"/>
     <addaction name="menuDates"/>
+    <addaction name="menuLocation"/>
     <addaction name="separator"/>
     <addaction name="menuFind_Similar_Images"/>
    </widget>
@@ -1018,6 +1033,22 @@
   <action name="actionAuto_Tag_Month">
    <property name="text">
     <string>Auto Tag Month</string>
+   </property>
+  </action>
+  <action name="actionAuto_Tag_Location">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Auto-Tag Location from GPS</string>
+   </property>
+  </action>
+  <action name="actionRemove_Location_Tags">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Remove Location Tags</string>
    </property>
   </action>
   <action name="actionFind_Similar_In_Selection">

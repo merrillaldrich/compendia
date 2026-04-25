@@ -193,6 +193,12 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->previewContainer, &PreviewContainer::navigateRequested,
             this, [this](int delta){ navigatePreview(delta); });
+    connect(ui->previewContainer, &PreviewContainer::mapOverlayClicked,
+            this, [this]() {
+        auto *dlg = new MapDialog(previewMapLat_, previewMapLon_, this);
+        dlg->setAttribute(Qt::WA_DeleteOnClose);
+        dlg->exec();
+    });
 
     // All star widgets start disabled until a folder is loaded
     ui->filterStarRating->setEnabled(false);
@@ -207,6 +213,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionRemove_Auto_Detected_Faces->setEnabled(false);
     ui->actionAuto_Tag_Year->setEnabled(false);
     ui->actionAuto_Tag_Month->setEnabled(false);
+    ui->actionAuto_Tag_Location->setEnabled(false);
+    ui->actionRemove_Location_Tags->setEnabled(false);
     ui->actionFind_Similar_Images->setEnabled(false);
     ui->actionUntaggedImages->setEnabled(false);
     ui->actionClearAllFilters->setEnabled(false);
@@ -740,6 +748,8 @@ void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
     ui->actionRemove_Auto_Detected_Faces->setEnabled(true);
     ui->actionAuto_Tag_Year->setEnabled(true);
     ui->actionAuto_Tag_Month->setEnabled(true);
+    ui->actionAuto_Tag_Location->setEnabled(true);
+    ui->actionRemove_Location_Tags->setEnabled(true);
     ui->actionFind_Similar_Images->setEnabled(true);
     ui->actionUntaggedImages->setEnabled(true);
     ui->saveButton->setEnabled(true);
@@ -1432,6 +1442,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
 
     if (!proxyIndex.isValid()) {
         ui->previewContainer->clear();
+        ui->previewContainer->clearMapLocation();
         ui->previewFileNameValue->setText("-");
         ui->previewFileLocationValue->setText("-");
         ui->previewImageCapturedValue->setText("-");
@@ -1453,6 +1464,9 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
         TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
 
         ui->previewContainer->preview(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
+
+        // Update the map overlay for this file's GPS data
+        updatePreviewMap(itemAsTaggedFile);
 
         // Build tag rect overlays and push to the preview container
         refreshPreviewTagRects(itemAsTaggedFile);
@@ -2626,4 +2640,143 @@ void MainWindow::on_actionExport_triggered()
     mb.setTextFormat(Qt::RichText);
     mb.setTextInteractionFlags(Qt::TextBrowserInteraction);
     mb.exec();
+}
+
+// ---------------------------------------------------------------------------
+// Geography / map feature
+// ---------------------------------------------------------------------------
+
+/*! \brief Parses GPS from \p tf's EXIF map and updates the preview map overlay. */
+void MainWindow::updatePreviewMap(TaggedFile *tf)
+{
+    if (!tf) {
+        ui->previewContainer->clearMapLocation();
+        return;
+    }
+
+    auto coords = Geo::parseGpsCoordinates(tf->exifMap());
+    if (coords) {
+        previewMapLat_ = coords->x();
+        previewMapLon_ = coords->y();
+        ui->previewContainer->setMapLocation(previewMapLat_, previewMapLon_);
+        ui->previewContainer->setMapVisible(ui->showMapCheckbox->isChecked());
+    } else {
+        ui->previewContainer->clearMapLocation();
+    }
+}
+
+/*! \brief Shows or hides the map overlay when the Show Map checkbox is toggled. */
+void MainWindow::on_showMapCheckbox_stateChanged(int state)
+{
+    ui->previewContainer->setMapVisible(state == Qt::Checked);
+}
+
+/*! \brief Reverse-geocodes GPS coordinates in all loaded images and creates location tags. */
+void MainWindow::on_actionAuto_Tag_Location_triggered()
+{
+    if (!core->containsFiles()) return;
+
+    // Collect files that have GPS data and are not yet tagged with a City family tag.
+    QStandardItemModel *model = core->getItemModel();
+    geocodeQueue_.clear();
+    geocodeDone_  = 0;
+
+    for (int r = 0; r < model->rowCount(); ++r) {
+        TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+
+        const auto hasCityTag = [](Tag *t){ return t->tagFamily->getName() == u"City"; };
+        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasCityTag)) continue;
+
+        auto coords = Geo::parseGpsCoordinates(tf->exifMap());
+        if (!coords) continue;
+
+        geocodeQueue_.append({tf, coords->x(), coords->y()});
+    }
+
+    geocodeTotal_ = geocodeQueue_.size();
+
+    if (geocodeTotal_ == 0) {
+        QMessageBox::information(this, tr("Auto-Tag Location"),
+            tr("No images with GPS data found (or all are already tagged)."));
+        return;
+    }
+
+    // Rate-limited timer: one Nominatim request per NominatimDelayMs
+    if (!geocodeTimer_) {
+        geocodeTimer_ = new QTimer(this);
+        geocodeTimer_->setSingleShot(false);
+        connect(geocodeTimer_, &QTimer::timeout, this, [this]() {
+            if (geocodeQueue_.isEmpty()) {
+                geocodeTimer_->stop();
+                core->writeFileMetadata();
+                refreshNavTagLibrary();
+                refreshTagAssignmentArea();
+                progress_->showNotification(
+                    tr("Location tagging complete: %1 file(s) tagged.").arg(geocodeDone_));
+                return;
+            }
+
+            const GeocodeQueueEntry entry = geocodeQueue_.takeFirst();
+            ++geocodeDone_;
+            progress_->showNotification(
+                tr("Geocoding %1 / %2...").arg(geocodeDone_).arg(geocodeTotal_));
+
+            Geo::reverseGeocode(entry.lat, entry.lon, this,
+                [this, tf = entry.tf](QString city, QString state, QString country) {
+                    if (!city.isEmpty())
+                        tf->addTag(core->addLibraryTag(QStringLiteral("City"), city));
+                    if (!state.isEmpty())
+                        tf->addTag(core->addLibraryTag(QStringLiteral("State/Province"), state));
+                    if (!country.isEmpty())
+                        tf->addTag(core->addLibraryTag(QStringLiteral("Country"), country));
+                });
+        });
+    }
+
+    geocodeTimer_->start(Compendia::NominatimDelayMs);
+}
+
+/*! \brief Removes all City, State/Province, and Country tags from the library after confirmation. */
+void MainWindow::on_actionRemove_Location_Tags_triggered()
+{
+    if (!core->containsFiles()) return;
+
+    const QStringList locationFamilies = {
+        QStringLiteral("City"),
+        QStringLiteral("State/Province"),
+        QStringLiteral("Country")
+    };
+
+    // Count how many tags will be removed
+    int count = 0;
+    for (Tag *tag : *core->getLibraryTags()) {
+        if (locationFamilies.contains(tag->tagFamily->getName()))
+            ++count;
+    }
+
+    if (count == 0) {
+        QMessageBox::information(this, tr("Remove Location Tags"),
+            tr("No location tags found."));
+        return;
+    }
+
+    const int ret = QMessageBox::question(this,
+        tr("Remove Location Tags"),
+        tr("Remove %1 location tag(s) (City, State/Province, Country) from all files and the library?")
+            .arg(count),
+        QMessageBox::Yes | QMessageBox::Cancel);
+    if (ret != QMessageBox::Yes) return;
+
+    // Collect tags to remove (don't modify while iterating)
+    QList<Tag*> toRemove;
+    for (Tag *tag : *core->getLibraryTags()) {
+        if (locationFamilies.contains(tag->tagFamily->getName()))
+            toRemove.append(tag);
+    }
+    for (Tag *tag : toRemove)
+        core->deleteTagFromLibrary(tag);
+
+    refreshNavTagLibrary();
+    refreshTagAssignmentArea();
 }

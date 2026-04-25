@@ -318,7 +318,7 @@ QMap<QString, QString> ExifParser::exifTagsToMap(ExifData* ed) {
             char value[1024];
             exif_entry_get_value(entry, value, sizeof(value));
             if (*value) {
-                map.insert(exif_tag_get_name(entry->tag), value);
+                map.insert(exif_tag_get_name_in_ifd(entry->tag, static_cast<ExifIfd>(i)), value);
             }
         }
     }
