@@ -36,6 +36,7 @@ void TaggableListView::dropEvent(QDropEvent *event) {
         TagSet ts = TagSet(tagFamilyName, tagName);
 
         MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
+        if (!mainWin) return;
 
         if (selectionModel()->isSelected(index)) {
             // Drop on a selected item: apply to every selected file

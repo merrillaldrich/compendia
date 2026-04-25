@@ -78,8 +78,10 @@ void TagAssignmentContainer::dropEvent(QDropEvent *event)
 
         // Locate the dropped tag in the tag library
         MainWindow *mainWin = qobject_cast<MainWindow*>(this->window());
+        if (!mainWin) return;
 
         Tag* t = mainWin->core->getTag(tagFamilyName, tagName);
+        if (!t) return;
         TagFamily* f = t->tagFamily;
 
         // Identify an existing TagFamilyWidget or make a new TagFamilyWidget if it's missing
