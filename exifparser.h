@@ -13,6 +13,7 @@
 
 extern "C" {
 #include "libexif/exif-data.h"
+#include "libexif/exif-tag.h"
 }
 
 /*! \brief Utility class for extracting EXIF metadata from JPEG and HEIF/HEIC image files.

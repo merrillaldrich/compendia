@@ -76,6 +76,34 @@ constexpr int SimilarImageThreshold = 10;
  */
 constexpr int RectWarmupDelayMs = 3000;
 
+// ---------------------------------------------------------------------------
+// Geography / map display
+// ---------------------------------------------------------------------------
+
+/*! \brief OpenStreetMap tile URL template. Replace {z}, {x}, {y} with tile coords. */
+constexpr const char* OsmTileUrlTemplate = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+
+/*! \brief Nominatim reverse-geocode endpoint base URL. */
+constexpr const char* NominatimReverseUrl = "https://nominatim.openstreetmap.org/reverse";
+
+/*! \brief HTTP User-Agent header sent with all OSM/Nominatim requests. */
+constexpr const char* MapNetworkUserAgent = "Compendia/0.1 (contact: merrillaldrich@gmail.com)";
+
+/*! \brief Default zoom level for the small map overlay (city-level). */
+constexpr int MapOverlayZoom = 13;
+
+/*! \brief Width of the small map overlay widget in pixels. */
+constexpr int MapOverlayWidth = 200;
+
+/*! \brief Height of the small map overlay widget in pixels. */
+constexpr int MapOverlayHeight = 160;
+
+/*! \brief Margin from the bottom-right corner of the preview for the map overlay (px). */
+constexpr int MapOverlayMargin = 10;
+
+/*! \brief Minimum milliseconds between Nominatim requests (enforces ≤1 req/s policy). */
+constexpr int NominatimDelayMs = 1100;
+
 } // namespace Compendia
 
 #endif // CONSTANTS_H

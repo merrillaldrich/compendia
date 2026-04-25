@@ -19,6 +19,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Concurrent)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Multimedia)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS MultimediaWidgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Svg)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 
 #find_package(libexif REQUIRED) # this doesn't work
 #find_package(libheif)
@@ -104,6 +105,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         folderscanner.h folderscanner.cpp
         undomanager.h undomanager.cpp
         aboutdialog.h aboutdialog.cpp aboutdialog.ui
+        geo.h geo.cpp
+        maptilecache.h maptilecache.cpp
+        mapwidget.h mapwidget.cpp
+        mapdialog.h mapdialog.cpp
+        geofilterdialog.h geofilterdialog.cpp
 
     )
 
@@ -172,6 +178,7 @@ target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent)
 target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Multimedia)
 target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::MultimediaWidgets)
 target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Svg)
+target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Network)
 
 # Add libexif library from 3rdParty subdirectory
 target_include_directories(compendia PRIVATE ${LIBEXIF_INCLUDE_DIR})
