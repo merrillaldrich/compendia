@@ -109,6 +109,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         maptilecache.h maptilecache.cpp
         mapwidget.h mapwidget.cpp
         mapdialog.h mapdialog.cpp
+        geofilterdialog.h geofilterdialog.cpp
 
     )
 

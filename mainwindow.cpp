@@ -26,6 +26,7 @@
 #include "tagfamilywidget.h"
 #include "filenamedelegate.h"
 #include "starratingwidget.h"
+#include "geofilterdialog.h"
 
 /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.
  *
@@ -215,6 +216,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionAuto_Tag_Month->setEnabled(false);
     ui->actionAuto_Tag_Location->setEnabled(false);
     ui->actionRemove_Location_Tags->setEnabled(false);
+    ui->actionGeoFilter->setEnabled(false);
     ui->actionFind_Similar_Images->setEnabled(false);
     ui->actionUntaggedImages->setEnabled(false);
     ui->actionClearAllFilters->setEnabled(false);
@@ -502,6 +504,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionDrillUp->setIcon(QIcon(":/resources/drill-up-folder.svg"));
     ui->actionDrillToFolder->setEnabled(false);
     ui->actionDrillUp->setEnabled(false);
+    ui->actionGeoFilter->setIcon(QIcon(":/resources/geo-filter.svg"));
+    ui->geoFilterButton->setDefaultAction(ui->actionGeoFilter);
 
     // Default pane sizes
     resize(1400, 900);
@@ -750,6 +754,7 @@ void MainWindow::loadFolder(const QString &folder, bool skipCacheConfirm)
     ui->actionAuto_Tag_Month->setEnabled(true);
     ui->actionAuto_Tag_Location->setEnabled(true);
     ui->actionRemove_Location_Tags->setEnabled(true);
+    ui->actionGeoFilter->setEnabled(true);
     ui->actionFind_Similar_Images->setEnabled(true);
     ui->actionUntaggedImages->setEnabled(true);
     ui->saveButton->setEnabled(true);
@@ -2779,4 +2784,17 @@ void MainWindow::on_actionRemove_Location_Tags_triggered()
 
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
+}
+
+/*! \brief Opens the Geo Filter dialog. On acceptance the isolation set is already applied by
+ *         the dialog; here we just enable the Clear Isolation action and refresh the UI. */
+void MainWindow::on_actionGeoFilter_triggered()
+{
+    GeoFilterDialog dlg(core, this);
+    if (dlg.exec() == QDialog::Accepted) {
+        ui->actionClearIsolation->setEnabled(true);
+        updateFileCountLabel();
+        refreshTagAssignmentArea();
+        updateClearAllFiltersEnabled();
+    }
 }

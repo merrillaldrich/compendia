@@ -41,6 +41,23 @@ void MapWidget::setZoomLevel(int z)
     update();
 }
 
+void MapWidget::setGeoPoints(const QVector<QPointF> &points)
+{
+    geoPoints_ = points;
+    update();
+}
+
+MapWidget::ViewportBounds MapWidget::viewportBounds() const
+{
+    const QPointF centerPx = Geo::latLonToPixel(lat_, lon_, zoom_);
+    const double hw = width()  / 2.0;
+    const double hh = height() / 2.0;
+    // Y increases downward: top edge = smaller Y = higher latitude (maxLat)
+    auto [topLat, westLon] = Geo::pixelToLatLon(centerPx.x() - hw, centerPx.y() - hh, zoom_);
+    auto [botLat, eastLon] = Geo::pixelToLatLon(centerPx.x() + hw, centerPx.y() + hh, zoom_);
+    return { botLat, topLat, westLon, eastLon };
+}
+
 void MapWidget::onTileReady(int /*x*/, int /*y*/, int zoom, QPixmap /*pix*/)
 {
     if (zoom == zoom_)
@@ -93,10 +110,35 @@ void MapWidget::drawMarker(QPainter &p)
     p.setBrush(QColor(0, 0, 0, 70));
     p.drawEllipse(cx - 6, cy - 5, 13, 13);
 
-    // Red filled circle with white outline
-    p.setBrush(QColor(220, 50, 50));
+    // Blue filled circle with white outline
+    p.setBrush(QColor(50, 120, 220));
     p.setPen(QPen(Qt::white, 1.5));
     p.drawEllipse(cx - 6, cy - 6, 12, 12);
+
+    p.restore();
+}
+
+void MapWidget::drawGeoPoints(QPainter &p)
+{
+    const QPointF centerPx = Geo::latLonToPixel(lat_, lon_, zoom_);
+    const double originX = centerPx.x() - width()  / 2.0;
+    const double originY = centerPx.y() - height() / 2.0;
+
+    p.save();
+    p.setRenderHint(QPainter::Antialiasing);
+    p.setPen(QPen(Qt::white, 1.5));
+    p.setBrush(QColor(50, 120, 220, 200));
+
+    for (const QPointF &pt : geoPoints_) {
+        const QPointF wp = Geo::latLonToPixel(pt.x(), pt.y(), zoom_);
+        const double sx = wp.x() - originX;
+        const double sy = wp.y() - originY;
+
+        if (sx < -10.0 || sx > width() + 10.0 || sy < -10.0 || sy > height() + 10.0)
+            continue;
+
+        p.drawEllipse(QPointF(sx, sy), 4.0, 4.0);
+    }
 
     p.restore();
 }
@@ -120,7 +162,10 @@ void MapWidget::paintEvent(QPaintEvent *)
 
     if (locationSet_) {
         drawTiles(p);
-        drawMarker(p);
+        if (!geoPoints_.isEmpty())
+            drawGeoPoints(p);
+        else
+            drawMarker(p);
     }
 
     // Rounded border (drawn outside the clip so it sits on top)
@@ -159,6 +204,7 @@ void MapWidget::mouseMoveEvent(QMouseEvent *event)
     lat_ = qBound(-kLatMax, newLat, kLatMax);
     lon_ = qBound(-180.0,   newLon, 180.0);
     update();
+    emit viewportChanged();
     event->accept();
 }
 
@@ -188,9 +234,32 @@ void MapWidget::wheelEvent(QWheelEvent *event)
         event->ignore();
         return;
     }
-    if (event->angleDelta().y() > 0)
-        setZoomLevel(zoom_ + 1);
-    else
-        setZoomLevel(zoom_ - 1);
+
+    const int newZoom = qBound(1, zoom_ + (event->angleDelta().y() > 0 ? 1 : -1), 19);
+    if (newZoom == zoom_) {
+        event->accept();
+        return;
+    }
+
+    // Convert the mouse position to a geographic anchor point at the current zoom level,
+    // then after changing the zoom shift the viewport center so that point stays under the mouse.
+    const QPointF mousePos   = event->position();
+    const QPointF centerPx   = Geo::latLonToPixel(lat_, lon_, zoom_);
+    const double  mouseWpx   = centerPx.x() - width()  / 2.0 + mousePos.x();
+    const double  mouseWpy   = centerPx.y() - height() / 2.0 + mousePos.y();
+    auto [anchorLat, anchorLon] = Geo::pixelToLatLon(mouseWpx, mouseWpy, zoom_);
+
+    zoom_ = newZoom;
+
+    const QPointF newAnchorPx  = Geo::latLonToPixel(anchorLat, anchorLon, newZoom);
+    const double  newCenterWpx = newAnchorPx.x() - mousePos.x() + width()  / 2.0;
+    const double  newCenterWpy = newAnchorPx.y() - mousePos.y() + height() / 2.0;
+    auto [newLat, newLon] = Geo::pixelToLatLon(newCenterWpx, newCenterWpy, newZoom);
+
+    lat_ = qBound(-kLatMax, newLat, kLatMax);
+    lon_ = qBound(-180.0,   newLon, 180.0);
+
+    update();
+    emit viewportChanged();
     event->accept();
 }

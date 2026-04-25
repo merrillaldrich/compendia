@@ -53,6 +53,24 @@ QPixmap MapTileCache::tilePixmap(int x, int y, int zoom)
         if (!pix.loadFromData(reply->readAll()))
             return;
 
+        // Boost saturation of the tile before caching.
+        // OSM Carto tiles are intentionally muted; this lifts them to a more
+        // vivid appearance without changing hue or lightness.
+        // Reds (freeways, hue ≤20 or ≥340) get a modest lift only; all other
+        // hues (greens, yellows, blues) get the full boost.
+        QImage img = pix.toImage().convertToFormat(QImage::Format_ARGB32);
+        for (int row = 0; row < img.height(); ++row) {
+            QRgb *line = reinterpret_cast<QRgb *>(img.scanLine(row));
+            for (int col = 0; col < img.width(); ++col) {
+                const QColor c(line[col]);
+                const int hue = c.hsvHue();
+                const bool isRed = hue <= 20 || hue >= 340;
+                const int s = qMin(255, c.hsvSaturation() * (isRed ? 115 : 165) / 100);
+                line[col] = QColor::fromHsv(hue, s, c.value(), qAlpha(line[col])).rgba();
+            }
+        }
+        pix = QPixmap::fromImage(img);
+
         tileCache_.insert(key, new QPixmap(pix));
         emit tileReady(x, y, zoom, pix);
     });

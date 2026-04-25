@@ -18,5 +18,6 @@
         <file>resources/about_background.svg</file>
         <file>resources/compendia_icon.svg</file>
         <file>resources/unreadable-files.svg</file>
+        <file>resources/geo-filter.svg</file>
     </qresource>
 </RCC>

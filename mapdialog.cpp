@@ -22,7 +22,7 @@ MapDialog::MapDialog(double lat, double lon, QWidget *parent)
     const QString ns = (lat >= 0.0) ? QStringLiteral("N") : QStringLiteral("S");
     const QString ew = (lon >= 0.0) ? QStringLiteral("E") : QStringLiteral("W");
     coordLabel_ = new QLabel(
-        QString::fromLatin1("%1\xc2\xb0%2,  %3\xc2\xb0%4")
+        QStringLiteral("%1°%2,  %3°%4")
             .arg(std::abs(lat), 0, 'f', 5).arg(ns)
             .arg(std::abs(lon), 0, 'f', 5).arg(ew),
         this);

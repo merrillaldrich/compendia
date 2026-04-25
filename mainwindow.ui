@@ -403,6 +403,29 @@
                </property>
               </widget>
              </item>
+             <item alignment="Qt::AlignmentFlag::AlignVCenter">
+              <widget class="QLabel" name="geographyLabel">
+               <property name="text">
+                <string>Geography</string>
+               </property>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignmentFlag::AlignVCenter">
+              <widget class="QToolButton" name="geoFilterButton">
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>
@@ -925,6 +948,8 @@
     <addaction name="actionDrillToFolder"/>
     <addaction name="actionDrillUp"/>
     <addaction name="separator"/>
+    <addaction name="actionGeoFilter"/>
+    <addaction name="separator"/>
     <addaction name="actionClearAllFilters"/>
     <addaction name="separator"/>
     <addaction name="actionUntaggedImages"/>
@@ -1128,6 +1153,14 @@
   <action name="actionUntaggedImages">
    <property name="text">
     <string>Untagged Images</string>
+   </property>
+  </action>
+  <action name="actionGeoFilter">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Geo Filter Map…</string>
    </property>
   </action>
   <action name="actionAbout">
