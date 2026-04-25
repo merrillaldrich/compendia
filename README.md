@@ -11,9 +11,9 @@ using tags and criteria you define and control.
 ## Features
 
 ### Cross-Platform
-- compendia has been built and tested on Windows 11 and Linux (Ubunu/Gnome). 
-  A Mac version is in the pipeline. Files and metadata are 100% identical across
-  platforms so you can seamlessly move between them if needed.
+- compendia has been built and tested on Windows 11, macOS, and Linux (Ubuntu/Gnome).
+  Files and metadata are 100% identical across platforms so you can seamlessly
+  move between them if needed.
 
 ### Browsing & Preview
 - Point compendia at any folder; it recursively discovers all images and videos,
@@ -30,10 +30,14 @@ using tags and criteria you define and control.
   assignment to large numbers of files.
 - Tags are organised into groups called **Tag Families**, each with a unique colour, 
   for clear visual grouping.
+- The tag library stays in a stable sorted order and can be re-sorted at any time
+  via the **Edit → Sort Library** command.
 - Tags can apply to a whole image or to a region you define, for example to identify
   people in images.
 - Tags are persisted as **"sidecar files"** written alongside the original images.
   Your directory structure and original files are never modified.
+- **Undo / Redo** — full snapshot-based undo (Ctrl+Z) and redo (Ctrl+Y) for all
+  tag and tag-family changes.
 
 ### Filtering
 
@@ -49,6 +53,8 @@ Search thousands of files with ease
   date when available, falls back to filesystem creation date. Leaving the field
   blank shows all files.
 - **Star rating** — filter by rating using less-than, equal, or greater-than.
+- **Untagged Images** — isolate files that have no tags applied, making it easy
+  to work through an unorganized library.
 
 ### EXIF Metadata
 
