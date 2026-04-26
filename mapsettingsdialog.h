@@ -1,13 +1,16 @@
 #ifndef MAPSETTINGSDIALOG_H
 #define MAPSETTINGSDIALOG_H
 
+#include <QCheckBox>
 #include <QDialog>
 #include <QLineEdit>
+#include <QPushButton>
 
-/*! \brief Modal dialog for configuring the Mapbox API token and tile URL template.
+/*! \brief Modal dialog for configuring the map service provider.
  *
- * Both values are persisted to QSettings on OK; Cancel discards all changes.
- * The dialog is built programmatically — no .ui file.
+ * Users choose between the Compendia free-tier proxy and a bring-your-own
+ * Mapbox token. Both choices are persisted to QSettings on OK; Cancel
+ * discards all changes. The dialog is built programmatically — no .ui file.
  */
 class MapSettingsDialog : public QDialog
 {
@@ -21,8 +24,10 @@ public:
     explicit MapSettingsDialog(QWidget *parent = nullptr);
 
 private:
-    QLineEdit *tileUrlEdit_; /*!< Editable tile URL template. */
-    QLineEdit *tokenEdit_;   /*!< API token field (password-masked by default). */
+    QCheckBox   *freeTierCheck_; /*!< Enables the Compendia free-tier proxy when checked. */
+    QLineEdit   *tileUrlEdit_;   /*!< Editable tile URL template (disabled in free-tier mode). */
+    QLineEdit   *tokenEdit_;     /*!< API token field, password-masked (disabled in free-tier mode). */
+    QPushButton *showHideBtn_;   /*!< Toggles token visibility (disabled in free-tier mode). */
 };
 
 #endif // MAPSETTINGSDIALOG_H

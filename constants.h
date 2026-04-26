@@ -95,6 +95,25 @@ constexpr const char* MapApiTokenSettingsKey = "map/apiToken";
 /*! \brief QSettings key storing the tile URL template (defaults to MapboxTileUrlTemplate). */
 constexpr const char* MapTileUrlSettingsKey  = "map/tileUrlTemplate";
 
+// ---------------------------------------------------------------------------
+// Compendia free-tier proxy (Azure Functions — fill in your Function App name)
+// ---------------------------------------------------------------------------
+
+/*! \brief Tile proxy URL template. Replace \<functionapp\> with your Azure Function App name. */
+constexpr const char* CompendiaTileProxyUrlTemplate =
+    "https://<functionapp>.azurewebsites.net/api/tiles/{z}/{x}/{y}";
+
+/*! \brief Geocode proxy URL. Replace \<functionapp\> with your Azure Function App name. */
+constexpr const char* CompendiaGeocodeProxyUrl =
+    "https://<functionapp>.azurewebsites.net/api/geocode";
+
+/*! \brief Shared app key sent in the X-Compendia-Key request header.
+ *  Must match the COMPENDIA_APP_KEY value set in the Azure Function App's Application Settings. */
+constexpr const char* CompendiaProxyAppKey = "compendia-v1-replace-with-key";
+
+/*! \brief QSettings key storing whether the Compendia free-tier proxy is active. */
+constexpr const char* MapUseFreeTierSettingsKey = "map/useFreeTier";
+
 /*! \brief HTTP User-Agent header sent with all map/geocode requests. */
 constexpr const char* MapNetworkUserAgent = "Compendia/0.1 (contact: merrillaldrich@gmail.com)";
 

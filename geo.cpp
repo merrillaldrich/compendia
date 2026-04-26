@@ -104,9 +104,19 @@ std::pair<double, double> Geo::pixelToLatLon(double px, double py, int zoom)
 QString Geo::tileUrl(int x, int y, int zoom)
 {
     QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
-    QString tmpl = s.value(Compendia::MapTileUrlSettingsKey,
-                           QString::fromLatin1(Compendia::MapboxTileUrlTemplate)).toString();
-    const QString token = s.value(Compendia::MapApiTokenSettingsKey).toString();
+    const bool freeTier = s.value(Compendia::MapUseFreeTierSettingsKey, false).toBool();
+
+    QString tmpl;
+    QString token;
+
+    if (freeTier) {
+        tmpl = QString::fromLatin1(Compendia::CompendiaTileProxyUrlTemplate);
+    } else {
+        tmpl  = s.value(Compendia::MapTileUrlSettingsKey,
+                        QString::fromLatin1(Compendia::MapboxTileUrlTemplate)).toString();
+        token = s.value(Compendia::MapApiTokenSettingsKey).toString();
+    }
+
     return tmpl
         .replace(QStringLiteral("{z}"),     QString::number(zoom))
         .replace(QStringLiteral("{x}"),     QString::number(x))

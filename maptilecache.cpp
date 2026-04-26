@@ -40,6 +40,11 @@ QPixmap MapTileCache::tilePixmap(int x, int y, int zoom)
 
     QNetworkRequest req(QUrl(Geo::tileUrl(x, y, zoom)));
     req.setRawHeader("User-Agent", QByteArray(Compendia::MapNetworkUserAgent));
+    {
+        QSettings qs(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
+        if (qs.value(Compendia::MapUseFreeTierSettingsKey, false).toBool())
+            req.setRawHeader("X-Compendia-Key", QByteArray(Compendia::CompendiaProxyAppKey));
+    }
 
     QNetworkReply *reply = nam_->get(req);
     connect(reply, &QNetworkReply::finished, this,
@@ -66,14 +71,24 @@ void MapTileCache::requestReverseGeocode(double lat, double lon,
                                           std::function<void(QString, QString, QString)> callback)
 {
     QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
-    const QString token = s.value(Compendia::MapApiTokenSettingsKey).toString();
+    const bool freeTier = s.value(Compendia::MapUseFreeTierSettingsKey, false).toBool();
 
-    const QString urlStr = QString::fromLatin1(Compendia::MapboxReverseGeoUrl)
-        .replace(QStringLiteral("{lon}"),   QString::number(lon, 'f', 7))
-        .replace(QStringLiteral("{lat}"),   QString::number(lat, 'f', 7))
-        .replace(QStringLiteral("{token}"), token);
-
-    QNetworkRequest req{QUrl(urlStr)};
+    QNetworkRequest req;
+    if (freeTier) {
+        const QString urlStr = QString::fromLatin1(Compendia::CompendiaGeocodeProxyUrl)
+            + QString("?lat=%1&lon=%2")
+                .arg(QString::number(lat, 'f', 7))
+                .arg(QString::number(lon, 'f', 7));
+        req = QNetworkRequest{QUrl(urlStr)};
+        req.setRawHeader("X-Compendia-Key", QByteArray(Compendia::CompendiaProxyAppKey));
+    } else {
+        const QString token = s.value(Compendia::MapApiTokenSettingsKey).toString();
+        const QString urlStr = QString::fromLatin1(Compendia::MapboxReverseGeoUrl)
+            .replace(QStringLiteral("{lon}"),   QString::number(lon, 'f', 7))
+            .replace(QStringLiteral("{lat}"),   QString::number(lat, 'f', 7))
+            .replace(QStringLiteral("{token}"), token);
+        req = QNetworkRequest{QUrl(urlStr)};
+    }
     req.setRawHeader("User-Agent", QByteArray(Compendia::MapNetworkUserAgent));
 
     QNetworkReply *reply = nam_->get(req);

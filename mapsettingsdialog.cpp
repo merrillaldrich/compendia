@@ -3,9 +3,9 @@
 
 #include <QDialogButtonBox>
 #include <QFormLayout>
+#include <QFrame>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QPushButton>
 #include <QSettings>
 #include <QVBoxLayout>
 
@@ -16,8 +16,17 @@ MapSettingsDialog::MapSettingsDialog(QWidget *parent)
     setMinimumWidth(500);
 
     QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
+    const bool storedFreeTier = s.value(Compendia::MapUseFreeTierSettingsKey, false).toBool();
 
-    // Tile URL
+    // --- Free-tier checkbox ---
+    freeTierCheck_ = new QCheckBox(tr("Use Compendia free geo lookup"), this);
+    freeTierCheck_->setChecked(storedFreeTier);
+
+    auto *separator = new QFrame(this);
+    separator->setFrameShape(QFrame::HLine);
+    separator->setFrameShadow(QFrame::Sunken);
+
+    // --- Tile URL ---
     tileUrlEdit_ = new QLineEdit(this);
     const QString storedUrl = s.value(Compendia::MapTileUrlSettingsKey).toString();
     tileUrlEdit_->setText(storedUrl.isEmpty()
@@ -29,38 +38,52 @@ MapSettingsDialog::MapSettingsDialog(QWidget *parent)
     helpFont.setPointSizeF(helpFont.pointSizeF() * 0.85);
     urlHelp->setFont(helpFont);
 
-    // API token
+    // --- API token ---
     tokenEdit_ = new QLineEdit(this);
     tokenEdit_->setEchoMode(QLineEdit::Password);
     tokenEdit_->setText(s.value(Compendia::MapApiTokenSettingsKey).toString());
 
-    auto *showHideBtn = new QPushButton(tr("Show"), this);
-    showHideBtn->setCheckable(true);
-    connect(showHideBtn, &QPushButton::toggled, this, [this, showHideBtn](bool checked) {
+    showHideBtn_ = new QPushButton(tr("Show"), this);
+    showHideBtn_->setCheckable(true);
+    connect(showHideBtn_, &QPushButton::toggled, this, [this](bool checked) {
         tokenEdit_->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
-        showHideBtn->setText(checked ? tr("Hide") : tr("Show"));
+        showHideBtn_->setText(checked ? tr("Hide") : tr("Show"));
     });
 
     auto *tokenRow = new QHBoxLayout;
     tokenRow->addWidget(tokenEdit_);
-    tokenRow->addWidget(showHideBtn);
+    tokenRow->addWidget(showHideBtn_);
 
-    // Layout
+    // --- Form ---
     auto *form = new QFormLayout;
     form->addRow(tr("Provider tile URL template:"), tileUrlEdit_);
     form->addRow(QString(), urlHelp);
     form->addRow(tr("API token:"), tokenRow);
 
+    // --- Enable/disable wiring ---
+    auto updateEnabled = [this](bool freeTier) {
+        tileUrlEdit_->setEnabled(!freeTier);
+        tokenEdit_->setEnabled(!freeTier);
+        showHideBtn_->setEnabled(!freeTier);
+    };
+    connect(freeTierCheck_, &QCheckBox::toggled, this, updateEnabled);
+    updateEnabled(storedFreeTier);
+
+    // --- Buttons ---
     auto *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     connect(buttons, &QDialogButtonBox::accepted, this, [this]() {
         QSettings s2(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
-        s2.setValue(Compendia::MapTileUrlSettingsKey,  tileUrlEdit_->text().trimmed());
-        s2.setValue(Compendia::MapApiTokenSettingsKey, tokenEdit_->text().trimmed());
+        s2.setValue(Compendia::MapUseFreeTierSettingsKey, freeTierCheck_->isChecked());
+        s2.setValue(Compendia::MapTileUrlSettingsKey,     tileUrlEdit_->text().trimmed());
+        s2.setValue(Compendia::MapApiTokenSettingsKey,    tokenEdit_->text().trimmed());
         accept();
     });
     connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
+    // --- Root layout ---
     auto *root = new QVBoxLayout(this);
+    root->addWidget(freeTierCheck_);
+    root->addWidget(separator);
     root->addLayout(form);
     root->addWidget(buttons);
 }

@@ -2684,7 +2684,8 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
 
     {
         QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
-        if (s.value(Compendia::MapApiTokenSettingsKey).toString().isEmpty()) {
+        const bool freeTier = s.value(Compendia::MapUseFreeTierSettingsKey, false).toBool();
+        if (!freeTier && s.value(Compendia::MapApiTokenSettingsKey).toString().isEmpty()) {
             QMessageBox::information(this, tr("Map Token Required"),
                 tr("A Mapbox API token is required for location tagging.\n"
                    "Open Autos → Location → Map Service Settings… to configure it."));
