@@ -61,14 +61,14 @@ public:
      */
     static std::pair<double, double> pixelToLatLon(double px, double py, int zoom);
 
-    /*! \brief Builds the OpenStreetMap tile URL for tile (x, y) at \a zoom.
+    /*! \brief Builds the tile URL for tile (x, y) at \a zoom using the configured provider template and token.
      *
      * \param x    Tile column.
      * \param y    Tile row.
      * \param zoom Zoom level.
      * \return URL string ready for a network request.
      */
-    static QString osmTileUrl(int x, int y, int zoom);
+    static QString tileUrl(int x, int y, int zoom);
 
     /*! \brief Initiates an asynchronous Nominatim reverse-geocode request.
      *

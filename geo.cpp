@@ -4,6 +4,7 @@
 
 #include <cmath>
 
+#include <QSettings>
 #include <QStringList>
 
 static constexpr double kPi       = M_PI;
@@ -100,12 +101,17 @@ std::pair<double, double> Geo::pixelToLatLon(double px, double py, int zoom)
     return {lat, lon};
 }
 
-QString Geo::osmTileUrl(int x, int y, int zoom)
+QString Geo::tileUrl(int x, int y, int zoom)
 {
-    return QString::fromLatin1(Compendia::OsmTileUrlTemplate)
-        .replace(QStringLiteral("{z}"), QString::number(zoom))
-        .replace(QStringLiteral("{x}"), QString::number(x))
-        .replace(QStringLiteral("{y}"), QString::number(y));
+    QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
+    QString tmpl = s.value(Compendia::MapTileUrlSettingsKey,
+                           QString::fromLatin1(Compendia::MapboxTileUrlTemplate)).toString();
+    const QString token = s.value(Compendia::MapApiTokenSettingsKey).toString();
+    return tmpl
+        .replace(QStringLiteral("{z}"),     QString::number(zoom))
+        .replace(QStringLiteral("{x}"),     QString::number(x))
+        .replace(QStringLiteral("{y}"),     QString::number(y))
+        .replace(QStringLiteral("{token}"), token);
 }
 
 void Geo::reverseGeocode(double lat, double lon,

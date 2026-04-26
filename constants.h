@@ -80,29 +80,35 @@ constexpr int RectWarmupDelayMs = 3000;
 // Geography / map display
 // ---------------------------------------------------------------------------
 
-/*! \brief OpenStreetMap tile URL template. Replace {z}, {x}, {y} with tile coords. */
-constexpr const char* OsmTileUrlTemplate = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+/*! \brief Mapbox raster tile URL template. {z}, {x}, {y}, and {token} are substituted at request time. */
+constexpr const char* MapboxTileUrlTemplate =
+    "https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}?access_token={token}";
 
-/*! \brief Nominatim reverse-geocode endpoint base URL. */
-constexpr const char* NominatimReverseUrl = "https://nominatim.openstreetmap.org/reverse";
+/*! \brief Mapbox reverse-geocode endpoint. {lon}, {lat}, and {token} are substituted at request time. */
+constexpr const char* MapboxReverseGeoUrl =
+    "https://api.mapbox.com/geocoding/v5/mapbox.places/{lon},{lat}.json"
+    "?types=place,locality,district&access_token={token}";
 
-/*! \brief HTTP User-Agent header sent with all OSM/Nominatim requests. */
+/*! \brief QSettings key storing the Mapbox API token. */
+constexpr const char* MapApiTokenSettingsKey = "map/apiToken";
+
+/*! \brief QSettings key storing the tile URL template (defaults to MapboxTileUrlTemplate). */
+constexpr const char* MapTileUrlSettingsKey  = "map/tileUrlTemplate";
+
+/*! \brief HTTP User-Agent header sent with all map/geocode requests. */
 constexpr const char* MapNetworkUserAgent = "Compendia/0.1 (contact: merrillaldrich@gmail.com)";
 
 /*! \brief Default zoom level for the small map overlay (city-level). */
 constexpr int MapOverlayZoom = 13;
 
 /*! \brief Width of the small map overlay widget in pixels. */
-constexpr int MapOverlayWidth = 200;
+constexpr int MapOverlayWidth = 160;
 
 /*! \brief Height of the small map overlay widget in pixels. */
-constexpr int MapOverlayHeight = 160;
+constexpr int MapOverlayHeight = 128;
 
 /*! \brief Margin from the bottom-right corner of the preview for the map overlay (px). */
 constexpr int MapOverlayMargin = 10;
-
-/*! \brief Minimum milliseconds between Nominatim requests (enforces ≤1 req/s policy). */
-constexpr int NominatimDelayMs = 1100;
 
 } // namespace Compendia
 

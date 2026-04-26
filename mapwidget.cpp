@@ -137,7 +137,7 @@ void MapWidget::drawGeoPoints(QPainter &p)
         if (sx < -10.0 || sx > width() + 10.0 || sy < -10.0 || sy > height() + 10.0)
             continue;
 
-        p.drawEllipse(QPointF(sx, sy), 4.0, 4.0);
+        p.drawEllipse(QPointF(sx, sy), 6.0, 6.0);
     }
 
     p.restore();

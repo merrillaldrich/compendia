@@ -18,6 +18,7 @@
 #include <QMenu>
 #include <QProcess>
 #include <QProgressDialog>
+#include <QSettings>
 #include <QStyleFactory>
 
 #include "./ui_mainwindow.h"
@@ -2681,6 +2682,16 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
 {
     if (!core->containsFiles()) return;
 
+    {
+        QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
+        if (s.value(Compendia::MapApiTokenSettingsKey).toString().isEmpty()) {
+            QMessageBox::information(this, tr("Map Token Required"),
+                tr("A Mapbox API token is required for location tagging.\n"
+                   "Open Autos → Location → Map Service Settings… to configure it."));
+            return;
+        }
+    }
+
     // Collect files that have GPS data and are not yet tagged with a City family tag.
     QStandardItemModel *model = core->getItemModel();
     geocodeQueue_.clear();
@@ -2707,7 +2718,6 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
         return;
     }
 
-    // Rate-limited timer: one Nominatim request per NominatimDelayMs
     if (!geocodeTimer_) {
         geocodeTimer_ = new QTimer(this);
         geocodeTimer_->setSingleShot(false);
@@ -2739,7 +2749,7 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
         });
     }
 
-    geocodeTimer_->start(Compendia::NominatimDelayMs);
+    geocodeTimer_->start(0);
 }
 
 /*! \brief Removes all City, State/Province, and Country tags from the library after confirmation. */
@@ -2797,4 +2807,10 @@ void MainWindow::on_actionGeoFilter_triggered()
         refreshTagAssignmentArea();
         updateClearAllFiltersEnabled();
     }
+}
+
+void MainWindow::on_actionMapSettings_triggered()
+{
+    MapSettingsDialog dlg(this);
+    dlg.exec();
 }

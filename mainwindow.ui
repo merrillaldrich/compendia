@@ -988,6 +988,8 @@
      </property>
      <addaction name="actionAuto_Tag_Location"/>
      <addaction name="actionRemove_Location_Tags"/>
+     <addaction name="separator"/>
+     <addaction name="actionMapSettings"/>
     </widget>
     <addaction name="menuFace_Detection"/>
     <addaction name="separator"/>
@@ -1074,6 +1076,11 @@
    </property>
    <property name="text">
     <string>Remove Location Tags</string>
+   </property>
+  </action>
+  <action name="actionMapSettings">
+   <property name="text">
+    <string>Map Service Settings…</string>
    </property>
   </action>
   <action name="actionFind_Similar_In_Selection">

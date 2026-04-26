@@ -2,12 +2,13 @@
 #include "geo.h"
 #include "constants.h"
 
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QSettings>
 #include <QUrl>
-#include <QUrlQuery>
 
 MapTileCache *MapTileCache::instance()
 {
@@ -37,7 +38,7 @@ QPixmap MapTileCache::tilePixmap(int x, int y, int zoom)
 
     inFlight_.insert(key);
 
-    QNetworkRequest req(QUrl(Geo::osmTileUrl(x, y, zoom)));
+    QNetworkRequest req(QUrl(Geo::tileUrl(x, y, zoom)));
     req.setRawHeader("User-Agent", QByteArray(Compendia::MapNetworkUserAgent));
 
     QNetworkReply *reply = nam_->get(req);
@@ -53,24 +54,6 @@ QPixmap MapTileCache::tilePixmap(int x, int y, int zoom)
         if (!pix.loadFromData(reply->readAll()))
             return;
 
-        // Boost saturation of the tile before caching.
-        // OSM Carto tiles are intentionally muted; this lifts them to a more
-        // vivid appearance without changing hue or lightness.
-        // Reds (freeways, hue ≤20 or ≥340) get a modest lift only; all other
-        // hues (greens, yellows, blues) get the full boost.
-        QImage img = pix.toImage().convertToFormat(QImage::Format_ARGB32);
-        for (int row = 0; row < img.height(); ++row) {
-            QRgb *line = reinterpret_cast<QRgb *>(img.scanLine(row));
-            for (int col = 0; col < img.width(); ++col) {
-                const QColor c(line[col]);
-                const int hue = c.hsvHue();
-                const bool isRed = hue <= 20 || hue >= 340;
-                const int s = qMin(255, c.hsvSaturation() * (isRed ? 115 : 165) / 100);
-                line[col] = QColor::fromHsv(hue, s, c.value(), qAlpha(line[col])).rgba();
-            }
-        }
-        pix = QPixmap::fromImage(img);
-
         tileCache_.insert(key, new QPixmap(pix));
         emit tileReady(x, y, zoom, pix);
     });
@@ -82,45 +65,45 @@ void MapTileCache::requestReverseGeocode(double lat, double lon,
                                           QObject *context,
                                           std::function<void(QString, QString, QString)> callback)
 {
-    QUrl url(QString::fromLatin1(Compendia::NominatimReverseUrl));
-    QUrlQuery q;
-    q.addQueryItem(QStringLiteral("format"), QStringLiteral("json"));
-    q.addQueryItem(QStringLiteral("lat"),    QString::number(lat, 'f', 7));
-    q.addQueryItem(QStringLiteral("lon"),    QString::number(lon, 'f', 7));
-    q.addQueryItem(QStringLiteral("zoom"),   QStringLiteral("10"));
-    url.setQuery(q);
+    QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
+    const QString token = s.value(Compendia::MapApiTokenSettingsKey).toString();
 
-    QNetworkRequest req(url);
+    const QString urlStr = QString::fromLatin1(Compendia::MapboxReverseGeoUrl)
+        .replace(QStringLiteral("{lon}"),   QString::number(lon, 'f', 7))
+        .replace(QStringLiteral("{lat}"),   QString::number(lat, 'f', 7))
+        .replace(QStringLiteral("{token}"), token);
+
+    QNetworkRequest req{QUrl(urlStr)};
     req.setRawHeader("User-Agent", QByteArray(Compendia::MapNetworkUserAgent));
-    req.setRawHeader("Accept-Language", "en");
 
     QNetworkReply *reply = nam_->get(req);
     connect(reply, &QNetworkReply::finished, this,
             [reply, context, cb = std::move(callback)]() mutable {
         reply->deleteLater();
 
-        if (!context) {
+        if (!context || reply->error() != QNetworkReply::NoError) {
             cb({}, {}, {});
             return;
         }
 
-        if (reply->error() != QNetworkReply::NoError) {
-            cb({}, {}, {});
-            return;
-        }
-
+        // Parse Mapbox GeoJSON FeatureCollection
         const QJsonObject root = QJsonDocument::fromJson(reply->readAll()).object();
-        const QJsonObject addr = root.value(QStringLiteral("address")).toObject();
+        const QJsonArray features = root.value(QStringLiteral("features")).toArray();
+        if (features.isEmpty()) { cb({}, {}, {}); return; }
 
-        // Pick the most specific settlement name available
-        QString city;
-        for (const char *key : {"city", "town", "village", "hamlet", "suburb", "municipality"}) {
-            const QString v = addr.value(QLatin1String(key)).toString();
-            if (!v.isEmpty()) { city = v; break; }
+        const QJsonArray contextArr =
+            features[0].toObject().value(QStringLiteral("context")).toArray();
+
+        QString city, state, country;
+        for (const QJsonValue &v : contextArr) {
+            const QJsonObject obj  = v.toObject();
+            const QString     id   = obj.value(QStringLiteral("id")).toString();
+            const QString     text = obj.value(QStringLiteral("text")).toString();
+            if      (id.startsWith(QLatin1String("place.")))    city    = text;
+            else if (id.startsWith(QLatin1String("locality."))) { if (city.isEmpty()) city = text; }
+            else if (id.startsWith(QLatin1String("region.")))   state   = text;
+            else if (id.startsWith(QLatin1String("country.")))  country = text;
         }
-
-        const QString state   = addr.value(QStringLiteral("state")).toString();
-        const QString country = addr.value(QStringLiteral("country")).toString();
 
         cb(city, state, country);
     });

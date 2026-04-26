@@ -15,6 +15,7 @@
 #include "multiprogressbar.h"
 #include "facerecognizer.h"
 #include "facerecognitionsettingsdialog.h"
+#include "mapsettingsdialog.h"
 #include "framegrabber.h"
 #include "constants.h"
 #include "aboutdialog.h"
@@ -60,7 +61,7 @@ private:
         double lon;
     };
     QList<GeocodeQueueEntry> geocodeQueue_;  ///< Pending reverse-geocode requests.
-    QTimer *geocodeTimer_ = nullptr;          ///< Fires every NominatimDelayMs to drain geocodeQueue_.
+    QTimer *geocodeTimer_ = nullptr;          ///< Fires to drain geocodeQueue_.
     int geocodeDone_ = 0;                     ///< Count of completed geocode requests in the current batch.
     int geocodeTotal_ = 0;                    ///< Total geocode requests in the current batch.
 
@@ -510,6 +511,9 @@ private slots:
     /*! \brief Opens the Geo Filter dialog to show all geolocated photos on a map
      *         and optionally apply a geographic isolation set. */
     void on_actionGeoFilter_triggered();
+
+    /*! \brief Opens the Map Service Settings dialog. */
+    void on_actionMapSettings_triggered();
 
 protected:
     /*! \brief Overrides the Qt base-class resize handler to freshen the preview on resize.
