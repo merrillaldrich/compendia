@@ -1227,14 +1227,17 @@ Tag* CompendiaCore::addLibraryTag(QString tagFamilyName, QString tagName){
         matchingTag = new Tag(tf, tagName, this);
         tags_->insert(matchingTag);
         connect(matchingTag, &Tag::nameChanged, this, &CompendiaCore::writeTagLibraryFile);
+        // Guard against emitting during bulk load (libraryFileInitialized_ is false until
+        // loadTagLibraryFile() completes).  Without this, addLibraryTag() fires a full
+        // TagContainer rebuild for every tag in the library — hundreds of widget rebuilds
+        // with no event-loop cycles between them, causing the OS "hung application" dialog.
+        // loadTagLibraryFile() emits tagLibraryChanged() exactly once after setting the flag.
+        // Emitting only on new-tag creation also prevents O(n) signal storms during bulk
+        // operations like Auto Tag Year/Month, where the same tag pointer is looked up
+        // once per file but rarely created.
+        if (libraryFileInitialized_)
+            emit tagLibraryChanged();
     }
-    // Guard against emitting during bulk load (libraryFileInitialized_ is false until
-    // loadTagLibraryFile() completes).  Without this, addLibraryTag() fires a full
-    // TagContainer rebuild for every tag in the library — hundreds of widget rebuilds
-    // with no event-loop cycles between them, causing the OS "hung application" dialog.
-    // loadTagLibraryFile() emits tagLibraryChanged() exactly once after setting the flag.
-    if (libraryFileInitialized_)
-        emit tagLibraryChanged();
     return matchingTag;
 }
 
