@@ -85,6 +85,12 @@ private:
         QStringList disappeared;  ///< Absolute paths present in the model but absent from disk.
     };
 
+    /*! \brief Subdirectories that appeared or disappeared in a parent directory, as determined by diffSubdirectories(). */
+    struct FolderDiff {
+        QStringList appearedFolders;    ///< Subdirs present on disk but not in the watcher.
+        QStringList disappearedFolders; ///< Subdirs in the watcher that no longer exist on disk.
+    };
+
     /*! \brief Diffs the current disk contents of \a dirPath against what the model knows about that directory.
      *
      * Pure read — does not modify the model or the watcher.
@@ -92,6 +98,14 @@ private:
      * \return A DirDiff with appeared and disappeared file lists.
      */
     DirDiff diffDirectory(const QString& dirPath) const;
+
+    /*! \brief Diffs the immediate subdirectories of \a parentPath against the set of watched paths.
+     *
+     * Pure read — does not modify the model or the watcher.
+     * \param parentPath Absolute path of the directory to inspect.
+     * \return A FolderDiff with appeared and disappeared subdirectory lists.
+     */
+    FolderDiff diffSubdirectories(const QString& parentPath) const;
 
     /*! \brief Processes all directories accumulated in pendingChangedDirs_, classifies changes,
      *  and dispatches to the appropriate handler. Called by watcherDebounceTimer_. */
@@ -125,6 +139,23 @@ private:
      * that handleFileAdded()'s duplicate guard would then preserve incorrectly.
      */
     void removeStaleModelEntries();
+
+    /*! \brief Adds \a seedDirs and all their ancestors up to root_directory_ to fileWatcher_.
+     *
+     * Replaces the ad-hoc fileWatcher_->addPath() calls scattered around the class so that every
+     * intermediate directory in the tree is watched (required to detect subdirectory renames).
+     * \param seedDirs Leaf directories to start from; their ancestors are computed automatically.
+     */
+    void addWatchPaths(const QSet<QString>& seedDirs);
+
+    /*! \brief Handles a subfolder that was renamed from \a oldPath to \a newPath in the OS.
+     *
+     * Patch-updates all in-memory TaggedFile::filePath values under oldPath, swaps the watcher
+     * registrations, and emits folderRenamedExternally().
+     * \param oldPath Absolute path the folder occupied before the rename.
+     * \param newPath Absolute path the folder occupies after the rename.
+     */
+    void handleFolderRenamed(const QString& oldPath, const QString& newPath);
 
     /*! \brief Moves up to a fixed number of pending icon results from the background queue into the model.
      */
@@ -725,6 +756,13 @@ signals:
      * \param absolutePath Absolute path of the newly appeared file.
      */
     void fileAddedExternally(const QString& absolutePath);
+
+    /*! \brief Emitted when a subfolder within the watched tree is renamed by the OS.
+     *
+     * \param oldPath Absolute path the folder occupied before the rename.
+     * \param newPath Absolute path the folder occupies after the rename.
+     */
+    void folderRenamedExternally(const QString& oldPath, const QString& newPath);
 
     /*! \brief Emitted at the end of restoreSnapshot(), after tagLibraryChanged() has fired.
      *
