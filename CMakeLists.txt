@@ -5,6 +5,17 @@ project(compendia VERSION 0.1.3 LANGUAGES CXX)
 # Generate version.h from version.h.in, substituting project version variables.
 configure_file(version.h.in "${CMAKE_CURRENT_BINARY_DIR}/version.h")
 
+# Load the real proxy app key from secrets.cmake (gitignored, never committed).
+# Copy secrets.cmake.example to secrets.cmake and fill in the key before building.
+include(secrets.cmake OPTIONAL)
+if(NOT COMPENDIA_PROXY_APP_KEY)
+    message(STATUS
+        "compendia: COMPENDIA_PROXY_APP_KEY not set — "
+        "free-tier proxy will not authenticate. "
+        "Copy secrets.cmake.example to secrets.cmake and fill in the key.")
+endif()
+configure_file(secrets.h.in "${CMAKE_CURRENT_BINARY_DIR}/secrets.h")
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)

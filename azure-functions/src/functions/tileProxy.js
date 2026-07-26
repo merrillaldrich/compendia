@@ -1,4 +1,5 @@
 const { app } = require('@azure/functions');
+const { checkRateLimit } = require('./rateLimiter');
 
 app.http('tileProxy', {
     methods: ['GET'],
@@ -8,6 +9,11 @@ app.http('tileProxy', {
         const appKey = request.headers.get('x-compendia-key');
         if (!appKey || appKey !== process.env.COMPENDIA_APP_KEY) {
             return { status: 401, body: 'Unauthorized' };
+        }
+
+        const rateResult = await checkRateLimit(request, context, 'tile');
+        if (!rateResult.allowed) {
+            return { status: 429, body: 'Rate limit exceeded' };
         }
 
         const { z, x, y } = request.params;

@@ -107,10 +107,6 @@ constexpr const char* CompendiaTileProxyUrlTemplate =
 constexpr const char* CompendiaGeocodeProxyUrl =
     "https://<functionapp>.azurewebsites.net/api/geocode";
 
-/*! \brief Shared app key sent in the X-Compendia-Key request header.
- *  Must match the COMPENDIA_APP_KEY value set in the Azure Function App's Application Settings. */
-constexpr const char* CompendiaProxyAppKey = "compendia-v1-replace-with-key";
-
 /*! \brief QSettings key storing whether the Compendia free-tier proxy is active. */
 constexpr const char* MapUseFreeTierSettingsKey = "map/useFreeTier";
 

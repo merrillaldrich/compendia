@@ -1,6 +1,7 @@
 #include "maptilecache.h"
 #include "geo.h"
 #include "constants.h"
+#include "secrets.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -43,7 +44,7 @@ QPixmap MapTileCache::tilePixmap(int x, int y, int zoom)
     {
         QSettings qs(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
         if (qs.value(Compendia::MapUseFreeTierSettingsKey, false).toBool())
-            req.setRawHeader("X-Compendia-Key", QByteArray(Compendia::CompendiaProxyAppKey));
+            req.setRawHeader("X-Compendia-Key", QByteArray(COMPENDIA_PROXY_APP_KEY));
     }
 
     QNetworkReply *reply = nam_->get(req);
@@ -80,7 +81,7 @@ void MapTileCache::requestReverseGeocode(double lat, double lon,
                 .arg(QString::number(lat, 'f', 7))
                 .arg(QString::number(lon, 'f', 7));
         req = QNetworkRequest{QUrl(urlStr)};
-        req.setRawHeader("X-Compendia-Key", QByteArray(Compendia::CompendiaProxyAppKey));
+        req.setRawHeader("X-Compendia-Key", QByteArray(COMPENDIA_PROXY_APP_KEY));
     } else {
         const QString token = s.value(Compendia::MapApiTokenSettingsKey).toString();
         const QString urlStr = QString::fromLatin1(Compendia::MapboxReverseGeoUrl)
