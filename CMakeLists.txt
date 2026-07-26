@@ -7,7 +7,11 @@ configure_file(version.h.in "${CMAKE_CURRENT_BINARY_DIR}/version.h")
 
 # Load the real proxy app key from secrets.cmake (gitignored, never committed).
 # Copy secrets.cmake.example to secrets.cmake and fill in the key before building.
-include(secrets.cmake OPTIONAL)
+# Tell cmake to re-configure whenever secrets.cmake changes (or is first created),
+# even though the include is OPTIONAL and cmake wouldn't track it otherwise.
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/secrets.cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/secrets.cmake" OPTIONAL)
 if(NOT COMPENDIA_PROXY_APP_KEY)
     message(STATUS
         "compendia: COMPENDIA_PROXY_APP_KEY not set — "
