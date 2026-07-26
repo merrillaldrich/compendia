@@ -183,7 +183,8 @@ QProgressBar::chunk {
 QToolButton#isolateFolderButton,
 QToolButton#clearFolderIsolationButton,
 QToolButton#isolateSelectionButton,
-QToolButton#clearIsolationButton {
+QToolButton#clearIsolationButton,
+QToolButton#geoFilterButton {
     border: none;
     background: transparent;
 }
@@ -191,7 +192,8 @@ QToolButton#clearIsolationButton {
 QToolButton#isolateFolderButton:hover:enabled,
 QToolButton#clearFolderIsolationButton:hover:enabled,
 QToolButton#isolateSelectionButton:hover:enabled,
-QToolButton#clearIsolationButton:hover:enabled {
+QToolButton#clearIsolationButton:hover:enabled,
+QToolButton#geoFilterButton:hover:enabled {
     background-color: rgba(128, 128, 128, 0.15);
     border-radius: 3px;
 }
@@ -199,7 +201,8 @@ QToolButton#clearIsolationButton:hover:enabled {
 QToolButton#isolateFolderButton:pressed,
 QToolButton#clearFolderIsolationButton:pressed,
 QToolButton#isolateSelectionButton:pressed,
-QToolButton#clearIsolationButton:pressed {
+QToolButton#clearIsolationButton:pressed,
+QToolButton#geoFilterButton:pressed {
     background-color: rgba(128, 128, 128, 0.3);
     border-radius: 3px;
 }

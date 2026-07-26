@@ -615,6 +615,12 @@ PreviewContainer::PreviewContainer(QWidget *parent)
     navLeftButton_->installEventFilter(this);
     navRightButton_->installEventFilter(this);
 
+    // Small map overlay in the lower-right corner (non-interactive; click opens MapDialog)
+    mapOverlay_ = new MapWidget(/*interactive=*/false, this);
+    mapOverlay_->setFixedSize(Compendia::MapOverlayWidth, Compendia::MapOverlayHeight);
+    mapOverlay_->hide();
+    connect(mapOverlay_, &MapWidget::clicked, this, &PreviewContainer::mapOverlayClicked);
+
     // Play/pause button toggles playback state.
     // If a video thumbnail is shown but playback hasn't started yet, clicking
     // Play sets up the videoItem and starts from the beginning of the file.
@@ -1127,6 +1133,50 @@ void PreviewContainer::clearDropPreviewRect()
 }
 
 // ---------------------------------------------------------------------------
+// Map overlay
+// ---------------------------------------------------------------------------
+
+void PreviewContainer::setMapLocation(double lat, double lon)
+{
+    mapLocationSet_ = true;
+    mapOverlay_->setZoomLevel(Compendia::MapOverlayZoom);
+    mapOverlay_->setLocation(lat, lon);
+    if (mapVisible_) {
+        repositionMapOverlay();
+        mapOverlay_->show();
+        mapOverlay_->raise();
+    }
+}
+
+void PreviewContainer::clearMapLocation()
+{
+    mapLocationSet_ = false;
+    mapOverlay_->hide();
+}
+
+void PreviewContainer::setMapVisible(bool visible)
+{
+    mapVisible_ = visible;
+    if (visible && mapLocationSet_) {
+        repositionMapOverlay();
+        mapOverlay_->show();
+        mapOverlay_->raise();
+    } else {
+        mapOverlay_->hide();
+    }
+}
+
+void PreviewContainer::repositionMapOverlay()
+{
+    if (!mapOverlay_) return;
+    const QRect vr = view->geometry();
+    if (vr.isEmpty()) return;
+    const int m = Compendia::MapOverlayMargin;
+    mapOverlay_->move(vr.right()  - mapOverlay_->width()  - m,
+                      vr.bottom() - mapOverlay_->height() - m);
+}
+
+// ---------------------------------------------------------------------------
 // Nav button overlay
 // ---------------------------------------------------------------------------
 
@@ -1172,6 +1222,8 @@ void PreviewContainer::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
     repositionNavButtons();
+    if (mapOverlay_ && mapOverlay_->isVisible())
+        repositionMapOverlay();
 }
 
 /*! \brief Tracks mouse position on the view to drive nav button fade in/out.

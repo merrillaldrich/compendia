@@ -1,0 +1,9 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "MAPBOX_TOKEN": "<your-mapbox-token-here>",
+    "COMPENDIA_APP_KEY": "<your-app-key-here>"
+  }
+}

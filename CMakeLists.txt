@@ -5,6 +5,17 @@ project(compendia VERSION 0.1.3 LANGUAGES CXX)
 # Generate version.h from version.h.in, substituting project version variables.
 configure_file(version.h.in "${CMAKE_CURRENT_BINARY_DIR}/version.h")
 
+# Load the real proxy app key from secrets.cmake (gitignored, never committed).
+# Copy secrets.cmake.example to secrets.cmake and fill in the key before building.
+include(secrets.cmake OPTIONAL)
+if(NOT COMPENDIA_PROXY_APP_KEY)
+    message(STATUS
+        "compendia: COMPENDIA_PROXY_APP_KEY not set — "
+        "free-tier proxy will not authenticate. "
+        "Copy secrets.cmake.example to secrets.cmake and fill in the key.")
+endif()
+configure_file(secrets.h.in "${CMAKE_CURRENT_BINARY_DIR}/secrets.h")
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -19,6 +30,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Concurrent)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Multimedia)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS MultimediaWidgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Svg)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 
 #find_package(libexif REQUIRED) # this doesn't work
 #find_package(libheif)
@@ -69,6 +81,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         tagset.cpp
         tag.cpp tagfamily.cpp taggedfile.cpp
+        constants.h
         compendiacore.h tagfamily.h taggedfile.h  tagset.h
         compendiacore.cpp
         tag.h
@@ -99,11 +112,18 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         folderfilterlineedit.h folderfilterlineedit.cpp
         multiprogressbar.h multiprogressbar.cpp
         framegrabber.h framegrabber.cpp
+        locationtagger.h locationtagger.cpp
         perceptualhasher.h perceptualhasher.cpp
         starratingwidget.h starratingwidget.cpp
         folderscanner.h folderscanner.cpp
         undomanager.h undomanager.cpp
         aboutdialog.h aboutdialog.cpp aboutdialog.ui
+        geo.h geo.cpp
+        maptilecache.h maptilecache.cpp
+        mapwidget.h mapwidget.cpp
+        mapdialog.h mapdialog.cpp
+        mapsettingsdialog.h mapsettingsdialog.cpp
+        geofilterdialog.h geofilterdialog.cpp
 
     )
 
@@ -172,6 +192,7 @@ target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent)
 target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Multimedia)
 target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::MultimediaWidgets)
 target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Svg)
+target_link_libraries(compendia PRIVATE Qt${QT_VERSION_MAJOR}::Network)
 
 # Add libexif library from 3rdParty subdirectory
 target_include_directories(compendia PRIVATE ${LIBEXIF_INCLUDE_DIR})

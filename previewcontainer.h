@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QFrame>
 #include "zoomablegraphicsview.h"
+#include "mapwidget.h"
 
 /*! \brief Describes a single tag region overlay for display in the preview pane.
  *
@@ -95,6 +96,27 @@ public:
      */
     void setTagRectsVisible(bool visible);
 
+    /*! \brief Shows the map overlay centered at (lat, lon).
+     *
+     * Stores the coordinates, updates the MapWidget, and shows the overlay
+     * widget in the lower-right corner of the preview.  The overlay is only
+     * made visible when the "Show Map" checkbox is on.
+     *
+     * \param lat Latitude in decimal degrees.
+     * \param lon Longitude in decimal degrees.
+     */
+    void setMapLocation(double lat, double lon);
+
+    /*! \brief Hides the map overlay and clears the stored location. */
+    void clearMapLocation();
+
+    /*! \brief Shows or hides the map overlay according to \a visible.
+     *
+     * The overlay is only shown when a location has been set via setMapLocation().
+     * \param visible True to show the overlay, false to hide it.
+     */
+    void setMapVisible(bool visible);
+
     /*! \brief Updates the stored normalized rect for one descriptor in-place.
      *
      * Called after a live resize so that the drop hit-test uses the current rect
@@ -112,6 +134,12 @@ public:
     void setDropPreviewColor(QColor color);
 
 signals:
+    /*! \brief Emitted when the user clicks the small map overlay.
+     *
+     * Connect to this signal to open a MapDialog with the full interactive map.
+     */
+    void mapOverlayClicked();
+
     /*! \brief Emitted when the user requests navigation to the previous (delta = -1)
      *         or next (delta = +1) file in the list.
      *
@@ -242,8 +270,15 @@ private:
     QVariantAnimation*      navFadeAnim_     = nullptr; ///< Animates both button opacities together.
     bool                    navButtonsVisible_ = false;  ///< Current logical visibility state.
 
+    MapWidget* mapOverlay_     = nullptr; ///< Small map overlay in the lower-right of the preview.
+    bool       mapLocationSet_ = false;   ///< True when a GPS location has been provided.
+    bool       mapVisible_     = false;   ///< Desired visibility state from the Show Map checkbox.
+
     /*! \brief Repositions the left and right overlay buttons over the view. */
     void repositionNavButtons();
+
+    /*! \brief Repositions the map overlay to the lower-right corner of the view. */
+    void repositionMapOverlay();
 
     /*! \brief Fades the nav overlay buttons to fully visible (\p visible = true) or
      *         fully hidden (\p visible = false), animating the transition.

@@ -26,7 +26,10 @@
 #include "icongenerator.h"
 #include "taggedfile.h"
 #include "folderscanner.h"
+#include "locationtagger.h"
 #include "undomanager.h"
+
+#include <QModelIndex>
 
 /*! \brief Central controller that owns all application data and business logic.
  *
@@ -534,6 +537,28 @@ public:
     void applyVideoMetadata(const QString &absoluteFilePath,
                             const QMap<QString, QString> &meta);
 
+    /*! \brief Result returned by exportFiles(). */
+    struct ExportResult {
+        int copied  = 0;
+        int skipped = 0;
+        QStringList failedNames;
+    };
+
+    /*! \brief Copies \a sourcePaths to \a destPath, skipping sidecar and cache files.
+     *
+     * When \a overwrite is false, files that already exist at the destination are
+     * counted in \a skipped and left untouched.  When true, they are replaced.
+     * Any file that fails to copy has its name appended to \c failedNames.
+     *
+     * \param sourcePaths Absolute paths of files to copy (typically from the proxy model).
+     * \param destPath    Absolute path of the destination directory.
+     * \param overwrite   True to replace existing files; false to skip them.
+     * \return An ExportResult with copy counts and any failure names.
+     */
+    ExportResult exportFiles(const QStringList &sourcePaths,
+                             const QString &destPath,
+                             bool overwrite);
+
     /*! \brief Groups all files whose pHash values are within \a threshold Hamming distance of each other.
      *
      * Uses a Union-Find algorithm over all files with a valid pHash.  Only groups of
@@ -574,6 +599,39 @@ public:
      * \return Number of tags removed, or 0 if there were none.
      */
     int removeAutoDetectedFaceTags();
+
+    /*! \brief Returns the count of location tags (City, State/Province, Country) in the library. */
+    int countLocationTags() const;
+
+    /*! \brief Removes all City, State/Province, and Country tags from every file, the active
+     *  filter, and the tag library.
+     *
+     * \return Number of tags removed, or 0 if there were none.
+     */
+    int removeLocationTags();
+
+    /*! \brief Returns all model files that have GPS data but no existing City tag.
+     *
+     * Used to build the queue for auto-tag-by-location without leaking knowledge
+     * of tag family names or GPS parsing into the UI layer.
+     */
+    QList<LocationTagger::Entry> collectGeocodeQueue() const;
+
+    /*! \brief Restricts the visible set to files that have no tags assigned.
+     *
+     * Parallel to isolateUnreadableFiles().
+     */
+    void isolateUntaggedFiles();
+
+    /*! \brief Returns the absolute paths of all video files currently in the model. */
+    QStringList videoFilePaths() const;
+
+    /*! \brief Extracts the TaggedFile* stored at \a proxyIndex.
+     *
+     * Maps the proxy index to the source model and unpacks Qt::UserRole+1.
+     * Returns nullptr if the index is invalid or carries no TaggedFile.
+     */
+    TaggedFile *fileFromProxyIndex(const QModelIndex &proxyIndex) const;
 
     /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
      *  Emits tagLibraryChanged() when done. */
@@ -626,6 +684,32 @@ public:
      * \param rating A value in [1,5], or std::nullopt to clear.
      */
     void setFileRating(TaggedFile* file, std::optional<int> rating);
+
+    /*! \brief Tags every file with its capture/creation year in the "Year" family.
+     *
+     * Uses each file's effective date (EXIF capture date, falling back to filesystem
+     * creation date). Files already carrying a "Year" tag or with no resolvable date
+     * are skipped.
+     */
+    void autoTagByYear();
+
+    /*! \brief Tags every file with its capture/creation month name in the "Month" family.
+     *
+     * Uses each file's effective date (EXIF capture date, falling back to filesystem
+     * creation date). Files already carrying a "Month" tag or with no resolvable date
+     * are skipped. Month names are English (January–December).
+     */
+    void autoTagByMonth();
+
+    /*! \brief Creates "Set NN" tags in the "Similarity Sets" family and assigns one to
+     *  each file in \a groups.
+     *
+     * Tag names are zero-padded to at least two digits, widening automatically for
+     * 100+ groups.  Existing tags in other families are not affected.
+     *
+     * \param groups List of file groups; each inner list receives a distinct set tag.
+     */
+    void applyGroupTags(const QList<QList<TaggedFile*>> &groups);
 
 public slots:
 

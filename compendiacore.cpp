@@ -1,5 +1,6 @@
 #include "compendiacore.h"
 #include "constants.h"
+#include "geo.h"
 #include "perceptualhasher.h"
 #include "folderscanner.h"
 #include "exifparser.h"
@@ -14,6 +15,7 @@
 #include <QJsonDocument>
 #include <QDebug>
 #include <QIcon>
+#include <QLocale>
 #include <QSet>
 #include <QRunnable>
 #include <QThreadPool>
@@ -2344,4 +2346,168 @@ void CompendiaCore::removeStaleModelEntries()
         qDebug() << "[FileWatch] removeStaleModelEntries: removing stale entry" << path;
         handleFileRemoved(path);
     }
+}
+
+CompendiaCore::ExportResult CompendiaCore::exportFiles(const QStringList &sourcePaths,
+                                                       const QString &destPath,
+                                                       bool overwrite)
+{
+    const QString cacheDirName = QStringLiteral(".compendia_cache");
+    struct CopyJob { QString src; QString dest; QString fileName; };
+    QList<CopyJob> jobs;
+    jobs.reserve(sourcePaths.size());
+    for (const QString &src : sourcePaths) {
+        if (src.contains(cacheDirName))
+            continue;
+        const QString fileName = QFileInfo(src).fileName();
+        jobs.append({src, QDir(destPath).filePath(fileName), fileName});
+    }
+
+    ExportResult result;
+    for (const CopyJob &job : std::as_const(jobs)) {
+        if (QFile::exists(job.dest)) {
+            if (!overwrite) {
+                ++result.skipped;
+                continue;
+            }
+            QFile::remove(job.dest);
+        }
+        if (!QFile::copy(job.src, job.dest))
+            result.failedNames.append(job.fileName);
+        else
+            ++result.copied;
+    }
+    return result;
+}
+
+void CompendiaCore::autoTagByYear()
+{
+    for (int r = 0; r < tagged_files_->rowCount(); ++r) {
+        TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+
+        const auto hasYearTag = [](Tag *t){ return t->tagFamily->getName() == u"Year"; };
+        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasYearTag)) continue;
+
+        QDate date = tf->effectiveDate();
+        if (!date.isValid()) continue;
+
+        tf->addTag(addLibraryTag(QStringLiteral("Year"), QString::number(date.year())));
+    }
+}
+
+void CompendiaCore::autoTagByMonth()
+{
+    const QLocale english(QLocale::English);
+    for (int r = 0; r < tagged_files_->rowCount(); ++r) {
+        TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+
+        const auto hasMonthTag = [](Tag *t){ return t->tagFamily->getName() == u"Month"; };
+        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasMonthTag)) continue;
+
+        QDate date = tf->effectiveDate();
+        if (!date.isValid()) continue;
+
+        tf->addTag(addLibraryTag(QStringLiteral("Month"),
+                                 english.monthName(date.month(), QLocale::LongFormat)));
+    }
+}
+
+void CompendiaCore::applyGroupTags(const QList<QList<TaggedFile*>> &groups)
+{
+    const int digits = qMax(2, QString::number(groups.size()).length());
+    for (int i = 0; i < groups.size(); ++i) {
+        const QString tagName =
+            QStringLiteral("Set %1").arg(i + 1, digits, 10, QLatin1Char('0'));
+        Tag *tag = addLibraryTag(QStringLiteral("Similarity Sets"), tagName);
+        for (TaggedFile *tf : groups[i])
+            tf->addTag(tag);
+    }
+}
+
+TaggedFile *CompendiaCore::fileFromProxyIndex(const QModelIndex &proxyIndex) const
+{
+    if (!proxyIndex.isValid()) return nullptr;
+    const QModelIndex src = tagged_files_proxy_->mapToSource(proxyIndex);
+    return tagged_files_->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+}
+
+int CompendiaCore::countLocationTags() const
+{
+    static const QStringList locationFamilies = {
+        QStringLiteral("City"),
+        QStringLiteral("State/Province"),
+        QStringLiteral("Country")
+    };
+    int count = 0;
+    for (Tag *tag : *tags_) {
+        if (locationFamilies.contains(tag->tagFamily->getName()))
+            ++count;
+    }
+    return count;
+}
+
+int CompendiaCore::removeLocationTags()
+{
+    static const QStringList locationFamilies = {
+        QStringLiteral("City"),
+        QStringLiteral("State/Province"),
+        QStringLiteral("Country")
+    };
+    QList<Tag*> toRemove;
+    for (Tag *tag : *tags_) {
+        if (locationFamilies.contains(tag->tagFamily->getName()))
+            toRemove.append(tag);
+    }
+    for (Tag *tag : toRemove)
+        deleteTagFromLibrary(tag);
+    return toRemove.size();
+}
+
+QList<LocationTagger::Entry> CompendiaCore::collectGeocodeQueue() const
+{
+    QList<LocationTagger::Entry> queue;
+    for (int r = 0; r < tagged_files_->rowCount(); ++r) {
+        TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+
+        const auto hasCityTag = [](Tag *t){ return t->tagFamily->getName() == u"City"; };
+        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasCityTag)) continue;
+
+        auto coords = Geo::parseGpsCoordinates(tf->exifMap());
+        if (!coords) continue;
+
+        queue.append({tf, coords->x(), coords->y()});
+    }
+    return queue;
+}
+
+void CompendiaCore::isolateUntaggedFiles()
+{
+    QSet<TaggedFile*> untagged;
+    for (int row = 0; row < tagged_files_->rowCount(); ++row) {
+        TaggedFile *tf = tagged_files_->item(row)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && tf->tags()->isEmpty())
+            untagged.insert(tf);
+    }
+    setIsolationSet(untagged);
+}
+
+QStringList CompendiaCore::videoFilePaths() const
+{
+    static const QStringList videoExts = {
+        QStringLiteral("mp4"), QStringLiteral("mov"), QStringLiteral("avi"),
+        QStringLiteral("mkv"), QStringLiteral("wmv"), QStringLiteral("webm"),
+        QStringLiteral("m4v")
+    };
+    QStringList paths;
+    for (int r = 0; r < tagged_files_->rowCount(); ++r) {
+        TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+        const QString full = tf->filePath + "/" + tf->fileName;
+        if (videoExts.contains(QFileInfo(full).suffix().toLower()))
+            paths.append(full);
+    }
+    return paths;
 }

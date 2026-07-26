@@ -76,6 +76,55 @@ constexpr int SimilarImageThreshold = 10;
  */
 constexpr int RectWarmupDelayMs = 3000;
 
+// ---------------------------------------------------------------------------
+// Geography / map display
+// ---------------------------------------------------------------------------
+
+/*! \brief Mapbox raster tile URL template. {z}, {x}, {y}, and {token} are substituted at request time. */
+constexpr const char* MapboxTileUrlTemplate =
+    "https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}?access_token={token}";
+
+/*! \brief Mapbox reverse-geocode endpoint. {lon}, {lat}, and {token} are substituted at request time. */
+constexpr const char* MapboxReverseGeoUrl =
+    "https://api.mapbox.com/geocoding/v5/mapbox.places/{lon},{lat}.json"
+    "?types=place,locality,district&access_token={token}";
+
+/*! \brief QSettings key storing the Mapbox API token. */
+constexpr const char* MapApiTokenSettingsKey = "map/apiToken";
+
+/*! \brief QSettings key storing the tile URL template (defaults to MapboxTileUrlTemplate). */
+constexpr const char* MapTileUrlSettingsKey  = "map/tileUrlTemplate";
+
+// ---------------------------------------------------------------------------
+// Compendia free-tier proxy (Azure Functions — fill in your Function App name)
+// ---------------------------------------------------------------------------
+
+/*! \brief Tile proxy URL template. */
+constexpr const char* CompendiaTileProxyUrlTemplate =
+    "https://compendia-maps-proxy.azurewebsites.net/api/tiles/{z}/{x}/{y}";
+
+/*! \brief Geocode proxy URL. */
+constexpr const char* CompendiaGeocodeProxyUrl =
+    "https://compendia-maps-proxy.azurewebsites.net/api/geocode";
+
+/*! \brief QSettings key storing whether the Compendia free-tier proxy is active. */
+constexpr const char* MapUseFreeTierSettingsKey = "map/useFreeTier";
+
+/*! \brief HTTP User-Agent header sent with all map/geocode requests. */
+constexpr const char* MapNetworkUserAgent = "Compendia/0.1 (contact: merrillaldrich@gmail.com)";
+
+/*! \brief Default zoom level for the small map overlay (city-level). */
+constexpr int MapOverlayZoom = 13;
+
+/*! \brief Width of the small map overlay widget in pixels. */
+constexpr int MapOverlayWidth = 160;
+
+/*! \brief Height of the small map overlay widget in pixels. */
+constexpr int MapOverlayHeight = 128;
+
+/*! \brief Margin from the bottom-right corner of the preview for the map overlay (px). */
+constexpr int MapOverlayMargin = 10;
+
 } // namespace Compendia
 
 #endif // CONSTANTS_H
