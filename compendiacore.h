@@ -616,6 +616,7 @@ public:
      * of tag family names or GPS parsing into the UI layer.
      */
     QList<LocationTagger::Entry> collectGeocodeQueue() const;
+    QList<LocationTagger::Entry> collectGeocodeQueue(const QVector<TaggedFile*> &files) const;
 
     /*! \brief Restricts the visible set to files that have no tags assigned.
      *

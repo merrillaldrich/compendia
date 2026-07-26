@@ -6,6 +6,9 @@
 
 #include <QCheckBox>
 #include <QCoreApplication>
+#include <QDialog>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QScrollBar>
 #include <QDir>
 #include <QFile>
@@ -2073,6 +2076,64 @@ bool MainWindow::ensureFaceRecognizerLoaded()
     return false;
 }
 
+/*! \brief Shows a scope-selection dialog and returns which file set the user chose.
+ *
+ * Buttons are laid out manually (All → Visible → Selected → Cancel, left to right)
+ * so platform-specific QDialogButtonBox reordering does not affect them.
+ *
+ * \return 0 = All Files, 1 = Visible Files, 2 = Selected Files, -1 = Cancel/closed.
+ */
+static int askFileScopeDialog(QWidget *parent,
+                               const QString &title,
+                               const QString &text,
+                               bool isFiltered,
+                               bool hasSelection)
+{
+    QDialog dlg(parent);
+    dlg.setWindowTitle(title);
+
+    auto *vlay = new QVBoxLayout(&dlg);
+    auto *label = new QLabel(text, &dlg);
+    label->setWordWrap(true);
+    vlay->addWidget(label);
+    vlay->addSpacing(8);
+
+    auto *hlay = new QHBoxLayout;
+    hlay->addStretch();
+
+    int result = -1;
+
+    auto *allBtn = new QPushButton(QObject::tr("All Files"), &dlg);
+    hlay->addWidget(allBtn);
+    QObject::connect(allBtn, &QPushButton::clicked, &dlg, [&]{ result = 0; dlg.accept(); });
+
+    QPushButton *visibleBtn = nullptr;
+    if (isFiltered) {
+        visibleBtn = new QPushButton(QObject::tr("Visible Files"), &dlg);
+        hlay->addWidget(visibleBtn);
+        QObject::connect(visibleBtn, &QPushButton::clicked, &dlg, [&]{ result = 1; dlg.accept(); });
+    }
+
+    QPushButton *selectedBtn = nullptr;
+    if (hasSelection) {
+        selectedBtn = new QPushButton(QObject::tr("Selected Files"), &dlg);
+        hlay->addWidget(selectedBtn);
+        QObject::connect(selectedBtn, &QPushButton::clicked, &dlg, [&]{ result = 2; dlg.accept(); });
+    }
+
+    auto *cancelBtn = new QPushButton(QObject::tr("Cancel"), &dlg);
+    hlay->addWidget(cancelBtn);
+    QObject::connect(cancelBtn, &QPushButton::clicked, &dlg, &QDialog::reject);
+
+    QPushButton *def = selectedBtn ? selectedBtn : visibleBtn ? visibleBtn : allBtn;
+    def->setDefault(true);
+    def->setFocus();
+
+    vlay->addLayout(hlay);
+    dlg.exec();
+    return result;
+}
+
 /*! \brief Cross-image face recognition sweep across all loaded image files.
  *
  * Four phases:
@@ -2116,26 +2177,18 @@ void MainWindow::on_actionFind_Faces_triggered()
     if (!isFiltered && !hasSelection) {
         targetFiles = allFiles;
     } else {
-        QMessageBox msgBox(this);
-        msgBox.setWindowTitle(tr("Face Detection"));
-        msgBox.setText(tr("Would you like to process all files, or a selection?"));
-
-        QPushButton *selectedBtn = hasSelection ? msgBox.addButton(tr("Selected Files"), QMessageBox::AcceptRole) : nullptr;
-        QPushButton *visibleBtn  = isFiltered   ? msgBox.addButton(tr("Visible Files"),  QMessageBox::AcceptRole) : nullptr;
-        QPushButton *allBtn      = msgBox.addButton(tr("All Files"),      QMessageBox::AcceptRole);
-        msgBox.addButton(QMessageBox::Cancel);
-
-        msgBox.exec();
-        QAbstractButton* clicked = msgBox.clickedButton();
-
-        if (clicked == allBtn) {
+        const int scope = askFileScopeDialog(this,
+            tr("Face Detection"),
+            tr("Would you like to process all files, or a selection?"),
+            isFiltered, hasSelection);
+        if (scope == 0) {
             targetFiles = allFiles;
-        } else if (visibleBtn && clicked == visibleBtn) {
+        } else if (scope == 1) {
             for (int r = 0; r < proxy->rowCount(); ++r) {
                 if (TaggedFile* tf = core->fileFromProxyIndex(proxy->index(r, 0)))
                     targetFiles.append(tf);
             }
-        } else if (selectedBtn && clicked == selectedBtn) {
+        } else if (scope == 2) {
             for (const QModelIndex &pi : selIndexes) {
                 if (TaggedFile* tf = core->fileFromProxyIndex(pi))
                     targetFiles.append(tf);
@@ -2559,7 +2612,46 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
         }
     }
 
-    const QList<LocationTagger::Entry> queue = core->collectGeocodeQueue();
+    // ----- Scope selection (mirrors face detection) -----
+    QStandardItemModel* model = core->getItemModel();
+    FilterProxyModel* proxy   = core->getItemModelProxy();
+    const bool isFiltered     = proxy->rowCount() < model->rowCount();
+    QModelIndexList selIndexes = ui->fileListView->selectionModel()->selectedIndexes();
+    const bool hasSelection   = !selIndexes.isEmpty();
+
+    QVector<TaggedFile*> targetFiles;
+
+    if (!isFiltered && !hasSelection) {
+        for (int r = 0; r < model->rowCount(); ++r) {
+            if (TaggedFile* tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>())
+                targetFiles.append(tf);
+        }
+    } else {
+        const int scope = askFileScopeDialog(this,
+            tr("Auto-Tag Location"),
+            tr("Would you like to tag all files, or a selection?"),
+            isFiltered, hasSelection);
+        if (scope == 0) {
+            for (int r = 0; r < model->rowCount(); ++r) {
+                if (TaggedFile* tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>())
+                    targetFiles.append(tf);
+            }
+        } else if (scope == 1) {
+            for (int r = 0; r < proxy->rowCount(); ++r) {
+                if (TaggedFile* tf = core->fileFromProxyIndex(proxy->index(r, 0)))
+                    targetFiles.append(tf);
+            }
+        } else if (scope == 2) {
+            for (const QModelIndex &pi : selIndexes) {
+                if (TaggedFile* tf = core->fileFromProxyIndex(pi))
+                    targetFiles.append(tf);
+            }
+        } else {
+            return;  // Cancel
+        }
+    }
+
+    const QList<LocationTagger::Entry> queue = core->collectGeocodeQueue(targetFiles);
     if (queue.isEmpty()) {
         QMessageBox::information(this, tr("Auto-Tag Location"),
             tr("No images with GPS data found (or all are already tagged)."));

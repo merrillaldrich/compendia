@@ -2467,17 +2467,23 @@ int CompendiaCore::removeLocationTags()
 
 QList<LocationTagger::Entry> CompendiaCore::collectGeocodeQueue() const
 {
-    QList<LocationTagger::Entry> queue;
+    QVector<TaggedFile*> all;
+    all.reserve(tagged_files_->rowCount());
     for (int r = 0; r < tagged_files_->rowCount(); ++r) {
-        TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
-        if (!tf) continue;
+        if (TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>())
+            all.append(tf);
+    }
+    return collectGeocodeQueue(all);
+}
 
-        const auto hasCityTag = [](Tag *t){ return t->tagFamily->getName() == u"City"; };
+QList<LocationTagger::Entry> CompendiaCore::collectGeocodeQueue(const QVector<TaggedFile*> &files) const
+{
+    QList<LocationTagger::Entry> queue;
+    const auto hasCityTag = [](Tag *t){ return t->tagFamily->getName() == u"City"; };
+    for (TaggedFile *tf : files) {
         if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasCityTag)) continue;
-
         auto coords = Geo::parseGpsCoordinates(tf->exifMap());
         if (!coords) continue;
-
         queue.append({tf, coords->x(), coords->y()});
     }
     return queue;
