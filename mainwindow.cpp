@@ -2538,22 +2538,12 @@ void MainWindow::on_actionExport_triggered()
         return;
     }
 
-    // Filter out cache files and build the final list of (src, dest) pairs.
-    const QString cacheDirName = QStringLiteral(".compendia_cache");
-    struct CopyJob { QString src; QString dest; QString fileName; };
-    QList<CopyJob> jobs;
-    jobs.reserve(sourcePaths.size());
-    for (const QString &src : std::as_const(sourcePaths)) {
-        if (src.contains(cacheDirName))
-            continue;
-        const QString fileName = QFileInfo(src).fileName();
-        jobs.append({src, QDir(destPath).filePath(fileName), fileName});
-    }
-
     // Check for pre-existing files at the destination.
     const int existingCount = static_cast<int>(
-        std::count_if(jobs.cbegin(), jobs.cend(),
-                      [](const CopyJob &j){ return QFile::exists(j.dest); }));
+        std::count_if(sourcePaths.cbegin(), sourcePaths.cend(),
+                      [&destPath](const QString &src) {
+                          return QFile::exists(QDir(destPath).filePath(QFileInfo(src).fileName()));
+                      }));
 
     bool overwrite = false;
     if (existingCount > 0) {
@@ -2574,33 +2564,15 @@ void MainWindow::on_actionExport_triggered()
             return; // Cancel
     }
 
-    // Copy files.
-    int copied  = 0;
-    int skipped = 0;
-    QStringList errors;
-
-    for (const CopyJob &job : std::as_const(jobs)) {
-        if (QFile::exists(job.dest)) {
-            if (!overwrite) {
-                ++skipped;
-                continue;
-            }
-            QFile::remove(job.dest);
-        }
-
-        if (!QFile::copy(job.src, job.dest))
-            errors.append(job.fileName);
-        else
-            ++copied;
-    }
+    const auto result = core->exportFiles(sourcePaths, destPath, overwrite);
 
     // Report results (rich text so the folder link is clickable).
     const QString folderUrl = QUrl::fromLocalFile(destPath).toString();
-    QString summary = tr("Export complete.<br><br>Copied: %1 file(s)").arg(copied);
-    if (skipped > 0)
-        summary += tr("<br>Skipped (already exist): %1 file(s)").arg(skipped);
-    if (!errors.isEmpty())
-        summary += tr("<br>Failed: %1 file(s)").arg(errors.size());
+    QString summary = tr("Export complete.<br><br>Copied: %1 file(s)").arg(result.copied);
+    if (result.skipped > 0)
+        summary += tr("<br>Skipped (already exist): %1 file(s)").arg(result.skipped);
+    if (!result.failedNames.isEmpty())
+        summary += tr("<br>Failed: %1 file(s)").arg(result.failedNames.size());
     summary += tr("<br><br><a href=\"%1\">Open Folder</a>").arg(folderUrl);
 
     QMessageBox mb(QMessageBox::Information, tr("Export"), summary, QMessageBox::Ok, this);

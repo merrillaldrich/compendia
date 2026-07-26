@@ -534,6 +534,28 @@ public:
     void applyVideoMetadata(const QString &absoluteFilePath,
                             const QMap<QString, QString> &meta);
 
+    /*! \brief Result returned by exportFiles(). */
+    struct ExportResult {
+        int copied  = 0;
+        int skipped = 0;
+        QStringList failedNames;
+    };
+
+    /*! \brief Copies \a sourcePaths to \a destPath, skipping sidecar and cache files.
+     *
+     * When \a overwrite is false, files that already exist at the destination are
+     * counted in \a skipped and left untouched.  When true, they are replaced.
+     * Any file that fails to copy has its name appended to \c failedNames.
+     *
+     * \param sourcePaths Absolute paths of files to copy (typically from the proxy model).
+     * \param destPath    Absolute path of the destination directory.
+     * \param overwrite   True to replace existing files; false to skip them.
+     * \return An ExportResult with copy counts and any failure names.
+     */
+    ExportResult exportFiles(const QStringList &sourcePaths,
+                             const QString &destPath,
+                             bool overwrite);
+
     /*! \brief Groups all files whose pHash values are within \a threshold Hamming distance of each other.
      *
      * Uses a Union-Find algorithm over all files with a valid pHash.  Only groups of

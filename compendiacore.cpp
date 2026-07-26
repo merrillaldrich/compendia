@@ -2347,6 +2347,38 @@ void CompendiaCore::removeStaleModelEntries()
     }
 }
 
+CompendiaCore::ExportResult CompendiaCore::exportFiles(const QStringList &sourcePaths,
+                                                       const QString &destPath,
+                                                       bool overwrite)
+{
+    const QString cacheDirName = QStringLiteral(".compendia_cache");
+    struct CopyJob { QString src; QString dest; QString fileName; };
+    QList<CopyJob> jobs;
+    jobs.reserve(sourcePaths.size());
+    for (const QString &src : sourcePaths) {
+        if (src.contains(cacheDirName))
+            continue;
+        const QString fileName = QFileInfo(src).fileName();
+        jobs.append({src, QDir(destPath).filePath(fileName), fileName});
+    }
+
+    ExportResult result;
+    for (const CopyJob &job : std::as_const(jobs)) {
+        if (QFile::exists(job.dest)) {
+            if (!overwrite) {
+                ++result.skipped;
+                continue;
+            }
+            QFile::remove(job.dest);
+        }
+        if (!QFile::copy(job.src, job.dest))
+            result.failedNames.append(job.fileName);
+        else
+            ++result.copied;
+    }
+    return result;
+}
+
 void CompendiaCore::autoTagByYear()
 {
     for (int r = 0; r < tagged_files_->rowCount(); ++r) {
