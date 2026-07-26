@@ -62,8 +62,9 @@ private:
     };
     QList<GeocodeQueueEntry> geocodeQueue_;  ///< Pending reverse-geocode requests.
     QTimer *geocodeTimer_ = nullptr;          ///< Fires to drain geocodeQueue_.
-    int geocodeDone_ = 0;                     ///< Count of completed geocode requests in the current batch.
-    int geocodeTotal_ = 0;                    ///< Total geocode requests in the current batch.
+    int  geocodeDone_     = 0;               ///< Count of dispatched geocode requests in the current batch.
+    int  geocodeTotal_    = 0;               ///< Total geocode requests in the current batch.
+    bool geocodeAborted_  = false;           ///< True once an error has been shown; suppresses duplicate notifications.
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.

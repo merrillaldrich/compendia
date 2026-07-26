@@ -2696,7 +2696,8 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
     // Collect files that have GPS data and are not yet tagged with a City family tag.
     QStandardItemModel *model = core->getItemModel();
     geocodeQueue_.clear();
-    geocodeDone_  = 0;
+    geocodeDone_   = 0;
+    geocodeAborted_ = false;
 
     for (int r = 0; r < model->rowCount(); ++r) {
         TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
@@ -2741,9 +2742,11 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
             Geo::reverseGeocode(entry.lat, entry.lon, this,
                 [this, tf = entry.tf](QString city, QString state, QString country, QString error) {
                     if (!error.isEmpty()) {
-                        geocodeQueue_.clear();
-                        geocodeTimer_->stop();
-                        progress_->showNotification(tr("Location tagging stopped: %1").arg(error));
+                        if (!geocodeAborted_) {
+                            geocodeAborted_ = true;
+                            progress_->showNotification(
+                                tr("Location tagging stopped: %1").arg(error));
+                        }
                         return;
                     }
                     if (!city.isEmpty())
