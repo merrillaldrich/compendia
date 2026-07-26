@@ -627,6 +627,32 @@ public:
      */
     void setFileRating(TaggedFile* file, std::optional<int> rating);
 
+    /*! \brief Tags every file with its capture/creation year in the "Year" family.
+     *
+     * Uses each file's effective date (EXIF capture date, falling back to filesystem
+     * creation date). Files already carrying a "Year" tag or with no resolvable date
+     * are skipped.
+     */
+    void autoTagByYear();
+
+    /*! \brief Tags every file with its capture/creation month name in the "Month" family.
+     *
+     * Uses each file's effective date (EXIF capture date, falling back to filesystem
+     * creation date). Files already carrying a "Month" tag or with no resolvable date
+     * are skipped. Month names are English (January–December).
+     */
+    void autoTagByMonth();
+
+    /*! \brief Creates "Set NN" tags in the "Similarity Sets" family and assigns one to
+     *  each file in \a groups.
+     *
+     * Tag names are zero-padded to at least two digits, widening automatically for
+     * 100+ groups.  Existing tags in other families are not affected.
+     *
+     * \param groups List of file groups; each inner list receives a distinct set tag.
+     */
+    void applyGroupTags(const QList<QList<TaggedFile*>> &groups);
+
 public slots:
 
     /*! \brief Starts the UI flush timer if it is not already running.

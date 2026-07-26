@@ -1218,19 +1218,6 @@ void MainWindow::on_actionDrillUp_triggered()
  *
  * \param groups List of file groups as returned by findSimilarImages() or groupBySimilarity().
  */
-void MainWindow::applySimilaritySetTags(const QList<QList<TaggedFile*>> &groups)
-{
-    const int digits = qMax(2, QString::number(groups.size()).length());
-    for (int i = 0; i < groups.size(); ++i) {
-        const QString tagName =
-            QStringLiteral("Set %1").arg(i + 1, digits, 10, QLatin1Char('0'));
-        Tag* tag = core->addLibraryTag(QStringLiteral("Similarity Sets"), tagName);
-        for (TaggedFile* tf : groups[i])
-            tf->addTag(tag);
-    }
-    refreshNavTagLibrary();
-    refreshTagAssignmentArea();
-}
 
 /*! \brief Finds images similar to the current selection by perceptual hash and isolates them.
  *
@@ -1273,8 +1260,11 @@ void MainWindow::on_actionFind_Similar_In_Selection_triggered()
     ask.exec();
     if (ask.clickedButton() != tagBtn && ask.clickedButton() != showBtn)
         return;
-    if (ask.clickedButton() == tagBtn)
-        applySimilaritySetTags(groups);
+    if (ask.clickedButton() == tagBtn) {
+        core->applyGroupTags(groups);
+        refreshNavTagLibrary();
+        refreshTagAssignmentArea();
+    }
 
     // Check which matches would be hidden by the current non-isolation filters.
     QSet<TaggedFile*> hidden;
@@ -1341,8 +1331,11 @@ void MainWindow::on_actionFind_Similar_Images_triggered()
     ask.exec();
     if (ask.clickedButton() != tagBtn && ask.clickedButton() != showBtn)
         return;
-    if (ask.clickedButton() == tagBtn)
-        applySimilaritySetTags(groups);
+    if (ask.clickedButton() == tagBtn) {
+        core->applyGroupTags(groups);
+        refreshNavTagLibrary();
+        refreshTagAssignmentArea();
+    }
 
     core->setIsolationSet(similar);
     ui->actionClearIsolation->setEnabled(true);
@@ -2309,22 +2302,7 @@ void MainWindow::on_dateEdit_dateChanged(const QDate &date)
 void MainWindow::on_actionAuto_Tag_Year_triggered()
 {
     if (!core->containsFiles()) return;
-
-    QStandardItemModel *model = core->getItemModel();
-    for (int r = 0; r < model->rowCount(); ++r) {
-        TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
-        if (!tf) continue;
-
-        const auto hasYearTag = [](Tag *t){ return t->tagFamily->getName() == u"Year"; };
-        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasYearTag)) continue;
-
-        QDate date = tf->effectiveDate();
-        if (!date.isValid()) continue;
-
-        Tag *tag = core->addLibraryTag(QStringLiteral("Year"), QString::number(date.year()));
-        tf->addTag(tag);
-    }
-
+    core->autoTagByYear();
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
 }
@@ -2338,24 +2316,7 @@ void MainWindow::on_actionAuto_Tag_Year_triggered()
 void MainWindow::on_actionAuto_Tag_Month_triggered()
 {
     if (!core->containsFiles()) return;
-
-    QStandardItemModel *model = core->getItemModel();
-    const QLocale english(QLocale::English);
-    for (int r = 0; r < model->rowCount(); ++r) {
-        TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
-        if (!tf) continue;
-
-        const auto hasMonthTag = [](Tag *t){ return t->tagFamily->getName() == u"Month"; };
-        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasMonthTag)) continue;
-
-        QDate date = tf->effectiveDate();
-        if (!date.isValid()) continue;
-
-        QString monthName = english.monthName(date.month(), QLocale::LongFormat);
-        Tag *tag = core->addLibraryTag(QStringLiteral("Month"), monthName);
-        tf->addTag(tag);
-    }
-
+    core->autoTagByMonth();
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
 }

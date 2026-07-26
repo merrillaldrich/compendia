@@ -14,6 +14,7 @@
 #include <QJsonDocument>
 #include <QDebug>
 #include <QIcon>
+#include <QLocale>
 #include <QSet>
 #include <QRunnable>
 #include <QThreadPool>
@@ -2343,5 +2344,51 @@ void CompendiaCore::removeStaleModelEntries()
     for (const QString& path : stalePaths) {
         qDebug() << "[FileWatch] removeStaleModelEntries: removing stale entry" << path;
         handleFileRemoved(path);
+    }
+}
+
+void CompendiaCore::autoTagByYear()
+{
+    for (int r = 0; r < tagged_files_->rowCount(); ++r) {
+        TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+
+        const auto hasYearTag = [](Tag *t){ return t->tagFamily->getName() == u"Year"; };
+        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasYearTag)) continue;
+
+        QDate date = tf->effectiveDate();
+        if (!date.isValid()) continue;
+
+        tf->addTag(addLibraryTag(QStringLiteral("Year"), QString::number(date.year())));
+    }
+}
+
+void CompendiaCore::autoTagByMonth()
+{
+    const QLocale english(QLocale::English);
+    for (int r = 0; r < tagged_files_->rowCount(); ++r) {
+        TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+
+        const auto hasMonthTag = [](Tag *t){ return t->tagFamily->getName() == u"Month"; };
+        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasMonthTag)) continue;
+
+        QDate date = tf->effectiveDate();
+        if (!date.isValid()) continue;
+
+        tf->addTag(addLibraryTag(QStringLiteral("Month"),
+                                 english.monthName(date.month(), QLocale::LongFormat)));
+    }
+}
+
+void CompendiaCore::applyGroupTags(const QList<QList<TaggedFile*>> &groups)
+{
+    const int digits = qMax(2, QString::number(groups.size()).length());
+    for (int i = 0; i < groups.size(); ++i) {
+        const QString tagName =
+            QStringLiteral("Set %1").arg(i + 1, digits, 10, QLatin1Char('0'));
+        Tag *tag = addLibraryTag(QStringLiteral("Similarity Sets"), tagName);
+        for (TaggedFile *tf : groups[i])
+            tf->addTag(tag);
     }
 }
