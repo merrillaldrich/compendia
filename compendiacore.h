@@ -26,7 +26,10 @@
 #include "icongenerator.h"
 #include "taggedfile.h"
 #include "folderscanner.h"
+#include "locationtagger.h"
 #include "undomanager.h"
+
+#include <QModelIndex>
 
 /*! \brief Central controller that owns all application data and business logic.
  *
@@ -596,6 +599,39 @@ public:
      * \return Number of tags removed, or 0 if there were none.
      */
     int removeAutoDetectedFaceTags();
+
+    /*! \brief Returns the count of location tags (City, State/Province, Country) in the library. */
+    int countLocationTags() const;
+
+    /*! \brief Removes all City, State/Province, and Country tags from every file, the active
+     *  filter, and the tag library.
+     *
+     * \return Number of tags removed, or 0 if there were none.
+     */
+    int removeLocationTags();
+
+    /*! \brief Returns all model files that have GPS data but no existing City tag.
+     *
+     * Used to build the queue for auto-tag-by-location without leaking knowledge
+     * of tag family names or GPS parsing into the UI layer.
+     */
+    QList<LocationTagger::Entry> collectGeocodeQueue() const;
+
+    /*! \brief Restricts the visible set to files that have no tags assigned.
+     *
+     * Parallel to isolateUnreadableFiles().
+     */
+    void isolateUntaggedFiles();
+
+    /*! \brief Returns the absolute paths of all video files currently in the model. */
+    QStringList videoFilePaths() const;
+
+    /*! \brief Extracts the TaggedFile* stored at \a proxyIndex.
+     *
+     * Maps the proxy index to the source model and unpacks Qt::UserRole+1.
+     * Returns nullptr if the index is invalid or carries no TaggedFile.
+     */
+    TaggedFile *fileFromProxyIndex(const QModelIndex &proxyIndex) const;
 
     /*! \brief Merges \a from into \a into across all files, then removes and schedules \a from for deletion.
      *  Emits tagLibraryChanged() when done. */

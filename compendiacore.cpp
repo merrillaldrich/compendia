@@ -1,5 +1,6 @@
 #include "compendiacore.h"
 #include "constants.h"
+#include "geo.h"
 #include "perceptualhasher.h"
 #include "folderscanner.h"
 #include "exifparser.h"
@@ -2423,4 +2424,90 @@ void CompendiaCore::applyGroupTags(const QList<QList<TaggedFile*>> &groups)
         for (TaggedFile *tf : groups[i])
             tf->addTag(tag);
     }
+}
+
+TaggedFile *CompendiaCore::fileFromProxyIndex(const QModelIndex &proxyIndex) const
+{
+    if (!proxyIndex.isValid()) return nullptr;
+    const QModelIndex src = tagged_files_proxy_->mapToSource(proxyIndex);
+    return tagged_files_->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+}
+
+int CompendiaCore::countLocationTags() const
+{
+    static const QStringList locationFamilies = {
+        QStringLiteral("City"),
+        QStringLiteral("State/Province"),
+        QStringLiteral("Country")
+    };
+    int count = 0;
+    for (Tag *tag : *tags_) {
+        if (locationFamilies.contains(tag->tagFamily->getName()))
+            ++count;
+    }
+    return count;
+}
+
+int CompendiaCore::removeLocationTags()
+{
+    static const QStringList locationFamilies = {
+        QStringLiteral("City"),
+        QStringLiteral("State/Province"),
+        QStringLiteral("Country")
+    };
+    QList<Tag*> toRemove;
+    for (Tag *tag : *tags_) {
+        if (locationFamilies.contains(tag->tagFamily->getName()))
+            toRemove.append(tag);
+    }
+    for (Tag *tag : toRemove)
+        deleteTagFromLibrary(tag);
+    return toRemove.size();
+}
+
+QList<LocationTagger::Entry> CompendiaCore::collectGeocodeQueue() const
+{
+    QList<LocationTagger::Entry> queue;
+    for (int r = 0; r < tagged_files_->rowCount(); ++r) {
+        TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+
+        const auto hasCityTag = [](Tag *t){ return t->tagFamily->getName() == u"City"; };
+        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasCityTag)) continue;
+
+        auto coords = Geo::parseGpsCoordinates(tf->exifMap());
+        if (!coords) continue;
+
+        queue.append({tf, coords->x(), coords->y()});
+    }
+    return queue;
+}
+
+void CompendiaCore::isolateUntaggedFiles()
+{
+    QSet<TaggedFile*> untagged;
+    for (int row = 0; row < tagged_files_->rowCount(); ++row) {
+        TaggedFile *tf = tagged_files_->item(row)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (tf && tf->tags()->isEmpty())
+            untagged.insert(tf);
+    }
+    setIsolationSet(untagged);
+}
+
+QStringList CompendiaCore::videoFilePaths() const
+{
+    static const QStringList videoExts = {
+        QStringLiteral("mp4"), QStringLiteral("mov"), QStringLiteral("avi"),
+        QStringLiteral("mkv"), QStringLiteral("wmv"), QStringLiteral("webm"),
+        QStringLiteral("m4v")
+    };
+    QStringList paths;
+    for (int r = 0; r < tagged_files_->rowCount(); ++r) {
+        TaggedFile *tf = tagged_files_->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
+        if (!tf) continue;
+        const QString full = tf->filePath + "/" + tf->fileName;
+        if (videoExts.contains(QFileInfo(full).suffix().toLower()))
+            paths.append(full);
+    }
+    return paths;
 }

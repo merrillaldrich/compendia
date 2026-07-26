@@ -245,16 +245,14 @@ MainWindow::MainWindow(QWidget *parent)
             }
             core->checkpoint(tr("Set rating"));
             for (int i = 0; i < n; ++i) {
-                TaggedFile *tf = model->data(
-                    proxy->mapToSource(proxy->index(i, 0)), Qt::UserRole + 1).value<TaggedFile*>();
-                if (tf) tf->setRating(rating);
+                if (TaggedFile *tf = core->fileFromProxyIndex(proxy->index(i, 0)))
+                    tf->setRating(rating);
             }
         } else {
             core->checkpoint(tr("Set rating"));
             for (const QModelIndex &idx : sel) {
-                TaggedFile *tf = model->data(
-                    proxy->mapToSource(idx), Qt::UserRole + 1).value<TaggedFile*>();
-                if (tf) tf->setRating(rating);
+                if (TaggedFile *tf = core->fileFromProxyIndex(idx))
+                    tf->setRating(rating);
             }
         }
         // Reset the widget — it's a bulk action tool, not a persistent indicator
@@ -297,10 +295,7 @@ MainWindow::MainWindow(QWidget *parent)
             this, [this](std::optional<int> rating) {
         auto *selModel = ui->fileListView->selectionModel();
         if (!selModel || selModel->selectedIndexes().isEmpty()) return;
-        QModelIndex src = core->getItemModelProxy()->mapToSource(
-            selModel->selectedIndexes().first());
-        TaggedFile *tf = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
-        if (tf)
+        if (TaggedFile *tf = core->fileFromProxyIndex(selModel->selectedIndexes().first()))
             core->setFileRating(tf, rating);
     });
 
@@ -392,8 +387,7 @@ MainWindow::MainWindow(QWidget *parent)
         menu.addAction(ui->actionIsolateSelection);
 
         // Resolve the clicked item's folder so we can offer folder isolation.
-        QModelIndex clickedSrc = core->getItemModelProxy()->mapToSource(clickedProxy);
-        TaggedFile* clickedTf = core->getItemModel()->data(clickedSrc, Qt::UserRole + 1).value<TaggedFile*>();
+        TaggedFile* clickedTf = core->fileFromProxyIndex(clickedProxy);
         if (clickedTf) {
             QAction* isolateFolderAction = menu.addAction(QIcon(":/resources/isolate-folder.svg"), tr("Isolate this Folder"));
             const QString targetFolder = clickedTf->filePath;
@@ -424,10 +418,8 @@ MainWindow::MainWindow(QWidget *parent)
 
             // Collect seed files (selected files with a valid pHash)
             QSet<TaggedFile*> seeds;
-            const QModelIndexList selectedProxyIdxs = ui->fileListView->selectionModel()->selectedIndexes();
-            for (const QModelIndex &pi : selectedProxyIdxs) {
-                QModelIndex si = core->getItemModelProxy()->mapToSource(pi);
-                TaggedFile* tf = core->getItemModel()->data(si, Qt::UserRole + 1).value<TaggedFile*>();
+            for (const QModelIndex &pi : ui->fileListView->selectionModel()->selectedIndexes()) {
+                TaggedFile* tf = core->fileFromProxyIndex(pi);
                 if (tf && tf->pHash() != 0)
                     seeds.insert(tf);
             }
@@ -886,8 +878,7 @@ void MainWindow::onTagNameChanged(Tag* tag)
     if (sel.isEmpty())
         return;
 
-    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
-    TaggedFile* tf  = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    TaggedFile* tf = core->fileFromProxyIndex(sel.first());
     if (!tf)
         return;
 
@@ -936,10 +927,8 @@ void MainWindow::onSnapshotRestored()
 {
     QItemSelectionModel* sm = ui->fileListView->selectionModel();
     if (!sm || !sm->currentIndex().isValid()) return;
-    QModelIndex src = core->getItemModelProxy()->mapToSource(sm->currentIndex());
-    TaggedFile* tf  = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
-    if (!tf) return;
-    ui->previewStarRating->setRating(tf->rating());
+    if (TaggedFile* tf = core->fileFromProxyIndex(sm->currentIndex()))
+        ui->previewStarRating->setRating(tf->rating());
 }
 
 /*! \brief Isolates the currently selected files so only they pass the filter.
@@ -955,9 +944,7 @@ void MainWindow::on_actionIsolateSelection_triggered()
 
     QSet<TaggedFile*> files;
     for (const QModelIndex &pi : sel) {
-        QModelIndex src = core->getItemModelProxy()->mapToSource(pi);
-        TaggedFile* tf = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
-        if (tf)
+        if (TaggedFile *tf = core->fileFromProxyIndex(pi))
             files.insert(tf);
     }
     core->setIsolationSet(files);
@@ -980,8 +967,7 @@ void MainWindow::on_actionIsolateFolderSelection_triggered()
     if (!sm || !sm->currentIndex().isValid())
         return;
 
-    QModelIndex src = core->getItemModelProxy()->mapToSource(sm->currentIndex());
-    TaggedFile* current = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    TaggedFile* current = core->fileFromProxyIndex(sm->currentIndex());
     if (!current)
         return;
 
@@ -1038,14 +1024,7 @@ void MainWindow::on_actionUnreadableFiles_triggered()
 /*! \brief Captures all currently untagged files into the isolation set. */
 void MainWindow::on_actionUntaggedImages_triggered()
 {
-    QSet<TaggedFile*> untagged;
-    QStandardItemModel* model = core->getItemModel();
-    for (int row = 0; row < model->rowCount(); ++row) {
-        TaggedFile* tf = model->item(row)->data(Qt::UserRole + 1).value<TaggedFile*>();
-        if (tf && tf->tags()->isEmpty())
-            untagged.insert(tf);
-    }
-    core->setIsolationSet(untagged);
+    core->isolateUntaggedFiles();
     ui->actionClearIsolation->setEnabled(true);
     updateFileCountLabel();
     refreshTagAssignmentArea();
@@ -1175,8 +1154,7 @@ void MainWindow::on_actionDrillToFolder_triggered()
     if (!sm || !sm->currentIndex().isValid())
         return;
 
-    QModelIndex src = core->getItemModelProxy()->mapToSource(sm->currentIndex());
-    TaggedFile* current = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    TaggedFile* current = core->fileFromProxyIndex(sm->currentIndex());
     if (!current)
         return;
 
@@ -1229,10 +1207,8 @@ void MainWindow::on_actionDrillUp_triggered()
 void MainWindow::on_actionFind_Similar_In_Selection_triggered()
 {
     QSet<TaggedFile*> seeds;
-    const QModelIndexList selectedProxyIdxs = ui->fileListView->selectionModel()->selectedIndexes();
-    for (const QModelIndex &pi : selectedProxyIdxs) {
-        QModelIndex si = core->getItemModelProxy()->mapToSource(pi);
-        TaggedFile* tf = core->getItemModel()->data(si, Qt::UserRole + 1).value<TaggedFile*>();
+    for (const QModelIndex &pi : ui->fileListView->selectionModel()->selectedIndexes()) {
+        TaggedFile* tf = core->fileFromProxyIndex(pi);
         if (tf && tf->pHash() != 0)
             seeds.insert(tf);
     }
@@ -1369,9 +1345,7 @@ void MainWindow::refreshPreviewTagsLabel()
         return;
     }
 
-    QModelIndex src = core->getItemModelProxy()->mapToSource(
-        selModel->selectedIndexes().first());
-    TaggedFile* tf = core->getItemModel()->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    TaggedFile* tf = core->fileFromProxyIndex(selModel->selectedIndexes().first());
     if (!tf) {
         ui->previewFileTagsValue->setText("-");
         return;
@@ -1402,9 +1376,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
 
     // Warm up known-face embeddings for the file being left.
     if (!deselected.isEmpty()) {
-        QModelIndex di = deselected.indexes().first();
-        QModelIndex si = core->getItemModelProxy()->mapToSource(di);
-        TaggedFile* prev = core->getItemModel()->data(si, Qt::UserRole + 1).value<TaggedFile*>();
+        TaggedFile* prev = core->fileFromProxyIndex(deselected.indexes().first());
 
         // Cancel the pending debounce timer and immediately trigger a full warmup
         // (descriptor cache + known-face cache) for the departing file, so that
@@ -1432,8 +1404,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
     bool hasSeedInSelection = false;
     if (sm) {
         for (const QModelIndex &pi : sm->selectedIndexes()) {
-            QModelIndex si = core->getItemModelProxy()->mapToSource(pi);
-            TaggedFile* tf = core->getItemModel()->data(si, Qt::UserRole + 1).value<TaggedFile*>();
+            TaggedFile* tf = core->fileFromProxyIndex(pi);
             if (tf && tf->pHash() != 0) { hasSeedInSelection = true; break; }
         }
     }
@@ -1455,12 +1426,7 @@ void MainWindow::onFileSelectionChanged(const QItemSelection &selected, const QI
     }
     else {
 
-        // Map proxy index used by the view to source index in the model
-        QModelIndex sourceIndex = core->getItemModelProxy()->mapToSource(proxyIndex);
-
-        // Get the absolute path to the selected file
-        QVariant selectedImage = core->getItemModel()->data(sourceIndex, Qt::UserRole + 1);
-        TaggedFile* itemAsTaggedFile = selectedImage.value<TaggedFile*>();
+        TaggedFile* itemAsTaggedFile = core->fileFromProxyIndex(proxyIndex);
 
         ui->previewContainer->preview(itemAsTaggedFile->filePath + "/" + itemAsTaggedFile->fileName);
 
@@ -1510,9 +1476,7 @@ void MainWindow::onTagDroppedOnPreview(const QString &family,
     QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
     if (sel.isEmpty()) return;
 
-    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
-    TaggedFile* tf  = core->getItemModel()
-                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    TaggedFile* tf = core->fileFromProxyIndex(sel.first());
     if (!tf) return;
 
     Tag* tag = core->getTag(family, tagName);
@@ -1552,9 +1516,7 @@ void MainWindow::onTagDroppedOnExistingRegion(const QString &family,
     QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
     if (sel.isEmpty()) return;
 
-    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
-    TaggedFile* tf  = core->getItemModel()
-                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    TaggedFile* tf = core->fileFromProxyIndex(sel.first());
     if (!tf) return;
 
     Tag* newTag = core->getTag(family, tagName);
@@ -1607,9 +1569,7 @@ void MainWindow::onTagRectResized(const QRectF &oldNorm, const QRectF &newNorm)
     QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
     if (sel.isEmpty()) return;
 
-    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
-    TaggedFile* tf  = core->getItemModel()
-                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    TaggedFile* tf = core->fileFromProxyIndex(sel.first());
     if (!tf) return;
 
     for (Tag* tag : *tf->tags()) {
@@ -1639,9 +1599,7 @@ void MainWindow::onTagRectDeleteRequested(const QRectF &normalizedRect)
     QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
     if (sel.isEmpty()) return;
 
-    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
-    TaggedFile* tf  = core->getItemModel()
-                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    TaggedFile* tf = core->fileFromProxyIndex(sel.first());
     if (!tf) return;
 
     for (Tag* tag : *tf->tags()) {
@@ -1672,9 +1630,7 @@ void MainWindow::onTagRectFindPersonRequested(const QRectF &normalizedRect)
     QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
     if (sel.isEmpty()) return;
 
-    QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
-    TaggedFile* tf  = core->getItemModel()
-                          ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
+    TaggedFile* tf = core->fileFromProxyIndex(sel.first());
     if (!tf) return;
 
     Tag* queryTag = nullptr;
@@ -1733,15 +1689,13 @@ void MainWindow::onTagRectFindPersonRequested(const QRectF &normalizedRect)
             targetFiles = allFiles;
         } else if (visibleBtn && clicked == visibleBtn) {
             for (int r = 0; r < proxy->rowCount(); ++r) {
-                QModelIndex s = proxy->mapToSource(proxy->index(r, 0));
-                TaggedFile* f = model->data(s, Qt::UserRole + 1).value<TaggedFile*>();
-                if (f) targetFiles.append(f);
+                if (TaggedFile* f = core->fileFromProxyIndex(proxy->index(r, 0)))
+                    targetFiles.append(f);
             }
         } else if (selectedBtn && clicked == selectedBtn) {
             for (const QModelIndex &pi : selIndexes) {
-                QModelIndex s = proxy->mapToSource(pi);
-                TaggedFile* f = model->data(s, Qt::UserRole + 1).value<TaggedFile*>();
-                if (f) targetFiles.append(f);
+                if (TaggedFile* f = core->fileFromProxyIndex(pi))
+                    targetFiles.append(f);
             }
         } else {
             return; // Cancel
@@ -2090,10 +2044,7 @@ bool MainWindow::ensureFaceRecognizerLoaded()
             ui->showTaggedRegionsCheckbox->setChecked(true);
             QModelIndexList sel = ui->fileListView->selectionModel()->selectedIndexes();
             if (!sel.isEmpty()) {
-                QModelIndex src = core->getItemModelProxy()->mapToSource(sel.first());
-                TaggedFile* tf  = core->getItemModel()
-                                      ->data(src, Qt::UserRole + 1).value<TaggedFile*>();
-                if (tf)
+                if (TaggedFile* tf = core->fileFromProxyIndex(sel.first()))
                     refreshPreviewTagRects(tf, /*forceVisible=*/true);
             }
         };
@@ -2181,15 +2132,13 @@ void MainWindow::on_actionFind_Faces_triggered()
             targetFiles = allFiles;
         } else if (visibleBtn && clicked == visibleBtn) {
             for (int r = 0; r < proxy->rowCount(); ++r) {
-                QModelIndex src = proxy->mapToSource(proxy->index(r, 0));
-                TaggedFile* tf = model->data(src, Qt::UserRole + 1).value<TaggedFile*>();
-                if (tf) targetFiles.append(tf);
+                if (TaggedFile* tf = core->fileFromProxyIndex(proxy->index(r, 0)))
+                    targetFiles.append(tf);
             }
         } else if (selectedBtn && clicked == selectedBtn) {
             for (const QModelIndex &pi : selIndexes) {
-                QModelIndex src = proxy->mapToSource(pi);
-                TaggedFile* tf = model->data(src, Qt::UserRole + 1).value<TaggedFile*>();
-                if (tf) targetFiles.append(tf);
+                if (TaggedFile* tf = core->fileFromProxyIndex(pi))
+                    targetFiles.append(tf);
             }
         } else {
             return;  // Cancel
@@ -2336,18 +2285,7 @@ void MainWindow::on_actionGrab_Video_Frame_triggered()
         return;
     }
 
-    static const QStringList videoExts = {"mp4", "mov", "avi", "mkv", "wmv", "webm", "m4v"};
-
-    QStringList paths;
-    QStandardItemModel *model = core->getItemModel();
-    for (int r = 0; r < model->rowCount(); ++r) {
-        TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
-        if (!tf) continue;
-        QString full = tf->filePath + "/" + tf->fileName;
-        if (videoExts.contains(QFileInfo(full).suffix().toLower()))
-            paths.append(full);
-    }
-
+    const QStringList paths = core->videoFilePaths();
     if (paths.isEmpty()) {
         QMessageBox::information(this, tr("No Video Files"),
             tr("No video files were found in the loaded folder."));
@@ -2522,12 +2460,7 @@ void MainWindow::on_actionExport_triggered()
     QStringList sourcePaths;
     sourcePaths.reserve(count);
     for (int row = 0; row < count; ++row) {
-        QModelIndex proxyIdx = proxy->index(row, 0);
-        QModelIndex srcIdx   = proxy->mapToSource(proxyIdx);
-        auto *item = core->getItemModel()->itemFromIndex(srcIdx);
-        if (!item)
-            continue;
-        auto *tf = qvariant_cast<TaggedFile*>(item->data(Qt::UserRole + 1));
+        TaggedFile *tf = core->fileFromProxyIndex(proxy->index(row, 0));
         if (!tf || tf->filePath.isEmpty() || tf->fileName.isEmpty())
             continue;
         sourcePaths.append(tf->filePath + "/" + tf->fileName);
@@ -2626,23 +2559,7 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
         }
     }
 
-    // Collect files that have GPS data and are not yet tagged with a City family tag.
-    QStandardItemModel *model = core->getItemModel();
-    QList<LocationTagger::Entry> queue;
-
-    for (int r = 0; r < model->rowCount(); ++r) {
-        TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
-        if (!tf) continue;
-
-        const auto hasCityTag = [](Tag *t){ return t->tagFamily->getName() == u"City"; };
-        if (std::any_of(tf->tags()->cbegin(), tf->tags()->cend(), hasCityTag)) continue;
-
-        auto coords = Geo::parseGpsCoordinates(tf->exifMap());
-        if (!coords) continue;
-
-        queue.append({tf, coords->x(), coords->y()});
-    }
-
+    const QList<LocationTagger::Entry> queue = core->collectGeocodeQueue();
     if (queue.isEmpty()) {
         QMessageBox::information(this, tr("Auto-Tag Location"),
             tr("No images with GPS data found (or all are already tagged)."));
@@ -2674,19 +2591,7 @@ void MainWindow::on_actionRemove_Location_Tags_triggered()
 {
     if (!core->containsFiles()) return;
 
-    const QStringList locationFamilies = {
-        QStringLiteral("City"),
-        QStringLiteral("State/Province"),
-        QStringLiteral("Country")
-    };
-
-    // Count how many tags will be removed
-    int count = 0;
-    for (Tag *tag : *core->getLibraryTags()) {
-        if (locationFamilies.contains(tag->tagFamily->getName()))
-            ++count;
-    }
-
+    const int count = core->countLocationTags();
     if (count == 0) {
         QMessageBox::information(this, tr("Remove Location Tags"),
             tr("No location tags found."));
@@ -2700,15 +2605,7 @@ void MainWindow::on_actionRemove_Location_Tags_triggered()
         QMessageBox::Yes | QMessageBox::Cancel);
     if (ret != QMessageBox::Yes) return;
 
-    // Collect tags to remove (don't modify while iterating)
-    QList<Tag*> toRemove;
-    for (Tag *tag : *core->getLibraryTags()) {
-        if (locationFamilies.contains(tag->tagFamily->getName()))
-            toRemove.append(tag);
-    }
-    for (Tag *tag : toRemove)
-        core->deleteTagFromLibrary(tag);
-
+    core->removeLocationTags();
     refreshNavTagLibrary();
     refreshTagAssignmentArea();
 }
