@@ -62,7 +62,8 @@ private:
     };
     QList<GeocodeQueueEntry> geocodeQueue_;  ///< Pending reverse-geocode requests.
     QTimer *geocodeTimer_ = nullptr;          ///< Fires to drain geocodeQueue_.
-    int  geocodeDone_     = 0;               ///< Count of dispatched geocode requests in the current batch.
+    int  geocodeDone_     = 0;               ///< Callbacks received so far in the current batch.
+    int  geocodeTagged_   = 0;               ///< Files that received at least one location tag in the current batch.
     int  geocodeTotal_    = 0;               ///< Total geocode requests in the current batch.
     bool geocodeAborted_  = false;           ///< True once an error has been shown; suppresses duplicate notifications.
 

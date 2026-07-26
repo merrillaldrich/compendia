@@ -2696,7 +2696,8 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
     // Collect files that have GPS data and are not yet tagged with a City family tag.
     QStandardItemModel *model = core->getItemModel();
     geocodeQueue_.clear();
-    geocodeDone_   = 0;
+    geocodeDone_    = 0;
+    geocodeTagged_  = 0;
     geocodeAborted_ = false;
 
     for (int r = 0; r < model->rowCount(); ++r) {
@@ -2726,35 +2727,49 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
         connect(geocodeTimer_, &QTimer::timeout, this, [this]() {
             if (geocodeQueue_.isEmpty()) {
                 geocodeTimer_->stop();
-                core->writeFileMetadata();
-                refreshNavTagLibrary();
-                refreshTagAssignmentArea();
-                progress_->showNotification(
-                    tr("Location tagging complete: %1 file(s) tagged.").arg(geocodeDone_));
                 return;
             }
 
             const GeocodeQueueEntry entry = geocodeQueue_.takeFirst();
-            ++geocodeDone_;
-            progress_->showNotification(
-                tr("Geocoding %1 / %2...").arg(geocodeDone_).arg(geocodeTotal_));
 
             Geo::reverseGeocode(entry.lat, entry.lon, this,
                 [this, tf = entry.tf](QString city, QString state, QString country, QString error) {
+                    ++geocodeDone_;
+
                     if (!error.isEmpty()) {
                         if (!geocodeAborted_) {
                             geocodeAborted_ = true;
                             progress_->showNotification(
                                 tr("Location tagging stopped: %1").arg(error));
                         }
-                        return;
+                    } else {
+                        bool tagged = false;
+                        if (!city.isEmpty()) {
+                            tf->addTag(core->addLibraryTag(QStringLiteral("City"), city));
+                            tagged = true;
+                        }
+                        if (!state.isEmpty()) {
+                            tf->addTag(core->addLibraryTag(QStringLiteral("State/Province"), state));
+                            tagged = true;
+                        }
+                        if (!country.isEmpty()) {
+                            tf->addTag(core->addLibraryTag(QStringLiteral("Country"), country));
+                            tagged = true;
+                        }
+                        if (tagged) ++geocodeTagged_;
+                        if (!geocodeAborted_)
+                            progress_->showNotification(
+                                tr("Geocoding %1 / %2...").arg(geocodeDone_).arg(geocodeTotal_));
                     }
-                    if (!city.isEmpty())
-                        tf->addTag(core->addLibraryTag(QStringLiteral("City"), city));
-                    if (!state.isEmpty())
-                        tf->addTag(core->addLibraryTag(QStringLiteral("State/Province"), state));
-                    if (!country.isEmpty())
-                        tf->addTag(core->addLibraryTag(QStringLiteral("Country"), country));
+
+                    if (geocodeDone_ == geocodeTotal_) {
+                        core->writeFileMetadata();
+                        refreshNavTagLibrary();
+                        refreshTagAssignmentArea();
+                        if (!geocodeAborted_)
+                            progress_->showNotification(
+                                tr("Location tagging complete: %1 file(s) tagged.").arg(geocodeTagged_));
+                    }
                 });
         });
     }

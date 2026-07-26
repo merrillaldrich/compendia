@@ -136,15 +136,22 @@ void MapTileCache::requestReverseGeocode(double lat, double lon,
         const QJsonArray features = root.value(QStringLiteral("features")).toArray();
         if (features.isEmpty()) { cb({}, {}, {}, {}); return; }
 
-        const QJsonArray contextArr =
-            features[0].toObject().value(QStringLiteral("context")).toArray();
+        const QJsonObject feature0    = features[0].toObject();
+        const QString     feature0Id  = feature0.value(QStringLiteral("id")).toString();
+        const QJsonArray  contextArr  = feature0.value(QStringLiteral("context")).toArray();
 
         QString city, state, country;
+
+        // When the primary feature IS the city, its name is in feature0.text, not in context.
+        if (feature0Id.startsWith(QLatin1String("place.")) ||
+            feature0Id.startsWith(QLatin1String("locality.")))
+            city = feature0.value(QStringLiteral("text")).toString();
+
         for (const QJsonValue &v : contextArr) {
             const QJsonObject obj  = v.toObject();
             const QString     id   = obj.value(QStringLiteral("id")).toString();
             const QString     text = obj.value(QStringLiteral("text")).toString();
-            if      (id.startsWith(QLatin1String("place.")))    city    = text;
+            if      (id.startsWith(QLatin1String("place.")))    { if (city.isEmpty()) city = text; }
             else if (id.startsWith(QLatin1String("locality."))) { if (city.isEmpty()) city = text; }
             else if (id.startsWith(QLatin1String("region.")))   state   = text;
             else if (id.startsWith(QLatin1String("country.")))  country = text;
