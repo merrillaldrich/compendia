@@ -47,11 +47,19 @@ public:
      * \param callback Invoked on the main thread with (city, state, country).
      *                 All strings are empty on network or parse failure.
      */
+    /*! \brief Sends a reverse-geocode request for (lat, lon).
+     *
+     * \param callback Invoked with (city, state, country, error). On success,
+     *                 error is empty. On failure, city/state/country are empty
+     *                 and error is a short human-readable message. HTTP status
+     *                 0 means a transport-level failure.
+     */
     void requestReverseGeocode(double lat, double lon,
                                QObject *context,
                                std::function<void(QString city,
                                                   QString state,
-                                                  QString country)> callback);
+                                                  QString country,
+                                                  QString error)> callback);
 
 signals:
     /*! \brief Emitted when a tile has been fetched from the network and added to cache.
@@ -62,6 +70,12 @@ signals:
      * \param pixmap The tile image.
      */
     void tileReady(int x, int y, int zoom, QPixmap pixmap);
+
+    /*! \brief Emitted when a tile request fails.
+     *
+     * \param httpStatus HTTP status code, or 0 for a transport-level error.
+     */
+    void tileError(int httpStatus);
 
 private:
     explicit MapTileCache(QObject *parent = nullptr);

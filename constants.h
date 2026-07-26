@@ -99,13 +99,13 @@ constexpr const char* MapTileUrlSettingsKey  = "map/tileUrlTemplate";
 // Compendia free-tier proxy (Azure Functions — fill in your Function App name)
 // ---------------------------------------------------------------------------
 
-/*! \brief Tile proxy URL template. Replace \<functionapp\> with your Azure Function App name. */
+/*! \brief Tile proxy URL template. */
 constexpr const char* CompendiaTileProxyUrlTemplate =
-    "https://<functionapp>.azurewebsites.net/api/tiles/{z}/{x}/{y}";
+    "https://compendia-maps-proxy.azurewebsites.net/api/tiles/{z}/{x}/{y}";
 
-/*! \brief Geocode proxy URL. Replace \<functionapp\> with your Azure Function App name. */
+/*! \brief Geocode proxy URL. */
 constexpr const char* CompendiaGeocodeProxyUrl =
-    "https://<functionapp>.azurewebsites.net/api/geocode";
+    "https://compendia-maps-proxy.azurewebsites.net/api/geocode";
 
 /*! \brief QSettings key storing whether the Compendia free-tier proxy is active. */
 constexpr const char* MapUseFreeTierSettingsKey = "map/useFreeTier";

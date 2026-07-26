@@ -87,7 +87,8 @@ public:
                                QObject *context,
                                std::function<void(QString city,
                                                   QString state,
-                                                  QString country)> callback);
+                                                  QString country,
+                                                  QString error)> callback);
 
 private:
     static double parseRational(const QString &token);

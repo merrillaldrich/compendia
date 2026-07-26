@@ -5,6 +5,7 @@
 
 #include <cmath>
 
+#include <QFont>
 #include <QPainter>
 #include <QPainterPath>
 #include <QMouseEvent>
@@ -23,15 +24,18 @@ MapWidget::MapWidget(bool interactive, QWidget *parent)
 
     connect(MapTileCache::instance(), &MapTileCache::tileReady,
             this, &MapWidget::onTileReady);
+    connect(MapTileCache::instance(), &MapTileCache::tileError,
+            this, &MapWidget::onTileError);
 }
 
 void MapWidget::setLocation(double lat, double lon)
 {
-    lat_         = qBound(-kLatMax, lat, kLatMax);
-    lon_         = qBound(-180.0, lon, 180.0);
-    photoLat_    = lat_;
-    photoLon_    = lon_;
-    locationSet_ = true;
+    lat_          = qBound(-kLatMax, lat, kLatMax);
+    lon_          = qBound(-180.0, lon, 180.0);
+    photoLat_     = lat_;
+    photoLon_     = lon_;
+    locationSet_  = true;
+    errorMessage_ = {};
     update();
 }
 
@@ -62,6 +66,20 @@ void MapWidget::onTileReady(int /*x*/, int /*y*/, int zoom, QPixmap /*pix*/)
 {
     if (zoom == zoom_)
         update();
+}
+
+void MapWidget::onTileError(int httpStatus)
+{
+    if (!errorMessage_.isEmpty())
+        return; // already showing an error; first one wins
+
+    switch (httpStatus) {
+    case 0:   errorMessage_ = tr("Map unavailable"); break;
+    case 401: errorMessage_ = tr("Map key error"); break;
+    case 429: errorMessage_ = tr("Map rate limit\nreached"); break;
+    default:  errorMessage_ = tr("Map error"); break;
+    }
+    update();
 }
 
 // ---------------------------------------------------------------------------
@@ -166,6 +184,14 @@ void MapWidget::paintEvent(QPaintEvent *)
             drawGeoPoints(p);
         else
             drawMarker(p);
+    }
+
+    if (!errorMessage_.isEmpty()) {
+        p.setPen(QColor(80, 80, 80));
+        p.setFont(QFont("sans-serif", 8));
+        p.drawText(rect().adjusted(6, 6, -6, -6),
+                   Qt::AlignCenter | Qt::TextWordWrap,
+                   errorMessage_);
     }
 
     // Rounded border (drawn outside the clip so it sits on top)

@@ -53,8 +53,16 @@ QPixmap MapTileCache::tilePixmap(int x, int y, int zoom)
         reply->deleteLater();
         inFlight_.remove(key);
 
-        if (reply->error() != QNetworkReply::NoError)
+        const int httpStatus =
+            reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        if (httpStatus != 0 && httpStatus != 200) {
+            emit tileError(httpStatus);
             return;
+        }
+        if (reply->error() != QNetworkReply::NoError) {
+            emit tileError(0);
+            return;
+        }
 
         QPixmap pix;
         if (!pix.loadFromData(reply->readAll()))
@@ -67,9 +75,19 @@ QPixmap MapTileCache::tilePixmap(int x, int y, int zoom)
     return {};
 }
 
+static QString geocodeErrorMessage(int httpStatus)
+{
+    switch (httpStatus) {
+    case 0:   return QStringLiteral("Map service unavailable");
+    case 401: return QStringLiteral("Map service key error — check Map Service Settings");
+    case 429: return QStringLiteral("Map service rate limit reached, try again tomorrow");
+    default:  return QStringLiteral("Map service error (HTTP %1)").arg(httpStatus);
+    }
+}
+
 void MapTileCache::requestReverseGeocode(double lat, double lon,
                                           QObject *context,
-                                          std::function<void(QString, QString, QString)> callback)
+                                          std::function<void(QString, QString, QString, QString)> callback)
 {
     QSettings s(QSettings::IniFormat, QSettings::UserScope, "compendia", "compendia");
     const bool freeTier = s.value(Compendia::MapUseFreeTierSettingsKey, false).toBool();
@@ -97,15 +115,26 @@ void MapTileCache::requestReverseGeocode(double lat, double lon,
             [reply, context, cb = std::move(callback)]() mutable {
         reply->deleteLater();
 
-        if (!context || reply->error() != QNetworkReply::NoError) {
-            cb({}, {}, {});
+        if (!context) {
+            cb({}, {}, {}, {});
+            return;
+        }
+
+        const int httpStatus =
+            reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        if (httpStatus != 0 && httpStatus != 200) {
+            cb({}, {}, {}, geocodeErrorMessage(httpStatus));
+            return;
+        }
+        if (reply->error() != QNetworkReply::NoError) {
+            cb({}, {}, {}, geocodeErrorMessage(0));
             return;
         }
 
         // Parse Mapbox GeoJSON FeatureCollection
         const QJsonObject root = QJsonDocument::fromJson(reply->readAll()).object();
         const QJsonArray features = root.value(QStringLiteral("features")).toArray();
-        if (features.isEmpty()) { cb({}, {}, {}); return; }
+        if (features.isEmpty()) { cb({}, {}, {}, {}); return; }
 
         const QJsonArray contextArr =
             features[0].toObject().value(QStringLiteral("context")).toArray();
@@ -121,6 +150,6 @@ void MapTileCache::requestReverseGeocode(double lat, double lon,
             else if (id.startsWith(QLatin1String("country.")))  country = text;
         }
 
-        cb(city, state, country);
+        cb(city, state, country, {});
     });
 }

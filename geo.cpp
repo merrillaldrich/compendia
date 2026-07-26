@@ -126,7 +126,7 @@ QString Geo::tileUrl(int x, int y, int zoom)
 
 void Geo::reverseGeocode(double lat, double lon,
                          QObject *context,
-                         std::function<void(QString, QString, QString)> callback)
+                         std::function<void(QString, QString, QString, QString)> callback)
 {
     MapTileCache::instance()->requestReverseGeocode(lat, lon, context, std::move(callback));
 }

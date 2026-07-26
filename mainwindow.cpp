@@ -2739,7 +2739,13 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
                 tr("Geocoding %1 / %2...").arg(geocodeDone_).arg(geocodeTotal_));
 
             Geo::reverseGeocode(entry.lat, entry.lon, this,
-                [this, tf = entry.tf](QString city, QString state, QString country) {
+                [this, tf = entry.tf](QString city, QString state, QString country, QString error) {
+                    if (!error.isEmpty()) {
+                        geocodeQueue_.clear();
+                        geocodeTimer_->stop();
+                        progress_->showNotification(tr("Location tagging stopped: %1").arg(error));
+                        return;
+                    }
                     if (!city.isEmpty())
                         tf->addTag(core->addLibraryTag(QStringLiteral("City"), city));
                     if (!state.isEmpty())

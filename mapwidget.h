@@ -78,6 +78,7 @@ protected:
 
 private slots:
     void onTileReady(int x, int y, int zoom, QPixmap pix);
+    void onTileError(int httpStatus);
 
 private:
     void drawTiles(QPainter &p);
@@ -98,6 +99,7 @@ private:
     double panOriginLon_ = 0.0;
 
     QVector<QPointF> geoPoints_; ///< Multi-point overlay (lat, lon); suppresses single marker when non-empty.
+    QString errorMessage_;       ///< Set when a tile request fails; cleared when a new location is set.
 };
 
 #endif // MAPWIDGET_H

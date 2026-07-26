@@ -81,6 +81,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         tagset.cpp
         tag.cpp tagfamily.cpp taggedfile.cpp
+        constants.h
         compendiacore.h tagfamily.h taggedfile.h  tagset.h
         compendiacore.cpp
         tag.h
