@@ -80,7 +80,7 @@ static QString geocodeErrorMessage(int httpStatus)
     switch (httpStatus) {
     case 0:   return QStringLiteral("Map service unavailable");
     case 401: return QStringLiteral("Map service key error — check Map Service Settings");
-    case 429: return QStringLiteral("Map service rate limit reached, try again tomorrow");
+    case 429: return QStringLiteral("Map service rate limit reached");
     default:  return QStringLiteral("Map service error (HTTP %1)").arg(httpStatus);
     }
 }

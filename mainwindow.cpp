@@ -2656,10 +2656,7 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
 
     // Collect files that have GPS data and are not yet tagged with a City family tag.
     QStandardItemModel *model = core->getItemModel();
-    geocodeQueue_.clear();
-    geocodeDone_    = 0;
-    geocodeTagged_  = 0;
-    geocodeAborted_ = false;
+    QList<LocationTagger::Entry> queue;
 
     for (int r = 0; r < model->rowCount(); ++r) {
         TaggedFile *tf = model->item(r)->data(Qt::UserRole + 1).value<TaggedFile*>();
@@ -2671,71 +2668,33 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
         auto coords = Geo::parseGpsCoordinates(tf->exifMap());
         if (!coords) continue;
 
-        geocodeQueue_.append({tf, coords->x(), coords->y()});
+        queue.append({tf, coords->x(), coords->y()});
     }
 
-    geocodeTotal_ = geocodeQueue_.size();
-
-    if (geocodeTotal_ == 0) {
+    if (queue.isEmpty()) {
         QMessageBox::information(this, tr("Auto-Tag Location"),
             tr("No images with GPS data found (or all are already tagged)."));
         return;
     }
 
-    if (!geocodeTimer_) {
-        geocodeTimer_ = new QTimer(this);
-        geocodeTimer_->setSingleShot(false);
-        connect(geocodeTimer_, &QTimer::timeout, this, [this]() {
-            if (geocodeQueue_.isEmpty()) {
-                geocodeTimer_->stop();
-                return;
-            }
-
-            const GeocodeQueueEntry entry = geocodeQueue_.takeFirst();
-
-            Geo::reverseGeocode(entry.lat, entry.lon, this,
-                [this, tf = entry.tf](QString city, QString state, QString country, QString error) {
-                    ++geocodeDone_;
-
-                    if (!error.isEmpty()) {
-                        if (!geocodeAborted_) {
-                            geocodeAborted_ = true;
-                            progress_->showNotification(
-                                tr("Location tagging stopped: %1").arg(error));
-                        }
-                    } else {
-                        bool tagged = false;
-                        if (!city.isEmpty()) {
-                            tf->addTag(core->addLibraryTag(QStringLiteral("City"), city));
-                            tagged = true;
-                        }
-                        if (!state.isEmpty()) {
-                            tf->addTag(core->addLibraryTag(QStringLiteral("State/Province"), state));
-                            tagged = true;
-                        }
-                        if (!country.isEmpty()) {
-                            tf->addTag(core->addLibraryTag(QStringLiteral("Country"), country));
-                            tagged = true;
-                        }
-                        if (tagged) ++geocodeTagged_;
-                        if (!geocodeAborted_)
-                            progress_->showNotification(
-                                tr("Geocoding %1 / %2...").arg(geocodeDone_).arg(geocodeTotal_));
-                    }
-
-                    if (geocodeDone_ == geocodeTotal_) {
-                        core->writeFileMetadata();
-                        refreshNavTagLibrary();
-                        refreshTagAssignmentArea();
-                        if (!geocodeAborted_)
-                            progress_->showNotification(
-                                tr("Location tagging complete: %1 file(s) tagged.").arg(geocodeTagged_));
-                    }
-                });
-        });
-    }
-
-    geocodeTimer_->start(0);
+    locationTagger_ = new LocationTagger(core, this);
+    connect(locationTagger_, &LocationTagger::progress, this, [this](int done, int total) {
+        progress_->showNotification(tr("Geocoding %1 / %2...").arg(done).arg(total));
+    });
+    connect(locationTagger_, &LocationTagger::errorOccurred, this, [this](const QString &msg) {
+        progress_->showNotification(tr("Location tagging stopped: %1").arg(msg));
+    });
+    connect(locationTagger_, &LocationTagger::finished, this, [this](int tagged, bool hadError) {
+        core->writeFileMetadata();
+        refreshNavTagLibrary();
+        refreshTagAssignmentArea();
+        if (!hadError)
+            progress_->showNotification(
+                tr("Location tagging complete: %1 file(s) tagged.").arg(tagged));
+        locationTagger_->deleteLater();
+        locationTagger_ = nullptr;
+    });
+    locationTagger_->start(queue);
 }
 
 /*! \brief Removes all City, State/Province, and Country tags from the library after confirmation. */

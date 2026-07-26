@@ -20,6 +20,7 @@
 #include "constants.h"
 #include "aboutdialog.h"
 #include "geo.h"
+#include "locationtagger.h"
 #include "mapdialog.h"
 
 QT_BEGIN_NAMESPACE
@@ -53,19 +54,7 @@ private:
     // --- Geography / map ---
     double previewMapLat_ = 0.0;  ///< Latitude of the currently previewed file's GPS location.
     double previewMapLon_ = 0.0;  ///< Longitude of the currently previewed file's GPS location.
-
-    /*! \brief Per-file entry used by the location auto-tagging queue. */
-    struct GeocodeQueueEntry {
-        TaggedFile *tf;
-        double lat;
-        double lon;
-    };
-    QList<GeocodeQueueEntry> geocodeQueue_;  ///< Pending reverse-geocode requests.
-    QTimer *geocodeTimer_ = nullptr;          ///< Fires to drain geocodeQueue_.
-    int  geocodeDone_     = 0;               ///< Callbacks received so far in the current batch.
-    int  geocodeTagged_   = 0;               ///< Files that received at least one location tag in the current batch.
-    int  geocodeTotal_    = 0;               ///< Total geocode requests in the current batch.
-    bool geocodeAborted_  = false;           ///< True once an error has been shown; suppresses duplicate notifications.
+    LocationTagger *locationTagger_ = nullptr; ///< Active location-tagging batch, or nullptr when idle.
 
 public:
     /*! \brief Constructs the main window, sets up layouts, status bar, and default pane sizes.

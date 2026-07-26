@@ -76,7 +76,7 @@ void MapWidget::onTileError(int httpStatus)
     switch (httpStatus) {
     case 0:   errorMessage_ = tr("Map unavailable"); break;
     case 401: errorMessage_ = tr("Map key error"); break;
-    case 429: errorMessage_ = tr("Map rate limit\nreached"); break;
+    case 429: errorMessage_ = tr("Map rate limit\nexhausted"); break;
     default:  errorMessage_ = tr("Map error"); break;
     }
     update();
