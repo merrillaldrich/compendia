@@ -3,7 +3,6 @@
 
 #include <QList>
 #include <QObject>
-#include <QTimer>
 
 class CompendiaCore;
 class TaggedFile;
@@ -15,8 +14,9 @@ class TaggedFile;
  * coordinates), then call start().  Progress, errors, and completion are reported
  * through signals so the caller can update the UI without knowing the internals.
  *
- * The worker owns its own QTimer and is safe to parent to the MainWindow; it
- * should be destroyed (via deleteLater()) after finished() is received.
+ * The worker uses a sliding window of concurrent async requests (no dedicated
+ * thread or timer) and is safe to parent to the MainWindow; destroy it via
+ * deleteLater() after finished() is received.
  */
 class LocationTagger : public QObject
 {
@@ -37,7 +37,7 @@ public:
      */
     explicit LocationTagger(CompendiaCore *core, QObject *parent = nullptr);
 
-    /*! \brief Starts draining \a queue, firing one geocode request per timer tick.
+    /*! \brief Starts draining \a queue using a sliding window of concurrent requests.
      *
      * \param queue Files to geocode; must be non-empty.
      */
@@ -65,13 +65,15 @@ signals:
     void finished(int tagged, bool hadError);
 
 private:
+    void dispatchNext();
+
     CompendiaCore *core_;
     QList<Entry>   queue_;
-    QTimer        *timer_   = nullptr;
-    int            done_    = 0;
-    int            tagged_  = 0;
-    int            total_   = 0;
-    bool           aborted_ = false;
+    int            inFlight_ = 0;
+    int            done_     = 0;
+    int            tagged_   = 0;
+    int            total_    = 0;
+    bool           aborted_  = false;
 };
 
 #endif // LOCATIONTAGGER_H

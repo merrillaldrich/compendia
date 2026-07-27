@@ -2660,12 +2660,16 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
 
     locationTagger_ = new LocationTagger(core, this);
     connect(locationTagger_, &LocationTagger::progress, this, [this](int done, int total) {
-        progress_->showNotification(tr("Geocoding %1 / %2...").arg(done).arg(total));
+        progress_->setLabel(MultiProgressBar::Process::LocationTagging,
+                            tr("Geocoding %1 / %2").arg(done).arg(total));
+        progress_->increment(MultiProgressBar::Process::LocationTagging);
     });
     connect(locationTagger_, &LocationTagger::errorOccurred, this, [this](const QString &msg) {
+        progress_->finishProcess(MultiProgressBar::Process::LocationTagging);
         progress_->showNotification(tr("Location tagging stopped: %1").arg(msg));
     });
     connect(locationTagger_, &LocationTagger::finished, this, [this](int tagged, bool hadError) {
+        progress_->finishProcess(MultiProgressBar::Process::LocationTagging);
         core->writeFileMetadata();
         refreshNavTagLibrary();
         refreshTagAssignmentArea();
@@ -2675,6 +2679,8 @@ void MainWindow::on_actionAuto_Tag_Location_triggered()
         locationTagger_->deleteLater();
         locationTagger_ = nullptr;
     });
+    progress_->startProcess(MultiProgressBar::Process::LocationTagging,
+                             0, queue.size(), tr("Geocoding…"));
     locationTagger_->start(queue);
 }
 
